@@ -18,9 +18,11 @@
 - GIA 文件(节点图导出文件)解析:
   - [utils/gia.proto](./utils/gia.proto): Protobuf 定义文件(我推测的, 包含大部分结构, 除了结构体的扩展)
   - [utils/bindec.py](./utils/bindec.py): 解码 GIA 文件到原始的 protobuf message 结构
-  - [utils/decode.py](./utils/decode.py): 解码 GIA 文件到可读文本格式
-- 服务器节点图节点ID检索: [./utils/server_node_id.yaml](./utils/server_node_id.yaml): 我手动导出并对应的, 算术节点基本保证覆盖全了, 但是操作节点没有考虑全部的泛类的情况.
+  - [utils/gia.py](./utils/gia.py): 解码 GIA 文件到可读文本格式, 编码文本到 GIA 文件.
+- 服务器节点图节点ID检索: [utils/server_node_id.yaml](./utils/server_node_id.yaml): 我手动导出并对应的, 算术节点基本保证覆盖全了, 但是操作节点没有考虑全部的泛类的情况.
   - 客户端节点我发现 id 不一样, 没心情弄了.
+  - [utils/enum_id.yaml](./utils/enum_id.yaml)
+  未完成, 枚举对应的字段.
 - [docs/UserGuide.md](./docs/UserGuide.md) 代码使用手册
 - [utils/def.d.ts](./utils/def.d.ts) 代码结构定义文件
 - [src/index.ts](./src/index.ts) 编译器和转换器(完成一半)

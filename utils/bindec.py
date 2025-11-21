@@ -1,4 +1,5 @@
 # 解码 GIA 文件到原始的 protobuf message 结构
+# Version 1.0.0
 
 import struct
 import argparse
