@@ -17,7 +17,7 @@
 这个项目是我整理的我上述项目中的已经成型的文件, 用于补全开源开发生态.
 - GIA 文件(节点图导出文件)解析:
   - [utils/protobuf/gia.proto](./utils/protobuf/gia.proto): GIA 文件的 Protobuf 数据结构定义文件 (我推测的, 包含大部分结构, 除了结构体的扩展)
-  - [utils/protobuf/proto2ts.ts](./utils/protobuf/proto2ts.ts) 将 `gia.proto` 转换为 Typescript 类型声明 `.d.ts` , 使解析后数据结构有类型注释.
+  - [utils/protobuf/proto2ts.ts](./utils/protobuf/proto2ts.ts) 将 `gia.proto` 转换为 Typescript 类型声明 `gia.proto.ts` , 使解析后数据结构有类型注释和枚举常量.
   - [utils/protobuf/decode.ts](./utils/protobuf/decode.ts): 解码 GIA 文件到可读文本格式/JSON格式.
   - **(弃用, 请使用decode.ts)** [utils/protobuf/decode.py](./utils/protobuf/decode.py): 解码 GIA 文件到可读文本格式, 编码文本到 GIA 文件. 
   - [utils/protobuf/decode_raw.py](./utils/protobuf/decode_raw.py): 解码 GIA 文件到原始的 protobuf message 结构. 使用强类型检查而非 `protoc.exe` 的宽松行为.

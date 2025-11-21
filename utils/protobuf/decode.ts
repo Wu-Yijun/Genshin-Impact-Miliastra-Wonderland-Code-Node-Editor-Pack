@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "fs";
 import proto from "protobufjs";
-import { NodePin$Index$Kind } from "./gia.proto";
+import { type GraphNode, NodePin$Index$Kind, type Root } from "./gia.proto.ts";
 
 const VERSION = "1.0.2";
 
@@ -33,7 +33,8 @@ interface Info {
   to: number;
 }
 function getInfo(node: GraphNode): Info | null {
-  console.log(node.pins[0].i1.kind === NodePin$Index$Kind.InFlow)
+  const p: NodePin$Index$Kind = node.pins[1]?.i1.kind;
+  console.log(p === NodePin$Index$Kind.InParam)
   const temp = {
     index: node.nodeIndex,
     id: node.concreteId?.nodeId,
