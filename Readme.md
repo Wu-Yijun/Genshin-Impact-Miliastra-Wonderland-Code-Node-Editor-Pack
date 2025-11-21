@@ -82,7 +82,7 @@ declare global{
 ```
 
 ## GIA 文件结构
-[script-1024/genshin-miliastra-file-format](https://github.com/script-1024/genshin-miliastra-file-format/blob/main/docs/zh/%E6%A6%82%E8%BF%B0.md) 说的更好, 于是我就直接改写来了:
+[script-1024/genshin-miliastra-file-format](https://github.com/script-1024/genshin-miliastra-file-format/blob/main/docs/zh/%E6%A6%82%E8%BF%B0.md) 写的比我之前的详细, 于是我就参考它的改写了:
 
 无论是 `.gip`(Project), `.gil`(Level), `.gia`(Assets), 还是 `.gir`(Runtime) 文件，它们都拥有类似的结构：
 ```cs
@@ -103,12 +103,12 @@ declare global{
 
 | 字段名称 | 偏移地址 | 值 | 描述与说明 | ~~译者~~(我的)注 |
 |---------|----------|------|------|------------|
-| 文件大小 | `0x00` | $size - 4$ | 文件真实大小减去 4 字节（不包含尾部标记） |
-| 版本编号 | `0x04` | `00 00 00 01` | 可修改但建议保持官方值 | *我本以为是主版本号, 看来猜错了?* |
+| 文件大小 | `0x00` | $size - 4$ | 文件大小减 4 字节 (不包含尾部标记) |
+| 版本编号 | `0x04` | `00 00 00 01` | 可修改, 但建议保持官方值 | *我本以为是主版本号, 看来猜错了?* |
 | 头部标记 | `0x08` | `00 00 03 26` | **严格校验，不可修改** | *我本以为是次版本号, 但它不是向下兼容的?* |
-| 文件类型 | `0x0C` | • GIP = `00 00 00 01`<br>• GIL = `00 00 00 02`<br>• GIA = `00 00 00 03`<br>• GIR = `00 00 00 04` | 枚举值 |
-| 内容长度 | `0x10` | $protobufSize$ | 文件真实大小减去 24 字节（不含头部 20 字节和尾部 4 字节） |  |
-| 内容负载 | `0x14` | PROTOBUF 编码 | ProtoBuf 编码数据 | 具体编码规则见 [utils/gia.proto](./utils/gia.proto) |
+| 文件类型 | `0x0C` | • GIP=`00 00 00 01`<br>• GIL=`00 00 00 02`<br>• GIA=`00 00 00 03`<br>• GIR=`00 00 00 04` | 枚举值 |
+| 内容长度 | `0x10` | `Size_of_Protobuf` | 文件大小减 24 字节 (不含头部 20 字节和尾部 4 字节) |  |
+| 内容负载 | `0x14` | Protobuf二进制编码 | ProtoBuf 编码数据 | 具体编码规则见 [utils/gia.proto](./utils/gia.proto) |
 | 尾部标记 | 文件大小字段值 | `00 00 06 79` | **严格校验，不可修改** | 头部标记 + 尾部标记 = `0x099F` 可能有什么特殊含义? |
 
 ## Usages
