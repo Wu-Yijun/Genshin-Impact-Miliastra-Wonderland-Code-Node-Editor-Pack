@@ -24,5 +24,8 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1"
+  },
+  "dependencies": {
+    "protobufjs": "^7.5.4"
   }
 }
