@@ -11,7 +11,7 @@ GetPlayer()[player, num = index as int, time as float]
     false = Log("small") >> 0
   )
   .Log("done")
-  .Log("Ouch! Took " + dmg_val.to<string>(1,2))
+  .Log("Ouch! Took " + m.str(dmg_val))
   .MoveTo(X = 10 + calc(y, z ** 2) as int, 0 as int, z = 0)
   .Log("A happened")
   .Wait(1.0)
@@ -25,7 +25,7 @@ GetPlayer()[player, num = index as int, time as float]
   .Branch[14].Fun() < 14 >> null
   .Loop(0, 2, "MyLoop")[i]( // 将运行 3 次 (i=0, i=1, i=2)
     // 循环体
-    true = Log("Loop iteration: " + i.to<string>())
+    true = Log("Loop iteration: " + m.str(i))
       .If(i == 1) // 假设我们想在 i=1 时停止
       .StopLoop("MyLoop"), // 注意：这不会立即跳出
     // 循环结束时

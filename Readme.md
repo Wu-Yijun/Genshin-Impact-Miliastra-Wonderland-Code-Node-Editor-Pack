@@ -9,7 +9,7 @@
 - [x] **(刚开始)** IR本地运行器
 - [ ] **(未动工)** DSL$\rArr$GIA转换器
 - [ ] **(未动工)** GIA$\rArr$DSL转换器
-- [ ] **(完成一大半)** 写一个没营养的 DSL 示例, 并在千星奇域中手动实现.
+- [x] **(完成一大半)** 写一个~~没营养~~的 DSL 示例, 并在千星奇域中手动实现.
 
 但今天搜索 Github, 无意中发现 [Columbina-Dev](https://github.com/Columbina-Dev/WebMiliastraNodesEditor) 已经做好了 **节点编辑器**, 可以简单体验的[网页版](https://miliastra.columbina.dev/). 这一下子就*给我动力*了, 我准备把简单的DSL$\rArr$JSON转换器先给它实现了. 稍微增强下开源生态......
 
@@ -24,7 +24,8 @@
 - [docs/UserGuide.md](./docs/UserGuide.md) 代码使用手册
 - [utils/def.d.ts](./utils/def.d.ts) 代码结构定义文件
 - [src/index.ts](./src/index.ts) 编译器和转换器(完成一半)
-- [src/sysTypes.ts](./src/sysTypes.ts) 运行时系统类型定义
+- [src/sysTypes.ts](./src/sysTypes.ts) **运行时**系统类型定义
+- [src/test/def.d.ts](./src/test/def.d.ts) 本地编写代码时的**类型定义和函数补全**
 
 
 ## Getting Started

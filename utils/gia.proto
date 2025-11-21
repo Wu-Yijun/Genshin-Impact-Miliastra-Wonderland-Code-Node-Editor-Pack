@@ -1,4 +1,5 @@
 syntax = "proto3";
+// @version: 1.0.2
 // package gia;
 
 message Root {
@@ -208,7 +209,7 @@ message StructureDefWrapper {
 
       oneof val {
         IntBase_Value int_v = 13;
-        BoolBase_Value bool_v = 14;
+        EnumBase_Value bool_v = 14;
         StringBase_Value str_v = 16;
         // TODO: What A mess here! I can't bear anymore!!!!!
         // He who trust himself could take a try.
@@ -241,7 +242,7 @@ enum Var_Type {
   StringList = 11;
   Vector = 12;
   EntityList = 13;
-
+  EnumItem = 14;
   VectorList = 15;
 
   Faction = 17;
@@ -271,7 +272,7 @@ message VarBase {
     IntBase = 2;
     FloatBase = 4;
     StringBase = 5;
-    BoolBase = 6;
+    EnumBase = 6;
     VectorBase = 7;
 
     NodeValueBase = 10000; // link to node
@@ -313,8 +314,7 @@ message VarBase {
   }
 
   Class class = 1;
-  // Only Entity is NOT writable (false)
-  bool writable = 2; // decide can value be manually inputted.
+  bool contain_any_val = 2;
   ItemType item_type = 4;
   // Only Struct contains this field
   optional Struct_Info struct_info = 5;
@@ -325,7 +325,7 @@ message VarBase {
     IntBase_Value b_int = 102;
     FloatBase_Value b_float = 104;
     StringBase_Value b_string = 105;
-    BoolBase_Value b_bool = 106;
+    EnumBase_Value b_enum = 106;
     VectorBase_Value b_vector = 107;
     StructBase_Value b_struct = 108;
     ArrayBase_Value b_array = 109;
@@ -338,7 +338,7 @@ message IdBase_Value { int32 val = 1; }
 message IntBase_Value { int32 val = 1; }
 message FloatBase_Value { float val = 1; }
 message StringBase_Value { string val = 1; }
-message BoolBase_Value { bool val = 1; }
+message EnumBase_Value { int32 val = 1; }
 message VectorBase_Value {
   message Vec {
     float x = 1;
@@ -358,8 +358,8 @@ message MapPairBase_Value {
   VarBase value = 2;
 }
 message NodeValueBase_Value {
-  int32 pin_index = 1;
-  VarBase val = 2;
+  int32 classBase = 1;
+  VarBase value = 2;
   // TODO: What is this
   message Wrapper {
     message Inner {

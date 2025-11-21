@@ -3,8 +3,11 @@
 import argparse
 import subprocess
 import sys
+import os
 
 PYTHON_FILE_PATH = sys.argv[0]
+PYTHON_DIR_PATH = os.path.dirname(os.path.abspath(PYTHON_FILE_PATH))
+PYTHON_REL_PATH = os.path.relpath(PYTHON_DIR_PATH, os.getcwd())
 
 def read_arg():
   parser = argparse.ArgumentParser(description="Parse protobuf file")
@@ -26,7 +29,8 @@ def main(path, no_print=False, output=None):
     data = f.read()[20:-4]  # 去掉文件头和尾
 
   p = subprocess.Popen(
-    [f"{PYTHON_FILE_PATH}/protoc.exe", "--decode=Root", f"{PYTHON_FILE_PATH}/gia.proto"],
+    # [f"{PYTHON_DIR_PATH}/protoc.exe", "--decode=Root", "./utils/gia.proto"],
+    [f"{PYTHON_REL_PATH}/protoc.exe", "--decode=Root", f"{PYTHON_REL_PATH}/gia.proto"],
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE,
     stderr=subprocess.PIPE,

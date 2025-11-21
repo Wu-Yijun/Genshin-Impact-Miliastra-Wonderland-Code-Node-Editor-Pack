@@ -2,13 +2,24 @@ import { readFileSync, writeFileSync } from "fs";
 import { AllTypes, AllKeyTypes, AllKeyTypes_, AllValTypes, AllValTypes_, SysEnumNames } from "../src/sysTypes.ts";
 import type { int, str, float, bool, Int, Float, Bool, Str, Vec, GUID, Entity, Prefab, Faction, ConfigId, List, Dict, Struct } from "../src/sysTypes.ts";
 
+
 // const RawTypes = ["int", "float", "bool", "str"] as const;
 // const RawTypeMaps = ["bigint", "number", "boolean", "string"] as const;
 // const ExtendTypes = ["Int", "Float", "Bool", "Str", "Vec", "GUID", "Entity", "Prefab", "Faction", "ConfigId", "List", "Dict", "Struct"] as const;
 // const AllTypes = [...ExtendTypes, ...RawTypes] as const;
 // const AllKeyTypes = ["Entity", "GUID", "Int", "Str", "Faction", "ConfigId", "Prefab"] as const satisfies (typeof ExtendTypes[number])[];
 // const AllValTypes = ["Entity", "GUID", "Int", "Bool", "Float", "Str", "Faction", "Vec", "ConfigId", "Prefab"] as const satisfies (typeof ExtendTypes[number])[];
-type SysAllTypes = any;
+
+// Just to avoid Errors in this file
+type SysAllTypes = never;
+type EnumInterruptStatus = never;
+type EnumRoundMode = never;
+type EnumSkillSlot = never;
+type EnumGameMode = never;
+type EnumDeathCause = never;
+type EnumDevice = never;
+type EnumEntityType = never;
+
 
 const version = "1.0.2";
 declare namespace MathNodes {
@@ -28,9 +39,9 @@ declare namespace MathNodes {
   function str(x: Vec | GUID | Entity | Faction): str;
   function Str(x: Vec | GUID | Entity | Faction): Str;
 
-  function vec(x: int, y: int, z: int): vec;
-  function vec([x, y, z]: [int, int, int]): vec;
-  function split_vec(v: vec): [x: int, y: int, z: int];
+  function vec(x: int, y: int, z: int): Vec;
+  function vec([x, y, z]: [int, int, int]): Vec;
+  function split_vec(v: Vec): [x: int, y: int, z: int];
 
   // ====== List ====== //
   /** @deprecated Please use list.length directly. */
@@ -288,9 +299,9 @@ declare namespace QueryNodes {
   function all_players(): List;
   function all_characters(player: Entity): List;
 
-  function level_of(player: Entity, class_id?: Config): int;
-  function class_id_of(player: Entity): Config;
-  function skill_of(player: Entity, skill_slot: EnumSkillSlot): Config;
+  function level_of(player: Entity, class_id?: ConfigId): int;
+  function class_id_of(player: Entity): ConfigId;
+  function skill_of(player: Entity, skill_slot: EnumSkillSlot): ConfigId;
   // TODO: 16-22
 
   namespace attr {
@@ -357,27 +368,33 @@ declare namespace QueryNodes {
   function on_field(prefab: Prefab): List;
   function type(entity: Entity): EnumEntityType;
 
-  function pos(entity?: Entity): vec;
-  function rot(entity?: Entity): vec;
-  function front(entity?: Entity): vec;
-  function right(entity?: Entity): vec;
-  function up(entity?: Entity): vec;
+  function pos(entity?: Entity): Vec;
+  function rot(entity?: Entity): Vec;
+  function front(entity?: Entity): Vec;
+  function right(entity?: Entity): Vec;
+  function up(entity?: Entity): Vec;
   function children(entity?: Entity): List;
 
   function parent(entity?: Entity): Entity;
   function guid(entity: Entity): GUID;
   function entity(guid: GUID): Entity;
-  function faction(entity: Entity): FactionType;
-  function hostile(f1: FactionType, f2: FactionType): bool;
+  function faction(entity: Entity): Faction;
+  function hostile(f1: Faction, f2: Faction): bool;
 
-  function filter(src: List, center: vec, radius: float): List;
+  function filter(src: List, center: Vec, radius: float): List;
   function filter(src: List, type: EnumEntityType): List;
   function filter(src: List, prefab: Prefab): List;
-  function filter(src: List, faction: FactionType): List;
+  function filter(src: List, faction: Faction): List;
 
 }
 declare namespace ExecNodes {
   function $(lambda: (...args: any[]) => any): [][];
+
+  // 选择分支
+  function If(cond: bool | Bool): [][];
+  // 选择分支
+  function Switch(key: bool | float | int | str | Bool | Float | Int | Str): [][];
+
   // ------ 执行节点函数 ------ //
   // 打印字符串
   function Log(str: str | Str): [][];
@@ -504,13 +521,12 @@ declare namespace TrigNodes {
   function OnDestroy(): [
     src: Entity,
     src_guid: GUID,
-    pos: vec,
-    dir: vec,
+    pos: Vec,
+    dir: Vec,
     damage_src: Entity,
-    vars: EntityVars,
+    snapshot: Entity,
     type: EnumEntityType,
     parent: Entity,
-    snapshot: Entity,
   ][];
 
   // 角色倒下时(角色实体上的节点图可以触发该事件)
@@ -554,7 +570,7 @@ declare namespace TrigNodes {
   // 命中检测触发时
   function OnHit(): [
     target: Entity,
-    pos: vec,
+    pos: Vec,
     is_hitbox: boolean,
     src: Entity,
     src_guid: GUID,
@@ -743,13 +759,13 @@ class Generator {
     this.addLine(`${is_interface ? "interface" : "class"} ${name}${extendsClass ? ` extends ${extendsClass}` : ""} {`);
     if (body?.val) {
       for (const [n, t, c] of body.val) {
-        if (c) this.addComment(c);
+        if (c) this.addComments(c);
         this.addLine(`${n}: ${t};`);
       }
     }
     if (body?.fun) {
       for (const [n, args, ret, c] of body.fun) {
-        if (c) this.addComment(c);
+        if (c) this.addComments(c);
         this.addFun(n, args, ret, true);
       }
     }
@@ -1034,7 +1050,7 @@ function main() {
   addQuery(gen, reader);
 
   gen.addLine();
-  gen.addComment("====== Operator Nodes ======");
+  gen.addComment("====== Execution Nodes ======");
   addExec(gen, reader);
 
   gen.addLine();
@@ -1045,7 +1061,10 @@ function main() {
   //   [index: string | float | symbol]: [][]; // 修改索引签名返回类型
   // }
   gen.addClass("Array<T>", "ExecFunctions", {
-    val: [["[index: string | float | symbol]", "[][]", "修改索引签名返回类型"]]
+    val: [
+      ["[index: string | float | symbol]", "[][]", "修改索引签名返回类型"],
+      ["(...cases: (string | float | null | boolean)[])", "[][]", "分支选择"],
+    ]
   }, true);
 
   // interface Object extends ExecFunctions {
@@ -1059,12 +1078,13 @@ function main() {
   gen.pop();
 
   gen.addLine();
-  gen.addComment("====== Operator Nodes Helper ======");
+  gen.addComment("====== Execution Nodes Helper ======");
   gen.addLines("interface ExecFunctions {");
   addExec(gen, reader, true);
   gen.pop();
 
   gen.dump(import.meta.dirname + "/../src/test/def.d.ts");
+  // gen.dump(import.meta.dirname + "/def.d.ts");
 }
 
 

@@ -1,13 +1,6 @@
 # 节点图等效代码语言(DSL)使用手册
 
 截图展示节点图实在太折磨人了——又小又丑，还老是看不清。于是我干脆自己捣鼓了一套“**节点图等效代码语言(DSL, Domain-Specific Language)**”，用代码把节点图的结构清清楚楚地表达出来。
-（顺带一提：以后说不定我会写个本地构建器+调试器，让它跟节点图文件互相转换；如果哪位大佬愿意研究一下节点图的二进制结构那就更香了……）
-
-本来我真没打算写这玩意儿的。只是当我在写另一篇《节点图的性能优化》时，为了把某条节点路线讲清楚，不得不临时发明了个“又短又能读”的代码表示方案。
-*VSCode 用 ESLint 还能直接高亮 TypeScript（只要在第一行加 `// @ts-nocheck`，不然类型报错会把人逼疯）。*
-
-
-*注意, 我们的示例中使用了**字符串拼接**运算, 以及 `Wait(duration)` 函数, 这在节点图中是没有实现的, 为了方便演示, 我们直接使用并假定它们存在.*
 
 ## 1\. 快速上手
 
@@ -25,7 +18,7 @@
 // ^ 建议始终在文件顶部添加此行，以关闭 TS 编译器的类型检查
 
 declare global {
-  namespace self {
+  namespace Self {
     const my_var: any = 0;
   }
 }
@@ -91,15 +84,19 @@ declare global {
   }
 
   // 5.声明实体的全局变量 (每个实体一个实例)
-  namespace self{
+  namespace Self{
     let player_name: string = "Default";
     let is_alive: boolean = true;
   }
 
   // 6. 节点图变量 (node)
   // 声明节点图变量 (每个实体的每个节点图一个实例)
-  namespace node {
+  namespace Node {
     let config_id: Config = 0;
+  }
+
+  namespace Local {
+    let _local_a: int = 5n;
   }
 }
 
