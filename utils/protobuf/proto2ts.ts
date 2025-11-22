@@ -388,10 +388,11 @@ function main(input_path: string) {
   }
   const proto = proto_raw
     .split("\n")
-    .map(s => s.replace(/\/\/.*$/, ""))
+    .map(s => s.replace(/\/\/.*$/m, ""))
     .join(" ")
     .replaceAll(/(\s|\n|\r)+/g, " ")
     .replace(/^syntax\s*=.+?;/, "");
+  // console.log(proto);
 
   const t = tokenize(proto);
   const doc = parseDoc(t);

@@ -7,7 +7,7 @@ type ArgType =
   | SysTypeNames   // basic types
   | SysEnumNameTypes  // enum types
   | ArgType[]       // type array
-  | (() => ArgType | string); // other types
+  | (() => ArgType | string | string[]); // other types
 /** 
  * - `key` is parameter name and should only be used once.
  * - `0: true` to mark if an `arg` is optional 

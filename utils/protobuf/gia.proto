@@ -314,7 +314,7 @@ message VarBase {
 
   Class class = 1;
   bool alreadySetVal = 2;
-  ItemType itemType = 4;
+  optional ItemType itemType = 4;
   // Only Struct contains this field
   optional StructInfo structInfo = 5;
 
@@ -371,7 +371,7 @@ message NodeValueBaseValue {
     int32 classBase = 4;
     Inner inner = 100;
   }
-  Wrapper wrapper = 5;
+  optional Wrapper wrapper = 5;
 }
 // ========== End of Variable Defs ========== //
 

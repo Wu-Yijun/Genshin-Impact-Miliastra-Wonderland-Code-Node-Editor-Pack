@@ -388,7 +388,7 @@ export interface VarBase {
   /** Index = 2 */
   alreadySetVal: boolean;
   /** Index = 4 */
-  itemType: VarBase$ItemType;
+  itemType?: VarBase$ItemType;
   /** Index = 5 */
   structInfo?: VarBase$StructInfo;
   /** Index = 101
@@ -568,7 +568,7 @@ export interface NodeValueBaseValue {
   /** Index = 2 */
   value: VarBase;
   /** Index = 5 */
-  wrapper: NodeValueBaseValue$Wrapper;
+  wrapper?: NodeValueBaseValue$Wrapper;
 }
 export interface NodeValueBaseValue$Wrapper {
   /** Index = 4 */

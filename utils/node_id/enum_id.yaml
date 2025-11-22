@@ -1,0 +1,371 @@
+# This file is auto-generated. Do not edit manually.
+Version: 1.1.0
+Author: Aluria
+Date: Sun Nov 23 2025 00:29:21 GMT+0800 (中国标准时间)
+EnumList:
+  - name: Generic
+    id: 475
+    varClassBase: 0
+    items: {}
+  - name: Comparison Operators
+    id: 476
+    varClassBase: 1
+    items:
+      "100": Equal To
+      "101": Less Than
+      "102": Less Than or Equal To
+      "103": Greater Than
+      "104": Greater Than or Equal To
+  - name: Logical Operators
+    id: 477
+    varClassBase: 2
+    items:
+      "200": AND
+      "201": OR
+      "202": XOR
+      "203": NOT
+  - name: Mathematical Operators
+    id: 478
+    varClassBase: 3
+    items:
+      "300": Addition
+      "301": Subtraction
+      "302": Multiplication
+      "303": Division
+      "304": Modulo Operation
+      "305": Exponentiation
+      "306": Get Maximum Value
+      "307": Get Minimum Value
+      "308": Logarithm
+  - name: Attack Shapes
+    id: 479
+    varClassBase: 4
+    items:
+      "400": Rectangle
+      "401": Sphere
+      "402": Sector
+  - name: Survival Status
+    id: 480
+    varClassBase: 5
+    items:
+      "500": Alive
+      "501": Down
+  - name: Sorting Rules
+    id: 481
+    varClassBase: 6
+    items:
+      "600": Ascending
+      "601": Descending
+  - name: Rounding Logic
+    id: 482
+    varClassBase: 7
+    items:
+      "700": Round Up
+      "701": Round Down
+      "702": Round to Nearest
+      "703": Truncate
+  - name: Type Conversions
+    id: 483
+    varClassBase: 8
+    items:
+      "800": Integer to Boolean
+      "801": Integer to Floating Point
+      "802": Integer to String
+      "803": Entity to String
+      "804": GUID to String
+      "805": Boolean to Integer
+      "806": Boolean to String
+      "807": Floating Point to Integer
+      "808": Floating Point to String
+      "809": 3D Vector to String
+      "810": Faction to String
+  - name: Motion Path Point Types
+    id: 484
+    varClassBase: 9
+    items:
+      "900": Straight Line
+      "901": Curve
+  - name: Motion Types
+    id: 485
+    varClassBase: 10
+    items:
+      "1000": One-Way
+      "1001": Back and Forth
+      "1002": Cyclic Movement
+  - name: Follow Location Type
+    id: 486
+    varClassBase: 11
+    items:
+      "1100": Completely Follow
+      "1101": Follow Location
+      "1102": Follow Rotation
+  - name: Coordinate System Type
+    id: 487
+    varClassBase: 12
+    items:
+      "1200": Relative Coordinate System
+      "1201": World Coordinate System
+  - name: Elemental Type
+    id: 488
+    varClassBase: 13
+    items:
+      "1300": None
+      "1301": Pyro
+      "1302": Hydro
+      "1303": Anemo
+      "1304": Electro
+      "1305": Dendro
+      "1306": Cryo
+      "1307": Geo
+  - name: Entity Type
+    id: 489
+    varClassBase: 14
+    items:
+      "1401": Stage
+      "1402": Object
+      "1403": Player
+      "1404": Character
+      "1405": Creation
+  - name: Unit Status Addition Result
+    id: 491
+    varClassBase: 16
+    items:
+      "1500": "Failed: Unexpected error"
+      "1501": "Failed: Operation paused for another process"
+      "1502": "Failed: Maximum coexistence limit reached"
+      "1503": "Failed: Unable to add additional stack"
+      "1504": "Success: New status applied"
+      "1505": "Success: Slot stacking"
+  - name: Unit Status Removal Reason
+    id: 492
+    varClassBase: 17
+    items:
+      "1506": Replaced by other unit status
+      "1507": Duration exceeded
+      "1508": Dispelled
+      "1509": Status expired
+      "1510": Class changed
+  - name: Unit Status Removal Strategy
+    id: 493
+    varClassBase: 18
+    items:
+      "1540": All Coexisting Statuses With the Same Name
+      "1541": Status With Fastest Stack Loss
+  - name: Revive Point Selection Strategy
+    id: 494
+    varClassBase: 19
+    items:
+      "1601": Nearest
+      "1602": Most Recently Activated
+      "1603": Highest Priority
+      "1604": Random
+  - name: Cause Of Being Down
+    id: 495
+    varClassBase: 20
+    items:
+      "1605": Node Graph Triggered
+      "1606": Normal Defeat
+      "1607": Abnormal Defeat
+  - name: Trigonometric Functions
+    id: 496
+    varClassBase: 21
+    items:
+      "1700": cos
+      "1701": sin
+      "1702": tan
+      "1703": arccos
+      "1704": arcsin
+      "1705": arctan
+      "1706": Radians to Degrees
+      "1707": Degrees to Radians
+  - name: Disruptor Device Types
+    id: 497
+    varClassBase: 22
+    items:
+      "1801": Force Field Device
+      "1802": Ejector
+      "1803": Tractor Device
+  - name: Disruptor Device Orientation
+    id: 498
+    varClassBase: 23
+    items:
+      "1810": Associate Character Orientation
+      "1811": Fixed Unidirectional
+  - name: UI Control Group Status
+    id: 499
+    varClassBase: 24
+    items:
+      "1900": Off
+      "1901": On
+      "1902": Hidden
+  - name: Target Type
+    id: 500
+    varClassBase: 25
+    items:
+      "2000": None
+      "2001": Allied Faction
+      "2002": Hostile Faction
+      "2003": Self
+      "2004": Own Faction
+      "2005": All
+      "2006": All Except Self
+      "2007": Allied Faction Self Included
+  - name: Trigger Restriction
+    id: 501
+    varClassBase: 26
+    items:
+      "2101": Trigger Only Once
+      "2102": Trigger Only Once per Entity
+  - name: Hit Type
+    id: 502
+    varClassBase: 27
+    items:
+      "2200": None
+      "2201": Default
+      "2202": Slash
+      "2203": Smash
+      "2204": Projectile
+      "2205": Piercing Attack
+  - name: Attack Type
+    id: 503
+    varClassBase: 28
+    items:
+      "2300": None
+      "2301": Melee Attack
+      "2302": Ranged Attack
+      "2303": Default
+  - name: Hit Performance Level
+    id: 504
+    varClassBase: 29
+    items:
+      "2400": Default
+      "2401": No Hit Performance
+      "2402": Hit by Normal Arrow Without Charging
+      "2403": Combo Hit
+      "2404": Normal Hit
+      "2405": Heavy Hit
+      "2406": Strong Impact
+      "2407": Ultimate Impact
+      "2408": Vertical Launch
+      "2409": Super Launch
+      "2410": Long-Range Throw
+  - name: Skill Slot
+    id: 3351
+    varClassBase: 30
+    items:
+      "3100": Normal Attack
+      "3111": "1: E"
+      "3112": "2: Q"
+      "3113": "3: R"
+      "3114": "4: T"
+      "3121": Custom Skill Slot 1
+      "3122": Custom Skill Slot 2
+      "3123": Custom Skill Slot 3
+      "3124": Custom Skill Slot 4
+      "3125": Custom Skill Slot 5
+      "3126": Custom Skill Slot 6
+      "3127": Custom Skill Slot 7
+      "3128": Custom Skill Slot 8
+      "3129": Custom Skill Slot 9
+      "3130": Custom Skill Slot 10
+      "3131": Custom Skill Slot 11
+      "3132": Custom Skill Slot 12
+      "3133": Custom Skill Slot 13
+      "3134": Custom Skill Slot 14
+      "3135": Custom Skill Slot 15
+  - name: Sound Attenuation Mode
+    id: 3352
+    varClassBase: 31
+    items:
+      "3400": Linear Attenuation
+      "3401": Fast Then Slow
+      "3402": Slow Then Fast
+  - name: Select Completion Reason
+    id: 3353
+    varClassBase: 32
+    items:
+      "3500": Completed by Player
+      "3501": Timeout
+      "3502": Fixed-Quantity Refresh
+      "3503": Refresh All
+      "3504": Closed Manually
+      "3505": Closed by Node Graph
+  - name: Settlement Status
+    id: 3354
+    varClassBase: 33
+    items:
+      "4100": TBC
+      "4101": Victory
+      "4102": Failed
+  - name: Reason For Item Change
+    id: 3356
+    varClassBase: 35
+    items:
+      "0": Default
+      "4900": Destroy
+      "4901": Discard
+      "4902": Use
+      "4903": Defeat Drops
+      "4904": Shop Trade
+      "4905": Node Graph Operation
+      "4950": Pick Up
+  - name: Item Loot Type
+    id: 3357
+    varClassBase: 36
+    items:
+      "4350": Shared Reward
+      "4351": Individualized Reward
+  - name: Decision Refresh Mode
+    id: 3358
+    varClassBase: 37
+    items:
+      "3510": Cannot Refresh
+      "3511": Partial Refresh
+      "3512": Refresh All
+  - name: Elemental Reaction Type
+    id: 3359
+    varClassBase: 38
+    items:
+      "4701": Overloaded
+      "4702": Vaporize
+      "4703": Burning
+      "4705": Wet
+      "4706": Bloom
+      "4707": Melt
+      "4708": Frozen
+      "4712": Electro-Charged
+      "4716": Superconduct
+      "4717": "Swirl: Pyro"
+      "4718": "Swirl: Hydro"
+      "4719": "Swirl: Electro"
+      "4720": "Swirl: Cryo"
+      "4727": "Crystallize: Pyro"
+      "4728": "Crystallize: Hydro"
+      "4729": "Crystallize: Electro"
+      "4730": "Crystallize: Cryo"
+      "4733": Catalyze
+      "4734": Aggravate
+      "4735": Spread
+      "4736": Burgeon
+      "4737": Hyperbloom
+  - name: Interrupt Status
+    id: 759
+    varClassBase: 39
+    items:
+      "5200": Interrupt Resistance Status
+      "5201": Interrupt Vulnerability Status
+      "5202": Protected Status
+  - name: Gameplay Mode
+    id: 776
+    varClassBase: 40
+    items:
+      "5700": Play
+      "5701": Room Play
+      "5702": Match Play
+  - name: Input Device Type
+    id: 777
+    varClassBase: 41
+    items:
+      "5800": Keyboard and Mouse
+      "5801": Controller
+      "5802": Touchscreen

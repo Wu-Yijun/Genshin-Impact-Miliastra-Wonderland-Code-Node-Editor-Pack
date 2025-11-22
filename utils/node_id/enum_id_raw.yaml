@@ -1,9 +1,9 @@
+Version: 1.1.0
+
 EnumList:
   - name: Generic
     id: 475
-    items: 
-      100: XXX
-      101: XXX
+    items: []
   - name: Comparison Operators
     id: 476
     items: []
@@ -144,7 +144,7 @@ Enums: |
   Attack Shapes_Rectangle
   Attack Shapes_Sphere
   Attack Shapes_Sector
-  Survival Status Alive
+  Survival Status_Alive
   Survival Status_Down
   Sorting Rules_Ascending
   Sorting Rules_Descending
@@ -163,8 +163,8 @@ Enums: |
   Type Conversions_Floating Point to String
   Type Conversions_3D Vector to String
   Type Conversions_Faction to String
-  Motion Path Points_Straight Line
-  Motion Path Points_Curve
+  Motion Path Point Types_Straight Line
+  Motion Path Point Types_Curve
   Motion Types_One-Way
   Motion Types_Back and Forth
   Motion Types_Cyclic Movement
@@ -173,6 +173,7 @@ Enums: |
   Follow Location Type_Follow Rotation
   Coordinate System Type_Relative Coordinate System
   Coordinate System Type_World Coordinate System
+  Elemental Type_None
   Elemental Type_Pyro
   Elemental Type_Hydro
   Elemental Type_Anemo
@@ -180,7 +181,7 @@ Enums: |
   Elemental Type_Dendro
   Elemental Type_Cryo
   Elemental Type_Geo
-  Elemental Type_None
+  Entity Type_1
   Entity Type_Stage
   Entity Type_Object
   Entity Type_Player
@@ -192,31 +193,37 @@ Enums: |
   Unit Status Addition Result_Failed: Unable to add additional stack
   Unit Status Addition Result_Success: New status applied
   Unit Status Addition Result_Success: Slot stacking
+  Unit Status Removal Reason_6
   Unit Status Removal Reason_Replaced by other unit status
   Unit Status Removal Reason_Duration exceeded
   Unit Status Removal Reason_Dispelled
   Unit Status Removal Reason_Status expired
   Unit Status Removal Reason_Class changed
+  Unit Status Removal Strategy_40
   Unit Status Removal Strategy_All Coexisting Statuses With the Same Name
   Unit Status Removal Strategy_Status With Fastest Stack Loss
-  Revive Point Selection_Nearest
-  Revive Point Selection_Most Recently Activated
-  Revive Point Selection_Highest Priority
-  Revive Point Selection_Random
+  Revive Point Selection Strategy_1
+  Revive Point Selection Strategy_Nearest
+  Revive Point Selection Strategy_Most Recently Activated
+  Revive Point Selection Strategy_Highest Priority
+  Revive Point Selection Strategy_Random
+  Cause Of Being Down_5
   Cause Of Being Down_Node Graph Triggered
   Cause Of Being Down_Normal Defeat
   Cause Of Being Down_Abnormal Defeat
   Trigonometric Functions_cos
-  Trigonometric Functions_sln
+  Trigonometric Functions_sin
   Trigonometric Functions_tan
   Trigonometric Functions_arccos
   Trigonometric Functions_arcsin
   Trigonometric Functions_arctan
   Trigonometric Functions_Radians to Degrees
   Trigonometric Functions_Degrees to Radians
-  Disruptor Device Type_Force Field Device
-  Disruptor Device Type_Ejector
-  Disruptor Device Type_Tractor Device
+  Disruptor Device Types_1
+  Disruptor Device Types_Force Field Device
+  Disruptor Device Types_Ejector
+  Disruptor Device Types_Tractor Device
+  Disruptor Device Orientation_10
   Disruptor Device Orientation_Associate Character Orientation
   Disruptor Device Orientation_Fixed Unidirectional
   UI Control Group Status_Off
@@ -230,8 +237,9 @@ Enums: |
   Target Type_All
   Target Type_All Except Self
   Target Type_Allied Faction Self Included
-  Trigger Restriction_Only Once
-  Trigger Restriction_Only Once per Entity
+  Trigger Restriction_1
+  Trigger Restriction_Trigger Only Once
+  Trigger Restriction_Trigger Only Once per Entity
   Hit Type_None
   Hit Type_Default
   Hit Type_Slash
@@ -254,10 +262,12 @@ Enums: |
   Hit Performance Level_Super Launch
   Hit Performance Level_Long-Range Throw
   Skill Slot_Normal Attack
+  Skill Slot_10
   Skill Slot_1: E
   Skill Slot_2: Q
   Skill Slot_3: R
   Skill Slot_4: T
+  Skill Slot_6
   Skill Slot_Custom Skill Slot 1
   Skill Slot_Custom Skill Slot 2
   Skill Slot_Custom Skill Slot 3
@@ -293,28 +303,36 @@ Enums: |
   Reason For Item Change_Node Graph Operation
   Reason For Item Change_Pick Up
   Reason For Item Change_Default
+  Item Loot Type_50
   Item Loot Type_Shared Reward
   Item Loot Type_Individualized Reward
+  Decision Refresh Mode_10
   Decision Refresh Mode_Cannot Refresh
   Decision Refresh Mode_Partial Refresh
   Decision Refresh Mode_Refresh All
+  Elemental Reaction Type_1
   Elemental Reaction Type_Overloaded
   Elemental Reaction Type_Vaporize
   Elemental Reaction Type_Burning
+  Elemental Reaction Type_1
   Elemental Reaction Type_Wet
   Elemental Reaction Type_Bloom
   Elemental Reaction Type_Melt
   Elemental Reaction Type_Frozen
+  Elemental Reaction Type_3
   Elemental Reaction Type_Electro-Charged
+  Elemental Reaction Type_3
   Elemental Reaction Type_Superconduct
   Elemental Reaction Type_Swirl: Pyro
   Elemental Reaction Type_Swirl: Hydro
   Elemental Reaction Type_Swirl: Electro
   Elemental Reaction Type_Swirl: Cryo
+  Elemental Reaction Type_6
   Elemental Reaction Type_Crystallize: Pyro
   Elemental Reaction Type_Crystallize: Hydro
   Elemental Reaction Type_Crystallize: Electro
   Elemental Reaction Type_Crystallize: Cryo
+  Elemental Reaction Type_2
   Elemental Reaction Type_Catalyze
   Elemental Reaction Type_Aggravate
   Elemental Reaction Type_Spread

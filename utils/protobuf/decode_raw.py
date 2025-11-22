@@ -165,7 +165,7 @@ if __name__ == "__main__":
     sys.exit(1)
   except FileNotFoundError:
     print(
-      "Error: deno not found. Please install deno to format the output.",
+      "Warn: deno not found. Please install deno to format the output.",
       file=sys.stderr,
     )
     sys.exit(1)

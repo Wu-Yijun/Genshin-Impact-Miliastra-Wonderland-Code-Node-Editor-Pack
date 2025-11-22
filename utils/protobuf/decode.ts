@@ -116,14 +116,14 @@ function test() {
     return temp as Info;
   }
 
+  let id = 0;
   function getId() {
-    let id = 0;
-    return (() => ++id)();
+    return ++id;
   }
   function getNode(info: Info, x: number, y: number, node: GraphNode): GraphNode {
     const n = structuredClone(node);
-    n.x = x * 300;
-    n.y = y * 200;
+    n.x = x * 300 + 0.124356;
+    n.y = y * 200 + 0.12345;
     n.nodeIndex = getId();
     n.concreteId.nodeId = info.id;
     n.pins[0].value.bNodeValue!.classBase = info.type;

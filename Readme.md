@@ -1,6 +1,41 @@
 # 千星奇域节点图本地编辑器, 网页节点编辑器, 转换器
 # A Local Code Editor, Web Node Editor, Convertor for Genshin Impact Miliastra Wonderland
 
+本项目是多个千星奇域工具项目的汇总与整合，旨在补全开源开发生态，提供从底层文件解析到上层代码编写的全套解决方案。
+
+## 核心功能 (Core Features)
+
+本项目功能复杂多样，主要包含以下核心模块：
+
+### 1. 强大的 DSL 代码编写体验
+提供了一套基于 TypeScript 的领域特定语言 (DSL)，让你能以写代码的方式构建节点图。
+*   **自动类型生成 (`utils/gen_def.ts`)**: 这是 DSL 的核心引擎。它读取结构化的函数定义，自动生成包含完整类型声明的 `def.d.ts` 文件。这意味着你在编写节点图代码时，可以享受到 **IDE 的智能补全、类型检查和文档提示**。
+*   **结构化函数定义 (`utils/functions`)**: 所有的算术节点和查询节点都通过统一的格式进行定义，支持重载、泛型和参数校验。
+
+### 2. GIA 文件深度解析与工程化
+完全掌握 `.gia` (Genshin Impact Assets) 文件的读写与转换。
+*   **Protobuf 定义**: 包含完整的 `gia.proto` 定义文件。
+*   **编解码工具**: 提供 TypeScript 工具 (`decode.ts`) 将 GIA 文件解码为易于操作的 JSON/对象结构，或将对象重新编码为游戏可读取的 GIA 文件。
+
+### 3. 完备的节点与枚举数据
+整理并校验了游戏中的各类 ID 映射，确保转换的准确性。
+*   **Node ID 映射**: 服务器节点 ID (Server Node ID) 的完整对照表。
+*   **枚举标准化**: 自动生成标准化的枚举定义 (`enum_id.yaml`)，并提供工具生成测试用例以在游戏中验证枚举的有效性。
+
+---
+
+## 模块详情 (Module Documentation)
+
+更多细节功能请查阅各子模块的文档：
+
+*   **[DSL 函数定义与生成工具](./utils/functions/readme.md)**: 了解 DSL 类型系统是如何构建的，以及如何添加新的节点定义。
+*   **[GIA 文件格式与 Protobuf 工具](./utils/protobuf/readme.md)**: 深入了解文件结构，学习如何使用脚本读写 GIA 文件。
+*   **[节点 ID 与枚举定义](./utils/node_id/readme.md)**: 查看节点 ID 列表和枚举值的详细映射关系。
+
+---
+
+## 开发进度 (Project Status)
+
 本来是进展缓慢的, 因为我需要要多线并行: 
 - [x] **(完成主要部分)** GIA 文件逆向 
 - [ ] **(未动工)** 节点编辑器图形界面
@@ -12,28 +47,6 @@
 - [x] **(完成一大半)** 写一个~~没营养~~的 DSL 示例, 并在千星奇域中手动实现.
 
 但11月20号搜索 Github, 无意中发现 [Columbina-Dev](https://github.com/Columbina-Dev/WebMiliastraNodesEditor) 已经做好了**节点编辑器**的[网页版](https://miliastra.columbina.dev/). 这一下子就*给我动力*了, 我准备把简单的DSL ⇒ JSON转换器先给它实现了. 稍微增强下开源生态......
-
-## 本项目提供的工具.
-这个项目是我整理的我上述项目中的已经成型的文件, 用于补全开源开发生态.
-- GIA 文件(节点图导出文件)解析:
-  - [utils/protobuf/gia.proto](./utils/protobuf/gia.proto): GIA 文件的 Protobuf 数据结构定义文件 (我推测的, 包含大部分结构, 除了结构体的扩展)
-  - [utils/protobuf/proto2ts.ts](./utils/protobuf/proto2ts.ts) 将 `gia.proto` 转换为 Typescript 类型声明 `gia.proto.ts` , 使解析后数据结构有类型注释和枚举常量, 方便用 ts 处理.
-  - [utils/protobuf/decode.ts](./utils/protobuf/decode.ts): **解码 GIA 文件**到 Typescript 结构体, **编码 TS 对象** 到 gia 文件.
-  - ~~**(弃用, 请使用decode.ts)** [utils/protobuf/decode.py](./utils/protobuf/decode.py): 解码 GIA 文件到可读文本格式, 编码文本到 GIA 文件.~~
-  - [utils/protobuf/decode_raw.py](./utils/protobuf/decode_raw.py): 解码 GIA 文件到原始的 protobuf message 结构. 使用强类型检查而非 `protoc.exe` 的宽松行为.
-- 服务器节点图节点ID检索: [utils/server_node_id.yaml](./utils/server_node_id.yaml): 我手动导出并对应的, 算术节点基本保证覆盖全了, 但是操作节点没有考虑全部的泛类的情况.
-  - 客户端节点我发现 Id 不同于服务器同样的节点, 没心情弄了.
-  - [utils/enum_id.yaml](./utils/enum_id.yaml) (正在进行) 枚举对应的字段列表和ID.
-- DSL 代码编写运行相关:
-  - [docs/UserGuide.md](./docs/UserGuide.md) 代码使用手册
-  - [docs/SystemDesign.md](./docs/SystemDesign.md) 代码结构设计手册
-  - [utils/gen_def.ts](./utils/gen_def.ts) 自动创建最新版代码结构定义文件的程序
-  - [src/test/def.d.ts](./src/test/def.d.ts) 代码结构定义文件, **本地编写代码**时的`类型定义和函数补全`
-  - [src/sysTypes.ts](./src/sysTypes.ts) **运行时**系统类型定义
-  - [src/index.ts](./src/index.ts) 编译器和转换器(完成一半)
-- 与 Columbina-Dev/WebMiliastraNodesEditor 的相互转换的相关资源
-  - [utils/functions/math.ts](./utils/functions/math.ts) 运算节点的相互转换关系.
-
 
 ## Getting Started
 
@@ -119,5 +132,3 @@ declare global{
 ```shell
 node ./src/test/parser.ts
 ```
-
-
