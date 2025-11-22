@@ -1,7 +1,7 @@
 # 千星奇域节点图本地编辑器, 网页节点编辑器, 转换器
 # A Local Code Editor, Web Node Editor, Convertor for Genshin Impact Miliastra Wonderland
 
-本项目是多个千星奇域工具项目的汇总与整合，旨在补全开源开发生态，提供从底层文件解析到上层代码编写的全套解决方案。
+本项目是我的多个千星奇域工具项目的汇总与整合，旨在补全开源开发生态，提供从底层文件解析到上层代码编写的全套解决方案。
 
 ## 核心功能 (Core Features)
 
@@ -9,24 +9,27 @@
 
 ### 1. 强大的 DSL 代码编写体验
 提供了一套基于 TypeScript 的领域特定语言 (DSL)，让你能以写代码的方式构建节点图。
-*   **自动类型生成 (`utils/gen_def.ts`)**: 这是 DSL 的核心引擎。它读取结构化的函数定义，自动生成包含完整类型声明的 `def.d.ts` 文件。这意味着你在编写节点图代码时，可以享受到 **IDE 的智能补全、类型检查和文档提示**。
-*   **结构化函数定义 (`utils/functions`)**: 所有的算术节点和查询节点都通过统一的格式进行定义，支持重载、泛型和参数校验。
+*   [**自动类型生成 (`utils/gen_def.ts`)**](./utils/gen_def.ts): 这是 DSL 的核心引擎。它读取结构化的函数定义，自动生成包含完整类型声明的 `def.d.ts` 文件。这意味着你在编写节点图代码时，可以享受到 **IDE 的智能补全、类型检查和文档提示**。
+*   [**结构化函数定义 (`utils/functions`)**](./utils/functions/readme.md): 所有的算术节点和查询节点都通过统一的格式进行定义，支持重载、泛型和参数校验。
 
 ### 2. GIA 文件深度解析与工程化
 完全掌握 `.gia` (Genshin Impact Assets) 文件的读写与转换。
-*   **Protobuf 定义**: 包含完整的 `gia.proto` 定义文件。
-*   **编解码工具**: 提供 TypeScript 工具 (`decode.ts`) 将 GIA 文件解码为易于操作的 JSON/对象结构，或将对象重新编码为游戏可读取的 GIA 文件。
+*   [**Protobuf 定义 (`utils/protobuf/gia.proto`)**](./utils/protobuf/gia.proto): 包含较完整的 `gia.proto` 定义文件。
+*   [**编解码工具 (`utils/protobuf/decode.ts`)**](./utils/protobuf/decode.ts): 提供 TypeScript 工具 (`decode.ts`) 将 GIA 文件解码为易于操作的 JSON/对象结构，或将对象重新编码为游戏可读取的 GIA 文件。
 
 ### 3. 完备的节点与枚举数据
 整理并校验了游戏中的各类 ID 映射，确保转换的准确性。
-*   **Node ID 映射**: 服务器节点 ID (Server Node ID) 的完整对照表。
-*   **枚举标准化**: 自动生成标准化的枚举定义 (`enum_id.yaml`)，并提供工具生成测试用例以在游戏中验证枚举的有效性。
+*   [**Node ID 映射 (`utils/node_id/server_node_id.yaml`)**](./utils/node_id/server_node_id.yaml): 服务器节点 ID (Server Node ID) 的完整对照表。
+*   [**枚举标准化 (`utils/node_id/enum_id.yaml`)**](./utils/node_id/enum_id.yaml): 自动生成标准化的枚举定义 (`enum_id.yaml`)，并提供工具生成测试用例以在游戏中验证枚举的有效性。
+
+### 4. 在线节点编辑器功能
+*   *(外部库)* [WebMiliastraNodesEditor](https://github.com/Columbina-Dev/WebMiliastraNodesEditor): 图形化操作界面, 模拟游戏内节点编辑器行为, 将来会补充完整的导入导出和转化功能.
 
 ---
 
 ## 模块详情 (Module Documentation)
 
-更多细节功能请查阅各子模块的文档：
+更多细节功能请查阅各子模块的 README 文档：
 
 *   **[DSL 函数定义与生成工具](./utils/functions/readme.md)**: 了解 DSL 类型系统是如何构建的，以及如何添加新的节点定义。
 *   **[GIA 文件格式与 Protobuf 工具](./utils/protobuf/readme.md)**: 深入了解文件结构，学习如何使用脚本读写 GIA 文件。
@@ -38,7 +41,7 @@
 
 本来是进展缓慢的, 因为我需要要多线并行: 
 - [x] **(完成主要部分)** GIA 文件逆向 
-- [ ] **(未动工)** 节点编辑器图形界面
+- [x] **(未动工)** 节点编辑器图形界面, 有现成的
 - [x] **(基本完成)** 节点图的等效代码表示(DSL)
 - [x] **(完成一小半)** DSL ⇒ IR编译器
 - [x] **(刚开始)** IR本地运行器
