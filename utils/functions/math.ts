@@ -1,4 +1,3 @@
-import { writeFileSync } from "fs";
 
 import { type Lambda, Parser } from "./function_defs.ts";
 import {
@@ -16,6 +15,7 @@ import {
   expandArgs,
   XY,
 } from "./utils.ts";
+import { write_file } from "../../src/util.ts";
 
 /** Levels:
  * - ArgType: AllTypes | AllTypes[] | (()=>string|ArgType)
@@ -644,7 +644,7 @@ function test(print: boolean = true, out_file = "/math.temp.d.ts") {
     // console.log(d.gen_by_name("dict_get").join("\n"))
   } else {
     const res = "// @ts-nocheck\n\n" + d.gen().join("\n\n");
-    writeFileSync(import.meta.dirname + out_file, res);
+    write_file(out_file, res, "rel");
   }
 }
 

@@ -4,10 +4,11 @@
  */
 
 import yaml from 'yaml';
-import { readFileSync } from 'fs';
 import { encode_gia_file } from "../protobuf/decode.ts";
-import { type GraphNode, NodeGraph$Id$Class, NodeGraph$Id$Kind, NodeGraph$Id$Type, type NodePin, NodePin$Index$Kind, NodeProperty$Type, NodeUnit$Id$Type, NodeUnit$Type, type Root, VarBase$Class, VarType } from "../protobuf/gia.proto.ts";
+import { EnumNode$ClassBase, EnumNode$Value, type GraphNode, NodeGraph$Id$Class, NodeGraph$Id$Kind, NodeGraph$Id$Type, NodeId, type NodePin, NodePin$Index$Kind, NodeProperty$Type, NodeUnit$Id$Type, NodeUnit$Type, type Root, VarBase$Class, VarType } from "../protobuf/gia.proto.ts";
 import "./enum_id.yaml.d.ts";
+import { read_file } from '../../src/util.ts';
+import assert from 'assert';
 
 function save_nodes(graph_name: string, file_name: string, nodes: GraphNode[]): Root {
   const uid = parseInt("201" + randomDigits(6));
@@ -62,11 +63,11 @@ function randomDigits(len: number): string {
 
 
 interface EnumOptions {
-  generic_id: number;
-  concrete_id: number;
+  generic_id: NodeId;
+  concrete_id: NodeId;
   pos: [number, number];
-  varClassBase: number;
-  enum_item_id: [number, number];
+  varClassBase: EnumNode$ClassBase;
+  enum_item_id: [EnumNode$Value, EnumNode$Value];
 }
 let index = 0;
 function create_enum_node(option: EnumOptions) {
@@ -106,7 +107,7 @@ function create_enum_node(option: EnumOptions) {
   const pin2 = structuredClone(pin1);
   pin2.i1.index = 1;
   pin2.i2.index = 1;
-  pin2.value.bNodeValue!.value.bEnum!.val = option.enum_item_id[1];
+  pin2.value.bNodeValue!.value.bEnum!.val = option.enum_item_id[1] as any;
 
   const node: GraphNode = {
     nodeIndex: ++index,
@@ -131,7 +132,7 @@ function create_enum_node(option: EnumOptions) {
 }
 
 function check_create_enums(v: number) {
-  const enum_list: EnumList = yaml.parse(readFileSync(import.meta.dirname + "/enum_id.yaml").toString());
+  const enum_list: EnumList = yaml.parse(read_file("enum_id.yaml", "rel"));
 
   const nodes: GraphNode[] = [];
   for (let i = 0; i < enum_list.EnumList.length; i++) {
@@ -143,10 +144,10 @@ function check_create_enums(v: number) {
       // const value = e.items[key];
       const node = create_enum_node({
         generic_id: 475,
-        concrete_id: e.id,
+        concrete_id: e.id as any,
         pos: [i, j / 2],
-        varClassBase: e.varClassBase,
-        enum_item_id: [val, val2],
+        varClassBase: e.varClassBase as any,
+        enum_item_id: [val as any, val2 as any],
       });
       nodes.push(node);
     }
@@ -161,8 +162,74 @@ function check_create_enums(v: number) {
   });
 }
 
+function get_enums_as_proto() {
+  const enum_list: EnumList = yaml.parse(read_file("enum_id.yaml", "rel").toString());
+  const data = enum_list.EnumList.map(x => {
+    const name = x.name.replaceAll(/([^a-zA-Z0-9])+/g, "_");
+    const items = Object.entries(x.items).map(([k, v]) => {
+      const y = parseInt(k);
+      assert(y.toString() === k);
+      return {
+        id: y,
+        name: v
+          .replaceAll(/([^a-zA-Z])([a-z])/gs, ([m1, m2]) => m1 + m2.toUpperCase())
+          .replaceAll(/([^a-zA-Z0-9])+/gs, "_")
+          .replaceAll(/(^_+)|(_+$)/g, ""),
+      }
+    });
+    return {
+      name,
+      id: x.id,
+      varClassBase: x.varClassBase,
+      items,
+    };
+  });
+
+  const node_ids: [string, number][] = data.map(x => [x.name, x.id]); // `${PAD}${name} = ${id};
+  const node_var_base: [string, number][] = data.map(x => [x.name, x.varClassBase]); // `${PAD}${name} = ${varClassBase};
+  const node_enum: [string, number][] = data.map(x => {
+    return x.items.map(y => {
+      return [x.name.replaceAll(/_/g, "") + "_" + y.name.replaceAll(/_/g, ""), y.id];
+    }) as [string, number][];
+  }).flat();
+  // console.log(node_ids, node_var_base, node_enum);
+  assert(node_ids.length === new Map(node_ids).size);
+  assert(node_var_base.length === new Map(node_var_base).size);
+  assert(node_enum.length === new Map(node_enum).size);
+  assert(node_ids.length === new Set(node_ids.map(x => x[1])).size);
+  assert(node_var_base.length === new Set(node_var_base.map(x => x[1])).size);
+  assert(node_enum.length === new Set(node_enum.map(x => x[1])).size);
+
+
+
+  const node_ids_str = node_ids.map(([k, v]) => `  EnumEqual_${k} = ${v};`).join("\n");
+  const node_var_base_str = node_var_base.map(([k, v]) => `    ${k} = ${v};`).join("\n");
+  const node_enum_str = node_enum.map(([k, v]) => `    ${k} = ${v};`).join("\n");
+  return `
+// All nodes id includes server and client
+enum NodeId{
+  // ==== enum nodes ====
+${node_ids_str}
+}
+message EnumNode{
+  // an enum info only message
+  enum EnumNodeClassBase {
+${node_var_base_str}
+  }
+  enum EnumNodeValue {
+${node_enum_str}
+  }
+}
+`;
+}
+
 
 if (import.meta.main) {
   const v = 4;
-  check_create_enums(v);
+  // generate `Generated Enum v${v}.gia`
+  // check_create_enums(v);
+
+  // print all enum structures in protobuf form
+  const proto = get_enums_as_proto();
+  console.log(proto);
 }

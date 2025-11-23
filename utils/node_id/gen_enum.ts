@@ -1,10 +1,10 @@
 import assert from 'assert';
-import { readFileSync, writeFileSync } from 'fs';
 import yaml from 'yaml';
 import { decode_gia_file } from '../protobuf/decode.ts';
+import { read_file, write_file } from '../../src/util.ts';
 
-const inputFilePath = import.meta.dirname + '/../node_id/enum_id_raw.yaml';
-const outputFileBaseName = import.meta.dirname + '/../node_id/enum_id.yaml';
+const inputFileName = 'enum_id_raw.yaml';
+const outputFileName = 'enum_id.yaml';
 
 function get_enum_id_list() {
   interface Info {
@@ -49,7 +49,7 @@ interface Document {
 }
 
 // Read and parse the YAML file
-const fileContent = readFileSync(inputFilePath, 'utf8');
+const fileContent = read_file(inputFileName, "rel");
 const parsedYaml: Document = yaml.parse(fileContent);
 
 const enums = parsedYaml.Enums.split("\n")
@@ -110,4 +110,4 @@ const output = {
 };
 const outputContent = `# This file is auto-generated. Do not edit manually.\n` + yaml.stringify(output);
 
-writeFileSync(outputFileBaseName, outputContent, 'utf8');
+write_file(outputFileName, outputContent, "rel");

@@ -1,13 +1,13 @@
 import assert from "assert";
 import { MathNodes } from "./math.ts";
 import type { Lambda } from "./function_defs.ts";
-import { readFileSync } from "fs";
 import yaml from "yaml";
+import { read_file } from "../../src/util.ts";
 
 
 function checkEverythingMatch(nodes: Lambda[], raw_file: string, ref_file: string): boolean {
-  const raw = readFileSync(import.meta.dirname + raw_file).toString();
-  const ref: any[] = yaml.parse(readFileSync(import.meta.dirname + ref_file).toString());
+  const raw = read_file(raw_file);
+  const ref: any[] = yaml.parse(read_file(ref_file));
 
   const names = nodes.map(p => p.name);
   const raw_names: string[] = [];

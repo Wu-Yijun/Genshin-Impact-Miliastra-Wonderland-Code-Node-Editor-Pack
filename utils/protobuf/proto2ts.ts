@@ -320,7 +320,7 @@ class TypeLayers {
  * @program ${import.meta.url}
  */\n\n`;
         const ts = this.dump_ts(0, config.padding ?? 2);
-        writeFileSync(out_file, ts);
+        writeFileSync(out_file, header + ts);
         break;
     }
   }

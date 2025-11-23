@@ -1,6 +1,7 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
 import { AllTypes, AllKeyTypes, AllKeyTypes_, AllValTypes, AllValTypes_, SysEnumNames } from "../src/sysTypes.ts";
 import type { int, str, float, bool, Int, Float, Bool, Str, Vec, GUID, Entity, Prefab, Faction, ConfigId, List, Dict, Struct, SysKeyTypes } from "../src/sysTypes.ts";
+import { write_file } from "../src/util.ts";
 
 const version = "1.0.4";
 
@@ -609,8 +610,8 @@ declare namespace TrigNodes {
 
 class Reader {
   content: string;
-  constructor(file: string) {
-    this.content = readFileSync(file).toString();
+  constructor(conetnt: string) {
+    this.content = this.content
   }
   find_namespace(name: string): string {
     const reg = new RegExp(`namespace\\s+${name}\\s+{`, "gm");
@@ -722,8 +723,8 @@ class Generator {
       this.addLine(l);
     }
   }
-  dump(file: string) {
-    writeFileSync(file, this.content);
+  dump() {
+    return this.content;
   }
 
   newNamespace(name: string) {
@@ -957,7 +958,8 @@ function addTrig(gen: Generator, reader: Reader) {
 
 function main() {
 
-  const reader = new Reader(import.meta.filename);
+  // read self
+  const reader = new Reader(readFileSync(import.meta.filename).toString());
   const gen = new Generator(version);
 
   gen.addClass(`TypeBase`);
@@ -1143,8 +1145,7 @@ function main() {
   addExec(gen, reader, true);
   gen.pop();
 
-  gen.dump(import.meta.dirname + "/../src/test/def.d.ts");
-  // gen.dump(import.meta.dirname + "/def.d.ts");
+  write_file("src/test/def.d.ts", gen.dump());
 }
 
 
