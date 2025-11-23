@@ -16,6 +16,7 @@
 ```ts
 // @ts-nocheck
 // ^ 建议始终在文件顶部添加此行, 以关闭 TS 编译器的类型检查
+// 也可以不注释, 会有少量变量未定义错误...
 
 declare global {
   namespace Self {
@@ -141,18 +142,18 @@ const _local_counter: int = 0; //  变量名须以 _ 开头
   .Log("Step 1")
   .DoSomething()
   .Log("Step 2")
-  .MoveTo(10, 0, 0);
+  .Teleport(Self.self, m.vec(10, 0, 0));
 
 ```
 
 ### 4.3. 并行分支 (Parallel Branching)
 
-使用 `== { 0: ... , 1: ... , ... }` 来创建多个 “同时” 执行的分支. 
+使用 `>> { 0: ... , 1: ... , ... }` 来创建多个 “同时” 执行的分支. 
 
 **规则**：分支键必须是**整数字面量**. 执行将按照**键的升序**, 以**深度优先**的方式进行. 
 ```ts
 [OnCreate()]
-  .Log("Starting...") == {
+  .Log("Starting...") >> {
     // 这三个分支将按 0, 1, 2 的顺序依次执行完毕
     0: Log("Branch 0: Runs first"),
     2: Log("Branch 2: Runs last"),
@@ -175,9 +176,10 @@ const _local_counter: int = 0; //  变量名须以 _ 开头
 * **定义锚点**：
   1.  `Branch["my-anchor"].FunA()` (在新行顶格无缩进的书写. )
   2.  `... FunB().Branch["my-anchor"].FunC()` (在链中标记)
-* **跳转到锚点**：`== "my-anchor"()` 
+* **跳转到锚点**：`>> "my-anchor"()` 
 
 **注意**：在同一作用域 (文件或 Component) 内, 锚点 ID 必须**唯一**. 
+**注意**：分支跳转后, 当跳转的目标分支执行完毕后, 会回到跳转位置**继续向后执行**. 
 
 **示例：使用锚点合流**
 ```ts
@@ -188,72 +190,78 @@ Branch["Merge Branch"]
 
 [Signal(Signal.EventA)]
   .Log("A happened")
-  .Wait(1.0).
-  ."Merge Branch"; // 跳转到 "Merge Branch"
+  .Wait(1.0)
+  >> "Merge Branch"(); // 跳转到 "Merge Branch"
 
 [Signal(Signal.EventB)]
   .Log("B happened")
-  ."Merge Branch"; // 跳转到 "Merge Branch"
+  >> "Merge Branch"(); // 跳转到 "Merge Branch"
 
 ```
 
 > **请注意, 复杂的合流会产生额外的思维成本, 有形成潜在 Bug 的风险, 包括: 一颗执行树中的某个分支被意外执行多次, 引用了未被执行的节点的输出值, 等**
 
-### 4.5. `>> 0` (块内合流)
+### 4.5. `>> 0()` (块内合流)
 
-在 `>> {}`、`If()` 或 `Switch()` 块内部, `>> 0` 是一个特殊的跳转, 意思是“**合并回主干流**” (即 `}` 或 `)` 之后连接的第一个节点) . 
-对于不执行操作直接转跳的行为, 通过 `0: 0`(直接合流) 或 `1: "branch-id"`(直接进入某分支) 表示.
+在分支块 `>> {}`、选择块 `If()` 或 `Switch()` 的内部, `>> 0()` 是一个特殊的跳转, 意思是“**合并回主干流**” (即 `}` 或 `)` 之后连接的第一个节点) . 
+
+对于不执行操作直接转跳的行为,
+  - 通过 `0: 0()`*(分支块)* 或 `true = 0()`*(选择块)* 表示直接合流.
+  - 通过 `1: "branch-id"()`*(分支块)* 或 `false = "branch-id"()`*(选择块)* 表示直接进入某分支.
+
 ```ts
 [OnCreate()]
   .Log("Start")
   >> {
-    0: Wait(1.0) >> 0, // 等待, 然后跳转到 "Log("Both done")"
-    1: Log("Branch 1") >> 0, // Log, 然后跳转到 "Log("Both done")"
-  }
-    .Log("Both done?"); // <-- ">> 0" 的目标
+    0: DoSomething() >> 0(), // 先执行 DoSomething(), 然后跳转到 `}` 外
+    1: Log("Branch 1") >> 0(), // Log, 然后跳转到 "Log("Both done")"
+  }.Log("Both done?"); // <-- ">> 0" 的目标
 
 // 预期执行顺序:
 // 1. Log("Start")
-// 2. Wait(1.0)
+// 2. DoSomething()
 // 3. Log("Both done?")
 // 4. Log("Branch 1")
 // 5. Log("Both done?")
+
 ```
-<!-- ![6](./static/03/image-6.png) -->
 
 
-此外, 还可以使用  `>> null` (或不标记) , 意思是"执行完不转跳, **继续执行下一分支**". 
-同样的, `>> "branch-id"`, 意思是执行完进入特定锚点.
-
-**省略写法 (语法糖)：**
-如果你想在任意位置分支出一个合流分支使用 `< Branch >` 连接:
-* **代码**：`.FunA() < "Branch 1" > FunB()`
-* **等价于**：`.FunA() >> { 0:0, 1: "Branch 1" }.FunB()`
-* **含义**：在FunA执行后, **先执行 FunB** 上的分支, 完毕后, 再跳转到 Branch1 分支执行.
+此外, 还可以使用  `>> -1()` (或不在尾部标记) , 表示内部逻辑执行完不转跳, **继续执行下一分支**. 
+同样的, `>> "branch-id"()`, 意思是执行完进入特定锚点.
 
 
-### 4.6. 条件逻辑 (If)
+**行为比较 (Behavior Comparison)：**
+* **`A() >> B() >> C()`** (顺序执行)：
+    * 等价于 `A().B().C()`。
+    * 含义：**A** 执行完 -> **B** 执行完 -> **C** 执行完。
+* **`A() << B() >> C()...`** (延迟执行)：
+    * 等价于 `A().C()....B()`。
+    * 含义：先执行 **A**，然后执行 **C** 以及 **C 后面** 的全部内容。当 C 的链路**完全结束**后，才运行 **B**，B 运行完成后结束。
+* **多重延迟**：
+    * 当一条链上有多个 `<<` 时 (e.g. `A() << B() << C() >> D()....`)，按定义先执行主要链 (A() -> D()...)，再**从后向前**依次执行被"挂起"的节点 (C -> B)。
+
+
+### 4.7. 条件逻辑 (If)
 
 使用 `If(condition)( ... )` 来创建选择分支. 
 对于不执行操作直接转跳的行为, 通过 `true = 0`(直接合流) 或 `false = "branch-id"`(直接进入某分支) 表示.
 ```ts
-[Signal("CheckValue")[val]]
+[Signal(Signal.CompareVal)[val]]
   .If(val > 10)(
-    true = Log("Value is large") >> 0, // 如果 true, 执行并合流
-    false = Log("Value is small") >> 0 // 如果 false, 执行并合流
+    true = Log("Value is large") >> 0(), // 如果 true, 执行并合流
+    false = Log("Value is small") >> 0() // 如果 false, 执行并合流
   )
-  .Log("Check complete"); // <-- ">> 0" 的合流点
+  .Log("Check complete"); // <-- ">> 0()" 的合流点
 
 ```
-<!-- ![7](./static/03/image-7.png) -->
-
 
 **省略写法 (语法糖)：**
 
 如果你只想处理 `true` 分支并继续主干流, 可以省略 `()`. 
 * **代码**：`.If(this.is_alive).Log("Still alive!")`
-* **等价于**：`.If(this.is_alive)(true = 0, false = null).Log("Still alive!")`
-* **含义**：如果 `is_alive` 为 true, 执行 `Log()`；如果为 false, 则停止该分支. 
+* **等价于**：`.If(this.is_alive)(true = 0(), false = -1()).Log("Still alive!")`
+* **含义**：如果 `is_alive` 为 true, 执行 `Log()`；如果为 false, 则不执行后续的 `Log`.
 
 ### 4.7. 多选逻辑 (Switch)
 
@@ -264,17 +272,16 @@ Branch["Merge Branch"]
 2.  使用 `null` 作为 `default` (默认) 分支. 
 
 ```ts
-[Signal("Equip")[item_name]]
+[Signal(Signal.Equip)[item_name]]
   .Switch(item_name)(
-    "sword" = Log("Equipped sword.") >> 0,
-    "shield" = Log("Equipped shield.") >> 0,
-    "potion" = DrinkPotion() >> 0,
-    null = Log("Unknown item!") >> 0 // 默认分支
+    "sword" = Log("Equipped sword.") >> 0(),
+    "shield" = Log("Equipped shield.") >> 0(),
+    "potion" = DrinkPotion() >> 0(),
+    null = Log("Unknown item!") >> 0() // 默认分支
   )
   .UpdatePlayerModel(); // 所有分支的合流点
 
 ```
-<!-- ![8](./static/03/image-8.png) -->
 
 
 ### 4.8. 循环 (Loop)
@@ -286,42 +293,41 @@ Branch["Merge Branch"]
 * `false` 分支：当循环*正常*结束后 (`i > end`) 执行一次. 
 ```ts
 [OnCreate()]
-  .Loop(0, 2, "MyLoop")[i]( // 将运行 3 次 (i=0, i=1, i=2)
-
+  .Loop(0n, 2n, "MyLoop")[i]( // 将运行 3 次 (i=0, i=1, i=2)
     // 循环体
-    true = Log("Loop iteration: " + i.to<string>())
-      .If(i == 1) // 假设我们想在 i=1 时停止
-      .StopLoop("MyLoop"), // 注意：这不会立即跳出
-
+    true = Log("Loop iteration: " + m.str(i))
+      .If(i === 1n) // 假设我们想在 i=1 时停止
+      .StopLoop("MyLoop"),
     // 循环结束时
-    false = Log("Loop finished") >> 0
-
+    false = Log("Loop finished") >> 0()
   ).Log("Done with loop.");
 
+// 预期执行顺序:
+// 1. Log("Loop iteration: 0")
+// 2. If(0n === 1n)
+// 3. Log("Loop iteration: 1")
+// 4. If(1n === 1n).StopLoop()
+// 5. Log("Loop finished")
+// 6. Log("Done with loop.")
+
 ```
-<!-- ![9](./static/03/image-9.png) -->
 
-
-
-
-**`StopLoop` 详解**：
-`StopLoop("ID")` *不会*立即跳出. 它只是标记循环在*当前迭代*结束后停止. `StopLoop` 之后的节点 (在 `true` 块内) 仍会继续执行. 
+**`StopLoop` 注意**：
+`StopLoop("ID")` *不会*立即跳出. 它只是标记循环在*当前迭代*结束后再进入结束分支. `StopLoop` 之后的节点 (在 `true` 块内) 仍会继续执行. 
 
 ### 4.9. 迭代 (ForEach)
 
 与 Loop 循环类似, 但是循环变量 i 改为列表元素 item.
 ```ts
-[OnSignal("Hit")[list]]
+[OnSignal(Signal.Hit)[list]]
   .ForEach(list)[item]( // 将依次遍历实体列表
     // 循环体
-    true = Log("Hit item: " + item.name)
-      .Hit(item),
+    true = Log("Hit item: " + item.name).Hit(item),
     // 循环结束时
-    false = Log("Foreach finished") >> 0
+    false = Log("Foreach finished") >> 0()
   ).Log("Done with Hit.");
 
 ```
-<!-- ![10](./static/03/image-10.png) -->
 
 
 ## 5\. 计算值：数据流 (Data Flow)
@@ -330,7 +336,8 @@ Branch["Merge Branch"]
 
 ### 5.1. `$(...)` 语法
 
-`$(...)` 是创建**运算节点**的唯一方式. 它用于执行纯计算. 
+`$(...)` 是创建**运算节点**的唯一方式. 它用于执行纯计算.
+* **内部格式**: $() 内部必须唯一一个 lambda 表达式 `() => ...`
 * **求值时机**：当控制流激活了它所依附的执行节点时, `$(...)` 才会被立即求值. 
 
 ```ts
@@ -341,10 +348,6 @@ Branch["Merge Branch"]
   .Log(msg);
 
 ```
-<!-- ![11](./static/03/image-11.png) -->
-
-
-
 
 ### 5.2. `function output` (获取变量)
 
@@ -356,35 +359,32 @@ Branch["Merge Branch"]
   .Log("Player name is: " + player_name);
 
 ```
-<!-- ![12](./static/03/image-12.png) -->
 
-
-### 5.3. `$(...)` 捕获列表 (重要！)
+### 5.3. `$(...)` 捕获列表
 
 这是 `$(...)` 语法最关键的规则. 
 
 **规则**：你必须在 `$(...)` 的**第一个**括号 (捕获列表) 中, **明确列出**你将要使用的所有 `function output` 变量. 
+**例外**：`this.var`, `node.var` 变量**不**需要在捕获列表中声明, 你可以直接在内部使用它们. 
 
-**例外**：`this.var`, `node.var` 和 `_temp_var` 变量**不**需要 (也不允许) 在捕获列表中声明, 你可以直接在内部使用它们. 
 ```ts
 [OnCreate()]
   .FunA()[val_a]
   .FunB()[val_b]
   // --- 示例 ---
   // ✅ 正确: val_a 和 val_b 都在捕获列表中
-  .$((val_a, val_b) => val_a + val_b + this.global_val)[sum]
+  .$((val_a, val_b) => val_a + val_b + Self.global_val)[sum]
   // ❌ 错误: val_b 在内部使用, 但未在捕获列表 (val_a) 中声明
   .$((val_a) => val_a + val_b)[sum1] // 编译时会报错
   // ❌ 错误: this.global_val 是全局变量, 不应放入捕获列表
-  .$((val_a, this.global_val) => val_a + this.global_val)[sum2] // 编译时会报错
+  .$((val_a, Self.global_val) => val_a + Self.global_val)[sum2] // 编译时会报错
 
 ```
-<!-- ![13](./static/03/image-13.png) -->
 
 
 ### 5.4. `$(...)` 多输出
 
-如果你的计算需要返回多个值, `$(...)` 内部应返回一个对象, 并在外部使用 `[a = key1, b = key2]` 的语法进行映射. 
+如果你的计算需要返回多个值, `$(...)` 内部应返回一个对象或列表, 并在外部使用 `[a, b]` 的语法进行提取, 可选 `[a=key1, b=key2]`重映射位置. 
 ```ts
 [OnCreate()]
   .GetPlayer()[player]
@@ -396,19 +396,18 @@ Branch["Merge Branch"]
   .Log("X: " + x_pos + ", Y: " + y_pos);
 
 ```
-<!-- ![14](./static/03/image-14.png) -->
 
 
 ### 5.5. 依赖未执行分支的变量
 
 如果你捕获了一个来自 `If` 分支的变量, 但该分支*没有*被执行, 会发生什么？
 
-**规则**：**不会报错**. 你将获取该变量类型的**默认值** (`0`, `false`, `""` 等) . 
+**规则**：**不会报错**. 你将获取该变量类型的**默认值** (`0`, `false`, `""` 等), 并打印警告. 
 ```ts
 [OnCreate()]
-  .If(false)( // 这个分支永远不会执行
-    true = FunA()[my_var],
-    false = null
+  .If(false)(
+    true = DoSomething()[my_var], // 这个分支永远不会执行
+    false = 0(),
   )
   // my_var 仍然在捕获列表中声明
   // 此时, my_var 的值是 0 (假设它是 int 类型)
@@ -416,12 +415,11 @@ Branch["Merge Branch"]
   .Log(result); // 将打印 "10"
 
 ```
-<!-- ![15](./static/03/image-15.png) -->
 
 
 ### 5.6. 计算路径
 
-每一个计算节点都可以有捕获和输出, 如果一个计算节点包含捕获, 那么当它被调用时, 会先就算捕获值的来源.
+每一个计算节点都可以有捕获和输出, 如果一个计算节点包含捕获, 那么当它被调用时, 会先寻找捕获值的来源.
 * **节点系统函数**: 如果捕获值的来源是系统函数, 那么会获取它**最新一次**输出值作为传入参数(未被计算的取默认值).
 * **节点系统函数**: 如果捕获值的来源是复合节点(Component 函数), 那么会进入复合函数, 寻找这个输出参量的来源.
   * 如果来源是执行节点或复合节点或运算节点, 则重复上述操作
@@ -430,31 +428,29 @@ Branch["Merge Branch"]
 ## 6\. 管理状态：变量命名空间
 
 你有四种不同生命周期的变量可以使用：
-<!-- ![t0](./static/03/table-0.png) -->
-| 类型 | 声明方式 | 生命期 | 如何修改 | 捕获列表？ |
+| 类型 | 声明方式 | 生命周期 | 如何修改 | 捕获列表？ |
 | :--- | :--- | :--- | :--- | :--- |
 | **函数输出** | `.Fun()[a]` | 单次执行树 | **只读** | **必须捕获** |
-| **临时变量** | `const _x` | 单次执行树 | `.SetVal(_x, ...)` | **不可捕获** (直接用) |
+| **临时变量** | `const _x` | 单次执行树 | `.SetVal(_x, ...)` | (直接用) |
 | **节点图变量**| `declare class node` | 持久 (实体的节点图) | `.SetVal(node.x, ...)` | **不可捕获** (直接用) |
 | **全局变量** | `declare class This` | 持久 (实体) | `.SetVal(this.x, ...)` | **不可捕获** (直接用) |
 
 **示例：使用 `SetVal` 和临时变量**
 ```ts
 // 声明一个临时计数器
-const _hit_damage: int = 100;
+const _hit_damage: int = 100n;
 // 每次触发时 _hit_damage 又会被初始化为 100
-[Signal("PlayerHit")[reaction_rate]]
+[Signal(Signal.PlayerHit)[reaction_rate]]
   // 1. 读取 reaction_rate 并执行计算
   .$((reaction_rate) => _hit_damage * calc_intensity(reaction_rate))[damage]
   // 2. 将新值写入 _hit_damage
   .SetVal(_hit_damage, damage)
-  // 3. 将新值写入持久化的 this.total_hits
+  // 3. 将新值写入持久化的 Self.total_hits
   // 这里的调用不会触发计算
-  .SetVal(this.total_hits, this.total_hits + _hit_damage)
-  .Log("Hit: " + _hit_damage.to<string>());
+  .SetVal(Self.total_hits, Self.total_hits + _hit_damage)
+  .Log("Hit: " + m.str(_hit_damage));
 
 ```
-<!-- ![16](./static/03/image-16.png) -->
 
 
 ## 7\. 复用逻辑：组件 (Components)
@@ -469,35 +465,33 @@ const _hit_damage: int = 100;
 ```ts
 // 定义一个组件, 它只有默认出口
 function GetValue(val: int) {
-  [] // 默认入口
+  In(0) // 默认入口
     .$((val) => val + 10)[sum]
-    .Out() // 默认出口
+    .Out(0) // 默认出口
     .Log("Runs Before Out()!")
 
   // 声明该组件的返回值
-  return [sum as int];
+  return ExecFun<{ sum: int }>();
 }
 
 // 定义一个组件, 它有两个出口："large" 和 "small"
 function CheckValue(val: int) {
-  [] // 默认入口
+  In(0) // 默认入口
     .If(val > 10)(
-      true = Log(val.to<string>()).Out("large"), // 触发 "large" 出口
-      false = Out("small") // 触发 "small" 出口
+      true = Log(m.str(val)).Out("large"), // 触发 "large" 出口
+      false = Out("small"), // 触发 "small" 出口
     );
 
   // 声明该组件的出口
-  return []("large", "small");
+  return ExecFun<{}>("large", "small");
 }
-```
-![17](./static/03/image-17.png)
-如果有多个入口, 通过在函数中使用多个 `[]` 并添加分支名表示入口 `[InBranchId]`, 调用时通过 `MyFun<InBranchId, "NodeTag">(args)[outs]` 调用, 其中的 NodeTag 相同则对应同一个节点. (默认入口 `[]` 对应 `0` 分支).
 
+```
+如果有多个入口, 通过在函数中使用多个 `In()` 并添加分支名表示入口 `In("InBranchId")`, 调用时通过 `MyFun(args)[outs]` 进入默认入口. 如果需要指定为其它入口, 需通过 `Selector(MyFun, "InBranchId", args)[outs]` 调用.
 
 ***`出口` 执行顺序 (深度优先)***：
-当 `Out(id)` 被触发时, 控制流会先运行**后面**的代码, 出口的优先级是**最低**的, 执行完毕后面的代码后, 再触发触发`Out()` 外部的节点(类似 `FunX() < Out() > FunY()` 的顺序). 
-就算是并列分支, 在节点编辑器中, Out 也是最后执行的, 就算你用 `FunX().{0: Out(), 1: 0}.FunY()` 试图让 Out() 先于 FunY() 执行, 运行时也是 Out() 在 FunY() 执行后触发. 
-同样的, **Out() 是在 FunX() 分支内**的, 如果与 FunX() 有一个并列的 FunZ() 且执行顺序在 FunX() 之后, 那么 Out() 也会先于 FunZ() 触发.
+当出口 `Out(id)` 被触发时, 控制流会先运行**后面**的代码, 出口的优先级是**最低**的, 执行完毕后面的代码后, 再触发触发`Out()` 外部的节点(等价于 `FunX() << Out() >> FunY()` 的顺序). 
+就算是并列分支, 在节点编辑器中, Out 也永远是最后执行的, 即使你用 `FunX().{0: Out(), 1: 0()}.FunY()` 试图让 Out() 先于 FunY() 执行, 运行时也是 Out() 在 FunY() 执行后触发. 必须将 Out 挂载其它执行节点上, 它会被挂起在对应节点上.
 
 **使用 (Use):**
 ```ts
@@ -510,9 +504,9 @@ function CheckValue(val: int) {
     "small" = Log("Value was small.")
   );
 
-// 因此, 示例中的执行结果为
+// 示例中的执行结果为
 // 1. GetValue(5)
-// 2. Log("Runs Before Out()!")
+// 2. Log("Runs Before Out()!") // 注意. 在 Out 前触发
 // 3. Out(0)[sum = 15]
 // 4. CheckValue(15)
 // 5. Log("15")
@@ -520,14 +514,13 @@ function CheckValue(val: int) {
 // 7. Log("Value was large!")
 
 ```
-![18](./static/03/image-18.png)
 
 
 
 
 ### 7.2. 纯运算函数 (首字母小写)
 
-这些是纯粹的数据计算函数, 只能在 `$(...)` 内部或节点参数中调用. 
+这些是纯粹的数学计算函数, 只能在 `$(...)` 内部或节点参数中调用. 定义时应采用 lambda 表达式的形式.
 
 **定义 (Define):**
 ```ts
@@ -540,7 +533,6 @@ const get_stats = (a: int): { x: int, y: int } => {
 }
 
 ```
-<!-- ![19](./static/03/image-19.png) -->
 
 
 **使用 (Use):**
@@ -548,7 +540,7 @@ const get_stats = (a: int): { x: int, y: int } => {
 [OnCreate()]
   .FunA()[val_a, val_b]
 
-  // 只能在 $(...) 内部调用
+  // 或者在 $(...) 内部调用
   .$((val_a, val_b) => {
     const sum = add(val_a, val_b);
     const { x, y } = get_stats(sum);
@@ -559,29 +551,30 @@ const get_stats = (a: int): { x: int, y: int } => {
   // 或作为函数参数
   .FunB(add(1, 2), get_stats(3).x);
 ```
-<!-- ![20](./static/03/image-20.png) -->
 
 
 ## 8\. 类型声明
 
-最后提供全部可能遇到的类型, 并给出一致的名称使用定义
-<!-- ![t1](./static/03/table-1.png) -->
-| 类型 | 声明方式 |
-| :--- | :--- |
-|整数|int|
-|浮点数|float|
-|布尔|boolean|
-|字符串|string|
-|三维向量|vec|
-|列表|List\<K>|
-|字典|Dict<K, V>|
-|GUID|GUID|
-|实体|Entity|
-|元件 ID|Prefab|
-|配置 ID|Config|
-|阵营|Faction|
+以下列出了全部系统允许类型
+
+
+|序号| 类型 | 类型名 | 备注 |
+|:--:| :--- | :--- | :--- |
+|1|整型|Int| 同时有 int 类型, 对应 TS 的 `bigint`, 方便使用 |
+|2|浮点型|Float| 同时有 float 类型, 对应 TS 的 `number`, 方便使用 |
+|3|布尔型|Bool| 同时有 bool 类型, 对应 TS 的 `boolean`, 方便使用 |
+|4|字符串|Str| 同时有 string 类型, 对应 TS 的 `string`, 方便使用 |
+|5|三维向量|Vec| 内部逻辑为 x,y,z 均为 float 值 |
+|6|GUID|GUID| 内部逻辑为 int, 但不能化为int |
+|7|实体|Entity| 唯一不能设置初始值的对象(默认为 null) |
+|8|元件 ID|Prefab|内部逻辑为 int, 但不能化为int |
+|9|阵营|Faction|内部逻辑为 int, 但不能化为int |
+|10|配置 ID|ConfigId|内部逻辑为 int, 但不能化为int |
+|11|列表|List| 列表的项目也是强类型的, 由列表的属性决定 |
+|12|字典|Dict| 字典的键值都是强类型的, 由字典的属性决定, 共 140 种组合 |
+|13|结构体|Struct| 结构体的类型是需要在节点编辑器中定义的 |
 
 ---
 
 
-对于更多详细内容, 可以等我把**节点图DSL设计规范文件**整理好发出来以深入了解.
+## 更多详细内容与设计理念参见[系统设计文档](./SystemDesign.md)

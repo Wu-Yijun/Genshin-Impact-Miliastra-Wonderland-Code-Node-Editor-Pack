@@ -20,11 +20,13 @@ declare global {
     function EventA(): Signal;
     function EventB(): Signal;
   }
+
 }
 declare namespace node {
   export const x = 1;
   const y = 1;
 }
+
 
 const _local_x = 1;
 
@@ -63,13 +65,16 @@ function DoSomething(): ExecFun<{}> { return 0 as any; }
 [OnCreate()]
   .Log("Starting...") >> {
     // 这三个分支将按 0, 1, 2 的顺序依次执行完毕
-    0: Log("Branch 0: Runs first")[1].$(() => 1),
+    0: Log("Branch 0: Runs first")[x].$(() => 1),
     2: Log("Branch 2: Runs last") >> "12"() >> "12"().Log("") < Log("") >> Log("").Log(""),
     1: DoSomething().Log("Branch 1"),
   }.Log("注意: 这里不会被执行") >> "12"() >> 2().Log(""); // (执行方式见后文)
 
 
-Log("").If(true)(
-  true = Log("").Log(""),
-  false = 0(),
-).Log("")
+[Signal("CheckValue")[val]]
+  .If(val > 10)(
+    true = Log("Value is large") >> 0(), // 如果 true, 执行并合流
+    false = Log("Value is small") >> 0(), // 如果 false, 执行并合流
+  )
+  .Log("Check complete"); // <-- ">> 0" 的合流点
+

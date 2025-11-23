@@ -18,3 +18,4 @@ const j = performance.now();
 
 console.dir(tree, { depth: null });
 console.log("Parsing Elapse Time:", j - i, "ms");
+

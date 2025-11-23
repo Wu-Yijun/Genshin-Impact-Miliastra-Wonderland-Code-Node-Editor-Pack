@@ -108,12 +108,27 @@ const _local_counter: int = 0; //  变量名须以 _ 开头
 
 
 [OnCreate()]
+  .Log("Step 1")
+  .DoSomething()
+  .Log("Step 2")
+  .Teleport(Self.self, m.vec(10, 0, 0));
+
+
+[OnCreate()]
   .Log("Starting...") >> {
     // 这三个分支将按 0, 1, 2 的顺序依次执行完毕
     0: Log("Branch 0: Runs first"),
     2: Log("Branch 2: Runs last"),
     1: DoSomething().Log("Branch 1"),
   }.Log("注意: 这里不会被执行"); // (执行方式见后文)
+
+// 实际执行顺序:
+// 1. Log("Starting...")
+// 2. Log("Branch 0: Runs first")
+// 3. DoSomething()
+// 4. Log("Branch 1")
+// 5. Log("Branch 2: Runs last")
+
 
 // 定义 "finish-logic" 锚点
 // 无论 EventA 或 EventA 发生, 这里都会被执行
@@ -122,11 +137,187 @@ Branch["Merge Branch"]
 
 [Signal(Signal.EventA)]
   .Log("A happened")
-  .Wait(1.0)
-  + "Merge Branch"; // 跳转到 "Merge Branch"
+  .DoSomething()
+  >> "Merge Branch"(); // 跳转到 "Merge Branch"
 
 [Signal(Signal.EventB)]
   .Log("B happened")
-  + "Merge Branch"; // 跳转到 "Merge Branch"
+  >> "Merge Branch"(); // 跳转到 "Merge Branch"
 
-;
+
+
+declare function DoSomething(): ExecFun<{}>;
+
+[OnCreate()]
+  .Log("Start")
+  >> {
+    0: DoSomething() >> 0(), // 先执行 DoSomething(), 然后跳转到 `}` 外
+    1: Log("Branch 1") >> 0(), // Log, 然后跳转到 "Log("Both done")"
+  }.Log("Both done?"); // <-- ">> 0" 的目标
+
+// 预期执行顺序:
+// 1. Log("Start")
+// 2. DoSomething()
+// 3. Log("Both done?")
+// 4. Log("Branch 1")
+// 5. Log("Both done?")
+
+
+[Signal(Signal.CompareVal)[val]]
+  .If(val > 10)(
+    true = Log("Value is large") >> 0(), // 如果 true, 执行并合流
+    false = Log("Value is small") >> 0() // 如果 false, 执行并合流
+  )
+  .Log("Check complete"); // <-- ">> 0()" 的合流点
+
+
+[Signal(Signal.Equip)[item_name]]
+  .Switch(item_name)(
+    "sword" = Log("Equipped sword.") >> 0(),
+    "shield" = Log("Equipped shield.") >> 0(),
+    "potion" = DrinkPotion() >> 0(),
+    null = Log("Unknown item!") >> 0() // 默认分支
+  )
+  .UpdatePlayerModel(); // 所有分支的合流点
+
+[OnCreate()]
+  .Loop(0n, 2n, "MyLoop")[i]( // 将运行 3 次 (i=0, i=1, i=2)
+    // 循环体
+    true = Log("Loop iteration: " + m.str(i))
+      .If(i === 1n) // 假设我们想在 i=1 时停止
+      .StopLoop("MyLoop"),
+    // 循环结束时
+    false = Log("Loop finished") >> 0()
+  ).Log("Done with loop.");
+
+// 预期执行顺序:
+// 1. Log("Loop iteration: 0")
+// 2. If(0n === 1n)
+// 3. Log("Loop iteration: 1")
+// 4. If(1n === 1n).StopLoop()
+// 5. Log("Loop finished")
+// 6. Log("Done with loop.")
+
+
+[Signal(Signal.Hit)[list]]
+  .ForEach(list)[item]( // 将依次遍历实体列表
+    // 循环体
+    true = Log("Hit item: " + item.name).Hit(item),
+    // 循环结束时
+    false = Log("Foreach finished") >> 0()
+  ).Log("Done with Hit.");
+
+[OnCreate()]
+  // 执行到这里不会直接调用
+  .$(() => "Hello" + " " + "World!")[msg]
+  // .Log() 被激活时, $(...) 才会被求值
+  .Log(msg);
+
+
+[OnCreate()]
+  .GetPlayer()[player_entity] // 1. GetPlayer() 输出 "player_entity"
+  .GetName(player_entity)[player_name] // 2. GetName() 使用 "player_entity"
+  .Log("Player name is: " + player_name);
+
+
+
+[OnCreate()]
+  .DoSomething()[val_a]
+  .FunB()[val_b]
+  // --- 示例 ---
+  // ✅ 正确: val_a 和 val_b 都在捕获列表中
+  .$((val_a, val_b) => val_a + val_b + Self.global_val)[sum]
+  // ❌ 错误: val_b 在内部使用, 但未在捕获列表 (val_a) 中声明
+  .$((val_a) => val_a + val_b)[sum1] // 编译时会报错
+  // ❌ 错误: this.global_val 是全局变量, 不应放入捕获列表
+  .$((val_a, Self.global_val) => val_a + Self.global_val)[sum2] // 编译时会报错
+
+
+[OnCreate()]
+  .If(false)(
+    true = DoSomething()[my_var], // 这个分支永远不会执行
+    false = 0(),
+  )
+  // my_var 仍然在捕获列表中声明
+  // 此时, my_var 的值是 0 (假设它是 int 类型)
+  .$((my_var) => my_var + 10)[result]
+  .Log(result); // 将打印 "10"
+
+
+// 声明一个临时计数器
+const _hit_damage: int = 100n;
+// 每次触发时 _hit_damage 又会被初始化为 100
+[Signal(Signal.PlayerHit)[reaction_rate]]
+  // 1. 读取 reaction_rate 并执行计算
+  .$((reaction_rate) => _hit_damage * calc_intensity(reaction_rate))[damage]
+  // 2. 将新值写入 _hit_damage
+  .SetVal(_hit_damage, damage)
+  // 3. 将新值写入持久化的 Self.total_hits
+  // 这里的调用不会触发计算
+  .SetVal(Self.total_hits, Self.total_hits + _hit_damage)
+  .Log("Hit: " + m.str(_hit_damage));
+
+// 定义一个组件, 它只有默认出口
+function GetValue(val: int) {
+  In(0) // 默认入口
+    .$((val) => val + 10)[sum]
+    .Out(0) // 默认出口
+    .Log("Runs Before Out()!")
+
+  // 声明该组件的返回值
+  return ExecFun<{ sum: int }>();
+}
+
+// 定义一个组件, 它有两个出口："large" 和 "small"
+function CheckValue(val: int) {
+  In(0) // 默认入口
+    .If(val > 10)(
+      true = Log(m.str(val)).Out("large"), // 触发 "large" 出口
+      false = Out("small"), // 触发 "small" 出口
+    );
+
+  // 声明该组件的出口
+  return ExecFun<{}>("large", "small");
+}
+
+
+[Signal(Signal.TestValue)[my_val]]
+  // 调用组件, 并获取输出值
+  .GetValue(my_val)[new_val = sum]
+  // 调用多分支组件, 并为它的出口连接后续逻辑
+  .CheckValue(new_val)(
+    "large" = Log("Value was large!"),
+    "small" = Log("Value was small.")
+  );
+
+// 示例中的执行结果为
+// 1. GetValue(5)
+// 2. Log("Runs Before Out()!")
+// 3. Out(0)[sum = 15]
+// 4. CheckValue(15)
+// 5. Log("15")
+// 6. Out("large")
+// 7. Log("Value was large!")
+
+
+
+
+
+
+// function In(x: 0): ExecFun<{}>;
+// function In(x: string): ExecFun<{}>;
+// function Out(x: 0): ExecFun<{}>;
+// function Out(x: string): ExecFun<{}>;
+// /** A Shared Function Instance, call it with branch tag and function args */
+// type SharedFun<Args extends SysAllTypes[], T extends { [key: string]: SysAllTypes }> = (in_port: string | 0, ...args: Args) => ExecFun<T>;
+// type SharedFunPort<Args extends SysAllTypes[], T extends { [key: string]: SysAllTypes }> = (...args: Args) => ExecFun<T>;
+// /** Create a shared function instance, can be called from multiple places */
+// function Shared<Args extends SysAllTypes[], T extends { [key: string]: SysAllTypes }>(exec_func: (...args: Args) => ExecFun<T>): SharedFun<Args, T>;
+// function Shared<Args extends SysAllTypes[], T extends { [key: string]: SysAllTypes }>(exec_func: (...args: Args) => ExecFun<T>, port_id: string | 0): SharedFunPort<Args, T>;
+// /** Select InBranch of a given ExecFunc */
+// function Selector<Args extends SysAllTypes[], T extends { [key: string]: SysAllTypes }>(exec_func: (...args: Args) => ExecFun<T>, in_branch_id: string | 0, ...args: Args): ExecFun<T>;
+
+// declare function Test(val: int): ExecFun<{}>;
+// declare function Test(val: int, x: float): ExecFun<{}>;
+// declare function Test(val: bigint, x: float, z: bool): ExecFun<{}>;
+// declare function Test(val: float, x: string): ExecFun<{}>;

@@ -392,7 +392,9 @@ declare namespace QueryNodes {
 
 }
 declare namespace ExecNodes {
-  function $(lambda: (...args: any[]) => any): ExecFun<{}>;
+  // function $(lambda: (...args: any[]) => any): ExecFun<{}>;
+  function $<T extends SysAllTypes>(lambda: (...args: any[]) => T): ExecFun<{ out: T }>;
+  function $<T extends { [key: string]: SysAllTypes }>(lambda: (...args: any[]) => T): ExecFun<T>;
 
   // function SendSignal(signal: () => Signal): ExecFun<{}>;
   function SendSignal<Args extends any[]>(signal: (...args: Args) => Signal, ...args: Args): ExecFun<{}>;
@@ -866,8 +868,6 @@ function includes(list: List, item: ANY): boolean;
   function get_dict_all_fun(): string {
     const a1 = AllKeyTypes_.map(t => `/** @deprecated Please use \`dict.has(key)\` directly. */
 function dict_has_key(dict: Dict, key: KEY): boolean;
-/** @deprecated Please use \`dict.get(key)\` directly. */
-function dict_get(KEY): VAL;
 `.replaceAll("KEY", t)).join("\n");
     const a2 = AllValTypes_.map(t => `/** @deprecated Please use \`dict.includes(val)\` directly. */
 function dict_has_val(dict: Dict, value: VALUE): boolean;
@@ -875,7 +875,10 @@ function dict_has_val(dict: Dict, value: VALUE): boolean;
     const a3 =
       AllKeyTypes_.map(t =>
         AllValTypes_.map(v =>
-          `function dict(pairs: [KEY, VALUE][]): Dict;
+          `
+/** @deprecated Please use \`dict.get(key)\` directly. */
+function dict_get(dict: Dict, key: KEY): VALUE;
+function dict(pairs: [KEY, VALUE][]): Dict;
 function dict(...pairs: [KEY, VALUE][]): Dict;
 function dict(...pairs: (KEY | VALUE)[]): Dict;
 `.replaceAll("VALUE", v)).join("\n")
@@ -1071,7 +1074,7 @@ function main() {
   gen.addComments("Use Default Out Branch");
   gen.addFun("ExecFun<T extends { [key: str]: any }>", [], "ExecFun<T>");
   gen.addComments("Use Specified Out Branch");
-  gen.addFun("ExecFun<T extends { [key: str]: any }>", [["default_branch", "string"], ["...more_branches", "string"]], "ExecFun<T>");
+  gen.addFun("ExecFun<T extends { [key: str]: any }>", [["default_branch", "string"], ["...more_branches", "string[]"]], "ExecFun<T>");
 
   gen.addLine();
   gen.addComment("====== Math Namespace ======");
@@ -1101,7 +1104,7 @@ function main() {
   gen.addComments("Declarations for jumping to Branch");
   gen.addClass("Number", null, {
     val: [
-      ["()", "ExecFun<{}>", "\n- `>> n()` 先执行跳转分支 `n` , 再继续执行\n- `>> 0()` 执行主线分支"],
+      ["()", "ExecFun<{}>", "\n- `>> n()` 先执行用户定义的跳转分支 `n` , 再继续执行\n- `>> 0()` 执行主线分支\n- `>> -1()` 不执行主线分支(无动作)"],
     ]
   }, true);
   gen.addComments("Declarations for jumping to Branch");
@@ -1123,12 +1126,12 @@ function main() {
       ["Branch", "Branch", '`.Branch["name" | number]`: 创建分支接入点'],
     ]
   }, true);
-
+  ``
   // MyFun: T extends null ? () => ExecFun<{}> : never;
   gen.addComments("Declarations for Trigger behaviors");
-  gen.addClass("Array<T>", "ExecFunctions", {
+  gen.addClass("Array<T>", null, {
     val: [
-      // ["Branch", "Branch", "创建分支接入点"],
+      // TODO: ["Branch", "Branch", "创建分支接入点"],
     ]
   }, true);
 
