@@ -277,7 +277,7 @@ function CheckValue(val: int) {
     );
 
   // 声明该组件的出口
-  return ExecFun<{}>("large", "small");
+  return ExecFun<{}>("", "");
 }
 
 

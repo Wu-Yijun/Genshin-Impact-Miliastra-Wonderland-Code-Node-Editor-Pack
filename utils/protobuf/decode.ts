@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import proto from "protobufjs";
 
-import { type GraphNode, NodePin$Index$Kind, type Root } from "./gia.proto.ts";
+import { type GraphNode, NodePin_Index_Kind, type Root } from "./gia.proto.ts";
 import assert from "assert";
 
 const VERSION = "1.1.0";
@@ -102,7 +102,7 @@ function test() {
     to: number;
   }
   function getInfo(node: GraphNode): Info | null {
-    const p: NodePin$Index$Kind = node.pins[1]?.i1.kind;
+    const p: NodePin_Index_Kind = node.pins[1]?.i1.kind;
     const temp = {
       index: node.nodeIndex,
       id: node.concreteId?.nodeId,
@@ -125,11 +125,11 @@ function test() {
     n.x = x * 300 + 0.124356;
     n.y = y * 200 + 0.12345;
     n.nodeIndex = getId();
-    n.concreteId.nodeId = info.id;
-    n.pins[0].value.bNodeValue!.classBase = info.type;
-    n.pins[1].value.bNodeValue!.classBase = info.type;
-    n.pins[0].value.bNodeValue!.value.bEnum!.val = info.from;
-    n.pins[1].value.bNodeValue!.value.bEnum!.val = info.to;
+    n.concreteId.nodeId = info.id as any;
+    n.pins[0].value.bNodeValue!.classBase = info.type as any;
+    n.pins[1].value.bNodeValue!.classBase = info.type as any;
+    n.pins[0].value.bNodeValue!.value.bEnum!.val = info.from as any;
+    n.pins[1].value.bNodeValue!.value.bEnum!.val = info.to as any;
     return n;
   }
 

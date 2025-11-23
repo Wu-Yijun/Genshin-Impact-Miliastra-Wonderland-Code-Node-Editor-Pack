@@ -5,7 +5,7 @@
 
 import yaml from 'yaml';
 import { encode_gia_file } from "../protobuf/decode.ts";
-import { EnumNode$ClassBase, EnumNode$Value, type GraphNode, NodeGraph$Id$Class, NodeGraph$Id$Kind, NodeGraph$Id$Type, NodeId, type NodePin, NodePin$Index$Kind, NodeProperty$Type, NodeUnit$Id$Type, NodeUnit$Type, type Root, VarBase$Class, VarType } from "../protobuf/gia.proto.ts";
+import { EnumNode_ClassBase, EnumNode_Value, type GraphNode, NodeGraph_Id_Class, NodeGraph_Id_Kind, NodeGraph_Id_Type, NodeId, type NodePin, NodePin_Index_Kind, NodeProperty_Type, NodeUnit_Id_Type, NodeUnit_Type, type Root, VarBase_Class, VarType } from "../protobuf/gia.proto.ts";
 import "./enum_id.yaml.d.ts";
 import { read_file } from '../../src/util.ts';
 import assert from 'assert';
@@ -17,19 +17,19 @@ function save_nodes(graph_name: string, file_name: string, nodes: GraphNode[]): 
   const gia: Root = {
     graph: {
       id: {
-        type: NodeUnit$Id$Type.Basic,
+        type: NodeUnit_Id_Type.Basic,
         id: graph_id,
       },
       relatedIds: [],
       name: graph_name,
-      type: NodeUnit$Type.EntityNode,
+      type: NodeUnit_Type.EntityNode,
       graph: {
         inner: {
           graph: {
             id: {
-              class: NodeGraph$Id$Class.UserDefined,
-              type: NodeGraph$Id$Type.BasicNode,
-              kind: NodeGraph$Id$Kind.NodeGraph,
+              class: NodeGraph_Id_Class.UserDefined,
+              type: NodeGraph_Id_Type.BasicNode,
+              kind: NodeGraph_Id_Kind.NodeGraph,
               id: graph_id,
             },
             name: graph_name,
@@ -66,27 +66,27 @@ interface EnumOptions {
   generic_id: NodeId;
   concrete_id: NodeId;
   pos: [number, number];
-  varClassBase: EnumNode$ClassBase;
-  enum_item_id: [EnumNode$Value, EnumNode$Value];
+  varClassBase: EnumNode_ClassBase;
+  enum_item_id: [EnumNode_Value, EnumNode_Value];
 }
 let index = 0;
 function create_enum_node(option: EnumOptions) {
   const pin1: NodePin = {
     i1: {
-      kind: NodePin$Index$Kind.InParam,
+      kind: NodePin_Index_Kind.InParam,
       index: 0
     },
     i2: {
-      kind: NodePin$Index$Kind.InParam,
+      kind: NodePin_Index_Kind.InParam,
       index: 0
     },
     value: {
-      class: VarBase$Class.NodeValueBase,
+      class: VarBase_Class.NodeValueBase,
       alreadySetVal: true,
       bNodeValue: {
         classBase: option.varClassBase,
         value: {
-          class: VarBase$Class.EnumBase,
+          class: VarBase_Class.EnumBase,
           alreadySetVal: true,
           itemType: {
             classBase: 1,
@@ -112,15 +112,15 @@ function create_enum_node(option: EnumOptions) {
   const node: GraphNode = {
     nodeIndex: ++index,
     genericId: {
-      class: NodeGraph$Id$Class.SystemDefined,
-      type: NodeProperty$Type.Server,
-      kind: NodeGraph$Id$Kind.SysCall,
+      class: NodeGraph_Id_Class.SystemDefined,
+      type: NodeProperty_Type.Server,
+      kind: NodeGraph_Id_Kind.SysCall,
       nodeId: option.generic_id,
     },
     concreteId: {
-      class: NodeGraph$Id$Class.SystemDefined,
-      type: NodeProperty$Type.Server,
-      kind: NodeGraph$Id$Kind.SysCall,
+      class: NodeGraph_Id_Class.SystemDefined,
+      type: NodeProperty_Type.Server,
+      kind: NodeGraph_Id_Kind.SysCall,
       nodeId: option.concrete_id,
     },
     pins: [pin1, pin2],

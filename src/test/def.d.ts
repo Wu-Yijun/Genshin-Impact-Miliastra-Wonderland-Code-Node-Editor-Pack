@@ -2146,9 +2146,9 @@ declare global {
     Branch: Branch;
 
     In(x: string): ExecFun<{}>;
-    In(x: 0): ExecFun<{}>;
+    In(): ExecFun<{}>;
     Out(x: string): ExecFun<{}>;
-    Out(x: 0): ExecFun<{}>;
+    Out(): ExecFun<{}>;
   }
 
   function In(x: 0): ExecFun<{}>;

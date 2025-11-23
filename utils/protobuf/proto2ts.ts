@@ -303,6 +303,7 @@ class TypeLayers {
     padding?: number,
     src_path: string,
     dest_path?: string,
+    separator?: string,
   }) {
     switch (type) {
       case "ts":
@@ -319,7 +320,8 @@ class TypeLayers {
  * @dest ${out_file}
  * @program ${import.meta.url}
  */\n\n`;
-        const ts = this.dump_ts(0, config.padding ?? 2);
+        const separator = config.separator ?? "$";
+        const ts = this.dump_ts(0, config.padding ?? 2, separator);
         writeFileSync(out_file, header + ts);
         break;
     }
@@ -328,10 +330,10 @@ class TypeLayers {
    * [Vars]
    * [Nodes]
    */
-  private dump_ts(depth: number, padding: number): string {
+  private dump_ts(depth: number, padding: number, SEP: string): string {
     const PAD = " ".repeat(padding);
     let ts = "";
-    if (depth > 0) ts += "export interface " + this.getPath().join("$") + " {\n";
+    if (depth > 0) ts += "export interface " + this.getPath().join(SEP) + " {\n";
     for (const v of this.vars.values()) {
       // /** Id = var_index
       //  *
@@ -341,8 +343,8 @@ class TypeLayers {
       // var_name?: var_type[];
       ts += `${PAD}/** Index = ${v.index}${v.comment === undefined ? "" : `\n${PAD} *\n${PAD} * ${v.comment}\n${PAD}`} */\n`;
       const _type = v.class.length === 1 ?
-        SystemVar.get(v.class[0]) ?? v.class.join("$") :
-        v.class.join("$");
+        SystemVar.get(v.class[0]) ?? v.class.join(SEP) :
+        v.class.join(SEP);
       const var_name = v.name + (v.optional ? "?" : "");
       const var_type = _type + (v.repeated ? "[]" : "");
       if (depth > 0) ts += `${PAD}${var_name}: ${var_type};\n`;
@@ -353,7 +355,7 @@ class TypeLayers {
 
     for (const v of this.message.values()) {
       if (this.enums.has(v.name)) {
-        const class_name = v.getPath().join("$");
+        const class_name = v.getPath().join(SEP);
 
         ts += "export const " + class_name + " = {\n";
         for (const e of this.enums.get(v.name)!) {
@@ -362,7 +364,7 @@ class TypeLayers {
         ts += "} as const;\n";
         ts += `export type ${class_name} = (typeof ${class_name})[keyof typeof ${class_name}];\n`;
       } else {
-        ts += v.dump_ts(depth + 1, padding);
+        ts += v.dump_ts(depth + 1, padding, SEP);
       }
     }
     return ts;
@@ -401,6 +403,7 @@ function main(input_path: string) {
   layers.dump("ts", {
     version: version[1].trim(),
     src_path: input_path,
+    separator: "_",
   });
 
 }

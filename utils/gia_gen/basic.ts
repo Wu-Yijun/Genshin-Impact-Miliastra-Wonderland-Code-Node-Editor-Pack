@@ -1,19 +1,19 @@
 import {
-  EnumNode$ClassBase,
-  EnumNode$Value,
+  EnumNode_ClassBase,
+  EnumNode_Value,
   type GraphNode,
-  NodeGraph$Id$Class,
-  NodeGraph$Id$Kind,
-  NodeGraph$Id$Type,
+  NodeGraph_Id_Class,
+  NodeGraph_Id_Kind,
+  NodeGraph_Id_Type,
   type NodeId,
   type NodePin,
-  NodePin$Index$Kind,
-  NodeProperty$Type,
-  NodeUnit$Id$Type,
-  NodeUnit$Type,
+  NodePin_Index_Kind,
+  NodeProperty_Type,
+  NodeUnit_Id_Type,
+  NodeUnit_Type,
   type Root,
   type VarBase,
-  VarBase$Class,
+  VarBase_Class,
   VarType,
 } from "../protobuf/gia.proto.ts";
 
@@ -37,19 +37,19 @@ function graph_body(body: GraphBody): Root {
   const gia: Root = {
     graph: {
       id: {
-        type: NodeUnit$Id$Type.Basic,
+        type: NodeUnit_Id_Type.Basic,
         id: body.graph_id,
       },
       relatedIds: [],
       name: graph_name,
-      type: NodeUnit$Type.EntityNode,
+      type: NodeUnit_Type.EntityNode,
       graph: {
         inner: {
           graph: {
             id: {
-              class: NodeGraph$Id$Class.UserDefined,
-              type: NodeGraph$Id$Type.BasicNode,
-              kind: NodeGraph$Id$Kind.NodeGraph,
+              class: NodeGraph_Id_Class.UserDefined,
+              type: NodeGraph_Id_Type.BasicNode,
+              kind: NodeGraph_Id_Kind.NodeGraph,
               id: body.graph_id,
             },
             name: graph_name,
@@ -78,15 +78,15 @@ function node_body(body: NodeBody): GraphNode {
   const node: GraphNode = {
     nodeIndex: nodeIndex,
     genericId: {
-      class: NodeGraph$Id$Class.SystemDefined,
-      type: NodeProperty$Type.Server,
-      kind: NodeGraph$Id$Kind.SysCall,
+      class: NodeGraph_Id_Class.SystemDefined,
+      type: NodeProperty_Type.Server,
+      kind: NodeGraph_Id_Kind.SysCall,
       nodeId: body.generic_id,
     },
     concreteId: {
-      class: NodeGraph$Id$Class.SystemDefined,
-      type: NodeProperty$Type.Server,
-      kind: NodeGraph$Id$Kind.SysCall,
+      class: NodeGraph_Id_Class.SystemDefined,
+      type: NodeProperty_Type.Server,
+      kind: NodeGraph_Id_Kind.SysCall,
       nodeId: body.concrete_id,
     },
     pins: [],
@@ -98,7 +98,7 @@ function node_body(body: NodeBody): GraphNode {
 }
 
 interface PinBody {
-  kind: NodePin$Index$Kind;
+  kind: NodePin_Index_Kind;
   index: number;
   value?: VarBase;
   type: VarType;
@@ -121,12 +121,12 @@ function pin_body(body: PinBody): NodePin {
 }
 
 interface PinValue {
-  varClassBase: EnumNode$ClassBase;
+  varClassBase: EnumNode_ClassBase;
   value?: VarBase;
 }
 function pin_value(body: PinValue): VarBase {
   const value: VarBase = {
-    class: VarBase$Class.NodeValueBase,
+    class: VarBase_Class.NodeValueBase,
     alreadySetVal: true,
     bNodeValue: {
       classBase: body.varClassBase,
@@ -137,11 +137,11 @@ function pin_value(body: PinValue): VarBase {
 }
 
 interface EnumValue {
-  value: EnumNode$Value;
+  value: EnumNode_Value;
 }
 function enum_value(body: EnumValue) {
   const value: VarBase = {
-    class: VarBase$Class.EnumBase,
+    class: VarBase_Class.EnumBase,
     alreadySetVal: true,
     itemType: {
       classBase: 1,
