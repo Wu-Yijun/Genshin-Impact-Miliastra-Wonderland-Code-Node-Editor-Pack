@@ -357,8 +357,9 @@ message MapPairBaseValue {
   VarBase value = 2;
 }
 message NodeValueBaseValue {
+  // index of concrete node types
   // EnumNode.EnumEqualList
-  int32 indexInSelector = 1;
+  int32 indexOfConcrete = 1;
   VarBase value = 2;
   // TODO: What is this
   message Wrapper {

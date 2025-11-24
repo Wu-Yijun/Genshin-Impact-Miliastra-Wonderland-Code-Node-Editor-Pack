@@ -1,5 +1,5 @@
 import {
-  EnumNode_ClassBase,
+  EnumNode_EnumEqualList,
   EnumNode_Value,
   type GraphNode,
   NodeGraph_Id_Class,
@@ -72,6 +72,7 @@ interface NodeBody {
   concrete_id: NodeId;
   x: number;
   y: number;
+  pins: NodePin[];
   /** ⚠️ Warning: This may cause ID collision. */
   index?: number;
 }
@@ -91,7 +92,7 @@ function node_body(body: NodeBody): GraphNode {
       kind: NodeGraph_Id_Kind.SysCall,
       nodeId: body.concrete_id,
     },
-    pins: [],
+    pins: body.pins,
     x: body.x * 300 + Math.random() * 10,
     y: body.y * 200 + Math.random() * 10,
     usingStruct: [],
@@ -123,7 +124,7 @@ function pin_body(body: PinBody): NodePin {
 }
 
 interface PinValue {
-  varClassBase: EnumNode_ClassBase;
+  indexOfConcrete?: EnumNode_EnumEqualList;
   value?: VarBase;
 }
 function pin_value(body: PinValue): VarBase {
@@ -131,7 +132,7 @@ function pin_value(body: PinValue): VarBase {
     class: VarBase_Class.NodeValueBase,
     alreadySetVal: true,
     bNodeValue: {
-      classBase: body.varClassBase,
+      indexOfConcrete: body.indexOfConcrete ?? 0,
       value: body.value ?? {} as any,
     },
   };
