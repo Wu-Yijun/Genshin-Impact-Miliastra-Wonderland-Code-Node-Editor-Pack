@@ -95,7 +95,8 @@
 {
   name: ["add", ...],
   in: [{ x: "int" }, { y: "int" }], // ArgArr
-  out: [{ res: "int" }]
+  out: [{ out: "int" }],
+  comments: "(optional) Comments can be string or string[]"
 }
 ```
 
@@ -109,8 +110,8 @@
     f: [{ x: "float" }]  // Key: f
   },
   out: {
-    i: [{ r: "int" }],   // Key: i (仅与 in.i 匹配)
-    f: [{ r: "float" }]  // Key: f (仅与 in.f 匹配)
+    i: [{ out: "int" }],   // Key: i (仅与 in.i 匹配)
+    f: [{ out: "float" }]  // Key: f (仅与 in.f 匹配)
   }
 }
 ```
@@ -122,7 +123,7 @@
   name: ["cast", ...],
   // 使用数组列出两种独立情况，它们都是"默认组"，因此会两两交叉
   in: [ [{x: "int"}], [{x: "float"}] ], 
-  out: [ [{r: "int"}], [{r: "float"}] ]
+  out: [ [{out: "int"}], [{out: "float"}] ]
 }
 ```
 
@@ -181,4 +182,39 @@ in: [
 #### 其他简写助手
 *   **`X(t)`, `Y(t)`, `Z(t)`**: 快速创建单参数对象 `{x: t}`, `{y: t}`, `{z: t}`。
 *   **`XY(t)`, `XYZ(t)`**: 快速创建参数列表 `[{x:t}, {y:t}]` 等。
-*   **`any_int`, `any_float`**: 预定义的类型常量数组 `int | Int` 和 `float | Float` 等。
+*   **`any_int`, `any_float`**: 预定义的类型常量数组 `int | Int` 和 `float | Float` 等。(类似的还有 any_bool 和 any_str 和 any_type)   
+
+
+
+其它需求.
+*   不要使用允许的基本格式外的类型, 允许的包括:  "int" | "float" | "bool" | "str" | "Int" | "Float" | "Bool" | "Str" | "Vec" | "GUID" | "Entity" | "Prefab" | "Faction" | "ConfigId" | "List" | "Dict" | "Struct"
+*   对于 "int", "float", "bool", "str" , 作为函数输入时需要它们改写为大小两种重载. 函数输出一般只采用小写.
+*   SysAllTypes 作为函数输出时, 需要展开为每一种形式的重载
+*   输出只有一个值时, 通常使用名称 "out" , 有多个输出时, 使用简单而可读的名称
+
+参考样例
+```
+export const MathNodes: Lambda[] = [
+ {
+    name: ["equal", "math.equals", "client.math.isEqual"],
+    in: any_type.map(t => [XY(t)]),
+    out: [{ out: "bool" }]
+  },
+  {
+    name: ["int", "math.typeCast", "client.math.typeCast"],
+    in: [...any_bool, ...any_float, "Int"].map(t => [X(t)]),
+    out: [{ out: "int" }]
+  },
+  {
+    name: ["add", "math.add", "client.math.add"],
+    in: [
+      expandArgs([{ x: any_int }, { y: any_int }]).map((args) => ({ "i": args })),
+      expandArgs([{ x: any_float }, { y: any_float }]).map((args) => ({ "f": args })),
+    ],
+    out: {
+      "i": { out: "int" },  // use tag to match inputs and outputs
+      "f": { out: "float" },
+    },
+  },
+];
+```

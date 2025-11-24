@@ -1,5 +1,5 @@
 import assert from "assert";
-import { extractArg, type Arg, type ArgArr, type strict_arg } from "./function_defs";
+import { extractArg, type Arg, type ArgArr, type strict_arg } from "./function_defs.ts";
 
 export const AllTypes = ["int", "float", "bool", "str", "Int", "Float", "Bool", "Str", "Vec", "GUID", "Entity", "Prefab", "Faction", "ConfigId", "List", "Dict", "Struct"] as const;
 

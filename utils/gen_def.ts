@@ -271,19 +271,19 @@ declare namespace QueryNodes {
 
   function timer(name: string, src?: Entity): float;
 
-  function device(player: Entity): EnumDevice;
-  function which_ui(player: string): int;
+  function device(player?: Entity): EnumDevice;
+  function which_ui(player?: Entity): int;
 
   function target_of(creation: Entity): Entity;
   function aggro_of(creation: Entity): List;
 
   function snapshot(): { [key: string]: SysAllTypes };
   /** @deprecated Directly use `_local_var` */
-  function local_var(): { [key: string]: SysAllTypes };
+  function local_var(name: string): SysAllTypes;
   /** @deprecated Directly use `Self.var` or `entity.var` */
-  function custom_var(target: Entity): { [key: string]: SysAllTypes };
+  function custom_var(name: string, target?: Entity): SysAllTypes;
   /** @deprecated Directly use `Node.var` */
-  function graph_var(): { [key: string]: SysAllTypes };
+  function graph_var(name: string): { [key: string]: SysAllTypes };
   /** @deprecated Directly use `Self` */
   function self(): { [key: string]: SysAllTypes };
 
@@ -365,9 +365,7 @@ declare namespace QueryNodes {
   }
 
   // ------ entity ------ //
-  // is on the field
   function is_on_field(entity: Entity): bool;
-  // get all on the field
   function on_field(type: EnumEntityType): List;
   function on_field(prefab: Prefab): List;
   function type(entity: Entity): EnumEntityType;
