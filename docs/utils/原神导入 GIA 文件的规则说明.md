@@ -1,4 +1,5 @@
 # 原神导入 GIA 文件的规则说明
+> 文件: [utils/gia_gen/id_collide.test.ts](/utils/gia_gen/id_collide.test.ts)
 
 ## 概述
 

@@ -1,12 +1,12 @@
 import assert from "node:assert";
 
 // const BasicTypes = ["Int", "Float", "Bool", "Str", "Vec", "GUID", "Entity", "Prefab", "Faction", "ConfigId"] as const;
-const BasicTypes = ["Int", "Flt", "Bol", "Str", "Vec", "Gid", "Ety", "Pfb", "Fct", "Cfg"] as const;
-type BasicTypes = typeof BasicTypes[number];
+export const BasicTypes = ["Int", "Flt", "Bol", "Str", "Vec", "Gid", "Ety", "Pfb", "Fct", "Cfg"] as const;
+export type BasicTypes = typeof BasicTypes[number];
 
 
 type EnumId = number;
-type NodeType = {
+export type NodeType = {
   /** Type = Basic Types */
   t: "b";
   /** Basic Types */
@@ -22,7 +22,7 @@ type NodeType = {
   /** item = NodeType*/
   i: NodeType;
 } | {
-  /** Type = Struct */
+  /** Type = Struct, or reflect src map */
   t: "s";
   /** fields = [name, NodeType][] */
   f: [string, NodeType][];
@@ -40,15 +40,10 @@ type NodeType = {
   r: string;
 };
 
-const T: NodeType = { t: "r", r: "T" };
-const S: NodeType = { t: "r", r: "S" };
-const Item: NodeType = { t: "r", r: "Item" };
-const Key: NodeType = { t: "r", r: "Key" };
-const Value: NodeType = { t: "r", r: "Value" };
-
 type NodeId = number;
 
-function stringify(node: NodeType): string {
+export function stringify(node: NodeType | string): string {
+  if (typeof node === "string") return node;
   switch (node.t) {
     case "b":
       return node.b;
@@ -65,7 +60,7 @@ function stringify(node: NodeType): string {
       return `R<${node.r}>`;
   }
 }
-function parse(src: string): NodeType {
+export function parse(src: string): NodeType {
   let p = 0;
   const tokens = src.split(/([ ]+|\<|\,|\:|\>)/g).filter(x => x.trim().length > 0);
   // Throw Error for Invalid name
@@ -171,10 +166,10 @@ function parse(src: string): NodeType {
   }
 }
 
-type NodeReflectRecords = [index: number, reflect: string, node_id: NodeId];
-interface NodePinsRecords {
-  inputs: NodeType[];
-  outputs: NodeType[];
+export type NodeReflectRecords = [index: number, reflect: string, node_id: NodeId];
+export interface NodePinsRecords {
+  inputs: string[];
+  outputs: string[];
   id: NodeId;
   /** Determines whether it is a basic node, 
    * or a generic node with extensive ids.
@@ -182,8 +177,27 @@ interface NodePinsRecords {
    * A map of NodeType[Struct]->NodeId */
   reflectMap?: NodeReflectRecords[];
 }
+/** ⚠️ Using of `NodePinsRecordsFull` is not suggested.
+ * 
+ * Please use `NodePinsRecords` instead
+ */
+export type NodeReflectRecordsFull = [index: number, reflect: NodeType, node_id: NodeId];
+/** ⚠️ Using of `NodePinsRecordsFull` is not suggested.
+ * 
+ * Please use `NodePinsRecords` instead
+ */
+export interface NodePinsRecordsFull {
+  inputs: NodeType[];
+  outputs: NodeType[];
+  id: NodeId;
+  /** Determines whether it is a basic node, 
+   * or a generic node with extensive ids.
+   *  
+   * A map of NodeType[Struct]->NodeId */
+  reflectMap?: NodeReflectRecordsFull[];
+}
 
-interface NodePins {
+export interface NodePins {
   inputs: NodeType[];
   outputs: NodeType[];
   id: NodeId;
@@ -212,7 +226,7 @@ export function reflects_records(rec: NodePinsRecords, refs?: [string, NodeType]
   // find id
   if (rec.reflectMap === undefined) {
     assert(refs === undefined);
-    return { inputs: rec.inputs, outputs: rec.outputs, id: rec.id };
+    return rec_to_full(rec);
   }
   assert(refs !== undefined);
   const refs_str = typeof refs === "string" ? refs : stringify({ t: "s", f: refs });
@@ -228,16 +242,16 @@ export function reflects_records(rec: NodePinsRecords, refs?: [string, NodeType]
     refs_exp = refs;
   }
   return {
-    inputs: rec.inputs.map(node => reflects(node, refs_exp)),
-    outputs: rec.outputs.map(node => reflects(node, refs_exp)),
+    inputs: rec.inputs.map(node => reflects(parse(node), refs_exp)),
+    outputs: rec.outputs.map(node => reflects(parse(node), refs_exp)),
     id: rec.id
   }
 }
 export function unwrap_records(rec: NodePinsRecords): NodePins[] {
   if (rec.reflectMap === undefined) {
     return [{
-      inputs: rec.inputs,
-      outputs: rec.outputs,
+      inputs: rec.inputs.map(parse),
+      outputs: rec.outputs.map(parse),
       id: rec.id
     }];
   }
@@ -245,14 +259,14 @@ export function unwrap_records(rec: NodePinsRecords): NodePins[] {
   const rs = map.map(x => { const n = x[0]; assert(n.t === "s"); return n.f });
   const ids = map.map(x => x[1]);
   return rs.map((r, i) => ({
-    inputs: rec.inputs.map(node => reflects(node, r)),
-    outputs: rec.outputs.map(node => reflects(node, r)),
+    inputs: rec.inputs.map(node => reflects(parse(node), r)),
+    outputs: rec.outputs.map(node => reflects(parse(node), r)),
     id: ids[i]
   }));
 }
 
 
-function get_id(node: NodeType): number {
+export function get_id(node: NodeType): number {
   switch (node.t) {
     case "b":
       switch (node.b) {
@@ -319,7 +333,7 @@ function get_id(node: NodeType): number {
       return 25;
   }
 }
-function get_type(id: number): NodeType {
+export function get_type(id: number): NodeType {
   switch (id) {
     case 1:
       return { t: "b", b: "Ety" };
@@ -373,6 +387,84 @@ function get_type(id: number): NodeType {
   throw new Error("Invalid ID: " + id);
 }
 
+export function rec_to_str(rec: NodePinsRecords): string {
+  return [
+    rec.id,
+    rec.inputs.join("&"),
+    rec.outputs.join("&"),
+    ...rec.reflectMap?.join("&") ?? []
+  ].join("|");
+}
+export function full_to_str(rec: NodePinsRecordsFull): string {
+  return [
+    rec.id,
+    rec.inputs.map(stringify).join("&"),
+    rec.outputs.map(stringify).join("&"),
+    ...rec.reflectMap?.map(x => [x[0], stringify(x[1]), x[2]].join("&")) ?? []
+  ].join("|");
+}
+export function rec_to_full(rec: NodePinsRecords): NodePinsRecordsFull {
+  return {
+    inputs: rec.inputs.map(parse),
+    outputs: rec.outputs.map(parse),
+    id: rec.id,
+    reflectMap: rec.reflectMap?.map(x => [x[0], parse(x[1]), x[2]]),
+  };
+}
+export function full_to_rec(rec: NodePinsRecordsFull): NodePinsRecords {
+  return {
+    inputs: rec.inputs.map(stringify),
+    outputs: rec.outputs.map(stringify),
+    id: rec.id,
+    reflectMap: rec.reflectMap?.map(x => [x[0], stringify(x[1]), x[2]]),
+  };
+}
+export function str_to_full(str: string): NodePinsRecordsFull {
+  const [id, i, o, ...maps] = str.split("|");
+  const ref: any = maps.map(r => r.split("&")).map(x => [parseInt(x[0]), parse(x[1]), parseInt(x[2])]);
+  return {
+    inputs: i.split("&").map(parse),
+    outputs: o.split("&").map(parse),
+    id: parseInt(id),
+    reflectMap: ref.length === 0 ? undefined : ref
+  };
+}
+/** ⚠️ This function will NOT validate node_pin_records.
+ * 
+ * Please use `node_def.to_records(str: string)` instead
+ */
+export function str_to_rec(str: string): NodePinsRecords {
+  const [id, i, o, ...maps] = str.split("|");
+  const ref: any = maps.map(r => r.split("&")).map(x => [parseInt(x[0]), x[1], parseInt(x[2])]);
+  return {
+    inputs: i.split("&"),
+    outputs: o.split("&"),
+    id: parseInt(id),
+    reflectMap: ref.length === 0 ? undefined : ref,
+  };
+}
+
+export function to_string(node: NodePinsRecordsFull | NodePinsRecords): string {
+  return full_to_str(node as any);
+}
+/** Will first validate rec and then return a valid NodePinsRecords */
+export function to_records(rec: string | NodePinsRecordsFull): NodePinsRecords {
+  if (typeof rec === "string") {
+    rec = str_to_full(rec);
+  }
+  rec.reflectMap?.map((x, i) => assert(x[1].t === "s", `reflectMap[${i}] ("${x[1]}") is not Struct Type!`))
+  return full_to_rec(rec as any);
+}
+/** ⚠️ Using of `NodePinsRecordsFull` is not suggested.
+ * 
+ * Please use `NodePinsRecords` instead
+ */
+export function to_records_full(rec: string | NodePinsRecords): NodePinsRecordsFull {
+  if (typeof rec === "string") {
+    return str_to_full(rec);
+  }
+  return rec_to_full(rec);
+}
 
 if (import.meta.main) {
   function check_parse(str: string) {
@@ -412,29 +504,59 @@ if (import.meta.main) {
       assert.equal(i, get_id(t));
     }
   }
-
+  const node_def1: NodePinsRecords = {
+    inputs: ["D<R<Key>,R<Value>>"],
+    outputs: ["L<R<Key>>"],
+    id: 1,
+    reflectMap: [
+      [1, "S<R:Int,Value:Flt>", 103],
+    ]
+  };
+  const node_def: NodePinsRecords = {
+    inputs: ["D<Bol,D<S<k:R<Key>,Value:R<Value>>,R<Value>>>"],
+    outputs: ["L<R<Key>>"],
+    id: 1,
+    reflectMap: [
+      [3, "S<Key:Int,Value:Flt>", 10],
+      [2, "S<Key:Bol,Value:Str>", 5],
+      [5, "S<Value:Ety,Key:Str>", 50],
+      [4, "S<Key:D<Str,R<Value>>,Value:Ety>", 50],
+    ]
+  };
   function test_ref() {
-    const node_def: NodePinsRecords = {
-      inputs: [{ t: "d", k: { t: "r", r: "Value" }, v: { t: "b", b: "Flt" } }],
-      outputs: [{ t: "l", i: { t: "r", r: "Key" } }],
-      id: 1,
-      reflectMap: [
-        [5, "S<Key:Int,Value:Flt>", 10],
-        [2, "S<Key:Bol,Value:Str>", 5],
-        [5, "S<Key:Str,Value:Ety>", 50],
-      ]
-    }
+
     // const node = reflects_records(node_def, node_def.reflectMap?.[0][1]);
     const node = unwrap_records(node_def);
     console.dir(node, { depth: null });
     console.dir(node.map(x => [x.inputs.map(get_id), x.outputs.map(get_id)]), { depth: null });
     console.dir(node.map(x => [x.inputs.map(stringify), x.outputs.map(stringify)]), { depth: null });
   }
+  function test_str() {
+    const s = to_string(node_def);
+    console.log(s);
+    console.dir(to_records_full(s), { depth: null });
 
-  test_parse();
+    const node = unwrap_records(node_def).map(to_records);
+    console.dir(node, { depth: null });
 
-  // test_id();
+    assert.equal(s, to_string(to_records_full(s)));
+  }
 
-  test_ref()
-
+  function test_enum() {
+    const enum_def: NodePinsRecordsFull = {
+      inputs: [parse("D<Bol,D<S<k:R<Key>,Value:R<Value>>,R<Value>>>")],
+      outputs: [parse("L<E<123>>"), { t: "e", e: 123 }],
+      id: 1,
+      reflectMap: [
+        [3, parse("S<Key:Int,Value:Flt>"), 10],
+        [2, parse("S<Key:Bol,Value:Str>"), 5],
+        [5, parse("S<Value:Ety,Key:Str>"), 50],
+        [4, parse("S<Value:Ety,Key:D<Str,R<Value>>>"), 55],
+      ]
+    };
+    const node = unwrap_records(to_records(enum_def)).map(to_records);
+    console.dir(node, { depth: null });
+  }
+  test_enum(); test_str();
+  console.log(to_string(node_def1));
 }

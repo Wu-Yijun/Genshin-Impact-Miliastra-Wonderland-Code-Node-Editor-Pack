@@ -4,6 +4,7 @@ import type { NodePin, GraphNode } from "../protobuf/gia.proto.ts";
 import { NodePin_Index_Kind, VarBase_Class } from "../protobuf/gia.proto.ts";
 import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
 import { readFileSync, writeFileSync } from "fs";
+import { node_def, type NodePinsRecords } from "./nodes.ts";
 
 function generate_all_nodes(from: number, size: number = 300, line_width: number = 20, offsets: number = 1): GraphNode[] {
   const ret = [];
@@ -179,66 +180,7 @@ function create_node_lists(list: (number | (number | null)[])[]) {
   })
 }
 
-// 手动读取57个泛类的引脚位置
-const LIST: (number | (number | null)[])[] = [
-  0,
-  [0, 1],
-  0,
-  1,
-  2, // Set Cus Var
-  [null, 3, 4],
-  [null, 0],
-  [0, 1],
-  0,
-  [0, 1], // List Includes
-  [0, 1],
-  0,
-  0,
-  0,
-  [0, null, 0], // Maximum
-  [0, null, 0],
-  0,
-  [0, 3],
-  0,
-  [0, null, 0], // Assem
-  [0, null, 0], // Convert
-  [0, 1, null, 0],
-  [0, 1, null, 0],
-  [0, 1, null, 0],
-  [0, 1, null, 0], // Div
-  [0, 1, null, 0],
-  [0, 1, null, 0],
-  [0, 1, null, 0],
-  [0, 1, null, 0],
-  [0, 1, null, 0], // Sgn
-  [0, 1, 2, null, 0],
-  [0, 1, null, 0],
-  [0, 1, null, 0],
-  [0, 1, null, 0],
-  [0, 1, null, 0], // GE
-  [1],
-  [null, 0],
-  [null, 3, 4],
-  [null, 3, 4],
-  2, // Native Setting CV
-  [null, 0],
-  [0, 1],
-  [0, null, 0],
-  3,
-  [0, 1, 2], // Set KV
-  [0, 1, null, 1],
-  [0, 1, null, 0],
-  [0, 1],
-  [0, 1],
-  [0, 1], // Query dict V
-  [0, null, 0],
-  [0, null, 0],
-  [0, null, 0],
-  [0], // Clear D
-  [0, 1, null, 0],
-  [0, null, 0, 1],
-  [0, null, 0, 1],
-];
+
 
 function read_derive_graph() {
   const graph = decode_gia_file({
@@ -271,51 +213,109 @@ function read_derive_graph() {
   writeFileSync("./utils/node_id/ref/all_1.txt", arr.join("\n"));
 }
 
-/** number for pure type, [number, number] for key-value */
-type PinType = number | [number, number];
-/** Positive number starting from 1 for input, negative for output */
-type PinTypes = { [id: number]: PinType };
-type NodeTypes = { [node_id: number]: PinTypes };
+// /** number for pure type, [number, number] for key-value */
+// type PinType = number | [number, number];
+// /** Positive number starting from 1 for input, negative for output */
+// type PinTypes = { [id: number]: PinType };
+// type NodeTypes = { [node_id: number]: PinTypes };
 
 function extract_types() {
+  // 手动读取57个泛类的引脚位置
+  const LIST: (number | (number | null)[])[] = [
+    0,
+    [0, 1],
+    0,
+    1,
+    2, // Set Cus Var
+    [null, 3, 4],
+    [null, 0],
+    [0, 1],
+    0,
+    [0, 1], // List Includes
+    [0, 1],
+    0,
+    0,
+    0,
+    [0, null, 0], // Maximum
+    [0, null, 0],
+    0,
+    [0, 3],
+    0,
+    [0, null, 0], // Assem
+    [0, null, 0], // Convert
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0], // Div
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0], // Sgn
+    [0, 1, 2, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0], // GE
+    [1],
+    [null, 0],
+    [null, 3, 4],
+    [null, 3, 4],
+    2, // Native Setting CV
+    [null, 0],
+    [0, 1],
+    [0, null, 0],
+    3,
+    [0, 1, 2], // Set KV
+    [0, 1, null, 1],
+    [0, 1, null, 0],
+    [0, 1],
+    [0, 1],
+    [0, 1], // Query dict V
+    [0, null, 0],
+    [0, null, 0],
+    [0, null, 0],
+    [0], // Clear D
+    [0, 1, null, 0],
+    [0, null, 0, 1],
+    [0, null, 0, 1],
+  ];
   const graph = decode_gia_file({
     gia_path: "./utils/ref/derived_server_nodes_ids.gia",
   });
   const nodes = graph.graph.graph!.inner.graph.nodes!;
   const group = Object.groupBy(nodes, (n) => n.genericId.nodeId as number);
   const keys = Object.keys(group);
-  const res: [number, NodeTypes][] = [];
+
+  const ret: NodePinsRecords[] = [];
   for (let i = 0; i < LIST.length; i++) {
     const g = group[parseInt(keys[i])]!;
-    const node_types: NodeTypes = {};
-    for (const j of g) {
-      if (j.concreteId?.nodeId === undefined) {
+    const rec: NodePinsRecords = {
+      id: g[0].genericId.nodeId,
+      inputs: [],
+      outputs: [],
+      reflectMap: [],
+    };
+    for (const n of g.find(x => x.concreteId?.nodeId !== undefined)?.pins ?? []) {
+      if (n.i1.kind === NodePin_Index_Kind.InParam) {
+        rec.inputs[n.i1.index ?? 0] = { t: "r", r: "T" };
+      } else if (n.i1.kind === NodePin_Index_Kind.OutParam) {
+        rec.outputs[n.i1.index ?? 0] = { t: "r", r: "T" };
+      }
+    }
+    for (let j = 0; j < g.length; j++) {
+      if (g[j].concreteId?.nodeId === undefined) {
         continue;
       }
-      const pin = j.pins;
-      const type: PinTypes = {};
-      for (const p of pin) {
-        const index = p.i1.index ?? 0;
-        if (p.i1.kind === 4) {
-          type[-1 - index] = p.type;
-        } else {
-          type[1 + index] = p.type;
-        }
-      }
-      node_types[j.concreteId.nodeId] = type;
+      const type = node_def.get_type(g[j].pins[0].type);
+      const exp = node_def.stringify({ t: "s", f: [["T", type]] });
+      rec.reflectMap!.push([j, exp, g[j].concreteId.nodeId]);
     }
-    res.push([g[0].genericId.nodeId, node_types]);
+    ret.push(rec);
+    console.log(node_def.stringify_node(rec));
   }
-  console.dir(res.slice(0, 2), { depth: null });
-  for (const [id, r] of res) {
-    const KVMap = new Map<String, number>();
-    const arr: [number, [number, number | [number, number]][]][]
-      = Object.entries(r).map(([k, v]) => [parseInt(k), Object.entries(v).map(([pin, name]) => [parseInt(pin), name])]);
-    if (arr.every(ar => ar[1].every(a => a[1] === ar[1][0][1] && typeof a[1] === "number"))) {
-      const types = arr.map(ar => ar[1][0][1]).map(t => TypeIdToAllTypes[t as TypeIdToAllTypes]);
-      arr.forEach(a => KVMap.set(`${types}-`, a[0]));
-    }
-  }
+  // console.dir(ret.slice(0, 2), { depth: null });
+  console.dir(ret, { depth: null });
 }
 
 if (import.meta.main) {
@@ -327,7 +327,7 @@ if (import.meta.main) {
 
   // ====== Step 2 
   // create_derived();
-  // create_node_lists(LIST);
+  // create_node_lists();
   // read_derive_graph();
   extract_types();
 
