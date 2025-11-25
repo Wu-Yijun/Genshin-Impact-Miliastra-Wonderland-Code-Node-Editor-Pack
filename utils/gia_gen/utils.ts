@@ -30,3 +30,8 @@ export function randomInt(len: number, starting: string = ""): number {
   }
   return parseInt(ret);
 }
+
+
+export function todo<T>(msg?:string):T{
+  throw new Error("TODO: Not implemented yet." + (msg?` Details: ${msg}`:""));
+}

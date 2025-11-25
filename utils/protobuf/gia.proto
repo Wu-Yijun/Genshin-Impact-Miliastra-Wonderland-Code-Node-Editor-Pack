@@ -283,16 +283,16 @@ message VarBase {
   }
   message ItemType {
     message StructItem { int64 structId = 1; }
+    message PairItems {
+      VarType key = 1;
+      VarType value = 2;
+      optional int64 structId = 3; // only when value is struct
+    }
     message Inner {
       enum Kind {
         Normal = 0;
         Struct = 1;
         Pair = 2;
-      }
-      message PairItems {
-        VarType key = 1;
-        VarType value = 2;
-        optional int64 structId = 3; // only when value is struct
       }
 
       VarType type = 1;
@@ -366,7 +366,10 @@ message NodeValueBaseValue {
     message Inner {
       message Wrapper {
         VarBase.Class class = 1;
-        oneof type { VarBase.ItemType.StructItem item = 100; }
+        oneof type { 
+          VarBase.ItemType.StructItem item = 100;
+          VarBase.ItemType.PairItems map_pair = 102;
+        }
       }
       Wrapper wrapper = 1;
     }
@@ -526,6 +529,7 @@ message EnumNode {
 
   enum Value {
     Default = 0;
+    True = 1;
     ComparisonOperators_EqualTo = 100;
     ComparisonOperators_LessThan = 101;
     ComparisonOperators_LessThanOrEqualTo = 102;

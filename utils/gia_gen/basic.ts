@@ -11,26 +11,30 @@ import {
   NodeProperty_Type,
   NodeUnit_Id_Type,
   NodeUnit_Type,
+  NodeValueBaseValue_Wrapper,
   type Root,
   type VarBase,
   VarBase_Class,
+  VarBase_ItemType,
+  VarBase_ItemType_Inner_Kind,
   VarType,
 } from "../protobuf/gia.proto.ts";
 
-import { counter_dynamic_id, counter_index, randomInt } from "./utils.ts";
+import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 
-export { enum_value, graph_body, node_body, pin_body, pin_value };
-export type { EnumValue, GraphBody, NodeBody, PinBody, PinValue };
-
-interface GraphBody {
+export interface GraphBody {
   uid: number;
   graph_id: number;
   graph_name?: string;
   nodes?: GraphNode[];
 }
-function graph_body(body: GraphBody): Root {
-  const graph_name = body.graph_name ?? "Graph " + randomInt(8).toString() + ".gia";
-  const file_name = graph_name.replaceAll(/[^a-zA-Z0-9_.]+/gs, "_").replaceAll(/[A-Z]/g, (m) => m.toLowerCase());
+export function graph_body(body: GraphBody): Root {
+  const graph_name = body.graph_name ??
+    "Graph " + randomInt(8).toString() + ".gia";
+  const file_name = graph_name.replaceAll(/[^a-zA-Z0-9_.]+/gs, "_").replaceAll(
+    /[A-Z]/g,
+    (m) => m.toLowerCase(),
+  );
   const timestamp = Math.floor(Date.now() / 1000);
   const file_id = body.graph_id + counter_dynamic_id.value;
   const filePath = `${body.uid}-${timestamp}-${file_id}-\\${file_name}`;
@@ -67,7 +71,7 @@ function graph_body(body: GraphBody): Root {
   return gia;
 }
 
-interface NodeBody {
+export interface NodeBody {
   generic_id: NodeId;
   concrete_id: NodeId;
   x: number;
@@ -76,7 +80,7 @@ interface NodeBody {
   /** ⚠️ Warning: This may cause ID collision. */
   index?: number;
 }
-function node_body(body: NodeBody): GraphNode {
+export function node_body(body: NodeBody): GraphNode {
   const nodeIndex = body.index ?? counter_index.value;
   const node: GraphNode = {
     nodeIndex: nodeIndex,
@@ -100,13 +104,13 @@ function node_body(body: NodeBody): GraphNode {
   return node;
 }
 
-interface PinBody {
+export interface PinBody {
   kind: NodePin_Index_Kind;
   index: number;
   value?: VarBase;
   type: VarType;
 }
-function pin_body(body: PinBody): NodePin {
+export function pin_body(body: PinBody): NodePin {
   const pin: NodePin = {
     i1: {
       kind: body.kind,
@@ -123,39 +127,233 @@ function pin_body(body: PinBody): NodePin {
   return pin;
 }
 
-interface PinValue {
-  indexOfConcrete?: EnumNode_EnumEqualList;
+export interface PinValue {
+  indexOfConcrete?: number;
   value?: VarBase;
+  wrapper?: NodeValueBaseValue_Wrapper;
 }
-function pin_value(body: PinValue): VarBase {
+export function pin_value(body: PinValue): VarBase {
   const value: VarBase = {
     class: VarBase_Class.NodeValueBase,
     alreadySetVal: true,
     bNodeValue: {
       indexOfConcrete: body.indexOfConcrete ?? 0,
       value: body.value ?? {} as any,
+      wrapper: body.wrapper,
     },
   };
   return value;
 }
 
-interface EnumValue {
+/** Normal item type */
+export function item_type(type: VarType): VarBase_ItemType {
+  return {
+    classBase: 1,
+    itemType: {
+      type: type,
+      kind: 0,
+    },
+  };
+}
+
+export interface EnumValue {
   value: EnumNode_Value;
 }
-function enum_value(body: EnumValue) {
+/** En */
+export function enum_value(body: EnumValue) {
   const value: VarBase = {
     class: VarBase_Class.EnumBase,
     alreadySetVal: true,
+    itemType: item_type(VarType.EnumItem),
+    bEnum: { val: body.value },
+  };
+  return value;
+}
+
+export interface MapPinBody {
+  kind: NodePin_Index_Kind;
+  index: number;
+  key_type: VarType;
+  value_type: VarType;
+}
+export function map_pin_body(body: MapPinBody) {
+  const map_pair = {
+    key: body.key_type,
+    value: body.value_type,
+    structId: 0,
+  };
+  const value: VarBase = {
+    class: VarBase_Class.MapBase,
+    alreadySetVal: false,
     itemType: {
       classBase: 1,
       itemType: {
-        type: VarType.EnumItem,
-        kind: 0,
+        type: VarType.Dictionary,
+        kind: VarBase_ItemType_Inner_Kind.Pair,
+        items: map_pair,
       },
     },
-    bEnum: {
-      val: body.value,
-    },
+    bMap: { mapPairs: [] },
   };
-  return value;
+  const wrapper: NodeValueBaseValue_Wrapper = {
+    classBase: 1,
+    inner: { wrapper: { class: VarBase_Class.MapBase, map_pair: map_pair } },
+  };
+  return pin_body({
+    kind: body.kind,
+    index: body.index,
+    type: VarType.Dictionary,
+    value: pin_value({ value, wrapper }),
+  });
+}
+
+export interface ListPinBody {
+  indexOfConcrete?: number;
+  kind: NodePin_Index_Kind;
+  index: number;
+  value_type: VarType;
+}
+export function list_pin_body(body: ListPinBody) {
+  const value: VarBase = {
+    class: VarBase_Class.ArrayBase,
+    alreadySetVal: false,
+    itemType: item_type(body.value_type),
+    bArray: { entries: [] },
+  };
+  const val = pin_value({
+    indexOfConcrete: body.indexOfConcrete,
+    value: value,
+  });
+  return pin_body({
+    kind: body.kind,
+    index: body.index,
+    type: body.value_type,
+    value: val,
+  });
+}
+
+export function int_pin_body(val: number): VarBase {
+  return {
+    class: VarBase_Class.IntBase,
+    alreadySetVal: true,
+    itemType: item_type(VarType.Integer),
+    bInt: { val },
+  };
+}
+export function bool_pin_body(val: number | boolean): VarBase {
+  return {
+    class: VarBase_Class.EnumBase,
+    alreadySetVal: true,
+    itemType: item_type(VarType.Boolean),
+    bEnum: { val: val ? EnumNode_Value.True : EnumNode_Value.Default },
+  };
+}
+export function id_pin_body(val: number, type: VarType = VarType.GUID): VarBase {
+  return {
+    class: VarBase_Class.IdBase,
+    alreadySetVal: true,
+    itemType: item_type(type),
+    bId: { val },
+  };
+}
+export function float_pin_body(val: number): VarBase {
+  return {
+    class: VarBase_Class.FloatBase,
+    alreadySetVal: true,
+    itemType: item_type(VarType.Float),
+    bFloat: { val },
+  };
+}
+export function string_pin_body(val: string): VarBase {
+  return {
+    class: VarBase_Class.StringBase,
+    alreadySetVal: true,
+    itemType: item_type(VarType.String),
+    bString: { val },
+  };
+}
+export function vector_pin_body(vec: number[]): VarBase {
+  return {
+    class: VarBase_Class.VectorBase,
+    alreadySetVal: true,
+    itemType: item_type(VarType.Vector),
+    bVector: { val:{
+      x: vec[0] ,
+      y: vec[1] ,
+      z: vec[2] ,
+    } },
+  };
+}
+
+export interface AnyPinBody {
+  kind: NodePin_Index_Kind;
+  index: number;
+  type: VarType;
+  indexOfConcrete?: number;
+  value?: any;
+}
+export function any_pin_body(body: AnyPinBody): NodePin {
+  let value: VarBase;
+  switch (body.type) {
+    case VarType.Dictionary:
+      return map_pin_body({
+        kind: body.kind,
+        index: body.index,
+        key_type: body.value.key_type,
+        value_type: body.value.value_type,
+      });
+    case VarType.BooleanList:
+    case VarType.ConfigurationList:
+    case VarType.EntityList:
+    case VarType.FactionList:
+    case VarType.FloatList:
+    case VarType.GUIDList:
+    case VarType.IntegerList:
+    case VarType.PrefabList:
+    case VarType.StringList:
+    case VarType.StructList:
+    case VarType.VectorList:
+      return list_pin_body({
+        indexOfConcrete: body.value.indexOfConcrete,
+        kind: body.kind,
+        index: body.index,
+        value_type: body.value.value_type,
+      });
+    case VarType.EnumItem:
+      value = enum_value({ value: body.value });
+      break;
+    case VarType.Integer:
+      value = int_pin_body(body.value);
+      break;
+    case VarType.GUID:
+    case VarType.Configuration:
+    case VarType.Entity:
+    case VarType.Faction:
+    case VarType.Prefab:
+      value = id_pin_body(body.value, body.type);
+      break;
+    case VarType.Boolean:
+      value =  bool_pin_body(body.value);
+      break;
+    case VarType.Float:
+      value = float_pin_body(body.value);
+      break;
+    case VarType.String:
+      value = string_pin_body(body.value);
+      break;
+    case VarType.Vector:
+      value = vector_pin_body(body.value);
+      break;
+    default:
+      return todo("Not implemented AnyPinBody for type " + body.type);
+  }
+  return pin_body({
+    kind: body.kind,
+    index: body.index,
+    type: body.type,
+    value: pin_value({
+      indexOfConcrete: body.indexOfConcrete,
+      value: value,
+    }),
+  });
 }

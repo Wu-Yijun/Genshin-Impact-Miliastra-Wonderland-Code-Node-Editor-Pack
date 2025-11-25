@@ -1,13 +1,14 @@
 import { readFileSync, writeFileSync } from "fs";
 import util from "node:util";
+import { graph_body, node_body } from "./basic.ts";
 
-import { gia } from "./index.ts";
 import type { NodePin, GraphNode } from "../protobuf/gia.proto.ts";
 import { NodePin_Index_Kind, VarBase_Class } from "../protobuf/gia.proto.ts";
 import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
 import { get_type, stringify, to_string, type NodePinsRecords } from "./nodes.ts";
 import { fixSparseArrays } from "../../src/util.ts";
 import assert from "node:assert";
+import { randomInt } from "./utils.ts";
 
 function generate_all_nodes(from: number, size: number = 300, line_width: number = 20, offsets: number = 1): GraphNode[] {
   const ret = [];
@@ -15,7 +16,7 @@ function generate_all_nodes(from: number, size: number = 300, line_width: number
     const y = Math.floor(i / line_width);
     const x = i % line_width;
     for (let k = 0; k < offsets; k++) {
-      ret.push(gia.basic_node_body({
+      ret.push(node_body({
         generic_id: from + i as any,
         concrete_id: from + i + k as any,
         x: x,
@@ -28,7 +29,7 @@ function generate_all_nodes(from: number, size: number = 300, line_width: number
 }
 function gen_node(id1: number, id2?: number) {
   const i2 = id2 ?? id1;
-  return gia.basic_node_body({
+  return node_body({
     generic_id: id1 as any,
     concrete_id: i2 as any,
     x: id1,
@@ -42,10 +43,10 @@ function create_graph(w: number = 20, h: number = 15, len: number = 1) {
   const N = w * h * len;
   console.time(`Create ${N} nodes in`);
 
-  const uid = gia.random_int(9, "201");
-  const graph_id = gia.random_int(10, "102");
+  const uid = randomInt(9, "201");
+  const graph_id = randomInt(10, "102");
   const nodes = [];
-  const graph = gia.basic_graph_body({
+  const graph = graph_body({
     uid: uid,
     graph_id: graph_id,
     nodes: generate_all_nodes(1, w * h, w, len),
@@ -82,12 +83,12 @@ function get_graph_ids(type?: "Generic" | "Basic"): number[] {
 // ====== Step 2 ======
 function create_derived() {
   const ids = get_graph_ids("Generic");
-  const uid = gia.random_int(9, "201");
-  const graph_id = gia.random_int(10, "102");
+  const uid = randomInt(9, "201");
+  const graph_id = randomInt(10, "102");
   const nodes: GraphNode[] = [];
   for (let index = 0; index < ids.length; index++) {
     const id1 = ids[index];
-    const node = gia.basic_node_body({
+    const node = node_body({
       generic_id: id1 as any,
       concrete_id: id1 as any,
       x: index * 1.5,
@@ -96,7 +97,7 @@ function create_derived() {
     });
     nodes.push(node);
   }
-  const graph = gia.basic_graph_body({
+  const graph = graph_body({
     uid: uid,
     graph_id: graph_id,
     nodes: nodes,
@@ -146,7 +147,7 @@ function create_node_with_pin(id: number, pin_index: number[], type: number, x =
     }
     pins.push(p);
   }
-  return gia.basic_node_body({
+  return node_body({
     generic_id: id as any,
     concrete_id: id as any,
     x: x,
@@ -172,9 +173,9 @@ function create_node_lists(list: (number | (number | null)[])[]) {
       nodes.push(create_node_with_pin(ids[i], pin, j, i, j));
     }
   }
-  const graph = gia.basic_graph_body({
-    uid: gia.random_int(9, "201"),
-    graph_id: gia.random_int(10, "102"),
+  const graph = graph_body({
+    uid: randomInt(9, "201"),
+    graph_id: randomInt(10, "102"),
     nodes: nodes,
   });
   encode_gia_file({
@@ -244,7 +245,7 @@ function extract_types() {
     0,
     [0, 3],
     0,
-    [0, null, 0], // Assem
+    [0, null, 0], // Assemble
     [0, null, 0], // Convert
     [0, 1, null, 0],
     [0, 1, null, 0],
@@ -338,6 +339,9 @@ function extract_types() {
   console.log(res);
 }
 
+
+
+
 if (import.meta.main) {
 
   // ====== Step 1 ======
@@ -345,16 +349,16 @@ if (import.meta.main) {
   // read_trimmed_graph();
 
 
-  // ====== Step 2 
+  // ====== Step 2 ======
   // create_derived();
   // create_node_lists();
   // read_derive_graph();
-  extract_types();
+  // extract_types();
 
   // const graph = decode_gia_file({
   //   // gia_path: "./utils/ref/derived_server_nodes_pins.gia",
-  //   gia_path: "./utils/ref/1.gia",
+  //   gia_path: "./utils/node_id/dicts.gia",
   // });
   // const nodes = graph.graph.graph!.inner.graph.nodes!;
-  // console.dir(nodes[0], { depth: null });
+  // console.dir(nodes[4], { depth: null });
 }
