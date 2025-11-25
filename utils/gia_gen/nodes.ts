@@ -1,4 +1,5 @@
 import assert from "node:assert";
+import { VarType } from "../protobuf/gia.proto.ts";
 
 // const BasicTypes = ["Int", "Float", "Bool", "Str", "Vec", "GUID", "Entity", "Prefab", "Faction", "ConfigId"] as const;
 export const BasicTypes = ["Int", "Flt", "Bol", "Str", "Vec", "Gid", "Ety", "Pfb", "Fct", "Cfg"] as const;
@@ -61,6 +62,7 @@ export function stringify(node: NodeType | string): string {
   }
 }
 export function parse(src: string): NodeType {
+  if (src === undefined) return undefined as any;
   let p = 0;
   const tokens = src.split(/([ ]+|\<|\,|\:|\>)/g).filter(x => x.trim().length > 0);
   // Throw Error for Invalid name
@@ -271,117 +273,120 @@ export function get_id(node: NodeType): number {
     case "b":
       switch (node.b) {
         case "Int":
-          return 3;
+          return VarType.Integer;
         case "Flt":
-          return 5;
+          return VarType.Float;
         case "Bol":
-          return 4;
+          return VarType.Boolean;
         case "Str":
-          return 6;
+          return VarType.String;
         case "Vec":
-          return 12;
+          return VarType.Vector;
         case "Gid":
-          return 2;
+          return VarType.GUID;
         case "Ety":
-          return 1;
+          return VarType.Entity;
         case "Pfb":
-          return 21;
+          return VarType.Prefab;
         case "Fct":
-          return 17;
+          return VarType.Faction;
         case "Cfg":
-          return 20;
+          return VarType.Configuration;
       }
-      return 0;
+      break;
     case "e":
-      return 14;
+      return VarType.EnumItem;
     case "l":
       switch (node.i.t) {
         case "b":
           switch (node.i.b) {
             case "Int":
-              return 8;
+              return VarType.IntegerList;
             case "Flt":
-              return 10;
+              return VarType.FloatList;
             case "Bol":
-              return 9;
+              return VarType.BooleanList;
             case "Str":
-              return 11;
+              return VarType.StringList;
             case "Vec":
-              return 15;
+              return VarType.VectorList;
             case "Gid":
-              return 7;
+              return VarType.GUIDList;
             case "Ety":
-              return 13;
+              return VarType.EntityList;
             case "Pfb":
-              return 23;
+              return VarType.PrefabList;
             case "Fct":
-              return 24;
+              return VarType.FactionList;
             case "Cfg":
-              return 22;
+              return VarType.ConfigurationList;
           }
-          return 0;
+          break;
         case "s":
-          return 26
+          return VarType.StringList;
         default:
-          return 0;
+          break;
       }
+      break;
     case "d":
-      return 27;
+      return VarType.Dictionary;
     case "r":
-      return 0;
+      break;
     case "s":
-      return 25;
+      return VarType.Struct;
   }
+  console.warn(node, "is not a basic type! Fallback to id = 0 !");
+  return 0;
 }
 export function get_type(id: number): NodeType {
   switch (id) {
-    case 1:
+    case VarType.Entity:
       return { t: "b", b: "Ety" };
-    case 2:
+    case VarType.GUID:
       return { t: "b", b: "Gid" };
-    case 3:
+    case VarType.Integer:
       return { t: "b", b: "Int" };
-    case 4:
+    case VarType.Boolean:
       return { t: "b", b: "Bol" };
-    case 5:
+    case VarType.Float:
       return { t: "b", b: "Flt" };
-    case 6:
+    case VarType.String:
       return { t: "b", b: "Str" };
-    case 7:
+    case VarType.GUIDList:
       return { t: "l", i: { t: "b", b: "Gid" } };
-    case 8:
+    case VarType.IntegerList:
       return { t: "l", i: { t: "b", b: "Int" } };
-    case 9:
+    case VarType.BooleanList:
       return { t: "l", i: { t: "b", b: "Bol" } };
-    case 10:
+    case VarType.FloatList:
       return { t: "l", i: { t: "b", b: "Flt" } };
-    case 11:
+    case VarType.StringList:
       return { t: "l", i: { t: "b", b: "Str" } };
-    case 12:
+    case VarType.Vector:
       return { t: "b", b: "Vec" };
-    case 13:
+    case VarType.EntityList:
       return { t: "l", i: { t: "b", b: "Ety" } };
-    case 14:
+    case VarType.EnumItem:
       return { t: "e", e: 0 };
-    case 15:
+    case VarType.VectorList:
       return { t: "l", i: { t: "b", b: "Vec" } };
-    case 17:
+    case VarType.Faction:
       return { t: "b", b: "Fct" };
-    case 20:
+    case VarType.Configuration:
       return { t: "b", b: "Cfg" };
-    case 21:
+    case VarType.Prefab:
       return { t: "b", b: "Pfb" };
-    case 22:
+    case VarType.ConfigurationList:
       return { t: "l", i: { t: "b", b: "Cfg" } };
-    case 23:
+    case VarType.PrefabList:
       return { t: "l", i: { t: "b", b: "Pfb" } };
-    case 24:
+    case VarType.FactionList:
       return { t: "l", i: { t: "b", b: "Fct" } };
-    case 25:
+    case VarType.Struct:
       return { t: "s", f: [] };
-    case 26:
+    case VarType.StringList:
       return { t: "l", i: { t: "s", f: [] } };
-    case 27:
+    case VarType.Dictionary:
       return { t: "d", k: { t: "b", b: "Str" }, v: { t: "b", b: "Str" } };
   }
   throw new Error("Invalid ID: " + id);

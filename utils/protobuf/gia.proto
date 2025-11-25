@@ -366,9 +366,9 @@ message NodeValueBaseValue {
     message Inner {
       message Wrapper {
         VarBase.Class class = 1;
-        oneof type { 
+        oneof type {
           VarBase.ItemType.StructItem item = 100;
-          VarBase.ItemType.PairItems map_pair = 102;
+          VarBase.ItemType.PairItems mapPair = 102;
         }
       }
       Wrapper wrapper = 1;

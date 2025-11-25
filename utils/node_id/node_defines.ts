@@ -1,4 +1,4 @@
-import { NodePinsRecords } from "../gia_gen/nodes";
+import type { NodePinsRecords } from "../gia_gen/nodes.ts";
 
 export const derived_records: (NodePinsRecords | { len: number })[] = [
   {
@@ -106,7 +106,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 575],
       [18, 'S<T:Fct>', 622],
       [19, 'S<T:L<Fct>>', 692],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -137,7 +137,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 549],
       [18, 'S<T:Fct>', 623],
       [19, 'S<T:L<Fct>>', 2716],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -168,7 +168,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 579],
       [18, 'S<T:Fct>', 624],
       [19, 'S<T:L<Fct>>', 693],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -214,7 +214,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   { // list include?
     id: 114,
-    inputs: ['L<T>', 'R<T>'],
+    inputs: ['L<R<T>>', 'R<T>'],
     outputs: [],
     reflectMap: [
       [0, 'S<T:Int>', 114],
@@ -232,7 +232,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   { // search indices
     id: 121,
-    inputs: ['L<T>', 'R<T>'],
+    inputs: ['L<R<T>>', 'R<T>'],
     outputs: ['L<Int>'],
     reflectMap: [
       [0, 'S<T:Int>', 121],
@@ -250,7 +250,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   {
     id: 128,
-    inputs: ['L<T>'],
+    inputs: ['L<R<T>>'],
     outputs: ['R<T>'],
     reflectMap: [
       [0, 'S<T:Int>', 128],
@@ -269,7 +269,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   {
     id: 135,
-    inputs: ['L<T>', 'R<T>'],
+    inputs: ['L<R<T>>', 'R<T>'],
     outputs: [],
     reflectMap: [
       [0, 'S<T:Int>', 135],
@@ -288,7 +288,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   {
     id: 142,
-    inputs: ['L<T>'],
+    inputs: ['L<R<T>>'],
     outputs: [],
     reflectMap: [
       [0, 'S<T:Int>', 142],
@@ -307,21 +307,21 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   {
     id: 149,
-    inputs: ['L<T>'],
+    inputs: ['L<R<T>>'],
     outputs: ['R<T>'],
     reflectMap: [[0, 'S<T:Int>', 2648], [1, 'S<T:Flt>', 2649]],
     len: 2
   },
   {
     id: 151,
-    inputs: ['L<T>'],
+    inputs: ['L<R<T>>'],
     outputs: ['R<T>'],
     reflectMap: [[0, 'S<T:Int>', 2646], [1, 'S<T:Flt>', 2647]],
     len: 2
   },
   {
     id: 153,
-    inputs: ['L<T>'],
+    inputs: ['L<R<T>>'],
     outputs: [],
     reflectMap: [
       [0, 'S<T:Int>', 153],
@@ -340,7 +340,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   {
     id: 160,
-    inputs: ['L<T>', undefined, 'R<T>'],
+    inputs: ['L<R<T>>', undefined, 'R<T>'],
     outputs: [],
     reflectMap: [
       [0, 'S<T:Int>', 160],
@@ -359,15 +359,15 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   {
     id: 167,
-    inputs: ['L<T>'],
+    inputs: ['L<R<T>>'],
     outputs: [],
     reflectMap: [[0, 'S<T:Int>', 167], [1, 'S<T:Flt>', 168]],
     len: 2
   },
   { // Assemble List 
     id: 169,
-    inputs: Array(99).fill('R<T>'),
-    outputs: ['L<T>'],
+    inputs: [undefined, ...Array(99).fill('R<T>')],
+    outputs: ['L<R<T>>'],
     reflectMap: [
       [0, 'S<T:Int>', 169],
       [1, 'S<T:Str>', 170],
@@ -383,15 +383,15 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
     ],
     len: 10
   },
-  {// Data Type Conversion
+  {// Data Type Conversion TODO
     id: 180,
     inputs: ['R<T>'],
     outputs: ['R<V>'],
     reflectMap: [
-      [0, 'S<T:Int>', 180],
-      [2, 'S<T:Gid>', 184],
-      [3, 'S<T:Bol>', 185],
-      [-1, "", -1],
+      // [0, 'S<T:Int>', 180],
+      // [2, 'S<T:Gid>', 184],
+      // [3, 'S<T:Bol>', 185],
+      // [-1, "", -1],
     ],
     len: 3
   },
@@ -518,7 +518,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 537],
       [18, 'S<T:Fct>', 625],
       [19, 'S<T:L<Fct>>', 2857],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -549,7 +549,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 541],
       [18, 'S<T:Fct>', 626],
       [19, 'S<T:L<Fct>>', 2998],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -580,7 +580,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 545],
       [18, 'S<T:Fct>', 627],
       [19, 'S<T:L<Fct>>', 3139],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -611,7 +611,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 525],
       [18, 'S<T:Fct>', 628],
       [19, 'S<T:L<Fct>>', 2490],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -642,7 +642,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 529],
       [18, 'S<T:Fct>', 629],
       [19, 'S<T:L<Fct>>', 2208],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -673,7 +673,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
       [17, 'S<T:L<Pfb>>', 533],
       [18, 'S<T:Fct>', 630],
       [19, 'S<T:L<Fct>>', 2349],
-      [-1, 'D<K,V>', -1],
+      [-1, 'D<R<K>,R<V>>', -1],
       [-1, 'S<>', -1],
       [-1, 'L<S<>>', -1],
     ],
@@ -684,32 +684,33 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
     inputs: ['R<T>', 'R<T>'],
     outputs: [],
     reflectMap: [
-      [1, 'S<T:E<0>>', 476],
-      [2, 'S<T:E<0>>', 477],
-      [3, 'S<T:E<0>>', 478],
-      [4, 'S<T:E<0>>', 479],
-      [5, 'S<T:E<0>>', 480],
-      [6, 'S<T:E<0>>', 481],
-      [7, 'S<T:E<0>>', 482],
-      [8, 'S<T:E<0>>', 483],
-      [9, 'S<T:E<0>>', 484],
-      [10, 'S<T:E<0>>', 485],
-      [11, 'S<T:E<0>>', 486],
-      [12, 'S<T:E<0>>', 487],
-      [13, 'S<T:E<0>>', 488],
-      [14, 'S<T:E<0>>', 489],
-      [16, 'S<T:E<0>>', 491],
-      [17, 'S<T:E<0>>', 492],
-      [18, 'S<T:E<0>>', 493],
-      [19, 'S<T:E<0>>', 494],
-      [20, 'S<T:E<0>>', 495],
-      [-1, '""', -1],
+      // [0, 'S<T:E<0>>', 475],
+      // [1, 'S<T:E<0>>', 476],
+      // [2, 'S<T:E<0>>', 477],
+      // [3, 'S<T:E<0>>', 478],
+      // [4, 'S<T:E<0>>', 479],
+      // [5, 'S<T:E<0>>', 480],
+      // [6, 'S<T:E<0>>', 481],
+      // [7, 'S<T:E<0>>', 482],
+      // [8, 'S<T:E<0>>', 483],
+      // [9, 'S<T:E<0>>', 484],
+      // [10, 'S<T:E<0>>', 485],
+      // [11, 'S<T:E<0>>', 486],
+      // [12, 'S<T:E<0>>', 487],
+      // [13, 'S<T:E<0>>', 488],
+      // [14, 'S<T:E<0>>', 489],
+      // [16, 'S<T:E<0>>', 491],
+      // [17, 'S<T:E<0>>', 492],
+      // [18, 'S<T:E<0>>', 493],
+      // [19, 'S<T:E<0>>', 494],
+      // [20, 'S<T:E<0>>', 495],
+      // [-1, 'Enum', -1],
     ],
     len: 19
   },
   {
     id: 509,
-    inputs: ['L<T>'],
+    inputs: ['L<R<T>>'],
     outputs: ['R<T>'],
     reflectMap: [
       [0, 'S<T:Bol>', 509],
@@ -739,7 +740,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   },
   {
     id: 948,
-    inputs: ['D<K,V>', 'R<K>', 'R<V>'],
+    inputs: ['D<R<K>,R<V>>', 'R<K>', 'R<V>'],
     outputs: [],
     reflectMap: [[-1, 'D<>', -1]],
     len: 1
@@ -747,84 +748,84 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
   {
     id: 1088,
     inputs: ['R<K>', 'R<V>'],
-    outputs: ['D<K,V>'],
+    outputs: ['D<R<K>,R<V>>'],
     reflectMap: [[-1, 'D<>', -1]],
     len: 7
   },
   {
     id: 1158,
-    inputs: ['D<K,V>', 'R<K>'],
+    inputs: ['D<R<K>,R<V>>', 'R<K>'],
     outputs: ['R<V>'],
     reflectMap: [[-1, 'D<>', -1]],
     len: 1
   },
   {
     id: 1298,
-    inputs: ['D<K,V>', 'R<K>'],
+    inputs: ['D<R<K>,R<V>>', 'R<K>'],
     outputs: [],
     reflectMap: [[-1, 'D<>', -1]],
     len: 0
   },
   {
     id: 1368,
-    inputs: ['D<K,V>', 'R<K>'],
+    inputs: ['D<R<K>,R<V>>', 'R<K>'],
     outputs: [],
     reflectMap: [[-1, 'D<>', -1]],
     len: 0
   },
   {
     id: 1438,
-    inputs: ['D<K,V>', 'R<K>'],
+    inputs: ['D<R<K>,R<V>>', 'R<K>'],
     outputs: [],
     reflectMap: [[-1, 'D<>', -1]],
     len: 0
   },
   {
     id: 1508,
-    inputs: ['D<K,V>'],
+    inputs: ['D<R<K>,R<V>>'],
     outputs: ['R<K>'],
     reflectMap: [[-1, 'D<>', -1]],
     len: 0
   },
   {
     id: 1578,
-    inputs: ['D<K,V>'],
+    inputs: ['D<R<K>,R<V>>'],
     outputs: ['R<V>'],
     reflectMap: [[-1, 'D<>', -1]],
     len: 0
   },
   {
     id: 1648,
-    inputs: ['D<K,V>'],
+    inputs: ['D<R<K>,R<V>>'],
     outputs: [],
     reflectMap: [[-1, 'D<>', -1]],
     len: 0
   },
   {
     id: 1718,
-    inputs: ['D<K,V>'],
+    inputs: ['D<R<K>,R<V>>'],
     outputs: [],
     reflectMap: [[-1, 'D<>', -1]],
     len: 0
   },
   {
     id: 1788,
-    inputs: Array(99).fill(['R<K>', 'R<V>']).flat(),
-    outputs: ['D<K,V>'],
+    inputs: [undefined, ...Array(99).fill(['R<K>', 'R<V>']).flat(2)],
+    outputs: ['D<R<K>,R<V>>'],
     reflectMap: [[-1, 'D<>', -1]],
     len: 0
   },
   {
     id: 1928,
-    inputs: ['D<K,V>'],
-    outputs: ['L<K>', 'L<V>'],
+    inputs: ['D<R<K>,R<V>>'],
+    outputs: ['L<R<K>>', 'L<R<V>>'],
     reflectMap: [[-1, 'D<>', -1]],
     len: 1
   },
   {
     id: 1938,
-    inputs: ['D<K,V>'],
-    outputs: ['L<K>', 'L<V>'],
+    inputs: ['D<R<K>,R<V>>'],
+    outputs: ['L<R<K>>', 'L<R<V>>'],
     reflectMap: [[-1, 'D<>', -1]],
     len: 1
   }

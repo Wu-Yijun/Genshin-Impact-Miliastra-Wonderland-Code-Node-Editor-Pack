@@ -1,14 +1,15 @@
 import { readFileSync, writeFileSync } from "fs";
 import util from "node:util";
-import { graph_body, node_body } from "./basic.ts";
+import assert from "node:assert";
+import { graph_body, node_body, node_type_pin_body } from "./basic.ts";
 
 import type { NodePin, GraphNode } from "../protobuf/gia.proto.ts";
 import { NodePin_Index_Kind, VarBase_Class } from "../protobuf/gia.proto.ts";
 import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
-import { get_type, stringify, to_string, type NodePinsRecords } from "./nodes.ts";
+import { get_id, get_type, type NodeType, parse, stringify, to_string, type NodePinsRecords, BasicTypes, reflect, reflects } from "./nodes.ts";
 import { fixSparseArrays } from "../../src/util.ts";
-import assert from "node:assert";
 import { randomInt } from "./utils.ts";
+import { derived_records } from "../node_id/node_defines.ts";
 
 function generate_all_nodes(from: number, size: number = 300, line_width: number = 20, offsets: number = 1): GraphNode[] {
   const ret = [];
@@ -339,10 +340,102 @@ function extract_types() {
   console.log(res);
 }
 
+function generate_reflect() {
+  const d = derived_records as NodePinsRecords[];
+  const VALUE_MAP = [...BasicTypes, ...BasicTypes.map(v => `L<${v}>`)];
 
+  const nodes = [];
+
+  for (let i = 0; i < d.length; i++) {
+    const node = d[i]
+    const ins = node.inputs.map(parse);
+    const outs = node.outputs.map(parse);
+    for (let j = 0; j < node.reflectMap!.length; j++) {
+      const [index, type, id] = node.reflectMap![j];
+      const idx = index === -1 ? j : index;
+      assert(idx === j);
+      if (type !== "D<R<K>,R<V>>" && type !== "D<>") continue;
+      for (const k of BasicTypes) {
+        for (const v of VALUE_MAP) {
+          let is, os;
+          if (type === "D<>") {
+            const n = parse(`S<K:${k},V:${v}>`);
+            assert(n.t === "s");
+            is = ins.map(x => x === undefined || reflects(x, n.f));
+            os = outs.map(x => x === undefined || reflects(x, n.f));
+          } else {
+            const n = parse(`D<${k},${v}>`);
+            is = ins.map(x => x === undefined || reflect(x, ["T", n]));
+            os = outs.map(x => x === undefined || reflect(x, ["T", n]));
+          }
+          const pins: NodePin[] = [];
+          let valid = true;
+          is.forEach((x, i) => {
+            if (x === true) return;
+            if (x.t === "l" && x.i.t === "l") {
+              console.warn("Cannot Create List of List:", x);
+              valid = false;
+              return;
+            }
+            pins.push(node_type_pin_body({
+              indexOfConcrete: idx,
+              kind: NodePin_Index_Kind.InParam,
+              index: i,
+              type: x,
+            }))
+          });
+          os.forEach((x, i) => {
+            if (x === true) return;
+            if (x.t === "l" && x.i.t === "l") {
+              console.warn("Id", node.id, k, v, "Cannot Create List of List:", x);
+              valid = false;
+              return;
+            }
+            pins.push(node_type_pin_body({
+              indexOfConcrete: idx,
+              kind: NodePin_Index_Kind.OutParam,
+              index: i,
+              type: x,
+            }))
+          });
+          if (!valid) continue;
+          if (pins.length === 0) {
+            console.warn("Invalid Node:", node.id, "With kv:", k, v);
+            continue;
+          }
+          const n = node_body({
+            pins: pins,
+            generic_id: node.id as any,
+            concrete_id: node.id as any,
+            x: nodes.length % 100,
+            y: nodes.length / 100,
+          });
+          nodes.push(n);
+        }
+      }
+    }
+  }
+
+  const uid = randomInt(9, "201");
+  const graph_id = randomInt(10, "102");
+  const graph = graph_body({ uid, graph_id, nodes: nodes });
+  const out_path = "./utils/ref/all_reflect.gia";
+  encode_gia_file({ out_path, gia_struct: graph });
+
+  // console.dir(nodes[1], { depth: null });
+  console.log("Created", nodes.length, "reflected nodes and saved to", out_path);
+}
+
+function read_all_reflect() {
+  const nodes = decode_gia_file({ gia_path: "./utils/ref/all_reflect_trim.gia" }).graph.graph?.inner.graph.nodes;
+  console.log(nodes?.map(n => n.concreteId?.nodeId).filter(x => x));
+  // console.log(nodes?.map(n => n.));
+
+}
 
 
 if (import.meta.main) {
+  console.time("Time Consume");
 
   // ====== Step 1 ======
   // create_graph(100, 30, 1);
@@ -355,10 +448,19 @@ if (import.meta.main) {
   // read_derive_graph();
   // extract_types();
 
-  // const graph = decode_gia_file({
-  //   // gia_path: "./utils/ref/derived_server_nodes_pins.gia",
-  //   gia_path: "./utils/node_id/dicts.gia",
-  // });
-  // const nodes = graph.graph.graph!.inner.graph.nodes!;
-  // console.dir(nodes[4], { depth: null });
+  const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
+  const graph = decode_gia_file({
+    gia_path: "./utils/ref/all_reflect_trim.gia",
+    // gia_path: PATH + "all_reflect.gia",
+    // gia_path: "./utils/node_id/dicts.gia",
+  });
+  const nodes = graph.graph.graph!.inner.graph.nodes!;
+  console.dir(nodes[1], { depth: null });
+
+
+  // generate_reflect();
+  // read_all_reflect();
+
+
+  console.timeEnd("Time Consume")
 }

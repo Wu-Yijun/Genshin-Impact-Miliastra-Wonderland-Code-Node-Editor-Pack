@@ -1,3 +1,4 @@
+import assert from "node:assert";
 import {
   EnumNode_EnumEqualList,
   EnumNode_Value,
@@ -11,14 +12,15 @@ import {
   NodeProperty_Type,
   NodeUnit_Id_Type,
   NodeUnit_Type,
-  NodeValueBaseValue_Wrapper,
+  type NodeValueBaseValue_Wrapper,
   type Root,
   type VarBase,
   VarBase_Class,
-  VarBase_ItemType,
+  type VarBase_ItemType,
   VarBase_ItemType_Inner_Kind,
   VarType,
 } from "../protobuf/gia.proto.ts";
+import { get_id as _nodes_get_id, type NodeType as _NodeType } from "./nodes.ts";
 
 import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 
@@ -175,6 +177,7 @@ export interface MapPinBody {
   index: number;
   key_type: VarType;
   value_type: VarType;
+  indexOfConcrete?: number;
 }
 export function map_pin_body(body: MapPinBody) {
   const map_pair = {
@@ -190,20 +193,29 @@ export function map_pin_body(body: MapPinBody) {
       itemType: {
         type: VarType.Dictionary,
         kind: VarBase_ItemType_Inner_Kind.Pair,
-        items: map_pair,
+        items: structuredClone(map_pair),
       },
     },
     bMap: { mapPairs: [] },
   };
   const wrapper: NodeValueBaseValue_Wrapper = {
     classBase: 1,
-    inner: { wrapper: { class: VarBase_Class.MapBase, map_pair: map_pair } },
+    inner: {
+      wrapper: {
+        class: VarBase_Class.MapBase,
+        mapPair: {
+          key: body.key_type,
+          value: body.value_type,
+          structId: 0,
+        }
+      }
+    },
   };
   return pin_body({
     kind: body.kind,
     index: body.index,
     type: VarType.Dictionary,
-    value: pin_value({ value, wrapper }),
+    value: pin_value({ value, wrapper, indexOfConcrete: body.indexOfConcrete }),
   });
 }
 
@@ -277,11 +289,13 @@ export function vector_pin_body(vec: number[]): VarBase {
     class: VarBase_Class.VectorBase,
     alreadySetVal: true,
     itemType: item_type(VarType.Vector),
-    bVector: { val:{
-      x: vec[0] ,
-      y: vec[1] ,
-      z: vec[2] ,
-    } },
+    bVector: {
+      val: {
+        x: vec?.[0],
+        y: vec?.[1],
+        z: vec?.[2],
+      }
+    },
   };
 }
 
@@ -289,6 +303,8 @@ export interface AnyPinBody {
   kind: NodePin_Index_Kind;
   index: number;
   type: VarType;
+  /** Only exist when it is dict */
+  key_val_type?: [VarType, VarType];
   indexOfConcrete?: number;
   value?: any;
 }
@@ -296,11 +312,13 @@ export function any_pin_body(body: AnyPinBody): NodePin {
   let value: VarBase;
   switch (body.type) {
     case VarType.Dictionary:
+      assert(body.key_val_type !== null, "Dict Type should pass parameter `key_val_type`!");
       return map_pin_body({
         kind: body.kind,
         index: body.index,
-        key_type: body.value.key_type,
-        value_type: body.value.value_type,
+        key_type: body.key_val_type![0],
+        value_type: body.key_val_type![1],
+        indexOfConcrete: body.indexOfConcrete,
       });
     case VarType.BooleanList:
     case VarType.ConfigurationList:
@@ -314,10 +332,10 @@ export function any_pin_body(body: AnyPinBody): NodePin {
     case VarType.StructList:
     case VarType.VectorList:
       return list_pin_body({
-        indexOfConcrete: body.value.indexOfConcrete,
+        indexOfConcrete: body.indexOfConcrete,
         kind: body.kind,
         index: body.index,
-        value_type: body.value.value_type,
+        value_type: body.type,
       });
     case VarType.EnumItem:
       value = enum_value({ value: body.value });
@@ -333,7 +351,7 @@ export function any_pin_body(body: AnyPinBody): NodePin {
       value = id_pin_body(body.value, body.type);
       break;
     case VarType.Boolean:
-      value =  bool_pin_body(body.value);
+      value = bool_pin_body(body.value);
       break;
     case VarType.Float:
       value = float_pin_body(body.value);
@@ -345,6 +363,7 @@ export function any_pin_body(body: AnyPinBody): NodePin {
       value = vector_pin_body(body.value);
       break;
     default:
+      // console.log(body);
       return todo("Not implemented AnyPinBody for type " + body.type);
   }
   return pin_body({
@@ -355,5 +374,27 @@ export function any_pin_body(body: AnyPinBody): NodePin {
       indexOfConcrete: body.indexOfConcrete,
       value: value,
     }),
+  });
+}
+
+export interface NodeTypePinBody {
+  kind: NodePin_Index_Kind;
+  index: number;
+  type: _NodeType;
+  indexOfConcrete?: number;
+  value?: any;
+}
+export function node_type_pin_body(body: NodeTypePinBody): NodePin {
+  let key_val_type: [VarType, VarType] | undefined;
+  if (body.type.t === "d") {
+    key_val_type = [_nodes_get_id(body.type.k), _nodes_get_id(body.type.v)] as any;
+  }
+  return any_pin_body({
+    kind: body.kind,
+    index: body.index,
+    type: _nodes_get_id(body.type) as any,
+    key_val_type,
+    value: body.value,
+    indexOfConcrete: body.indexOfConcrete,
   });
 }

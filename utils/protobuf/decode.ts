@@ -77,7 +77,7 @@ export function wrap_gia(message: proto.Type, data: Root) {
 
 export function decode_gia_file(config: DecodeGiaInterface): Root {
   config.proto_path ??= import.meta.dirname + "/gia.proto";
-  const root = proto.loadSync(config.proto_path);
+  const root = new proto.Root().loadSync(config.proto_path, { keepCase: true });
   const message = root.lookupType("Root");
 
   const msg = message.decode(unwrap_gia(config)) as any as Root;
@@ -94,7 +94,7 @@ export interface EncodeGiaInterface {
 }
 export function encode_gia_file(config: EncodeGiaInterface) {
   config.proto_path ??= import.meta.dirname + "/gia.proto";
-  const root = proto.loadSync(config.proto_path);
+  const root = new proto.Root().loadSync(config.proto_path, { keepCase: true });
   const message = root.lookupType("Root");
 
   writeFileSync(config.out_path, Buffer.from(wrap_gia(message, config.gia_struct)));
@@ -114,7 +114,7 @@ function test() {
     const temp = {
       index: node.nodeIndex,
       id: node.concreteId?.nodeId,
-      type: node.pins[0]?.value.bNodeValue?.indexInSelector,
+      type: node.pins[0]?.value.bNodeValue?.indexOfConcrete,
       from: node.pins[0]?.value.bNodeValue?.value.bEnum?.val,
       to: node.pins[1]?.value.bNodeValue?.value.bEnum?.val,
     };
@@ -134,8 +134,8 @@ function test() {
     n.y = y * 200 + 0.12345;
     n.nodeIndex = getId();
     n.concreteId.nodeId = info.id as any;
-    n.pins[0].value.bNodeValue!.indexInSelector = info.type as any;
-    n.pins[1].value.bNodeValue!.indexInSelector = info.type as any;
+    n.pins[0].value.bNodeValue!.indexOfConcrete = info.type as any;
+    n.pins[1].value.bNodeValue!.indexOfConcrete = info.type as any;
     n.pins[0].value.bNodeValue!.value.bEnum!.val = info.from as any;
     n.pins[1].value.bNodeValue!.value.bEnum!.val = info.to as any;
     return n;
