@@ -286,6 +286,55 @@ export function extract_reflect_names(type: NodeType): string[] {
   return Array.from(set);
 }
 
+export function type_equal(a: NodeType, b: NodeType): boolean {
+  if (a.t !== b.t) return false;
+  switch (a.t) {
+    case "b":
+      return a.b === (b as any).b;
+    case "e":
+      return a.e === (b as any).e;
+    case "l":
+      return type_equal(a.i, (b as any).i);
+    case "d":
+      return type_equal(a.k, (b as any).k) && type_equal(a.v, (b as any).v);
+    case "s": {
+      const bf = (b as any).f as [string, NodeType][];
+      if (a.f.length !== bf.length) return false;
+      for (let i = 0; i < a.f.length; i++) {
+        if (a.f[i][0] !== bf[i][0]) return false;
+        if (!type_equal(a.f[i][1], bf[i][1])) return false;
+      }
+      return true;
+    }
+    case "r":
+      return a.r === (b as any).r;
+  }
+  throw new Error("Unreachable");
+}
+
+export function derive_reflect(node: NodeType, ref: [string, NodeType]): NodeType {
+  switch (node.t) {
+    case "b":
+      return node;
+    case "e":
+      return node;
+    case "l":
+      return { t: "l", i: derive_reflect(node.i, ref) };
+    case "d":
+      return { t: "d", k: derive_reflect(node.k, ref), v: derive_reflect(node.v, ref) };
+    case "s":
+      return { t: "s", f: node.f.map(([name, t]) => [name, derive_reflect(t, ref)]) };
+    case "r":
+      return node.r === ref[0] ? structuredClone(ref[1]) : node;
+  }
+  throw new Error("Unreachable");
+}
+export function derive_reflects(node: NodeType, refs: [string, NodeType][]): NodeType {
+  for(let i=refs.length-1; i>=0; i--) {
+    node = derive_reflect(node, refs[i]);
+  }
+  return node;
+}
 
 export function get_id(node: NodeType): number {
   switch (node.t) {
@@ -406,7 +455,7 @@ export function get_type(id: number): NodeType {
     case VarType.StringList:
       return { t: "l", i: { t: "s", f: [] } };
     case VarType.Dictionary:
-      return { t: "d", k: { t: "b", b: "Str" }, v: { t: "b", b: "Str" } };
+      return { t: "d", k: { t: "b", b: "Ety" }, v: { t: "b", b: "Ety" } };
   }
   throw new Error("Invalid ID: " + id);
 }

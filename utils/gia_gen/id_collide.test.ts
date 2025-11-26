@@ -10,6 +10,7 @@ import { get_id, get_type, type NodeType, parse, stringify, to_string, type Node
 import { fixSparseArrays } from "../../src/util.ts";
 import { randomInt } from "./utils.ts";
 import { derived_records } from "../node_id/node_defines.ts";
+import { get_pin_info } from "./extract.ts";
 
 function generate_all_nodes(from: number, size: number = 300, line_width: number = 20, offsets: number = 1): GraphNode[] {
   const ret = [];
@@ -425,11 +426,35 @@ function generate_reflect() {
 }
 
 function read_all_reflect() {
-  const nodes = decode_gia_file({ gia_path: "./utils/ref/all_reflect_trim.gia" }).graph.graph?.inner.graph.nodes;
-  console.log(nodes?.map(n => n.concreteId?.nodeId).filter(x => x));
-  console.log(nodes?.map(n => n.pins[1]?.value.bNodeValue?.indexOfConcrete).filter(x => x).join(" "));
-  // console.log(nodes?.map(n => n.));
+  const nodes = decode_gia_file({ gia_path: "./utils/node_id/dicts.gia" }).graph.graph?.inner.graph.nodes!;
+  // const nodes = decode_gia_file({ gia_path: "./utils/ref/all_reflect_trim.gia" }).graph.graph?.inner.graph.nodes!;
+  // console.dir(nodes?.slice(0,5)?.map(n => n.pins.map(get_pin_info)), {depth:null});
+  type PinId = [index: number, kind: number, indexOfConcrete: number];
+  /** Concreted&Type -> PinId */
+  const concrete_id=new  Map<string, Set<string>>();
 
+  for(const [id, nds] of Object.entries(Object.groupBy(nodes, n => n.genericId.nodeId as number))) {
+    console.log("Node ID:", id);
+    const ns = nds?.filter(n => n.concreteId?.nodeId !== undefined);
+    if(ns===undefined || ns.length === 0){
+      console.log("No concrete nodes for", nds![0]);
+      continue;
+    }
+    for(const info of ns.map(n=>n.pins.map(get_pin_info)).flat()){
+      const key = `${info.type}:${info.indexOfConcrete}`;
+      const val = `${id}:${info.index}:${info.kind}`;
+      if(!concrete_id.has(key)){
+        concrete_id.set(key, new Set());
+      }
+      concrete_id.get(key)!.add(val);
+    }
+
+  }
+
+  console.log("Concrete ID Map:");
+  for(const [k,v] of concrete_id.entries()){
+    console.log(k,"->",Array.from(v).join(" | "));
+  }
 }
 
 
@@ -447,20 +472,20 @@ if (import.meta.main) {
   // read_derive_graph();
   // extract_types();
 
-  const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
-  const graph = decode_gia_file({
-    // gia_path: "./utils/ref/all_reflect_trim.gia",
-    // gia_path: "./utils/ref/test.gia",
-    gia_path: "./utils/ref/all_reflect.gia",
-    // gia_path: PATH + "all_reflect.gia",
-    // gia_path: "./utils/node_id/dicts.gia",
-  });
-  const nodes = graph.graph.graph!.inner.graph.nodes!;
-  console.dir(nodes[2098], { depth: null });
+  // const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
+  // const graph = decode_gia_file({
+  //   // gia_path: "./utils/ref/all_reflect_trim.gia",
+  //   // gia_path: "./utils/ref/test.gia",
+  //   gia_path: "./utils/ref/all_reflect.gia",
+  //   // gia_path: PATH + "all_reflect.gia",
+  //   // gia_path: "./utils/node_id/dicts.gia",
+  // });
+  // const nodes = graph.graph.graph!.inner.graph.nodes!;
+  // console.dir(nodes[2098], { depth: null });
 
 
   // generate_reflect();
-  // read_all_reflect();
+  read_all_reflect();
 
   // 下一步, 针对可变引脚, **分别**测试其 indexOfConcrete...... 太愚蠢了, 一个联合类型的节点引脚居然可以乱来......
 
