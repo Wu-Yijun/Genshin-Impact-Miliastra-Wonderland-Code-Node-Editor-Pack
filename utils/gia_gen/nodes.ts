@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { VarType } from "../protobuf/gia.proto.ts";
-import { concrete_map } from "../node_id/concrete_map.ts";
+// import { concrete_map } from "../node_id/concrete_map.ts";
 
 // const BasicTypes = ["Int", "Float", "Bool", "Str", "Vec", "GUID", "Entity", "Prefab", "Faction", "ConfigId"] as const;
 export const BasicTypes = ["Int", "Flt", "Bol", "Str", "Vec", "Gid", "Ety", "Pfb", "Fct", "Cfg"] as const;
@@ -640,9 +640,9 @@ export function to_tc_map_raw(src: Partial<TypeConcreteMap>[]): TypeConcreteMapR
     id: [...x.id ?? []],
   }));
 }
-export function get_concrete_map(id: number): TypeConcreteMap | null {
-  return concrete_map.find(x => x.id.has(id)) ?? null;
-}
+// export function get_concrete_map(id: number): TypeConcreteMap | null {
+//   return concrete_map.find(x => x.id.has(id)) ?? null;
+// }
 export function get_concrete_index(map_or_id: TypeConcreteMap | number, type: number | NodeType) {
   const id = typeof type === "number" ? type : get_id(type);
   const map = typeof map_or_id === "number" ? get_concrete_map(map_or_id) : map_or_id;

@@ -19,7 +19,7 @@ import {
   VarBase_ItemType_Inner_Kind,
   VarType,
 } from "../protobuf/gia.proto.ts";
-import { get_concrete_map, get_id, type NodePins, type TypeConcreteMap, type NodeType, get_concrete_index } from "./nodes.ts";
+import { get_id, type NodePins, type TypeConcreteMap, type NodeType, get_concrete_index } from "./nodes.ts";
 
 import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 
@@ -626,13 +626,6 @@ export interface NodeTypePinBody_ {
   /** 引脚的初始值，可选 */
   value?: any;
 }
-export interface NodeTypePinBody_ {
-  kind: NodePin_Index_Kind;
-  index: number;
-  type: NodeType;
-  indexOfConcrete?: number;
-  value?: any;
-}
 /**
  * 构建 NodeType 类型的引脚（NodeType → VarType）
  *
@@ -725,4 +718,78 @@ export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
     x: body.x ?? 0,
     y: body.y ?? 0,
   });
+}
+
+
+
+
+
+/** ⚠️ Warning: Do not use in productive environment.
+ * @deprecated Create an empty frame for genshin to auto derive pin contents. */
+interface NodeTypePinBodyEmpty_ {
+  /** 引脚类型 (输入/输出) */
+  kind: number;
+  /** 引脚索引 */
+  index: number;
+  /** 具体类型的索引，用于支持类型实例化 */
+  indexOfConcrete: number;
+  /** careful. this is type rather than indexOfConcrete */
+  map_type?: [number, number];
+}
+export function node_type_pin_body_frame(pin: NodeTypePinBodyEmpty_): NodePin {
+  if (pin.map_type === undefined) {
+    return {
+      i1: { kind: pin.kind as any, index: pin.index },
+      i2: { kind: pin.kind as any, index: pin.index },
+      value: {
+        class: VarBase_Class.NodeValueBase,
+        alreadySetVal: true,
+        bNodeValue: {
+          indexOfConcrete: pin.indexOfConcrete,
+          value: {} as any
+        }
+      },
+      type: 0,
+      connects: []
+    }
+  }
+  return {
+    i1: { kind: pin.kind as any, index: pin.index },
+    i2: { kind: pin.kind as any, index: pin.index },
+    value: {
+      class: VarBase_Class.NodeValueBase,
+      alreadySetVal: true,
+      bNodeValue: {
+        indexOfConcrete: pin.indexOfConcrete,
+        value: {} as any,
+        wrapper: {
+          classBase: 1,
+          inner: {
+            wrapper: {
+              class: VarBase_Class.MapBase,
+              mapPair: { key: pin.map_type[0], value: pin.map_type[1] } as any
+            }
+          }
+        }
+      }
+    },
+    type: 0,
+    connects: []
+  }
+}
+/** ⚠️ Warning: Do not use in productive environment. 
+ * @deprecated Create an empty frame for genshin to auto derive pin contents
+ * therefore we can get a full id-reflect list
+ * @param id 泛类 id
+ * @param pins 引脚类型列表, number: 普通引脚, [number, number]: 字典引脚 
+ * @returns 
+ *  */
+export function node_type_node_body_empty(id: number, pins: NodeTypePinBodyEmpty_[]) {
+  return node_body({
+    pins: pins.map(node_type_pin_body_frame),
+    generic_id: id,
+    concrete_id: id,
+    x: 0,
+    y: 0,
+  } as any);
 }

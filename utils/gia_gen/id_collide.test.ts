@@ -1,16 +1,16 @@
 import { readFileSync, writeFileSync } from "fs";
 import util from "node:util";
 import assert from "node:assert";
-import { graph_body, node_body, node_type_node_body, node_type_pin_body } from "./basic.ts";
+import { graph_body, node_body, node_type_node_body, node_type_node_body_empty, node_type_pin_body } from "./basic.ts";
 
 import type { NodePin, GraphNode } from "../protobuf/gia.proto.ts";
 import { NodePin_Index_Kind, VarBase_Class } from "../protobuf/gia.proto.ts";
 import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
-import { get_id, get_type, type NodeType, parse, stringify, to_string, type NodePinsRecords, BasicTypes, reflect, reflects, extract_reflect_names, reflects_records, to_tc_map_raw, type TypeConcreteMap, extract_reflect_fields, type_equal, get_concrete_map, is_reflect } from "./nodes.ts";
+import { get_id, get_type, type NodeType, parse, stringify, to_string, type NodePinsRecords, BasicTypes, reflect, reflects, extract_reflect_names, reflects_records, to_tc_map_raw, type TypeConcreteMap, extract_reflect_fields, type_equal, is_reflect } from "./nodes.ts";
 import { fixSparseArrays } from "../../src/util.ts";
 import { randomInt } from "./utils.ts";
 import { derived_records } from "../node_id/ref/node_defines.ts";
-import { get_pin_info, get_node_info } from "./extract.ts";
+import { get_pin_info, get_node_info, get_nodes } from "./extract.ts";
 
 function generate_all_nodes(from: number, size: number = 300, line_width: number = 20, offsets: number = 1): GraphNode[] {
   const ret = [];
@@ -111,53 +111,114 @@ function create_derived() {
   console.log("Saved to", "./utils/ref/derived_server_nodes.gia");
 }
 
-function create_node_with_pin(id: number, pin_index: number[], type: number, x = 0, y = 0) {
-  const pin: NodePin = {
-    i1: {
-      kind: NodePin_Index_Kind.InParam,
-      index: 0
-    },
-    i2: {
-      kind: NodePin_Index_Kind.InParam,
-      index: 0
-    },
-    value: {
-      class: VarBase_Class.NodeValueBase,
-      alreadySetVal: true,
-      bNodeValue: {
-        indexOfConcrete: type,
-        value: {} as any,
-      }
-    },
-    type: undefined as any,
-    connects: undefined as any,
-  };
-  const pins: NodePin[] = [];
-  for (let i = -6; i < 6; i++) {
-    const p = structuredClone(pin);
-    if (!pin_index.includes(i)) {
-      p.value.bNodeValue!.indexOfConcrete = 0;
-    }
-    if (i < 0) {
-      p.i1.kind = NodePin_Index_Kind.OutParam;
-      p.i2.kind = NodePin_Index_Kind.OutParam;
-      p.i1.index = -1 - i;
-      p.i2.index = -1 - i;
-    } else {
-      p.i1.index = i;
-      p.i2.index = i;
-    }
-    pins.push(p);
-  }
-  return node_body({
-    generic_id: id as any,
-    concrete_id: id as any,
-    x: x,
-    y: y,
-    pins: pins,
-  });
-}
-function create_node_lists(list: (number | (number | null)[])[]) {
+// function create_node_with_pin(id: number, pin_index: number[], type: number, x = 0, y = 0) {
+//   const pin: NodePin = {
+//     i1: {
+//       kind: NodePin_Index_Kind.InParam,
+//       index: 0
+//     },
+//     i2: {
+//       kind: NodePin_Index_Kind.InParam,
+//       index: 0
+//     },
+//     value: {
+//       class: VarBase_Class.NodeValueBase,
+//       alreadySetVal: true,
+//       bNodeValue: {
+//         indexOfConcrete: type,
+//         value: {} as any,
+//       }
+//     },
+//     type: undefined as any,
+//     connects: undefined as any,
+//   };
+//   const pins: NodePin[] = [];
+//   for (let i = -6; i < 6; i++) {
+//     const p = structuredClone(pin);
+//     if (!pin_index.includes(i)) {
+//       p.value.bNodeValue!.indexOfConcrete = 0;
+//     }
+//     if (i < 0) {
+//       p.i1.kind = NodePin_Index_Kind.OutParam;
+//       p.i2.kind = NodePin_Index_Kind.OutParam;
+//       p.i1.index = -1 - i;
+//       p.i2.index = -1 - i;
+//     } else {
+//       p.i1.index = i;
+//       p.i2.index = i;
+//     }
+//     pins.push(p);
+//   }
+//   return node_body({
+//     generic_id: id as any,
+//     concrete_id: id as any,
+//     x: x,
+//     y: y,
+//     pins: pins,
+//   });
+// }
+function create_node_lists() {
+
+  // 手动读取57个泛类的引脚位置
+  const list: (number | (number | null)[])[] = [
+    0,
+    [0, 1],
+    [0, 1],
+    1,
+    2, // Set Cus Var
+    [null, 3, 4],
+    [null, 0],
+    [0, 1],
+    0,
+    [0, 1], // List Includes
+    [0, 1],
+    0,
+    0,
+    0,
+    [0, null, 0], // Maximum
+    [0, null, 0],
+    0,
+    [0, 3],
+    0,
+    [0, null, 0], // Assemble
+    [0, null, 0], // Convert
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0], // Div
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0], // Sgn
+    [0, 1, 2, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0],
+    [0, 1, null, 0], // GE
+    [1],
+    [null, 0],
+    [null, 3, 4],
+    [null, 3, 4],
+    2, // Native Setting CV
+    [null, 0],
+    [0, 1],
+    [0, null, 0],
+    3,
+    [0, 1, 2], // Set KV
+    [0, 1, null, 1],
+    [0, 1, null, 0],
+    [0, 1],
+    [0, 1],
+    [0, 1], // Query dict V
+    [0, null, 0],
+    [0, null, 0],
+    [0, null, 0],
+    [0], // Clear D
+    [0, 1, null, 0],
+    [0, null, 0, 1],
+    [0, null, 0, 1],
+  ];
   const ids = get_graph_ids("Generic");
   const nodes: GraphNode[] = [];
   for (let i = 0; i < list.length; i++) {
@@ -171,7 +232,7 @@ function create_node_lists(list: (number | (number | null)[])[]) {
       }
       return x;
     }).filter(x => x !== null);
-    for (let j = 0; j < 21; j++) {
+    for (let j = 0; j < 23; j++) {
       nodes.push(create_node_with_pin(ids[i], pin, j, i, j));
     }
   }
@@ -187,6 +248,7 @@ function create_node_lists(list: (number | (number | null)[])[]) {
 }
 
 
+const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
 
 function read_derive_graph() {
   const graph = decode_gia_file({
@@ -218,12 +280,6 @@ function read_derive_graph() {
   }
   writeFileSync("./utils/node_id/ref/all_1.txt", arr.join("\n"));
 }
-
-// /** number for pure type, [number, number] for key-value */
-// type PinType = number | [number, number];
-// /** Positive number starting from 1 for input, negative for output */
-// type PinTypes = { [id: number]: PinType };
-// type NodeTypes = { [node_id: number]: PinTypes };
 
 function extract_types() {
   // 手动读取57个泛类的引脚位置
@@ -341,9 +397,116 @@ function extract_types() {
   console.log(res);
 }
 
+function generate_concrete_map() {
+  const ds = derived_records as NodePinsRecords[];
+  const nodes: GraphNode[] = [];
+  for (const d of ds) {
+    for (let i = 0; i < 30; i++) {
+      const p1 = d.inputs.map((x, idx) => {
+        if (x === undefined) return undefined;
+        return {
+          kind: 3,
+          index: idx,
+          indexOfConcrete: i
+        };
+      }).filter(x => x !== undefined);
+      const p2 = d.outputs.map((x, idx) => {
+        if (x === undefined) return undefined;
+        return {
+          kind: 4,
+          index: idx,
+          indexOfConcrete: i
+        };
+      }).filter(x => x !== undefined);
+      nodes.push(node_type_node_body_empty(d.id, [...p1, ...p2]))
+    }
+  }
+
+  encode_gia_file({
+    out_path: PATH + "temp.gia",
+    gia_struct: graph_body({
+      uid: randomInt(9, "201"),
+      graph_id: randomInt(10, "102"),
+      nodes: nodes,
+    })
+  });
+}
+function read_concrete_map() {
+  const nodes = get_nodes(decode_gia_file({ gia_path: "./utils/ref/all_reflect_trim.gia" }))!;
+  const cm = new Set<string>();
+  for (const n of nodes) {
+    const info = get_node_info(n);
+    assert(info.concrete_id > 0)
+    assert(info.generic_id > 0)
+    for (const i of info.pins) {
+      assert(i.indexOfConcrete >= 0);
+      cm.add(info.generic_id + ":" + i.kind + ":" + i.index + "|" + i.indexOfConcrete + ":" + i.type);
+    }
+  }
+  const p = Array.from(cm).sort()
+    // .filter(x => !x.startsWith("149") && !x.startsWith("151") && !x.startsWith("114") && !x.startsWith("121"))
+    .map(x => x.split("|"));
+  // console.log(p);
+  const group = Object.groupBy(p, x => x[0]);
+  const m = Object.entries(group)
+    .map(([k, v]) => ({ k, v: v!.map(arr => arr[1].split(":").map(x => parseInt(x))) }))
+    .sort((a, b) => -a.v.length + b.v.length)
+    .filter(x => x.v.length > 1)
+    .map(({ k, v }) => {
+      const d: (number | null)[] = Array(30).fill(null);
+      v.forEach((s) => {
+        assert(d[s[0]] === null);
+        d[s[0]] = s[1];
+      })
+      return { k, v: d }
+    });
+  // console.log(m.slice(0, 3));
+  const groups: (null | number)[][] = [];
+  const index: string[][] = [];
+  for (const { k, v } of m) {
+    let find = false;
+    for (let gi = 0; gi < groups.length; gi++) {
+      const g = groups[gi];
+      let fail = false;
+      for (let i = 0; i < v.length; i++) {
+        if (v[i] !== null && g[i] !== null && v[i] !== g[i]) {
+          fail = true;
+          break;
+        }
+      }
+      if (!fail) {
+        find = true;
+        v.forEach((i, j) => i !== null && (g[j] = i));
+        index[gi].push(k);
+        break;
+      }
+    }
+    if (!find) {
+      index.push([k]);
+      groups.push(v);
+    }
+  }
+  // console.log(groups);
+  // console.log(index);
+
+  const a = index.map(x => x.map(s => s.split(":")[0]));
+  const as = a.map(x => new Set(x));
+  // console.log(as);
+  const b = new Set(a.flat()).forEach((i) => {
+    console.log("Check", i, as.map((x, i) => ({ x, i })).filter(x => x.x.has(i)).map(x => x.i))
+  });
+  groups.forEach(g => assert.equal(g.findLastIndex(x => x !== null) + 1, g.findIndex(x => x === null)));
+  const map = {
+    maps: groups.map(arr => arr.filter(g => g !== null)),
+    pins: index.map((arr, i) => arr.map(a => [a, i])).flat(),
+  };
+  console.dir(map, { depth: null, maxArrayLength: null })
+  // console.log(groups[0].filter(g => g !== null))
+
+}
+
 function generate_reflect() {
   const d = derived_records as NodePinsRecords[];
-  const VALUE_MAP = [...BasicTypes, ...BasicTypes.map(v => `L<${v}>`)];
 
   const nodes = [];
 
@@ -647,11 +810,17 @@ function write_read_reflect(read = false) {
           assert(nt.t === "s");
           if (read === true) {
             // 泛类节点, 提取其类型信息
+            console.log(nodes_len);
+            if (nodes[nodes_len].genericId === undefined) {
+              console.warn("Bad De")
+            }
+            if (nodes_len === 2388) console.dir(nodes.slice(nodes_len - 7, nodes_len - 6).map(get_node_info), { depth: null });
             const info = get_node_info(nodes[nodes_len++]);
             const ref_map = get_concrete_map(info.concrete_id);
             assert(ref_map !== null);
-            console.dir({ info, n: get_node_info(nodes[nodes_len++]) }, { depth: null });
-            return;
+            // console.dir(nodes[nodes_len++], { depth: null });
+            // return;
+            continue;
             // console.dir(info, { depth: null });
             // console.log(index);
             assert.equal(info.generic_id, rec.id);
@@ -717,27 +886,59 @@ if (import.meta.main) {
   // read_derive_graph();
   // extract_types();
 
+  // generate_concrete_map();
+  read_concrete_map();
+
   // const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
-  // const graph = decode_gia_file({
-  //   // gia_path: "./utils/ref/correct_reflect_trim.gia",
-  //   gia_path: "./utils/ref/correct_reflect.gia",
-  // });
-  // const nodes = graph.graph.graph!.inner.graph.nodes!;
-  // console.dir(nodes[1], { depth: null });
+  // // const graph = decode_gia_file({
+  // //   // gia_path: "./utils/ref/correct_reflect_trim.gia",
+  // //   gia_path: "./utils/ref/correct_reflect.gia",
+  // // });
+  // // const nodes = graph.graph.graph!.inner.graph.nodes!;
+  // // console.dir(nodes[2381], { depth: null });
   // const graph2 = decode_gia_file({
-  //   gia_path: PATH + "correct_reflect.gia",
+  //   // gia_path: PATH + "correct_reflect.gia",
+  //   gia_path: PATH + "temp1.gia",
   // });
   // const nodes2 = graph2.graph.graph!.inner.graph.nodes!;
   // console.dir(nodes2[0], { depth: null });
+
+  // nodes2[0].pins[0].value.bNodeValue!.value = {} as any;
+  // nodes2[0].pins[0].type = 0;
+  // nodes2[0].pins[1].value.bNodeValue!.value = {} as any;
+  // nodes2[0].pins[1].type = 0;
+  // nodes2[0].pins[2].value.bNodeValue!.value = {} as any;
+  // nodes2[0].concreteId.nodeId = 1088 as any;
+  // nodes2.pop();
+  // nodes2.push(node_type_node_body_empty(1088, [
+  //   {
+  //     kind: 3,
+  //     index: 0,
+  //     indexOfConcrete: 3
+  //   },
+  //   {
+  //     kind: 3,
+  //     index: 1,
+  //     indexOfConcrete: 5
+  //   },
+  //   {
+  //     kind: 4,
+  //     index: 0,
+  //     indexOfConcrete: 1,
+  //     // map_type: [3, 6],
+  //   },
+  // ]))
+  // encode_gia_file({ gia_struct: graph2, out_path: PATH + "temp1.gia", });
 
 
   // generate_reflect();
   // read_all_reflect();
 
   // write_read_reflect(false);
-  write_read_reflect(true);
+  // write_read_reflect(true);
 
   // 下一步, 针对可变引脚, **分别**测试其 indexOfConcrete...... 太愚蠢了, 一个联合类型的节点引脚居然可以乱来......
+
 
 
   console.timeEnd("Time Consume")
