@@ -1,6 +1,6 @@
 import assert from "assert";
-import type {  GraphNode, NodePin, Root  } from "../protobuf/gia.proto.ts";
-import { VarBase_Class,NodePin_Index_Kind,VarType,VarBase_ItemType_Inner_Kind } from "../protobuf/gia.proto.ts";
+import type { GraphNode, NodePin, Root } from "../protobuf/gia.proto.ts";
+import { VarBase_Class, NodePin_Index_Kind, VarType, VarBase_ItemType_Inner_Kind } from "../protobuf/gia.proto.ts";
 import { get_type, type NodeType } from "./nodes.ts";
 
 
@@ -8,7 +8,7 @@ export function get_nodes(graph: Root): GraphNode[] | null {
   return graph?.graph?.graph?.inner?.graph?.nodes ?? null;
 }
 
-interface PinInfo {
+interface PinInfo_ {
   kind: NodePin_Index_Kind;
   index: number;
   type: VarType;
@@ -16,8 +16,8 @@ interface PinInfo {
   node_type: NodeType;
   is_node: boolean;
 }
-export function get_pin_info(pin: NodePin): PinInfo {
-  const ret: PinInfo = {
+export function get_pin_info(pin: NodePin): PinInfo_ {
+  const ret: PinInfo_ = {
     kind: pin.i1.kind,
     index: pin.i1.index,
     type: pin.type,
@@ -33,5 +33,19 @@ export function get_pin_info(pin: NodePin): PinInfo {
     ret.node_type.k = get_type(t.items!.key);
     ret.node_type.v = get_type(t.items!.value);
   }
+  return ret;
+}
+
+interface NodeInfo_ {
+  generic_id: number;
+  concrete_id: number;
+  pins: PinInfo_[];
+}
+export function get_node_info(node: GraphNode): NodeInfo_ {
+  const ret: NodeInfo_ = {
+    generic_id: node.genericId.nodeId,
+    concrete_id: node.concreteId.nodeId,
+    pins: node.pins.map(v => get_pin_info(v)),
+  };
   return ret;
 }

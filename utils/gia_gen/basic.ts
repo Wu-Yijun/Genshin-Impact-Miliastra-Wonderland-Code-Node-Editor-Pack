@@ -23,12 +23,33 @@ import { get_concrete_map, get_id, type NodePins, type TypeConcreteMap, type Nod
 
 import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 
+/**
+ * GraphBody_ 接口定义了构建图的基本参数
+ */
 export interface GraphBody_ {
+  /** 唯一标识符 */
   uid: number;
+  /** 图的 ID */
   graph_id: number;
+  /** 图的名称，可选 */
   graph_name?: string;
+  /** 图中包含的节点列表，可选 */
   nodes?: GraphNode[];
 }
+/**
+ * 根据提供的参数构建一个图对象 (Root)
+ *
+ * 参数列表：
+ * - body: {
+ *     uid: number;
+ *     graph_id: number;
+ *     graph_name?: string;
+ *     nodes?: GraphNode[];
+ *   }
+ *
+ * @param body 构建图所需的参数
+ * @returns Root 图对象
+ */
 export function graph_body(body: GraphBody_): Root {
   const graph_name = body.graph_name ??
     "Graph " + randomInt(8).toString() + ".gia";
@@ -72,17 +93,42 @@ export function graph_body(body: GraphBody_): Root {
   return gia;
 }
 
+/**
+ * NodeBody_ 接口定义了构建节点的基本参数
+ */
 export interface NodeBody_ {
+  /** 通用 ID */
   generic_id: NodeId;
+  /** 具体 ID */
   concrete_id: NodeId;
+  /** X 坐标 */
   x: number;
+  /** Y 坐标 */
   y: number;
+  /** 节点的引脚列表 */
   pins: NodePin[];
-  /** ⚠️ Warning: This may cause ID collision. */
-  index?: number;
+  /** ⚠️ Warning: This may cause ID collision. 节点唯一索引，不建议填入 */
+  unique_index?: number;
 }
+
+/**
+ * 根据提供的参数构建一个节点对象 (GraphNode)
+ *
+ * 参数列表：
+ * - body: {
+ *     generic_id: NodeId;
+ *     concrete_id: NodeId;
+ *     x: number;
+ *     y: number;
+ *     pins: NodePin[];
+ *     unique_index?: number;
+ *   }
+ *
+ * @param body 构建节点所需的参数
+ * @returns GraphNode 节点对象
+ */
 export function node_body(body: NodeBody_): GraphNode {
-  const nodeIndex = body.index ?? counter_index.value;
+  const nodeIndex = body.unique_index ?? counter_index.value;
   const node: GraphNode = {
     nodeIndex: nodeIndex,
     genericId: {
@@ -105,12 +151,33 @@ export function node_body(body: NodeBody_): GraphNode {
   return node;
 }
 
+/**
+ * PinBody_ 接口定义了构建引脚的基本参数
+ */
 export interface PinBody_ {
+  /** 引脚类型 (输入/输出) */
   kind: NodePin_Index_Kind;
+  /** 引脚索引 */
   index: number;
+  /** 引脚的值，可选 */
   value?: VarBase;
+  /** 引脚的数据类型 */
   type: VarType;
 }
+/**
+ * 根据提供的参数构建一个引脚对象 (NodePin)
+ *
+ * 参数列表：
+ * - body: {
+ *     kind: NodePin_Index_Kind;
+ *     index: number;
+ *     value?: VarBase;
+ *     type: VarType;
+ *   }
+ *
+ * @param body 引脚参数
+ * @returns NodePin 引脚对象
+ */
 export function pin_body(body: PinBody_): NodePin {
   const pin: NodePin = {
     i1: {
@@ -128,11 +195,30 @@ export function pin_body(body: PinBody_): NodePin {
   return pin;
 }
 
+/**
+ * PinValue_ 接口定义了构建引脚值的参数
+ */
 export interface PinValue_ {
+  /** 具体类型的索引，可选 */
   indexOfConcrete?: number;
+  /** 基础值，可选 */
   value?: VarBase;
+  /** 值包装器，可选 */
   wrapper?: NodeValueBaseValue_Wrapper;
 }
+/**
+ * 构建一个值对象 VarBase（用于引脚 value）
+ *
+ * 参数列表：
+ * - body: {
+ *     indexOfConcrete?: number;
+ *     value?: VarBase;
+ *     wrapper?: NodeValueBaseValue_Wrapper;
+ *   }
+ *
+ * @param body 值参数
+ * @returns VarBase 引脚值对象
+ */
 export function pin_value(body: PinValue_): VarBase {
   const value: VarBase = {
     class: VarBase_Class.NodeValueBase,
@@ -147,6 +233,15 @@ export function pin_value(body: PinValue_): VarBase {
 }
 
 
+/**
+ * 根据变量类型构建 ItemType 对象
+ *
+ * 参数列表：
+ * - type: VarType
+ *
+ * @param type 变量类型
+ * @returns VarBase_ItemType
+ */
 export function item_type(type: VarType): VarBase_ItemType {
   return {
     classBase: 1,
@@ -157,9 +252,22 @@ export function item_type(type: VarType): VarBase_ItemType {
   };
 }
 
+/**
+ * EnumValue_ 接口定义了枚举值的参数
+ */
 export interface EnumValue_ {
+  /** 枚举值 */
   value: EnumNode_Value;
 }
+/**
+ * 构建枚举类型值 VarBase
+ *
+ * 参数列表：
+ * - body: { value: EnumNode_Value }
+ *
+ * @param body 枚举值
+ * @returns VarBase
+ */
 export function enum_value(body: EnumValue_) {
   const value: VarBase = {
     class: VarBase_Class.EnumBase,
@@ -170,14 +278,37 @@ export function enum_value(body: EnumValue_) {
   return value;
 }
 
+/**
+ * MapPinBody_ 接口定义了构建 Map 类型引脚的参数
+ */
 export interface MapPinBody_ {
+  /** 引脚类型 (输入/输出) */
   kind: NodePin_Index_Kind;
+  /** 引脚索引 */
   index: number;
+  /** 键的类型 */
   key_type: VarType;
+  /** 值的类型 */
   value_type: VarType;
+  /** 具体类型的索引，可选 */
   indexOfConcrete?: number;
 }
-export function map_pin_body(body: MapPinBody_) {
+/**
+ * 构建 Map 类型引脚
+ *
+ * 参数列表：
+ * - body: {
+ *     kind: NodePin_Index_Kind;
+ *     index: number;
+ *     key_type: VarType;
+ *     value_type: VarType;
+ *     indexOfConcrete?: number;
+ *   }
+ *
+ * @param body Map 引脚参数
+ * @returns NodePin
+ */
+export function map_pin_body(body: MapPinBody_): NodePin {
   const map_pair = {
     key: body.key_type,
     value: body.value_type,
@@ -217,13 +348,34 @@ export function map_pin_body(body: MapPinBody_) {
   });
 }
 
-export interface ListPinBody {
+/**
+ * ListPinBody_ 接口定义了构建 List 类型引脚的参数
+ */
+export interface ListPinBody_ {
+  /** 具体类型的索引，可选 */
   indexOfConcrete?: number;
+  /** 引脚类型 (输入/输出) */
   kind: NodePin_Index_Kind;
+  /** 引脚索引 */
   index: number;
+  /** 列表中元素的类型 */
   value_type: VarType;
 }
-export function list_pin_body(body: ListPinBody) {
+/**
+ * 构建 List 类型引脚
+ *
+ * 参数列表：
+ * - body: {
+ *     indexOfConcrete?: number;
+ *     kind: NodePin_Index_Kind;
+ *     index: number;
+ *     value_type: VarType;
+ *   }
+ *
+ * @param body List 引脚参数
+ * @returns NodePin
+ */
+export function list_pin_body(body: ListPinBody_): NodePin {
   const value: VarBase = {
     class: VarBase_Class.ArrayBase,
     alreadySetVal: false,
@@ -242,6 +394,15 @@ export function list_pin_body(body: ListPinBody) {
   });
 }
 
+/**
+ * 构建整数值 VarBase
+ *
+ * 参数列表：
+ * - val: number
+ *
+ * @param val 整数值
+ * @returns VarBase
+ */
 export function int_pin_body(val: number): VarBase {
   return {
     class: VarBase_Class.IntBase,
@@ -250,6 +411,15 @@ export function int_pin_body(val: number): VarBase {
     bInt: { val },
   };
 }
+/**
+ * 构建布尔值 VarBase
+ *
+ * 参数列表：
+ * - val: boolean | number
+ *
+ * @param val 布尔或 0/1
+ * @returns VarBase
+ */
 export function bool_pin_body(val: number | boolean): VarBase {
   return {
     class: VarBase_Class.EnumBase,
@@ -258,6 +428,17 @@ export function bool_pin_body(val: number | boolean): VarBase {
     bEnum: { val: val ? EnumNode_Value.True : EnumNode_Value.Default },
   };
 }
+/**
+ * 构建 ID 值 VarBase
+ *
+ * 参数列表：
+ * - val: number;
+ * - type?: VarType (默认 GUID)
+ *
+ * @param val ID 数值
+ * @param type ID 类型
+ * @returns VarBase
+ */
 export function id_pin_body(val: number, type: VarType = VarType.GUID): VarBase {
   return {
     class: VarBase_Class.IdBase,
@@ -266,6 +447,15 @@ export function id_pin_body(val: number, type: VarType = VarType.GUID): VarBase 
     bId: { val },
   };
 }
+/**
+ * 构建浮点数值 VarBase
+ *
+ * 参数列表：
+ * - val: number
+ *
+ * @param val 浮点数
+ * @returns VarBase
+ */
 export function float_pin_body(val: number): VarBase {
   return {
     class: VarBase_Class.FloatBase,
@@ -274,6 +464,15 @@ export function float_pin_body(val: number): VarBase {
     bFloat: { val },
   };
 }
+/**
+ * 构建字符串值 VarBase
+ *
+ * 参数列表：
+ * - val: string
+ *
+ * @param val 字符串
+ * @returns VarBase
+ */
 export function string_pin_body(val: string): VarBase {
   return {
     class: VarBase_Class.StringBase,
@@ -282,6 +481,15 @@ export function string_pin_body(val: string): VarBase {
     bString: { val },
   };
 }
+/**
+ * 构建向量值 VarBase
+ *
+ * 参数列表：
+ * - vec: number[]  (长度至少 3)
+ *
+ * @param vec 向量 [x,y,z]
+ * @returns VarBase
+ */
 export function vector_pin_body(vec: number[]): VarBase {
   return {
     class: VarBase_Class.VectorBase,
@@ -297,15 +505,43 @@ export function vector_pin_body(vec: number[]): VarBase {
   };
 }
 
+/**
+ * AnyPinBody_ 接口定义了构建任意类型引脚的参数
+ */
 export interface AnyPinBody_ {
+  /** 引脚类型 (输入/输出) */
   kind: NodePin_Index_Kind;
+  /** 引脚索引 */
   index: number;
+  /** 引脚的数据类型 (VarType)，例如 Integer / Float / Dictionary 等 */
   type: VarType;
-  /** Only exist when it is dict */
+  /**
+   * 当引脚类型为字典(Dictionary)时需要提供的键值类型对
+   * [key_type, value_type]
+   * 仅在 type === VarType.Dictionary 时有效
+   */
   key_val_type?: [VarType, VarType];
+  /** 具体类型的索引，可选，用于多态类型的选择 */
   indexOfConcrete?: number;
+  /** 引脚的初始值，可选，不同类型对应不同值结构 */
   value?: any;
 }
+/**
+ * 构建任意类型引脚（自动根据 VarType 分发）
+ *
+ * 参数列表：
+ * - body: {
+ *     kind: NodePin_Index_Kind;
+ *     index: number;
+ *     type: VarType;
+ *     key_val_type?: [VarType, VarType];
+ *     indexOfConcrete?: number;
+ *     value?: any;
+ *   }
+ *
+ * @param body 任意引脚参数
+ * @returns NodePin
+ */
 export function any_pin_body(body: AnyPinBody_): NodePin {
   let value: VarBase;
   switch (body.type) {
@@ -375,6 +611,21 @@ export function any_pin_body(body: AnyPinBody_): NodePin {
   });
 }
 
+/**
+ * NodeTypePinBody_ 接口定义了基于 NodeType 构建引脚的参数
+ */
+export interface NodeTypePinBody_ {
+  /** 引脚类型 (输入/输出) */
+  kind: NodePin_Index_Kind;
+  /** 引脚索引 */
+  index: number;
+  /** 节点类型系统中的类型描述对象 NodeType */
+  type: NodeType;
+  /** 具体类型的索引，用于支持类型实例化 */
+  indexOfConcrete?: number;
+  /** 引脚的初始值，可选 */
+  value?: any;
+}
 export interface NodeTypePinBody_ {
   kind: NodePin_Index_Kind;
   index: number;
@@ -382,6 +633,21 @@ export interface NodeTypePinBody_ {
   indexOfConcrete?: number;
   value?: any;
 }
+/**
+ * 构建 NodeType 类型的引脚（NodeType → VarType）
+ *
+ * 参数列表：
+ * - body: {
+ *     kind: NodePin_Index_Kind;
+ *     index: number;
+ *     type: NodeType;
+ *     indexOfConcrete?: number;
+ *     value?: any;
+ *   }
+ *
+ * @param body NodeType 引脚参数
+ * @returns NodePin
+ */
 export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
   let key_val_type: [VarType, VarType] | undefined;
   if (body.type.t === "d") {
@@ -397,16 +663,42 @@ export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
   });
 }
 
+/**
+ * NodeTypeNodeBody_ 接口定义了构建基于 NodeType 的节点的参数
+ */
 export interface NodeTypeNodeBody_ {
+  /** 节点类型定义，包括输入/输出引脚类型列表 */
   node: NodePins;
-  map: TypeConcreteMap;
+  /** 类型到具体实例映射表，用于确定具体类型索引，可选，默认使用 node.id 检索 */
+  map?: TypeConcreteMap;
+  /** 节点的泛类 ID，可选，默认使用 node.id */
+  generic_id?: number;
+  /** 节点的具体 ID，可选，默认使用 node.id */
   concrete_id?: number;
-  x: number;
-  y: number;
+  /** 节点的 X 坐标 */
+  x?: number;
+  /** 节点的 Y 坐标 */
+  y?: number;
 }
+/**
+ * 根据 NodeType 构建完整 GraphNode（自动构建 pins&类型映射）
+ *
+ * 参数列表：
+ * - body: {
+ *     node: NodePins;
+ *     map?: TypeConcreteMap;
+ *     concrete_id?: number;
+ *     x?: number;
+ *     y?: number;
+ *   }
+ *
+ * @param body NodeType 节点参数
+ * @returns GraphNode
+ */
 export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
+  const generic_id = body.generic_id ?? body.node.id;
   const concrete_id = body.concrete_id ?? body.node.id;
-  const map = get_concrete_map(body.node.id);
+  const map = body.map || get_concrete_map(body.node.id);
   const pins: NodePin[] = [];
   body.node.inputs.forEach((p, i) => {
     if (p === undefined) return;
@@ -427,11 +719,10 @@ export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
     }));
   });
   return node_body({
-    index: body.node.id,
     pins,
-    generic_id: body.node.id as any,
+    generic_id: generic_id as any,
     concrete_id: concrete_id as any,
-    x: body.x,
-    y: body.y,
+    x: body.x ?? 0,
+    y: body.y ?? 0,
   });
 }

@@ -31,7 +31,10 @@ export function randomInt(len: number, starting: string = ""): number {
   return parseInt(ret);
 }
 
-
-export function todo<T>(msg?: string): T {
-  throw new Error("TODO: Not implemented yet." + (msg ? ` Details: ${msg}` : ""));
+const DEBUG = false;
+export function todo<T>(msg?: string, strict = DEBUG): T {
+  const err = "TODO: Not implemented yet." + (msg ? ` Details: ${msg}` : "")
+  if (strict) throw new Error(err);
+  else console.error(err);
+  return 0 as any;
 }

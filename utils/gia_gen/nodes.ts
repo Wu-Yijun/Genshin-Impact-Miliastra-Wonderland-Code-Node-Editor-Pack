@@ -227,7 +227,7 @@ export function reflects(type: NodeType, refs: [string, NodeType][], allow_undef
   if (type === undefined && allow_undefined === true) return undefined as any;
   return refs.reduce((type, ref) => reflect(type, ref), type);
 }
-export function reflects_records(rec: NodePinsRecords, refs?: [string, NodeType][] | string): NodePins {
+export function reflects_records(rec: NodePinsRecords, refs?: [string, NodeType][] | string, allow_undefined = false): NodePins {
   // find id
   if (rec.reflectMap === undefined) {
     assert(refs === undefined);
@@ -236,7 +236,7 @@ export function reflects_records(rec: NodePinsRecords, refs?: [string, NodeType]
   assert(refs !== undefined);
   const refs_str = typeof refs === "string" ? refs : stringify({ t: "s", f: refs });
   const id = rec.reflectMap!.find(r => r[1] === refs_str)?.[2];
-  assert(id !== undefined);
+  assert(id !== undefined || allow_undefined);
   // reflect expression
   let refs_exp;
   if (typeof refs === "string") {
@@ -247,9 +247,9 @@ export function reflects_records(rec: NodePinsRecords, refs?: [string, NodeType]
     refs_exp = refs;
   }
   return {
-    inputs: rec.inputs.map(node => reflects(parse(node), refs_exp, true)),
-    outputs: rec.outputs.map(node => reflects(parse(node), refs_exp, true)),
-    id: rec.id
+    inputs: rec.inputs.map(node => reflects(parse(node), refs_exp, allow_undefined)),
+    outputs: rec.outputs.map(node => reflects(parse(node), refs_exp, allow_undefined)),
+    id: id ?? rec.id,
   }
 }
 export function unwrap_records(rec: NodePinsRecords): NodePins[] {
@@ -257,7 +257,7 @@ export function unwrap_records(rec: NodePinsRecords): NodePins[] {
     return [{
       inputs: rec.inputs.map(parse),
       outputs: rec.outputs.map(parse),
-      id: rec.id
+      id: rec.id,
     }];
   }
   const map: [NodeType, NodeId][] = rec.reflectMap.sort(r => r[0]).map(r => [parse(r[1]), r[2]]);
@@ -266,7 +266,7 @@ export function unwrap_records(rec: NodePinsRecords): NodePins[] {
   return rs.map((r, i) => ({
     inputs: rec.inputs.map(node => reflects(parse(node), r)),
     outputs: rec.outputs.map(node => reflects(parse(node), r)),
-    id: ids[i]
+    id: ids[i],
   }));
 }
 
@@ -307,6 +307,42 @@ export function extract_reflect_names(type: NodeType): string[] {
   };
   core(type);
   return Array.from(set);
+}
+export function extract_reflect_fields(type: NodeType, ref: NodeType): [string, NodeType][] {
+  const fields = new Map<string, NodeType>();
+  const core = (r: NodeType, t: NodeType) => {
+    if (r.t === "r") {
+      const f = fields.get(r.r);
+      if (!f) {
+        fields.set(r.r, t);
+      } else {
+        assert(type_equal(f, t));
+      }
+      return;
+    }
+    assert.equal(t.t, r.t);
+    switch (r.t) {
+      case "b":
+        assert.equal(r.b, (t as any).b);
+        return;
+      case "e":
+        assert.equal(r.e, (t as any).e);
+        return;
+      case "l":
+        core(r.i, (t as any).i);
+        return;
+      case "s":
+        r.f.forEach(([name, type]) => core(type, (t as any).f[name]));
+        return;
+      case "d":
+        core(r.k, (t as any).k);
+        core(r.v, (t as any).v);
+        return;
+    }
+
+  }
+  core(ref, type);
+  return [...fields.entries()];
 }
 
 export function type_equal(a: NodeType, b: NodeType): boolean {
@@ -586,7 +622,7 @@ export function to_tc_map(str: string | TypeConcreteMapRaw[]): TypeConcreteMap[]
   if (typeof str !== "string") {
     return str.map(src => ({
       map: new Map(src.map as [number, number][] ?? []),
-      id: new Set(src.id ?? []),
+      id: new Set([...src.id ?? []]),
       // concrete_id: new Set(src.concrete_id ?? []),
     }));
   }
