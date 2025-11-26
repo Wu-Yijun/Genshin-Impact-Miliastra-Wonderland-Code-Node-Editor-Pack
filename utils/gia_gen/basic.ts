@@ -1,6 +1,5 @@
 import assert from "node:assert";
 import {
-  EnumNode_EnumEqualList,
   EnumNode_Value,
   type GraphNode,
   NodeGraph_Id_Class,
@@ -20,17 +19,17 @@ import {
   VarBase_ItemType_Inner_Kind,
   VarType,
 } from "../protobuf/gia.proto.ts";
-import { get_id, type NodeType } from "./nodes.ts";
+import { get_concrete_map, get_id, type NodePins, type TypeConcreteMap, type NodeType, get_concrete_index } from "./nodes.ts";
 
 import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 
-export interface GraphBody {
+export interface GraphBody_ {
   uid: number;
   graph_id: number;
   graph_name?: string;
   nodes?: GraphNode[];
 }
-export function graph_body(body: GraphBody): Root {
+export function graph_body(body: GraphBody_): Root {
   const graph_name = body.graph_name ??
     "Graph " + randomInt(8).toString() + ".gia";
   const file_name = graph_name.replaceAll(/[^a-zA-Z0-9_.]+/gs, "_").replaceAll(
@@ -73,7 +72,7 @@ export function graph_body(body: GraphBody): Root {
   return gia;
 }
 
-export interface NodeBody {
+export interface NodeBody_ {
   generic_id: NodeId;
   concrete_id: NodeId;
   x: number;
@@ -82,7 +81,7 @@ export interface NodeBody {
   /** ⚠️ Warning: This may cause ID collision. */
   index?: number;
 }
-export function node_body(body: NodeBody): GraphNode {
+export function node_body(body: NodeBody_): GraphNode {
   const nodeIndex = body.index ?? counter_index.value;
   const node: GraphNode = {
     nodeIndex: nodeIndex,
@@ -99,20 +98,20 @@ export function node_body(body: NodeBody): GraphNode {
       nodeId: body.concrete_id,
     },
     pins: body.pins,
-    x: body.x * 300 + Math.random() * 10,
-    y: body.y * 200 + Math.random() * 10,
+    x: body.x * 300 + Math.random() * 10, // shakings
+    y: body.y * 200 + Math.random() * 10,// shakings
     usingStruct: [],
   };
   return node;
 }
 
-export interface PinBody {
+export interface PinBody_ {
   kind: NodePin_Index_Kind;
   index: number;
   value?: VarBase;
   type: VarType;
 }
-export function pin_body(body: PinBody): NodePin {
+export function pin_body(body: PinBody_): NodePin {
   const pin: NodePin = {
     i1: {
       kind: body.kind,
@@ -129,12 +128,12 @@ export function pin_body(body: PinBody): NodePin {
   return pin;
 }
 
-export interface PinValue {
+export interface PinValue_ {
   indexOfConcrete?: number;
   value?: VarBase;
   wrapper?: NodeValueBaseValue_Wrapper;
 }
-export function pin_value(body: PinValue): VarBase {
+export function pin_value(body: PinValue_): VarBase {
   const value: VarBase = {
     class: VarBase_Class.NodeValueBase,
     alreadySetVal: true,
@@ -147,7 +146,7 @@ export function pin_value(body: PinValue): VarBase {
   return value;
 }
 
-/** Normal item type */
+
 export function item_type(type: VarType): VarBase_ItemType {
   return {
     classBase: 1,
@@ -158,11 +157,10 @@ export function item_type(type: VarType): VarBase_ItemType {
   };
 }
 
-export interface EnumValue {
+export interface EnumValue_ {
   value: EnumNode_Value;
 }
-/** En */
-export function enum_value(body: EnumValue) {
+export function enum_value(body: EnumValue_) {
   const value: VarBase = {
     class: VarBase_Class.EnumBase,
     alreadySetVal: true,
@@ -172,14 +170,14 @@ export function enum_value(body: EnumValue) {
   return value;
 }
 
-export interface MapPinBody {
+export interface MapPinBody_ {
   kind: NodePin_Index_Kind;
   index: number;
   key_type: VarType;
   value_type: VarType;
   indexOfConcrete?: number;
 }
-export function map_pin_body(body: MapPinBody) {
+export function map_pin_body(body: MapPinBody_) {
   const map_pair = {
     key: body.key_type,
     value: body.value_type,
@@ -299,7 +297,7 @@ export function vector_pin_body(vec: number[]): VarBase {
   };
 }
 
-export interface AnyPinBody {
+export interface AnyPinBody_ {
   kind: NodePin_Index_Kind;
   index: number;
   type: VarType;
@@ -308,7 +306,7 @@ export interface AnyPinBody {
   indexOfConcrete?: number;
   value?: any;
 }
-export function any_pin_body(body: AnyPinBody): NodePin {
+export function any_pin_body(body: AnyPinBody_): NodePin {
   let value: VarBase;
   switch (body.type) {
     case VarType.Dictionary:
@@ -377,14 +375,14 @@ export function any_pin_body(body: AnyPinBody): NodePin {
   });
 }
 
-export interface NodeTypePinBody {
+export interface NodeTypePinBody_ {
   kind: NodePin_Index_Kind;
   index: number;
   type: NodeType;
   indexOfConcrete?: number;
   value?: any;
 }
-export function node_type_pin_body(body: NodeTypePinBody): NodePin {
+export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
   let key_val_type: [VarType, VarType] | undefined;
   if (body.type.t === "d") {
     key_val_type = [get_id(body.type.k), get_id(body.type.v)] as any;
@@ -399,10 +397,41 @@ export function node_type_pin_body(body: NodeTypePinBody): NodePin {
   });
 }
 
-// export interface NodeTypeNodeBody {
-//   node: NodeType;
-//   generic_id: number;
-// }
-// export function node_type_node_body(body: NodeTypeNodeBody): NodeBody {
-//   const
-// }
+export interface NodeTypeNodeBody_ {
+  node: NodePins;
+  map: TypeConcreteMap;
+  concrete_id?: number;
+  x: number;
+  y: number;
+}
+export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
+  const concrete_id = body.concrete_id ?? body.node.id;
+  const map = get_concrete_map(body.node.id);
+  const pins: NodePin[] = [];
+  body.node.inputs.forEach((p, i) => {
+    if (p === undefined) return;
+    pins.push(node_type_pin_body({
+      kind: NodePin_Index_Kind.InParam,
+      index: i,
+      type: p,
+      indexOfConcrete: map === null ? 0 : get_concrete_index(map, p),
+    }));
+  });
+  body.node.outputs.forEach((p, i) => {
+    if (p === undefined) return;
+    pins.push(node_type_pin_body({
+      kind: NodePin_Index_Kind.OutParam,
+      index: i,
+      type: p,
+      indexOfConcrete: map === null ? 0 : get_concrete_index(map, p),
+    }));
+  });
+  return node_body({
+    index: body.node.id,
+    pins,
+    generic_id: body.node.id as any,
+    concrete_id: concrete_id as any,
+    x: body.x,
+    y: body.y,
+  });
+}

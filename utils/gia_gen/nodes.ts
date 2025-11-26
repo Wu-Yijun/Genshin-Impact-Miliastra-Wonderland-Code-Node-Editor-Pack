@@ -1,5 +1,6 @@
 import assert from "node:assert";
 import { VarType } from "../protobuf/gia.proto.ts";
+import { concrete_map } from "../node_id/concrete_map.ts";
 
 // const BasicTypes = ["Int", "Float", "Bool", "Str", "Vec", "GUID", "Entity", "Prefab", "Faction", "ConfigId"] as const;
 export const BasicTypes = ["Int", "Flt", "Bol", "Str", "Vec", "Gid", "Ety", "Pfb", "Fct", "Cfg"] as const;
@@ -565,62 +566,52 @@ export function to_records_full(rec: string | NodePinsRecords): NodePinsRecordsF
 
 export interface TypeConcreteMapRaw {
   map: number[][];
-  generic_id: number[];
-  concrete_id?: number[];
+  id: number[];
 };
 export interface TypeConcreteMap {
   /** Different groups of (type_id, indexOfConcrete) */
   map: Map<number, number>;
-  /** Index list of generic id */
-  generic_id: Set<number>;
-  /** Index list of concrete id */
-  concrete_id: Set<number>;
+  /** Index list of both generic id and concrete id */
+  id: Set<number>;
 }
 export function from_tc_map(map: TypeConcreteMap | TypeConcreteMap[]): string {
   if (map instanceof Array) {
-    return map.map(from_tc_map).join("\n");
+    return map.map(from_tc_map).join(";");
   }
-  const m = [...map.map.entries()].map(([k, v]) => `${k}:${v}`).join("&");
-  const g = [...map.generic_id].join("&");
-  const c = [...map.concrete_id].join("&");
-  return [m, g, c].join("|");
+  const m = [...map.map.entries()].map(([k, v]) => `${k}:${v}`).join(",");
+  const i = [...map.id].join(",");
+  return [m, i].join("|");
 }
 export function to_tc_map(str: string | TypeConcreteMapRaw[]): TypeConcreteMap[] {
   if (typeof str !== "string") {
     return str.map(src => ({
       map: new Map(src.map as [number, number][] ?? []),
-      generic_id: new Set(src.generic_id ?? []),
-      concrete_id: new Set(src.concrete_id ?? []),
+      id: new Set(src.id ?? []),
+      // concrete_id: new Set(src.concrete_id ?? []),
     }));
   }
-  if (str.includes("\n")) {
-    return str.split("\n").map(to_tc_map).flat();
+  if (str.includes(";")) {
+    return str.split(";").map(to_tc_map).flat();
   }
-  const [m, g, c] = str.split("|");
-  const map = new Map<number, number>();
-  const generic_id = new Set<number>();
-  const concrete_id = new Set<number>();
-  for (const [k, v] of m.split("&").map(x => x.split(":"))) {
-    map.set(parseInt(k), parseInt(v));
-    generic_id.add(parseInt(k));
-    concrete_id.add(parseInt(v));
-  }
-  return [{ map, generic_id, concrete_id }];
+  const [m, g] = str.split("|");
+  const map = new Map<number, number>(m.split(",").map(x => x.split(":").map(y => parseInt(y)) as [number, number]));
+  const id = new Set<number>(g.split(",").map(x => parseInt(x)));
+  return [{ map, id }];
 }
 export function to_tc_map_raw(src: Partial<TypeConcreteMap>[]): TypeConcreteMapRaw[] {
   return src.map(x => ({
     map: [...x.map?.entries() ?? []],
-    generic_id: [...x.generic_id ?? []],
-    concrete_id: [...x.concrete_id ?? []],
+    id: [...x.id ?? []],
   }));
 }
-export function get_concrete_id(maps: TypeConcreteMap[] | Map<number, number>, type_id: number, id?: number) {
-  if (maps instanceof Array) {
-    assert(id !== undefined);
-    return maps.find(m => m.generic_id.has(id))!.map.get(type_id) ?? 0;
-  } else if (maps instanceof Map) {
-    return maps.get(type_id) ?? 0;
-  }
+export function get_concrete_map(id: number): TypeConcreteMap | null {
+  return concrete_map.find(x => x.id.has(id)) ?? null;
+}
+export function get_concrete_index(map_or_id: TypeConcreteMap | number, type: number | NodeType) {
+  const id = typeof type === "number" ? type : get_id(type);
+  const map = typeof map_or_id === "number" ? get_concrete_map(map_or_id) : map_or_id;
+  if (id === 0 || map === null) return 0;
+  return map.map.get(id) ?? 0;
 }
 
 if (import.meta.main) {

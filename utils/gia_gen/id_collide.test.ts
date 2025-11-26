@@ -9,7 +9,7 @@ import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
 import { get_id, get_type, type NodeType, parse, stringify, to_string, type NodePinsRecords, BasicTypes, reflect, reflects, extract_reflect_names, reflects_records, to_tc_map_raw, type TypeConcreteMap } from "./nodes.ts";
 import { fixSparseArrays } from "../../src/util.ts";
 import { randomInt } from "./utils.ts";
-import { derived_records } from "../node_id/node_defines.ts";
+import { derived_records } from "../node_id/ref/node_defines.ts";
 import { get_pin_info } from "./extract.ts";
 
 function generate_all_nodes(from: number, size: number = 300, line_width: number = 20, offsets: number = 1): GraphNode[] {
@@ -481,7 +481,7 @@ function merge_group(srcList: [number, Map<number, number>][]): TypeConcreteMap[
     for (const [k, v] of S) {
       G.map.set(k, v);
     }
-    G.generic_id.add(idx);
+    G.id.add(idx);
   }
 
   const groups = [];
@@ -499,8 +499,7 @@ function merge_group(srcList: [number, Map<number, number>][]): TypeConcreteMap[
     if (!placed) {
       groups.push({
         map: new Map(S),
-        concrete_id: new Set<number>(),
-        generic_id: new Set([srcList[i][0]]),
+        id: new Set([srcList[i][0]]),
       });
     }
   }
@@ -563,11 +562,141 @@ function read_all_reflect() {
       continue;
     }
     for (const n of ns) {
-      gs.find(x => x.generic_id.has(n.genericId.nodeId))!.concrete_id.add(n.concreteId.nodeId);
+      gs.find(x => x.id.has(n.genericId.nodeId))!.id.add(n.concreteId.nodeId);
     }
   }
   const ts = to_tc_map_raw(gs);
   console.dir(ts, { depth: null, maxArrayLength: null });
+}
+
+function write_read_reflect(read = false) {
+  const d = derived_records as NodePinsRecords[];
+  const VALUE_MAP = [...BasicTypes, ...BasicTypes.map(v => `L<${v}>`)];
+
+  const nodes = [];
+
+  for (let i = 0; i < d.length; i++) {
+    const node = d[i]
+    const ins = node.inputs.map(parse);
+    const outs = node.outputs.map(parse);
+    for (let j = 0; j < node.reflectMap!.length; j++) {
+      const [index, type, id] = node.reflectMap![j];
+      if (index !== -1) {
+        assert(index === j);
+        const pins: NodePin[] = [];
+        const n = reflects_records(node, type);
+        n.inputs.forEach((x, i) => {
+          if (x === undefined) return;
+          pins.push(node_type_pin_body({
+            kind: NodePin_Index_Kind.InParam,
+            index: i,
+            type: x,
+            indexOfConcrete: index,
+          }));
+        })
+        n.outputs.forEach((x, i) => {
+          if (x === undefined) return;
+          pins.push(node_type_pin_body({
+            kind: NodePin_Index_Kind.OutParam,
+            index: i,
+            type: x,
+            indexOfConcrete: index,
+          }));
+        })
+        nodes.push(node_body({
+          pins: pins,
+          generic_id: node.id as any,
+          concrete_id: id as any,
+          x: nodes.length % 100,
+          y: nodes.length / 100,
+        }));
+        continue;
+      }
+      if (type === "S<>" || type === "L<S<>>" || type === "Enum") {
+        console.info("Structure not implemented!", node.id, node.reflectMap![j]);
+        continue;
+      }
+      if (type !== "D<R<K>,R<V>>" && type !== "D<>") {
+        console.error("Unknown reflect:", node.id, node.reflectMap![j]);
+        continue;
+      }
+
+      for (let k0 = 0; k0 < BasicTypes.length; k0++) {
+        const k = BasicTypes[k0];
+        // for (const k of BasicTypes) {
+        for (let v0 = 0; v0 < VALUE_MAP.length; v0++) {
+          const v = VALUE_MAP[v0];
+          // for (const v of VALUE_MAP) {
+          let ios: ([NodeType, number, number] | true)[] = [];
+          if (type === "D<>") {
+            const n = parse(`S<K:${k},V:${v}>`);
+            assert(n.t === "s");
+            ios.push(...ins.map((x, i) => x === undefined || [reflects(x, n.f), i, 3] as [NodeType, number, number]));
+            ios.push(...outs.map((x, i) => x === undefined || [reflects(x, n.f), i, 4] as [NodeType, number, number]));
+          } else {
+            const n = parse(`D<${k},${v}>`);
+            ios.push(...ins.map((x, i) => x === undefined || [reflect(x, ["T", n]), i, 3] as [NodeType, number, number]));
+            ios.push(...outs.map((x, i) => x === undefined || [reflect(x, ["T", n]), i, 4] as [NodeType, number, number]));
+          }
+          const pins: NodePin[] = [];
+          let valid = true;
+          ios.forEach((x) => {
+            if (x === true) return;
+            if (x[0].t === "l" && x[0].i.t === "l") {
+              console.warn("Cannot Create List of List=", stringify(x[0]), "with index=", x[2], "with kind=", x[1]);
+              valid = false;
+              return;
+            }
+            const l = extract_reflect_names(x[2] === 3 ? ins[x[1]] : outs[x[1]]);
+            let index = j;
+            if (l.includes("K") && !l.includes("V")) index = k0;
+            if (l.includes("V") && !l.includes("K")) index = v0;
+            if (nodes.length === 2001) {
+              debugger;
+            }
+            pins.push(node_type_pin_body({
+              indexOfConcrete: index,
+              kind: x[2] as any,
+              index: x[1],
+              type: x[0],
+            }))
+          });
+          if (!valid) continue;
+          if (pins.length === 0) {
+            console.warn("Invalid Node:", node.id, "With kv:", k, v);
+            continue;
+          }
+          const n = node_body({
+            pins: pins,
+            generic_id: node.id as any,
+            concrete_id: node.id as any,
+            x: nodes.length % 100,
+            y: nodes.length / 100,
+          });
+          nodes.push(n);
+        }
+      }
+    }
+  }
+
+  const uid = randomInt(9, "201");
+  const graph_id = randomInt(10, "102");
+  const graph = graph_body({ uid, graph_id, nodes: nodes });
+  const out_path = "./utils/ref/all_reflect.gia";
+  encode_gia_file({ out_path, gia_struct: graph });
+
+  // console.dir(nodes[1], { depth: null });
+  console.log("Created", nodes.length, "reflected nodes and saved to", out_path);
+}
+
+const uid = randomInt(9, "201");
+const graph_id = randomInt(10, "102");
+const graph = graph_body({ uid, graph_id, nodes: nodes });
+const out_path = "./utils/ref/all_reflect.gia";
+encode_gia_file({ out_path, gia_struct: graph });
+
+// console.dir(nodes[1], { depth: null });
+console.log("Created", nodes.length, "reflected nodes and saved to", out_path);
 }
 
 

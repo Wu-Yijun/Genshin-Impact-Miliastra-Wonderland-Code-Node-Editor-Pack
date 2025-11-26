@@ -1,4 +1,4 @@
-import type { NodePinsRecords } from "../gia_gen/nodes.ts";
+import type { NodePinsRecords } from "../../gia_gen/nodes.ts";
 
 /*
 
