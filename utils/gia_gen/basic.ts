@@ -20,7 +20,7 @@ import {
   VarBase_ItemType_Inner_Kind,
   VarType,
 } from "../protobuf/gia.proto.ts";
-import { get_id as _nodes_get_id, type NodeType as _NodeType } from "./nodes.ts";
+import { get_id, type NodeType } from "./nodes.ts";
 
 import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 
@@ -380,21 +380,29 @@ export function any_pin_body(body: AnyPinBody): NodePin {
 export interface NodeTypePinBody {
   kind: NodePin_Index_Kind;
   index: number;
-  type: _NodeType;
+  type: NodeType;
   indexOfConcrete?: number;
   value?: any;
 }
 export function node_type_pin_body(body: NodeTypePinBody): NodePin {
   let key_val_type: [VarType, VarType] | undefined;
   if (body.type.t === "d") {
-    key_val_type = [_nodes_get_id(body.type.k), _nodes_get_id(body.type.v)] as any;
+    key_val_type = [get_id(body.type.k), get_id(body.type.v)] as any;
   }
   return any_pin_body({
     kind: body.kind,
     index: body.index,
-    type: _nodes_get_id(body.type) as any,
+    type: get_id(body.type) as any,
     key_val_type,
     value: body.value,
     indexOfConcrete: body.indexOfConcrete,
   });
 }
+
+// export interface NodeTypeNodeBody {
+//   node: NodeType;
+//   generic_id: number;
+// }
+// export function node_type_node_body(body: NodeTypeNodeBody): NodeBody {
+//   const
+// }

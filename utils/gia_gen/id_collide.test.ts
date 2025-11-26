@@ -6,7 +6,7 @@ import { graph_body, node_body, node_type_pin_body } from "./basic.ts";
 import type { NodePin, GraphNode } from "../protobuf/gia.proto.ts";
 import { NodePin_Index_Kind, VarBase_Class } from "../protobuf/gia.proto.ts";
 import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
-import { get_id, get_type, type NodeType, parse, stringify, to_string, type NodePinsRecords, BasicTypes, reflect, reflects, extract_reflect_names } from "./nodes.ts";
+import { get_id, get_type, type NodeType, parse, stringify, to_string, type NodePinsRecords, BasicTypes, reflect, reflects, extract_reflect_names, reflects_records, to_tc_map_raw, type TypeConcreteMap } from "./nodes.ts";
 import { fixSparseArrays } from "../../src/util.ts";
 import { randomInt } from "./utils.ts";
 import { derived_records } from "../node_id/node_defines.ts";
@@ -353,9 +353,45 @@ function generate_reflect() {
     const outs = node.outputs.map(parse);
     for (let j = 0; j < node.reflectMap!.length; j++) {
       const [index, type, id] = node.reflectMap![j];
-      let idx = index === -1 ? j : index;
-      assert(idx === j);
-      if (type !== "D<R<K>,R<V>>" && type !== "D<>") continue;
+      if (index !== -1) {
+        assert(index === j);
+        const pins: NodePin[] = [];
+        const n = reflects_records(node, type);
+        n.inputs.forEach((x, i) => {
+          if (x === undefined) return;
+          pins.push(node_type_pin_body({
+            kind: NodePin_Index_Kind.InParam,
+            index: i,
+            type: x,
+            indexOfConcrete: index,
+          }));
+        })
+        n.outputs.forEach((x, i) => {
+          if (x === undefined) return;
+          pins.push(node_type_pin_body({
+            kind: NodePin_Index_Kind.OutParam,
+            index: i,
+            type: x,
+            indexOfConcrete: index,
+          }));
+        })
+        nodes.push(node_body({
+          pins: pins,
+          generic_id: node.id as any,
+          concrete_id: id as any,
+          x: nodes.length % 100,
+          y: nodes.length / 100,
+        }));
+        continue;
+      }
+      if (type === "S<>" || type === "L<S<>>" || type === "Enum") {
+        console.info("Structure not implemented!", node.id, node.reflectMap![j]);
+        continue;
+      }
+      if (type !== "D<R<K>,R<V>>" && type !== "D<>") {
+        console.error("Unknown reflect:", node.id, node.reflectMap![j]);
+        continue;
+      }
 
       for (let k0 = 0; k0 < BasicTypes.length; k0++) {
         const k = BasicTypes[k0];
@@ -379,17 +415,17 @@ function generate_reflect() {
           ios.forEach((x) => {
             if (x === true) return;
             if (x[0].t === "l" && x[0].i.t === "l") {
-              console.warn("Cannot Create List of List:", x);
+              console.warn("Cannot Create List of List=", stringify(x[0]), "with index=", x[2], "with kind=", x[1]);
               valid = false;
               return;
             }
-            // if (nodes.length === 2202) {
-            //   debugger;
-            // }
             const l = extract_reflect_names(x[2] === 3 ? ins[x[1]] : outs[x[1]]);
-            let index = idx;
+            let index = j;
             if (l.includes("K") && !l.includes("V")) index = k0;
             if (l.includes("V") && !l.includes("K")) index = v0;
+            if (nodes.length === 2001) {
+              debugger;
+            }
             pins.push(node_type_pin_body({
               indexOfConcrete: index,
               kind: x[2] as any,
@@ -425,36 +461,113 @@ function generate_reflect() {
   console.log("Created", nodes.length, "reflected nodes and saved to", out_path);
 }
 
+/** 合并互相兼容（不冲突）的 S，让它们放进同一个 G
+ * 
+ * 每个输入 ( S_i ) 是一个双射映射（bijection）：
+ * * 由若干对 ((k,v)) 组成；
+ * * 内部无重复 k、无重复 v；
+ * * 你需要构造尽量少的 Group；
+ * * 每个 Group 也是一组 ((k,v)) 对（可能更大）；
+ * * 每个输入 (S_i) 必须被至少一个 Group 完全包含：
+ */
+function merge_group(srcList: [number, Map<number, number>][]): TypeConcreteMap[] {
+  function isCompatible(map: Map<number, number>, S: Map<number, number>): boolean {
+    for (const [k, v] of S) {
+      if (map.has(k) && map.get(k) !== v) return false;
+    }
+    return true;
+  }
+  function mergeInto(G: TypeConcreteMap, S: Map<number, number>, idx: number) {
+    for (const [k, v] of S) {
+      G.map.set(k, v);
+    }
+    G.generic_id.add(idx);
+  }
+
+  const groups = [];
+
+  for (let i = 0; i < srcList.length; i++) {
+    const S = srcList[i][1];
+    let placed = false;
+    for (const G of groups) {
+      if (isCompatible(G.map, S)) {
+        mergeInto(G, S, srcList[i][0]);
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) {
+      groups.push({
+        map: new Map(S),
+        concrete_id: new Set<number>(),
+        generic_id: new Set([srcList[i][0]]),
+      });
+    }
+  }
+  return groups;
+}
+
+
 function read_all_reflect() {
-  const nodes = decode_gia_file({ gia_path: "./utils/node_id/dicts.gia" }).graph.graph?.inner.graph.nodes!;
-  // const nodes = decode_gia_file({ gia_path: "./utils/ref/all_reflect_trim.gia" }).graph.graph?.inner.graph.nodes!;
+  // const nodes = decode_gia_file({ gia_path: "./utils/node_id/dicts.gia" }).graph.graph?.inner.graph.nodes!;
+  const nodes = decode_gia_file({ gia_path: "./utils/ref/all_reflect_trim.gia" }).graph.graph?.inner.graph.nodes!;
   // console.dir(nodes?.slice(0,5)?.map(n => n.pins.map(get_pin_info)), {depth:null});
   type PinId = [index: number, kind: number, indexOfConcrete: number];
   /** Concreted&Type -> PinId */
-  const concrete_id=new  Map<string, Set<string>>();
+  const concrete_id = new Set<string>();
 
-  for(const [id, nds] of Object.entries(Object.groupBy(nodes, n => n.genericId.nodeId as number))) {
-    console.log("Node ID:", id);
+  for (const [id, nds] of Object.entries(Object.groupBy(nodes, n => n.genericId.nodeId as number))) {
     const ns = nds?.filter(n => n.concreteId?.nodeId !== undefined);
-    if(ns===undefined || ns.length === 0){
+    if (ns === undefined || ns.length === 0) {
       console.log("No concrete nodes for", nds![0]);
       continue;
     }
-    for(const info of ns.map(n=>n.pins.map(get_pin_info)).flat()){
-      const key = `${info.type}:${info.indexOfConcrete}`;
-      const val = `${id}:${info.index}:${info.kind}`;
-      if(!concrete_id.has(key)){
-        concrete_id.set(key, new Set());
-      }
-      concrete_id.get(key)!.add(val);
+    for (const info of ns.map(n => n.pins.map(get_pin_info)).flat()) {
+      const key = [id, info.type, info.indexOfConcrete];
+      // const key = [info.type, info.indexOfConcrete, id, info.kind, info.index];
+      concrete_id.add(key.join(":"));
     }
-
   }
 
-  console.log("Concrete ID Map:");
-  for(const [k,v] of concrete_id.entries()){
-    console.log(k,"->",Array.from(v).join(" | "));
+  const ids = Array.from(concrete_id)
+    .map(x => x.split(":").map(y => parseInt(y)))
+    // .filter(x => x[0] === 121)
+    .sort((l, r) => l[0] - r[0] || l[1] - r[1] || l[2] - r[2]);
+  const result: [number, Map<number, number>][] = [];
+  let last_id = ids[0][0];
+  let last_type = -1;
+  let ret = new Map<number, number>();
+  ids.forEach(x => {
+    if (x[0] !== last_id) {
+      result.push([last_id, ret]);
+      ret = new Map();
+      last_id = x[0];
+      last_type = -1;
+    }
+    if (x[1] === last_type) {
+      ret.delete(x[1]);
+      console.log("Warning: conflict type:", x);
+    } else {
+      last_type = x[1];
+      ret.set(x[1], x[2]);
+    }
+  });
+  result.push([last_id, ret]);
+
+  const gs = merge_group(result);
+  // console.dir({ gs, len: gs.length }, { depth: null });
+  for (const [id, nds] of Object.entries(Object.groupBy(nodes, n => n.genericId.nodeId as number))) {
+    const ns = nds?.filter(n => n.concreteId?.nodeId !== undefined);
+    if (ns === undefined || ns.length === 0) {
+      console.log("No concrete nodes for", nds![0]);
+      continue;
+    }
+    for (const n of ns) {
+      gs.find(x => x.generic_id.has(n.genericId.nodeId))!.concrete_id.add(n.concreteId.nodeId);
+    }
   }
+  const ts = to_tc_map_raw(gs);
+  console.dir(ts, { depth: null, maxArrayLength: null });
 }
 
 
@@ -477,11 +590,11 @@ if (import.meta.main) {
   //   // gia_path: "./utils/ref/all_reflect_trim.gia",
   //   // gia_path: "./utils/ref/test.gia",
   //   gia_path: "./utils/ref/all_reflect.gia",
-  //   // gia_path: PATH + "all_reflect.gia",
+  //   // gia_path: PATH + "all_reflect_trim.gia",
   //   // gia_path: "./utils/node_id/dicts.gia",
   // });
   // const nodes = graph.graph.graph!.inner.graph.nodes!;
-  // console.dir(nodes[2098], { depth: null });
+  // console.dir(nodes[2001], { depth: null });
 
 
   // generate_reflect();

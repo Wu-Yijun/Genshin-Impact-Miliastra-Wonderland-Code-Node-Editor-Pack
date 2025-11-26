@@ -178,6 +178,7 @@ export interface NodePinsRecords {
    *  
    * A map of NodeType[Struct]->NodeId */
   reflectMap?: NodeReflectRecords[];
+
 }
 /** ⚠️ Using of `NodePinsRecordsFull` is not suggested.
  * 
@@ -221,7 +222,8 @@ export function reflect(type: NodeType, ref: [string, NodeType]): NodeType {
       return { t: "s", f: type.f.map(([name, node]) => [name, reflect(node, ref)]) };
   }
 }
-export function reflects(type: NodeType, refs: [string, NodeType][]): NodeType {
+export function reflects(type: NodeType, refs: [string, NodeType][], allow_undefined = false): NodeType {
+  if (type === undefined && allow_undefined === true) return undefined as any;
   return refs.reduce((type, ref) => reflect(type, ref), type);
 }
 export function reflects_records(rec: NodePinsRecords, refs?: [string, NodeType][] | string): NodePins {
@@ -244,8 +246,8 @@ export function reflects_records(rec: NodePinsRecords, refs?: [string, NodeType]
     refs_exp = refs;
   }
   return {
-    inputs: rec.inputs.map(node => reflects(parse(node), refs_exp)),
-    outputs: rec.outputs.map(node => reflects(parse(node), refs_exp)),
+    inputs: rec.inputs.map(node => reflects(parse(node), refs_exp, true)),
+    outputs: rec.outputs.map(node => reflects(parse(node), refs_exp, true)),
     id: rec.id
   }
 }
@@ -266,6 +268,23 @@ export function unwrap_records(rec: NodePinsRecords): NodePins[] {
     id: ids[i]
   }));
 }
+
+export function is_reflect(type: NodeType): boolean {
+  switch (type.t) {
+    case "b":
+      return false;
+    case "e":
+      return false;
+    case "l":
+      return is_reflect(type.i);
+    case "d":
+      return is_reflect(type.k) || is_reflect(type.v);
+    case "s":
+      return type.f.some(x => is_reflect(x[1]));
+    case "r":
+      return true;
+  }
+}
 export function extract_reflect_names(type: NodeType): string[] {
   const set = new Set<string>();
   const core = (t: NodeType) => {
@@ -279,6 +298,9 @@ export function extract_reflect_names(type: NodeType): string[] {
         return;
       case "r":
         set.add(t.r);
+        return;
+      case "l":
+        core(t.i);
         return;
     }
   };
@@ -330,7 +352,7 @@ export function derive_reflect(node: NodeType, ref: [string, NodeType]): NodeTyp
   throw new Error("Unreachable");
 }
 export function derive_reflects(node: NodeType, refs: [string, NodeType][]): NodeType {
-  for(let i=refs.length-1; i>=0; i--) {
+  for (let i = refs.length - 1; i >= 0; i--) {
     node = derive_reflect(node, refs[i]);
   }
   return node;
@@ -539,6 +561,68 @@ export function to_records_full(rec: string | NodePinsRecords): NodePinsRecordsF
   return rec_to_full(rec);
 }
 
+
+
+export interface TypeConcreteMapRaw {
+  map: number[][];
+  generic_id: number[];
+  concrete_id?: number[];
+};
+export interface TypeConcreteMap {
+  /** Different groups of (type_id, indexOfConcrete) */
+  map: Map<number, number>;
+  /** Index list of generic id */
+  generic_id: Set<number>;
+  /** Index list of concrete id */
+  concrete_id: Set<number>;
+}
+export function from_tc_map(map: TypeConcreteMap | TypeConcreteMap[]): string {
+  if (map instanceof Array) {
+    return map.map(from_tc_map).join("\n");
+  }
+  const m = [...map.map.entries()].map(([k, v]) => `${k}:${v}`).join("&");
+  const g = [...map.generic_id].join("&");
+  const c = [...map.concrete_id].join("&");
+  return [m, g, c].join("|");
+}
+export function to_tc_map(str: string | TypeConcreteMapRaw[]): TypeConcreteMap[] {
+  if (typeof str !== "string") {
+    return str.map(src => ({
+      map: new Map(src.map as [number, number][] ?? []),
+      generic_id: new Set(src.generic_id ?? []),
+      concrete_id: new Set(src.concrete_id ?? []),
+    }));
+  }
+  if (str.includes("\n")) {
+    return str.split("\n").map(to_tc_map).flat();
+  }
+  const [m, g, c] = str.split("|");
+  const map = new Map<number, number>();
+  const generic_id = new Set<number>();
+  const concrete_id = new Set<number>();
+  for (const [k, v] of m.split("&").map(x => x.split(":"))) {
+    map.set(parseInt(k), parseInt(v));
+    generic_id.add(parseInt(k));
+    concrete_id.add(parseInt(v));
+  }
+  return [{ map, generic_id, concrete_id }];
+}
+export function to_tc_map_raw(src: Partial<TypeConcreteMap>[]): TypeConcreteMapRaw[] {
+  return src.map(x => ({
+    map: [...x.map?.entries() ?? []],
+    generic_id: [...x.generic_id ?? []],
+    concrete_id: [...x.concrete_id ?? []],
+  }));
+}
+export function get_concrete_id(maps: TypeConcreteMap[] | Map<number, number>, type_id: number, id?: number) {
+  if (maps instanceof Array) {
+    assert(id !== undefined);
+    return maps.find(m => m.generic_id.has(id))!.map.get(type_id) ?? 0;
+  } else if (maps instanceof Map) {
+    return maps.get(type_id) ?? 0;
+  }
+}
+
 if (import.meta.main) {
   function check_parse(str: string) {
     const node = parse(str);
@@ -633,3 +717,5 @@ if (import.meta.main) {
   test_enum(); test_str();
   console.log(to_string(node_def1));
 }
+
+
