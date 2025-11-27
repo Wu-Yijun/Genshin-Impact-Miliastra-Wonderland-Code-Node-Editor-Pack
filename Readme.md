@@ -37,25 +37,27 @@
 *   **[节点 ID 与枚举定义](./utils/node_id/readme.md)**: 查看节点 ID 列表和枚举值的详细映射关系。
 *   **[GIA 图生成器](./utils/gia_gen/readme.md)**: 了解如何使用 Helper 函数快速生成和操作 GIA 节点图。
 
----
+
+> 如果您有任何建议或想法, 或发现什么有意思的, 或任何可能有帮助的库, 请随意提交 Issue 或发 [Email](mailto:wuyijun21@mails.ucas.ac.cn) 告诉我
+
 
 ## 开发进度 (Project Status)
 
-本来是进展缓慢的, 因为我需要要多线并行: 
+半个月前是进展缓慢的, 因为我需要要多线并行: 
 - [x] **(完成主要部分)** GIA 文件逆向 
 - [x] **(未动工)** 节点编辑器图形界面, 有现成的
 - [x] **(基本完成)** 节点图的等效代码表示(DSL)
 - [x] **(完成一小半)** DSL ⇒ IR编译器
 - [x] **(刚开始)** IR本地运行器
-- [ ] **(未动工)** DSL ⇒ GIA转换器
-- [ ] **(未动工)** GIA ⇒ DSL转换器
+- [ ] **(进行中)** IR ⇒ GIA转换器
+- [ ] **(进行中)** GIA ⇒ IR转换器
 - [x] **(完成一大半)** 写一个~~没营养~~的 DSL 示例, 并在千星奇域中手动实现.
 
 但11月20号搜索 Github, 无意中发现 [Columbina-Dev](https://github.com/Columbina-Dev/WebMiliastraNodesEditor) 已经做好了**节点编辑器**的[网页版](https://miliastra.columbina.dev/). 这一下子就*给我动力*了, 我准备把简单的DSL ⇒ JSON转换器先给它实现了. 稍微增强下开源生态......
 
 ## Getting Started
 
-**详细的代码说明见下:** [## Usages](#usages)
+**详细的代码说明见下:** [## DSL Usages](#dsl-usages)
 
 目前只有简单的 block parser, 使用如下:
 ```shell
@@ -106,7 +108,7 @@ declare namespace node {
 ```
 
 ## GIA 文件结构
-[script-1024/genshin-miliastra-file-format](https://github.com/script-1024/genshin-miliastra-file-format/blob/main/docs/zh/%E6%A6%82%E8%BF%B0.md) 写的比我之前的详细, 于是我就参考它的改写了:
+文件头部分 [script-1024/genshin-miliastra-file-format](https://github.com/script-1024/genshin-miliastra-file-format/blob/main/docs/zh/%E6%A6%82%E8%BF%B0.md) 写的比我之前的详细, 于是我就参考它的改写了:
 
 无论是 `.gip`(Project), `.gil`(Level), `.gia`(Assets), 还是 `.gir`(Runtime) 文件，它们都拥有类似的结构：
 ```cs
@@ -135,7 +137,9 @@ declare namespace node {
 | 内容负载 | `0x14` | Protobuf二进制编码 | ProtoBuf 编码数据 | 具体编码规则见 [utils/gia.proto](./utils/gia.proto) |
 | 尾部标记 | 文件大小字段值 | `00 00 06 79` | **严格校验，不可修改** | 头部标记 + 尾部标记 = `0x099F` 可能有什么特殊含义? |
 
-## Usages
+**部的 Protobuf 编码参见** 我写的 [utils/protobuf/gia.proto](./utils/protobuf/gia.proto), 这其中包含了主要的结构定义. 同时在 [utils/protobuf/](./utils/protobuf/) 和 [utils/gia_gen/](./utils/gia_gen/) 目录下也有一些编码解码组件.
+
+## DSL-Usages
 
 目前只有简单的 block parser, 样例如下:
 ```shell
