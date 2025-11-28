@@ -131,7 +131,7 @@ export interface NodeBody_ {
  * @returns GraphNode 节点对象
  */
 export function node_body(body: NodeBody_): GraphNode {
-  const nodeIndex = body.unique_index ??  counter_index.value;
+  const nodeIndex = body.unique_index ?? counter_index.value;
   const node: GraphNode = {
     nodeIndex: nodeIndex,
     genericId: {
@@ -669,7 +669,7 @@ export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
  */
 export interface NodeTypeNodeBody_ {
   /** 节点类型定义，包括输入/输出引脚类型列表 */
-  node: NodePins;
+  pins: NodePins;
   /** 类型到具体实例映射表，用于确定具体类型索引，可选，默认使用 node.id 检索 */
   map?: ConcreteMap;
   /** 节点的泛类 ID，可选，默认使用 node.id */
@@ -688,7 +688,7 @@ export interface NodeTypeNodeBody_ {
  *
  * 参数列表：
  * - body: {
- *     node: NodePins;
+ *     pins: NodePins;
  *     map?: TypeConcreteMap;
  *     generic_id?: number;
  *     concrete_id?: number;
@@ -700,10 +700,10 @@ export interface NodeTypeNodeBody_ {
  * @returns GraphNode
  */
 export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
-  const generic_id = body.generic_id ?? body.node.id;
-  const concrete_id = body.concrete_id ?? body.node.id;
+  const generic_id = body.generic_id ?? body.pins.id;
+  const concrete_id = body.concrete_id ?? body.pins.id;
   const pins: NodePin[] = [];
-  body.node.inputs.forEach((p, i) => {
+  body.pins.inputs.forEach((p, i) => {
     if (p === undefined) return;
     pins.push(node_type_pin_body({
       kind: NodePin_Index_Kind.InParam,
@@ -712,7 +712,7 @@ export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
       indexOfConcrete: get_concrete_index(generic_id, 3, i, get_id(p), body.map),
     }));
   });
-  body.node.outputs.forEach((p, i) => {
+  body.pins.outputs.forEach((p, i) => {
     if (p === undefined) return;
     pins.push(node_type_pin_body({
       kind: NodePin_Index_Kind.OutParam,

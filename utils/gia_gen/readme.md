@@ -7,19 +7,126 @@
 目前主要提供了一系列生成函数，用于通过少量参数快速创建节点图的各个组件。
 
 
-### 构造和管理节点 [graph.ts](./graph.ts)
+### 构造和管理节点 [graph.ts](./graph.ts) — GIA 图结构建模与序列化 (推荐使用)
 
-在类中的高级封装, 通过 new, set, get 等方法管理.
+本模块用于在 TypeScript 中构建、编辑并序列化 **GIA 图结构（Graph / Node / Pin）**，并与 protobuf 生成的 `gia.proto` 数据结构互相转换。它提供了一套高层 API，使你可以像操作普通对象一样构建 GIA 图，再将其安全地编码为 protobuf 结构或从中解码。
 
-- `class Graph`
-- `class Node`
+#### Graph
+
+* 表示一个完整的 GIA 图。
+* 支持：
+
+  * 自动生成唯一 UID、graphId、fileId
+  * 添加节点
+  * graph → protobuf 的编码
+  * protobuf → graph 的解码
+* 当前仅支持 `"server"` 类型的图（其它类型会报错）。
+
+#### Node
+
+* 表示图中的单个节点。
+* 维护：
+
+  * generic_id（通用类型）
+  * concrete_id（具体实例类型）
+  * pins（输入/输出引脚）
+  * 位置坐标（x, y）
+  * 唯一索引 unique_id
+* 自动根据 node_record 设置节点的输入/输出引脚类型。
+
+#### Pin
+
+* 表示节点的引脚（输入/输出）。
+* 支持：
+
+  * 类型绑定 (`setType`)
+  * 清除具体类型 (`clear`)
+  * 自动计算 concrete_index（用于类型实例化）
+  * 编码为 protobuf 的 NodePin 结构
+
+
+#### 📦 文件结构
+
+```
+Graph
+├── Graph(type, uid, name, graph_id)
+│   ├── add_node()
+│   ├── encode(): Root
+│   └── static decode(root: Root): Graph
+│
+└── Node(node_id, unique_id)
+    ├── setConcrete()
+    ├── setPos(x, y)
+    ├── encode(): GraphNode
+    └── static decode(gNode: GraphNode): Node
+
+Pin(node_id, kind, index)
+    ├── clear()
+    ├── setType()
+    ├── updateConcreteIndex()
+    └── encode(): NodePin | null
+```
+
+#### 🔄 序列化行为
+
+**`Graph.encode()` → `Root`**
+
+将 Graph 转化为 `gia.proto` 的 `Root` 结构，主要包括：
+
+* `uid`：唯一标识
+* `graph_id`：图 ID
+* `file_id`：文件 ID（通常等于 `graph_id + i`）
+* `graph_name`
+* `nodes`：编码后的 GraphNode 列表
+
+**`Graph.decode(Root)` → `Graph`**
+
+自动解析：
+
+* filePath 中的 `uid / graph_id / name`
+* 图中所有节点
+* 所有节点的 `pins` 类型信息
+
+位置恢复时自动缩放：
+
+```
+node.x = proto.x / 300
+node.y = proto.y / 200
+```
+
+#### 🧩 基本用法
+
+**创建图并添加节点**
+
+```ts
+const graph = new Graph("server");
+
+const n1 = graph.add_node(1001);
+const n2 = graph.add_node(250);
+
+n1.setPos(1, 2);
+n2.setPos(3, 4);
+
+// 修改节点具体 ID（自动更新引脚）
+n2.setConcrete(251);
+```
+
+**序列化**
+
+```ts
+const root = graph.encode();
+```
+
+**反序列化**
+
+```ts
+const restored = Graph.decode(root);
+```
 
 
 
 ### 基础组件生成 (Basic Helpers): [basic.ts](./basic.ts)
 
-
-***所有生成函数均通过 `gia` 空间导出。函数接口通过 `Gia` 空间导出***
 
 本模块提供了一组用于 **快速构造图(Graph)**、**节点(Node)**、**引脚(Pin)** 与 **各种 Value** 的基础函数。
 整体设计遵循：
@@ -90,11 +197,52 @@
 * 最底层构造器
 * 被各级引脚函数调用
 
+#### 示例
+
+创建节点:
+```ts
+import {
+  node_type_node_body,
+  graph_body,
+  int_pin_body,
+} from "./basic.ts";
+
+const node = node_type_node_body({
+  node: MyNodeDef,
+  x: 100,
+  y: 200,
+});
+
+node.pins[0].value = int_pin_body(42);
+
+const graph = graph_body({
+  uid: 1,
+  graph_id: 99,
+  nodes: [node],
+});
+```
+
+
 ### 提取节点信息 [extract.ts](./extract.ts)
 
 - `get_nodes(graph)`: 获取节点图的全部节点列表
 - `get_pin_info(pin: NodePin)`: 提取某个引脚的自身信息.
 - `get_node_info(node: GraphNode)`: 获取某个节点的自身信息, 和它所有引脚的信息.
+
+
+#### 示例
+
+提取节点信息
+
+```ts
+import {get_nodes, get_node_info} from "extract.ts";
+import {decode_gia_file} from "../protobuf/decode.ts";
+
+const nodes = get_nodes(decode_gia_file({ gia_path }))!;
+const info = get_node_info(nodes[0]);
+
+```
+
 
 ### 工具函数 [utils.ts](./utils.ts)
 
@@ -111,44 +259,6 @@
 - `DEBUG`: 是否显示**警告**输出
 - `STRICT`: 是否在错误时直接中断, 或返回空值
 
-
-## 典型示例
-
-创建节点:
-```ts
-import {
-  node_type_node_body,
-  graph_body,
-  int_pin_body,
-} from "./basic.ts";
-
-const node = node_type_node_body({
-  node: MyNodeTypeDef,
-  map: MyTypeMap,
-  x: 100,
-  y: 200,
-});
-
-node.pins[0].value = int_pin_body(42);
-
-const graph = graph_body({
-  uid: 1,
-  graph_id: 99,
-  nodes: [node],
-});
-```
-
-提取节点信息
-
-```ts
-import {get_nodes, get_node_info} from "extract.ts";
-import {decode_gia_file} from "../protobuf/decode.ts";
-
-const nodes = get_nodes(decode_gia_file({ gia_path }))!;
-const info = get_node_info(nodes[0]);
-
-```
-
 ## 设计理念
 
 * **多层封装**：从自动化到手动，适应不同精度需求
@@ -160,12 +270,12 @@ const info = get_node_info(nodes[0]);
 
 以下功能正在开发计划中：
 
-- [ ] **类管理节点图 (Class-based Graph Management)**
-    - [ ] 包装上述 Helper，提供面向对象的 `GraphManager` 类。
-    - [ ] 提供更高级的接口来管理图的生命周期。
+- [x] **类管理节点图 (Class-based Graph Management)**
+    - [ x] 包装上述 Helper，提供面向对象的 `GraphManager` 类。
+    - [x] 提供更高级的接口来管理图的生命周期。
 
 - [ ] **修改现有节点图 (Modify Existing Graphs)**
-    - [ ] 加载现有 GIA 文件并进行修改。
+    - [x] 加载现有 GIA 文件并进行修改。
     - [ ] 支持增删改查节点和连接。
 
 - [ ] **高级操作方法 (Advanced Methods)**

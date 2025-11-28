@@ -324,7 +324,7 @@ export function reflects(
  */
 export function reflects_records(
   rec: NodePinsRecords,
-  refs?: [string, NodeType][] | string,
+  refs?: [string, NodeType][] | string | number,
   allow_undefined = false,
 ): NodePins {
   // find id
@@ -333,20 +333,33 @@ export function reflects_records(
     return rec_to_full(rec);
   }
   assert(refs !== undefined);
-  const refs_str = typeof refs === "string"
-    ? refs
-    : stringify({ t: "s", f: refs });
-  const id = rec.reflectMap!.find((r) => r[1] === refs_str)?.[0];
-  assert(id !== undefined || allow_undefined);
+
   // reflect expression
   let refs_exp;
   if (typeof refs === "string") {
     const exp = parse(refs);
     assert(exp.t === "s");
     refs_exp = exp.f;
+  } else if (typeof refs === "number") {
+    const ref_str = rec.reflectMap!.find(r => r[0] === refs)![1];
+    const e = parse(ref_str);
+    assert(e.t === "s");
+    refs_exp = e.f;
   } else {
     refs_exp = refs;
   }
+
+  let id;
+  if (typeof refs === "number") {
+    id = refs;
+  } else {
+    const refs_str = typeof refs === "string"
+      ? refs
+      : stringify({ t: "s", f: refs });
+    const id = rec.reflectMap!.find((r) => r[1] === refs_str)?.[0];
+    assert(id !== undefined || allow_undefined);
+  }
+
   return {
     inputs: rec.inputs.map((node) =>
       reflects(parse(node), refs_exp, allow_undefined)

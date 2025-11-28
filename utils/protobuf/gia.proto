@@ -5,7 +5,7 @@ syntax = "proto3";
 message Root {
   NodeUnit graph = 1;          // graph info
   repeated NodeUnit utils = 2; // data_structure, input/output
-  string filePath = 3;         // {UID}-{TIME}-{LEVEL_ID}-\${FILE_NAME}.gia
+  string filePath = 3;         // {UID}-{TIME}-{LEVEL_ID}-\{FILE_NAME}.gia
 }
 
 message NodeUnit {

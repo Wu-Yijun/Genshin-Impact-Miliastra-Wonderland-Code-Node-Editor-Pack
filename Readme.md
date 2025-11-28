@@ -12,6 +12,9 @@
 *   [**自动类型生成 (`utils/gen_def.ts`)**](./utils/gen_def.ts): 这是 DSL 的核心引擎。它读取结构化的函数定义，自动生成包含完整类型声明的 `def.d.ts` 文件。这意味着你在编写节点图代码时，可以享受到 **IDE 的智能补全、类型检查和文档提示**。
 *   [**结构化函数定义 (`utils/functions`)**](./utils/functions/readme.md): 所有的算术节点和查询节点都通过统一的格式进行定义，支持重载、泛型和参数校验。
 
+### 2.0. GIA 文件快速读写 (进行中, 目前仅支持节点)
+在 `./utils/gia_gen/graph.ts` 中(或通过 `./utils/gia_gen/index.ts` 导入), 快速创建Graph类, 可导出为 gia 文件结构. 更多信息参见 [utils/gia_gen/readme.md](./utils/gia_gen/readme.md#graph)
+
 ### 2. GIA 文件深度解析与工程化
 完全掌握 `.gia` (Genshin Impact Assets) 文件的读写与转换。
 *   [**Protobuf 定义 (`utils/protobuf/gia.proto`)**](./utils/protobuf/gia.proto): 包含较完整的 `gia.proto` 定义文件。
@@ -134,10 +137,10 @@ declare namespace node {
 | 头部标记 | `0x08` | `00 00 03 26` | **严格校验，不可修改** | *我本以为是次版本号, 但它不是向下兼容的?* |
 | 文件类型 | `0x0C` | •GIP:`00 00 00 01`<br>•GIL:`00 00 00 02`<br>•GIA:`00 00 00 03`<br>•GIR:`00 00 00 04` | 枚举值 |
 | 内容长度 | `0x10` | `Size_of_Protobuf` | 文件大小减 24 字节 (不含头部 20 字节和尾部 4 字节) |  |
-| 内容负载 | `0x14` | Protobuf二进制编码 | ProtoBuf 编码数据 | 具体编码规则见 [utils/gia.proto](./utils/gia.proto) |
+| 内容负载 | `0x14` | Protobuf二进制编码 | ProtoBuf 编码数据 | 具体编码规则见 [gia.proto](./utils/protobuf/gia.proto) |
 | 尾部标记 | 文件大小字段值 | `00 00 06 79` | **严格校验，不可修改** | 头部标记 + 尾部标记 = `0x099F` 可能有什么特殊含义? |
 
-**部的 Protobuf 编码参见** 我写的 [utils/protobuf/gia.proto](./utils/protobuf/gia.proto), 这其中包含了主要的结构定义. 同时在 [utils/protobuf/](./utils/protobuf/) 和 [utils/gia_gen/](./utils/gia_gen/) 目录下也有一些编码解码组件.
+**内部的 Protobuf 编码参见** 我写的 [utils/protobuf/gia.proto](./utils/protobuf/gia.proto), 这其中包含了主要的结构定义. 同时在 [utils/protobuf/](./utils/protobuf/) 和 [utils/gia_gen/](./utils/gia_gen/) 目录下也有一些编码解码组件.
 
 ## DSL-Usages
 

@@ -44,7 +44,7 @@ export function randomBigInt(len: number, starting: string = ""): bigint {
 }
 
 
-const names = "the of and to in a is was that for as with by on are from be or his were it an at not which have he had this has also their but one can its other been more they used first all two citation than into would only time who most may such some many when after between over these her about there use no them new him will out during made both then often so any being such as where number could main through system people known each while if called convert same later three because well work before the same under part very different became year did large example several city early until much government found own since she even form power do those around state including set high life against second century within world still end using small name what now usually without however began like as well area make common the most water another way due must long less four death said film order due to back public does left based few become known as given country major place group considered among game point used to period support war music down million important systems control should took day family language last original result political line members case well as see single just process along similar take following we although countries right either times areas published the other local include population never data home every various the time modern further development per how led possible military popular term though history generally you off rather men law developed".split("\n");
+const names = "the of and to in a is was that for as with by on are from be or his were it an at not which have he had this has also their but one can its other been more they used first all two citation than into would only time who most may such some many when after between over these her about there use no them new him will out during made both then often so any being such as where number could main through system people known each while if called convert same later three because well work before the same under part very different became year did large example several city early until much government found own since she even form power do those around state including set high life against second century within world still end using small name what now usually without however began like as well area make common the most water another way due must long less four death said film order due to back public does left based few become known as given country major place group considered among game point used to period support war music down million important systems control should took day family language last original result political line members case well as see single just process along similar take following we although countries right either times areas published the other local include population never data home every various the time modern further development per how led possible military popular term though history generally you off rather men law developed".split(" ");
 export function randomName(words_count: number = 1): string {
   let res = [];
   while (words_count-- > 0)
@@ -52,6 +52,10 @@ export function randomName(words_count: number = 1): string {
   return res.join(" ");
 }
 
+
+export function panic<T>(msg?: string): T {
+ throw new Error("Panic: Unrecoverable error occurred." + (msg ? ` Details: ${msg}` : ""));
+}
 export function todo<T>(msg?: string): T {
   const err = "TODO: Not implemented yet." + (msg ? ` Details: ${msg}` : "")
   if (STRICT) throw new Error(err);

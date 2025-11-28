@@ -3550,3 +3550,22 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     ],
   },
 ];
+
+
+const NODE_RECORDS_INDEX_MAP: Map<number, number> = new Map(
+  NODE_PIN_RECORDS.map((r, i) => [r.id, i])
+);
+const NODE_ID_MAP: Map<number, number> = new Map(
+  NODE_PIN_RECORDS.map(r =>
+    r.reflectMap!.map(ref => [ref[0], r.id] as [number, number])
+  ).flat()
+);
+
+export function get_generic_id(concrete_id: number): number | null {
+  return NODE_ID_MAP.get(concrete_id) ?? null;
+}
+export function get_node_record(concrete_id: number): NodePinsRecords | null {
+  const id = get_generic_id(concrete_id) ?? concrete_id;
+  const idx = NODE_RECORDS_INDEX_MAP.get(id);
+  return idx === undefined ? null : NODE_PIN_RECORDS[idx] ?? null;
+}

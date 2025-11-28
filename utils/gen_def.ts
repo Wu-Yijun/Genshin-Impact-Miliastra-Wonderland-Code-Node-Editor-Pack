@@ -1,7 +1,6 @@
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { AllTypes, AllKeyTypes, AllKeyTypes_, AllValTypes, AllValTypes_, SysEnumNames } from "../src/sysTypes.ts";
 import type { int, str, float, bool, Int, Float, Bool, Str, Vec, GUID, Entity, Prefab, Faction, ConfigId, List, Dict, Struct, SysKeyTypes } from "../src/sysTypes.ts";
-import { write_file } from "../src/util.ts";
 
 const version = "1.0.4";
 
@@ -1153,7 +1152,7 @@ function main() {
   addExec(gen, reader, true);
   gen.pop();
 
-  write_file("src/test/def.d.ts", gen.dump());
+  writeFileSync("./src/test/def.d.ts", gen.dump());
 }
 
 
