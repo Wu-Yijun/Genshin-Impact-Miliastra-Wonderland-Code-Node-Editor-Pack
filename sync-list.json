@@ -24,6 +24,6 @@
     "!utils/functions/check.ts"
 
   ],
-  "commitMessage": "Refract and Filter files sync to main",
+  "commitMessage": "添加任务记录与规划清单",
   "notSync": false
 }
