@@ -35,8 +35,8 @@ function collectFiles(patterns: string[]): string[] {
 }
 
 function syncFiles(config: SyncConfig) {
-  console.log("🟦 Cleaning main/ ...");
-  fse.emptyDirSync(out_dir);
+  // console.log("🟦 Cleaning main/ ...");
+  // fse.emptyDirSync(out_dir);
 
   console.log("🟩 Collecting include files...");
   let included = collectFiles(config.include);

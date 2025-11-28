@@ -16,18 +16,18 @@ jobs:
         with:
           ref: dev
           path: dev
-      - name: Setup Node.js 24 (no npm project)
+      - name: Setup Node.js 24
         uses: actions/setup-node@v5
         with:
           node-version: 24
       - name: Install dependency
         run: npm install fast-glob fs-extra
 
-        
-      - name: Checkout dev
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: main
+          sparse-checkout: ".does_not_exist"
+          sparse-checkout-cone-mode: false
           path: main
 
       - name: Sync and commit files
