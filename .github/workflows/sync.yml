@@ -34,4 +34,4 @@ jobs:
           path: main
 
       - name: Sync and commit files
-        run: node dev/.github/workflows/sync.ts main dev sync-list.json
+        run: node dev/.github/workflows/sync.ts main dev dev/sync-list.json

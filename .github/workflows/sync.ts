@@ -24,7 +24,7 @@ const sync_path = process.argv[4] ?? path.join(in_dir, "sync-list.json");
 
 function loadConfig(): SyncConfig {
   if (!fs.existsSync(sync_path)) {
-    throw new Error("sync-list.json not found");
+    throw new Error(`${sync_path} not found`);
   }
   return JSON.parse(fs.readFileSync(sync_path, "utf8"));
 }
@@ -90,9 +90,9 @@ function main() {
 
   // Commit inside main directory
   const gitCmd = `
-    git config --global user.name "github-actions[bot]" &&
-    git config --global user.email "github-actions[bot]@users.noreply.github.com" &&
-    cd main &&
+    cd ${out_dir} &&
+    git config user.name "github-actions[bot]" &&
+    git config user.email "github-actions[bot]@users.noreply.github.com" &&
     git add -A &&
     (git commit -m "${commitMessage.replace(/"/g, '\\"')}" || echo "No changes") &&
     git push
