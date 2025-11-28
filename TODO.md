@@ -38,5 +38,3 @@
 - [ ] 编译器自动类型推断
 - [ ] 运行器 - 调度框架/用户界面
 - [ ] 运行模拟 - 对更多系统函数进行转化处理为可模拟项目.
-
-我目前的构想是, 本地运行器主要用于验证逻辑和计算, 并提供一个简易的监视器观测实体和变量的值, 事件的触发需要手动触发或通过接口预先定义. 目前添加了 (TODO.md)[https://github.com/Wu-Yijun/Genshin-Impact-Miliastra-Wonderland-Code-Node-Editor-Pack/TODO.md] 标记已完成工作和将来计划.
