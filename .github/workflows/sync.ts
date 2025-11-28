@@ -6,7 +6,7 @@ import { execSync } from "child_process";
 
 interface SyncConfig {
   include: string[];
-  exclude: string[];
+  // exclude: string[];
   commitMessage?: string;
   notSync?: boolean;
 }
@@ -30,20 +30,6 @@ function loadConfig(): SyncConfig {
   return JSON.parse(fs.readFileSync(sync_path, "utf8"));
 }
 
-function resolvePattern(pattern: string): string {
-  // Absolute ("/src") → remove leading slash, match from root
-  if (pattern.startsWith("/")) {
-    return pattern.substring(1);
-  }
-  // Relative ("src") → match anywhere
-  return "**/" + pattern;
-}
-
-function collectFiles(patterns: string[]): string[] {
-  const finalPatterns = patterns.map(resolvePattern);
-  return fg.sync(finalPatterns, { cwd: in_dir, dot: true });
-}
-
 function cleanDir(dir: string) {
   if (!fs.existsSync(dir)) {
     throw new Error(`Directory does not exist. Make sure you checkout main into '${dir}' folder.`);
@@ -62,14 +48,15 @@ function syncFiles(config: SyncConfig) {
   cleanDir(out_dir);
 
   console.log("🟩 Collecting include files...");
-  let included = collectFiles(config.include);
+  const included = fg.sync(config.include, { cwd: in_dir, dot: true });
 
-  console.log("🚫 Applying exclude rules...");
-  let excluded = new Set(collectFiles(config.exclude));
+  // console.log("🚫 Applying exclude rules...");
+  // let excluded = new Set(collectFiles(config.exclude));
 
-  let finalFiles = included.filter(f => !excluded.has(f));
+  // let finalFiles = included.filter(f => !excluded.has(f));
+  const finalFiles = included;
 
-  console.debug(config, included, excluded, finalFiles);
+  // console.debug(config, included, excluded, finalFiles);
 
   console.log(`📦 Total files to sync: ${finalFiles.length}`);
 
@@ -115,8 +102,7 @@ function main() {
     git config user.email "github-actions[bot]@users.noreply.github.com" &&
     git add -A &&
     (git commit -m "${commitMessage.replace(/"/g, '\\"')}" || echo "No changes") &&
-    git push &&
-    git merge -s ours dev
+    git push
   `;
 
   execSync(gitCmd, { stdio: "inherit", shell: "/bin/bash" });

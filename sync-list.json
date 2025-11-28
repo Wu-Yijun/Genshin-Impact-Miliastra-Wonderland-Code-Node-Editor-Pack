@@ -1,22 +1,21 @@
 {
   "include": [
-    "/*",
-    "/docs",
-    "/ref",
-    "/src",
-    "/utils"
-  ],
-  "exclude": [
-    "/package-lock.json",
-    "/sync-list.json",
-    "test/**",
-    "temp/**",
+    "*",
+    "docs/**",
+    "ref/**",
+    "src/**",
+    "utils/**",
 
-    "*.test.*",
-    "*.temp.*",
-    "test.*",
-    "temp.*",
-    "*.log"
+    "!package-lock.json",
+    "!sync-list.json",
+
+    "!**/test/**",
+    "!**/temp/**",
+
+    "!**/((*.)?(temp|test|log)(.*)?)",
+
+    "!utils/ref/**"
+
   ],
   "commitMessage": "Sync from dev branch",
   "notSync": false
