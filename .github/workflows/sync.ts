@@ -79,7 +79,7 @@ function getDevCommitMessage(): string {
 
 function main() {
   const config = loadConfig();
-  if(config.notSync) {
+  if(config.notSync === true) {
     console.log("⚠️ Sync is disabled via 'notSync' flag in sync-list.json. Exiting.");
     return;
   }

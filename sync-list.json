@@ -12,7 +12,7 @@
     "!**/test/**",
     "!**/temp/**",
 
-    "!**/((*.)?(temp|test|log)(.*)?)",
+    "!**/?(*.)(temp|test|log)?(.*)",
 
     "!utils/ref/**"
 
