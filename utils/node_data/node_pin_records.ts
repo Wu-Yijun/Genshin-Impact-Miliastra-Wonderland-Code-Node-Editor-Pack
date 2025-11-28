@@ -7,7 +7,13 @@
 
 import type { NodePinsRecords } from "../gia_gen/nodes.ts";
 
-export const NODE_PIN_RECORDS: NodePinsRecords[] = [
+interface SingleNodeData extends NodePinsRecords {
+  name?: string;
+  category?: string;
+}
+
+
+export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     inputs: ["R<T>"],
     outputs: [],

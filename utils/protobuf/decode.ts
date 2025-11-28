@@ -6,7 +6,7 @@ import assert from "assert";
 
 const VERSION = "1.1.0";
 
-export interface GiaFile {
+interface GiaFile {
   _00_header: { // 4 * 5 = 20 bytes
     _00_left_size: number; // file_size - 4
     _04_schema_version: 1;

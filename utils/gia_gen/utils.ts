@@ -11,8 +11,14 @@ export class Counter {
 
 /** 节点 Index 计数器 */
 export const counter_index = new Counter();
-/** 节点动态 id 计时器 */
+/** 节点动态 id 计数器 */
 export const counter_dynamic_id = new Counter();
+
+/** 是否显示警告输出 */
+export const DEBUG = false;
+/** 是否在错误时直接中断, 或返回空值 */
+export const STRICT = false;
+
 
 export function randomInt(len: number, starting: string = ""): number {
   return Number(randomBigInt(len, starting));
@@ -46,8 +52,6 @@ export function randomName(words_count: number = 1): string {
   return res.join(" ");
 }
 
-export const DEBUG = false;
-export const STRICT = false;
 export function todo<T>(msg?: string): T {
   const err = "TODO: Not implemented yet." + (msg ? ` Details: ${msg}` : "")
   if (STRICT) throw new Error(err);
