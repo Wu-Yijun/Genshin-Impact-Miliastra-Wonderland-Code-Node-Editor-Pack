@@ -6,13 +6,24 @@
 
 目前主要提供了一系列生成函数，用于通过少量参数快速创建节点图的各个组件。
 
-### 基础组件生成 (Basic Helpers)
 
-**所有生成函数均通过 `gia` 空间导出。函数接口通过 `Gia` 空间导出**
+### 构造和管理节点 [graph.ts](./graph.ts)
 
-本模块提供了一组用于 **快速构造图(Graph)**、**节点(Node)**、**引脚(Pin)** 与 **各种 Value** 的辅助函数。
+在类中的高级封装, 通过 new, set, get 等方法管理.
+
+- `class Graph`
+- `class Node`
+
+
+
+### 基础组件生成 (Basic Helpers): [basic.ts](./basic.ts)
+
+
+***所有生成函数均通过 `gia` 空间导出。函数接口通过 `Gia` 空间导出***
+
+本模块提供了一组用于 **快速构造图(Graph)**、**节点(Node)**、**引脚(Pin)** 与 **各种 Value** 的基础函数。
 整体设计遵循：
-**从高层到低层、从类型驱动到原始构造** 的“多层封装”结构。
+**从低层到高层、从类型驱动到原始构造** 的“多层封装”结构。
 
 #### 0. 图级构造器
 
@@ -27,7 +38,7 @@
 
 #### 1. 高层：基于 NodeType 的自动构造（推荐方式）
 
-这些函数基于 `NodeType` / `NodePins` 元数据自动生成节点及引脚，是高层的封装方式。
+这些函数基于 IR 类型 `NodeType` / `NodePins` 元数据自动生成节点及引脚，是高层的封装方式。
 
 **API**
 
@@ -79,15 +90,37 @@
 * 最底层构造器
 * 被各级引脚函数调用
 
+### 提取节点信息 [extract.ts](./extract.ts)
 
-## 典型示例（仅示意）
+- `get_nodes(graph)`: 获取节点图的全部节点列表
+- `get_pin_info(pin: NodePin)`: 提取某个引脚的自身信息.
+- `get_node_info(node: GraphNode)`: 获取某个节点的自身信息, 和它所有引脚的信息.
 
+### 工具函数 [utils.ts](./utils.ts)
+
+- `Counter`: 单调递增的计数器类. 有导出实例:
+  - counter_index: 节点 Index 计数器
+  - counter_dynamic_id: 节点动态 id 计时器
+- `randomInt(len: number, starting?: string)`: 生成1-16位长度的随机整数，可指定起始字符串。用于生成合法 ID:
+  - `const uid = randomInt(9, "201");`
+  - `const graph_id = randomInt(10, "102");`
+- `randomBigInt(len: number, starting: string)`: 生成任意长度随机数字
+- randomName(words_count: number = 1): 生成随机英文句子, 用于生成随机名称.
+  - `const graph_name = randomName(3);`
+- `todo<T>(msg?: string): T`: 标记未完成的函数语句.
+- `DEBUG`: 是否显示**警告**输出
+- `STRICT`: 是否在错误时直接中断, 或返回空值
+
+
+## 典型示例
+
+创建节点:
 ```ts
 import {
   node_type_node_body,
   graph_body,
   int_pin_body,
-} from "./builder";
+} from "./basic.ts";
 
 const node = node_type_node_body({
   node: MyNodeTypeDef,
@@ -105,7 +138,16 @@ const graph = graph_body({
 });
 ```
 
----
+提取节点信息
+
+```ts
+import {get_nodes, get_node_info} from "extract.ts";
+import {decode_gia_file} from "../protobuf/decode.ts";
+
+const nodes = get_nodes(decode_gia_file({ gia_path }))!;
+const info = get_node_info(nodes[0]);
+
+```
 
 ## 设计理念
 
@@ -113,35 +155,6 @@ const graph = graph_body({
 * **强类型**：所有构造均依赖明确的 interface 和 VarType 枚举
 * **可扩展**：节点、引脚、值类型均可自由拓展
 
-### 工具函数 (Utils)
-
-*   `gia.random_int(len, starting)`: 生成指定长度的随机整数(支持1-16位数字)，支持指定起始字符串。(用于生成合法 ID)
-
-## 使用示例 (Usage)
-
-```typescript
-import { gia } from "./index.ts";
-
-// 创建节点列表
-const nodes = [];
-nodes.push(gia.basic_node_body({
-  generic_id: 123,
-  concrete_id: 123,
-  x: 0,
-  y: 0,
-}));
-
-// 创建图
-const graph = gia.basic_graph_body({
-  uid: 201123456,
-  graph_id: 1021234567,
-  nodes: nodes,
-});
-
-console.log(graph);
-```
-
-更多示例请参考 `test.ts`。
 
 ## 待实现功能 (Planned Features)
 

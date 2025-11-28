@@ -5,7 +5,7 @@ declare interface EnumList {
   EnumList: {
     name: string;
     id: number;
-    varClassBase: number;
+    indexOfConcrete: number;
     items: Record<number, string>;
   }[];
 }

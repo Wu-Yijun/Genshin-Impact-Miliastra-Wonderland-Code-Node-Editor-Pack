@@ -5,11 +5,11 @@ Date: Sun Nov 23 2025 00:29:21 GMT+0800 (中国标准时间)
 EnumList:
   - name: Generic
     id: 475
-    varClassBase: 0
+    indexOfConcrete: 0
     items: {}
   - name: Comparison Operators
     id: 476
-    varClassBase: 1
+    indexOfConcrete: 1
     items:
       "100": Equal To
       "101": Less Than
@@ -18,7 +18,7 @@ EnumList:
       "104": Greater Than or Equal To
   - name: Logical Operators
     id: 477
-    varClassBase: 2
+    indexOfConcrete: 2
     items:
       "200": AND
       "201": OR
@@ -26,7 +26,7 @@ EnumList:
       "203": NOT
   - name: Mathematical Operators
     id: 478
-    varClassBase: 3
+    indexOfConcrete: 3
     items:
       "300": Addition
       "301": Subtraction
@@ -39,26 +39,26 @@ EnumList:
       "308": Logarithm
   - name: Attack Shapes
     id: 479
-    varClassBase: 4
+    indexOfConcrete: 4
     items:
       "400": Rectangle
       "401": Sphere
       "402": Sector
   - name: Survival Status
     id: 480
-    varClassBase: 5
+    indexOfConcrete: 5
     items:
       "500": Alive
       "501": Down
   - name: Sorting Rules
     id: 481
-    varClassBase: 6
+    indexOfConcrete: 6
     items:
       "600": Ascending
       "601": Descending
   - name: Rounding Logic
     id: 482
-    varClassBase: 7
+    indexOfConcrete: 7
     items:
       "700": Round Up
       "701": Round Down
@@ -66,7 +66,7 @@ EnumList:
       "703": Truncate
   - name: Type Conversions
     id: 483
-    varClassBase: 8
+    indexOfConcrete: 8
     items:
       "800": Integer to Boolean
       "801": Integer to Floating Point
@@ -81,33 +81,33 @@ EnumList:
       "810": Faction to String
   - name: Motion Path Point Types
     id: 484
-    varClassBase: 9
+    indexOfConcrete: 9
     items:
       "900": Straight Line
       "901": Curve
   - name: Motion Types
     id: 485
-    varClassBase: 10
+    indexOfConcrete: 10
     items:
       "1000": One-Way
       "1001": Back and Forth
       "1002": Cyclic Movement
   - name: Follow Location Type
     id: 486
-    varClassBase: 11
+    indexOfConcrete: 11
     items:
       "1100": Completely Follow
       "1101": Follow Location
       "1102": Follow Rotation
   - name: Coordinate System Type
     id: 487
-    varClassBase: 12
+    indexOfConcrete: 12
     items:
       "1200": Relative Coordinate System
       "1201": World Coordinate System
   - name: Elemental Type
     id: 488
-    varClassBase: 13
+    indexOfConcrete: 13
     items:
       "1300": None
       "1301": Pyro
@@ -119,7 +119,7 @@ EnumList:
       "1307": Geo
   - name: Entity Type
     id: 489
-    varClassBase: 14
+    indexOfConcrete: 14
     items:
       "1401": Stage
       "1402": Object
@@ -128,7 +128,7 @@ EnumList:
       "1405": Creation
   - name: Unit Status Addition Result
     id: 491
-    varClassBase: 16
+    indexOfConcrete: 16
     items:
       "1500": "Failed: Unexpected error"
       "1501": "Failed: Operation paused for another process"
@@ -138,7 +138,7 @@ EnumList:
       "1505": "Success: Slot stacking"
   - name: Unit Status Removal Reason
     id: 492
-    varClassBase: 17
+    indexOfConcrete: 17
     items:
       "1506": Replaced by other unit status
       "1507": Duration exceeded
@@ -147,13 +147,13 @@ EnumList:
       "1510": Class changed
   - name: Unit Status Removal Strategy
     id: 493
-    varClassBase: 18
+    indexOfConcrete: 18
     items:
       "1540": All Coexisting Statuses With the Same Name
       "1541": Status With Fastest Stack Loss
   - name: Revive Point Selection Strategy
     id: 494
-    varClassBase: 19
+    indexOfConcrete: 19
     items:
       "1601": Nearest
       "1602": Most Recently Activated
@@ -161,14 +161,14 @@ EnumList:
       "1604": Random
   - name: Cause Of Being Down
     id: 495
-    varClassBase: 20
+    indexOfConcrete: 20
     items:
       "1605": Node Graph Triggered
       "1606": Normal Defeat
       "1607": Abnormal Defeat
   - name: Trigonometric Functions
     id: 496
-    varClassBase: 21
+    indexOfConcrete: 21
     items:
       "1700": cos
       "1701": sin
@@ -180,27 +180,27 @@ EnumList:
       "1707": Degrees to Radians
   - name: Disruptor Device Types
     id: 497
-    varClassBase: 22
+    indexOfConcrete: 22
     items:
       "1801": Force Field Device
       "1802": Ejector
       "1803": Tractor Device
   - name: Disruptor Device Orientation
     id: 498
-    varClassBase: 23
+    indexOfConcrete: 23
     items:
       "1810": Associate Character Orientation
       "1811": Fixed Unidirectional
   - name: UI Control Group Status
     id: 499
-    varClassBase: 24
+    indexOfConcrete: 24
     items:
       "1900": Off
       "1901": On
       "1902": Hidden
   - name: Target Type
     id: 500
-    varClassBase: 25
+    indexOfConcrete: 25
     items:
       "2000": None
       "2001": Allied Faction
@@ -212,13 +212,13 @@ EnumList:
       "2007": Allied Faction Self Included
   - name: Trigger Restriction
     id: 501
-    varClassBase: 26
+    indexOfConcrete: 26
     items:
       "2101": Trigger Only Once
       "2102": Trigger Only Once per Entity
   - name: Hit Type
     id: 502
-    varClassBase: 27
+    indexOfConcrete: 27
     items:
       "2200": None
       "2201": Default
@@ -228,7 +228,7 @@ EnumList:
       "2205": Piercing Attack
   - name: Attack Type
     id: 503
-    varClassBase: 28
+    indexOfConcrete: 28
     items:
       "2300": None
       "2301": Melee Attack
@@ -236,7 +236,7 @@ EnumList:
       "2303": Default
   - name: Hit Performance Level
     id: 504
-    varClassBase: 29
+    indexOfConcrete: 29
     items:
       "2400": Default
       "2401": No Hit Performance
@@ -251,7 +251,7 @@ EnumList:
       "2410": Long-Range Throw
   - name: Skill Slot
     id: 3351
-    varClassBase: 30
+    indexOfConcrete: 30
     items:
       "3100": Normal Attack
       "3111": "1: E"
@@ -275,14 +275,14 @@ EnumList:
       "3135": Custom Skill Slot 15
   - name: Sound Attenuation Mode
     id: 3352
-    varClassBase: 31
+    indexOfConcrete: 31
     items:
       "3400": Linear Attenuation
       "3401": Fast Then Slow
       "3402": Slow Then Fast
   - name: Select Completion Reason
     id: 3353
-    varClassBase: 32
+    indexOfConcrete: 32
     items:
       "3500": Completed by Player
       "3501": Timeout
@@ -292,14 +292,14 @@ EnumList:
       "3505": Closed by Node Graph
   - name: Settlement Status
     id: 3354
-    varClassBase: 33
+    indexOfConcrete: 33
     items:
       "4100": TBC
       "4101": Victory
       "4102": Failed
   - name: Reason For Item Change
     id: 3356
-    varClassBase: 35
+    indexOfConcrete: 35
     items:
       "0": Default
       "4900": Destroy
@@ -311,20 +311,20 @@ EnumList:
       "4950": Pick Up
   - name: Item Loot Type
     id: 3357
-    varClassBase: 36
+    indexOfConcrete: 36
     items:
       "4350": Shared Reward
       "4351": Individualized Reward
   - name: Decision Refresh Mode
     id: 3358
-    varClassBase: 37
+    indexOfConcrete: 37
     items:
       "3510": Cannot Refresh
       "3511": Partial Refresh
       "3512": Refresh All
   - name: Elemental Reaction Type
     id: 3359
-    varClassBase: 38
+    indexOfConcrete: 38
     items:
       "4701": Overloaded
       "4702": Vaporize
@@ -350,21 +350,21 @@ EnumList:
       "4737": Hyperbloom
   - name: Interrupt Status
     id: 759
-    varClassBase: 39
+    indexOfConcrete: 39
     items:
       "5200": Interrupt Resistance Status
       "5201": Interrupt Vulnerability Status
       "5202": Protected Status
   - name: Gameplay Mode
     id: 776
-    varClassBase: 40
+    indexOfConcrete: 40
     items:
       "5700": Play
       "5701": Room Play
       "5702": Match Play
   - name: Input Device Type
     id: 777
-    varClassBase: 41
+    indexOfConcrete: 41
     items:
       "5800": Keyboard and Mouse
       "5801": Controller

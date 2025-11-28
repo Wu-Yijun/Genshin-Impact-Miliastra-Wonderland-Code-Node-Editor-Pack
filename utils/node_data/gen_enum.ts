@@ -1,10 +1,11 @@
 import assert from 'assert';
 import yaml from 'yaml';
 import { decode_gia_file } from '../protobuf/decode.ts';
-import { read_file, write_file } from '../../src/util.ts';
+import { readFileSync, writeFileSync } from 'fs';
+import { type GraphNode } from '../protobuf/gia.proto.ts';
 
-const inputFileName = 'enum_id_raw.yaml';
-const outputFileName = 'enum_id.yaml';
+const inputFileName = import.meta.dirname + 'enum_id_raw.yaml';
+const outputFileName = import.meta.dirname + 'enum_id.yaml';
 
 function get_enum_id_list() {
   interface Info {
@@ -12,11 +13,10 @@ function get_enum_id_list() {
     id: number;
     from: number;
   }
-  function getInfo(node: any): Info | null {
-    const p = node.pins[1]?.i1.kind;
+  function getInfo(node: GraphNode): Info | null {
     const temp = {
       id: node.concreteId?.nodeId,
-      classId: node.pins[0]?.value.bNodeValue?.classBase,
+      classId: node.pins[0]?.value.bNodeValue?.indexOfConcrete,
       from: node.pins[0]?.value.bNodeValue?.value.bEnum?.val,
     };
     if (temp.id === undefined) {
@@ -39,7 +39,7 @@ const id_list = get_enum_id_list();
 interface EnumEntry {
   name: string;
   id: number;
-  varClassBase: number;
+  indexOfConcrete: number;
   items: Record<number, string>;
 }
 interface Document {
@@ -49,7 +49,7 @@ interface Document {
 }
 
 // Read and parse the YAML file
-const fileContent = read_file(inputFileName, "rel");
+const fileContent = readFileSync(inputFileName, 'utf-8');
 const parsedYaml: Document = yaml.parse(fileContent);
 
 const enums = parsedYaml.Enums.split("\n")
@@ -67,12 +67,12 @@ for (let i = 0; i < old_list.length; i++) {
   const entry: EnumEntry = {
     name: old_list[i].name,
     id: old_list[i].id,
-    varClassBase: id.classId,
+    indexOfConcrete: id.classId,
     items: {},
   };
   list.push(entry);
   assert(entry.id === id.id, `Enum id mismatch: [${i}] expected ${id.id}, got ${entry.id}`);
-  entry.varClassBase = id.classId;
+  entry.indexOfConcrete = id.classId;
 
   const parts = enums.filter(p => p[0] === entry.name).map(p => p[1]);
   assert(parts.length >= 1 || i === 0, `Enum name mismatch: ${entry.name} not found in Enums`);
@@ -100,8 +100,6 @@ for (let i = 0; i < old_list.length; i++) {
 assert(count === enums.length, `Enum count mismatch: expected ${enums.length}, got ${count}`);
 
 
-
-
 const output = {
   Version: parsedYaml.Version,
   Author: "Aluria",
@@ -110,4 +108,4 @@ const output = {
 };
 const outputContent = `# This file is auto-generated. Do not edit manually.\n` + yaml.stringify(output);
 
-write_file(outputFileName, outputContent, "rel");
+writeFileSync(outputFileName, outputContent)

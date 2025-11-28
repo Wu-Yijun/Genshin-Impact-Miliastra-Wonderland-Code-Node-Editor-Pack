@@ -6,7 +6,7 @@
 
 ### 核心定义
 - **[gia.proto](./gia.proto)**
-  GIA 文件的 Protobuf 数据结构定义。包含了图 (Graph)、节点 (Node)、变量 (Variable) 等核心结构的定义。
+  GIA 文件的 Protobuf 数据结构定义。包含了图 (Graph)、节点 (Node)、变量 (Variable)、连线 (Connection) 等核心结构的定义。
 
 ![GIA.PROTO](../../static/image.png)
 
@@ -60,7 +60,9 @@ encode_gia_file({
 });
 ```
 
-### 创建 GIA 文件, 参考案例: [../node_data/check_enum.ts](../node_data/check_enum.ts)
+### 手动创建 GIA 文件, 参考案例: [../node_data/check_enum.test.ts](../../../dev/utils/node_data/check_enum.ts)
+
+🟩 推荐使用 [utils/gia_gen](../gia_gen/readme.md) 中提供的接口快速创建.
 
 构建并保存一个新的 `.gia` 文件至少包含以下三个步骤：
 
@@ -68,20 +70,20 @@ encode_gia_file({
     首先需要创建图中的每一个节点。你需要手动构建 `GraphNode` 对象，设置其 `nodeIndex` (索引)、`concreteId` (节点ID)、`pins` (引脚参数) 以及 `x`, `y` 坐标等信息。
 
     ```typescript
-    import { type GraphNode, NodeGraph$Id$Class, NodeGraph$Id$Kind, NodeProperty$Type } from "../protobuf/gia.proto.ts";
+    import { type GraphNode, NodeGraph_Id_Class, NodeGraph_Id_Kind, NodeProperty_Type } from "../protobuf/gia.proto.ts";
 
     const node: GraphNode = {
-      nodeIndex: 1, // 唯一索引, 重复的节点无法被导入
+      nodeIndex: 1, // 唯一索引, 重复的节点在导入时被略过
       genericId: { 
-        class: NodeGraph$Id$Class.SystemDefined,
-        type: NodeProperty$Type.Server,
-        kind: NodeGraph$Id$Kind.SysCall,
+        class: NodeGraph_Id_Class.UserDefined,
+        type: NodeGraph_Id_Type.BasicNode,
+        kind: NodeGraph_Id_Kind.NodeGraph,
         nodeId: 475, // 具体的节点 ID (例如 Generic Enum Node)
       }, // 具体 ID 可以通过参考导出的文件的定义得知
       concreteId { ... }
       pins: [ ... ], // 设置输入输出引脚的值
-      x: 0, // x 坐标, 右为正, 300 为一个节点的宽度
-      y: 0, // y 坐标, 下为正, 200 为一个节点的高度
+      x: 0, // x 坐标, 右为正, 大约 300 为一个节点的宽度
+      y: 0, // y 坐标, 下为正, 大约 200 为一个节点的高度
     };
     ```
 
@@ -89,13 +91,13 @@ encode_gia_file({
     将节点列表包装成完整的图结构对象。这个结构层级较深，大致结构为 `Root` -> `NodeUnit` (图单元) -> `NodeGraph` (图本身) -> `nodes` (节点列表)。你需要生成唯一的 `graph_id` 和 `file_id`，并设置图的名称。
 
     ```typescript
-    import { type Root, NodeUnit$Id$Type, NodeUnit$Type, NodeGraph$Id$Type } from "../protobuf/gia.proto.ts";
+    import { type Root, NodeUnit_Id_Type, NodeUnit_Type, NodeGraph_Id_Type } from "../protobuf/gia.proto.ts";
 
     function wrap_nodes_into_root(graph_name: string, nodes: GraphNode[]): Root {
       const graph_id = 123456; // 生成随机 ID
       return {
         graph: {
-          id: { type: NodeUnit$Id$Type.Basic, id: graph_id },
+          id: { type: NodeUnit_Id_Type.Basic, id: graph_id },
           relatedIds: [],
           name: graph_name,
           type: NodeUnit$Type.EntityNode,

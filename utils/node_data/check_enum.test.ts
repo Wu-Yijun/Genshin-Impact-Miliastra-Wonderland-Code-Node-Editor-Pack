@@ -146,7 +146,7 @@ function check_create_enums(v: number) {
         generic_id: 475,
         concrete_id: e.id as any,
         pos: [i, j / 2],
-        indexOfConcrete: e.varClassBase as any,
+        indexOfConcrete: e.indexOfConcrete,
         enum_item_id: [val as any, val2 as any],
       });
       nodes.push(node);
@@ -180,7 +180,7 @@ function get_enums_as_proto() {
     return {
       name,
       id: x.id,
-      varClassBase: x.varClassBase,
+      varClassBase: x.indexOfConcrete,
       items,
     };
   });
