@@ -20,9 +20,15 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 24
-
       - name: Install dependency
         run: npm install fast-glob fs-extra
+
+        
+      - name: Checkout dev
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
 
       - name: Sync and commit files
         run: node dev/.github/workflows/sync.ts
