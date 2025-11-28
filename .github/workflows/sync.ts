@@ -43,9 +43,22 @@ function collectFiles(patterns: string[]): string[] {
   return fg.sync(finalPatterns, { cwd: in_dir, dot: true });
 }
 
+function cleanDir(dir: string) {
+  if (!fs.existsSync(dir)) {
+    throw new Error(`Directory does not exist. Make sure you checkout main into '${dir}' folder.`);
+  }
+
+  const files = fs.readdirSync(dir);
+
+  for (const file of files) {
+    if (file === ".git") continue; // keep git metadata
+    fse.removeSync(path.join(dir, file));
+  }
+}
+
 function syncFiles(config: SyncConfig) {
-  // console.log("🟦 Cleaning main/ ...");
-  // fse.emptyDirSync(out_dir);
+  console.log(`🟦 Cleaning ${out_dir}/ ...`);
+  cleanDir(out_dir);
 
   console.log("🟩 Collecting include files...");
   let included = collectFiles(config.include);

@@ -19,6 +19,8 @@ jobs:
         with:
           ref: dev
           path: dev
+          fetch-depth: 1
+          
       - name: Setup Node.js 24
         uses: actions/setup-node@v5
         with:
@@ -29,9 +31,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-          sparse-checkout: ".does_not_exist"
-          sparse-checkout-cone-mode: false
           path: main
+          fetch-depth: 1
 
       - name: Sync and commit files
         run: node dev/.github/workflows/sync.ts main dev dev/sync-list.json
