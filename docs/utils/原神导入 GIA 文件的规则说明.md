@@ -36,7 +36,7 @@
 - **当 D 不存在时**：说明 B 有派生类，是**泛型基类节点** (Generic)
 
 **输出**：
-- 文件：`./utils/node_id/ref/generic.txt`
+- 文件：`./utils/node_data/ref/generic.txt`
 - 格式：每行为 `<ID>:Basic` 或 `<ID>:Generic`
 - 统计：共 **427 个节点**
   - **57 个** Generic（泛型基类，有派生类）
@@ -138,7 +138,7 @@ function create_derived(from: number, to: number, len: number)
 
 | 文件路径 | 说明 |
 |---------|------|
-| `./utils/node_id/ref/generic.txt` | 所有基类 ID 及其类型标记 |
+| `./utils/node_data/ref/generic.txt` | 所有基类 ID 及其类型标记 |
 | `./utils/ref/all_server_nodes.gia` | 生成的测试 GIA 文件 |
 | `./utils/ref/all_server_nodes_trim.gia` | 游戏过滤后的 GIA 文件 |
 

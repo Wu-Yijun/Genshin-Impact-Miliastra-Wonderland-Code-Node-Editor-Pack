@@ -8,7 +8,7 @@
 - **[gia.proto](./gia.proto)**
   GIA 文件的 Protobuf 数据结构定义。包含了图 (Graph)、节点 (Node)、变量 (Variable) 等核心结构的定义。
 
-![GIA.PROTO](image.png)
+![GIA.PROTO](../../static/image.png)
 
 ### TypeScript 工具
 - **[proto2ts.ts](./proto2ts.ts)**
@@ -60,7 +60,7 @@ encode_gia_file({
 });
 ```
 
-### 创建 GIA 文件, 参考案例: [../node_id/check_enum.ts](../node_id/check_enum.ts)
+### 创建 GIA 文件, 参考案例: [../node_data/check_enum.ts](../node_data/check_enum.ts)
 
 构建并保存一个新的 `.gia` 文件至少包含以下三个步骤：
 

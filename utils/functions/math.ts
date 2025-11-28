@@ -1,4 +1,5 @@
 
+import { writeFileSync } from "fs";
 import { type Lambda, Parser } from "./function_defs.ts";
 import {
   any_type,
@@ -15,7 +16,6 @@ import {
   expandArgs,
   XY,
 } from "./utils.ts";
-import { write_file } from "../../src/util.ts";
 
 /** Levels:
  * - ArgType: AllTypes | AllTypes[] | (()=>string|ArgType)
@@ -633,7 +633,7 @@ export const MathNodes: Lambda[] = [
 const MathNodes2: Lambda[] = [
 ]
 
-function test(print: boolean = true, out_file = "/math.temp.d.ts") {
+function test(out_file: string, print: boolean = true) {
   const d = new Parser();
   d.lambda(MathNodes);
   // d.lambda(MathNodes2);
@@ -644,10 +644,10 @@ function test(print: boolean = true, out_file = "/math.temp.d.ts") {
     // console.log(d.gen_by_name("dict_get").join("\n"))
   } else {
     const res = "// @ts-nocheck\n\n" + d.gen().join("\n\n");
-    write_file(out_file, res, "rel");
+    writeFileSync(out_file, res);
   }
 }
 
 if (import.meta.main) {
-  test();
+  test(import.meta.dirname + "/math.temp.d.ts", true);
 }

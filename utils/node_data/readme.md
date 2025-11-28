@@ -40,4 +40,4 @@
   - 可导入游戏以验证枚举节点。
 
 - **验证效果图**:
-  ![Generated Enum Nodes](<Generated Enum Nodes.jpg>)
+  ![Generated Enum Nodes](<../../static/Generated Enum Nodes.jpg>)

@@ -22,7 +22,7 @@ import {
 import { get_id, type NodePins, type NodeType } from "./nodes.ts";
 
 import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
-import { type ConcreteMap, get_concrete_index } from "../node_id/concrete_map.ts";
+import { type ConcreteMap, get_concrete_index } from "../node_data/concrete_map.ts";
 
 /**
  * GraphBody_ 接口定义了构建图的基本参数

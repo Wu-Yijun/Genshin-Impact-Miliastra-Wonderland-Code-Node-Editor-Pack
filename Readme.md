@@ -20,8 +20,8 @@
 
 ### 3. 完备的节点与枚举数据
 整理并校验了游戏中的各类 ID 映射，确保转换的准确性。
-*   [**Node ID 映射 (`utils/node_id/server_node_id.yaml`)**](./utils/node_id/server_node_id.yaml): 服务器节点 ID (Server Node ID) 的完整对照表。
-*   [**枚举标准化 (`utils/node_id/enum_id.yaml`)**](./utils/node_id/enum_id.yaml): 自动生成标准化的枚举定义 (`enum_id.yaml`)，并提供工具生成测试用例以在游戏中验证枚举的有效性。
+*   [**Node ID 映射 (`utils/node_data/server_node_id.yaml`)**](./utils/node_data/server_node_id.yaml): 服务器节点 ID (Server Node ID) 的完整对照表。
+*   [**枚举标准化 (`utils/node_data/enum_id.yaml`)**](./utils/node_data/enum_id.yaml): 自动生成标准化的枚举定义 (`enum_id.yaml`)，并提供工具生成测试用例以在游戏中验证枚举的有效性。
 
 ### 4. 在线节点编辑器功能
 *   *(外部库)* [WebMiliastraNodesEditor](https://github.com/Columbina-Dev/WebMiliastraNodesEditor): 图形化操作界面, 模拟游戏内节点编辑器行为, 将来会补充完整的导入导出和转化功能.
@@ -34,7 +34,7 @@
 
 *   **[DSL 函数定义与生成工具](./utils/functions/readme.md)**: 了解 DSL 类型系统是如何构建的，以及如何添加新的节点定义。
 *   **[GIA 文件格式与 Protobuf 工具](./utils/protobuf/readme.md)**: 深入了解文件结构，学习如何使用脚本读写 GIA 文件。
-*   **[节点 ID 与枚举定义](./utils/node_id/readme.md)**: 查看节点 ID 列表和枚举值的详细映射关系。
+*   **[节点 ID 与枚举定义](./utils/node_data/readme.md)**: 查看节点 ID 列表和枚举值的详细映射关系。
 *   **[GIA 图生成器](./utils/gia_gen/readme.md)**: 了解如何使用 Helper 函数快速生成和操作 GIA 节点图。
 
 
