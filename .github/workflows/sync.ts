@@ -81,6 +81,8 @@ function main() {
 
   // Commit inside main directory
   const gitCmd = `
+    git config user.name "github-actions[bot]"
+    git config user.email "github-actions[bot]@users.noreply.github.com"
     cd main &&
     git add -A &&
     (git commit -m "${commitMessage.replace(/"/g, '\\"')}" || echo "No changes") &&

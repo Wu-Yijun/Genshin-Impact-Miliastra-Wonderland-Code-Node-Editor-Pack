@@ -6,6 +6,9 @@ on:
     branches:
       - dev
 
+permissions:
+  contents: write # to push to main
+
 jobs:
   sync:
     runs-on: ubuntu-latest
