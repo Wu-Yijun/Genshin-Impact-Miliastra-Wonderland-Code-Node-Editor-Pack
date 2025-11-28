@@ -1,0 +1,23 @@
+name: Sync dev to main
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout dev
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+
+      - name: Install dependency
+        run: npm install fast-glob fs-extra
+
+      - name: Sync and commit files
+        run: node sync.ts
