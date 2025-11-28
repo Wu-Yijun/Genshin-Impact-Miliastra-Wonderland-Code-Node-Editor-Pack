@@ -1,4 +1,6 @@
 {
+  "commitMessage": "整理出完整服务器节点信息列表: utils/node_data/node_pin_records.ts",
+  "notSync": false,
   "include": [
     "*",
     "docs/**",
@@ -19,7 +21,5 @@
     "!utils/functions/tools.ts",
     "!utils/functions/math_raw.d.ts",
     "!utils/functions/check.ts"
-  ],
-  "commitMessage": "对创建节点图完成高级包装: Graph 类",
-  "notSync": true
+  ]
 }

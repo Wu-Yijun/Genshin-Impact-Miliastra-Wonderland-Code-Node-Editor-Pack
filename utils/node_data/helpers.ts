@@ -110,8 +110,8 @@ const NODE_ID_MAP: Map<number, number> = new Map(
 export function get_generic_id(concrete_id: number): number | null {
   return NODE_ID_MAP.get(concrete_id) ?? null;
 }
-export function get_node_record(concrete_id: number): SingleNodeData | null {
-  const id = get_generic_id(concrete_id) ?? concrete_id;
+export function get_node_record(gid_cid: number): SingleNodeData | null {
+  const id = get_generic_id(gid_cid) ?? gid_cid;
   const idx = NODE_RECORDS_INDEX_MAP.get(id);
   return idx === undefined ? null : NODE_PIN_RECORDS[idx] ?? null;
 }

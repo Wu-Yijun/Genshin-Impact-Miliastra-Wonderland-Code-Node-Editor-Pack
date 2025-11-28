@@ -12,8 +12,9 @@ import { derived_records } from "../node_data/ref/node_defines.ts";
 import { get_pin_info, get_node_info, get_nodes } from "./extract.ts";
 import { CONCRETE_MAP } from "../node_data/concrete_map.ts";
 import yaml from 'yaml';
-import { NODE_PIN_RECORDS } from "../node_data/node_pin_records.ts";
+import { NODE_PIN_RECORDS, type SingleNodeData } from "../node_data/node_pin_records.ts";
 import { Graph } from "./graph.ts"
+import { get_node_record } from "../node_data/helpers.ts";
 
 function generate_all_nodes(from: number, size: number = 300, line_width: number = 20, offsets: number = 1): GraphNode[] {
   const ret = [];
@@ -672,14 +673,43 @@ function combine_id_list() {
       .map(s => /^(\d+): (\d+\. )?(.+)$/s.exec(s)).filter(x => x !== null)
       .map(([_, d, _2, s]) => [d, s])
   );
-  console.log(names);
+  // console.log(names);
   const b = get_graph_ids("Basic").map(x => ({ gid: x, cid: x, type: "ServerBasic", name: names.get(x.toString()) }));
   const g = NODE_PIN_RECORDS.map(x => x.reflectMap!.map(y => ({ cid: y[0], gid: x.id, type: "ServerGeneric " + y[1], name: names.get(x.id.toString()) })));
   const all = [...g, ...b].flat()
     .sort((a, b) => a.cid - b.cid);
 
-  console.log(b);
-  writeFileSync("./utils/node_data/yaml/server.yaml", all.map(x => `${x.cid}:${x.gid} # ${x.type} ${x.name}`).join("\n"));
+  // console.log(b);
+  writeFileSync("./utils/node_data/yaml/server.yaml", all.map(x => `${x.cid}: ${x.gid} # ${x.type} # ${x.name}`).join("\n"));
+
+  const rec: SingleNodeData[] = [];
+  all.forEach((x) => {
+    const p = rec.find(y => y.id === x.gid);
+    if (p === undefined) {
+      const r = get_node_record(x.gid);
+      if (r) {
+        rec.push({
+          name: x.name,
+          id: x.gid,
+          inputs: r.inputs,
+          outputs: r.outputs,
+          reflectMap: r.reflectMap,
+        });
+      } else {
+        rec.push({
+          name: x.name,
+          id: x.gid,
+          inputs: [],
+          outputs: [],
+        });
+      }
+    } else {
+      assert(p.reflectMap?.find(y => y[0] === x.cid) !== null);
+      assert.equal(p.name, x.name);
+    }
+  });
+  const ret = util.inspect(rec, { depth: null, maxArrayLength: null });
+  writeFileSync("./temp", ret);
 }
 
 function get_missing() {
@@ -728,9 +758,11 @@ if (import.meta.main) {
   // read_concrete_map();
   // generate_concrete_dict_map(true);
 
-  combine_id_list();
+  // combine_id_list();
   // get_missing();
   // get_missing2();
+
+
 
   // const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
   // const graph = decode_gia_file({
