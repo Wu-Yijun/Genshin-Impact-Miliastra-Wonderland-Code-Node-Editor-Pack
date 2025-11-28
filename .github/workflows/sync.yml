@@ -20,4 +20,4 @@ jobs:
         run: npm install fast-glob fs-extra
 
       - name: Sync and commit files
-        run: node .github/actions/sync.ts
+        run: node dev/.github/actions/sync.ts
