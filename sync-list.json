@@ -1,0 +1,15 @@
+{
+  "include": [
+    "/src",
+    "/dist",
+    "*.md",
+    "assets/**"
+  ],
+  "exclude": [
+    "**/*.test.*",
+    "temp/**",
+    "ref/**",
+    "*.log"
+  ],
+  "commitMessage": "Test sync to auto-sync a clean main branch"
+}
