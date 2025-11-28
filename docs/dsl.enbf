@@ -1,0 +1,124 @@
+File          ::= (Import | Metadata | ConstDecl | Trigger | Component)*
+
+
+###############
+# Trigger
+###############
+
+Trigger       ::= "[" TriggerName "(" ArgList? ")" OutputList? "]"
+                   ChainExpr
+
+TriggerName   ::= Identifier
+
+
+###############
+# Component Definition
+###############
+
+Component     ::= "function" Identifier "(" ParamList? ")" Block
+
+Block         ::= "{"
+                    InChain+
+                    ReturnStmt
+                  "}"
+
+InChain       ::= InCall ConnSeq?
+
+InCall        ::= "In" "(" InPort? ")"
+
+InPort        ::= StringLiteral | IntegerLiteral
+
+ReturnStmt    ::= "return" ExecFuncCall ";"
+
+ExecFuncCall  ::= "ExecFunc" GenericTypeArgs? "(" OutPortList? ")"
+
+GenericTypeArgs ::= "<" TypeMap ">"
+
+TypeMap       ::= (Identifier ":" Type) ("," Identifier ":" Type)*
+
+OutPortList   ::= (StringLiteral ("," StringLiteral)*)?
+
+
+###############
+# Chain Expression
+###############
+
+ChainExpr     ::= CallExpr (ConnOp CallExpr)*
+
+ConnOp        ::= "." | "<<" | ">>"
+
+
+###############
+# Call Expression (核心规则)
+###############
+
+CallExpr      ::= PrimaryCall
+                  OutputList?
+                  CaseClause?
+
+PrimaryCall   ::= Identifier "(" ArgList? ")"
+
+OutputList    ::= "[" Identifier ("," Identifier)* "]"
+
+
+###############
+# Case Clause
+###############
+
+CaseClause    ::= "(" CaseList? ")"
+
+CaseList      ::= CaseEntry ("," CaseEntry)*
+
+CaseEntry     ::= CaseKey "=" ChainExpr
+
+CaseKey       ::= Identifier | IntegerLiteral | StringLiteral
+
+
+###############
+# Arguments / Params
+###############
+
+ArgList       ::= Expr ("," Expr)*
+
+ParamList     ::= Param ("," Param)*
+
+Param         ::= Identifier ":" Type
+
+
+###############
+# Metadata & Const
+###############
+
+Metadata      ::= "@" Identifier "(" MetadataObj ")"
+
+MetadataObj   ::= "{" MetadataEntry ("," MetadataEntry)* "}"
+
+MetadataEntry ::= Identifier ":" Expr
+
+ConstDecl     ::= "const" Identifier "=" Expr ";"
+
+
+###############
+# Imports
+###############
+
+Import        ::= "import" ImportItems "from" StringLiteral ";"
+
+ImportItems   ::= Identifier | "{" Identifier ("," Identifier)* "}"
+
+
+###############
+# Expressions (在 DSL 中受限)
+###############
+
+Expr          ::= Literal
+                | Identifier
+                | MemberExpr
+                | "(" Expr ")"
+
+MemberExpr    ::= Identifier "." Identifier
+
+Literal       ::= StringLiteral
+                | IntegerLiteral
+                | BooleanLiteral
+                | NullLiteral

@@ -1,0 +1,51 @@
+{
+  "triggers": [
+    {
+      "id": "OnCreate",
+      "params": [],
+      "root": {
+        "id": "n1",
+        "kind": "call",
+        "name": "GetPlayer",
+        "args": [],
+        "outputs": [{ "name": "player" }],
+        "next": {
+          "id": "n2",
+          "kind": "eval",
+          "capture": ["player"],
+          "lambdaParams": ["player"],
+          "lambdaBody": "player.x + 1",
+          "outputs": [{ "name": "xpos" }],
+          "next": {
+            "id": "n3",
+            "kind": "if",
+            "conditionExpr": "xpos > 10",
+            "trueNode": {
+              "id": "n4",
+              "kind": "call",
+              "name": "Log",
+              "args": ["'big'"],
+              "outputs": [],
+              "next": { "kind": "jump", "target": 0 }
+            },
+            "falseNode": {
+              "id": "n5",
+              "kind": "call",
+              "name": "Log",
+              "args": ["'small'"],
+              "outputs": [],
+              "next": { "kind": "jump", "target": 0 }
+            },
+            "next": {
+              "id": "n6",
+              "kind": "call",
+              "name": "Log",
+              "args": ["'done'"],
+              "outputs": []
+            }
+          }
+        }
+      }
+    }
+  ]
+}

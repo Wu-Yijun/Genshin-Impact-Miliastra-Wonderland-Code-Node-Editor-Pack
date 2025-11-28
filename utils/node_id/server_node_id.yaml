@@ -1,0 +1,805 @@
+Header:
+  Version: 1.0.2
+  Method: Manually Match from Raw File
+  BY: Aluria
+  Note: Server Node IDs are different from those of Client!
+  P.S.: Stupid! Ashamed!! Guilty!!!
+
+Server Execution Node:
+  - I. Common Nodes:
+    1: 1. Print Str
+    19: 2. Set Local Variable
+    6: 3. Break Loop
+    5: 4. Finite Loop
+    190: 5. Forwarding Event
+
+  - II. List Operations:
+    135: 1. Insert Value Into List
+    160: 2. Modify Value in List
+    153: 3. Remove Value From List
+    509: 4. List Iteration Loop
+    167: 5. List Sorting
+    100: 6. Concatenate List
+    107: 7. Clear List
+
+  - III. Custom Variables:
+    323: 1. Set Node Graph Variable
+    22: 2. Set Custom Variable
+
+  - IV. Preset Status:
+    66: 1. Set Preset Status
+
+  - V. Entity Related:
+    70: 1. Create Entity
+    252: 2. Create Prefab
+    757: 3. Create Prefab Group
+    308: 4. Activate/Disable Model Display
+    69: 5. Destroy Entity
+    372: 6. Remove Entity
+
+  - VI. Stage Related:
+    77: 1. Settle Stage
+    665: 2. Set Current Environment Time
+    666: 3. Set Environment Time Passage Speed
+
+  - VII. Faction Related:
+    250: 1. Modify Entity Faction
+
+  - VIII. Player and Character Related:
+    288: 1. Teleport Player
+    279: 2. Revive Character
+    283: 3. Revive All Player's Characters
+    282: 4. Defeat All Player's Characters
+    272: 5. Activate Revive Point
+    278: 6. Set Player Revive Time
+    276: 7. Set Player Remaining Revives
+    763: 8. Modify environment settings
+    274: 9. Allow/Forbid Player to Revive
+    273: 10. Deactivate Revive Point
+
+  - IX. Collision:
+    242: 1. Activate/Disable Extra Collision
+    243: 2. Activate/Disable Extra Collision Climbability
+    240: 3. Activate/Disable Native Collision
+    241: 4. Activate/Disable Native Collision Climbability
+
+  - X. Collision Triggers:
+    90: 1. Activate/Disable Collision Trigger
+
+  - XI. Combat:
+    303: 1. Initiate Attack
+    583: 2. Recover HP
+    697: 3. HP Loss
+    698: 4. Recover HP Directly
+
+  - XII. Motion Devices:
+    88: 1. Recover Basic Motion Device
+    775: 2. Activate Fixed-Point Motion Device
+    267: 3. Activate Basic Motion Device
+    520: 4. Add Target-Oriented Rotation-Based Motion Device
+    84: 5. Add Uniform Basic Linear Motion Device
+    85: 6. Add Uniform Basic Rotation-Based Motion Device
+    86: 7. Stop and Delete Basic Motion Device
+    87: 8. Pause Basic Motion Device
+
+  - XIII. Follow Motion Device:
+    365: 1. Activate/Disable Follow Motion Device
+    245: 2. Switch Follow Motion Device Target by GUID
+    668: 3. Switch Follow Motion Device Target by Entity
+
+  - XIV. Projectiles:
+    256: 1. Create Projectile
+
+  - XV. Special Effects:
+    93: 1. Play Timed Effects
+    473: 2. Clear Special Effects Based on Special Effect Assets
+    94: 3. Mount Looping Special Effect
+    95: 4. Clear Looping Special Effect
+
+  - XVI. Timer:
+    81: 1. Resume Timer
+    79: 2. Start Timer
+    80: 3. Pause Timer
+    82: 4. Stop Timer
+
+  - XVII. Global Timer:
+    312: 1. Recover Global Timer
+    314: 3. Modify Global Timer
+    311: 2. Start Global Timer
+    309: 4. Pause Global Timer
+    313: 5. Stop Global Timer
+
+  - XVIII. Camera:
+    261: 1. Switch Main Camera Template
+
+  - XIX. Character Disruptor Device:
+    302: 1. Modifying Character Disruptor Device
+
+  - XX. Unit Status:
+    297: 1. Add Unit Status
+    301: 2. Remove Unit Status
+
+  - XXI. Tabs:
+    306: 1. Activate/Disable Tab
+
+  - XXII. Collision Trigger Source:
+    367: 1. Activate/Disable Collision Trigger Source
+
+  - XXIII. Class:
+    391: 1. Change Player's Current Class Level
+    389: 2. Change Player Class
+    390: 3. Increase Player's Current Class EXP
+
+  - XXIV. UI Control Groups:
+    383: 1. Activate UI Control Group in Control Group Library
+    382: 2. Switch Current Interface Layout
+    384: 3. Modify UI Control Status Within the Interface Layout
+    521: 4. Remove Interface Control Group From Control Group Library
+
+  - XXV. Skills:
+    741: 1. Modify Skill CD Percentage Based on Max CD
+    397: 2. Initialize Character Skill
+    394: 3. Set Skill Resource Amount
+    739: 4. Set Character Skill CD
+    395: 5. Add Character Skill
+    393: 6. Modify Skill Resource Amount
+    740: 7. Modify Character Skill CD
+    399: 8. Delete Character Skill by Slot
+    396: 9. Delete Character Skill by ID
+
+  - XXVI. Sound Effects:
+    596: 1. Adjust Player Background Music Volume
+    593: 2. Adjust Specified Sound Effect Player
+    591: 3. Close Specified Sound Effect Player
+    595: 4. Start/Pause Player Background Music
+    592: 5. Start/Pause Specified Sound Effect Player
+    594: 6. Add Sound Effect Player
+    598: 7. Player Plays One-Shot 2D Sound Effect
+    597: 8. Modify Player Background Music
+
+  - XXVII. Unit Tags:
+    588: 1. Clear Unit Tags from Entity
+    586: 2. Add Unit Tag to Entity
+    587: 3. Remove Unit Tag from Entity
+
+  - XXVIII. Custom Aggro:
+    602: 1. Taunt Target
+    600: 2. Remove Target Entity From Aggro List
+    601: 3. Clear Specified Target's Aggro List
+    599: 4. Set the Aggro Value of Specified Entity
+
+  - XXIX. Signals:
+    30000: 1. Send Signal # Be careful. ID will become Dynamic ID
+
+  - XXX. Nameplate:
+    617: 1. Set Entity Active Nameplate
+
+  - XXXI. Text Bubbles:
+    631: 1. Switch Active Text Bubble
+
+  - XXXII. Deck Selector:
+    641: 1. Close Deck Selector
+    632: 2. Invoke Deck Selector
+    743: 3. Random Deck Selector Selection List
+
+  - XXXIII. Stage Settlement:
+    652: 1. Set Player Settlement Success Status
+    647: 2. Set Player Settlement Scoreboard Data Display
+    650: 3. Set Player Settlement Ranking Value
+    656: 4. Set Faction Settlement Success Status
+    654: 5. Set Faction Settlement Ranking Value
+
+  - XXXIV. Light Source Components:
+    667: 1. Toggle Entity Light Source
+
+  - XXXV. Dictionary:
+    1928: 1. Sort Dictionary by Key
+    1938: 2. Sort Dictionary by Value
+    948: 3. Set or Add Key Value Pairs to Dictionary
+    1718: 4. Clear Dictionary
+    1298: 5. Remove Key Value Pairs from Dictionary by Key
+
+  - XXXVI. Structures:
+    300004: 1. Modify Structure # Be careful. ID will become Dynamic ID
+
+  - XXXVII. Shop:
+    712: 1. Remove Item From Inventory Shop Sales List
+    713: 2. Remove item from purchase list
+    711: 3. Remove Item From Custom Shop Sales List
+    702: 4. Open Shop
+    703: 5. Close Shop
+    709: 6. Add New Item to Inventory Shop Sales List
+    710: 7. Add Items to the Purchase List
+    708: 8. Add New Item to Custom Shop Sales List
+    706: 9. Modify Inventory Shop Item Sales Info
+    707: 10. Modify Item Purchase Info in the Purchase List
+    704: 11. Modify Custom Shop Item Sales Info
+
+  - XXXVIII. Equipment:
+    674: 1. Modify Equipment Affix Value
+    673: 2. Remove Equipment Affix
+    672: 3. Add Affix to Equipment
+    742: 4. Add Affix to Equipment at Specified ID
+
+  - XXXIX. Items and Inventory:
+    720: 1. Set Inventory Item Drop Contents
+    687: 2. Set Inventory Drop Items/Currency Amount
+    725: 3. Set Loot Drop Type
+    724: 4. Trigger Loot Drop
+    # :TODO 4. Set Loot Drop Content Does not exist!
+    686: 5. Modify Inventory Item Quantity
+    688: 6. Modify Inventory Currency Quantity
+    726: 7. Modify Loot Item Component Quantity
+    727: 8. Modify Loot Component Currency Amount
+    685: 9. Increase Maximum Inventory Capacity
+
+  - XL. Mini-Map Marker Component:
+    636: 1. Modify Player List for Visible Mini-Map Markers
+    640: 2. Modify Player Markers on the Mini-Map
+    635: 3. Modify Mini-Map Marker Activation Status
+    634: 4. Modify Mini-Map Zoom
+    637: 5. Modify Player List for Tracking Mini-Map Markers
+
+  - XLI. Creation Patrol:
+    618: 1. Switch Creation Patrol Template
+
+  - XLII. Leaderboard:
+    762: 1. Set Player Leaderboard Score as a Float
+    761: 2. Set Player Leaderboard Score as an Integer
+
+  - XLIII. Achievements:
+    646: 1. Change Achievement Progress Tally
+    645: 2. Set Achievement Progress Tally
+
+  - XLIV. Scan Tags:
+    735: 1. Set Scan Tag Rules
+    736: 2. Set Scan Component's Active Scan Tag ID
+
+  - XLV. Rank:
+      663: 1. Switch the scoring group that affects player's competitive rank
+      659: 2. Set Player Rank Score Change
+      661: 3. Set Player Escape Validity
+
+  - XLVI. Entity Deployment Group:
+    178: 1. Activate/Disable Entity Deployment Group
+
+  - XLVII. Chat Channel:
+    769: 1. Set Chat Channel Switch
+    771: 2. Set Player's Current Channel
+    770: 3. Modify Player Channel Permission
+
+  - XLVIII. Wonderland Gift Boxes:
+    772: 1. Consume Gift Box
+
+Server Trigger Node:
+  - I. Custom Variables:
+    351: 1. When Node Graph Variable Changes
+    36: 2. When Custom Variable Changes
+
+  - II. Preset Status:
+    67: 1. When Preset Status Changes
+
+  - III. Entity Related:
+    946: 1. When Character Movement SPD Meets Condition
+    71: 2. When Entity Is Created
+    373: 3. When Entity Is Destroyed
+    72: 4. When Entity Is Removed/Destroyed
+
+  - IV. Faction Related:
+    251: 1. When Entity Faction Changes
+
+  - V. Player and Character Related:
+    280: 1. When the Character Is Down
+    281: 2. When Character Revives
+    289: 3. When Player Teleport Completes
+    284: 4. When All Player's Characters Are Down
+    286: 5. When All Player's Characters Are Revived
+    285: 6. When Player Is Abnormally Downed and Revives
+
+  - VI. Collision Triggers:
+    92: 1. When Entering Collision Trigger
+    91: 2. When Exiting Collision Trigger
+
+  - VII. Combat:
+    584: 1. When HP Is Recovered
+    585: 2. When Initiating HP Recovery
+    305: 3. When Attack Hits
+    304: 4. When Attacked
+    765: 5. When Entering an Interruptible State
+
+  - VIII. Motion Device:
+    89: 1. When Basic Motion Device Stops
+    177: 2. When Path Reaches Waypoint
+
+  - IX. Hit Detection:
+    253: 1. When On-Hit Detection Is Triggered
+
+  - X. Timer:
+    83: 1. When Timer Is Triggered
+
+  - XI. Global Timer:
+    315: 1. When Global Timer Is Triggered
+
+  - XII. UI Control Groups:
+    316: 1. When UI Control Group Is Triggered
+
+  - XIII. Unit Status:
+    300: 1. When Unit Status Changes
+    299: 2. When Unit Status Ends
+    642: 3. When Elemental Reaction Event Occurs
+    643: 4. When Shield Is Attacked
+
+  - XIV. Tabs:
+    307: 1. When Tab Is Selected
+
+  - XV. Creations:
+    374: 1. When Creation Enters Combat
+    375: 2. When Creation Leaves Combat
+
+  - XVI. Classes:
+    386: 1. When Player Class Level Changes
+    385: 2. When Player Class Changes
+    764: 3. When Player Class Is Removed
+
+  - XVII. Skills:
+    392: 1. When Skill Node Is Called
+
+  - XVIII. Custom Aggro:
+    611: 1. When Aggro Target Changes
+    612: 2. When Self Enters Combat
+    613: 3. When Self Leaves Combat
+
+  - XIX. Signals:
+    300001: 1. Monitor Signal ## NOTICE, DYNAMIC
+
+  - XX. Deck Selector:
+    633: 1. When Deck Selector Is Complete
+
+  - XXI. Text Bubbles:
+    679: 1. When Text Bubble Is Completed
+
+  - XXII. Shop:
+    701: 1. When Selling Inventory Items in the Shop
+    700: 2. When Custom Shop Item Is Sold
+    705: 3. When selling items to the shop
+
+  - XXIII. Equipment:
+    695: 1. When Equipment Is Equipped
+    696: 2. When Equipment Is Unequipped
+    694: 3. When Equipment Is Initialized
+    680: 4. When Equipment Affix Value Changes
+
+  - XXIV. Items:
+    682: 1. When Item Is Lost From Inventory
+    683: 2. When the Quantity of Inventory Item Changes
+    681: 3. When Item Is Added to Inventory
+    684: 4. When the Quantity of Inventory Currency Changes
+    733: 5. When Items in the Inventory Are Used
+
+  - XXV. Creation Patrol:
+    620: 1. When Creation Reaches Patrol Waypoint
+
+Flow Control Node:
+  - Branches:
+    2: Double Branch
+    3: Multiple Branches
+
+Arithmetic Node:
+  General:
+    - Equal: [Generic: 14]
+      14: Str
+      15: GUID
+      16: Entity
+      17: Vec
+      254: Faction
+      370: Int
+      371: Float
+      581: ConfigId
+      582: Prefab
+    - Assemble List: [Generic: 169]
+      169: Generic
+      169: Int
+      170: Str
+      171: Entity
+      172: GUID
+      173: Float
+      174: Vec
+      175: Bool
+      568: ConfigId
+      569: Prefab
+      2640: Faction
+    - Enumerations Equal: [Generic: 475]
+      475: Generic
+      476: Comparison Operators
+      477: Logical Operators
+      478: Mathematical Operators
+      479: Attack Shapes
+      480: Survival Status
+      481: Sorting Rules
+      482: Rounding Logic
+      483: Type Conversions
+      484: Motion Path Point Types
+      485: Motion Types
+      486: Follow Location Type
+      487: Coordinate System Type
+      488: Elemental Type
+      489: Entity Type
+      491: Unit Status Addition Result
+      492: Unit Status Removal Reason
+      493: Unit Status Removal Strategy
+      494: Revive Point Selection Strategy
+      495: Cause of Being Down
+      496: Trigonometric Functions
+      497: Disruptor Device Types
+      498: Disruptor Device Orientation
+      499: UI Control Group Status
+      500: Target Type
+      501: Trigger Restriction
+      502: Hit Type
+      503: Attack Type
+      504: Hit Performance Level
+      3351: Skill Slot
+      3352: Sound Attenuation Mode
+      3353: Select Completion Reason
+      3354: Settlement Status
+      3356: Reason for Item Change
+      3357: Item Loot Type
+      3358: Decision Refresh Mode
+      3359: Elemental Reaction Type
+      759: Interrupt Status
+      776: Gameplay Mode
+      777: Input Device Type
+    - Data Type Conversion: [Generic: 180]
+      180: Int -> Bool
+      181: Int -> Float
+      182: Int -> Str
+      183: Entity -> Str
+      184: GUID -> Str
+      185: Bool -> Int
+      186: Bool -> Str
+      187: Float -> Int
+      188: Float -> Str
+      189: Vec -> Str
+      255: Faction -> Str
+
+  # Note that Generic Type is the same as Int Node
+  Math: 
+    9: Split Vec
+    10: Vec Addition
+    11: Vec Subtraction
+    12: Vec Zoom
+    13: Vec Angle
+    74: Vec Normalization
+    200: (Int) Addition
+    201: (Float) Addition
+    202: (Int) Subtraction
+    203: (Float) Subtraction
+    204: (Int) Multiplication
+    205: (Float) Multiplication
+    206: (Int) Division
+    207: (Float) Division
+    208: Modulo Operation
+    209: (Int) Exponentiation
+    210: (Float) Exponentiation
+    211: (Int) Take Larger Value
+    212: (Float) Take Larger Value
+    213: (Int) Take Smaller Value
+    214: (Float) Take Smaller Value
+    215: Logarithm Operation
+    216: (Int) Absolute Value Operation
+    217: (Float) Absolute Value Operation
+    218: (Int) Sign Operation
+    219: (Float) Sign Operation
+    220: Vec Modulo Operation
+    221: Arithmetic Square Root Operation
+    222: (Int) Range Limiting Operation
+    223: (Float) Range Limiting Operation
+    224: Round to Integer Operation
+    225: Create Vec
+    230: (Int) Less Than
+    231: (Int) Less Than or Equal To
+    232: (Int) Greater Than
+    233: (Int) Greater Than or Equal To
+    235: (Float) Less Than
+    236: (Float) Less Than or Equal To
+    237: (Float) Greater Than
+    238: (Float) Greater Than or Equal To
+    226: Logical AND Operation
+    227: Logical OR Operation
+    228: Logical XOR Operation
+    229: Logical NOT Operation
+    244: Distance Between Two Coordinate Points
+    291: Sine Function
+    292: Cosine Function
+    293: Tangent Function
+    294: Arcsine Function
+    295: Arccosine Function
+    296: Arctangent Function
+    321: Radians to Degrees
+    322: Degrees to Radians
+    474: Vec Rotation
+    505: Vec Dot Product
+    506: Vec Cross Product
+    519: Direction Vector to Rotation
+    752: Calculate formatted time from timestamp
+    753: Calculate Timestamp From Formatted Time
+    754: Calculate day of the week from timestamp
+    778: Left Shift Operation
+    779: Right Shift Operation
+    780: Bitwise AND
+    781: Bitwise OR
+    782: XOR (Exclusive OR)
+    783: Bitwise Complement
+    784: Write by bit
+    785: Read by bit
+
+  Assembly Dict: # 1788-1927, 140 ID in total
+    base_id: 1788
+    Generic: 1788
+    # Except:
+    #   - Generic
+    #   - Structure
+    #   - Structure List
+    # Method: base_id + Key_id + Value_id
+    # Keys:
+    #   0: Entity
+    #   20: GUID
+    #   40: Integer
+    #   60: Str
+    #   80: Faction
+    #   100: ConfigId
+    #   120: Prefab
+    # Values:
+    #   0: Entity
+    #   1: GUID
+    #   2: Integer
+    #   3: Bool
+    #   4: Floating Point Numbers
+    #   5: Str
+    #   6: Faction
+    #   7: Vec
+    #   8: ConfigId
+    #   9: Prefab
+    #   10: Entity List
+    #   11: GUID List
+    #   12: Integer List
+    #   13: Bool List
+    #   14: Floating Point List
+    #   15: Str List
+    #   16: Faction List
+    #   17: Vec List
+    #   18: ConfigId List
+    #   19: Prefab List
+
+  Create Dict: # 1088-1157, 70 in total
+    base_id: 1088
+    Generic: 1088
+    # Except:
+    #   - Generic
+    #   - Structure
+    #   - Any List
+    # Method: base_id + Key_id + Value_id
+    # Keys:
+    #   0: Entity
+    #   10: GUID
+    #   20: Integer
+    #   30: Str
+    #   40: Faction
+    #   50: ConfigId
+    #   60: Prefab
+    # Values:
+    #   0: Entity
+    #   1: GUID
+    #   2: Integer
+    #   3: Bool
+    #   4: Floating Point Numbers
+    #   5: Str
+    #   6: Faction
+    #   7: Vec
+    #   8: ConfigId
+    #   9: Prefab
+
+
+  Structure:
+  Method: Dynamic ID
+  Assemble Structure: [Generic: 300002]
+  Split Structure: [Generic: 300003]
+
+Server Query Node:
+  - I. General:
+    766: 1. Query Game Mode and Player Number
+    18: 2. Get Local Variable
+
+  - II. Math:
+    756: 1. Query Server Time Zone
+    755: 2. Query Timestamp (UTC+0)
+    7: 3. Get Random Floating Point Number
+    257: 4. Get Random Integer
+    8: 5. Weighted Random
+    198: 6. Vec Backward
+    192: 7. Vec Zero Vector
+    197: 8. Vec Forward
+    193: 9. Vec Up
+    194: 10. Vec Down
+    196: 11. Vec Right
+    195: 12. Vec Left
+    191: 13. Pi (π)
+
+  - III. List Related:
+    121: 1. Search List and Return Value ID
+    128: 2. Get Corresponding Value From List
+    142: 3. Get List Length
+    149: 4. Get Maximum Value from List
+    151: 5. Get Minimum Value From List
+    114: 6. List Includes This Value
+
+  - IV. Custom Variables:
+    3360: 1. Query Custom Variable Snapshot
+    337: 2. Get Node Graph Variable
+    50: 3. Get Custom Variable
+
+  - V. Preset Status:
+    68: 1. Get Preset Status
+
+  - VI. Entity Related:
+    947: 1. Query Character's Current Movement SPD
+    507: 2. Query If Entity Is on the Field
+    318: 3. Get All Entities on the Field
+    319: 4. Get Specified Type of Entities on the Field
+    320: 5. Get Entities With Specified Prefab on the Field
+    738: 6. Get Character Attribute
+    670: 7. Get Entity Advanced Attribute
+    260: 8. Get Entity Type
+    99: 9. Get Entity Location and Rotation
+    516: 10. Get Entity Forward Vector
+    518: 11. Get Entity Upward Vector
+    517: 12. Get Entity Right Vector
+    745: 13. Get List of Entities Owned by the Entity
+    671: 14. Get Entity Elemental Attribute
+    580: 15. Get Object Attribute
+    744: 16. Get Owner Entity
+    380: 17. Get Entity List by Specified Range
+    377: 18. Get Entity List by Specified Type
+    378: 19. Get Entity List by Specified Prefab
+    379: 20. Get Entity List by Specified Faction
+    73: 21. Get Self Entity
+    76: 22. Query GUID by Entity
+    75: 23. Query Entity by GUID
+
+  - VII. Stage Related:
+    664: 1. Query Current Environment Time
+    290: 2. Query Game Time Elapsed
+
+  - VIII. Faction Related:
+    249: 1. Query Entity Faction
+    614: 2. Query If Faction Is Hostile
+
+  - IX. Player and Character Related:
+    287: 1. Query If All Player Characters Are Down
+    277: 6. Get Player Revive Time
+    750: 2. Get Player GUID by Player ID
+    751: 3. Get Player ID by Player GUID
+    768: 4. Get Player Client Input Device Type
+    259: 5. Get Player Entity to Which the Character Belongs
+    767: 7. Get Player Nickname
+    275: 8. Get Player Remaining Revives
+    248: 9. Get List of Player Entities on the Field
+    258: 10. Get All Character Entities of Specified Player
+
+  - X. Follow Motion Device:
+    246: 1. Get Follow Motion Device Target
+
+  - XI. Global Timer:
+    310: 1. Get Current Global Timer Time
+
+  - XII. UI Control Groups:
+    317: 1. Get Player's Current UI Layout
+
+  - XIII. Creation:
+    376: 1. Get Creation's Current Target
+    758: 2. Get Aggro List of Creation in Default Mode
+    381: 3. Get Creation Attribute
+
+  - XIV. Class:
+      388: 1. Query Player Class Level
+      387: 2. Query Player Class
+
+  - XV. Skills:
+      398: 1. Query Character Skill
+
+  - XVI. Unit Status:
+    508: 2. Query If Entity Has Unit Status
+    748: 1. List of Slot IDs Querying Unit Status
+    746: 3. Query Unit Status Stacks by Slot ID
+    747: 4. Query Unit Status Applier by Slot ID
+
+  - XVII. Unit Tags:
+    590: 1. Get Entity List by Unit Tag
+    589: 2. Get Entity Unit Tag List
+
+  - XVIII. Custom Aggro:
+    605: 1. Query Global Aggro Transfer Multiplier
+    604: 2. Query the Aggro Multiplier of the Specified Entity
+    603: 3. Query the Aggro Value of the Specified Entity
+    610: 4. Query if Specified Entity Is in Combat
+    607: 5. Get List of Owners Who Have the Target in Their Aggro List
+    608: 6. Get List of Owners That Have the Target As Their Aggro Target
+    609: 7. Get the Aggro List of the Specified Entity
+    606: 8. Get the Aggro Target of the Specified Entity
+
+  - XIX. Global Path:
+    621: 1. Get Specified Waypoint Info
+
+  - XX. Preset Points:
+      271: 1. Get Preset Point List by Unit Tag
+      270: 2. Query Preset Point Position Rotation
+
+  - XXI. Stage Settlement:
+    653: 1. Get Player Settlement Success Status
+    651: 2. Get Player Settlement Ranking Value
+    657: 3. Get Faction Settlement Success Status
+    655: 4. Get Faction Settlement Ranking Value
+
+  - XXII. Dictionary:
+    1368: 1. Query If Dictionary Contains Specific Key
+    1438: 2. Query If Dictionary Contains Specific Value
+    1648: 3. Query Dictionary's Length
+    1158: 4. Query Dictionary Value by Key
+    1508: 5. Get List of Keys from Dictionary
+    1578: 6. Get List of Values from Dictionary
+
+  - XXIII. Shop:
+    718: 1. Query Inventory Shop Item Sales Info
+    715: 2. Query Inventory Shop Item Sales List
+    716: 3. Query Shop Purchase Item List
+    719: 4. Query Shop Item Purchase Info
+    714: 5. Query Custom Shop Item Sales List
+    717: 6. Query Custom Shop Item Sales Info
+
+  - XXIV. Equipment:
+    734: 1. Query Equipment Tag List
+    749: 2. Query Equipment Config ID by Equipment ID
+    675: 3. Get Equipment Affix List
+    676: 4. Get Equipment Affix Config ID
+    677: 5. Get Equipment Affix Value
+
+  - XXV. Items:
+    690: 1. Get Inventory Item Quantity
+    691: 2. Get Inventory Currency Quantity
+    689: 3. Get Inventory Capacity
+    722: 4. Get All Currency From Inventory
+    721: 5. Get all basic items from Inventory
+    723: 6. Get all equipment from Inventory
+    728: 7. Get Loot Component Item Quantity
+    729: 8. Get Loot Component Currency Quantity
+    732: 9. Get All Equipment from Loot Component
+    730: 10. Get All Trophy Items
+    731: 11. Get All Trophy Currency
+
+  - XXVI. Collision Trigger:
+    669: 1. Get All Entities Within the Collision Trigger
+
+  - XXVII. Mini-Map Marker Component:
+    638: 1. Query Specified Mini-Map Marker Information
+    639: 2. Get Entity's Mini-Map Marker Status
+
+  - XXVIII. Creature Patrol:
+    619: 1. Get Current Creation's Patrol Template
+
+  - XXIX. Achievements:
+    644: 1. Query If Achievement Is Completed
+
+  - XXX. Scan Tags:
+    737: 1. Get the Currently Active Scan Tag Config ID
+
+  - XXXI. Rank Tier:
+    660: 1. Get Player Rank Score Change
+    658: 2. Get Player Ranking Info
+    662: 3. Get Player Escape Validity
+
+  - XXXII. Entity Layout Group:
+    179: 1. Get Currently Active Entity Deployment Groups
+
+  - XXXII. Wonderland Gift Box Related:
+    773: 1. Query Corresponding Gift Box Quantity
+    774: 2. Query Corresponding Gift Box Consumption

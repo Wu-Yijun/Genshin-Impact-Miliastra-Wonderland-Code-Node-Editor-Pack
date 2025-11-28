@@ -1,0 +1,8 @@
+[OnCreate()]
+  .GetPlayer()[player]
+  .$((player) => player.x + 1)[xpos]
+  .If(xpos > 10)(
+    true = Log("big") >> 0,
+    false = Log("small") >> 0
+  )
+  .Log("done")
