@@ -5,6 +5,10 @@
 
 项目的**规划**, **进度**, **当前工作**请参见 [todo.md](./TODO.md)
 
+
+> 如果您有任何建议或想法, 或发现什么有意思的, 或任何可能有帮助的库, 请随意提交 Issue 或发 [Email](mailto:wuyijun21@mails.ucas.ac.cn) 告诉我
+
+
 ## 核心功能 (Core Features)
 
 本项目功能复杂多样，主要包含以下核心模块：
@@ -41,10 +45,6 @@
 *   **[GIA 文件格式与 Protobuf 工具](./utils/protobuf/readme.md)**: 深入了解文件结构，学习如何使用脚本读写 GIA 文件。
 *   **[节点 ID 与枚举定义](./utils/node_data/readme.md)**: 查看节点 ID 列表和枚举值的详细映射关系。
 *   **[GIA 图生成器](./utils/gia_gen/readme.md)**: 了解如何使用 Helper 函数快速生成和操作 GIA 节点图。
-
-
-> 如果您有任何建议或想法, 或发现什么有意思的, 或任何可能有帮助的库, 请随意提交 Issue 或发 [Email](mailto:wuyijun21@mails.ucas.ac.cn) 告诉我
-
 
 ## 开发进度 (Project Status)
 

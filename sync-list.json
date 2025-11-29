@@ -1,6 +1,6 @@
 {
   "commitMessage": "完善了 node_pin_records 清单",
-  "notSync": true,
+  "notSync": false,
   "include": [
     "*",
     "docs/**",
