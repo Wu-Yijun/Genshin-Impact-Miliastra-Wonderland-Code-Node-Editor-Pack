@@ -1,5 +1,5 @@
 {
-  "commitMessage": "为 Graph 类制作了不完整的添加节点连线的功能",
+  "commitMessage": "整理了输入节点连线",
   "notSync": false,
   "include": [
     "*",

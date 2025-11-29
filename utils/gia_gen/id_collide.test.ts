@@ -681,7 +681,7 @@ function combine_id_list() {
 
   // console.log(b);
   writeFileSync("./utils/node_data/yaml/server.yaml", all.map(x => `${x.cid}: ${x.gid} # ${x.type} # ${x.name}`).join("\n"));
-
+  return;
   const rec: SingleNodeData[] = [];
   all.forEach((x) => {
     const p = rec.find(y => y.id === x.gid);
@@ -712,6 +712,7 @@ function combine_id_list() {
   writeFileSync("./temp", ret);
 }
 
+// undefined 名称
 function get_missing() {
   const lines = readFileSync("./utils/node_data/yaml/server.yaml").toString().split("\n")
     .filter(x => x.length > 0 && x.trim().endsWith("undefined"))
@@ -729,6 +730,7 @@ function get_missing2() {
   const lines = readFileSync("./utils/node_data/yaml/server.yaml").toString().split("\n")
     .map(x => x.split("#")[0].split(":").map(y => parseInt(y))).flat();
   const set = new Set(lines);
+  // console.log(set)
   const g = new Graph();
   const a = [];
   for (let i = 0; i < lines[lines.length - 1]; i++) {
@@ -808,6 +810,8 @@ if (import.meta.main) {
   // 下一步, 针对可变引脚, **分别**测试其 indexOfConcrete...... 太愚蠢了, 一个联合类型的节点引脚居然可以乱来......
 
 
+  get_missing();
+  // get_missing2();
 
   console.timeEnd("Time Consume")
 }

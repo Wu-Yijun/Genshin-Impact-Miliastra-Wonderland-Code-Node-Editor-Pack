@@ -1,43 +1,161 @@
-import { Graph } from "../gia_gen/graph.ts";
-import { decode_gia_file, encode_gia_file } from "./decode.ts";
+import { execSync } from "child_process";
+import assert from "assert";
+import { writeFileSync } from "fs";
+import util from "node:util";
 
+import { Graph, Pin } from "../gia_gen/graph.ts";
+import { decode_gia_file, encode_gia_file } from "./decode.ts";
+import { BasicTypes, get_id, get_type } from "../gia_gen/nodes.ts";
+import { NODE_PIN_RECORDS } from "../node_data/node_pin_records.ts";
+import { get_node_record } from "../node_data/helpers.ts";
 
 
 const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
 
-// console.time("graph_encode");
-// const graph = new Graph("server");
-// const node1 = graph.add_node(200); // add int
-// const node2 = graph.add_node(201); // add float
-// const node3 = graph.add_node(202); // sub int
-// node1.setPos(1, 2);
-// node2.setPos(3, 4);
-// graph.connect(node1, node2, 0, 0);
-// graph.connect(node3, node1, 0, 1);
-// graph.connect(node3, node1, 0, 0);
-// graph.connect(node3, node2, 0, 0);
-// const g = graph.encode();
-// console.timeEnd("graph_encode");
+function log(name: string) {
+  const g = decode_gia_file({ gia_path: PATH + name });
+  console.dir(g.graph.graph?.inner.graph.nodes, { depth: null });
+}
 
-console.time("graph_encode");
-const graph = new Graph("server");
-const dest = graph.add_node(93); // timed effects
-const src = graph.add_node(201); // add int
-src.setPos(-3, 0);
-// dest.add_pins
+function generate_test_connect(type: BasicTypes = "Int", list = false) {
+  const GetCustomVariable = 50;
+  const concrete_id = get_node_record(GetCustomVariable)!.reflectMap!.find(x => x[1] === (list ? `S<T:L<${type}>>` : `S<T:${type}>`))![0];
+  const var_type_id = list ? get_id({ t: "l", i: { t: "b", b: type } }) : get_id({ t: "b", b: type });
+  const name = list ? "l-" + type : "g-" + type;
 
-graph.connect(src, dest, 0, 0);
-graph.connect(src, dest, 0, 1);
-graph.connect(src, dest, 0, 2);
-graph.connect(src, dest, 0, 3);
-graph.connect(src, dest, 0, 4);
-graph.connect(src, dest, 0, 5);
-graph.connect(src, dest, 0, 6);
-graph.connect(src, dest, 0, 7);
-graph.connect(src, dest, 0, 8);
+  const graph = new Graph("server", undefined, name);
+  const var_node = graph.add_node(concrete_id);
 
+  const recs = NODE_PIN_RECORDS;
+  for (const rec of recs) {
+    const dest = graph.add_node(rec.reflectMap?.[0][0] ?? rec.id);
+    dest.setPos((graph.nodes.size / 2) % 10, (graph.nodes.size / 2) / 10);
+    for (let i = 0; i < 20; i++) {
+      if (dest.pins[i] !== undefined && dest.pins[i].type !== null) continue;
+      const p = new Pin(rec.id, 3, i);
+      p.setType(get_type(var_type_id));
+      dest.pins[i] = p;
+      graph.connect(var_node, dest, 0, i);
+    }
+  }
+  const g = graph.encode();
+  encode_gia_file({ out_path: PATH + name + ".gia", gia_struct: g });
+  // console.dir(graph, { depth: null });
+  console.log("Add", name);
+}
 
-const g = graph.encode();
-console.timeEnd("graph_encode");
+function get_all_test_connect() {
+  function read_test_connect(type = "Int", list = false) {
+    const g = decode_gia_file({ gia_path: PATH + (list ? `l-${type}.gia` : `g-${type}.gia`) });
+    const index = g.graph.graph?.inner.graph.nodes.slice(1).map(n => n.pins.filter(p => p.connects?.length ?? 0 > 0).map(p => p.i1.index))
+    // console.dir(index, { depth: null });
+    return index!;
+  }
+  const res = BasicTypes.map(t => ({ t, pins: read_test_connect(t) }));
+  const res2 = BasicTypes.map(t => ({ t: `L<${t}>`, pins: read_test_connect(t, true) }));
+  // read_test_connect();
 
-encode_gia_file({ out_path: PATH + "temp.gia", gia_struct: g })
+  // console.log(res);
+  for (const t of [...res, ...res2]) {
+    assert(t.pins.length === NODE_PIN_RECORDS.length);
+    for (let i = 0; i < NODE_PIN_RECORDS.length; i++) {
+      const rec = NODE_PIN_RECORDS[i];
+      for (const j of t.pins[i]) {
+        assert(rec.inputs[j] === undefined);
+        rec.inputs[j] = t.t;
+      }
+    }
+  }
+  NODE_PIN_RECORDS.forEach(x => { for (let i = 0; i < x.inputs.length; i++)x.inputs[i] ??= "Any" });
+  // console.dir(NODE_PIN_RECORDS, { depth: null });
+  writeFileSync("./temp.ts", util.inspect(NODE_PIN_RECORDS, { depth: null, maxArrayLength: null }));
+}
+
+function generate_test_connect_out(type: BasicTypes = "Int", list = false) {
+  const SetCustomVariable = 22;
+  const concrete_id = get_node_record(SetCustomVariable)!.reflectMap!.find(x => x[1] === (list ? `S<T:L<${type}>>` : `S<T:${type}>`))![0];
+  const var_type_id = list ? get_id({ t: "l", i: { t: "b", b: type } }) : get_id({ t: "b", b: type });
+  const name = list ? "ol-" + type : "og-" + type;
+
+  const graph = new Graph("server", undefined, name);
+
+  const recs = NODE_PIN_RECORDS;
+  for (const rec of recs) {
+    const src = graph.add_node(rec.reflectMap?.[0][0] ?? rec.id);
+    src.setPos(0, graph.nodes.size / 21 / 2);
+    for (let i = 0; i < 20; i++) {
+      const dest = graph.add_node(concrete_id);
+      dest.setPos(i + 1, graph.nodes.size / 21 / 2);
+      // @ts-ignore
+      const index = src.pin_len[0] + i;
+      if (src.pins[index] !== undefined && src.pins[index].type !== null) continue;
+      const p = new Pin(rec.id, 4, index);
+      p.setType(get_type(var_type_id));
+      src.pins[index] = p;
+      graph.connect(src, dest, i, 2);
+    }
+  }
+  const g = graph.encode();
+  encode_gia_file({ out_path: PATH + name + ".gia", gia_struct: g });
+  // console.dir(graph, { depth: null });
+  console.log("Add", name);
+}
+
+function get_all_test_connect_out() {
+  function read_test_connect_out(type = "Bol", list = false) {
+    const g = decode_gia_file({ gia_path: PATH + (list ? `ol-${type}.gia` : `og-${type}.gia`) });
+    const index = [];
+    const n = g.graph.graph!.inner.graph.nodes!;
+    for (let i = 0; i < n.length; i += 21) {
+      const t: number[] = [];
+      for (let j = 0; j < 20; j++) {
+        const c = n[i + j].pins[0]?.connects;
+        if (c === undefined || c.length === 0) continue;
+        assert(c.length === 1);
+        t.push(c[0].connect.index);
+      }
+      index.push(t);
+    }
+    // console.dir(index, { depth: null });
+    return index!;
+  }
+  const res = BasicTypes.map(t => ({ t, pins: read_test_connect_out(t) }));
+  const res2 = BasicTypes.map(t => ({ t: `L<${t}>`, pins: read_test_connect_out(t, true) }));
+  // read_test_connect();
+
+  // console.log(res);
+  for (const t of [...res, ...res2]) {
+    assert(t.pins.length === NODE_PIN_RECORDS.length);
+    for (let i = 0; i < NODE_PIN_RECORDS.length; i++) {
+      const rec = NODE_PIN_RECORDS[i];
+      for (const j of t.pins[i]) {
+        assert(rec.outputs[j] === undefined);
+        rec.outputs[j] = t.t;
+      }
+    }
+  }
+  NODE_PIN_RECORDS.forEach(x => { for (let i = 0; i < x.outputs.length; i++)x.outputs[i] ??= "Any" });
+  // console.dir(NODE_PIN_RECORDS, { depth: null });
+  writeFileSync("./temp2.ts", util.inspect(NODE_PIN_RECORDS, { depth: null, maxArrayLength: null }));
+}
+
+if (import.meta.main) {
+  execSync("cls", { stdio: 'inherit' });
+  console.time("test");
+
+  // log("1.gia");
+  // generate_test_connect("Str");;
+  // BasicTypes.map(t => generate_test_connect(t));
+  // BasicTypes.map(t => generate_test_connect(t, true));
+  // get_all_test_connect();
+
+  BasicTypes.map(t => generate_test_connect_out(t));
+  BasicTypes.map(t => generate_test_connect_out(t, true));
+
+  // generate_test_connect_out("Bol");
+
+  // const i = read_test_connect_out("Bol");
+  // console.log(i.filter(x => x.length > 0))
+
+  console.timeEnd("test");
+}

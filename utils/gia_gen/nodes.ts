@@ -90,6 +90,7 @@ export function parse(src: string): NodeType {
   const not_illegal_name = (str: string) => {
     assert(!BasicTypes.includes(str as BasicTypes), `System Type: "${str}"`);
     assert(/^[a-zA-Z][a-zA-Z0-9_]*$/s.test(str), `Invalid name: "${str}"`);
+    assert(str !== "Unk", `Invalid name: "${str}"`);
   };
   const parseTokens = (tokens: string[]): NodeType => {
     switch (tokens[p++]) {
@@ -132,6 +133,7 @@ export function parse(src: string): NodeType {
         return { t: "s", f: fields };
       default:
         assert(
+          tokens[p - 1] as any === "Unk" ||
           BasicTypes.includes(tokens[p - 1] as BasicTypes),
           `Invalid Basic Type: "${tokens[p - 1]}"`,
         );

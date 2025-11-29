@@ -25,7 +25,6 @@ Server Execution Node:
   - III. Custom Variables:
     323: 1. Set Node Graph Variable
     22: 2. Set Custom Variable
-    445: 2. Native Setting Custom Value
 
   - IV. Preset Status:
     66: 1. Set Preset Status
@@ -276,7 +275,6 @@ Server Trigger Node:
   - I. Custom Variables:
     351: 1. When Node Graph Variable Changes
     36: 2. When Custom Variable Changes
-    428: 3. When Native Custom Value Changes
 
   - II. Preset Status:
     67: 1. When Preset Status Changes
@@ -641,7 +639,6 @@ Server Query Node:
     3360: 1. Query Custom Variable Snapshot
     337: 2. Get Node Graph Variable
     50: 3. Get Custom Variable
-    459: 4. Native Query Custom Value
 
   - V. Preset Status:
     68: 1. Get Preset Status
@@ -808,3 +805,17 @@ Server Query Node:
   - XXXII. Wonderland Gift Box Related:
     773: 1. Query Corresponding Gift Box Quantity
     774: 2. Query Corresponding Gift Box Consumption
+
+Hidden Nodes:
+  262: Activate Entity Camera
+  263: Disable Entity Camera
+  264: Activate Focus Camera
+  265: Disable Focus Camera
+  266: Activate Screen Shake
+  366: Activate/Disable Character Disruptor Device
+  445: Native Setting Custom Value
+  428: When Native Custom Value Changes
+  459: Native Query Custom Value
+  615: Add Entity Active Nameplate
+  616: Delete Entity Active Nameplate
+  678: Update Player Leaderboard Score
