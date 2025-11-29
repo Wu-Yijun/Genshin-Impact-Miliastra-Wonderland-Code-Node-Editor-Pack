@@ -101,31 +101,35 @@ function generate_test_connect_out(type: BasicTypes = "Int", list = false) {
   console.log("Add", name);
 }
 
-function get_all_test_connect_out() {
-  function read_test_connect_out(type = "Bol", list = false) {
-    const g = decode_gia_file({ gia_path: PATH + (list ? `ol-${type}.gia` : `og-${type}.gia`) });
-    const index = [];
-    const n = g.graph.graph!.inner.graph.nodes!;
-    for (let i = 0; i < n.length; i += 21) {
-      const t: number[] = [];
-      for (let j = 0; j < 20; j++) {
-        const c = n[i + j].pins[0]?.connects;
-        if (c === undefined || c.length === 0) continue;
-        assert(c.length === 1);
-        t.push(c[0].connect.index);
-      }
-      index.push(t);
+function read_test_connect_out(type = "Bol", list = false) {
+  const g = decode_gia_file({ gia_path: PATH + (list ? `ol-${type}.gia` : `og-${type}.gia`) });
+  const index = [];
+  const n = g.graph.graph!.inner.graph.nodes!;
+  for (let i = 0; i < n.length; i += 21) {
+    const t: number[] = [];
+    assert(n[i].genericId.nodeId === NODE_PIN_RECORDS[i / 21].id);
+    for (let j = 0; j < 20; j++) {
+      const c = n[i + j + 1].pins[0]?.connects;
+      if (c === undefined || c.length === 0) continue;
+      assert(c.length === 1);
+      assert(c[0].connect.index === j);
+      t.push(c[0].connect.index);
     }
-    // console.dir(index, { depth: null });
-    return index!;
+    index.push(t);
+    // break;
   }
+  // console.dir(index, { depth: null });
+  return index!;
+}
+function get_all_test_connect_out() {
   const res = BasicTypes.map(t => ({ t, pins: read_test_connect_out(t) }));
   const res2 = BasicTypes.map(t => ({ t: `L<${t}>`, pins: read_test_connect_out(t, true) }));
   // read_test_connect();
-
+  // const res = [read_test_connect_out("Bol")], res2 = [];
+  // console.log(res[1]);
   // console.log(res);
   for (const t of [...res, ...res2]) {
-    assert(t.pins.length === NODE_PIN_RECORDS.length);
+    assert.equal(t.pins.length, NODE_PIN_RECORDS.length);
     for (let i = 0; i < NODE_PIN_RECORDS.length; i++) {
       const rec = NODE_PIN_RECORDS[i];
       for (const j of t.pins[i]) {
@@ -133,6 +137,7 @@ function get_all_test_connect_out() {
         rec.outputs[j] = t.t;
       }
     }
+    // break;
   }
   NODE_PIN_RECORDS.forEach(x => { for (let i = 0; i < x.outputs.length; i++)x.outputs[i] ??= "Any" });
   // console.dir(NODE_PIN_RECORDS, { depth: null });
@@ -149,10 +154,12 @@ if (import.meta.main) {
   // BasicTypes.map(t => generate_test_connect(t, true));
   // get_all_test_connect();
 
-  BasicTypes.map(t => generate_test_connect_out(t));
-  BasicTypes.map(t => generate_test_connect_out(t, true));
+  // BasicTypes.map(t => generate_test_connect_out(t));
+  // BasicTypes.map(t => generate_test_connect_out(t, true));
 
   // generate_test_connect_out("Bol");
+  get_all_test_connect_out();
+  // console.log(read_test_connect_out("Int"));
 
   // const i = read_test_connect_out("Bol");
   // console.log(i.filter(x => x.length > 0))

@@ -1,5 +1,5 @@
 {
-  "commitMessage": "整理了输入节点连线",
+  "commitMessage": "完成了节点引脚类型分析",
   "notSync": false,
   "include": [
     "*",
