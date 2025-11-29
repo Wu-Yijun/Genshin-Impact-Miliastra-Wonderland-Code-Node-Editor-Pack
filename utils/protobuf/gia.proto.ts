@@ -368,6 +368,7 @@ export const VarType = {
   EntityList: 13,
   EnumItem: 14,
   VectorList: 15,
+  LocalVariable: 16,
   Faction: 17,
   Configuration: 20,
   Prefab: 21,
@@ -377,6 +378,7 @@ export const VarType = {
   Struct: 25,
   StructList: 26,
   Dictionary: 27,
+  VariableSnapshot: 28,
 } as const;
 export type VarType = (typeof VarType)[keyof typeof VarType];
 export interface GraphVariable {

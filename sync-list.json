@@ -1,5 +1,5 @@
 {
-  "commitMessage": "完成了节点引脚类型分析",
+  "commitMessage": "补全了类型/枚举",
   "notSync": false,
   "include": [
     "*",

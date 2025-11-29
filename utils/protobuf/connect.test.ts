@@ -8,6 +8,8 @@ import { decode_gia_file, encode_gia_file } from "./decode.ts";
 import { BasicTypes, get_id, get_type } from "../gia_gen/nodes.ts";
 import { NODE_PIN_RECORDS } from "../node_data/node_pin_records.ts";
 import { get_node_record } from "../node_data/helpers.ts";
+import { EnumIdList, EnumNode_Value } from "../node_data/enums.ts";
+import { VarType } from "./gia.proto.ts";
 
 
 const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
@@ -148,6 +150,18 @@ if (import.meta.main) {
   execSync("cls", { stdio: 'inherit' });
   console.time("test");
 
+  log("fields.gia");
+
+  // EnumNode_Value.Coma
+  /**
+   *  "Get Custom Variable",     inputs: ["Ety", "Str", "Bol"],
+   *  "Remove Unit Status", hidden inputs 
+   *   "", hidden unknown input
+   * "Activate/Disable Character Disruptor Device", wrong pin type!
+   *  "Activate/Disable Collision Trigger Source", ...
+   * 
+   *  Activate Fixed-Point Motion Device: Movement mode: Instant Movement, Uniform
+   */
   // log("1.gia");
   // generate_test_connect("Str");;
   // BasicTypes.map(t => generate_test_connect(t));
@@ -158,7 +172,7 @@ if (import.meta.main) {
   // BasicTypes.map(t => generate_test_connect_out(t, true));
 
   // generate_test_connect_out("Bol");
-  get_all_test_connect_out();
+  // get_all_test_connect_out();
   // console.log(read_test_connect_out("Int"));
 
   // const i = read_test_connect_out("Bol");

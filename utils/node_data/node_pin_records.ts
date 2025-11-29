@@ -92,7 +92,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     name: "Get Local Variable",
     id: 18,
     inputs: ["R<T>"],
-    outputs: ["Any", "R<T>"],
+    outputs: ["E<1016>", "R<T>"],
     reflectMap: [
       [18, "S<T:Bol>"],
       [20, "S<T:Int>"],
@@ -119,7 +119,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Set Local Variable",
     id: 19,
-    inputs: ["Unk", "R<T>"],
+    inputs: ["E<1016>", "R<T>"],
     outputs: [],
     reflectMap: [
       [19, "S<T:Bol>"],
@@ -469,7 +469,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Get Custom Variable",
     id: 50,
-    inputs: ["Unk", "Str", "Bol"],
+    inputs: ["Ety", "Str", "Bol"],
     outputs: ["R<T>"],
     reflectMap: [
       [50, "S<T:Int>"],
@@ -1487,7 +1487,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     name: "When the Character Is Down",
     id: 280,
     inputs: [],
-    outputs: ["Ety", "Any", "Ety"],
+    outputs: ["Ety", "E<20>", "Ety"],
   },
   {
     name: "When Character Revives",
@@ -1588,8 +1588,8 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Add Unit Status",
     id: 297,
-    inputs: ["Ety", "Ety", "Cfg", "Int"],
-    outputs: ["Any", "Int"],
+    inputs: ["Ety", "Ety", "Cfg", "Int", "D<Str,Flt>"],
+    outputs: ["E<16>", "Int"],
   },
   {
     name: "When Unit Status Ends",
@@ -1604,7 +1604,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
       "Flt",
       "Int",
       "Ety",
-      "Any",
+      "E<17>",
       "Int",
     ],
   },
@@ -1627,7 +1627,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Remove Unit Status",
     id: 301,
-    inputs: ["Ety", "Cfg", "Unk", "Unk", "Ety"],
+    inputs: ["Ety", "Cfg", "E<18>", "E<18>", "Ety"],
     outputs: [],
   },
   {
@@ -1661,7 +1661,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
       "Ety",
       "Flt",
       "L<Str>",
-      "Any",
+      "E<13>",
       "Flt",
     ],
   },
@@ -1675,7 +1675,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
       "Ety",
       "Flt",
       "L<Str>",
-      "Any",
+      "E<13>",
       "Flt",
     ],
   },
@@ -2267,19 +2267,19 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Activate/Disable Follow Motion Device",
     id: 365,
-    inputs: ["Ety", "Unk", "Bol"],
+    inputs: ["Ety", "Unk", "Bol"], // The second field is hidden and may not be known easily.
     outputs: [],
   },
   {
     name: "Activate/Disable Character Disruptor Device",
     id: 366,
-    inputs: ["Ety", "Unk", "Bol"],
+    inputs: ["Ety", "Unk", "Bol"], // The second field is hidden and may not be known easily.
     outputs: [],
   },
   {
     name: "Activate/Disable Collision Trigger Source",
     id: 367,
-    inputs: ["Ety", "Unk", "Bol"],
+    inputs: ["Ety", "Unk", "Bol"], // The second field is hidden and may not be known easily.
     outputs: [],
   },
   { name: "Remove Entity", id: 372, inputs: ["Ety"], outputs: [] },
@@ -2292,10 +2292,11 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
       "Gid",
       "Vec",
       "Vec",
-      "Any",
+      "E<14>",
       "Fct",
       "Ety",
       "Ety",
+      "E<1028>",
     ],
   },
   {
@@ -3381,7 +3382,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     name: "When Deck Selector Is Complete",
     id: 633,
     inputs: [],
-    outputs: ["Ety", "L<Int>", "Any", "Int"],
+    outputs: ["Ety", "L<Int>", "E<32>", "Int"],
   },
   {
     name: "Modify Mini-Map Zoom",
@@ -3435,7 +3436,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     name: "When Elemental Reaction Event Occurs",
     id: 642,
     inputs: [],
-    outputs: ["Ety", "Gid", "Any", "Ety", "Gid"],
+    outputs: ["Ety", "Gid", "E<38>", "Ety", "Gid"],
   },
   {
     name: "When Shield Is Attacked",
@@ -3535,7 +3536,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Set Player Rank Score Change",
     id: 659,
-    inputs: ["Ety", "Unk", "Int"],
+    inputs: ["Ety", "E<33>", "Int"],
     outputs: [],
   },
   {
@@ -3821,7 +3822,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
       "Int",
       "Int",
       "Cfg",
-      "Unk",
+      "D<Cfg,Int>",
       "Int",
       "Bol",
       "Int",
@@ -3834,7 +3835,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     name: "When selling items to the shop",
     id: 705,
     inputs: [],
-    outputs: ["Ety", "Gid", "Ety", "Int"],
+    outputs: ["Ety", "Gid", "Ety", "Int", "D<Cfg,Int>"],
   },
   {
     name: "Modify Inventory Shop Item Sales Info",
@@ -3843,7 +3844,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
       "Ety",
       "Int",
       "Cfg",
-      "Unk",
+      "D<Cfg,Int>",
       "Int",
       "Int",
       "Bol",
@@ -3853,7 +3854,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Modify Item Purchase Info in the Purchase List",
     id: 707,
-    inputs: ["Ety", "Int", "Cfg", "Unk", "Bol"],
+    inputs: ["Ety", "Int", "Cfg", "D<Cfg,Int>", "Bol"],
     outputs: [],
   },
   {
@@ -3863,7 +3864,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
       "Ety",
       "Int",
       "Cfg",
-      "Unk",
+      "D<Cfg,Int>",
       "Int",
       "Bol",
       "Int",
@@ -3879,7 +3880,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
       "Ety",
       "Int",
       "Cfg",
-      "Unk",
+      "D<Cfg,Int>",
       "Int",
       "Int",
       "Bol",
@@ -3889,7 +3890,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Add Items to the Purchase List",
     id: 710,
-    inputs: ["Ety", "Int", "Cfg", "Unk", "Bol"],
+    inputs: ["Ety", "Int", "Cfg", "D<Cfg,Int>", "Bol"],
     outputs: [],
   },
   {
@@ -3934,7 +3935,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     inputs: ["Ety", "Int", "Int"],
     outputs: [
       "Cfg",
-      "Any",
+      "D<Cfg,Int>",
       "Int",
       "Bol",
       "Int",
@@ -3946,31 +3947,31 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     name: "Query Inventory Shop Item Sales Info",
     id: 718,
     inputs: ["Ety", "Int", "Cfg"],
-    outputs: ["Any", "Int", "Bol"],
+    outputs: ["D<Cfg,Int>", "Int", "Bol"],
   },
   {
     name: "Query Shop Item Purchase Info",
     id: 719,
     inputs: ["Ety", "Int", "Cfg"],
-    outputs: ["Any", "Bol"],
+    outputs: ["D<Cfg,Int>", "Bol"],
   },
   {
     name: "Set Inventory Item Drop Contents",
     id: 720,
-    inputs: ["Ety"],
+    inputs: ["Ety", "D<Cfg,Int>", "E<36>"],
     outputs: [],
   },
   {
     name: "Get all basic items from Inventory",
     id: 721,
     inputs: ["Ety"],
-    outputs: [],
+    outputs: ["D<Cfg,Int>"],
   },
   {
     name: "Get All Currency From Inventory",
     id: 722,
     inputs: ["Ety"],
-    outputs: [],
+    outputs: ["D<Cfg,Int>"],
   },
   {
     name: "Get all equipment from Inventory",
@@ -3981,7 +3982,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Trigger Loot Drop",
     id: 724,
-    inputs: ["Ety"],
+    inputs: ["Ety", "E<36>"],
     outputs: [],
   },
   {
@@ -4081,19 +4082,19 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
   {
     name: "Set Character Skill CD",
     id: 739,
-    inputs: ["Ety", "Unk", "Flt", "Bol"],
+    inputs: ["Ety", "E<30>", "Flt", "Bol"],
     outputs: [],
   },
   {
     name: "Modify Character Skill CD",
     id: 740,
-    inputs: ["Ety", "Unk", "Flt", "Bol"],
+    inputs: ["Ety", "E<30>", "Flt", "Bol"],
     outputs: [],
   },
   {
     name: "Modify Skill CD Percentage Based on Max CD",
     id: 741,
-    inputs: ["Ety", "Unk", "Flt", "Bol"],
+    inputs: ["Ety", "E<30>", "Flt", "Bol"],
     outputs: [],
   },
   {
@@ -4297,12 +4298,12 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     inputs: [
       "Ety",
       "Str",
-      "Unk",
+      "E<1042>",
       "Flt",
       "Vec",
       "Vec",
       "Bol",
-      "Unk",
+      "E<1043>",
       "Flt",
     ],
     outputs: [],
@@ -4359,7 +4360,7 @@ export const NODE_PIN_RECORDS: SingleNodeData[] = [
     name: "When Character Movement SPD Meets Condition",
     id: 946,
     inputs: [],
-    outputs: ["Ety", "Gid", "Cfg", "Any", "Flt", "Flt"],
+    outputs: ["Ety", "Gid", "Cfg", "E<1>", "Flt", "Flt"],
   },
   {
     name: "Query Character's Current Movement SPD",

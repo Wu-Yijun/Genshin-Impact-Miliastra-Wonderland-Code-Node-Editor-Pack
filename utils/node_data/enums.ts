@@ -44,7 +44,8 @@ export const NodeId = {
 } as const;
 export type NodeId = (typeof NodeId)[keyof typeof NodeId];
 
-export const EnumEqualList = {
+/** Also used as EnumEqual IndexOfConcrete */
+export const EnumIdList = {
   Generic: 0,
   Comparison_Operators: 1,
   Logical_Operators: 2,
@@ -60,6 +61,7 @@ export const EnumEqualList = {
   Coordinate_System_Type: 12,
   Elemental_Type: 13,
   Entity_Type: 14,
+  // 15,
   Unit_Status_Addition_Result: 16,
   Unit_Status_Removal_Reason: 17,
   Unit_Status_Removal_Strategy: 18,
@@ -78,6 +80,7 @@ export const EnumEqualList = {
   Sound_Attenuation_Mode: 31,
   Select_Completion_Reason: 32,
   Settlement_Status: 33,
+  // 34,
   Reason_For_Item_Change: 35,
   Item_Loot_Type: 36,
   Decision_Refresh_Mode: 37,
@@ -85,8 +88,14 @@ export const EnumEqualList = {
   Interrupt_Status: 39,
   Gameplay_Mode: 40,
   Input_Device_Type: 41,
+
+  /** Be careful. the following ids are not verified */
+  Movement_Mode: 1042,
+  Fixed_Motion_Parameter_Type: 1043,
+  LocalVariable: 1016, // E<1016> --> Local Variable
+  VariableSnapshot: 1028, // E<1028> --> VariableSnapshot
 } as const;
-export type EnumEqualList = (typeof EnumEqualList)[keyof typeof EnumEqualList];
+export type EnumIdList = (typeof EnumIdList)[keyof typeof EnumIdList];
 
 export const EnumNode_Value = {
   Default: 0,
@@ -290,6 +299,10 @@ export const EnumNode_Value = {
   InterruptStatus_InterruptResistanceStatus: 5200,
   InterruptStatus_InterruptVulnerabilityStatus: 5201,
   InterruptStatus_ProtectedStatus: 5202,
+  MovementMode_InstantMovement: 5500,
+  MovementMode_UniformLinearMotion: 5501,
+  FixedMotionParameterType_FixedSpeed: 5600,
+  FixedMotionParameterType_FixedTime: 5601,
   GameplayMode_Play: 5700,
   GameplayMode_RoomPlay: 5701,
   GameplayMode_MatchPlay: 5702,

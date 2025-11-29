@@ -31,6 +31,9 @@
 *按任务优先级和完成度排序, 打勾的说明已经开始, 仍未完成*
 
 - [x] 手动补全 35 多个非常规类型引脚
+- [x] 算法bug导致我似乎遗漏了一些节点, 重新检查......
+- [x] VarType = 16, local variable, 相关内容, VariableSnapshot=28
+- [ ] MovementMode_InstantMovement, FixedMotionParameterType_FixedTime
 - [ ] 完成 Graph 类的 connects 机制 decode
 
 

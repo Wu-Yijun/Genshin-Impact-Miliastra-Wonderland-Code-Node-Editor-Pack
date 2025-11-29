@@ -1,6 +1,7 @@
 import assert from "node:assert";
 import { VarType } from "../protobuf/gia.proto.ts";
 import { DEBUG, STRICT } from "./utils.ts";
+import { EnumIdList } from "../node_data/enums.ts";
 
 export const BasicTypes = [
   "Int",
@@ -16,6 +17,9 @@ export const BasicTypes = [
 ] as const;
 export type BasicTypes = typeof BasicTypes[number];
 
+export const LocalVariableType: NodeType = { t: "e", e: EnumIdList.LocalVariable };
+export const VariableSnapshotType: NodeType = { t: "e", e: EnumIdList.VariableSnapshot };
+
 type EnumId = number;
 export type NodeType = {
   /** Type = Basic Types */
@@ -23,7 +27,7 @@ export type NodeType = {
   /** Basic Types */
   b: BasicTypes;
 } | {
-  /** Type = Basic Enums */
+  /** Type = Basic Enums, or some unique vars */
   t: "e";
   /** Enum Id */
   e: EnumId;
