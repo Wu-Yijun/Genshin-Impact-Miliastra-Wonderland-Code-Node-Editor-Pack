@@ -244,11 +244,11 @@
 259: 259 # ServerBasic # Get Player Entity to Which the Character Belongs
 260: 260 # ServerBasic # Get Entity Type
 261: 261 # ServerBasic # Switch Main Camera Template
-262: 262 # ServerBasic # undefined
-263: 263 # ServerBasic # undefined
-264: 264 # ServerBasic # undefined
-265: 265 # ServerBasic # undefined
-266: 266 # ServerBasic # undefined
+262: 262 # ServerBasic # Activate Entity Camera
+263: 263 # ServerBasic # Disable Entity Camera
+264: 264 # ServerBasic # Activate Focus Camera
+265: 265 # ServerBasic # Disable Focus Camera
+266: 266 # ServerBasic # Activate Screen Shake
 267: 267 # ServerBasic # Activate Basic Motion Device
 270: 270 # ServerBasic # Query Preset Point Position Rotation
 271: 271 # ServerBasic # Get Preset Point List by Unit Tag
@@ -345,7 +345,7 @@
 363: 351 # ServerGeneric S<T:L<Ety>> # When Node Graph Variable Changes
 364: 351 # ServerGeneric S<T:L<Vec>> # When Node Graph Variable Changes
 365: 365 # ServerBasic # Activate/Disable Follow Motion Device
-366: 366 # ServerBasic # undefined
+366: 366 # ServerBasic # Activate/Disable Character Disruptor Device
 367: 367 # ServerBasic # Activate/Disable Collision Trigger Source
 370: 14 # ServerGeneric S<T:Int> # Str
 371: 14 # ServerGeneric S<T:Flt> # Str
@@ -560,8 +560,8 @@
 612: 612 # ServerBasic # When Self Enters Combat
 613: 613 # ServerBasic # When Self Leaves Combat
 614: 614 # ServerBasic # Query If Faction Is Hostile
-615: 615 # ServerBasic # undefined
-616: 616 # ServerBasic # undefined
+615: 615 # ServerBasic # Add Entity Active Nameplate
+616: 616 # ServerBasic # Delete Entity Active Nameplate
 617: 617 # ServerBasic # Set Entity Active Nameplate
 618: 618 # ServerBasic # Switch Creation Patrol Template
 619: 619 # ServerBasic # Get Current Creation's Patrol Template
@@ -623,7 +623,7 @@
 675: 675 # ServerBasic # Get Equipment Affix List
 676: 676 # ServerBasic # Get Equipment Affix Config ID
 677: 677 # ServerBasic # Get Equipment Affix Value
-678: 678 # ServerBasic # undefined
+678: 678 # ServerBasic # Update Player Leaderboard Score
 679: 679 # ServerBasic # When Text Bubble Is Completed
 680: 680 # ServerBasic # When Equipment Affix Value Changes
 681: 681 # ServerBasic # When Item Is Added to Inventory
