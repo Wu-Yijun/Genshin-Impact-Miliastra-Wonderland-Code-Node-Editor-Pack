@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "fs";
-import { NODE_PIN_RECORDS } from "./node_pin_records.ts";
+import { NODE_PIN_RECORDS, type SingleNodeData } from "./node_pin_records.ts";
 import yaml from "yaml";
 import { get_id, is_reflect, type NodePinsRecords, reflects } from "../gia_gen/nodes.ts";
 import { get_concrete_index } from "./helpers.ts";
@@ -7,6 +7,7 @@ import assert from "assert";
 import { ENUM_ID, ENUM_VALUE } from "./enum_id.ts";
 import { VarType } from "../protobuf/gia.proto.ts";
 import { TYPES_LIST } from "./types_list.ts";
+import { NODE_ID } from "./node_id.ts";
 
 // ====== Begin of Document Schema ====== //
 interface Document {
@@ -111,7 +112,7 @@ function main() {
   const server: node_id_type = yaml.parse(readFileSync(DIR + "yaml/server_node_id.yaml").toString());
   // const client = readFileSync(DIR + "client_node_id.yaml").toString();
 
-  for (const rec of NODE_PIN_RECORDS) {
+  for (const rec of NODE_PIN_RECORDS as SingleNodeData[]) {
     const Name = rec.name!.replaceAll(/[^a-zA-Z0-9_]+/g, "_").replace(/^(?=\d)/, "_").replace(/_+$/, "");
     const Translations = { "en": rec.name! };
     const ID = rec.id;
@@ -123,7 +124,7 @@ function main() {
     const Outputs = rec.outputs;
     const TypeMappings = rec.reflectMap?.map((_, i) => get_type_map(rec, i));
     TypeMappings?.sort((a, b) => a.ConcreteId - b.ConcreteId);
-    if (Name === "Enumerations_Equal") {
+    if (ID === NODE_ID.Enumerations_Equal__Generic) {
       TypeMappings!.forEach(t => t.InputsIndexOfConcrete.fill(parseInt(t.Type.slice(6, -2))))
     }
     doc.NodesList.push({
@@ -181,7 +182,7 @@ function main() {
 
   // console.log(doc.EnumList[0]);
 
-  writeFileSync(DIR + "index.yaml", yaml.stringify(doc, { lineWidth: 120 }));
+  writeFileSync(DIR + "index.yaml", yaml.stringify(doc, { lineWidth: 150 }));
   writeFileSync(DIR + "index.json", JSON.stringify(doc, null, 2));
 }
 

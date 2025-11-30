@@ -1,10 +1,9 @@
 Version: 1.4.0
 Author: Aluria
-Date: Sun Nov 30 2025 14:34:22 GMT+0800 (中国标准时间)
+Date: Sun Nov 30 2025 15:06:25 GMT+0800 (中国标准时间)
 Description: This document contains all necessary information for this project, including types, nodes, and enums.
-Schema: >
+Schema: |
   // ====== Begin of Document Schema ====== //
-
   interface Document {
     Version: string;
     Author: string;
@@ -15,20 +14,17 @@ Schema: >
     NodesList: NodeEntry[];
     EnumList: EnumEntry[];
   }
-
   interface Entry {
     Name: string;               // Safe name used as object keys or query keys
     Translations: Translations; // Raw texts displayed in game
     ID: number;                 // An in-game unique id of the entry
   }
-
   interface TypeEntry extends Entry {
     Expression: string;     // Static representation expression for convertor
     DSLName: string;        // Name of var class(type) in DSL
     BaseType: string;       // Base type of the entry in game runtime
     BaseTypeID: number;     // Id of the base type
   }
-
   interface NodeEntry extends Entry {
     Type: "Simple" | "Generic";         // Whether a node is fixed-defined or generic-defined 
     Range: "Server" | "Client";         // The applicable range of the node
@@ -38,30 +34,20 @@ Schema: >
     Outputs: string[];                  // List of Output parameter types of the node
     TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic. 
   }
-
   interface EnumEntry extends Entry {
     Items: EnumItem[];  // List of Enum items of current enum
   }
-
   interface TypeMapping {
     ConcreteId: number;                         // Id of this concrete type
     Type: string;                               // Type mapping rules of this concrete type
     InputsIndexOfConcrete: (number | null)[];   // List of Input parameters' index of concrete
     OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete
   }
-
   interface EnumItem extends Entry {
-
   }
-
   const NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Hidden"] as const;
-
-  const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as
-  const;
-
-  type Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different
-  languages
-
+  const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
+  type Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages
   // ====== End of Document Schema ====== //
 TypesList:
   - Name: Entity

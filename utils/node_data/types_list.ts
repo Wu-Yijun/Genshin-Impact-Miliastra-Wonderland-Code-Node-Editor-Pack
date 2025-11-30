@@ -1,4 +1,4 @@
-import { VarBase_Class, VarType } from "../protobuf/gia.proto";
+import { VarBase_Class, VarType } from "../protobuf/gia.proto.ts";
 
 export interface TypeEntry {
   Name: string;               // Safe name used as object keys or query keys
