@@ -40,6 +40,7 @@
 - [ ] 完成 Graph 类的 connects 机制 decode
 - [ ] 完成 Graph 类的 value set 接口
 - [ ] 修改一些名称, 并全局检查同步修改
+- [ ] 更新文档
 
 
 ## 计划

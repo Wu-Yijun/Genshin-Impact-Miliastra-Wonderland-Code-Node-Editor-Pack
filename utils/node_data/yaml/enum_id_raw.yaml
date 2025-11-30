@@ -58,7 +58,7 @@ EnumList:
   - name: Revive Point Selection Strategy
     id: 494
     items: []
-  - name: Cause Of Being Down
+  - name: Cause of Being Down
     id: 495
     items: []
   - name: Trigonometric Functions
@@ -100,7 +100,7 @@ EnumList:
   - name: Settlement Status
     id: 3354
     items: []
-  - name: Reason For Item Change
+  - name: Reason for Item Change
     id: 3356
     items: []
   - name: Item Loot Type
@@ -207,10 +207,10 @@ Enums: |
   Revive Point Selection Strategy_Most Recently Activated
   Revive Point Selection Strategy_Highest Priority
   Revive Point Selection Strategy_Random
-  Cause Of Being Down_5
-  Cause Of Being Down_Node Graph Triggered
-  Cause Of Being Down_Normal Defeat
-  Cause Of Being Down_Abnormal Defeat
+  Cause of Being Down_5
+  Cause of Being Down_Node Graph Triggered
+  Cause of Being Down_Normal Defeat
+  Cause of Being Down_Abnormal Defeat
   Trigonometric Functions_cos
   Trigonometric Functions_sin
   Trigonometric Functions_tan
@@ -295,14 +295,14 @@ Enums: |
   Settlement Status_TBC
   Settlement Status_Victory
   Settlement Status_Failed
-  Reason For Item Change_Destroy
-  Reason For Item Change_Discard
-  Reason For Item Change_Use
-  Reason For Item Change_Defeat Drops
-  Reason For Item Change_Shop Trade
-  Reason For Item Change_Node Graph Operation
-  Reason For Item Change_Pick Up
-  Reason For Item Change_Default
+  Reason for Item Change_Destroy
+  Reason for Item Change_Discard
+  Reason for Item Change_Use
+  Reason for Item Change_Defeat Drops
+  Reason for Item Change_Shop Trade
+  Reason for Item Change_Node Graph Operation
+  Reason for Item Change_Pick Up
+  Reason for Item Change_Default
   Item Loot Type_50
   Item Loot Type_Shared Reward
   Item Loot Type_Individualized Reward
@@ -347,3 +347,7 @@ Enums: |
   Input Device Type_Keyboard and Mouse
   Input Device Type_Controller
   Input Device Type_Touchscreen
+  Movement Mode_Instant Movement
+  Movement Mode_Uniform Linear Motion
+  Fixed Motion Parameter Type_Fixed Speed
+  Fixed Motion Parameter Type_Fixed Time

@@ -1,13 +1,13 @@
 import {
-  CONCRETE_MAP,
   get_concrete_index,
   is_concrete_pin,
   get_concrete_map,
   get_concrete_type,
   parse_concrete_map,
   stringify_concrete_map,
-} from "./concrete_map.ts";
+} from "./helpers.ts";
 
+import { CONCRETE_MAP } from "./concrete_map.ts";
 
 export {
   /** 不同节点 id 不同端口对应的 concreteId - type 查找表.
