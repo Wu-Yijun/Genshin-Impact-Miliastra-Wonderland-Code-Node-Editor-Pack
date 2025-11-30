@@ -2,6 +2,8 @@ import { debugDecode } from "../protobuf/debug_decode.ts";
 import { decode_gia_file, encode_gia_file, unwrap_gia } from "../protobuf/decode.ts";
 import proto from "protobufjs";
 import { Graph } from "./graph.ts";
+import { NODE_ID } from "../node_data/node_id.ts";
+import { NODE_PIN_RECORDS } from "../node_data/node_pin_records.ts";
 
 const PATH = "C:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/";
 
@@ -58,3 +60,4 @@ function graph_ts() {
 }
 
 graph_ts();
+

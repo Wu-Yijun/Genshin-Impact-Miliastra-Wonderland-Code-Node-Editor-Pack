@@ -5,6 +5,8 @@ import { readFileSync, writeFileSync } from "fs";
 import { parse, stringify } from "./gia_gen/nodes.ts";
 import assert from "assert";
 import { inspect } from "util";
+import { NODE_ID } from "./node_data/node_id.ts";
+import { ENUM_ID } from "./node_data/enum_id.ts";
 
 interface Document {
   Version: string;
@@ -66,6 +68,21 @@ type Translations = Partial<{ [key in typeof Language[number]]: string }>; // Di
 
 const doc: Document = JSON.parse(readFileSync("./utils/node_data/index.json").toString());
 const res: Record<string, number> = {};
+const rep = {
+  L_: "List_",
+  D_: "Dict_",
+  S_: "Struct_",
+  Int: "Int",
+  Flt: "Float",
+  Bol: "Bool",
+  Str: "Str",
+  Vec: "Vec",
+  Gid: "GUID",
+  Ety: "Entity",
+  Pfb: "Prefab",
+  Fct: "Faction",
+  Cfg: "Config",
+}
 doc.NodesList.forEach(x => {
   if (!x.TypeMappings) {
     res[x.Name] = x.ID;
@@ -74,8 +91,15 @@ doc.NodesList.forEach(x => {
   x.TypeMappings?.forEach(y => {
     const t = parse(y.Type);
     assert(t.t === "s");
-    const str = t.f.map(x => stringify(x[1])).join(",");
-    res[x.Name + "__" + str.replaceAll(/[^0-9A-Za-z]+/gs, "_").replace(/^_/, "").replace(/_$/, "")] = y.ConcreteId;
+    let str = t.f.map(x => stringify(x[1])).join(",").replaceAll(/[^0-9A-Za-z]+/gs, "_").replace(/^_/, "").replace(/_$/, "");
+    Object.entries(rep).forEach(([k, v]) => {
+      str = str.replaceAll(k, v);
+    })
+    if (x.ID === NODE_ID.Enumerations_Equal__Generic) {
+      assert(t.f[0][1].t === "e")
+      str = Object.keys(ENUM_ID)[Object.values(ENUM_ID).indexOf(t.f[0][1].e as any)];
+    }
+    res[x.Name + "__" + str] = y.ConcreteId;
   })
 })
 

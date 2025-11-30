@@ -3,6 +3,9 @@
 ## 已完成的功能
 *按完成时间由近到远排序*
 
+- **2025-11-30**: 更新文档
+- **2025-11-30**: 根据 node_data 的 ts 文件, 更新 yaml 文件.
+- **2025-11-30**: 根据 node_data 的 ts 文件, 完善 NodeId 列表
 - **2025-11-30**: VarType = 16, local variable, 相关内容, VariableSnapshot=28
 - **2025-11-30**: MovementMode_InstantMovement, FixedMotionParameterType_FixedTime
 - **2025-11-30**: 算法bug导致我似乎遗漏了一些节点, 完整的重新检查.
@@ -35,20 +38,20 @@
 ## 进行中
 *按任务优先级和完成度排序, 打勾的说明已经开始, 仍未完成*
 
-- [ ] add Enum, for SysTypes
-- [x] 根据 node_data 的 ts 文件, 更新 yaml 文件.
-- [x] 根据 node_data 的 ts 文件, 完善 NodeId 列表
+
 - [x] 完成 Graph 类的 connects 机制 decode
+- [x] 完成 Graph 类的 flow 机制
 - [x] 完成 Graph 类的 value set 接口
 - [x] 修改一些名称, 并全局检查同步修改
-- [ ] 更新文档
+- [ ] 完成 Graph 接口
+
 
 
 ## 计划
 *按规划中先后实现顺序排序, 条目会在实际项目进行中展开更多细节*
 
-- [ ] 定义 DSL 函数签名和与原神对应关系
 - [ ] 修正 `DSL-IR` 编译器 - 块级编译器
+- [ ] 定义 DSL 函数签名和与原神对应关系
 - [ ] 节点图管理类导入 IR 功能
   - [ ] 单个节点转化
   - [ ] 节点位置自动布局
@@ -62,5 +65,5 @@
 - [ ] 客户端节点信息提取
 - [ ] 运行模拟 - 对更多系统函数进行转化处理为可模拟项目
 - [ ] 编译器自动类型推断
-
+- [ ] add Enum, VarSnapshot, LocalVar for SysTypes
 - [ ] 分析**简单** struct 的结构, 补全服务器 ID 列表. // 似乎结构体没有 Concrete ID?

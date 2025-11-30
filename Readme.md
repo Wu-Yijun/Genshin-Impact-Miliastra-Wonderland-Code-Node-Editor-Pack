@@ -6,8 +6,7 @@
 项目的**规划**, **进度**, **当前工作**请参见 [todo.md](./TODO.md)
 
 
-> 如果您有任何建议或想法, 或发现什么有意思的, 或任何可能有帮助的库, 请随意提交 Issue 或发 [Email](mailto:wuyijun21@mails.ucas.ac.cn) 告诉我
-
+> 如果您有任何建议或想法, 或发现什么有意思的线索, 或任何可能有帮助的库, 请随意提交 Issue 或发 [Email](mailto:wuyijun21@mails.ucas.ac.cn) 告诉我
 
 ## 核心功能 (Core Features)
 
@@ -18,8 +17,26 @@
 *   [**自动类型生成 (`utils/gen_def.ts`)**](./utils/gen_def.ts): 这是 DSL 的核心引擎。它读取结构化的函数定义，自动生成包含完整类型声明的 `def.d.ts` 文件。这意味着你在编写节点图代码时，可以享受到 **IDE 的智能补全、类型检查和文档提示**。
 *   [**结构化函数定义 (`utils/functions`)**](./utils/functions/readme.md): 所有的算术节点和查询节点都通过统一的格式进行定义，支持重载、泛型和参数校验。
 
-### 2.0. GIA 文件快速读写 (进行中, 目前仅支持节点)
+### 2.0. GIA 文件快速读写
 在 `./utils/gia_gen/graph.ts` 中(或通过 `./utils/gia_gen/index.ts` 导入), 快速创建Graph类, 可导出为 gia 文件结构. 更多信息参见 [utils/gia_gen/readme.md](./utils/gia_gen/readme.md#graph)
+
+接口用法示例:
+```ts
+const graph = new Graph();
+const node1 = graph.add_node(NODE_ID.When_Entity_Is_Created);
+const node2 = graph.add_node(NODE_ID.Teleport_Player);
+const node3 = graph.add_node(NODE_ID.Create_3D_Vector);
+const node4 = graph.add_node(NODE_ID.Get_Self_Entity);
+graph.flow(node1, node2)
+graph.connect(node3, node2, 0, 1);
+graph.connect(node4, node2, 0, 0);
+encode_gia_file("out.gia", graph.encode());
+// Same as DSL:
+// [OnCreate()]
+//   .$(() => new Vec())[pos]
+//   .Teleport(Self.self, pos);
+```
+
 
 ### 2. GIA 文件深度解析与工程化
 完全掌握 `.gia` (Genshin Impact Assets) 文件的读写与转换。
@@ -28,9 +45,9 @@
 *   [**图生成工具 (`utils/gia_gen`)**](./utils/gia_gen/readme.md): 提供便捷的 API (`gia_gen`) 快速构建和修改节点图结构，简化了复杂的 Protobuf 对象创建过程。
 
 ### 3. 完备的节点与枚举数据
-整理并校验了游戏中的各类 ID 映射，确保转换的准确性。
-*   [**Node ID 映射 (`utils/node_data/yaml/server_node_id.yaml`)**](./utils/node_data/yaml/server_node_id.yaml): 可读的服务器节点基类 ID (Server Node ID) 的完整对照表。 在 [utils/node_data/yaml/server.yaml](./utils/node_data/yaml/server.yaml) 保存了完整的扩展类-基类-反射类型-名称的清单.
-*   [**枚举标准化 (`utils/node_data/yaml/enum_id.yaml`)**](./utils/node_data/yaml/enum_id.yaml): 自动生成标准化的枚举定义 (`enum_id.yaml`)，并提供工具生成测试用例以在游戏中验证枚举的有效性。
+程序化整理并校验了游戏中的各类 ID 映射，确保转换的准确性。
+*   [**静态数据定义 (`utils/node_data`)**](./utils/node_data/readme.md): 提供了完整的 TypeScript 静态定义文件，包括节点 ID (`node_id.ts`)、枚举值 (`enum_id.ts`)、变量类型 (`types_list.ts`) 以及复杂的泛型节点反射映射 (`node_pin_records.ts`, `concrete_map.ts`)。这些数据是解析器和编译器的基础。
+*   [index.yaml](./index.yaml) / [index.json](./index.json): 以 YAML/JSON 格式提供的单文件完整数据汇总。适合外部程序直接读取和处理。
 
 ### 4. 在线节点编辑器功能
 *   *(外部库)* [WebMiliastraNodesEditor](https://github.com/Columbina-Dev/WebMiliastraNodesEditor): 图形化操作界面, 模拟游戏内节点编辑器行为, 将来会补充完整的导入导出和转化功能.
@@ -54,8 +71,8 @@
 - [x] **(基本完成)** 节点图的等效代码表示(DSL)
 - [x] **(完成一小半)** DSL ⇒ IR编译器
 - [x] **(刚开始)** IR本地运行器
-- [ ] **(进行中)** IR ⇒ GIA转换器
-- [ ] **(进行中)** GIA ⇒ IR转换器
+- [ ] **(完成一半)** IR ⇒ GIA转换器
+- [ ] **(完成一半)** GIA ⇒ IR转换器
 - [x] **(完成一大半)** 写一个~~没营养~~的 DSL 示例, 并在千星奇域中手动实现.
 
 但11月20号搜索 Github, 无意中发现 [Columbina-Dev](https://github.com/Columbina-Dev/WebMiliastraNodesEditor) 已经做好了**节点编辑器**的[网页版](https://miliastra.columbina.dev/). 这一下子就*给我动力*了, 我准备把简单的DSL ⇒ JSON转换器先给它实现了. 稍微增强下开源生态......

@@ -1,5 +1,5 @@
 {
-  "commitMessage": "完善了完整的数据清单文件, 在 utils/node_data 目录下",
+  "commitMessage": "完善了节点详细信息静态数据, 更新了 Readme",
   "notSync": false,
   "include": [
     "*",

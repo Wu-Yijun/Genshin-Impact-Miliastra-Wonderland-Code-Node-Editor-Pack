@@ -1,6 +1,6 @@
-Version: 1.4.0
+Version: 1.5.0
 Author: Aluria
-Date: Sun Nov 30 2025 15:06:25 GMT+0800 (中国标准时间)
+Date: Sun Nov 30 2025 17:55:08 GMT+0800 (中国标准时间)
 Description: This document contains all necessary information for this project, including types, nodes, and enums.
 Schema: |
   // ====== Begin of Document Schema ====== //
