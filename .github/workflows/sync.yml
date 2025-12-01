@@ -38,4 +38,4 @@ jobs:
         run: node dev/.github/workflows/sync.ts main dev dev/sync-list.json
       
       - name: Run tests
-        uses: .github/actions/CI@dev
+        uses: Wu-Yijun/Genshin-Impact-Miliastra-Wonderland-Code-Node-Editor-Pack/.github/actions/CI@dev
