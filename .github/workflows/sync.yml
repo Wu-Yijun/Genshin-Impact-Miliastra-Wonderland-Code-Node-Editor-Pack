@@ -47,4 +47,4 @@ jobs:
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
-          path: test_outputs.tar.gz
+          path: test_output.tar.gz
