@@ -3,17 +3,13 @@ import { readdirSync, cpSync, existsSync, mkdirSync } from "fs";
 import path from "path";
 
 const SRC = import.meta.dirname;
-const PATH = path.join(path.dirname(path.dirname(path.dirname(path.dirname(SRC)))), "main");
+const PATH = path.join(process.cwd(), "main");
 
 const tests = readdirSync(SRC, { withFileTypes: true })
   .filter(dirent => dirent.isDirectory() && dirent.name !== 'node_modules' && !dirent.name.startsWith('.'))
   .map(dirent => dirent.name);
 
 console.log("🟩 Found tests:", tests);
-
-// const testDestDir = path.join(PATH, "test");
-
-mkdirSync(path.join(PATH, "dist"));
 
 let passCount = 0;
 let failCount = 0;
