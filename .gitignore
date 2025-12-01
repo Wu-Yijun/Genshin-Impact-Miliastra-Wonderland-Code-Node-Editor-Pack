@@ -3,7 +3,6 @@
 /node_modules/
 /test/
 /dist/
-package-lock.json
 .env
 
 temp/
