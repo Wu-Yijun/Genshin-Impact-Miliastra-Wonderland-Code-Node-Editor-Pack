@@ -15,7 +15,7 @@ export const counter_index = new Counter();
 export const counter_dynamic_id = new Counter();
 
 /** 是否显示警告输出 */
-export const DEBUG = false;
+export const DEBUG = true;
 /** 是否在错误时直接中断, 或返回空值 */
 export const STRICT = false;
 
@@ -54,7 +54,7 @@ export function randomName(words_count: number = 1): string {
 
 
 export function panic<T>(msg?: string): T {
- throw new Error("Panic: Unrecoverable error occurred." + (msg ? ` Details: ${msg}` : ""));
+  throw new Error("Panic: Unrecoverable error occurred." + (msg ? ` Details: ${msg}` : ""));
 }
 export function todo<T>(msg?: string): T {
   const err = "TODO: Not implemented yet." + (msg ? ` Details: ${msg}` : "")

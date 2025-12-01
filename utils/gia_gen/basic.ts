@@ -18,7 +18,7 @@ import {
   VarBase_ItemType_Inner_Kind,
   VarType,
 } from "../protobuf/gia.proto.ts";
-import { get_id, LocalVariableType, type NodePins, type NodeType } from "./nodes.ts";
+import { get_id, get_type, LocalVariableType, type NodePins, type NodeType } from "./nodes.ts";
 
 import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 import { type ConcreteMap } from "../node_data/concrete_map.ts";
@@ -394,6 +394,7 @@ export interface ListPinBody_ {
   value_type: VarType;
   /** 引脚的连接 */
   connects?: NodeConnection[];
+  value?: any[];
 }
 /**
  * 构建 List 类型引脚
@@ -412,10 +413,18 @@ export interface ListPinBody_ {
 export function list_pin_body(body: ListPinBody_): NodePin {
   const value: VarBase = {
     class: VarBase_Class.ArrayBase,
-    alreadySetVal: false,
+    alreadySetVal: true,
     itemType: item_type(body.value_type),
     bArray: { entries: [] },
   };
+  if (body.value) {
+    const v_t = get_type(body.value_type);
+    assert(v_t.t === "l");
+    const item_type = get_id(v_t.i) as VarType;
+    for (let i = 0; i < body.value.length; i++) {
+      value.bArray!.entries.push(simple_value_var(item_type, body.value[i]));
+    }
+  }
   const val = wrapped_pin_value({
     indexOfConcrete: body.indexOfConcrete,
     value: value,
@@ -543,6 +552,30 @@ export function vector_pin_body(vec: number[]): VarBase {
   };
 }
 
+export function simple_value_var(var_type: VarType, value?: any, non_zero: boolean = false): VarBase {
+  switch (var_type) {
+    case VarType.EnumItem:
+      return enum_value({ value: value ?? (non_zero ? 1 : 0) });
+    case VarType.Integer:
+      return int_pin_body(value ?? (non_zero ? 1 : 0));
+    case VarType.GUID:
+    case VarType.Configuration:
+    case VarType.Entity:
+    case VarType.Faction:
+    case VarType.Prefab:
+      return id_pin_body(value ?? (non_zero ? 1 : 0));
+    case VarType.Boolean:
+      return bool_pin_body(value ?? false);
+    case VarType.Float:
+      return float_pin_body(value ?? (non_zero ? 1 : 0));
+    case VarType.String:
+      return string_pin_body(value ?? (non_zero ? "1" : ""));
+    case VarType.Vector:
+      return vector_pin_body(value ?? (non_zero ? [1, 1, 1] : [0, 0, 0]));
+  }
+  return todo("Not implemented AnyPinBody for type " + var_type);
+}
+
 /**
  * AnyPinBody_ 接口定义了构建任意类型引脚的参数
  */
@@ -605,7 +638,6 @@ export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
     }
   }
 
-  let value: VarBase;
   switch (var_type) {
     case VarType.Dictionary:
       assert(
@@ -637,42 +669,18 @@ export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
         index: body.index,
         value_type: var_type,
         connects: body.connects,
+        value: body.value,
       });
-    case VarType.EnumItem:
-      value = enum_value({ value: body.value ?? (body.non_zero ? 1 : 0) });
-      break;
-    case VarType.Integer:
-      value = int_pin_body(body.value ?? (body.non_zero ? 1 : 0));
-      break;
-    case VarType.GUID:
-    case VarType.Configuration:
-    case VarType.Entity:
-    case VarType.Faction:
-    case VarType.Prefab:
-      value = id_pin_body(body.value ?? (body.non_zero ? 1 : 0));
-      break;
-    case VarType.Boolean:
-      value = bool_pin_body(body.value ?? (body.non_zero ? true : false));
-      break;
-    case VarType.Float:
-      value = float_pin_body(body.value ?? (body.non_zero ? 1 : 0));
-      break;
-    case VarType.String:
-      value = string_pin_body(body.value ?? (body.non_zero ? "1" : ""));
-      break;
-    case VarType.Vector:
-      value = vector_pin_body(body.value ?? (body.non_zero ? [1, 1, 1] : [0, 0, 0]));
-      break;
     case VarType.LocalVariable:
     case VarType.VariableSnapshot:
-      // do nothing
-      value = {} as VarBase;
-      break;
-    default:
-      // console.log(body);
-      return todo("Not implemented AnyPinBody for type " + body.type);
+      return pin_body({
+        kind: body.kind,
+        index: body.index,
+        type: var_type,
+        connects: body.connects,
+      });
   }
-
+  const value = simple_value_var(var_type, body.value, body.non_zero);
   if (body.reflective === true) {
     return pin_body({
       kind: body.kind,

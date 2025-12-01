@@ -12,6 +12,7 @@ const get_val = graph.add_node(NODE_ID.Get_Custom_Variable__Int);
 graph.flow(trig, branch1);
 graph.connect(trig, branch1, 2, 0);
 graph.connect(trig, get_val, 0, 0);
+branch1.setVal(1, ["1", "2", "3"]);
 get_val.setVal(1, "Plant Level");
 // column 3
 const branch2 = graph.add_node(NODE_ID.Double_Branch);
@@ -32,8 +33,6 @@ graph.connect(eq3, branch4, 0, 0);
 eq1.setVal(1, 0);
 eq2.setVal(1, 1);
 eq3.setVal(1, 2);
-
 // auto analysis layout
 graph.autoLayout();
-// Save to file
 encode_gia_file("./dist/GeneratedGraph.gia", graph.encode());

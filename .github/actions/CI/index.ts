@@ -47,24 +47,24 @@ if (errors.length > 0) {
   console.error("Errors:", errors);
 }
 
-// Archive dist and move to PATH/../
-const distPath = path.join(PATH, "dist");
-if (existsSync(distPath)) {
-  const destArchiveDir = path.dirname(PATH); // PATH/../
-  const archivePath = path.join(destArchiveDir, "test_output.tar.gz");
+// // Archive dist and move to PATH/../
+// const distPath = path.join(PATH, "dist");
+// if (existsSync(distPath)) {
+//   const destArchiveDir = path.dirname(PATH); // PATH/../
+//   const archivePath = path.join(destArchiveDir, "test_output.tar.gz");
 
-  console.log(`📦 Archiving dist to ${archivePath}...`);
-  try {
-    // tar -czf <archive> -C <parent_of_dist> dist
-    execSync(`tar -czf "${archivePath}" -C "${PATH}" dist`, { stdio: "inherit" });
-    console.log("🟩 Archive created successfully.");
-  } catch (e) {
-    console.error("Failed to archive dist:", e);
-    errors.push(`🟨 Archive failed: ${e}`);
-  }
-} else {
-  console.warn("🚫 dist directory not found, skipping archive.");
-}
+//   console.log(`📦 Archiving dist to ${archivePath}...`);
+//   try {
+//     // tar -czf <archive> -C <parent_of_dist> dist
+//     execSync(`tar -czf "${archivePath}" -C "${PATH}" dist`, { stdio: "inherit" });
+//     console.log("🟩 Archive created successfully.");
+//   } catch (e) {
+//     console.error("Failed to archive dist:", e);
+//     errors.push(`🟨 Archive failed: ${e}`);
+//   }
+// } else {
+//   console.warn("🚫 dist directory not found, skipping archive.");
+// }
 
 if (failCount > 0) {
   process.exit(1);
