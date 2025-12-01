@@ -7,7 +7,7 @@ console.log(PATH);
 
 // call npm ci
 // Using /bin/bash as in original code, assuming environment supports it (e.g. Git Bash on Windows)
-execSync("npm ci", { stdio: "inherit", shell: "/bin/bash", cwd: PATH });
+// execSync("npm ci", { stdio: "inherit", shell: "/bin/bash", cwd: PATH });
 
 const ciDir = import.meta.dirname;
 const tests = readdirSync(ciDir, { withFileTypes: true })
@@ -36,7 +36,7 @@ for (const testName of tests) {
       console.log(`Running test: ${testName}`);
       // Execute index.ts using npx tsx to ensure TS support
       // Not specifying shell to use default (cmd on Windows, sh on Unix)
-      execSync(`npx tsx "${testIndex}"`, { stdio: "inherit", cwd: destDir });
+      execSync(`node "${testIndex}"`, { stdio: "inherit", cwd: destDir });
       passCount++;
     } else {
       console.warn(`Skipping ${testName}: index.ts not found.`);

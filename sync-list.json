@@ -1,6 +1,6 @@
 {
   "commitMessage": "基本可以完整的decode了, 且添加了自动生成布局的算法",
-  "notSync": false,
+  "notSync": true,
   "include": [
     "*",
     "docs/**",
