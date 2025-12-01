@@ -86,7 +86,7 @@ function test_all_nodes(read = false) {
           assert_equal(p.i1.kind, 3);
           assert_equal(p.i1.index, j);
           assert_equal(p.type, get_id(pin));
-          assert_unequal(p.value.class, VarBase_Class.NodeValueBase);
+          assert_unequal(p.value.class, VarBase_Class.ConcreteBase);
 
           check_val(pin, p.value);
 
@@ -117,21 +117,21 @@ function test_all_nodes(read = false) {
         assert_equal(p.i1.index, j);
         const ref = reflects(pin, record.reflectMap!.find(x => x[0] === i)![1]);
         assert_equal(p.type, get_id(ref));
-        assert_equal(p.value.class, VarBase_Class.NodeValueBase);
-        if (gid === 475) { assert_equal(ref.t, "e"); assert_equal(p.value.bNodeValue!.indexOfConcrete, ref.e); }
-        else { assert_equal(p.value.bNodeValue!.indexOfConcrete, get_concrete_index(gid, 3, j, get_id(ref))); }
+        assert_equal(p.value.class, VarBase_Class.ConcreteBase);
+        if (gid === 475) { assert_equal(ref.t, "e"); assert_equal(p.value.bConcreteValue!.indexOfConcrete, ref.e); }
+        else { assert_equal(p.value.bConcreteValue!.indexOfConcrete, get_concrete_index(gid, 3, j, get_id(ref))); }
 
         if (ref.t === "l") {
-          assert_equal(p.value.bNodeValue!.value.class, VarBase_Class.ArrayBase);
-          assert_equal(p.value.bNodeValue!.value.itemType?.itemType.type, get_id(ref));
+          assert_equal(p.value.bConcreteValue!.value.class, VarBase_Class.ArrayBase);
+          assert_equal(p.value.bConcreteValue!.value.itemType?.itemType.type, get_id(ref));
         } else if (ref.t === "d") {
-          assert_equal(p.value.bNodeValue!.value.class, VarBase_Class.MapBase);
-          assert_equal(p.value.bNodeValue!.value.itemType?.itemType.type, get_id(ref));
-          assert_equal(p.value.bNodeValue!.value.itemType?.itemType.kind, 2); //pair
-          assert_equal(p.value.bNodeValue!.value.itemType?.itemType.items?.key, get_id(ref.k)); //pair
-          assert_equal(p.value.bNodeValue!.value.itemType?.itemType.items?.value, get_id(ref.v)); //pair
+          assert_equal(p.value.bConcreteValue!.value.class, VarBase_Class.MapBase);
+          assert_equal(p.value.bConcreteValue!.value.itemType?.itemType.type, get_id(ref));
+          assert_equal(p.value.bConcreteValue!.value.itemType?.itemType.kind, 2); //pair
+          assert_equal(p.value.bConcreteValue!.value.itemType?.itemType.items?.key, get_id(ref.k)); //pair
+          assert_equal(p.value.bConcreteValue!.value.itemType?.itemType.items?.value, get_id(ref.v)); //pair
         }
-        check_val(pin, p.value.bNodeValue!.value);
+        check_val(pin, p.value.bConcreteValue!.value);
         continue;
       }
       if (pin.t !== "b" && pin.t !== "e") continue;
@@ -141,7 +141,7 @@ function test_all_nodes(read = false) {
       assert_equal(p.i1.kind, 3);
       assert_equal(p.i1.index, j);
       assert_equal(p.type, get_id(pin));
-      assert_unequal(p.value.class, VarBase_Class.NodeValueBase);
+      assert_unequal(p.value.class, VarBase_Class.ConcreteBase);
 
 
       check_val(pin, p.value);
@@ -201,7 +201,7 @@ console.time("Time consume");
 // 检查全部节点存在性
 test_all_nodes(true);
 
-// console.dir(decode_gia_file(PATH + "temp.gia").graph.graph?.inner.graph.nodes.map(n => ({ id: n.concreteId.nodeId, p: n.pins.map(p => p.value.bNodeValue?.indexOfConcrete) })), { depth: null, maxArrayLength: null });
+// console.dir(decode_gia_file(PATH + "temp.gia").graph.graph?.inner.graph.nodes.map(n => ({ id: n.concreteId.nodeId, p: n.pins.map(p => p.value.bConcreteValue?.indexOfConcrete) })), { depth: null, maxArrayLength: null });
 // console.dir(decode_gia_file(PATH + "temp.gia").graph.graph?.inner.graph.nodes, { depth: null, maxArrayLength: null });
 // console.dir(decode_gia_file(FILE).graph.graph?.inner.graph.nodes, { depth: null, maxArrayLength: null });
 

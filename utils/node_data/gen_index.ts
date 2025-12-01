@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "fs";
-import { NODE_PIN_RECORDS, type SingleNodeData } from "./node_pin_records.ts";
+import { NODE_PIN_RECORDS, type NodePinsRecords, type SingleNodeData } from "./node_pin_records.ts";
 import yaml from "yaml";
-import { get_id, is_reflect, type NodePinsRecords, reflects } from "../gia_gen/nodes.ts";
+import { get_id, is_reflect, reflects } from "../gia_gen/nodes.ts";
 import { get_concrete_index } from "./helpers.ts";
 import assert from "assert";
 import { ENUM_ID, ENUM_VALUE } from "./enum_id.ts";

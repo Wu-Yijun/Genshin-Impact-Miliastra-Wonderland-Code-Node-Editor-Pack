@@ -1,6 +1,6 @@
 import assert from "assert";
 import type { GraphNode, NodePin, NodePin_Index_Kind, Root } from "../protobuf/gia.proto.ts";
-import { graph_body, node_body, node_connect_from, node_type_pin_body } from "./basic.ts";
+import { graph_body, node_body, node_connect_from, node_connect_to, node_type_pin_body, pin_flow_body } from "./basic.ts";
 import { type NodeType, reflects_records, get_id, type_equal, to_records_full, is_reflect } from "./nodes.ts";
 import { Counter, panic, randomInt, randomName } from "./utils.ts";
 import { get_concrete_index, is_concrete_pin, get_generic_id, get_node_record, is_generic_id, get_node_record_generic } from "../node_data/helpers.ts";
@@ -12,22 +12,35 @@ const GraphType = ["server", "client", "composite"] as const;
 type GraphType = typeof GraphType[number];
 
 export class EncodeOptions {
-  non_zero: boolean;
+  private non_zero: boolean;
+  private auto_layouts: boolean;
+  is_non_zero(): boolean {
+    return this.non_zero;
+  }
+  is_auto_layout(): boolean {
+    return this.auto_layouts;
+  }
   constructor(non_zero = false) {
     this.non_zero = non_zero;
+    this.auto_layouts = false;
+  }
+  auto_layout(enable = true): EncodeOptions {
+    this.auto_layouts = enable;
+    return this;
   }
 }
 
 export class Graph {
   private type_: GraphType;
   graph_name: string;
+  uid: number;
   private graph_id: number;
   private file_id: number;
-  uid: number;
-  counter_idx: Counter;
-  counter_dyn_id: Counter;
-  nodes: Set<Node>;
-  connects: Set<Connect>;
+  private counter_idx: Counter;
+  private counter_dyn_id: Counter;
+  private nodes: Set<Node>;
+  private connects: Set<Connect>;
+  private flows: Map<Node, Connect[][]>;
 
   get type() {
     return this.type_;
@@ -46,6 +59,7 @@ export class Graph {
     this.file_id = this.counter_dyn_id.value;
     this.nodes = new Set();
     this.connects = new Set();
+    this.flows = new Map();
   }
   /** 
    * @param node Node Id or Instance */
@@ -64,7 +78,7 @@ export class Graph {
   }
   encode(opt?: EncodeOptions): Root {
     opt ??= new EncodeOptions();
-    const nodes = [...this.nodes].map((n) => n.encode(opt, this.get_connect_to(n)));
+    const nodes = [...this.nodes].map((n) => n.encode(opt, this.get_connect_to(n), this.flows.get(n)));
     return graph_body({/** 唯一标识符 */
       uid: this.uid,
       /** 图的 ID */
@@ -77,6 +91,9 @@ export class Graph {
       nodes
     });
   }
+  get_nodes(): Node[] {
+    return [...this.nodes];
+  }
   get_node(unique_id: number): Node | null {
     for (const node of this.nodes) {
       if (node.UniqueId === unique_id) {
@@ -84,6 +101,9 @@ export class Graph {
       }
     }
     return null;
+  }
+  get_connects(): Connect[] {
+    return [...this.connects];
   }
   get_connect_from(from: Node): Connect[] {
     const ret: Connect[] = [];
@@ -127,9 +147,46 @@ export class Graph {
     }
     return null;
   }
-  disconnect(connect: Connect) {
-    this.connects.delete(connect);
+  get_flows(): Connect[] {
+    return [...this.flows.values()].flat(2).filter(x => x !== undefined);
   }
+  get_flow(from: Node, to: Node, from_index = 0, to_index = 0): Connect | null {
+    return this.flows.get(from)?.[from_index]?.find(v => v.to === to && v.to_index === to_index) ?? null;
+  }
+  get_flows_from(from: Node): Connect[] {
+    return this.flows.get(from)?.flat() ?? [];
+  }
+  /** returns the pointer to the flow list. if the list is not exist, returns null */
+  get_flows_from_index(from: Node, index: number): Connect[] | null {
+    return this.flows.get(from)?.[index] ?? null;
+  }
+  get_flows_to(to: Node): Connect[] {
+    return this.get_flows().filter(v => v.to === to);
+  }
+  get_flows_to_index(to: Node, index: number): Connect[] {
+    return this.get_flows().filter(v => v.to === to && v.to_index === index);
+  }
+  disconnect(connect: Connect) {
+    if (!this.connects.delete(connect)) {
+      const flow = this.flows.get(connect.from)?.[connect.from_index];
+      const index = flow?.findIndex(v => v === connect);
+      if (flow === undefined || index === undefined || index < 0) {
+        console.warn("Flow not found!", connect);
+        return;
+      }
+      flow.splice(index, 1);
+    }
+  }
+  /** Connect execution flow from a node to another  */
+  flow(from: Node, to: Node, from_index = 0, to_index = 0, insert_pos?: number) {
+    if (!this.flows.has(from)) {
+      this.flows.set(from, []);
+    }
+    const f = this.flows.get(from)!;
+    f[from_index] ??= [];
+    f[from_index].splice(insert_pos ?? f.length, 0, new Connect(from, to, from_index, to_index));
+  }
+  /** Connect data flow from a  */
   connect(from: Node, to: Node, from_index: number, to_index: number) {
     const c = this.get_connect(from, to, from_index, to_index);
     if (c) {
@@ -214,8 +271,15 @@ export class Node {
     this.x = x;
     this.y = y;
   }
-  encode(opt: EncodeOptions, connects?: Connect[]): GraphNode {
-    const pins = this.pins.map((p) => p.encode(opt, connects)).filter((p) => p !== null);
+  encode(opt: EncodeOptions, connects?: Connect[], flows?: Connect[][]): GraphNode {
+    const pins = this.pins.map((p, i) => p.encode(opt, connects)).filter((p) => p !== null);
+    if (flows !== undefined) {
+      for (let i = 0; i < flows.length; i++) {
+        if (flows[i] !== undefined && flows[i].length !== 0) {
+          pins.push(Pin.encode_flows(flows[i], i));
+        }
+      }
+    }
     return node_body({
       /** 通用 ID */
       generic_id: this.record.id as number,
@@ -314,7 +378,7 @@ export class Pin {
       indexOfConcrete: this.concrete_id,
       /** 引脚的初始值，可选 */
       value: undefined,
-      non_zero: opt.non_zero,
+      non_zero: opt.is_non_zero(),
       connects: connect === undefined ? undefined : [connect],
     });
     if (this.type.t === "e" && this.node_id === 475) {
@@ -322,6 +386,12 @@ export class Pin {
       pin.value.bConcreteValue!.indexOfConcrete = this.type.e;
     }
     return pin;
+  }
+  static encode_flows(flows: Connect[], index: number = 0): NodePin {
+    return pin_flow_body({
+      index,
+      connects: flows.map((f) => f.encode_flow()),
+    })
   }
 }
 
@@ -338,6 +408,9 @@ export class Connect {
   }
   encode() {
     return node_connect_from(this.from.UniqueId, this.from_index);
+  }
+  encode_flow() {
+    return node_connect_to(this.to.UniqueId, this.to_index);
   }
   toString() {
     return `${this.from.UniqueId}-${this.from_index} -> ${this.to.UniqueId}-${this.to_index}`;
@@ -359,7 +432,7 @@ if (import.meta.main) {
   graph.connect(node3, node1, 0, 1);
   graph.connect(node3, node1, 0, 0);
   graph.connect(node3, node2, 0, 0);
-  const g = graph.encode();
+  const g = graph.encode(new EncodeOptions().auto_layout());
   console.timeEnd("graph_encode");
   console.log(g);
   // console.log(JSON.stringify(graph, null, 2));

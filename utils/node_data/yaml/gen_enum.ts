@@ -16,8 +16,8 @@ function get_enum_id_list() {
   function getInfo(node: GraphNode): Info | null {
     const temp = {
       id: node.concreteId?.nodeId,
-      classId: node.pins[0]?.value.bNodeValue?.indexOfConcrete,
-      from: node.pins[0]?.value.bNodeValue?.value.bEnum?.val,
+      classId: node.pins[0]?.value.bConcreteValue?.indexOfConcrete,
+      from: node.pins[0]?.value.bConcreteValue?.value.bEnum?.val,
     };
     if (temp.id === undefined) {
       return null;

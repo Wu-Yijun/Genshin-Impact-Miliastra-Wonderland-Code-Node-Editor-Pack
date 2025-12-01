@@ -6,15 +6,16 @@ import { graph_body, node_body, node_type_node_body, node_type_node_body_empty, 
 import type { NodePin, GraphNode } from "../protobuf/gia.proto.ts";
 import { NodePin_Index_Kind, VarBase_Class } from "../protobuf/gia.proto.ts";
 import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
-import { get_id, get_type, type NodeType, parse, stringify, to_string, type NodePinsRecords, BasicTypes, reflect, reflects, extract_reflect_names, reflects_records, extract_reflect_fields, type_equal, is_reflect } from "./nodes.ts";
+import { get_id, get_type, type NodeType, parse, stringify, to_string, BasicTypes, reflect, reflects, extract_reflect_names, reflects_records, extract_reflect_fields, type_equal, is_reflect } from "./nodes.ts";
 import { randomInt } from "./utils.ts";
 import { derived_records } from "../node_data/ref/node_defines.ts";
 import { get_pin_info, get_node_info, get_nodes } from "./extract.ts";
 import { CONCRETE_MAP } from "../node_data/concrete_map.ts";
 import yaml from 'yaml';
-import { NODE_PIN_RECORDS, type SingleNodeData } from "../node_data/node_pin_records.ts";
+import { NODE_PIN_RECORDS, NodePinsRecords, type SingleNodeData } from "../node_data/node_pin_records.ts";
 import { Graph } from "./graph.ts"
-import { get_node_record } from "../node_data/helpers.ts";
+import { get_concrete_index, get_node_record } from "../node_data/helpers.ts";
+import "../node_data/yaml/enum_id.yaml.d.ts"
 
 function generate_all_nodes(from: number, size: number = 300, line_width: number = 20, offsets: number = 1): GraphNode[] {
   const ret = [];
@@ -118,9 +119,9 @@ function create_node_with_pin(id: number, pin_index: number[], type: number, x =
       index: 0
     },
     value: {
-      class: VarBase_Class.NodeValueBase,
+      class: VarBase_Class.ConcreteBase,
       alreadySetVal: true,
-      bNodeValue: {
+      bConcreteValue: {
         indexOfConcrete: type,
         value: {} as any,
       }
@@ -132,7 +133,7 @@ function create_node_with_pin(id: number, pin_index: number[], type: number, x =
   for (let i = -6; i < 6; i++) {
     const p = structuredClone(pin);
     if (!pin_index.includes(i)) {
-      p.value.bNodeValue!.indexOfConcrete = 0;
+      p.value.bConcreteValue!.indexOfConcrete = 0;
     }
     if (i < 0) {
       p.i1.kind = NodePin_Index_Kind.OutParam;
@@ -251,7 +252,7 @@ function read_derive_graph() {
   const missing = new Set(nodes.map(x => x.genericId.nodeId as number));
   const tags = nodes.filter(x => x.concreteId?.nodeId !== undefined)
     .map(x => ({ id: x.genericId.nodeId, derived: x.concreteId.nodeId }));
-  const g = Object.entries(Object.groupBy(tags, x => x.id)).map(([k, v]) => ({ id: parseInt(k), derived: v.map(x => x.derived) }));
+  const g = Object.entries(Object.groupBy(tags, x => x.id)).map(([k, v]) => ({ id: parseInt(k), derived: v!.map(x => x.derived) }));
   g.forEach(({ id }) => missing.delete(id));
 
   const ids = get_graph_ids("Generic");
@@ -451,7 +452,7 @@ function read_concrete_map() {
   const cm = new Set<string>();
   const concrete_id_mapping =
     Object.entries(Object.groupBy(nodes.map(n => [n.genericId.nodeId, n.concreteId?.nodeId]), x => x[0]))
-      .map(([k, v]) => [[parseInt(k)], [...new Set(v.map(x => x[1]))].filter(x => x !== undefined).sort()])
+      .map(([k, v]) => [[parseInt(k)], [...new Set(v!.map(x => x[1]))].filter(x => x !== undefined).sort()])
   // .filter(x => x[0] === "1938")
   // util.inspect , { maxArrayLength: null }
 
@@ -646,7 +647,7 @@ export const NODE_PIN_RECORDS: NodePinsRecords[] = ${str};`;
 
 function read_enum() {
   const y: EnumList = yaml.parse(readFileSync("./utils/node_data/yaml/yaml/enum_id.yaml").toString());
-  console.log(y.EnumList.map(x => `[${x.id}, "S<T:E<${x.varClassBase}>>"],`).join("\n"));
+  console.log(y.EnumList.map(x => `[${x.id}, "S<T:E<${x.indexOfConcrete}>>"],`).join("\n"));
 }
 
 function combine_id_list() {
@@ -658,7 +659,7 @@ function combine_id_list() {
   );
   // console.log(names);
   const b = get_graph_ids("Basic").map(x => ({ gid: x, cid: x, type: "ServerBasic", name: names.get(x.toString()) }));
-  const g = NODE_PIN_RECORDS.map(x => x.reflectMap!.map(y => ({ cid: y[0], gid: x.id, type: "ServerGeneric " + y[1], name: names.get(x.id.toString()) })));
+  const g = (NODE_PIN_RECORDS as NodePinsRecords[]).map(x => x.reflectMap!.map(y => ({ cid: y[0], gid: x.id, type: "ServerGeneric " + y[1], name: names.get(x.id.toString()) })));
   const all = [...g, ...b].flat()
     .sort((a, b) => a.cid - b.cid);
 
@@ -763,11 +764,11 @@ if (import.meta.main) {
   // const nodes2 = graph2.graph.graph!.inner.graph.nodes!;
   // console.dir(nodes2[100], { depth: null });
 
-  // nodes2[0].pins[0].value.bNodeValue!.value = {} as any;
+  // nodes2[0].pins[0].value.bConcreteValue!.value = {} as any;
   // nodes2[0].pins[0].type = 0;
-  // nodes2[0].pins[1].value.bNodeValue!.value = {} as any;
+  // nodes2[0].pins[1].value.bConcreteValue!.value = {} as any;
   // nodes2[0].pins[1].type = 0;
-  // nodes2[0].pins[2].value.bNodeValue!.value = {} as any;
+  // nodes2[0].pins[2].value.bConcreteValue!.value = {} as any;
   // nodes2[0].concreteId.nodeId = 1088 as any;
   // nodes2.pop();
   // nodes2.push(node_type_node_body_empty(1088, [

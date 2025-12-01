@@ -6,9 +6,8 @@ import util from "node:util";
 import { Graph, Pin } from "../gia_gen/graph.ts";
 import { decode_gia_file, encode_gia_file } from "./decode.ts";
 import { BasicTypes, get_id, get_type } from "../gia_gen/nodes.ts";
-import { NODE_PIN_RECORDS } from "../node_data/node_pin_records.ts";
+import { NODE_PIN_RECORDS, NodePinsRecords } from "../node_data/node_pin_records.ts";
 import { get_node_record } from "../node_data/helpers.ts";
-import { EnumIdList, EnumNode_Value } from "../node_data/enums.ts";
 import { VarType } from "./gia.proto.ts";
 
 
@@ -28,10 +27,10 @@ function generate_test_connect(type: BasicTypes = "Int", list = false) {
   const graph = new Graph("server", undefined, name);
   const var_node = graph.add_node(concrete_id);
 
-  const recs = NODE_PIN_RECORDS;
+  const recs = NODE_PIN_RECORDS as NodePinsRecords[];
   for (const rec of recs) {
     const dest = graph.add_node(rec.reflectMap?.[0][0] ?? rec.id);
-    dest.setPos((graph.nodes.size / 2) % 10, (graph.nodes.size / 2) / 10);
+    dest.setPos((graph.get_nodes().length / 2) % 10, (graph.get_nodes().length / 2) / 10);
     for (let i = 0; i < 20; i++) {
       if (dest.pins[i] !== undefined && dest.pins[i].type !== null) continue;
       const p = new Pin(rec.id, 3, i);
@@ -56,7 +55,6 @@ function get_all_test_connect() {
   const res = BasicTypes.map(t => ({ t, pins: read_test_connect(t) }));
   const res2 = BasicTypes.map(t => ({ t: `L<${t}>`, pins: read_test_connect(t, true) }));
   // read_test_connect();
-
   // console.log(res);
   for (const t of [...res, ...res2]) {
     assert(t.pins.length === NODE_PIN_RECORDS.length);
@@ -64,11 +62,11 @@ function get_all_test_connect() {
       const rec = NODE_PIN_RECORDS[i];
       for (const j of t.pins[i]) {
         assert(rec.inputs[j] === undefined);
-        rec.inputs[j] = t.t;
+        (rec.inputs as any)[j] = t.t;
       }
     }
   }
-  NODE_PIN_RECORDS.forEach(x => { for (let i = 0; i < x.inputs.length; i++)x.inputs[i] ??= "Any" });
+  NODE_PIN_RECORDS.forEach(x => { for (let i = 0; i < x.inputs.length; i++)(x.inputs as any)[i] ??= "Any" });
   // console.dir(NODE_PIN_RECORDS, { depth: null });
   writeFileSync("./temp.ts", util.inspect(NODE_PIN_RECORDS, { depth: null, maxArrayLength: null }));
 }
@@ -81,13 +79,13 @@ function generate_test_connect_out(type: BasicTypes = "Int", list = false) {
 
   const graph = new Graph("server", undefined, name);
 
-  const recs = NODE_PIN_RECORDS;
+  const recs = NODE_PIN_RECORDS as NodePinsRecords[];
   for (const rec of recs) {
     const src = graph.add_node(rec.reflectMap?.[0][0] ?? rec.id);
-    src.setPos(0, graph.nodes.size / 21 / 2);
+    src.setPos(0, graph.get_nodes().length / 21 / 2);
     for (let i = 0; i < 20; i++) {
       const dest = graph.add_node(concrete_id);
-      dest.setPos(i + 1, graph.nodes.size / 21 / 2);
+      dest.setPos(i + 1, graph.get_nodes().length / 21 / 2);
       // @ts-ignore
       const index = src.pin_len[0] + i;
       if (src.pins[index] !== undefined && src.pins[index].type !== null) continue;
@@ -136,12 +134,12 @@ function get_all_test_connect_out() {
       const rec = NODE_PIN_RECORDS[i];
       for (const j of t.pins[i]) {
         assert(rec.outputs[j] === undefined);
-        rec.outputs[j] = t.t;
+        (rec.outputs as any)[j] = t.t;
       }
     }
     // break;
   }
-  NODE_PIN_RECORDS.forEach(x => { for (let i = 0; i < x.outputs.length; i++)x.outputs[i] ??= "Any" });
+  NODE_PIN_RECORDS.forEach(x => { for (let i = 0; i < x.outputs.length; i++)(x.outputs as any)[i] ??= "Any" });
   // console.dir(NODE_PIN_RECORDS, { depth: null });
   writeFileSync("./temp2.ts", util.inspect(NODE_PIN_RECORDS, { depth: null, maxArrayLength: null }));
 }

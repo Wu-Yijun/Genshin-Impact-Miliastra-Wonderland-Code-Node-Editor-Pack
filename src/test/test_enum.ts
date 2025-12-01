@@ -23,7 +23,7 @@ const get_node = (index: number, node_id: number, classBase: number, val: number
               kind: InParam
             }
             value {
-              class: NodeValueBase
+              class: ConcreteBaseValue
               contain_any_val: true
               b_nodeValue {
                 classBase: ${classBase}
@@ -54,7 +54,7 @@ const get_node = (index: number, node_id: number, classBase: number, val: number
               index: 1
             }
             value {
-              class: NodeValueBase
+              class: ConcreteBaseValue
               contain_any_val: true
               b_nodeValue {
                 classBase: ${classBase}
@@ -84,10 +84,10 @@ const doc = readFileSync("./src/test/enum.gia.cs").toString();
 const i = doc.lastIndexOf(searcher) + searcher.length + 1;
 
 const new_node = [];
-for(let i = 0;i < 17; i++){
-  new_node.push(get_node(16 + i, 3351, 30, 3100 + i* 2, 8, i));
+for (let i = 0; i < 17; i++) {
+  new_node.push(get_node(16 + i, 3351, 30, 3100 + i * 2, 8, i));
 }
 
-const new_doc = doc.slice(0, i)+ new_node + doc.slice(i);
+const new_doc = doc.slice(0, i) + new_node + doc.slice(i);
 
 writeFileSync("./temp.cs", new_doc);

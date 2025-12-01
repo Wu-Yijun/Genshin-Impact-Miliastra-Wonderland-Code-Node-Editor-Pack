@@ -92,9 +92,9 @@ function test() {
     const temp = {
       index: node.nodeIndex,
       id: node.concreteId?.nodeId,
-      type: node.pins[0]?.value.bNodeValue?.indexOfConcrete,
-      from: node.pins[0]?.value.bNodeValue?.value.bEnum?.val,
-      to: node.pins[1]?.value.bNodeValue?.value.bEnum?.val,
+      type: node.pins[0]?.value.bConcreteValue?.indexOfConcrete,
+      from: node.pins[0]?.value.bConcreteValue?.value.bEnum?.val,
+      to: node.pins[1]?.value.bConcreteValue?.value.bEnum?.val,
     };
     if (temp.id === undefined) {
       return null;
@@ -112,10 +112,10 @@ function test() {
     n.y = y * 200 + 0.12345;
     n.nodeIndex = getId();
     n.concreteId.nodeId = info.id as any;
-    n.pins[0].value.bNodeValue!.indexOfConcrete = info.type as any;
-    n.pins[1].value.bNodeValue!.indexOfConcrete = info.type as any;
-    n.pins[0].value.bNodeValue!.value.bEnum!.val = info.from as any;
-    n.pins[1].value.bNodeValue!.value.bEnum!.val = info.to as any;
+    n.pins[0].value.bConcreteValue!.indexOfConcrete = info.type as any;
+    n.pins[1].value.bConcreteValue!.indexOfConcrete = info.type as any;
+    n.pins[0].value.bConcreteValue!.value.bEnum!.val = info.from as any;
+    n.pins[1].value.bConcreteValue!.value.bEnum!.val = info.to as any;
     return n;
   }
 

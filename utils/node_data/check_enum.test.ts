@@ -9,7 +9,9 @@ import { type GraphNode, NodeGraph_Id_Class, NodeGraph_Id_Kind, NodeGraph_Id_Typ
 import "./yaml/enum_id.yaml.d.ts";
 import assert from 'assert';
 import { readFileSync } from 'fs';
-import type { EnumNode_Value, NodeId } from './enums.ts';
+import { NodeId } from './node_id.ts';
+import { EnumValue } from './enum_id.ts';
+// import type { EnumNode_Value, NodeId } from './enums.ts';
 
 function save_nodes(graph_name: string, file_name: string, nodes: GraphNode[]): Root {
   const uid = parseInt("201" + randomDigits(6));
@@ -37,7 +39,8 @@ function save_nodes(graph_name: string, file_name: string, nodes: GraphNode[]): 
             nodes: nodes,
             compositePins: [],
             graphValues: [],
-            affiliations: []
+            affiliations: [],
+            comments: [],
           }
         }
       }
@@ -68,7 +71,7 @@ interface EnumOptions {
   concrete_id: NodeId;
   pos: [number, number];
   indexOfConcrete: number;
-  enum_item_id: [EnumNode_Value, EnumNode_Value];
+  enum_item_id: [EnumValue, EnumValue];
 }
 let index = 0;
 function create_enum_node(option: EnumOptions) {
@@ -82,9 +85,9 @@ function create_enum_node(option: EnumOptions) {
       index: 0
     },
     value: {
-      class: VarBase_Class.NodeValueBase,
+      class: VarBase_Class.ConcreteBase,
       alreadySetVal: true,
-      bNodeValue: {
+      bConcreteValue: {
         indexOfConcrete: option.indexOfConcrete,
         value: {
           class: VarBase_Class.EnumBase,
@@ -108,7 +111,7 @@ function create_enum_node(option: EnumOptions) {
   const pin2 = structuredClone(pin1);
   pin2.i1.index = 1;
   pin2.i2.index = 1;
-  pin2.value.bNodeValue!.value.bEnum!.val = option.enum_item_id[1] as any;
+  pin2.value.bConcreteValue!.value.bEnum!.val = option.enum_item_id[1] as any;
 
   const node: GraphNode = {
     nodeIndex: ++index,

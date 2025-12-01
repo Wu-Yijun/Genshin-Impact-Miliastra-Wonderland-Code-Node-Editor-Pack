@@ -1,5 +1,5 @@
 {
-  "commitMessage": "完善了节点详细信息静态数据, 更新了 Readme",
+  "commitMessage": "完成 Graph 类的 flow 机制, 更新 gia.proto",
   "notSync": true,
   "include": [
     "*",

@@ -87,6 +87,7 @@ export function graph_body(body: GraphBody_): Root {
             compositePins: [],
             graphValues: [],
             affiliations: [],
+            comments: [],
           },
         },
       },
@@ -201,6 +202,29 @@ export function pin_body(body: PinBody_): NodePin {
   return pin;
 }
 
+export interface PinFlowBody_ {
+  /** 引脚索引 */
+  index: number;
+  /** 引脚的连接 */
+  connects: NodeConnection[];
+}
+export function pin_flow_body(body: PinFlowBody_): NodePin {
+  const pin: NodePin = {
+    i1: {
+      kind: NodePin_Index_Kind.OutFlow,
+      index: body.index,
+    },
+    i2: {
+      kind: NodePin_Index_Kind.OutFlow,
+      index: body.index,
+    },
+    value: undefined as any,
+    type: undefined as any,
+    connects: body.connects,
+  };
+  return pin;
+}
+
 /**
  * PinValue_ 接口定义了构建引脚值的参数
  */
@@ -219,7 +243,7 @@ export interface PinValue_ {
  * - body: {
  *     indexOfConcrete?: number;
  *     value?: VarBase;
- *     wrapper?: NodeValueBaseValue_Wrapper;
+ *     wrapper?: ConcreteBaseValueValue_Wrapper;
  *   }
  *
  * @param body 值参数
@@ -539,6 +563,8 @@ export interface NodeTypePinBody_ {
   non_zero?: boolean;
   /** 上游连接引脚 */
   connects?: NodeConnection[];
+  /** 下游连接节点 */
+  flows?: NodeConnection[];
 }
 /**
  * 构建任意类型引脚（自动根据 VarType 分发）
@@ -827,6 +853,21 @@ export function node_connect_from(from: number, from_index: number): NodeConnect
     connect2: {
       kind: NodePin_Index_Kind.OutParam,
       index: from_index,
+    },
+  };
+}
+
+/** flow connects to downstream nodes */
+export function node_connect_to(to: number, to_index: number): NodeConnection {
+  return {
+    id: to,
+    connect: {
+      kind: NodePin_Index_Kind.InFlow,
+      index: to_index,
+    },
+    connect2: {
+      kind: NodePin_Index_Kind.InFlow,
+      index: to_index,
     },
   };
 }
