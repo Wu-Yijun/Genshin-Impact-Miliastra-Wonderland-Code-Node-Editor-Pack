@@ -1,16 +1,22 @@
 import assert from "assert";
-import type { GraphNode, NodePin, NodePin_Index_Kind, Root } from "../protobuf/gia.proto.ts";
+import type { Comments, GraphNode, NodeConnection, NodePin, NodePin_Index_Kind, Root } from "../protobuf/gia.proto.ts";
 import { graph_body, node_body, node_connect_from, node_connect_to, node_type_pin_body, pin_flow_body } from "./basic.ts";
 import { type NodeType, reflects_records, get_id, type_equal, to_records_full, is_reflect } from "./nodes.ts";
 import { Counter, panic, randomInt, randomName } from "./utils.ts";
 import { get_concrete_index, is_concrete_pin, get_generic_id, get_node_record, get_node_record_generic } from "../node_data/helpers.ts";
-import { get_node_info } from "./extract.ts";
+import { extract_value, get_node_info } from "./extract.ts";
 import { type SingleNodeData } from "../node_data/node_pin_records.ts";
 import { auto_layout } from "./auto_layout.ts";
 
 
 const GraphType = ["server", "client", "composite"] as const;
 type GraphType = typeof GraphType[number];
+
+export type AnyType =
+  | number
+  | string
+  | boolean
+  | AnyType[];
 
 export class EncodeOptions {
   private non_zero: boolean;
@@ -33,6 +39,7 @@ export class Graph {
   private nodes: Set<Node>;
   private connects: Set<Connect>;
   private flows: Map<Node, Connect[][]>;
+  private comments: Set<Comment>;
 
   get type() {
     return this.type_;
@@ -52,6 +59,7 @@ export class Graph {
     this.nodes = new Set();
     this.connects = new Set();
     this.flows = new Map();
+    this.comments = new Set();
   }
   /** 
    * @param node Node Id or Instance */
@@ -68,21 +76,6 @@ export class Graph {
     this.nodes.add(node);
     return node;
   }
-  encode(opt?: EncodeOptions): Root {
-    opt ??= new EncodeOptions();
-    const nodes = [...this.nodes].map((n) => n.encode(opt, this.get_connect_to(n), this.flows.get(n)));
-    return graph_body({/** 唯一标识符 */
-      uid: this.uid,
-      /** 图的 ID */
-      graph_id: this.graph_id,
-      /** 图文件的ID，可选, 通常是 graph_id + i */
-      file_id: this.file_id,
-      /** 图的名称，可选 */
-      graph_name: this.graph_name,
-      /** 图中包含的节点列表，可选 */
-      nodes
-    });
-  }
   get_nodes(): Node[] {
     return [...this.nodes];
   }
@@ -93,6 +86,17 @@ export class Graph {
       }
     }
     return null;
+  }
+  add_connect(connect: Connect) {
+    this.connects.add(connect);
+  }
+  add_flow(connect: Connect) {
+    if (!this.flows.has(connect.from)) {
+      this.flows.set(connect.from, []);
+    }
+    const f = this.flows.get(connect.from)!;
+    f[connect.from_index] ??= [];
+    f[connect.from_index].push(connect);
   }
   get_connects(): Connect[] {
     return [...this.connects];
@@ -199,12 +203,57 @@ export class Graph {
     this.connects.add(connect);
     return connect;
   }
+
+  add_comment(content: string | Comment, x?: number, y?: number, attached_node: Node | null = null): Comment {
+    if (typeof content !== "string") {
+      this.comments.add(content);
+      return content;
+    }
+    const comment = new Comment(content, x ?? 0, y ?? 0, attached_node);
+    this.comments.add(comment);
+    return comment;
+  }
+  get_graph_comments(): Comment[] {
+    return [...this.comments].filter(c => c.attached_node === null);
+  }
+  get_node_comment(node: Node): Comment | null {
+    return [...this.comments].find(c => c.attached_node === node) ?? null;
+  }
+
+  encode(opt?: EncodeOptions): Root {
+    opt ??= new EncodeOptions();
+    const nodes = [...this.nodes].map((n) => n.encode(opt, this.get_connect_to(n), this.flows.get(n), this.get_node_comment(n)));
+    return graph_body({/** 唯一标识符 */
+      uid: this.uid,
+      /** 图的 ID */
+      graph_id: this.graph_id,
+      /** 图文件的ID，可选, 通常是 graph_id + i */
+      file_id: this.file_id,
+      /** 图的名称，可选 */
+      graph_name: this.graph_name,
+      /** 图中包含的节点列表，可选 */
+      nodes,
+      comments: this.get_graph_comments().map(c => c.encode()),
+    });
+  }
   static decode(root: Root): Graph {
     const [uid, time, graph_id_str, file_name] = root.filePath.split("-");
     const name = file_name.endsWith(".gia") ? file_name.slice(1, -4) : file_name.slice(1);
     const graph = new Graph("server", parseInt(uid), name, parseInt(graph_id_str));
     root.graph.graph?.inner.graph.nodes.forEach(node => {
-      graph.add_node(Node.decode(node));
+      // node itself
+      const n = graph.add_node(Node.decode(node));
+      // comments
+      if (node.comments !== undefined) {
+        graph.add_comment(Comment.decode(node.comments, n));
+      }
+
+    });
+    root.graph.graph?.inner.graph.nodes.forEach(node => {
+      // decode connects
+      const { flows, connects } = Node.decode_connects(node, graph);
+      connects.forEach(c => graph.add_connect(c));
+      flows.forEach(f => graph.add_flow(f));
     });
     return graph;
   }
@@ -269,7 +318,7 @@ export class Node {
     this.x = x;
     this.y = y;
   }
-  encode(opt: EncodeOptions, connects?: Connect[], flows?: Connect[][]): GraphNode {
+  encode(opt: EncodeOptions, connects?: Connect[], flows?: Connect[][], comment?: Comment | null): GraphNode {
     const pins = this.pins.map((p, i) => p.encode(opt, connects)).filter((p) => p !== null);
     if (flows !== undefined) {
       for (let i = 0; i < flows.length; i++) {
@@ -291,10 +340,11 @@ export class Node {
       pins,
       /** ⚠️ Warning: This may cause ID collision. 节点唯一索引，不建议填入 */
       unique_index: this.unique_id,
+      comment: comment?.encode(),
     });
   }
 
-  setVal(pin: number | Pin, val: any) {
+  setVal(pin: number | Pin, val: AnyType) {
     if (typeof pin === "number") {
       this.pins[pin].setVal(val);
     } else {
@@ -309,16 +359,42 @@ export class Node {
     const n = new Node(g_id, node.nodeIndex);
     n.setConcrete(c_id);
     n.setPos(node.x / 300, node.y / 200);
+    const values = node.pins.filter((p) => p.i1.kind === 3).map((p) => Pin.decode(p));
     info.pins.forEach((p) => {
       if (p.kind === 3) {
         // Input
         n.pins[p.index].setType(p.node_type);
+        const val_pin = values.find((vp) => vp.index === p.index);
+        if (val_pin !== undefined && val_pin.value !== undefined) {
+          n.pins[p.index].setVal(val_pin.value);
+        }
       } else if (p.kind === 4) {
         // Output
         n.pins[n.pin_len[0] + p.index].setType(p.node_type);
       }
     });
     return n;
+  }
+  static decode_connects(node: GraphNode, graph: Graph): { flows: Connect[], connects: Connect[] } {
+    const flows: Connect[] = [];
+    const connects: Connect[] = [];
+    if (node.pins !== undefined) {
+      const self_node = graph.get_node(node.nodeIndex);
+      if (self_node === null) {
+        throw new Error("Node not found for decode connects: " + node.nodeIndex);
+      }
+      for (const pin of node.pins) {
+        if (pin.connects !== undefined) {
+          if (pin.i1.kind === 2) {
+            flows.push(...Connect.decode_flows(pin.connects, self_node, pin.i1.index, graph));
+          } else if (pin.i1.kind === 3) {
+            connects.push(...Connect.decode_connects(pin.connects, self_node, pin.i1.index, graph));
+          }
+          throw new Error("Unreachable");
+        }
+      }
+    }
+    return { flows, connects };
   }
 
   get UniqueId() {
@@ -337,7 +413,7 @@ export class Pin {
   private node_id: number;
   private kind: number;
   private index: number;
-  value: any;
+  value: AnyType | undefined;
   reflective: boolean;
   /** concrete id */
   concrete_id: number;
@@ -351,7 +427,7 @@ export class Pin {
     this.concrete_id = 0;
     this.reflective = reflective;
   }
-  setVal(val: any) {
+  setVal(val: AnyType) {
     assert(this.kind === 3); // in params
     this.value = val;
   }
@@ -402,6 +478,9 @@ export class Pin {
     }
     return pin;
   }
+  static decode(pin: NodePin): { index: number, value: AnyType | undefined } {
+    return { index: pin.i1.index, value: extract_value(pin.value) };
+  }
   static encode_flows(flows: Connect[], index: number = 0): NodePin {
     return pin_flow_body({
       index,
@@ -427,12 +506,71 @@ export class Connect {
   encode_flow() {
     return node_connect_to(this.to.UniqueId, this.to_index);
   }
+  static decode_connects(connects: NodeConnection[], self_node: Node, self_index: number, graph: Graph): Connect[] {
+    const ret: Connect[] = [];
+    for (const c of connects) {
+      const from_node = graph.get_node(c.id);
+      if (from_node === null) {
+        console.warn("Node not found for connect:", c.id);
+        continue;
+      }
+      ret.push(new Connect(from_node, self_node, c.connect.index, self_index));
+    }
+    return ret;
+  }
+  static decode_flows(connects: NodeConnection[], self_node: Node, self_index: number, graph: Graph): Connect[] {
+    const ret: Connect[] = [];
+    for (const c of connects) {
+      const to_node = graph.get_node(c.id);
+      if (to_node === null) {
+        console.warn("Node not found for flow:", c.id);
+        continue;
+      }
+      ret.push(new Connect(self_node, to_node, self_index, c.connect.index));
+    }
+    return ret;
+  }
   toString() {
     return `${this.from.UniqueId}-${this.from_index} -> ${this.to.UniqueId}-${this.to_index}`;
   }
 }
 
-
+export class Comment {
+  content: string;
+  x: number;
+  y: number;
+  attached_node: Node | null;
+  constructor(content: string, x: number, y: number, attached_node: Node | null = null) {
+    this.content = content;
+    this.x = x;
+    this.y = y;
+    this.attached_node = attached_node;
+  }
+  attachTo(node: Node | null) {
+    this.attached_node = node;
+  }
+  encode(): Comments {
+    if (this.attached_node === null) {
+      return {
+        content: this.content,
+        x: this.x,
+        y: this.y,
+      };
+    } else {
+      return {
+        content: this.content,
+      };
+    }
+  }
+  static decode(c: Comments, parent?: Node): Comment {
+    return new Comment(
+      c.content,
+      c.x ?? 0,
+      c.y ?? 0,
+      parent,
+    );
+  }
+}
 
 if (import.meta.main) {
   // Test Graph Encoding

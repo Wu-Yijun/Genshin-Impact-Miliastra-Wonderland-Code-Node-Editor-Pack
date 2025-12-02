@@ -17,6 +17,7 @@ import {
   type VarBase_ItemType,
   VarBase_ItemType_Inner_Kind,
   VarType,
+  type Comments,
 } from "../protobuf/gia.proto.ts";
 import { get_id, get_type, LocalVariableType, type NodePins, type NodeType } from "./nodes.ts";
 
@@ -24,6 +25,7 @@ import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 import { type ConcreteMap } from "../node_data/concrete_map.ts";
 import { get_concrete_index } from "../node_data/helpers.ts";
 import { ENUM_ID } from "../node_data/enum_id.ts";
+import { AnyType } from "./graph.ts";
 
 /**
  * GraphBody_ 接口定义了构建图的基本参数
@@ -39,6 +41,7 @@ export interface GraphBody_ {
   graph_name?: string;
   /** 图中包含的节点列表，可选 */
   nodes?: GraphNode[];
+  comments?: Comments[];
 }
 /**
  * 根据提供的参数构建一个图对象 (Root)
@@ -87,7 +90,7 @@ export function graph_body(body: GraphBody_): Root {
             compositePins: [],
             graphValues: [],
             affiliations: [],
-            comments: [],
+            comments: body.comments ?? [],
           },
         },
       },
@@ -114,6 +117,7 @@ export interface NodeBody_ {
   pins: NodePin[];
   /** ⚠️ Warning: This may cause ID collision. 节点唯一索引，不建议填入 */
   unique_index?: number;
+  comment?: Comments;
 }
 
 /**
@@ -149,6 +153,7 @@ export function node_body(body: NodeBody_): GraphNode {
       nodeId: body.concrete_id,
     },
     pins: body.pins,
+    comments: body.comment,
     x: body.x * 300 + Math.random() * 10, // shakings
     y: body.y * 200 + Math.random() * 10, // shakings
     usingStruct: [],
@@ -323,6 +328,7 @@ export interface MapPinBody_ {
   indexOfConcrete?: number;
   /** 引脚的连接 */
   connects?: NodeConnection[];
+  value?: AnyType;
 }
 /**
  * 构建 Map 类型引脚
@@ -358,6 +364,11 @@ export function map_pin_body(body: MapPinBody_): NodePin {
     },
     bMap: { mapPairs: [] },
   };
+  if(body.value!==undefined) {
+    assert(Array.isArray(body.value), "Map pin body value must be an array of [key, value] pairs!");
+    assert(body.value.every(v => Array.isArray(v) && v.length === 2), "Map pin body value must be an array of [key, value] pairs!");
+    todo("Implement default map pin body value extraction");
+  }
   const wrapper: ComplexValueStruct = {
     class: 1,
     inner: {
@@ -394,7 +405,7 @@ export interface ListPinBody_ {
   value_type: VarType;
   /** 引脚的连接 */
   connects?: NodeConnection[];
-  value?: any[];
+  value?: AnyType;
 }
 /**
  * 构建 List 类型引脚
@@ -417,7 +428,8 @@ export function list_pin_body(body: ListPinBody_): NodePin {
     itemType: item_type(body.value_type),
     bArray: { entries: [] },
   };
-  if (body.value) {
+  if (body.value!==undefined) {
+    assert(Array.isArray(body.value), "List pin body value must be an array!");
     const v_t = get_type(body.value_type);
     assert(v_t.t === "l");
     const item_type = get_id(v_t.i) as VarType;
@@ -552,25 +564,35 @@ export function vector_pin_body(vec: number[]): VarBase {
   };
 }
 
-export function simple_value_var(var_type: VarType, value?: any, non_zero: boolean = false): VarBase {
+export function simple_value_var(var_type: VarType, value?: AnyType, non_zero: boolean = false): VarBase {
   switch (var_type) {
     case VarType.EnumItem:
+      assert(value === undefined || typeof value === "number");
       return enum_value({ value: value ?? (non_zero ? 1 : 0) });
     case VarType.Integer:
+      assert(value === undefined || typeof value === "number");
       return int_pin_body(value ?? (non_zero ? 1 : 0));
     case VarType.GUID:
     case VarType.Configuration:
     case VarType.Entity:
     case VarType.Faction:
     case VarType.Prefab:
+      assert(value === undefined || typeof value === "number");
       return id_pin_body(value ?? (non_zero ? 1 : 0));
     case VarType.Boolean:
+      assert(value === undefined || typeof value === "boolean");
       return bool_pin_body(value ?? false);
     case VarType.Float:
+      assert(value === undefined || typeof value === "number");
       return float_pin_body(value ?? (non_zero ? 1 : 0));
     case VarType.String:
+      assert(value === undefined || typeof value === "string");
       return string_pin_body(value ?? (non_zero ? "1" : ""));
     case VarType.Vector:
+      assert(
+        value === undefined ||
+        (Array.isArray(value) && value.length == 3 && value.every((v) => typeof v === "number"))
+      );
       return vector_pin_body(value ?? (non_zero ? [1, 1, 1] : [0, 0, 0]));
   }
   return todo("Not implemented AnyPinBody for type " + var_type);
@@ -591,7 +613,7 @@ export interface NodeTypePinBody_ {
   /** 具体类型的索引，可选，用于多态类型的选择 */
   indexOfConcrete?: number;
   /** 引脚的初始值，可选，不同类型对应不同值结构 */
-  value?: any;
+  value?: AnyType;
   /** 对基本类型填入非空的值 1 */
   non_zero?: boolean;
   /** 上游连接引脚 */
@@ -651,6 +673,7 @@ export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
         value_type: key_val_type![1],
         indexOfConcrete: body.indexOfConcrete,
         connects: body.connects,
+        value: body.value,
       });
     case VarType.BooleanList:
     case VarType.ConfigurationList:
