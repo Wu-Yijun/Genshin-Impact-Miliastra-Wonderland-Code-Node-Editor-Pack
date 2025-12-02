@@ -55,7 +55,8 @@ async function main() {
       class_array[i] = "Empty";
     }
   }
-  console.log(class_array.slice(30));
+  console.log("Read " + class_array.length + " nodes.");
+  // console.log(class_array.slice(30));
 
   const color = (str: string): [number, number, number] => {
     const r = parseInt(str.slice(1, 3), 16);
@@ -82,8 +83,11 @@ async function main() {
   }
 
   const colors = class_array.map(x => COLORS[x as keyof typeof COLORS]);
-  const img = encode(arrangeColors(colors, 100, 16), 95);
+  const img_data = arrangeColors(colors, 100, 16);
+  const img = encode(img_data, 95);
+  console.log("Image Size:", img_data.width, img_data.height);
   await writeFile('./dist/heat_map.jpg', img.data);
+  console.log("Heat map saved to `./dist/heat_map.jpg`!");
 }
 
 await main();

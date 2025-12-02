@@ -191,7 +191,7 @@ export interface CompositeDef_Type {
 export const CompositeDef_Type_Kind = {
   Unknown: 0,
   Composite: 1000,
-  Assemble: 1003,
+  Assembly: 1003,
   Split: 1004,
   Modify: 1005,
 } as const;

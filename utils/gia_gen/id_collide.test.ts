@@ -178,7 +178,7 @@ function create_node_lists() {
     0,
     [0, 3],
     0,
-    [0, null, 0], // Assemble
+    [0, null, 0], // Assembly
     [0, null, 0], // Convert
     [0, 1, null, 0],
     [0, 1, null, 0],
@@ -319,7 +319,7 @@ function extract_types() {
     0,
     [0, 3],
     0,
-    [0, null, 0], // Assemble
+    [0, null, 0], // Assembly
     [0, null, 0], // Convert
     [0, 1, null, 0],
     [0, 1, null, 0],

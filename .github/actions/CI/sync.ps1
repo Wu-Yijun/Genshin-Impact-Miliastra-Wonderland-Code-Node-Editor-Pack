@@ -1,1 +1,0 @@
-Copy-Item -Path "./test/*" -Destination "./.github/actions/CI" -Recurse -Force -Exclude "sync.bat"

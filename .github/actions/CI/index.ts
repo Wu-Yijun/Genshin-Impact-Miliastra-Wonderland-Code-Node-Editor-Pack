@@ -42,7 +42,7 @@ for (const testName of tests) {
 }
 
 const state = failCount > 0 ? passCount === 0 ? "🟥" : "🟨" : "🟩";
-console.log(`${state} Tests completed. Pass: ${passCount}, Fail: ${failCount}`);
+console.log(`${state} All Tests completed. Pass: ${passCount}, Fail: ${failCount}`);
 if (errors.length > 0) {
   console.error("Errors:", errors);
 }

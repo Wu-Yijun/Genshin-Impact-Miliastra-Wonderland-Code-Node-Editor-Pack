@@ -377,7 +377,7 @@ export const derived_records: (NodePinsRecords | { len: number })[] = [
     reflectMap: [[167, 'S<T:Int>'], [168, 'S<T:Flt>']],
     len: 2
   },
-  { // Assemble List 
+  { // Assembly List 
     id: 169,
     inputs: [undefined, ...Array(50).fill('R<T>')],
     outputs: ['L<R<T>>'],

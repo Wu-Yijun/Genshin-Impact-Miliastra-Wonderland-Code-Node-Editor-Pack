@@ -14,7 +14,7 @@ message NodeUnit {
       Unknown1 = 0;
       Node = 1;            // Such as boolean filter
       Basic = 5;           // Such as graph node
-      AffiliatedNode = 23; // Assemble/Split for Structure
+      AffiliatedNode = 23; // Assembly/Split for Structure
     }
     enum NodeType {
       Unknown2 = 0;
@@ -99,7 +99,7 @@ message CompositeDef {
     enum Kind {
       Unknown = 0;
       Composite = 1000;
-      Assemble = 1003;
+      Assembly = 1003;
       Split = 1004;
       Modify = 1005;
     }

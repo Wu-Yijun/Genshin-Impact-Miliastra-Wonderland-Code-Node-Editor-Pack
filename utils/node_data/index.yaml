@@ -5969,9 +5969,9 @@ NodesList:
         InputsIndexOfConcrete:
           - 1
         OutputsIndexOfConcrete: []
-  - Name: Assemble_List
+  - Name: Assembly_List
     Translations:
-      en: Assemble List
+      en: Assembly List
     ID: 169
     Type: Generic
     Range: Server
@@ -18450,9 +18450,9 @@ NodesList:
       - Ety
       - E<36>
     Outputs: []
-  - Name: Set_Loot_Drop_Type
+  - Name: Set_Loot_Drop_Content
     Translations:
-      en: Set Loot Drop Type
+      en: Set Loot Drop Content
     ID: 725
     Type: Simple
     Range: Server

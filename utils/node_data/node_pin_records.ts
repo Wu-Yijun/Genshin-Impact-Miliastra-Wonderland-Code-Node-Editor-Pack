@@ -990,7 +990,7 @@ export const NODE_PIN_RECORDS = [
     reflectMap: [[167, "S<T:Int>"], [168, "S<T:Flt>"]],
   },
   {
-    name: "Assemble List",
+    name: "Assembly List",
     id: 169,
     inputs: [
       "Int",
@@ -3998,7 +3998,7 @@ export const NODE_PIN_RECORDS = [
     outputs: [],
   },
   {
-    name: "Set Loot Drop Type",
+    name: "Set Loot Drop Content",
     id: 725,
     inputs: ["Ety"],
     outputs: [],

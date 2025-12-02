@@ -669,7 +669,7 @@
 722: 722 # ServerBasic # Get All Currency From Inventory
 723: 723 # ServerBasic # Get all equipment from Inventory
 724: 724 # ServerBasic # Trigger Loot Drop
-725: 725 # ServerBasic # Set Loot Drop Type
+725: 725 # ServerBasic # Set Loot Drop Content
 726: 726 # ServerBasic # Modify Loot Item Component Quantity
 727: 727 # ServerBasic # Modify Loot Component Currency Amount
 728: 728 # ServerBasic # Get Loot Component Item Quantity

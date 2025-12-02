@@ -224,7 +224,7 @@ Execution:
   - XXXIX. Items and Inventory:
       720: 1. Set Inventory Item Drop Contents
       687: 2. Set Inventory Drop Items/Currency Amount
-      725: 3. Set Loot Drop Type
+      725: 3. Set Loot Drop Content
       724: 4. Trigger Loot Drop
       # :TODO 4. Set Loot Drop Content Does not exist!
       686: 5. Modify Inventory Item Quantity
@@ -387,7 +387,7 @@ Control:
 Arithmetic:
   - General:
       14: Equal
-      169: Assemble List
+      169: Assembly List
       475: Enumerations Equal
       180: Data Type Conversion
       # - Equal: [Generic: 14]
@@ -400,7 +400,7 @@ Arithmetic:
       #   371: Float
       #   581: ConfigId
       #   582: Prefab
-      # - Assemble List: [Generic: 169]
+      # - Assembly List: [Generic: 169]
       #   169: Generic
       #   169: Int
       #   170: Str

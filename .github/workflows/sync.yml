@@ -38,7 +38,7 @@ jobs:
         run: node dev/.github/workflows/sync.ts main dev dev/sync-list.json
       
       - name: Install Dependency
-        run: cp dev/package-lock.json main && cd main && mkdir dist && npm ci
+        run: cp dev/package-lock.json main && cp -r dev/ref main && cd main && mkdir dist && npm ci
           
       - name: Run tests
         uses: Wu-Yijun/Genshin-Impact-Miliastra-Wonderland-Code-Node-Editor-Pack/.github/actions/CI@dev

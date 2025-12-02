@@ -94,3 +94,4 @@ set_val2.setVal(4, true);
 // auto analysis layout
 graph.autoLayout(1, 2);
 encode_gia_file("./dist/GeneratedGraph.gia", graph.encode());
+console.log("Saved to `./dist/GeneratedGraph.gia`")
