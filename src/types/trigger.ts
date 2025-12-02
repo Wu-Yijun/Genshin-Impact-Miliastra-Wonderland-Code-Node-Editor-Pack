@@ -1,4 +1,4 @@
-import type { TypeName } from "./IR_defs.ts";
+// import type { TypeName } from "./IR_defs.ts";
 import type { IRNode } from "./IR_node.ts";
 
 export interface TriggerDecl {

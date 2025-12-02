@@ -1,4 +1,4 @@
-import type { ParserState, Token } from "./types.ts";
+import type { ParserState, Token } from "../types/parser.ts";
 import { TOKEN_GROUPS, TOKENS } from "./consts.ts"; 
 import {
   assert,
@@ -35,7 +35,6 @@ import {
   parseOutList,
 } from "./parseParams.ts"; //js
 import {
-  extractBalanced,
   extractBalancedTokens,
   splitBalancedTokens,
 } from "./balancedExtract.ts"; //js

@@ -1,4 +1,4 @@
-import type { PatternTypes, Token } from "./types.ts";
+import type { PatternTypes, Token } from "../types/parser.ts";
 
 /** Default token fot quick access */
 export const TOKENS = {

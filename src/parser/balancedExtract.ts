@@ -1,5 +1,5 @@
 import { tokenEqual } from "./tokenizer.ts";
-import type { ParserState, Token } from "./types.ts";
+import type { ParserState, Token } from "../types/parser.ts";
 import { expect, next, peek } from "./utils.ts";
 
 export function extractBalancedTokens(

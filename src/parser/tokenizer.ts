@@ -1,5 +1,5 @@
 import { patterns } from "./consts.ts";
-import type { ParserState, Token } from "./types.ts";
+import type { ParserState, Token } from "../types/parser.ts";
 
 export function tokenEqual(t1: Token, t2: Token) {
   return t1.value === t2.value && t1.type === t2.type;

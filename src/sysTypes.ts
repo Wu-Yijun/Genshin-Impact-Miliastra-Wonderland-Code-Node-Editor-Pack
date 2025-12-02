@@ -1,39 +1,17 @@
 // src/runtime/sysTypes
 // version 1.0.2
 
+import type {
+  SysKeyTypeNames,
+  SysKeyTypes,
+  SysTypeNames,
+  SysTypes,
+  SysValTypeNames,
+  SysValTypes,
+  TypeMaps
+} from "./types/types.ts";
+
 const todo = (): any => { throw new Error("TODO"); };
-
-export interface TypeMaps {
-  int: int;
-  float: float;
-  bool: bool;
-  str: str;
-  Int: Int;
-  Float: Float;
-  Bool: Bool;
-  Str: Str;
-  Vec: Vec;
-  GUID: GUID;
-  Entity: Entity;
-  Prefab: Prefab;
-  Faction: Faction;
-  ConfigId: ConfigId;
-  List: List;
-  Dict: Dict;
-  Struct: Struct;
-}
-export const AllTypes = ["int", "float", "bool", "str", "Int", "Float", "Bool", "Str", "Vec", "GUID", "Entity", "Prefab", "Faction", "ConfigId", "List", "Dict", "Struct"] as const satisfies (keyof TypeMaps)[];
-export const AllKeyTypes = ["Entity", "GUID", "Int", "Str", "Faction", "ConfigId", "Prefab"] as const satisfies (keyof TypeMaps)[];
-export const AllKeyTypes_ = ["Entity", "GUID", "Int", "Str", "int", "str", "Faction", "ConfigId", "Prefab"] as const satisfies (keyof TypeMaps)[];
-export const AllValTypes = ["Entity", "GUID", "Int", "Bool", "Float", "Str", "Faction", "Vec", "ConfigId", "Prefab"] as const satisfies (keyof TypeMaps)[];
-export const AllValTypes_ = ["Entity", "GUID", "Int", "Bool", "Float", "Str", "int", "bool", "float", "str", "Faction", "Vec", "ConfigId", "Prefab"] as const satisfies (keyof TypeMaps)[];
-
-export type SysTypeNames = typeof AllTypes[number];
-export type SysKeyTypeNames = typeof AllKeyTypes[number];
-export type SysValTypeNames = typeof AllValTypes[number];
-export type SysTypes = TypeMaps[SysTypeNames];
-export type SysKeyTypes = TypeMaps[SysKeyTypeNames];
-export type SysValTypes = TypeMaps[SysValTypeNames];
 
 export type AnyTypePair = {
   [K in SysTypeNames]: { type: K; val: TypeMaps[K] };
@@ -517,19 +495,6 @@ function Upper(x: int | str | float | bool) {
 export { Upper, Lower as lower, to_int, to_str, to_float, to_bool };
 
 
-export const SysEnumNames = [
-  "EnumGeneric", "EnumComparisonOperators", "EnumLogicalOperators", "EnumMathematicalOperators", "EnumAttackShapes",
-  "EnumSurvivalStatus", "EnumSortingRules", "EnumRoundingLogic", "EnumTypeConversions", "EnumMotionPathPointTypes",
-  "EnumMotionTypes", "EnumFollowLocationType", "EnumCoordinateSystemType", "EnumElementalType", "EnumEntityType",
-  "EnumUnitStatusAdditionResult", "EnumUnitStatusRemovalReason", "EnumUnitStatusRemovalStrategy",
-  "EnumRevivePointSelectionStrategy", "EnumCauseOfBeingDown", "EnumTrigonometricFunctions",
-  "EnumDisruptorDeviceTypes", "EnumDisruptorDeviceOrientation", "EnumUIControlGroupStatus", "EnumTargetType",
-  "EnumTriggerRestriction", "EnumHitType", "EnumAttackType", "EnumHitPerformanceLevel", "EnumSkillSlot",
-  "EnumSoundAttenuationMode", "EnumSelectCompletionReason", "EnumSettlementStatus", "EnumReasonForItemChange",
-  "EnumItemLootType", "EnumDecisionRefreshMode", "EnumElementalReactionType", "EnumInterruptStatus",
-  "EnumGameplayMode", "EnumInputDeviceType"
-] as const;
-export type SysEnumNameTypes = typeof SysEnumNames[number];
 
 // test
 // const p = new List([1n, 2n, 4n], "int");
