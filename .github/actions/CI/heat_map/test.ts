@@ -82,7 +82,6 @@ async function main() {
   }
 
   const colors = class_array.map(x => COLORS[x as keyof typeof COLORS]);
-  // console.log(arrangeColors(colors, 100, 10));
   const img = encode(arrangeColors(colors, 100, 16), 95);
   await writeFile('./dist/heat_map.jpg', img.data);
 }

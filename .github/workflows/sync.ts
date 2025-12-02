@@ -11,8 +11,8 @@ interface SyncConfig {
   notSync?: boolean;
 }
 
-if(
-  process.argv.length < 2 || process.argv.length > 5 || 
+if (
+  process.argv.length < 2 || process.argv.length > 5 ||
   process.argv.includes("--help") || process.argv.includes("-h")
 ) {
   console.error("Usage: ts-node sync.ts [out_dir] [in_dir] [sync_path]");
@@ -79,12 +79,13 @@ function getDevCommitMessage(): string {
 
 function main() {
   const config = loadConfig();
-  if(config.notSync === true) {
+
+  syncFiles(config);
+
+  if (config.notSync === true) {
     console.log("⚠️ Sync is disabled via 'notSync' flag in sync-list.json. Exiting.");
     return;
   }
-
-  syncFiles(config);
 
   let commitMessage =
     config.commitMessage && config.commitMessage.trim() !== ""

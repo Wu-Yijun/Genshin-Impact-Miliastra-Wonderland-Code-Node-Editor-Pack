@@ -64,6 +64,8 @@ export type NodeLayoutItem =
 export interface NodeDefinition {
   id: string;
   displayName: string;
+  displayNameEN: string;
+  officialID: number;
   category: string;
   kind: NodeKind;
   description?: string;

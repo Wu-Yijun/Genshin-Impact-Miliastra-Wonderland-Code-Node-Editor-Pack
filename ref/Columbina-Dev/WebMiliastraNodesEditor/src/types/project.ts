@@ -1,4 +1,9 @@
 import type { GraphDocument } from './node';
+import type {
+  StructDocument,
+  StructManifestEntry,
+  StructManifestGroup,
+} from './struct';
 
 export type ProjectTopFolder = 'server' | 'client';
 
@@ -19,6 +24,8 @@ export interface ProjectManifestGroup {
   groupName: string;
 }
 
+export interface ProjectManifestStructGroup extends StructManifestGroup { }
+
 export interface ProjectManifestGraph {
   graphId: string;
   name: string;
@@ -37,6 +44,8 @@ export interface ProjectManifest {
   };
   graphs: ProjectManifestGraph[];
   groups: ProjectManifestGroup[];
+  structGroups?: ProjectManifestStructGroup[];
+  structures?: StructManifestEntry[];
 }
 
 export const PROJECT_MANIFEST_VERSION = 2;
@@ -52,6 +61,7 @@ export interface ProjectGraphLocation {
 export interface ProjectDocument {
   manifest: ProjectManifest;
   graphs: Record<string, GraphDocument>;
+  structs?: Record<string, StructDocument>;
 }
 
 export interface ProjectGraphDescriptor {
