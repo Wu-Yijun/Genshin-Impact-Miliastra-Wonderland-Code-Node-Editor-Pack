@@ -20,7 +20,7 @@
 ### 2.0. GIA 文件快速读写
 在 `./utils/gia_gen/graph.ts` 中(或通过 `./utils/gia_gen/index.ts` 导入), 快速创建Graph类, 可导出为 gia 文件结构. 更多信息参见 [utils/gia_gen/readme.md](./utils/gia_gen/readme.md#graph)
 
-接口用法示例: (更详细的参见自动构建测试 [gia_gen](./.github/actions/CI/gia_gen/))
+接口用法示例: (更详细的参见自动构建测试 [gia_gen](https://github.com/Wu-Yijun/Genshin-Impact-Miliastra-Wonderland-Code-Node-Editor-Pack/tree/dev/.github/actions/CI/gia_gen))
 ```ts
 const graph = new Graph();
 const node1 = graph.add_node(NODE_ID.When_Entity_Is_Created);

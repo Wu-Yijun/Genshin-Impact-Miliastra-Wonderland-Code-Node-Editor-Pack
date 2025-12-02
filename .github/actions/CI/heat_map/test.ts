@@ -1,37 +1,90 @@
-import { writeFile,rm, readFile } from "fs/promises";
+import { writeFile, rm, readFile } from "fs/promises";
 
-// const path = import.meta.dirname + '/jpeg-js.js'
-// const code = await (await fetch('https://cdn.jsdelivr.net/npm/jpeg-js@0.4.4/+esm')).text();
-// await writeFile(path, code);
-// const { encode } = await import('file:///' + path);
-// await rm(path);
+async function Import(url: string) {
+  const path = import.meta.dirname + '/' + url.replaceAll(/[^A-Za-z0-9]+/g, "_") + ".ts";
+  const code = await (await fetch(url)).text();
+  await writeFile(path, code);
+  const module = await import('file:///' + path);
+  await rm(path);
+  return module;
+}
 
-async function main(){
-  const data = JSON.parse((await readFile("./utils/node_data/index.json")).toString());
-  const nodes = data.NodesList;
-  const class_array: string[] = [];
-  for(const node of nodes){
-    class_array[node.ID] = node.Class;
-    if(node["TypeMappings"]){
-      for(const type_mapping of node["TypeMappings"]){
-        class_array[type_mapping.ConcreteId] = node.Class+"/Type";
+const { encode } = await Import('https://cdn.jsdelivr.net/npm/jpeg-js@0.4.4/+esm');
+
+function arrangeColors(colors: [number, number, number][], width: number, grid_size: number = 10) {
+  const height = Math.ceil(colors.length / width);
+  const H = height * grid_size + 1;
+  const W = width * grid_size + 1;
+  const data = new Uint8Array(H * W * 4).fill(128);
+  for (let i = 0; i < colors.length; i++) {
+    const color = colors[i];
+    const x = i % width;
+    const y = Math.floor(i / width);
+    for (let j = 0; j < grid_size - 1; j++) {
+      for (let k = 0; k < grid_size - 1; k++) {
+        const index = ((y * grid_size + j + 1) * W + (x * grid_size + k) + 1) * 4;
+        data[index] = color[0];
+        data[index + 1] = color[1];
+        data[index + 2] = color[2];
+        data[index + 3] = 255;
       }
     }
   }
-  for(let i=0;i<class_array.length;i++){
-    if(!class_array[i]){
+  // Prepare the raw image data object
+  return {
+    data: data,
+    width: W,
+    height: H,
+  };
+}
+
+async function main() {
+  const data = JSON.parse((await readFile("./utils/node_data/index.json")).toString());
+  const nodes = data.NodesList;
+  const class_array: string[] = [];
+  for (const node of nodes) {
+    class_array[node.ID] = node.Class;
+    if (node["TypeMappings"]) {
+      for (const type_mapping of node["TypeMappings"]) {
+        class_array[type_mapping.ConcreteId] = node.Class + "/Type";
+      }
+    }
+  }
+  for (let i = 0; i < class_array.length; i++) {
+    if (class_array[i] === undefined) {
       class_array[i] = "Empty";
     }
   }
-  console.log(class_array);
+  console.log(class_array.slice(30));
 
-  const COLORS = {
-    "Empty": [255,255,255],
-    "Control": [255,0,0],
-    "Execution": [0,255,0],
-    "Query": [0,255,0],
-    "Arithmetic": [0,255,0],
+  const color = (str: string): [number, number, number] => {
+    const r = parseInt(str.slice(1, 3), 16);
+    const g = parseInt(str.slice(3, 5), 16);
+    const b = parseInt(str.slice(5, 7), 16);
+    return [r, g, b];
   }
+  const COLORS = {
+    "Empty": color("#FFFFFF"),
+
+    "Control": color("#FAAD5F"),
+    "Execution": color("#FAEA76"),
+    "Query": color("#8684FA"),
+    "Arithmetic": color("#89DFFA"),
+    "Trigger": color("#E080D8"),
+    "Hidden": color("#6FE07D"),
+
+    "Control/Type": color("#FAB98A"),
+    "Execution/Type": color("#FAF5AC"),
+    "Query/Type": color("#C6C3F9"),
+    "Arithmetic/Type": color("#BDFAF8"),
+    "Trigger/Type": color("#E09ACE"),
+    "Hidden/Type": color("#ABE0BC"),
+  }
+
+  const colors = class_array.map(x => COLORS[x as keyof typeof COLORS]);
+  // console.log(arrangeColors(colors, 100, 10));
+  const img = encode(arrangeColors(colors, 100, 16), 95);
+  await writeFile('./dist/heat_map.jpg', img.data);
 }
 
 await main();
