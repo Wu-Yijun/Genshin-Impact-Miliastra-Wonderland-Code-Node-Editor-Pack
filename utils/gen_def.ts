@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "fs";
-import { AllTypes, AllKeyTypes, AllKeyTypes_, AllValTypes, AllValTypes_, SysEnumNames } from "../src/sysTypes.ts";
-import type { int, str, float, bool, Int, Float, Bool, Str, Vec, GUID, Entity, Prefab, Faction, ConfigId, List, Dict, Struct, SysKeyTypes } from "../src/sysTypes.ts";
+import { AllTypes, AllKeyTypes, AllKeyTypes_, AllValTypes, AllValTypes_, SysEnumNames } from "../src/test/sysTypes.ts";
+import type { int, str, float, bool, Int, Float, Bool, Str, Vec, GUID, Entity, Prefab, Faction, ConfigId, List, Dict, Struct, SysKeyTypes } from "../src/test/sysTypes.ts";
 
 const version = "1.0.4";
 

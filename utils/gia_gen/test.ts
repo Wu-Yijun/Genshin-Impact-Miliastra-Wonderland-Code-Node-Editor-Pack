@@ -46,18 +46,11 @@ function read() {
 
 
 function graph_ts() {
-  // Test Graph Encoding
-  console.time("graph_encode");
-  const graph = new Graph("server");
-  const node1 = graph.add_node(1001);
-  const node2 = graph.add_node(1002);
-  const node3 = graph.add_node(250);
-  node1.setPos(1, 2);
-  node2.setPos(3, 4);
-  node3.setPos(5, 6);
-  const g = graph.encode();
-  console.timeEnd("graph_encode");
-  encode_gia_file("./utils/ref/graph_ts.gia", g);
+  // const g = decode_gia_file(PATH + "GeneratedGraph.gia");
+  const g = decode_gia_file("./dist/GeneratedGraph.gia");
+  const graph = Graph.decode(g);
+  // console.dir(graph.get_node(), { depth: null });
+  encode_gia_file(PATH + "temp.gia", graph.encode());
 
 }
 

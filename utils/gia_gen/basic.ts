@@ -364,7 +364,7 @@ export function map_pin_body(body: MapPinBody_): NodePin {
     },
     bMap: { mapPairs: [] },
   };
-  if(body.value!==undefined) {
+  if (body.value !== undefined) {
     assert(Array.isArray(body.value), "Map pin body value must be an array of [key, value] pairs!");
     assert(body.value.every(v => Array.isArray(v) && v.length === 2), "Map pin body value must be an array of [key, value] pairs!");
     todo("Implement default map pin body value extraction");
@@ -428,7 +428,7 @@ export function list_pin_body(body: ListPinBody_): NodePin {
     itemType: item_type(body.value_type),
     bArray: { entries: [] },
   };
-  if (body.value!==undefined) {
+  if (body.value !== undefined) {
     assert(Array.isArray(body.value), "List pin body value must be an array!");
     const v_t = get_type(body.value_type);
     assert(v_t.t === "l");
@@ -580,7 +580,7 @@ export function simple_value_var(var_type: VarType, value?: AnyType, non_zero: b
       assert(value === undefined || typeof value === "number");
       return id_pin_body(value ?? (non_zero ? 1 : 0));
     case VarType.Boolean:
-      assert(value === undefined || typeof value === "boolean");
+      assert(value === undefined || typeof value === "boolean" || typeof value === "number");
       return bool_pin_body(value ?? false);
     case VarType.Float:
       assert(value === undefined || typeof value === "number");

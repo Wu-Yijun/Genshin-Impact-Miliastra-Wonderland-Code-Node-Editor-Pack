@@ -12,6 +12,10 @@ import { auto_layout } from "./auto_layout.ts";
 const GraphType = ["server", "client", "composite"] as const;
 type GraphType = typeof GraphType[number];
 
+function empty(v: any): v is null | undefined {
+  return v === undefined || v === null;
+}
+
 export type AnyType =
   | number
   | string
@@ -63,9 +67,14 @@ export class Graph {
   }
   /** 
    * @param node Node Id or Instance */
-  add_node(node: number | Node): Node {
+  add_node(node: number | Node | null, generic_id?: number): Node {
+    assert(!empty(node) || !empty(generic_id));
     if (typeof node === "number") {
-      const n = new Node(node, this.counter_idx.value);
+      const n = new Node(this.counter_idx.value, node, generic_id);
+      this.nodes.add(n);
+      return n;
+    } else if (empty(node)) {
+      const n = new Node(this.counter_idx.value, undefined, generic_id);
       this.nodes.add(n);
       return n;
     }
@@ -144,7 +153,7 @@ export class Graph {
     return null;
   }
   get_flows(): Connect[] {
-    return [...this.flows.values()].flat(2).filter(x => x !== undefined);
+    return [...this.flows.values()].flat(2).filter(x => !empty(x));
   }
   get_flow(from: Node, to: Node, from_index = 0, to_index = 0): Connect | null {
     return this.flows.get(from)?.[from_index]?.find(v => v.to === to && v.to_index === to_index) ?? null;
@@ -166,7 +175,7 @@ export class Graph {
     if (!this.connects.delete(connect)) {
       const flow = this.flows.get(connect.from)?.[connect.from_index];
       const index = flow?.findIndex(v => v === connect);
-      if (flow === undefined || index === undefined || index < 0) {
+      if (empty(flow) || empty(index) || index < 0) {
         console.warn("Flow not found!", connect);
         return;
       }
@@ -214,7 +223,7 @@ export class Graph {
     return comment;
   }
   get_graph_comments(): Comment[] {
-    return [...this.comments].filter(c => c.attached_node === null);
+    return [...this.comments].filter(c => empty(c.attached_node));
   }
   get_node_comment(node: Node): Comment | null {
     return [...this.comments].find(c => c.attached_node === node) ?? null;
@@ -244,7 +253,7 @@ export class Graph {
       // node itself
       const n = graph.add_node(Node.decode(node));
       // comments
-      if (node.comments !== undefined) {
+      if (!empty(node.comments)) {
         graph.add_comment(Comment.decode(node.comments, n));
       }
 
@@ -271,11 +280,16 @@ export class Node {
   pins: Pin[];
   x: number = 0;
   y: number = 0;
-  constructor(node_id: number, unique_id: number) {
+  constructor(unique_id: number, concrete_id?: number, generic_id?: number) {
+    assert(!empty(concrete_id) || !empty(generic_id));
+    // use generic_id if exist, or assume node_id is concrete, otherwise use node_id;
+    const gid = generic_id ?? get_generic_id(concrete_id!) ?? concrete_id!;
+    const cid = concrete_id;
+
     this.unique_id = unique_id;
-    this.node_id = node_id;
-    this.record = get_node_record(node_id) ?? get_node_record_generic(node_id) ?? {
-      id: node_id,
+    this.node_id = cid as number;
+    this.record = get_node_record_generic(gid) ?? {
+      id: gid,
       inputs: [],
       outputs: [],
       reflectMap: undefined,
@@ -283,18 +297,20 @@ export class Node {
     this.pins = [];
     this.pin_len = [this.record.inputs.length, this.record.outputs.length];
     // Initialize pins based on node record
-    this.setConcrete(node_id);
+    if (!empty(cid)) {
+      this.setConcrete(cid);
+    }
   }
   setConcrete(id: number) {
     assert(this.record.id === id || this.record.reflectMap?.find(x => x[0] === id) !== undefined);
     this.node_id = id;
 
-    const rec = this.record.reflectMap === undefined ? to_records_full(this.record) : reflects_records(this.record, id, true);
+    const rec = empty(this.record.reflectMap) ? to_records_full(this.record) : reflects_records(this.record, id, true);
     for (let i = 0; i < rec.inputs.length; i++) {
-      if (this.pins[i] === undefined) {
+      if (empty(this.pins[i])) {
         this.pins[i] = new Pin(this.node_id, 3, i);
       }
-      if (rec.inputs[i] === undefined) {
+      if (empty(rec.inputs[i])) {
         this.pins[i].clear();
       } else {
         this.pins[i].setType(rec.inputs[i]);
@@ -303,10 +319,10 @@ export class Node {
     }
     for (let j = 0; j < rec.outputs.length; j++) {
       const i = j + rec.inputs.length;
-      if (this.pins[i] === undefined) {
+      if (empty(this.pins[i])) {
         this.pins[i] = new Pin(this.node_id, 4, j);
       }
-      if (rec.outputs[j] === undefined) {
+      if (empty(rec.outputs[j])) {
         this.pins[i].clear();
       } else {
         this.pins[i].setType(rec.outputs[j]);
@@ -319,10 +335,10 @@ export class Node {
     this.y = y;
   }
   encode(opt: EncodeOptions, connects?: Connect[], flows?: Connect[][], comment?: Comment | null): GraphNode {
-    const pins = this.pins.map((p, i) => p.encode(opt, connects)).filter((p) => p !== null);
-    if (flows !== undefined) {
+    const pins = this.pins.map((p, i) => p.encode(opt, connects)).filter((p) => !empty(p));
+    if (!empty(flows)) {
       for (let i = 0; i < flows.length; i++) {
-        if (flows[i] !== undefined && flows[i].length !== 0) {
+        if (!empty(flows[i]) && flows[i].length !== 0) {
           pins.push(Pin.encode_flows(flows[i], i));
         }
       }
@@ -356,8 +372,7 @@ export class Node {
     const info = get_node_info(node);
     const g_id = info.generic_id;
     const c_id = info.concrete_id;
-    const n = new Node(g_id, node.nodeIndex);
-    n.setConcrete(c_id);
+    const n = new Node(node.nodeIndex, c_id, g_id);
     n.setPos(node.x / 300, node.y / 200);
     const values = node.pins.filter((p) => p.i1.kind === 3).map((p) => Pin.decode(p));
     info.pins.forEach((p) => {
@@ -365,7 +380,7 @@ export class Node {
         // Input
         n.pins[p.index].setType(p.node_type);
         const val_pin = values.find((vp) => vp.index === p.index);
-        if (val_pin !== undefined && val_pin.value !== undefined) {
+        if (!empty(val_pin) && !empty(val_pin.value)) {
           n.pins[p.index].setVal(val_pin.value);
         }
       } else if (p.kind === 4) {
@@ -378,17 +393,22 @@ export class Node {
   static decode_connects(node: GraphNode, graph: Graph): { flows: Connect[], connects: Connect[] } {
     const flows: Connect[] = [];
     const connects: Connect[] = [];
-    if (node.pins !== undefined) {
+    if (!empty(node.pins)) {
       const self_node = graph.get_node(node.nodeIndex);
-      if (self_node === null) {
+      if (empty(self_node)) {
         throw new Error("Node not found for decode connects: " + node.nodeIndex);
       }
       for (const pin of node.pins) {
-        if (pin.connects !== undefined) {
+        if (!empty(pin.connects)) {
           if (pin.i1.kind === 2) {
             flows.push(...Connect.decode_flows(pin.connects, self_node, pin.i1.index, graph));
+            continue;
           } else if (pin.i1.kind === 3) {
             connects.push(...Connect.decode_connects(pin.connects, self_node, pin.i1.index, graph));
+            continue;
+          } else if (pin.i1.kind === 4) {
+            // not sure why some will remain
+            continue;
           }
           throw new Error("Unreachable");
         }
@@ -437,24 +457,25 @@ export class Pin {
     this.value = undefined;
   }
   setType(type: NodeType) {
-    if (this.type !== null && type_equal(this.type, type)) {
+    if (!empty(this.type) && type_equal(this.type, type)) {
       return;
     }
     this.type = type;
     this.updateConcreteIndex();
   }
   updateConcreteIndex() {
-    if (this.type !== null && is_concrete_pin(this.node_id, this.kind, this.index)) {
+    if (!empty(this.type) && is_concrete_pin(this.node_id, this.kind, this.index)) {
       this.concrete_id = get_concrete_index(this.node_id, this.kind, this.index, get_id(this.type));
     } else {
       assert.equal(this.concrete_id, 0);
     }
   }
   encode(opt: EncodeOptions, connects?: Connect[]): NodePin | null {
-    if (this.type === null) {
+    if (empty(this.type)) {
       // Normal pin without determined type
       return null;
     }
+    // if (this.kind === 4 || this.kind === 1) return null;
     // if (connects?.length !== 0) debugger;
     const connect = connects?.find((c) => this.kind === 3 && c.to_index === this.index)?.encode(); // input can be connected
     const pin = node_type_pin_body({
@@ -470,7 +491,7 @@ export class Pin {
       /** 引脚的初始值，可选 */
       value: this.value,
       non_zero: opt.is_non_zero(),
-      connects: connect === undefined ? undefined : [connect],
+      connects: empty(connect) ? undefined : [connect],
     });
     if (this.type.t === "e" && this.node_id === 475) {
       // Enum Equal, 需要手动设置 index of concrete
@@ -510,7 +531,7 @@ export class Connect {
     const ret: Connect[] = [];
     for (const c of connects) {
       const from_node = graph.get_node(c.id);
-      if (from_node === null) {
+      if (empty(from_node)) {
         console.warn("Node not found for connect:", c.id);
         continue;
       }
@@ -522,7 +543,7 @@ export class Connect {
     const ret: Connect[] = [];
     for (const c of connects) {
       const to_node = graph.get_node(c.id);
-      if (to_node === null) {
+      if (empty(to_node)) {
         console.warn("Node not found for flow:", c.id);
         continue;
       }
@@ -550,7 +571,7 @@ export class Comment {
     this.attached_node = node;
   }
   encode(): Comments {
-    if (this.attached_node === null) {
+    if (empty(this.attached_node)) {
       return {
         content: this.content,
         x: this.x,

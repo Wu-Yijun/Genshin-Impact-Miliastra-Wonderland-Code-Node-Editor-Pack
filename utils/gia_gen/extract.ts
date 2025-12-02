@@ -29,11 +29,11 @@ interface PinInfo_ {
 export function get_pin_info(pin: NodePin): PinInfo_ {
   const ret: PinInfo_ = {
     kind: pin.i1.kind,
-    index: pin.i1.index,
+    index: pin.i1.index ?? 0,
     type: pin.type,
     indexOfConcrete: pin.value?.bConcreteValue?.indexOfConcrete ?? 0,
     node_type: get_type(pin.type),
-    is_node: pin.value.class === VarBase_Class.ConcreteBase,
+    is_node: pin.value?.class === VarBase_Class.ConcreteBase,
   };
   if (ret.node_type?.t === "d") {
     assert.equal(
@@ -64,7 +64,7 @@ export function get_node_info(node: GraphNode): NodeInfo_ {
 }
 
 export function extract_value(value: VarBase): AnyType | undefined {
-  if (value === undefined || !("class" in value)) {
+  if (value === undefined || value.class === VarBase_Class.Unknown) {
     return undefined;
   }
   switch (value.class) {
@@ -120,7 +120,6 @@ export function extract_value(value: VarBase): AnyType | undefined {
       }
       return items.map((item) => extract_value(item)) as AnyType;
     }
-    case VarBase_Class.Unknown:
     default:
       throw new Error("Cannot extract value of Unknown class: " + JSON.stringify(value));
   }

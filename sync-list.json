@@ -1,6 +1,6 @@
 {
-  "commitMessage": "重构原本的 IR 数据结构 和 Parser 逻辑",
-  "notSync": true,
+  "commitMessage": "修复 Graph 接口的 bug, 重构原本的 IR 数据结构",
+  "notSync": false,
   "include": [
     "*",
     "docs/**",
@@ -10,6 +10,7 @@
     "static/**",
     "!package-lock.json",
     "!sync-list.json",
+    "!test.CI/**",
     "!**/test/**",
     "!**/temp/**",
     "!**/?(*.)(temp|test|log)?(.*)",
