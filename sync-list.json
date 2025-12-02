@@ -1,6 +1,6 @@
 {
   "commitMessage": "添加了 comments, 与值的读取, 完成完整的 encode 和 decode",
-  "notSync": false,
+  "notSync": true,
   "include": [
     "*",
     "docs/**",

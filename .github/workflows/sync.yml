@@ -42,7 +42,7 @@ jobs:
           
       - name: Run tests
         uses: Wu-Yijun/Genshin-Impact-Miliastra-Wonderland-Code-Node-Editor-Pack/.github/actions/CI@dev
-        continue-on-error: true
+        # continue-on-error: true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
