@@ -1,6 +1,6 @@
-import type { ParserState, Token } from "./tokenizer.ts";
-import { tokenEqual } from "./tokenizer.ts"; //js
-import { expect, next, peek } from "./utils.ts"; //js
+import { tokenEqual } from "./tokenizer.ts";
+import type { ParserState, Token } from "../types/parser.ts";
+import { expect, next, peek } from "./utils.ts";
 
 export function extractBalancedTokens(
   state: ParserState,
@@ -36,17 +36,8 @@ export function extractBalancedTokens(
 
   return token;
 }
-/** Extract text inside balanced parentheses, including outer "()" */
-export function extractBalanced(
-  state: ParserState,
-  open: string,
-  close: string,
-  depth: number = 0,
-): string {
-  return extractBalancedTokens(state, open, close, depth).map((t) => t.value)
-    .join(" ");
-}
 
+/** Extract content inside balanced tokens, excluding the outer tokens */
 export function splitBalancedTokens(
   tokens: Token[],
   open: Token[],
