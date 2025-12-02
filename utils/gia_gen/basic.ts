@@ -19,13 +19,13 @@ import {
   VarType,
   type Comments,
 } from "../protobuf/gia.proto.ts";
-import { get_id, get_type, LocalVariableType, type NodePins, type NodeType } from "./nodes.ts";
+import { get_id, get_type, type NodePins, type NodeType } from "./nodes.ts";
 
 import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
 import { type ConcreteMap } from "../node_data/concrete_map.ts";
 import { get_concrete_index } from "../node_data/helpers.ts";
 import { ENUM_ID } from "../node_data/enum_id.ts";
-import { AnyType } from "./graph.ts";
+import type { AnyType } from "./graph.ts";
 
 /**
  * GraphBody_ 接口定义了构建图的基本参数
