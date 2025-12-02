@@ -1,8 +1,18 @@
 import assert from "assert";
-import type { GraphNode, NodePin, Root } from "../protobuf/gia.proto.ts";
-import { VarBase_Class, NodePin_Index_Kind, VarType, VarBase_ItemType_Inner_Kind } from "../protobuf/gia.proto.ts";
+import type {
+  GraphNode,
+  NodePin,
+  Root,
+  VarBase,
+} from "../protobuf/gia.proto.ts";
+import {
+  NodePin_Index_Kind,
+  VarBase_Class,
+  VarBase_ItemType_Inner_Kind,
+  VarType,
+} from "../protobuf/gia.proto.ts";
 import { get_type, type NodeType } from "./nodes.ts";
-
+import type { AnyType } from "./graph.ts";
 
 export function get_nodes(graph: Root): GraphNode[] | null {
   return graph?.graph?.graph?.inner?.graph?.nodes ?? null;
@@ -26,7 +36,10 @@ export function get_pin_info(pin: NodePin): PinInfo_ {
     is_node: pin.value.class === VarBase_Class.ConcreteBase,
   };
   if (ret.node_type?.t === "d") {
-    assert.equal(pin.value!.bConcreteValue!.value!.class, VarBase_Class.MapBase);
+    assert.equal(
+      pin.value!.bConcreteValue!.value!.class,
+      VarBase_Class.MapBase,
+    );
     const t = pin.value!.bConcreteValue!.value.itemType!.itemType!;
     assert.equal(t.type, VarType.Dictionary);
     assert.equal(t.kind, VarBase_ItemType_Inner_Kind.Pair);
@@ -45,7 +58,70 @@ export function get_node_info(node: GraphNode): NodeInfo_ {
   const ret: NodeInfo_ = {
     generic_id: node.genericId.nodeId,
     concrete_id: node.concreteId?.nodeId,
-    pins: node.pins.map(v => get_pin_info(v)),
+    pins: node.pins.map((v) => get_pin_info(v)),
   };
   return ret;
+}
+
+export function extract_value(value: VarBase): AnyType | undefined {
+  if (value === undefined || !("class" in value)) {
+    return undefined;
+  }
+  switch (value.class) {
+    case VarBase_Class.ConcreteBase: {
+      const v = value.bConcreteValue?.value;
+      if (v === undefined) {
+        return undefined;
+      }
+      return extract_value(v);
+    }
+    case VarBase_Class.EnumBase:
+      return value.bEnum?.val ?? undefined;
+    case VarBase_Class.FloatBase:
+      return value.bFloat?.val ?? undefined;
+    case VarBase_Class.IntBase:
+      return value.bInt?.val ?? undefined;
+    case VarBase_Class.IdBase:
+      return value.bId?.val ?? undefined;
+    case VarBase_Class.StringBase:
+      return value.bString?.val ?? undefined;
+    case VarBase_Class.VectorBase: {
+      const vec = value.bVector?.val;
+      if (vec === undefined) {
+        return undefined;
+      }
+      return [vec.x, vec.y, vec.z];
+    }
+    case VarBase_Class.ArrayBase: {
+      const list = value.bArray?.entries;
+      if (list === undefined) {
+        return undefined;
+      }
+      return list.map(extract_value) as AnyType;
+    }
+    case VarBase_Class.MapBase: {
+      const map = value.bMap?.mapPairs;
+      if (map === undefined) {
+        return undefined;
+      }
+      return map.map((pair) => extract_value(pair)) as AnyType;
+    }
+    case VarBase_Class.MapPair: {
+      const pair = value.bMapPair;
+      if (pair === undefined) {
+        return undefined;
+      }
+      return [extract_value(pair.key), extract_value(pair.value)] as AnyType;
+    }
+    case VarBase_Class.StructBase: {
+      const items = value.bStruct?.items;
+      if (items === undefined) {
+        return undefined;
+      }
+      return items.map((item) => extract_value(item)) as AnyType;
+    }
+    case VarBase_Class.Unknown:
+    default:
+      throw new Error("Cannot extract value of Unknown class: " + JSON.stringify(value));
+  }
 }

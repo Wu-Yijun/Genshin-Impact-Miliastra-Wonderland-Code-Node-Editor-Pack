@@ -1,5 +1,5 @@
 {
-  "commitMessage": "基本完成 encode 到 gia 文件的接口, 完成在 Github Actions 中的自动构建测试",
+  "commitMessage": "添加了 comments, 与值的读取, 完成完整的 encode 和 decode",
   "notSync": false,
   "include": [
     "*",
