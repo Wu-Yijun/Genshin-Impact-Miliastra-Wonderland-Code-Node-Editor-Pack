@@ -1,5 +1,5 @@
-import type { ParserState, Token } from "./tokenizer.ts";
-import { TOKEN_GROUPS, TOKENS } from "./tokenizer.ts"; //js
+import type { ParserState, Token } from "./types.ts";
+import { TOKEN_GROUPS, TOKENS } from "./consts.ts"; 
 import {
   assert,
   expect,
@@ -9,7 +9,7 @@ import {
   peekIs,
   peekIsIdentifier,
   peekIsIdLiteral,
-} from "./utils.ts"; //js
+} from "./utils.ts";
 import type {
   BranchId,
   IR_AnchorNode,
@@ -101,7 +101,7 @@ export function parseBlock(
     if (peekIs(state, "symbol", "<")) {
       next(state);
       const sugarNode = parseAngleBranchSugar(state);
-      if (!peekIs(state, "symbol", ">") && !peekIs(state, "goto", ">>")) {
+      if (!peekIs(state, "symbol", ">") && !peekIs(state, "right", ">>")) {
         throw new Error(
           `Invalid Usage in Branch Sugar! Expect > or >> but got '${
             peek(state)?.value
@@ -114,7 +114,7 @@ export function parseBlock(
     }
 
     // should be ">>" otherwise the block is finished.
-    if (!peekIs(state, "goto", ">>")) {
+    if (!peekIs(state, "right", ">>")) {
       break;
     }
     next(state);

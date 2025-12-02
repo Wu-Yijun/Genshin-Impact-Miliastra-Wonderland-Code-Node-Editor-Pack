@@ -1,6 +1,6 @@
 {
   "commitMessage": "添加了节点分布热力图, 添加了对比本地数据与 Columbina-Dev 的数据的差异",
-  "notSync": false,
+  "notSync": true,
   "include": [
     "*",
     "docs/**",
