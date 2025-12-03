@@ -87,7 +87,7 @@ function parseLambda(state: ParserState): LambdaDecl {
     name: undefined as any,
     args: [],
     body: [],
-    returns: [],
+    returns_type: undefined as any,
   };
   expect(state, "identifier", "const");
   ret.name = expect(state, "identifier").value;
@@ -111,6 +111,15 @@ function parseLambda(state: ParserState): LambdaDecl {
   }
   expect(state, "brackets", ")");
 
+  if (peekIs(state, "symbol", ":")) {
+    next(state);
+    const typed = try_capture_type(state.tokens, state.index);
+    assert(typed.success);
+    state.index += typed.tokens.length;
+    const argType = parse_type(typed.tokens);
+    ret.returns_type = argType;
+  }
+
   expect(state, "arrow", "=>");
 
   // Parse body: { ... }
@@ -119,9 +128,6 @@ function parseLambda(state: ParserState): LambdaDecl {
   // Extract all tokens until the closing brace
   const bodyTokens = extractBalancedTokens(state, "{", "}", 1);
   ret.body = bodyTokens.slice(0, -1); // Remove closing brace
-
-  // TODO: Parse return statement to extract return types
-  // For now, we leave returns empty
 
   if (peekIs(state, "symbol", ";")) {
     next(state);

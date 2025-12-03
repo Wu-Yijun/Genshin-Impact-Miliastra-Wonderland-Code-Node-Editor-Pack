@@ -79,7 +79,7 @@ export function ir_to_string(ir: IRExtend, src: string, depth: number = 0, MAX_L
     content = content.slice(0, MAX_LEN / 2) + " ... " + content.slice(-MAX_LEN / 2);
   }
   // console.log(inspect(ir, { depth: 0, compact: true, breakLength: Infinity }));
-  let res = `${depth}: \t${ir.kind}: \t${content}\n`;
+  let res = `${depth}: \t${ir.kind.padEnd(8, " ")}: \t${content}\n`;
   for (const v of Object.values(ir)) {
     if (v instanceof Object && "_srcRange" in v) {
       res += ir_to_string(v as IRExtend, src, depth + 1);
@@ -313,9 +313,7 @@ function decompile_global(ir: GlobalDecl, tab: number = 0): string {
 
   // Structs
   if (ir.structs.length > 0) {
-    res += `\n${indent(tab)}namespace Struct {\n`
-    res += ir.structs.map(s => decompile_fields(s, tab + 1)).join("\n");
-    res += `\n${indent(tab)}}\n`;
+    res += ir.structs.map(s => decompile_fields(s, tab)).join("\n");
   }
 
   // Globals
@@ -345,24 +343,12 @@ function decompile_global(ir: GlobalDecl, tab: number = 0): string {
 }
 
 function decompile_lambda(ir: LambdaDecl, tab: number = 0): string {
-  // const lambdaName = (arg_name: type) => { body; return ret; }
+  // const lambdaName = (arg_name: type): type => { body; return ret; }
   const i = indent(tab);
   const args = ir.args.map(a => `${a.name}: ${nodeTypeToString(a.type)} `).join(", ");
 
-  let res = `${i}const ${ir.name} = (${args}) => {\n`;
+  let res = `${i}const ${ir.name} = (${args})${ir.returns_type !== undefined ? `: ${nodeTypeToString(ir.returns_type)}` : ""} => {\n`;
   res += `${indent(tab + 1)}${tokensToString(ir.body)}; \n`;
-
-  if (ir.returns.length > 0) {
-    // return { name: type, ... } ? 
-    // The LambdaDecl definition says returns: {name, type}[].
-    // The comment says "return ret".
-    // We might not have the exact return expression in LambdaDecl, only the signature?
-    // Wait, LambdaDecl has `body: Token[]`. The return statement should be in the body tokens.
-    // The `returns` field describes the return type signature.
-    // So we don't need to generate a return statement if it's already in the body.
-    // But if `body` is just the logic without return, we might need it.
-    // Assuming `body` contains the full code block content.
-  }
 
   res += `${i}}; `;
   return res;

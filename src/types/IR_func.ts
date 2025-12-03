@@ -37,10 +37,7 @@ export interface LambdaDecl extends IRBase {
     type: NodeType;
   }[];
   body: Token[];
-  returns: {
-    name: string;
-    type: NodeType;
-  }[];
+  returns_type: NodeType;
 }
 
 /** 声明包含完整执行节点的子图，拥有自定义的入口和出口。

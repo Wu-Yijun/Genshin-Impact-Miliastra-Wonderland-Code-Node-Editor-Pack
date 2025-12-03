@@ -34,20 +34,29 @@ export function parseGlobal(state: ParserState): GlobalDecl {
   while (!peekIs(state, "brackets", "}")) {
     const t = peek(state);
     if (!t) break;
-
+    if (peekIs(state, "symbol", ";")) {
+      next(state);
+      continue;
+    }
     if (t.value === "interface") {
       ret.structs.push(parseStruct(state));
+      continue;
     } else if (t.value === "namespace") {
       const ns = parseNamespace(state);
       // Distribute namespace contents based on namespace name
       if (ns.name === "Self") {
         ret.globals.push(...ns.globals);
+        continue;
       } else if (ns.name === "Timer") {
         ret.timers.push(...ns.timers);
+        continue;
       } else if (ns.name === "Signal") {
         ret.signals.push(...ns.signals);
+        continue;
       }
     }
+    console.warn("Unknown global member:", t.value);
+    next(state); // Skip unknown tokens
   }
 
   expect(state, "brackets", "}");

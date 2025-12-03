@@ -8,11 +8,12 @@ export function tokenEqual(t1: Token, t2: Token) {
 
 /** Create a new parser state */
 export function createParserState(source: string): ParserState {
-  const tokens = tokenize(source);
+  const src = source.replaceAll("\r", "")
+  const tokens = tokenize(src);
   return {
     tokens,
     index: 0,
-    source,
+    source: src,
   };
 }
 

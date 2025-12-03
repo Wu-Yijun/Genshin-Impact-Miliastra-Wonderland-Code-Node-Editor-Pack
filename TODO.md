@@ -62,6 +62,10 @@
 *按任务优先级和完成度排序, 打勾的说明已经开始, 仍未完成*
 
 - [ ] 添加 Parser, decompiler 的自动化 CI 测试
+- [ ] 修复 Parser:
+  - [ ] **post-lexing disambiguation** 区分 
+  - [ ] 一元 +、- 与二元 +、- 的区分 (operator context disambiguation)
+  - [ ] 负数的解析 (区分 2-1 与 2--1 ?)
 - [ ] 更新文档
 - [ ] 解析复合节点, 添加接口
 - [ ] 定义 DSL 函数签名和与原神对应关系

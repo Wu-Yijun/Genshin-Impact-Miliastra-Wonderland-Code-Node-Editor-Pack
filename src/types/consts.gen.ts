@@ -1,7 +1,7 @@
 import { BUILD_IN_SYS_NODE } from "./consts.ts";
 
 
-export const SYS_TRIGGER_NODE = ["OnCreate"] as const;
+export const SYS_TRIGGER_NODE = ["OnCreate", "OnTab"] as const;
 export type SYS_TRIGGER_NODE = typeof SYS_TRIGGER_NODE[number];
 
 export const SYS_TRIGGER_NODE_SET = Object.freeze(new Set(SYS_TRIGGER_NODE));
