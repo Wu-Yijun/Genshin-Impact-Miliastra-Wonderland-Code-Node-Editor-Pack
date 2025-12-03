@@ -2,6 +2,7 @@ import { tokenEqual } from "./tokenizer.ts";
 import type { ParserState, Token } from "../types/parser.ts";
 import { expect, next, peek } from "./utils.ts";
 
+/** Extract content between balanced tokens, including the boundaries */
 export function extractBalancedTokens(
   state: ParserState,
   open: string,
@@ -10,19 +11,19 @@ export function extractBalancedTokens(
 ): Token[] {
   const token: Token[] = [];
 
-  // consume opening
-  if (depth === 0) {
-    token.push(expect(state, "symbol", open));
-    depth++;
-  }
+  // // consume opening
+  // if (depth === 0) {
+  //   token.push(expect(state, "symbol", open));
+  //   depth++;
+  // }
 
   while (state.index < state.tokens.length) {
     const t = peek(state);
     if (!t) break;
 
-    if (t.type === "symbol" && t.value === open) {
+    if (t.type === "brackets" && t.value === open) {
       depth++;
-    } else if (t.type === "symbol" && t.value === close) {
+    } else if (t.type === "brackets" && t.value === close) {
       depth--;
     }
 
@@ -37,7 +38,7 @@ export function extractBalancedTokens(
   return token;
 }
 
-/** Extract content inside balanced tokens, excluding the outer tokens */
+/** Extract content inside balanced tokens */
 export function splitBalancedTokens(
   tokens: Token[],
   open: Token[],
@@ -75,31 +76,33 @@ export function splitBalancedTokens(
 // type := identifier ( "<" type ( "," type )? ">" )?
 export function try_capture_type(tokens: Token[], from: number, look_back: boolean = false): { success: boolean, tokens: Token[] } {
   const dir = look_back ? -1 : 1;
-  const res = { success: true, tokens: [] as Token[] };
+  const left = look_back ? ">" : "<";
+  const right = look_back ? "<" : ">";
+  const ret: Token[] = [];
   if (!look_back) {
     if (tokens[from]?.type !== "identifier") return { success: false, tokens: [] };
-    res.tokens.push(tokens[from]);
+    ret.push(tokens[from]);
   }
-  if (tokens[from + dir * res.tokens.length]?.value === "<") {
-    res.tokens.push(tokens[from + dir * res.tokens.length]);
-    const arg = try_capture_type(tokens, from + dir * res.tokens.length, look_back);
+  if (tokens[from + dir * ret.length]?.value === left) {
+    ret.push(tokens[from + dir * ret.length]);
+    const arg = try_capture_type(tokens, from + dir * ret.length, look_back);
     if (!arg.success) return { success: false, tokens: [] };
-    res.tokens.push(...arg.tokens);
-    while (tokens[from + dir * res.tokens.length]?.value === ",") {
-      res.tokens.push(tokens[from + dir * res.tokens.length]);
-      const arg = try_capture_type(tokens, from + dir * res.tokens.length, look_back);
+    ret.push(...arg.tokens);
+    while (tokens[from + dir * ret.length]?.value === ",") {
+      ret.push(tokens[from + dir * ret.length]);
+      const arg = try_capture_type(tokens, from + dir * ret.length, look_back);
       if (!arg.success) return { success: false, tokens: [] };
-      res.tokens.push(...arg.tokens);
+      ret.push(...arg.tokens);
     }
-    if (tokens[from + dir * res.tokens.length]?.value === ">") {
-      res.tokens.push(tokens[from + dir * res.tokens.length]);
-      return res;
+    if (tokens[from + dir * ret.length]?.value !== right) {
+      return { success: false, tokens: [] };
     }
-    if (look_back) {
-      if (tokens[from]?.type !== "identifier") return { success: false, tokens: [] };
-      res.tokens.push(tokens[from]);
-    }
-    return { success: false, tokens: [] };
+    ret.push(tokens[from + dir * ret.length]);
   }
-  return res;
+  if (look_back) {
+    if (tokens[from + dir * ret.length]?.type !== "identifier") return { success: false, tokens: [] };
+    ret.push(tokens[from + dir * ret.length]);
+  }
+  // only one success path
+  return { success: true, tokens: ret };
 }

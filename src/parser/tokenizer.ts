@@ -20,7 +20,7 @@ export function createParserState(source: string): ParserState {
 /** Simple tokenizer using scan rules */
 export function tokenize(input: string): Token[] {
   const tokens: Token[] = [];
-  let pos = 3;
+  let pos = 0;
 
   while (pos < input.length) {
     let matched = false;

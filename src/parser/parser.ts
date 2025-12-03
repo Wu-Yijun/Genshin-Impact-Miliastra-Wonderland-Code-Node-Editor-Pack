@@ -62,7 +62,7 @@ export function parse(s: ParserState): IR_GraphModule {
         break;
       }
       case "function": {
-        ret.shared_funcs.push(parseComponent(s));
+        ret.components.push(parseComponent(s));
         break;
       }
       case "[":

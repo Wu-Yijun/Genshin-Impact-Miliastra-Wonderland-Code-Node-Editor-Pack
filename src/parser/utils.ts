@@ -6,6 +6,9 @@ export function peek(state: ParserState): Token | null {
 }
 
 export function src_pos(state: ParserState, to_end = false): number {
+  if(state.index >= state.tokens.length) {
+    return state.source.length;
+  }
   return state.tokens[state.index].pos + (to_end ? state.tokens[state.index].value.length : 0);
 }
 
@@ -26,7 +29,7 @@ export function next(state: ParserState): Token {
 /** Whether next token matches */
 export function match(
   state: ParserState,
-  type: string,
+  type: PatternTypes,
   value?: string,
 ): Token | null {
   const t = peek(state);
@@ -42,7 +45,7 @@ export function match(
 /** Require next token to match, otherwise throw */
 export function expect(
   state: ParserState,
-  type: string,
+  type: PatternTypes,
   value?: string,
 ): Token {
   const t = match(state, type, value);
@@ -100,6 +103,12 @@ export function peekIsIdLiteral(state: ParserState): boolean {
     return true;
   }
   return false;
+}
+
+export function assert(cond:boolean, msg?:string): asserts cond is true {
+  if (!cond) {
+    throw new Error(msg || "Assertion failed");
+  }
 }
 
 export function assertEq<T>(l: unknown, r: T, r2?: T, r3?: T, r4?: T): asserts l is T {

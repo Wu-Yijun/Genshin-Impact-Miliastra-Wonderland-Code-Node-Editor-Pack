@@ -1,4 +1,5 @@
 import type { NodeType } from "../../utils/gia_gen/nodes.ts";
+import { BUILD_IN_SYS_Call } from "./consts.ts";
 import type { Token } from "./parser.ts";
 import type { BranchId, IRBase } from "./types.ts";
 
@@ -70,7 +71,7 @@ export type IR_Node =
 export interface IR_CallNode extends IRBase {
   kind: "call";
   class: "Sys" | "Usr";
-  specific?: "If" | "Switch" | "Loop" | "ForEach" | "Selector" | "SetVal" | "In" | "Out" | "Event" | "Timer" | "Signal"; // special built-in
+  specific?: typeof BUILD_IN_SYS_Call[number]; // special built-in
   name: string;
 
   inputs: IR_FunctionArg[];
@@ -88,7 +89,7 @@ export interface IR_CallNode extends IRBase {
  */
 export interface IR_EvalNode extends IRBase {
   kind: "eval";
-  captures: string[]; // list of inputs' captured function-output names this eval depends on (e.g. ["val_a", "val_b"])
+  captures: IR_FunctionArg[]; // list of inputs' captured function-output names this eval depends on (e.g. ["val_a", "val_b"])
   lambda: Token[]; // lambda code body as string (for runtime eval)
   outputs: IR_FunctionArg[]; // mapping of outputs
 }

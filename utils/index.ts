@@ -1,6 +1,4 @@
 export {
-  gia,
-  Gia,
   randomInt,
   randomBigInt,
   randomName,
@@ -10,5 +8,6 @@ export {
   Graph,
   Node,
   Pin,
-  NodeType
 } from "./gia_gen/index.ts";
+
+export type { NodeType, Gia } from "./gia_gen/index.ts";

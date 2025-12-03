@@ -15,6 +15,7 @@ export type PatternTypes =
   | "comment"
   | "right"
   | "left"
+  | "arrow"
   | "equal"
   | "assign"
   | "ellipsis"
