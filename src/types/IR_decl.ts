@@ -12,6 +12,7 @@ export interface ImportDecl extends IRBase {
   file_name: string;
   components: string[];
   lambdas: string[];
+  defines: string[];
 }
 
 /** 全局声明和定义 (全部文件可用)

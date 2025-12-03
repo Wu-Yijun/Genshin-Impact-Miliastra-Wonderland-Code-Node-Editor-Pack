@@ -52,7 +52,7 @@ export interface LambdaDecl extends IRBase {
  *  }
  *  ```
  */
-export interface ComponentDecl {
+export interface ComponentDecl extends IRBase {
   kind: "component";
   name: string;
   args: {

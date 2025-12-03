@@ -1,4 +1,5 @@
 import type { NodeType } from "../../utils/gia_gen/nodes.ts";
+import { BUILD_IN_SYS_NODE } from "./consts.ts";
 import type { Token } from "./parser.ts";
 import type { BranchId, IRBase } from "./types.ts";
 
@@ -34,8 +35,10 @@ export interface IR_ExecutionBlock extends IRBase {
  */
 export interface IR_Trigger extends IRBase {
   kind: "trigger";
-  node: IR_CallNode & { class: "Sys", specific: "Event" | "Signal" | "Timer" };
+  node: IR_CallNode & { class: "Sys", specific: "Trigger" | "Timer" | "Signal" };
 }
+
+
 
 /** 通过`.`连接起节点链, 通过 `<<` `>>` 间隔不同节点链的执行先后. 
  * ```ts
@@ -52,9 +55,9 @@ export interface IR_NodeChain extends IRBase {
 };
 
 export type IR_Node =
-  | IR_CallNode // remain
-  | IR_EvalNode // remain
-  | IR_BranchNode // remain
+  | IR_CallNode // Identifier
+  | IR_EvalNode // "$"
+  | IR_BranchNode // {}
   | IR_AnchorNode // Branch["id"] 
   | IR_JumpNode // "id"() or 0()
   | IR_InOutNode; // In("branchId")/Out("branchId") in component (marks input/output)
@@ -68,7 +71,7 @@ export type IR_Node =
 export interface IR_CallNode extends IRBase {
   kind: "call";
   class: "Sys" | "Usr";
-  specific?: "If" | "Switch" | "Loop" | "ForEach" | "Selector" | "SetVal" | "Timer" | "Signal" | "In" | "Out"; // special built-in
+  specific?: typeof BUILD_IN_SYS_NODE[number]; // special built-in
   name: string;
 
   inputs: IR_FunctionArg[];
@@ -86,7 +89,7 @@ export interface IR_CallNode extends IRBase {
  */
 export interface IR_EvalNode extends IRBase {
   kind: "eval";
-  captures: string[]; // list of inputs' captured function-output names this eval depends on (e.g. ["val_a", "val_b"])
+  captures: IR_FunctionArg[]; // list of inputs' captured function-output names this eval depends on (e.g. ["val_a", "val_b"])
   lambda: Token[]; // lambda code body as string (for runtime eval)
   outputs: IR_FunctionArg[]; // mapping of outputs
 }

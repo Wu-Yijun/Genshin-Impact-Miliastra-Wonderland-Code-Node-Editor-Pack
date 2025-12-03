@@ -16,7 +16,7 @@ export const TOKENS = {
   closeParentheses: { type: "brackets", value: ")", pos: 0 },
   closeSquare: { type: "brackets", value: "]", pos: 0 },
   closeCurly: { type: "brackets", value: "}", pos: 0 },
-  closeAngle: { type: "brackets", value: ">", pos: 0 },
+  closeAngle: { type: "symbol", value: ">", pos: 0 },
   comma: { type: "symbol", value: ",", pos: 0 },
 } as const satisfies Record<string, Token>;
 
@@ -26,11 +26,13 @@ export const TOKEN_GROUPS = {
     TOKENS.openParentheses,
     TOKENS.openSquare,
     TOKENS.openCurly,
+    TOKENS.openAngle,
   ],
   closing: [
     TOKENS.closeParentheses,
     TOKENS.closeSquare,
     TOKENS.closeCurly,
+    TOKENS.closeAngle,
   ],
 } as const satisfies Record<string, Token[]>;
 
@@ -40,15 +42,16 @@ export const TOKENIZER_PATTERNS = [
   { type: "whitespace", regex: /^[\s\r\n\t]+/ },
   { type: "comment", regex: /^\/\/.*/ },
   { type: "comment", regex: /^\/\*.*?\*\//s },
-  { type: "right", regex: /^>>/ },
-  { type: "left", regex: /^<</ },
+  // { type: "right", regex: /^>>/ }, // undistinguished from two closing angle brackets
+  // { type: "left", regex: /^<</ },  // undistinguished from two opening angle brackets
+  { type: "arrow", regex: /^=>/ },
   { type: "equal", regex: /^==(=)?/ },
   { type: "assign", regex: /^=/ },
   { type: "ellipsis", regex: /^\.\.\./ },
   { type: "boolean", regex: /^(true|false)\b/ },
   { type: "identifier", regex: /^[A-Za-z_$][A-Za-z0-9_$]*/ },
-  { type: "float", regex: /^([0-9]*)\.([0-9]([0-9_]*))?/ },
-  { type: "int", regex: /^[0-9]([0-9_]*)/ },
+  { type: "float", regex: /^(([1-9]([0-9_]*)|0))\.([0-9]([0-9_]*))?|^\.([0-9]([0-9_]*))/ },
+  { type: "int", regex: /^[1-9]([0-9_]*)|^0/ },
   { type: "string", regex: /^"(?:[^"\\]|\\.)*"|^'(?:[^'\\]|\\.)*'|^`(?:[^`\\]|\\.)*`/ },
   { type: "brackets", regex: /^[\[\]\(\)\{\}]/ },
   { type: "decorator", regex: /^[@]/ },
@@ -57,3 +60,10 @@ export const TOKENIZER_PATTERNS = [
   { type: "math", regex: /^[+\-*\/^&|~!%|]/ },
   { type: "Unknown", regex: /^./ },
 ] as const satisfies { type: PatternTypes; regex: RegExp }[];
+
+export const BUILD_IN_SYS_NODE = [
+  "If", "Switch", "Loop", "ForEach", "Selector",
+  "SetVal", "In", "Out", "Trigger", "Timer", "Signal"
+] as const;
+export type BUILD_IN_SYS_NODE = typeof BUILD_IN_SYS_NODE[number];
+export const BUILD_IN_SYS_NODE_Set = Object.freeze(new Set(BUILD_IN_SYS_NODE));
