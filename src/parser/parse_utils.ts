@@ -4,7 +4,7 @@ import type { ParserState, Token } from "../types/parser.ts";
 import type { BranchId } from "../types/types.ts";
 import { TOKEN_GROUPS, TOKENS, UNK_TYPE } from "../types/consts.ts";
 import { extractBalancedTokens, splitBalancedTokens, try_capture_type } from "./balanced_extract.ts";
-import { assertEq, expect, next, peek } from "./utils.ts";
+import { assert, assertEq, expect, next, peek } from "./utils.ts";
 
 export function parse_type(tokens: Token[]): NodeType {
   return { t: "b", b: tokens.map(t => t.value).join("") as any };
@@ -24,6 +24,9 @@ export function name_style(name: string): "UpperCamelCase" | "Upper_Camel_Case" 
   if (first.toLocaleLowerCase() === first) {
     if (name.includes("_")) {
       return "BAD";
+    }
+    if (name.toLowerCase() === name) {
+      return "snake_case"; // snake case without "_"
     }
     // lowerCamelCase
     return "lowerCamelCase";
@@ -114,5 +117,19 @@ export function parse_args(s: ParserState, type: "in" | "out"): IR_FunctionArg[]
       type: typed ? parse_type(typename.reverse()) : null,
     });
   }
+  ret.forEach((arg) => {
+    let name = arg.name;
+    if (name === null && type === "out") {
+      assert(arg.expr.length === 1, "Out args should not be expression without a name!");
+      assert(arg.expr[0].type === "identifier", "Out args should be identifier than expression!");
+      name = arg.expr[0].value;
+    }
+    if (name) {
+      const style = name_style(name);
+      if (style !== "snake_case") {
+        console.warn(`Non snake_case name ${name} is used in ${type} args!`);
+      }
+    }
+  })
   return ret;
 }

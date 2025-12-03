@@ -2,6 +2,7 @@ import { decompile } from "./decompile.ts";
 import { parseExecutionBlock } from "./parse_block.ts";
 import { parseEval } from "./parse_node.ts";
 import { parse_args } from "./parse_utils.ts";
+import { parse } from "./parser.ts";
 import { createParserState } from "./tokenizer.ts";
 
 class Test {
@@ -44,6 +45,15 @@ class Test {
     console.log(ir);
     console.log(decompile(ir));
   }
+
+  static module() {
+    const doc = `
+    `
+    const s = createParserState(doc);
+    const ir = parse(s);
+    // console.dir(ir, { depth: null });
+    console.log(decompile(ir));
+  }
 }
 
 
@@ -52,7 +62,8 @@ if (import.meta.main) {
   // Add test cases here in the future
   // Test.tokenizer();
   // Test.evalNode();
-  Test.executionBlock();
+  // Test.executionBlock();
+  Test.module();
 
   console.log("All tests passed!");
 }
