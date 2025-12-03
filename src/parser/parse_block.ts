@@ -1,6 +1,7 @@
-import { IR_Id_Counter } from "../types/consts.ts";
 import type { IR_ExecutionBlock, IR_NodeChain, IR_Trigger } from "../types/IR_node.ts";
 import type { ParserState } from "../types/parser.ts";
+
+import { IR_Id_Counter } from "../types/consts.ts";
 import { parseAnchorNode, parseCallNode, parseInOutNode, parseNode } from "./parse_node.ts";
 import { assertEq, expect, next, peek, peekIs, src_pos } from "./utils.ts";
 
@@ -73,3 +74,4 @@ export function parseNodeChain(s: ParserState, suspend: boolean): IR_NodeChain {
   }
   throw new Error("Unexpected end of file");
 }
+

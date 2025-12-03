@@ -1,7 +1,13 @@
+
+
+import type { ImportDecl, IR_GraphModule } from "../types/IR.ts";
+import type { ParserState } from "../types/parser.ts";
+
 import { IR_Id_Counter } from "../types/consts.ts";
-import type { ImportDecl, IR_GraphModule, IR_Node } from "../types/IR.ts";
-import { ParserState } from "../types/parser.ts";
-import { IRBase } from "../types/types.ts";
+import { parseExecutionBlock } from "./parse_block.ts";
+import { parseComponent } from "./parse_component.ts";
+import { parseConst } from "./parse_const.ts";
+import { parseGlobal, parseNodeVar } from "./parse_decl.ts";
 import { peek, src_pos } from "./utils.ts";
 
 /** Parse a whole document (Module) */
@@ -56,7 +62,7 @@ export function parse(s: ParserState): IR_GraphModule {
         break;
       }
       case "function": {
-        ret.shared_funcs.push(parseSharedFunc(s));
+        ret.shared_funcs.push(parseComponent(s));
         break;
       }
       case "[":

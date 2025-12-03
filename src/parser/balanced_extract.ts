@@ -61,13 +61,45 @@ export function splitBalancedTokens(
       }
     } while (i < tokens.length);
     if (d !== 0) {
-      throw new Error("tokens unbalanced!");
+      throw new Error("tokens terminate but unbalanced!");
     }
     let j = i - 1;
     if (divider.some((t2) => tokenEqual(tokens[j], t2))) {
       j -= 1;
     }
     res.push(tokens.slice(from, j + 1));
+  }
+  return res;
+}
+
+// type := identifier ( "<" type ( "," type )? ">" )?
+export function try_capture_type(tokens: Token[], from: number, look_back: boolean = false): { success: boolean, tokens: Token[] } {
+  const dir = look_back ? -1 : 1;
+  const res = { success: true, tokens: [] as Token[] };
+  if (!look_back) {
+    if (tokens[from]?.type !== "identifier") return { success: false, tokens: [] };
+    res.tokens.push(tokens[from]);
+  }
+  if (tokens[from + dir * res.tokens.length]?.value === "<") {
+    res.tokens.push(tokens[from + dir * res.tokens.length]);
+    const arg = try_capture_type(tokens, from + dir * res.tokens.length, look_back);
+    if (!arg.success) return { success: false, tokens: [] };
+    res.tokens.push(...arg.tokens);
+    while (tokens[from + dir * res.tokens.length]?.value === ",") {
+      res.tokens.push(tokens[from + dir * res.tokens.length]);
+      const arg = try_capture_type(tokens, from + dir * res.tokens.length, look_back);
+      if (!arg.success) return { success: false, tokens: [] };
+      res.tokens.push(...arg.tokens);
+    }
+    if (tokens[from + dir * res.tokens.length]?.value === ">") {
+      res.tokens.push(tokens[from + dir * res.tokens.length]);
+      return res;
+    }
+    if (look_back) {
+      if (tokens[from]?.type !== "identifier") return { success: false, tokens: [] };
+      res.tokens.push(tokens[from]);
+    }
+    return { success: false, tokens: [] };
   }
   return res;
 }

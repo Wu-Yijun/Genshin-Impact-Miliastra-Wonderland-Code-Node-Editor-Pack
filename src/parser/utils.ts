@@ -108,3 +108,4 @@ export function assertEq<T>(l: unknown, r: T, r2?: T, r3?: T, r4?: T): asserts l
   }
   throw new Error(`The '${l}' is not strict Equal to '${r}'!`);
 }
+
