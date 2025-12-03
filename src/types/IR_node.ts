@@ -1,5 +1,5 @@
 import type { NodeType } from "../../utils/gia_gen/nodes.ts";
-import { BUILD_IN_SYS_Call } from "./consts.ts";
+import { BUILD_IN_SYS_NODE } from "./consts.ts";
 import type { Token } from "./parser.ts";
 import type { BranchId, IRBase } from "./types.ts";
 
@@ -35,7 +35,7 @@ export interface IR_ExecutionBlock extends IRBase {
  */
 export interface IR_Trigger extends IRBase {
   kind: "trigger";
-  node: IR_Trigger & { class: "Sys", specific: "Event" | "Timer" | "Signal" };
+  node: IR_CallNode & { class: "Sys", specific: "Trigger" | "Timer" | "Signal" };
 }
 
 
@@ -71,7 +71,7 @@ export type IR_Node =
 export interface IR_CallNode extends IRBase {
   kind: "call";
   class: "Sys" | "Usr";
-  specific?: typeof BUILD_IN_SYS_Call[number]; // special built-in
+  specific?: typeof BUILD_IN_SYS_NODE[number]; // special built-in
   name: string;
 
   inputs: IR_FunctionArg[];

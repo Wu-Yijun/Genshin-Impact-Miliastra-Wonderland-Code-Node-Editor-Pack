@@ -2,13 +2,17 @@
 import type { IR_AnchorNode, IR_BranchNode, IR_CallNode, IR_EvalNode, IR_FunctionArg, IR_InOutNode, IR_JumpNode, IR_Node } from "../types/IR_node.ts";
 import type { ParserState } from "../types/parser.ts";
 
-import { BUILD_IN_SYS_CALL_Set, IR_Id_Counter, TOKEN_GROUPS, TOKENS } from "../types/consts.ts";
+import { BUILD_IN_SYS_NODE_Set, IR_Id_Counter, TOKEN_GROUPS, TOKENS } from "../types/consts.ts";
 import { extractBalancedTokens, splitBalancedTokens, try_capture_type } from "./balanced_extract.ts";
 import { parse_type } from "./parse_type.ts";
 import { assert, assertEq, expect, peek, peekIs, next, src_pos } from "./utils.ts";
-import { tokenEqual } from "./tokenizer.ts";
-import { BranchId } from "../types/types.ts";
-import { ALL_SYS_CALL_Set } from "../types/consts.derived.ts";
+import type { BranchId } from "../types/types.ts";
+import { ALL_SYS_NODE_Set, SYS_TRIGGER_NODE_SET } from "../types/consts.derived.ts";
+import { parseNodeChainList } from "./parse_block.ts";
+
+// TODO: Remove this Test export
+export const test = { parse_args, parse_eval };
+
 
 export function parseNode(
   s: ParserState,
@@ -108,75 +112,45 @@ export function parseCallNode(s: ParserState): IR_CallNode {
     branches: []
   };
 
-  /** -------------------------------
-   * 1. 解析函数名 & 类别
-   --------------------------------*/
+  // 解析函数名
   const nameTok = expect(s, "identifier");
   ret.name = nameTok.value;
 
   // 系统内置函数表 
-  if (ALL_SYS_CALL_Set.has(ret.name as any)) {
+  if (ALL_SYS_NODE_Set.has(ret.name as any)) {
     ret.class = "Sys";
-    if(BUILD_IN_SYS_CALL_Set.has(ret.name as any)){
+    if (BUILD_IN_SYS_NODE_Set.has(ret.name as any)) {
       ret.specific = ret.name as any;
+    } else if (SYS_TRIGGER_NODE_SET.has(ret.name as any)) {
+      ret.specific = "Trigger";
     }
   } else {
     ret.class = "Usr";
   }
 
-  /** -------------------------------
-   * 2. 解析 inputs: (args)
-   --------------------------------*/
+  // 解析 inputs: (args)
   ret.inputs = parse_args(s, "in");
 
-  /** -------------------------------
-   * 3. 解析 outputs: [outs]
-   --------------------------------*/
+  // 解析 outputs: [outs]
   if (peekIs(s, "brackets", "[")) {
     ret.outputs = parse_args(s, "out");
   }
 
-  /** -------------------------------
-   * 4. 解析分支表:
-   *   ("id" = NodeChain, ...)
-   --------------------------------*/
+  // 解析分支表: ("id" = NodeChain, ...)
   if (peekIs(s, "brackets", "(")) {
-    // 解析 ("branchId" = IR_NodeChains, ...)
-    // 格式与 parse_args 不同，要自己处理
-    expect(s, "brackets", "(");
+    next(s);
 
     // 可能为空: () 
     while (!peekIs(s, "brackets", ")")) {
       // branchId
-      const keyTok = expectOneOf(s, ["string", "identifier", "int"]);
-      const branchId = keyTok.value as BranchId;
-
+      const branchId = parse_branch_id(s);
       expect(s, "assign", "=");
-
-      // branch 内部是 NodeChain 列表，由 parseNodeChain 实现
-      // 按其它解析器习惯：解析一个或多个 chain
-      const chainList: IR_NodeChain[] = [];
-
-      // parseNodeChain 由外层提供
-      chainList.push(parseNodeChain(s));
-
-      // 允许多个 chain 分隔: 以  >> 或 << 为符号，由 parseNodeChain 内部处理
-      while (isChainStarter(s)) {
-        chainList.push(parseNodeChain(s));
-      }
-
-      ret.branches.push({
-        branchId,
-        nodes: chainList
-      });
-
+      const nodes = parseNodeChainList(s);
+      ret.branches.push({ branchId, nodes });
       if (peekIs(s, "symbol", ",")) {
         next(s); // 吃掉逗号
-      } else {
-        break;
       }
     }
-
     expect(s, "brackets", ")");
   }
 
@@ -184,7 +158,32 @@ export function parseCallNode(s: ParserState): IR_CallNode {
   return ret;
 }
 function parse_branch(s: ParserState): IR_BranchNode {
-  // TODO
+  const ret: IR_BranchNode = {
+    _id: IR_Id_Counter.value,
+    _srcRange: { start: src_pos(s), end: -1 },
+    kind: "branch",
+    branches: [],
+  };
+
+  expect(s, "brackets", "{");
+
+  while (!peekIs(s, "brackets", "}")) {
+    const id = parse_int(s);
+    assert(id !== null);
+    expect(s, "symbol", ":");
+    const nodes = parseNodeChainList(s);
+
+    ret.branches.push({ id, nodes });
+
+    if (peekIs(s, "symbol", ",")) {
+      next(s);
+    }
+  }
+  assert(ret.branches.length > 0, "Branch must have at least one branches!");
+  expect(s, "brackets", "}");
+
+  ret._srcRange.end = src_pos(s, true);
+  return ret;
 }
 function parse_jump(s: ParserState): IR_JumpNode {
   const ret: IR_JumpNode = {
@@ -240,12 +239,9 @@ function parse_args(s: ParserState, type: "in" | "out"): IR_FunctionArg[] {
   return ret;
 }
 
-// Test export
-export const test = { parse_args, parse_eval };
-
 function parse_branch_id(s: ParserState): BranchId {
   const tok = next(s); // string | int | boolean (boolean not allowed), though grammar only expects int/string
-  assertEq(tok.type, "string", "int", "boolean");
+  assertEq(tok.type, "string", "int", "boolean", "math");
   switch (tok.type) {
     case "string":
       return tok.value.slice(1, -1);
@@ -253,7 +249,19 @@ function parse_branch_id(s: ParserState): BranchId {
       return tok.value === "true";
     case "int":
       return parseInt(tok.value);
+    case "math":
+      const int = parse_int(s);
+      if (int !== null) return int;
     default:
       throw new Error("Invalid Branch ID type");
   }
+}
+
+function parse_int(s: ParserState): number | null {
+  const tok = peek(s);
+  if (tok?.type === "int") return parseInt(expect(s, "int").value);
+  if (!(tok?.type === "math" && (tok.value === "-" || tok.value === "+"))) return null;
+  if (peek(s, 1)?.type !== "int") return null;
+  const neg = expect(s, "math").value === "+" ? 1 : -1;
+  return neg * parseInt(expect(s, "int").value);
 }

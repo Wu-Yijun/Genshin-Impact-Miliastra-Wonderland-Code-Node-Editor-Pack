@@ -23,19 +23,14 @@ export function parseExecutionBlock(s: ParserState): IR_ExecutionBlock {
     ret.starter = parseAnchorNode(s);
   } else if (peekIs(s, "identifier", "In")) {
     ret.starter = parseInOutNode(s);
+  } else {
+    throw new Error("Invalid starter of execution block");
   }
   // Chain
-  let t;
-  while (t = peek(s)) {
-    switch (t.value) {
-      case ";":
-        ret._srcRange.end = src_pos(s, true);
-        return ret;
-      default:
-        throw new Error(`Unexpected token: ${t.value}`);
-    }
-  }
-  throw new Error("Unexpected end of file");
+  ret.chain = parseNodeChainList(s);
+
+  ret._srcRange.end = src_pos(s, true);
+  return ret;
 }
 
 function parse_trigger(s: ParserState): IR_Trigger {
@@ -46,13 +41,42 @@ function parse_trigger(s: ParserState): IR_Trigger {
     node: null as any
   };
   const node = parseCallNode(s);
-  assertEq(node.specific, "Event", "Signal", "Timer");
+  assertEq(node.specific, "Trigger", "Signal", "Timer");
   assertEq(node.class, "Sys");
-  ret.node = node as any;
+  // 令人无语, 你的类型推断呢?
+  ret.node = {
+    ...node,
+    class: node.class,
+    specific: node.specific,
+  }
   return ret;
 }
 
 
+export function parseNodeChainList(s: ParserState): IR_NodeChain[] {
+  const ret: IR_NodeChain[] = [];
+  let t;
+  while (t = peek(s)) {
+    if ([",", ";", "}", ")"].includes(t.value)) {
+      return ret;
+    }
+    let suspend = false;
+    if (t.value === ".") {
+      next(s);
+      suspend = false;
+    } else if (t.value === "<") {
+      next(s);
+      expect(s, "symbol", "<");
+      suspend = true;
+    } else if (t.value === ">") {
+      next(s);
+      expect(s, "symbol", ">");
+      suspend = false;
+    }
+    ret.push(parseNodeChain(s, suspend));
+  }
+  throw new Error("Unexpected end of file");
+}
 export function parseNodeChain(s: ParserState, suspend: boolean): IR_NodeChain {
   const ret: IR_NodeChain = {
     _id: IR_Id_Counter.value,
@@ -61,15 +85,18 @@ export function parseNodeChain(s: ParserState, suspend: boolean): IR_NodeChain {
     suspend,
     chain: [],
   };
-  let t;
-  while (t = peek(s)) {
-    if ([",", ";", "<<", ">>", "}", ")"].includes(t.value)) {
-      ret._srcRange.end = src_pos(s, true);
-      return ret;
-    }
+  while (true) {
     ret.chain.push(parseNode(s));
     if (peekIs(s, "dot")) {
       next(s);
+    }
+    const t = peek(s);
+    if (t === null) {
+      break;
+    }
+    if ([",", ";", "<", ">", "}", ")"].includes(t.value)) {
+      ret._srcRange.end = src_pos(s, true);
+      return ret;
     }
   }
   throw new Error("Unexpected end of file");

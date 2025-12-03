@@ -50,8 +50,8 @@ export const TOKENIZER_PATTERNS = [
   { type: "ellipsis", regex: /^\.\.\./ },
   { type: "boolean", regex: /^(true|false)\b/ },
   { type: "identifier", regex: /^[A-Za-z_$][A-Za-z0-9_$]*/ },
-  { type: "float", regex: /^([0-9]*)\.([0-9]([0-9_]*))?/ },
-  { type: "int", regex: /^[0-9]([0-9_]*)/ },
+  { type: "float", regex: /^(([1-9]([0-9_]*)|0))\.([0-9]([0-9_]*))?|^\.([0-9]([0-9_]*))/ },
+  { type: "int", regex: /^[1-9]([0-9_]*)|^0/ },
   { type: "string", regex: /^"(?:[^"\\]|\\.)*"|^'(?:[^'\\]|\\.)*'|^`(?:[^`\\]|\\.)*`/ },
   { type: "brackets", regex: /^[\[\]\(\)\{\}]/ },
   { type: "decorator", regex: /^[@]/ },
@@ -61,9 +61,9 @@ export const TOKENIZER_PATTERNS = [
   { type: "Unknown", regex: /^./ },
 ] as const satisfies { type: PatternTypes; regex: RegExp }[];
 
-export const BUILD_IN_SYS_Call = [
+export const BUILD_IN_SYS_NODE = [
   "If", "Switch", "Loop", "ForEach", "Selector",
-  "SetVal", "In", "Out", "Event", "Timer", "Signal"
+  "SetVal", "In", "Out", "Trigger", "Timer", "Signal"
 ] as const;
-export type BUILD_IN_SYS_Call = typeof BUILD_IN_SYS_Call[number];
-export const BUILD_IN_SYS_CALL_Set = Object.freeze(new Set(BUILD_IN_SYS_Call));
+export type BUILD_IN_SYS_NODE = typeof BUILD_IN_SYS_NODE[number];
+export const BUILD_IN_SYS_NODE_Set = Object.freeze(new Set(BUILD_IN_SYS_NODE));

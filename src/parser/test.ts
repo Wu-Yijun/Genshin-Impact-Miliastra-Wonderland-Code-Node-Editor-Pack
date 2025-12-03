@@ -1,5 +1,6 @@
+import { parseExecutionBlock } from "./parse_block.ts";
 import { test } from "./parse_node.ts";
-import { createParserState, tokenize } from "./tokenizer.ts";
+import { createParserState } from "./tokenizer.ts";
 
 class Test {
   static tokenizer() {
@@ -25,6 +26,12 @@ class Test {
     console.dir(test.parse_eval(s), { depth: null });
     console.dir(test.parse_eval(s), { depth: null });
   }
+  static executionBlock() {
+    const doc = `[OnCreate()].MyComp(x)[y](true=$((x)=>x+1)[z].F(z) >> 0()) << G().R() >> S();
+    `
+    const s = createParserState(doc);
+    console.dir(parseExecutionBlock(s), { depth: null });
+  }
 }
 
 
@@ -32,7 +39,8 @@ if (import.meta.main) {
   console.log("Running parser tests...");
   // Add test cases here in the future
   // Test.tokenizer();
-  Test.evalNode();
+  // Test.evalNode();
+  Test.executionBlock();
 
   console.log("All tests passed!");
 }

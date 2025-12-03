@@ -1,12 +1,12 @@
 import type { ParserState, PatternTypes, Token } from "../types/parser.ts";
 
 /** Get current token */
-export function peek(state: ParserState): Token | null {
-  return state.tokens[state.index] || null;
+export function peek(state: ParserState, offset = 0): Token | null {
+  return state.tokens[state.index + offset] ?? null;
 }
 
 export function src_pos(state: ParserState, to_end = false): number {
-  if(state.index >= state.tokens.length) {
+  if (state.index >= state.tokens.length) {
     return state.source.length;
   }
   return state.tokens[state.index].pos + (to_end ? state.tokens[state.index].value.length : 0);
@@ -14,7 +14,7 @@ export function src_pos(state: ParserState, to_end = false): number {
 
 /** Lookahead n tokens */
 export function lookahead(state: ParserState, n: number): Token | null {
-  return state.tokens[state.index + n] || null;
+  return state.tokens[state.index + n] ?? null;
 }
 
 /** Advance and return next token */
@@ -105,10 +105,9 @@ export function peekIsIdLiteral(state: ParserState): boolean {
   return false;
 }
 
-export function assert(cond:boolean, msg?:string): asserts cond is true {
-  if (!cond) {
-    throw new Error(msg || "Assertion failed");
-  }
+export function assert(cond: boolean, msg?: string): asserts cond {
+  if (cond) return;
+  throw new Error(msg || "Assertion failed");
 }
 
 export function assertEq<T>(l: unknown, r: T, r2?: T, r3?: T, r4?: T): asserts l is T {
