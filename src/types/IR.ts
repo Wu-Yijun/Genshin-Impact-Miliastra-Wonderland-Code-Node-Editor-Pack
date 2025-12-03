@@ -38,6 +38,7 @@ export type IRExtend =
   // IR_func.ts
   | SharedFuncDecl
   | LambdaDecl
+  | ComponentDecl
   // IR_decl.ts
   | ImportDecl
   | GlobalDecl
