@@ -322,6 +322,8 @@ function CheckValue(val: int) {
 // declare function Test(val: bigint, x: float, z: bool): ExecFun<{}>;
 // declare function Test(val: float, x: string): ExecFun<{}>;
 
+
+
 // @ts-nocheck
 import "./src/test/def.d.ts" // 导入配置
 

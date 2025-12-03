@@ -6,7 +6,7 @@ import { BUILD_IN_SYS_NODE_Set, IR_Id_Counter } from "../types/consts.ts";
 import { extractBalancedTokens } from "./balanced_extract.ts";
 import { name_style, parse_args, parse_branch_id, parse_int } from "./parse_utils.ts";
 import { assert, assertEq, expect, peekIs, next, src_pos } from "./utils.ts";
-import { ALL_SYS_NODE_Set, SYS_TRIGGER_NODE_SET } from "../types/consts.derived.ts";
+import { ALL_SYS_NODE_Set, SYS_TRIGGER_NODE_SET } from "../types/consts.gen.ts";
 import { parseNodeChainList } from "./parse_block.ts";
 
 
@@ -54,7 +54,7 @@ export function parseEval(s: ParserState): IR_EvalNode {
   if (peekIs(s, "brackets", "[")) {
     ret.outputs = parse_args(s, "out");
   }
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }
 export function parseAnchorNode(s: ParserState): IR_AnchorNode {
@@ -70,7 +70,7 @@ export function parseAnchorNode(s: ParserState): IR_AnchorNode {
   expect(s, "brackets", "[");
   ret.id = parse_branch_id(s);
   expect(s, "brackets", "]");
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }
 export function parseInOutNode(s: ParserState): IR_InOutNode {
@@ -92,7 +92,7 @@ export function parseInOutNode(s: ParserState): IR_InOutNode {
     ret.id = parse_branch_id(s);
   }
   expect(s, "brackets", ")");
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }
 export function parseCallNode(s: ParserState): IR_CallNode {
@@ -154,7 +154,7 @@ export function parseCallNode(s: ParserState): IR_CallNode {
     expect(s, "brackets", ")");
   }
 
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }
 export function parseBranch(s: ParserState): IR_BranchNode {
@@ -182,7 +182,7 @@ export function parseBranch(s: ParserState): IR_BranchNode {
   assert(ret.branches.length > 0, "Branch must have at least one branches!");
   expect(s, "brackets", "}");
 
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }
 export function parseJump(s: ParserState): IR_JumpNode {
@@ -197,7 +197,7 @@ export function parseJump(s: ParserState): IR_JumpNode {
   expect(s, "brackets", "(");
   expect(s, "brackets", ")");
 
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }
 

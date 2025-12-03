@@ -3,17 +3,17 @@ import type { LocalVarDecl } from "../types/IR_decl.ts";
 import type { ParserState } from "../types/parser.ts";
 
 import { IR_Id_Counter } from "../types/consts.ts";
-import { extractBalancedTokens } from "./balanced_extract.ts";
+import { extractBalancedTokens, try_capture_type } from "./balanced_extract.ts";
 import { parseExecutionBlock } from "./parse_block.ts";
-import { parse_type } from "./parse_utils.ts";
-import { expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { parse_branch_id, parse_type } from "./parse_utils.ts";
+import { assert, expect, next, peek, peekIs, src_pos } from "./utils.ts";
 
 /** 声明包含完整执行节点的子图，拥有自定义的入口和出口。
  *  ```ts
  *  function ComponentName(arg_name: type) {
  *    // LocalVarDecl
  *    // IR_ExecutionBlocks
- *    return ExecFunc<{out_name: type}>(outBranchId)
+ *    return ExecFun<{out_name: type}>(outBranchId)
  *  }
  *  ```
  */
@@ -41,8 +41,10 @@ export function parseComponent(state: ParserState): ComponentDecl {
   while (!peekIs(state, "brackets", ")")) {
     const argName = expect(state, "identifier").value;
     expect(state, "symbol", ":");
-    const typeTokens = extractBalancedTokens(state, "(", ")", 0);
-    const argType = parse_type(typeTokens.slice(0, -1));
+    const typed = try_capture_type(state.tokens, state.index);
+    assert(typed.success);
+    state.index += typed.tokens.length;
+    const argType = parse_type(typed.tokens);
 
     ret.args.push({ name: argName, type: argType });
 
@@ -79,7 +81,7 @@ export function parseComponent(state: ParserState): ComponentDecl {
 
   expect(state, "brackets", "}");
 
-  ret._srcRange.end = src_pos(state, true);
+  ret._srcRange.end = src_pos(state);
   return ret;
 }
 
@@ -114,7 +116,7 @@ function parseLocalVar(state: ParserState): LocalVarDecl {
     next(state);
   }
 
-  ret._srcRange.end = src_pos(state, true);
+  ret._srcRange.end = src_pos(state);
   return ret;
 }
 
@@ -122,8 +124,8 @@ function parseLocalVar(state: ParserState): LocalVarDecl {
 function parseReturn(state: ParserState, component: ComponentDecl): void {
   expect(state, "identifier", "return");
 
-  // return ExecFunc<{out_name: type}>(outBranchId)
-  expect(state, "identifier", "ExecFunc");
+  // return ExecFun<{out_name: type}>(outBranchId)
+  expect(state, "identifier", "ExecFun");
 
   // Parse return types: <{out_name: type, ...}>
   if (peekIs(state, "symbol", "<")) {
@@ -133,8 +135,10 @@ function parseReturn(state: ParserState, component: ComponentDecl): void {
     while (!peekIs(state, "brackets", "}")) {
       const outName = expect(state, "identifier").value;
       expect(state, "symbol", ":");
-      const typeTokens = extractBalancedTokens(state, "(", ")", 0);
-      const outType = parse_type(typeTokens.slice(0, -1));
+      const typed = try_capture_type(state.tokens, state.index);
+      assert(typed.success);
+      state.index += typed.tokens.length;
+      const outType = parse_type(typed.tokens);
 
       component.returns.push({ name: outName, type: outType });
 
@@ -150,7 +154,7 @@ function parseReturn(state: ParserState, component: ComponentDecl): void {
   // Parse branch IDs: (outBranchId, ...)
   expect(state, "brackets", "(");
   while (!peekIs(state, "brackets", ")")) {
-    const branchId = expect(state, "identifier").value;
+    const branchId = parse_branch_id(state);
     component.outBranchIds.push(branchId);
 
     if (peekIs(state, "symbol", ",")) {

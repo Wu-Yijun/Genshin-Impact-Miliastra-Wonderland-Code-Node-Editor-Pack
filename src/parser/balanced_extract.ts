@@ -21,9 +21,9 @@ export function extractBalancedTokens(
     const t = peek(state);
     if (!t) break;
 
-    if (t.type === "brackets" && t.value === open) {
+    if (t.value === open) {
       depth++;
-    } else if (t.type === "brackets" && t.value === close) {
+    } else if (t.value === close) {
       depth--;
     }
 

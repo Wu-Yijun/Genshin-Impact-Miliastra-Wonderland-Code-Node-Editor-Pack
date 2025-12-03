@@ -29,7 +29,7 @@ export function parseExecutionBlock(s: ParserState): IR_ExecutionBlock {
   // Chain
   ret.chain = parseNodeChainList(s);
 
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }
 
@@ -94,7 +94,7 @@ export function parseNodeChain(s: ParserState, suspend: boolean): IR_NodeChain {
       break;
     }
     if ([",", ";", "<", ">", "}", ")"].includes(t.value)) {
-      ret._srcRange.end = src_pos(s, true);
+      ret._srcRange.end = src_pos(s);
       return ret;
     }
   }

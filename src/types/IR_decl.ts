@@ -46,7 +46,7 @@ export interface StructDecl extends IRBase {
   fields: {
     name: string;
     type: NodeType;
-    default: NodeVar;
+    default: NodeVar | null;
   }[];
 }
 
@@ -61,7 +61,7 @@ export interface GlobalVarDecl extends IRBase {
   kind: "globalVar";
   name: string;
   type: NodeType;
-  default: NodeVar;
+  default: NodeVar | null;
 }
 
 

@@ -31,6 +31,7 @@ export function parse(s: ParserState): IR_GraphModule {
   while (t = peek(s)) {
     switch (t.value) {
       case ";":
+        next(s);
         continue;
       case "import": {
         ret.imports.push(parseImport(s));
@@ -40,7 +41,7 @@ export function parse(s: ParserState): IR_GraphModule {
         if (peek(s, 1)?.value === "global") {
           ret.globals.push(parseGlobal(s));
         } else if (peek(s, 1)?.value === "namespace") {
-          ret.node_vars.push(parseNodeVar(s));
+          ret.node_vars.push(...parseNodeVar(s));
         }
         break;
       }
@@ -76,7 +77,7 @@ export function parse(s: ParserState): IR_GraphModule {
     }
   }
 
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }
 
@@ -129,6 +130,6 @@ export function parseImport(s: ParserState): ImportDecl {
     next(s);
   }
 
-  ret._srcRange.end = src_pos(s, true);
+  ret._srcRange.end = src_pos(s);
   return ret;
 }

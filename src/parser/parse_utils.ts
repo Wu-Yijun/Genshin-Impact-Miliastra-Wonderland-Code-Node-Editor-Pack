@@ -1,15 +1,52 @@
 import type { NodeType } from "../../utils/index.ts";
 import type { IR_FunctionArg } from "../types/IR_node.ts";
 import type { ParserState, Token } from "../types/parser.ts";
-import type { BranchId } from "../types/types.ts";
+import type { BranchId, IR_NodeVarValue } from "../types/types.ts";
 import { TOKEN_GROUPS, TOKENS, UNK_TYPE } from "../types/consts.ts";
 import { extractBalancedTokens, splitBalancedTokens, try_capture_type } from "./balanced_extract.ts";
-import { assert, assertEq, expect, next, peek } from "./utils.ts";
+import { assert, assertEq, expect, next, peek, peekIs } from "./utils.ts";
+import { NodeVar } from "../types/class.ts";
+import { parse as parse_node_type, type_equal } from "../../utils/gia_gen/nodes.ts";
 
 export function parse_type(tokens: Token[]): NodeType {
-  return { t: "b", b: tokens.map(t => t.value).join("") as any };
-  // TODO
-  return UNK_TYPE;
+  const t = tokens.map(t => {
+    switch (t.value.toLowerCase()) {
+      case "list":
+        return "L";
+      case "dict":
+        return "D";
+      case "struct":
+        return "S";
+      case "int":
+      case "integer":
+        return "Int";
+      case "float":
+        return "Flt";
+      case "bool":
+      case "boolean":
+        return "Bol";
+      case "str":
+      case "string":
+        return "Str";
+      case "config":
+      case "configid":
+        return "Cfg";
+      case "prefab":
+        return "Pfb";
+      case "vector":
+      case "vec":
+        return "Vec";
+      case "faction":
+        return "Fct";
+      case "guid":
+        return "Gid";
+      case "entity":
+        return "Ety";
+      default:
+        return t.value;
+    }
+  }).join("");
+  return parse_node_type(t);
 }
 
 export function name_style(name: string): "UpperCamelCase" | "Upper_Camel_Case" | "lowerCamelCase" | "snake_case" | "_snake_case" | "UPPER_SNAKE_CASE" | "BAD" {
@@ -132,4 +169,89 @@ export function parse_args(s: ParserState, type: "in" | "out"): IR_FunctionArg[]
     }
   })
   return ret;
+}
+
+
+// val := string | int | float | boolean | "[" val ( "," val )* "]" | "{" ( val ":" val ","? )* "}"
+export function parse_value(s: ParserState): IR_NodeVarValue {
+  switch (peek(s)?.type) {
+    case "string":
+      return next(s).value.slice(1, -1);
+    case "int":
+      const i = parse_int(s);
+      assert(i !== null);
+      return BigInt(i);
+    case "float":
+      const f = parse_float(s);
+      assert(f !== null);
+      return f;
+    case "boolean":
+      return next(s).value === "true";
+    case "brackets": {
+      if (peekIs(s, "brackets", "[")) {
+        next(s);
+        const ret = [];
+        while (!peekIs(s, "brackets", "]")) {
+          ret.push(parse_value(s));
+          if (peekIs(s, "symbol", ",")) {
+            next(s);
+          }
+        }
+        expect(s, "brackets", "]");
+        return ret;
+      } else if (peekIs(s, "brackets", "{")) {
+        next(s);
+        const ret: { key: IR_NodeVarValue, value: IR_NodeVarValue }[] = [];
+        while (!peekIs(s, "brackets", "}")) {
+          const key = parse_value(s);
+          expect(s, "symbol", ":");
+          ret.push({ key: key, value: parse_value(s) });
+          if (peekIs(s, "symbol", ",")) {
+            next(s);
+          }
+        }
+        expect(s, "brackets", "}");
+        return ret;
+      }
+    }
+  }
+  throw new Error("Invalid value forms!");
+}
+
+
+/** `Name (: Type)? (= (Value|Type\(Value\)))?` */
+export function parse_var_decl(state: ParserState) {
+  let type: NodeType | undefined;
+  const name = expect(state, "identifier").value;
+
+  if (peekIs(state, "symbol", ":")) {
+    next(state);
+    const typed = try_capture_type(state.tokens, state.index);
+    assert(typed.success, "Failed to parse type");
+    state.index += typed.tokens.length;
+    type = parse_type(typed.tokens);
+  }
+
+  let val: IR_NodeVarValue | undefined;
+  if (peekIs(state, "assign", "=")) {
+    next(state);
+    const typed = try_capture_type(state.tokens, state.index);
+    if (typed.success) {
+      state.index += typed.tokens.length;
+      if (type === undefined) {
+        type = parse_type(typed.tokens);
+      } else {
+        assert(type_equal(type, parse_type(typed.tokens)), "Type mismatch");
+      }
+      expect(state, "brackets", "(");
+      val = parse_value(state);
+      expect(state, "brackets", ")");
+    } else {
+      val = parse_value(state);
+    }
+  }
+  return {
+    name: name,
+    value: NodeVar.from(type, val)
+  };
 }

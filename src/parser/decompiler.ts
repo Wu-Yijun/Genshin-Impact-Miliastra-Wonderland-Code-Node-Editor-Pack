@@ -28,6 +28,7 @@ import type {
   StructDecl,
   TimerDecl
 } from "../types/IR.ts";
+import type { NodeVarValue } from "../types/types.ts";
 
 const TAB_WIDTH = 2;
 
@@ -71,6 +72,28 @@ export function decompile(ir: IRExtend, tab: number = 0): string {
   throw new Error(`Unknown IR: ${JSON.stringify(ir)}`);
 }
 
+export function ir_to_string(ir: IRExtend, src: string, depth: number = 0, MAX_LEN = 40): string {
+  const { start, end } = ir._srcRange;
+  let content = src.slice(start, end).replaceAll(/(\s|\r|\n)+/g, " ").trim();
+  if (content.length > MAX_LEN) {
+    content = content.slice(0, MAX_LEN / 2) + " ... " + content.slice(-MAX_LEN / 2);
+  }
+  // console.log(inspect(ir, { depth: 0, compact: true, breakLength: Infinity }));
+  let res = `${depth}: \t${ir.kind}: \t${content}\n`;
+  for (const v of Object.values(ir)) {
+    if (v instanceof Object && "_srcRange" in v) {
+      res += ir_to_string(v as IRExtend, src, depth + 1);
+    } else if (v instanceof Array) {
+      for (const item of v) {
+        if (item instanceof Object && "_srcRange" in item) {
+          res += ir_to_string(item as IRExtend, src, depth + 1);
+        }
+      }
+    }
+  }
+  return res;
+}
+
 // ================= Helper Functions =================
 
 function indent(tab: number): string {
@@ -87,15 +110,21 @@ function nodeTypeToString(type: NodeType): string {
   return stringify(type);
 }
 
-function nodeVarToString(nv: NodeVar): string {
-  const val = nv.value;
-  if (typeof val === "string") return `"${val}"`;
-  if (Array.isArray(val)) {
-    // Handle array or struct value
-    // This is a simplification, might need more robust handling based on type
-    return `[${val.map(v => JSON.stringify(v)).join(", ")}]`;
+function nodeValueToString(value: NodeVarValue): string {
+  switch (typeof value) {
+    case "string":
+      return JSON.stringify(value);
+    case "number":
+      return value.toString();
+    case "bigint":
+      return value.toString();
+    case "boolean":
+      return value.toString();
   }
-  return String(val);
+  if (Array.isArray(value)) {
+    return `[${value.map(v => nodeValueToString(v)).join(", ")}]`;
+  }
+  return String(value);
 }
 
 function functionArgToString(arg: IR_FunctionArg, isInput: boolean): string {
@@ -110,7 +139,7 @@ function functionArgToString(arg: IR_FunctionArg, isInput: boolean): string {
   return parts.join(" ");
 }
 
-// ================= Node Decompilers =================
+// ================= Node Decompiler =================
 
 function decompile_node(ir: IR_Node, tab: number = 0): string {
   switch (ir.kind) {
@@ -215,7 +244,7 @@ function decompile_block(ir: IR_ExecutionBlock, tab: number = 0): string {
   return res;
 }
 
-// ================= Declaration Decompilers =================
+// ================= Declaration Decompiler =================
 
 function decompile_import(ir: ImportDecl, tab: number = 0): string {
   // import { ComponentName, lambda_name } from "file_name";
@@ -233,10 +262,10 @@ function decompile_decl(ir: SharedFuncDecl | DefineDecl | LocalVarDecl, tab: num
     return `${i}const ${ir.name} = ${val};`;
   } else if (ir.kind === "define") {
     // const VAR_NAME: type = defaultValue;
-    return `${i}const ${ir.name}: ${nodeTypeToString(ir.type)} = ${nodeVarToString(ir.default)};`;
+    return `${i}const ${ir.name}: ${nodeTypeToString(ir.type)} = ${nodeValueToString(ir.default.value)};`;
   } else if (ir.kind === "localVar") {
     // const _var_name: type = defaultValue;
-    return `${i}const ${ir.name}: ${nodeTypeToString(ir.type)} = ${nodeVarToString(ir.default)};`;
+    return `${i}const ${ir.name}: ${nodeTypeToString(ir.type)}${ir.default !== null ? " = " + nodeValueToString(ir.default.value) : ""};`;
   }
   return "";
 }
@@ -255,63 +284,73 @@ function decompile_fields(ir: StructDecl | GlobalVarDecl | TimerDecl | SignalDec
       // interface StructName { name: type = defaultValue; }
       let s = `${i}interface ${ir.name} {\n`;
       s += ir.fields.map(f =>
-        `${indent(tab + 1)}${f.name}: ${nodeTypeToString(f.type)} = ${nodeVarToString(f.default)};`
+        `${indent(tab + 1)}${f.name}: ${nodeTypeToString(f.type)}${f.default !== null ? ` = ${nodeValueToString(f.default.value)}` : ""};`
       ).join("\n");
       s += `\n${i}}`;
       return s;
 
     case "globalVar":
-      // namespace Self { const varName: type = defaultValue; }
-      return `${i}namespace Self { const ${ir.name}: ${nodeTypeToString(ir.type)} = ${nodeVarToString(ir.default)}; }`;
+      return `${i}const ${ir.name}: ${nodeTypeToString(ir.type)}${ir.default !== null ? ` = ${nodeValueToString(ir.default.value)}` : ""};`;
 
     case "timer":
-      // namespace Timer { const name: CountDown<time> | Count<time>; }
-      const typeStr = ir.countdown ? `CountDown<${ir.time}>` : `Count<${ir.time}>`;
-      return `${i}namespace Timer { const ${ir.name}: ${typeStr}; }`;
+      const typeStr = ir.countdown ? `CountDown < ${ir.time}> ` : `Count < ${ir.time}> `;
+      return `${i}const ${ir.name}: ${typeStr};`;
 
     case "signal":
-      // namespace Signal { function signal_name(args): Signal; }
-      const args = ir.params.map(p => `${p.name}: ${nodeTypeToString(p.type)}`).join(", ");
-      return `${i}namespace Signal { function ${ir.name}(${args}): Signal; }`;
+      const args = ir.params.map(p => `${p.name}: ${nodeTypeToString(p.type)} `).join(", ");
+      return `${i}const ${ir.name}(${args}): Signal;`;
 
     case "nodeVar":
-      // declare namespace node { export const varName: type = defaultValue; }
       const exp = ir.export ? "export " : "";
-      return `${i}declare namespace node { ${exp}const ${ir.name}: ${nodeTypeToString(ir.type)} = ${nodeVarToString(ir.default)}; }`;
+      return `${i}${exp}const ${ir.name}: ${nodeTypeToString(ir.type)} = ${nodeValueToString(ir.default.value)};`;
   }
 }
 
 function decompile_global(ir: GlobalDecl, tab: number = 0): string {
   // declare global { ... }
   let res = `${indent(tab)}declare global {\n`;
+  tab += 1;
 
   // Structs
-  res += ir.structs.map(s => decompile_fields(s, tab + 1)).join("\n");
-  if (ir.structs.length > 0) res += "\n";
+  if (ir.structs.length > 0) {
+    res += `\n${indent(tab)}namespace Struct {\n`
+    res += ir.structs.map(s => decompile_fields(s, tab + 1)).join("\n");
+    res += `\n${indent(tab)}}\n`;
+  }
 
   // Globals
-  res += ir.globals.map(g => decompile_fields(g, tab + 1)).join("\n");
-  if (ir.globals.length > 0) res += "\n";
+  if (ir.globals.length > 0) {
+    res += `\n${indent(tab)}namespace Self {\n`
+    res += ir.globals.map(g => decompile_fields(g, tab + 1)).join("\n");
+    res += `\n${indent(tab)}}\n`;
+  }
 
   // Timers
-  res += ir.timers.map(t => decompile_fields(t, tab + 1)).join("\n");
-  if (ir.timers.length > 0) res += "\n";
+  if (ir.timers.length > 0) {
+    res += `\n${indent(tab)}namespace Timer {\n`
+    res += ir.timers.map(t => decompile_fields(t, tab + 1)).join("\n");
+    res += `\n${indent(tab)}}\n`;
+  }
 
   // Signals
-  res += ir.signals.map(s => decompile_fields(s, tab + 1)).join("\n");
-  if (ir.signals.length > 0) res += "\n";
+  if (ir.signals.length > 0) {
+    res += `\n${indent(tab)}namespace Signal {\n`
+    res += ir.signals.map(s => decompile_fields(s, tab + 1)).join("\n");
+    res += `\n${indent(tab)}}\n`;
+  }
 
-  res += `${indent(tab)}}`;
+  tab -= 1;
+  res += `\n${indent(tab)}}\n`;
   return res;
 }
 
 function decompile_lambda(ir: LambdaDecl, tab: number = 0): string {
   // const lambdaName = (arg_name: type) => { body; return ret; }
   const i = indent(tab);
-  const args = ir.args.map(a => `${a.name}: ${nodeTypeToString(a.type)}`).join(", ");
+  const args = ir.args.map(a => `${a.name}: ${nodeTypeToString(a.type)} `).join(", ");
 
   let res = `${i}const ${ir.name} = (${args}) => {\n`;
-  res += `${indent(tab + 1)}${tokensToString(ir.body)};\n`;
+  res += `${indent(tab + 1)}${tokensToString(ir.body)}; \n`;
 
   if (ir.returns.length > 0) {
     // return { name: type, ... } ? 
@@ -325,7 +364,7 @@ function decompile_lambda(ir: LambdaDecl, tab: number = 0): string {
     // Assuming `body` contains the full code block content.
   }
 
-  res += `${i}};`;
+  res += `${i}}; `;
   return res;
 }
 
@@ -345,17 +384,16 @@ function decompile_component(ir: ComponentDecl, tab: number = 0): string {
   if (ir.blocks.length > 0) res += "\n";
 
   // Return
-  // return ExecFunc<{out_name: type}>(outBranchId)
+  // return ExecFun<{out_name: type}>(outBranchId)
   // ComponentDecl has outBranchIds.
   // We need to reconstruct the return statement.
-  // The comment says: return ExecFunc<{out_name: type}>(outBranchId)
-  if (ir.returns.length > 0 || ir.outBranchIds.length > 0) {
-    const retTypes = ir.returns.map(r => `${r.name}: ${nodeTypeToString(r.type)}`).join(", ");
-    const outBranches = ir.outBranchIds.map(id => JSON.stringify(id)).join(", ");
-    res += `\n${indent(tab + 1)}return ExecFunc<{${retTypes}}>(${outBranches});\n`;
-  }
+  // The comment says: return ExecFun<{out_name: type}>(outBranchId)
 
-  res += `${i}}`;
+  const retTypes = ir.returns.map(r => `${r.name}: ${nodeTypeToString(r.type)}`).join(", ");
+  const outBranches = ir.outBranchIds.map(id => JSON.stringify(id)).join(", ");
+  res += `\n${indent(tab + 1)}return ExecFun<{${retTypes}}>(${outBranches});`;
+
+  res += `\n${i}}\n`;
   return res;
 }
 
@@ -371,8 +409,12 @@ function decompile_module(ir: IR_GraphModule, tab: number = 0): string {
   if (ir.globals.length > 0) res += "\n\n";
 
   // Node Vars
-  res += ir.node_vars.map(n => decompile_fields(n, tab)).join("\n");
-  if (ir.node_vars.length > 0) res += "\n\n";
+  // NodeVars
+  if (ir.node_vars.length > 0) {
+    res += `\n${indent(tab)}declare namespace node {\n`
+    res += ir.node_vars.map(s => decompile_fields(s, tab + 1)).join("\n");
+    res += `\n${indent(tab)}}\n`;
+  }
 
   // Defines
   res += ir.defines.map(d => decompile_decl(d, tab)).join("\n");
@@ -397,5 +439,6 @@ function decompile_module(ir: IR_GraphModule, tab: number = 0): string {
   // Graph (Main execution blocks)
   res += ir.graph.map(b => decompile_block(b, tab)).join("\n");
 
+  res += "\n\n"; // EOF
   return res;
 }

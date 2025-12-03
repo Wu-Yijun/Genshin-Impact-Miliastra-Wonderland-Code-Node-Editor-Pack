@@ -48,7 +48,7 @@ export interface LambdaDecl extends IRBase {
  *  function ComponentName(arg_name: type) {
  *    // LocalVarDecl
  *    // IR_ExecutionBlocks
- *    return ExecFunc<{out_name: type}>(outBranchId)
+ *    return ExecFun<{out_name: type}>(outBranchId)
  *  }
  *  ```
  */

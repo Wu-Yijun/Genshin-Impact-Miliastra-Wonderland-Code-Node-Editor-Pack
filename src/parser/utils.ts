@@ -5,11 +5,13 @@ export function peek(state: ParserState, offset = 0): Token | null {
   return state.tokens[state.index + offset] ?? null;
 }
 
-export function src_pos(state: ParserState, to_end = false): number {
+// export function src_pos(state: ParserState, to_end = false): number {
+export function src_pos(state: ParserState): number {
   if (state.index >= state.tokens.length) {
     return state.source.length;
   }
-  return state.tokens[state.index].pos + (to_end ? state.tokens[state.index].value.length : 0);
+  // return state.tokens[state.index].pos + (to_end ? state.tokens[state.index].value.length : 0);
+  return state.tokens[state.index].pos;
 }
 
 /** Lookahead n tokens */

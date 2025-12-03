@@ -1,10 +1,19 @@
 export type NodeVarValue =
   | number
-  | int
-  | float
+  | bigint
   | string
   | boolean
-  | NodeVarValue[];
+  | NodeVarValue[]
+  ;
+
+export type IR_NodeVarValue =
+  | number
+  | bigint
+  | string
+  | boolean
+  | IR_NodeVarValue[]
+  | { key: IR_NodeVarValue, value: IR_NodeVarValue }
+  ;
 
 export type BranchId = string | number | boolean; // literal strings are required in source for non-numeric ids
 
