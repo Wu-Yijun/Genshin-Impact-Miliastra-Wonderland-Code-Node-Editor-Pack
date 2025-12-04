@@ -4,7 +4,7 @@ import type { ParserState, Token } from "../types/types.ts";
 import { post_lexing_disambiguation } from "./disambiguation.ts";
 
 export function tokenEqual(t1: Token, t2: Token) {
-  return t1.value === t2.value && t1.type === t2.type;
+  return t1 && t2 && t1.value === t2.value && t1.type === t2.type;
 }
 
 /** Create a new parser state */

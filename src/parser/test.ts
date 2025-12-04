@@ -2,14 +2,24 @@ import { decompile, ir_to_string } from "./decompiler.ts";
 import { parseExecutionBlock } from "./parse_block.ts";
 import { parseEval } from "./parse_node.ts";
 import { parse_args } from "./parse_utils.ts";
-import { parse } from "./types.ts";
+import { parse } from "./parser.ts";
 import { createParserState } from "./tokenizer.ts";
 import { src_pos } from "./utils.ts";
 
 class Test {
   static tokenizer() {
+    console.log(createParserState("x<y>-1")); // x<y> // -
+    console.log(createParserState("x<y > -1")); // x<y> // -
+    console.log(createParserState("x<y>>-1")); // x < y // >> -1
+    console.log(createParserState("x<y >> -1")); // x < y // >> -1
+    console.log(createParserState("x<y> > -1")); // x<y> // > -1
+    console.log(createParserState("x<y>>>-1")); // x < y >> // > -1
+    console.log(createParserState("x<y>> > -1")); // x < y >> // > -1
+    console.log(createParserState("x<y> >> -1")); // x<y> // >> -1
+    return
     const doc = "(a as dict<int, a>, b=c,)[x=y as int, z=b+c as string]()[](x)(y.z, a+b)(as int)[1=](l as list<str>)[x as dict<S<int, L<str>>,int>]";
     const s = createParserState(doc);
+    console.log(s);
     console.dir(parse_args(s, "in"), { depth: null });
     console.dir(parse_args(s, "out"), { depth: null });
     console.dir(parse_args(s, "in"), { depth: null });
@@ -49,49 +59,49 @@ class Test {
 
   static module() {
     const doc = `
-    // import {MyComp, my_add, MY_CONST} from "./file.dsl.ts";
-    // declare global {
-    //   namespace Self {
-    //     const x: int;
-    //     const y: str = "123";
-    //     const z = 123.45;
-    //     const w = GUID(123);
-    //     const a = Vec([1,2,3]);
-    //     const b:Dict<Int,Vec> = [[1,[4,5,6]]];
-    //     const b = Dict<ConfigId,List<Vec>>({1:[[4,5,6]]});
-    //   }
+    import {MyComp, my_add, MY_CONST} from "./file.dsl.ts";
+    declare global {
+      namespace Self {
+        const x: int;
+        const y: str = "123";
+        const z = 123.45;
+        const w = GUID(123);
+        const a = Vec([1,2,3]);
+        const b:Dict<Int,Vec> = [[1,[4,5,6]]];
+        const b = Dict<ConfigId,List<Vec>>({1:[[4,5,6]]});
+      }
         
-    //   namespace Timer {
-    //     const x: Count<10>;
-    //     const y: CountDown<12>;
-    //   }
-    // }
-    // declare global {
-    //   namespace Signal {
-    //     function MySig(name: int, pos: Vector): Signal;
-    //   }
-    //   // 2. 定义自定义数据结构
-    //   interface PlayerData {
-    //     id: int;
-    //     name: string;
-    //   }
-    // }
+      namespace Timer {
+        const x: Count<10>;
+        const y: CountDown<12>;
+      }
+    }
+    declare global {
+      namespace Signal {
+        function MySig(name: int, pos: Vector): Signal;
+      }
+      // 2. 定义自定义数据结构
+      interface PlayerData {
+        id: int;
+        name: string;
+      }
+    }
 
-    // declare namespace node {
-    //   export const nodeVar1 = 1;
-    //   const nodeVar2 = [1,2,3];
-    // }
+    declare namespace node {
+      export const nodeVar1 = 1;
+      const nodeVar2 = [1,2,3];
+    }
 
     const _local_var1 = true;
     const _local_var2 = Entity(12);
 
-    // const DEFINE_A = 1;
-    // const DEFINE_B:GUID = 23456787654;
+    const DEFINE_A = 1;
+    const DEFINE_B:GUID = 23456787654;
 
-    // const my_add = (a:int,b:int)=>{
-    //   const c = a+b;
-    //   return c;
-    // };
+    const my_add = (a:int,b:int)=>{
+      const c = a+b;
+      return c;
+    };
 
     function MyComp(x:vec, y:str){
       const _comp_local = 1;
@@ -137,10 +147,10 @@ class Test {
 if (import.meta.main) {
   console.log("Running parser tests...");
   // Add test cases here in the future
-  // Test.tokenizer();
+  Test.tokenizer();
   // Test.evalNode();
   // Test.executionBlock();
-  Test.module();
+  // Test.module();
 
   console.log("All tests passed!");
 }
