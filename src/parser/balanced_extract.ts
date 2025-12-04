@@ -1,6 +1,7 @@
 import { tokenEqual } from "./tokenizer.ts";
-import type { ParserState, Token } from "../types/parser.ts";
+import type { ParserState, Token } from "../types/types.ts";
 import { expect, next, peek } from "./utils.ts";
+import { TOKENS } from "../types/consts.ts";
 
 /** Extract content between balanced tokens, including the boundaries */
 export function extractBalancedTokens(
@@ -76,25 +77,25 @@ export function splitBalancedTokens(
 // type := identifier ( "<" type ( "," type )? ">" )?
 export function try_capture_type(tokens: Token[], from: number, look_back: boolean = false): { success: boolean, tokens: Token[] } {
   const dir = look_back ? -1 : 1;
-  const left = look_back ? ">" : "<";
-  const right = look_back ? "<" : ">";
+  const left = look_back ? TOKENS.closeAngle : TOKENS.openAngle;
+  const right = look_back ? TOKENS.openAngle : TOKENS.closeAngle;
   const ret: Token[] = [];
   if (!look_back) {
     if (tokens[from]?.type !== "identifier") return { success: false, tokens: [] };
     ret.push(tokens[from]);
   }
-  if (tokens[from + dir * ret.length]?.value === left) {
+  if (tokenEqual(tokens[from + dir * ret.length], left)) {
     ret.push(tokens[from + dir * ret.length]);
     const arg = try_capture_type(tokens, from + dir * ret.length, look_back);
     if (!arg.success) return { success: false, tokens: [] };
     ret.push(...arg.tokens);
-    while (tokens[from + dir * ret.length]?.value === ",") {
+    while (tokenEqual(tokens[from + dir * ret.length], TOKENS.comma)) {
       ret.push(tokens[from + dir * ret.length]);
       const arg = try_capture_type(tokens, from + dir * ret.length, look_back);
       if (!arg.success) return { success: false, tokens: [] };
       ret.push(...arg.tokens);
     }
-    if (tokens[from + dir * ret.length]?.value !== right) {
+    if (!tokenEqual(tokens[from + dir * ret.length], right)) {
       return { success: false, tokens: [] };
     }
     ret.push(tokens[from + dir * ret.length]);

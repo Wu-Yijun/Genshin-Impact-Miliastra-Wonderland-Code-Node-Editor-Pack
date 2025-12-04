@@ -1,5 +1,5 @@
 import type { IR_ExecutionBlock, IR_NodeChain, IR_Trigger } from "../types/IR_node.ts";
-import type { ParserState } from "../types/parser.ts";
+import type { ParserState } from "../types/types.ts";
 
 import { IR_Id_Counter } from "../types/consts.ts";
 import { parseAnchorNode, parseCallNode, parseInOutNode, parseNode } from "./parse_node.ts";
@@ -63,13 +63,11 @@ export function parseNodeChainList(s: ParserState): IR_NodeChain[] {
     if (t.value === ".") {
       next(s);
       suspend = false;
-    } else if (t.value === "<") {
+    } else if (t.type === "left") {
       next(s);
-      expect(s, "symbol", "<");
       suspend = true;
-    } else if (t.value === ">") {
+    } else if (t.type === "right") {
       next(s);
-      expect(s, "symbol", ">");
       suspend = false;
     }
     ret.push(parseNodeChain(s, suspend));
@@ -93,7 +91,7 @@ export function parseNodeChain(s: ParserState, suspend: boolean): IR_NodeChain {
     if (t === null) {
       break;
     }
-    if ([",", ";", "<", ">", "}", ")"].includes(t.value)) {
+    if ([",", ";", "<<", ">>", "}", ")"].includes(t.value)) {
       ret._srcRange.end = src_pos(s);
       return ret;
     }

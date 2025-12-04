@@ -1,21 +1,27 @@
 
 import { TOKENIZER_PATTERNS } from "../types/consts.ts";
-import type { ParserState, Token } from "../types/parser.ts";
+import type { ParserState, Token } from "../types/types.ts";
+import { post_lexing_disambiguation } from "./disambiguation.ts";
 
 export function tokenEqual(t1: Token, t2: Token) {
-  return t1.value === t2.value && t1.type === t2.type;
+  return t1 && t2 && t1.value === t2.value && t1.type === t2.type;
 }
 
-/** Create a new parser state */
-export function createParserState(source: string): ParserState {
-  const src = source.replaceAll("\r", "")
-  const tokens = tokenize(src);
+export function ParserState(src: string, tokens: Token[]): ParserState {
   return {
     tokens,
     index: 0,
     source: src,
   };
 }
+
+/** Create a new parser state */
+export function createParserState(source: string): ParserState {
+  const src = source.replaceAll("\r", "")
+  const tokens = post_lexing_disambiguation(tokenize(src));
+  return ParserState(src, tokens);
+};
+
 
 
 /** Simple tokenizer using scan rules */

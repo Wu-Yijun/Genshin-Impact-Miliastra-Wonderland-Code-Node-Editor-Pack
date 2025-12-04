@@ -1,4 +1,4 @@
-import type { ParserState, PatternTypes, Token } from "../types/parser.ts";
+import type { ParserState, PatternTypes, Token } from "../types/types.ts";
 
 /** Get current token */
 export function peek(state: ParserState, offset = 0): Token | null {

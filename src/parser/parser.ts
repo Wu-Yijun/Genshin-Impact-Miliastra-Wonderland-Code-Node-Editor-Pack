@@ -1,7 +1,7 @@
 
 
 import type { ImportDecl, IR_GraphModule } from "../types/IR.ts";
-import type { ParserState } from "../types/parser.ts";
+import type { ParserState } from "../types/types.ts";
 
 import { IR_Id_Counter } from "../types/consts.ts";
 import { parseExecutionBlock } from "./parse_block.ts";

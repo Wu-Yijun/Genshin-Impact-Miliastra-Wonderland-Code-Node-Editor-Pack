@@ -1,6 +1,6 @@
 import { stringify, type NodeType } from "../../utils/gia_gen/nodes.ts";
 import type { NodeVar } from "../types/class.ts";
-import type { Token } from "../types/parser.ts";
+import type { Token } from "../types/types.ts";
 import type {
   ComponentDecl,
   DefineDecl,
@@ -29,8 +29,11 @@ import type {
   TimerDecl
 } from "../types/IR.ts";
 import type { NodeVarValue } from "../types/types.ts";
+import { tokenEqual } from "./tokenizer.ts";
+import { TOKENS } from "../types/consts.ts";
 
 const TAB_WIDTH = 2;
+const LINE_WIDTH = 60;
 
 /** Convert any IR back into code */
 export function decompile(ir: IRExtend, tab: number = 0): string {
@@ -187,7 +190,13 @@ function decompile_eval(ir: IR_EvalNode, tab: number = 0): string {
   // The lambda body is in ir.lambda
   res += ir.captures.map(arg => functionArgToString(arg, false)).join(", ");
   res += ") => ";
-  res += tokensToString(ir.lambda);
+  if (tokenEqual(ir.lambda[0], TOKENS.openCurly)) {
+    res += "{\n" + indent(tab + 1);
+    res += decompile_lambda_expression(ir.lambda.slice(1, -1), tab + 1);
+    res += "\n" + indent(tab) + "}";
+  } else {
+    res += tokensToString(ir.lambda);
+  }
   res += ")";
 
   if (ir.outputs.length > 0) {
@@ -216,15 +225,28 @@ function decompile_trigger(ir: IR_Trigger, tab: number = 0): string {
 
 function decompile_chain(ir: IR_NodeChain, tab: number = 0, no_prefix: boolean = false): string {
   // \n \TAB "<<"/">>"/"." ...
-  const prefix = ir.suspend ? "<<" : ">>";
+  let ret = no_prefix ? "" : ir.suspend ? `\n${indent(tab)}<<` : `\n${indent(tab)}>>`;
   // The first node doesn't need a dot if it follows << or >>? 
   // Actually the comment says: << IR_Node.IR_Node
   // So we join nodes with "."
-  const nodesCode = ir.chain.map(n => decompile_node(n, tab)).join(".");
-  if (no_prefix) {
-    return nodesCode;
+  let len = ret.length;
+  if (len > LINE_WIDTH) {
+    ret += "\n" + indent(tab);
+    len = tab * TAB_WIDTH;
   }
-  return `\n${indent(tab)}${prefix} ${nodesCode}`;
+  for (let i = 0; i < ir.chain.length; i++) {
+    const n = decompile_node(ir.chain[i], tab);
+    if (len + n.length > LINE_WIDTH) {
+      ret += "\n" + indent(tab);
+      len = tab * TAB_WIDTH;
+    }
+    if (i !== 0) {
+      ret += ".";
+    }
+    ret += n;
+    len += n.length;
+  }
+  return ret;
 }
 
 function decompile_block(ir: IR_ExecutionBlock, tab: number = 0): string {
@@ -238,8 +260,12 @@ function decompile_block(ir: IR_ExecutionBlock, tab: number = 0): string {
   } else if (ir.starter.kind === "inout") {
     res += decompile_node(ir.starter, tab);
   }
-
-  res += "." + ir.chain.map((c, i) => decompile_chain(c, tab + 1, i === 0)).join("");
+  if (ir.chain[0]?.chain[0]?.kind === "branch") {
+    res += " >> ";
+  } else {
+    res += ".";
+  }
+  res += ir.chain.map((c, i) => decompile_chain(c, tab + 1, i === 0)).join("");
   res += ";";
   return res;
 }
@@ -348,9 +374,40 @@ function decompile_lambda(ir: LambdaDecl, tab: number = 0): string {
   const args = ir.args.map(a => `${a.name}: ${nodeTypeToString(a.type)} `).join(", ");
 
   let res = `${i}const ${ir.name} = (${args})${ir.returns_type !== undefined ? `: ${nodeTypeToString(ir.returns_type)}` : ""} => {\n`;
-  res += `${indent(tab + 1)}${tokensToString(ir.body)}; \n`;
+  if (ir.body.length > 0) {
+    res += indent(tab + 1);
+    res += decompile_lambda_expression(ir.body, tab + 1);
+    res += "\n";
+  }
+  res += `${indent(tab)}${i}}; `;
+  return res;
+}
 
-  res += `${i}}; `;
+function decompile_lambda_expression(tokens: Token[], tab: number = 0): string {
+  let res = "";
+  let len = 0;
+  for (const t of tokens) {
+    res += t.value;
+    len += t.value.length;
+    if (tokenEqual(t, TOKENS.openCurly)) {
+      // tab++;
+      // res += "\n" + indent(tab);
+    } else if (tokenEqual(t, TOKENS.closeCurly)) {
+      // tab--;
+      // res += "\n" + indent(tab);
+    } else if (tokenEqual(t, TOKENS.comma)) {
+      if (len > LINE_WIDTH) {
+        res += "\n" + indent(tab);
+        len = tab * TAB_WIDTH;
+      }
+      // res += "\n" + indent(tab);
+    } else if (tokenEqual(t, TOKENS.semicolon)) {
+      res += "\n" + indent(tab);
+      len = tab * TAB_WIDTH;
+    } else {
+      res += " ";
+    }
+  }
   return res;
 }
 
@@ -382,6 +439,7 @@ function decompile_component(ir: ComponentDecl, tab: number = 0): string {
   res += `\n${i}}\n`;
   return res;
 }
+
 
 function decompile_module(ir: IR_GraphModule, tab: number = 0): string {
   let res = "";

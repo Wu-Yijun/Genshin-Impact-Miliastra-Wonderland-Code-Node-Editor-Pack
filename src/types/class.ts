@@ -74,7 +74,9 @@ export function defaultTypeValue(type: NodeType, value: IR_NodeVarValue | undefi
           if (typeof value !== "number" && typeof value !== "bigint") throw new Error("Invalid value! " + JSON.stringify(value));
           return Number(value);
         default:
-          throw new Error("Invalid type! " + JSON.stringify(type));
+          return 0;
+        // TODO
+        // throw new Error("Invalid type! " + JSON.stringify(type));
       }
     case "e":
       if (typeof value !== "number" || typeof value !== "undefined") throw new Error("Invalid value! " + JSON.stringify(value));

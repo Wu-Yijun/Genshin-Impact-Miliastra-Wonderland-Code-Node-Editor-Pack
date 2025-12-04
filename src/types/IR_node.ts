@@ -1,6 +1,6 @@
 import type { NodeType } from "../../utils/gia_gen/nodes.ts";
 import { BUILD_IN_SYS_NODE } from "./consts.ts";
-import type { Token } from "./parser.ts";
+import type { Token } from "./types.ts";
 import type { BranchId, IRBase } from "./types.ts";
 
 /**
@@ -78,7 +78,7 @@ export interface IR_CallNode extends IRBase {
   outputs: IR_FunctionArg[];
   // mapping of exit branches optionally specified at call site:
   // e.g. .Comp()( "large" = Log(...), "small" = ... )
-  branches: { branchId: BranchId; nodes: IR_NodeChain[] }[];
+  branches: { branchId: BranchId | null; nodes: IR_NodeChain[] }[];
 }
 
 /**
