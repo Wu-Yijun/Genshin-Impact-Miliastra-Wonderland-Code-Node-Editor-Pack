@@ -348,7 +348,7 @@ function decompile_lambda(ir: LambdaDecl, tab: number = 0): string {
   const args = ir.args.map(a => `${a.name}: ${nodeTypeToString(a.type)} `).join(", ");
 
   let res = `${i}const ${ir.name} = (${args})${ir.returns_type !== undefined ? `: ${nodeTypeToString(ir.returns_type)}` : ""} => {\n`;
-  res += `${indent(tab + 1)}${tokensToString(ir.body)}; \n`;
+  res += `${indent(tab + 1)}${tokensToString(ir.body)}\n`;
 
   res += `${i}}; `;
   return res;

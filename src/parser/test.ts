@@ -1,5 +1,6 @@
 import { decompile, ir_to_string } from "./decompiler.ts";
 import { parseExecutionBlock } from "./parse_block.ts";
+import { parseComponent } from "./parse_component.ts";
 import { parseEval } from "./parse_node.ts";
 import { parse_args } from "./parse_utils.ts";
 import { parse } from "./parser.ts";
@@ -16,8 +17,10 @@ class Test {
     console.log(createParserState("x<y>>>-1")); // x < y >> // > -1
     console.log(createParserState("x<y>> > -1")); // x < y >> // > -1
     console.log(createParserState("x<y> >> -1")); // x<y> // >> -1
-    return
-    const doc = "(a as dict<int, a>, b=c,)[x=y as int, z=b+c as string]()[](x)(y.z, a+b)(as int)[1=](l as list<str>)[x as dict<S<int, L<str>>,int>]";
+    console.log(createParserState("12 * -0x0A12_Fcde")); // x<y> // >> -1
+  }
+  static arg() {
+    const doc = "(a as dict<int, a>, b=c,)[x=y as int, z=b+c as string]()[](x)(y.z, a+b)(as int)[l=1](l as list<str>)[x as dict<D<int, L<str>>,int>](x+1 >= 5)";
     const s = createParserState(doc);
     console.log(s);
     console.dir(parse_args(s, "in"), { depth: null });
@@ -30,9 +33,10 @@ class Test {
     console.dir(parse_args(s, "out"), { depth: null });
     console.dir(parse_args(s, "in"), { depth: null });
     console.dir(parse_args(s, "out"), { depth: null });
+    console.dir(parse_args(s, "in"), { depth: null });
   }
   static evalNode() {
-    const doc = `$((a, b)=>  (c + d) * e )
+    const doc = `$((a, b)=>  (c + d) * e  )
       $((a as int, b as list<str>)=>{return {x:b[0],y:b[a]}})[out1, out2=x+y as int]
     `;
     const s = createParserState(doc);
@@ -56,7 +60,28 @@ class Test {
     console.log(ir);
     console.log(decompile(ir));
   }
-
+  static comp() {
+    const doc = `
+    function MyComp(t: vec){
+      const _s = "hello";
+      const _r: int;
+      In().Out();
+      return ExecFun<{s: int, r: int}>();
+    }
+    `
+    const s = createParserState(doc);
+    try {
+      const ir = parseComponent(s);
+      console.log(ir);
+      console.log(decompile(ir));
+    } catch (e) {
+      console.error(e);
+      const failure = src_pos(s);
+      console.log("At", failure, "in:");
+      console.log(s.source.slice(failure - 10, failure + 20).replaceAll("\n", " "));
+      console.log(" ".repeat(10) + "^");
+    }
+  }
   static module() {
     const doc = `
     import {MyComp, my_add, MY_CONST} from "./file.dsl.ts";
@@ -147,9 +172,11 @@ class Test {
 if (import.meta.main) {
   console.log("Running parser tests...");
   // Add test cases here in the future
-  Test.tokenizer();
+  // Test.tokenizer();
+  // Test.arg();
   // Test.evalNode();
   // Test.executionBlock();
+  Test.comp();
   // Test.module();
 
   console.log("All tests passed!");

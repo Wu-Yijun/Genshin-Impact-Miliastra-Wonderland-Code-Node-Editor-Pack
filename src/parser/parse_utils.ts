@@ -7,6 +7,7 @@ import { extractBalancedTokens, splitBalancedTokens, try_capture_type } from "./
 import { assert, assertEq, expect, next, peek, peekIs } from "./utils.ts";
 import { NodeVar } from "../types/class.ts";
 import { parse as parse_node_type, type_equal } from "../../utils/gia_gen/nodes.ts";
+import { tokenEqual } from "./tokenizer.ts";
 
 export function parse_type(tokens: Token[]): NodeType {
   const t = tokens.map(t => {
@@ -46,7 +47,13 @@ export function parse_type(tokens: Token[]): NodeType {
         return t.value;
     }
   }).join("");
-  return parse_node_type(t);
+  try {
+    return parse_node_type(t);
+  } catch (e) {
+    console.error(e);
+    console.info("Invalid type sources: ", t);
+    return { t: "b", b: t as any };
+  }
 }
 
 export function name_style(name: string): "UpperCamelCase" | "Upper_Camel_Case" | "lowerCamelCase" | "snake_case" | "_snake_case" | "UPPER_SNAKE_CASE" | "BAD" {
@@ -84,30 +91,54 @@ export function name_style(name: string): "UpperCamelCase" | "Upper_Camel_Case" 
 
 
 export function parse_branch_id(s: ParserState): BranchId {
-  const tok = next(s); // string | int | boolean (boolean not allowed), though grammar only expects int/string
-  assertEq(tok.type, "string", "int", "boolean", "math");
+  const tok = peek(s); // string | int | boolean (boolean not allowed), though grammar only expects int/string
+  assertEq(tok?.type, "string", "int", "boolean");
   switch (tok.type) {
     case "string":
-      return tok.value.slice(1, -1);
+      return next(s).value.slice(1, -1);
     case "boolean":
-      return tok.value === "true";
+      return next(s).value === "true";
     case "int":
-      return parseInt(tok.value.replaceAll("_", ""));
-    case "math":
-      const int = parse_int(s);
-      if (int !== null) return int;
+      const i = parse_int(s);
+      assert(i !== null);
+      return i;
     default:
       throw new Error("Invalid Branch ID type");
   }
 }
 
 export function parse_int(s: ParserState): number | null {
-  const tok = peek(s);
-  if (tok?.type === "int") return parseInt(expect(s, "int").value.replaceAll("_", "").replaceAll("_", ""));
-  if (!(tok?.type === "math" && (tok.value === "-" || tok.value === "+"))) return null;
-  if (peek(s, 1)?.type !== "int") return null;
-  const neg = expect(s, "math").value === "+" ? 1 : -1;
-  return neg * parseInt(expect(s, "int").value.replaceAll("_", ""));
+  let offset = 0;
+  let neg = 1;
+  let tok = peek(s)!;
+  if (tokenEqual(tok, TOKENS.plus)) {
+    offset = 1;
+  } else if (tokenEqual(tok, TOKENS.minus)) {
+    neg == -1;
+    offset = 1;
+  }
+  tok = peek(s, offset)!;
+  if (tok?.type === "int") {
+    s.index += offset + 1;
+    const val = tok.value.replaceAll("_", "");
+    if (val === "0") return 0;
+    if (val.startsWith("0")) {
+      switch (val[1].toLowerCase()) {
+        case "d":
+          return parseInt(val.slice(2), 10);
+        case "x":
+          return parseInt(val.slice(2), 16);
+        case "o":
+          return parseInt(val.slice(2), 8);
+        case "b":
+          return parseInt(val.slice(2), 2);
+        default:
+          return null;
+      }
+    }
+    return neg * parseInt(val);
+  }
+  return null;
 }
 
 export function parse_float(s: ParserState): number | null {

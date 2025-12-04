@@ -3,7 +3,11 @@
 ## 已完成的功能
 *按完成时间由近到远排序*
 
-- **2025-12-04**: 分辨 `2-1` 与 `2--1`, `<` `>` `<<` `>>` 与 `typedef := type<typedef(,typedef)*>` 的尖括号
+- **2025-12-04**: 添加二次编译一致性对比测试
+- **2025-12-04**: 添加 Parser, decompiler 的自动化 CI 测试
+- **2025-12-04**: 添加对 十六进制, 二进制, 八进制 数字前缀的支持
+- **2025-12-04**: 分辨 +、- 与二元 +、- 的区分 (operator context disambiguation)
+- **2025-12-04**: 分辨 `<` `>` `<<` `>>` 与 `typedef := type<typedef(,typedef)*>` 的尖括号
 - **2025-12-03**: 测试 Parser, decompiler 的全部功能
 - **2025-12-03**: 完成 `DSL-IR` 编译器 - 完整编译器 - 常量和临时变量定义, 声明, lambda 与 Component, 导入
 - **2025-12-03**: 完成 `IR-DSL` 反编译 - 块级编译器
@@ -62,13 +66,8 @@
 ## 进行中
 *按任务优先级和完成度排序, 打勾的说明已经开始, 仍未完成*
 
-- [ ] 添加 Parser, decompiler 的自动化 CI 测试
-- [ ] 修复 Parser:
-  - [ ] **post-lexing disambiguation** 区分 
-  - [ ] 一元 +、- 与二元 +、- 的区分 (operator context disambiguation)
-  - [ ] 负数的解析 (区分 2-1 与 2--1 ?)
-  - [ ] decompiler 在 {} 之前改为使用 ">>"
-  - [ ] decompiler 增加换行策略
+- [ ] decompiler 在 {} 之前改为使用 ">>"
+- [ ] decompiler 增加换行策略
 - [ ] 更新文档
 - [ ] 解析复合节点, 添加接口
 - [ ] 定义 DSL 函数签名和与原神对应关系

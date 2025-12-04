@@ -1,6 +1,6 @@
 
 import type { IR_AnchorNode, IR_BranchNode, IR_CallNode, IR_EvalNode, IR_InOutNode, IR_JumpNode, IR_Node } from "../types/IR_node.ts";
-import type { ParserState } from "../types/types.ts";
+import type { BranchId, ParserState } from "../types/types.ts";
 
 import { BUILD_IN_SYS_NODE_Set, IR_Id_Counter } from "../types/consts.ts";
 import { extractBalancedTokens } from "./balanced_extract.ts";
@@ -143,7 +143,13 @@ export function parseCallNode(s: ParserState): IR_CallNode {
     // 可能为空: () 
     while (!peekIs(s, "brackets", ")")) {
       // branchId
-      const branchId = parse_branch_id(s);
+      let branchId: BranchId | null = null;
+      if (peekIs(s, "identifier", "null")) {
+        next(s);
+        branchId = null;
+      } else {
+        branchId = parse_branch_id(s);
+      }
       expect(s, "assign", "=");
       const nodes = parseNodeChainList(s);
       ret.branches.push({ branchId, nodes });

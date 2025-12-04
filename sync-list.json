@@ -1,5 +1,5 @@
 {
-  "commitMessage": "fix bugs for parser.",
+  "commitMessage": "Verify Parser, Add CI test, Check for consistency. Add export in index.ts",
   "notSync": false,
   "include": [
     "*",

@@ -5,8 +5,9 @@ import type { ParserState } from "../types/types.ts";
 import { IR_Id_Counter } from "../types/consts.ts";
 import { extractBalancedTokens, try_capture_type } from "./balanced_extract.ts";
 import { parseExecutionBlock } from "./parse_block.ts";
-import { parse_branch_id, parse_type } from "./parse_utils.ts";
+import { parse_branch_id, parse_type, parse_var_decl } from "./parse_utils.ts";
 import { assert, expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { parseVarDecl } from "./parse_const.ts";
 
 /** 声明包含完整执行节点的子图，拥有自定义的入口和出口。
  *  ```ts
@@ -64,8 +65,9 @@ export function parseComponent(state: ParserState): ComponentDecl {
 
     if (t.value === "const") {
       // Parse local variable declaration
-      const localVar = parseLocalVar(state);
-      ret.locals.push(localVar);
+      const v = parseVarDecl(state, false);
+      assert(v.kind === "localVar");
+      ret.locals.push(v);
     } else if (t.value === "return") {
       // Parse return statement
       parseReturn(state, ret);
@@ -85,40 +87,40 @@ export function parseComponent(state: ParserState): ComponentDecl {
   return ret;
 }
 
-/** Parse local variable declaration inside component */
-function parseLocalVar(state: ParserState): LocalVarDecl {
-  const ret: LocalVarDecl = {
-    _id: IR_Id_Counter.value,
-    _srcRange: { start: src_pos(state), end: -1 },
-    kind: "localVar",
-    name: "",
-    type: { t: "b", b: "Int" },
-    default: null as any,
-  };
+// /** Parse local variable declaration inside component */
+// function parseLocalVar(state: ParserState): LocalVarDecl {
+//   const ret: LocalVarDecl = {
+//     _id: IR_Id_Counter.value,
+//     _srcRange: { start: src_pos(state), end: -1 },
+//     kind: "localVar",
+//     name: "",
+//     type: { t: "b", b: "Int" },
+//     default: null as any,
+//   };
 
-  expect(state, "identifier", "const");
-  ret.name = expect(state, "identifier").value;
+//   expect(state, "identifier", "const");
+//   ret.name = expect(state, "identifier").value;
 
-  if (peekIs(state, "symbol", ":")) {
-    next(state);
-    const typeTokens = extractBalancedTokens(state, "(", ")", 0);
-    ret.type = parse_type(typeTokens.slice(0, -1));
-  }
+//   if (peekIs(state, "symbol", ":")) {
+//     next(state);
+//     const typeTokens = extractBalancedTokens(state, "(", ")", 0);
+//     ret.type = parse_type(typeTokens.slice(0, -1));
+//   }
 
-  if (peekIs(state, "assign", "=")) {
-    next(state);
-    // Parse default value - simplified for now
-    const valueTok = next(state);
-    // TODO: properly parse NodeVar value
-  }
+//   if (peekIs(state, "assign", "=")) {
+//     next(state);
+//     // Parse default value - simplified for now
+//     const valueTok = next(state);
+//     // TODO: properly parse NodeVar value
+//   }
 
-  if (peekIs(state, "symbol", ";")) {
-    next(state);
-  }
+//   if (peekIs(state, "symbol", ";")) {
+//     next(state);
+//   }
 
-  ret._srcRange.end = src_pos(state);
-  return ret;
-}
+//   ret._srcRange.end = src_pos(state);
+//   return ret;
+// }
 
 /** Parse return statement and extract return types and branch IDs */
 function parseReturn(state: ParserState, component: ComponentDecl): void {
@@ -128,7 +130,7 @@ function parseReturn(state: ParserState, component: ComponentDecl): void {
   expect(state, "identifier", "ExecFun");
 
   // Parse return types: <{out_name: type, ...}>
-  if (peekIs(state, "symbol", "<")) {
+  if (peekIs(state, "math", "<")) {
     next(state);
     expect(state, "brackets", "{");
 
@@ -148,7 +150,7 @@ function parseReturn(state: ParserState, component: ComponentDecl): void {
     }
 
     expect(state, "brackets", "}");
-    expect(state, "symbol", ">");
+    expect(state, "math", ">");
   }
 
   // Parse branch IDs: (outBranchId, ...)

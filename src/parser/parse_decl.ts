@@ -3,7 +3,7 @@ import type { ParserState } from "../types/types.ts";
 
 import { IR_Id_Counter } from "../types/consts.ts";
 import { try_capture_type } from "./balanced_extract.ts";
-import { parse_type, parse_var_decl } from "./parse_utils.ts";
+import { parse_int, parse_type, parse_var_decl } from "./parse_utils.ts";
 import { assert, assertEq, expect, next, peek, peekIs, src_pos } from "./utils.ts";
 
 /** 全局声明和定义 (全部文件可用)
@@ -258,10 +258,11 @@ function parseTimer(state: ParserState): TimerDecl {
   assertEq(timerType, "Count", "CountDown")
   ret.countdown = timerType === "CountDown";
 
-  expect(state, "symbol", "<");
-  const timeValue = expect(state, "int").value;
-  ret.time = parseInt(timeValue);
-  expect(state, "symbol", ">");
+  expect(state, "math", "<");
+  const timeValue = parse_int(state);
+  assert(timeValue !== null && timeValue > 0, "Timer time must be non-negative");
+  ret.time = timeValue;
+  expect(state, "math", ">");
 
   if (peekIs(state, "symbol", ";")) {
     next(state);

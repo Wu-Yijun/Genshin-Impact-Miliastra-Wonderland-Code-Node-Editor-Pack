@@ -14,10 +14,10 @@ declare global {
     const state: string = "init";
     const randomBag: List<int> = [0, 1, 2, 3, 4, 5, 6]; // 比特位标志, 记录7种方块是否已出现
     const currentIndex: int = 0; // 0-6
-    /** @todo: support negative numbers */
-    // const nextBlock: int = -1; // 下一个方块的类型, 0-6
-    // const currentBlock: int = -1; // 当前方块的类型, 0-6
-    // const holdBlock: int = -1; // 保留的方块类型, -1表示没有保留
+    /** @done: support negative numbers */
+    const nextBlock: int = -1; // 下一个方块的类型, 0-6
+    const currentBlock: int = -1; // 当前方块的类型, 0-6
+    const holdBlock: int = -1; // 保留的方块类型, -1表示没有保留
 
     const existBlocks: List<int> = []; // 已存在的方块类型数组
     const level: int = 0;
@@ -32,8 +32,8 @@ declare global {
     const tetris_h: Entity; // The held tetris
 
     // current falling block shape
-    /** @todo: support struct */
-    // const f_b: FallingBlock;
+    /** @done: support struct */
+    const f_b: FallingBlock;
     // x offset of falling block
     const f_x: int; // [0, Padding, Width + Padding, Width + 2 * Padding)
     // y offset of falling block
@@ -63,9 +63,9 @@ const int_switcher = (x: int, y: int, b: boolean): int => {
   return m.int(b) * x + m.int(!b) * y;
 }
 
-/** @todo: support hex digits */
-// const WALLS = 0xFFFFFFF;
-// const NO_WALLS = 0x00000F;
+/** @done: support hex digits */
+const WALLS = 0xFFFFFFF;
+const NO_WALLS = 0x00000F;
 
 // ======================= Initialize ======================= //
 
@@ -99,8 +99,8 @@ Branch["LevelUp"].SetVal(Self.level, Self.level + 1)
 
 
 function FisherYatesShuffle() {
-  const _j;
-  const _swp;
+  const _j: int;
+  const _swp: int;
   In().Loop(1, 6)[i_init](
     true = 0(),
     false = SetVal(Self.currentIndex, 0).Out()
@@ -166,8 +166,8 @@ Branch["FetchTetris"]
   .SetVal(id, Self.currentBlock, Self.tetris_c, true)
   .SetVal(Self.f_b, extract_tetris_shape(Self.currentBlock, 0))
   // Shuffle a new Bag
-  /** @todo: distinguish comparing or type */
-  // .If(Self.currentIndex >= 7)
+  /** @done: distinguish comparing or type */
+  .If(Self.currentIndex >= 7)
   .FisherYatesShuffle();
 
 const _translate_x = 0;
@@ -184,23 +184,21 @@ Branch["GameDataUpdate"]
     "hold" = todo("Not Impl"),
     "rotL" = SetVal(Self.movement, "null").SetVal(_rotate_t, 3) >> "RotateT"(),
     "rotR" = SetVal(Self.movement, "null").SetVal(_rotate_t, 1) >> "RotateT"(),
-    /** @todo: add null branch */
-    0 = 0(),
+    /** @done: add null branch */
+    null = 0(),
   )
   .If(Self.descend_per_frame === 0)(
     true = SetVal(Self.left_frames, Self.left_frames - 1)
-      /** @todo: distinguish comparing or type */
-      .If(Self.left_frames == 0)(
-        // .If(Self.left_frames <= 0)(
+      /** @done: distinguish comparing or type */
+      .If(Self.left_frames <= 0)(
         true = "DescendOne"(),
         // false = SetVal(Self.left_frames, Self.frame_per_descend)
       ),
     false = todo("Not Implemented")
   );
 
-/** @todo: support structs */
-// const tetris_fit_in = (fb: FallingBlock, x: int, y: int) => {
-const tetris_fit_in = (fb: Unk, x: int, y: int) => {
+/** @done: support structs */
+const tetris_fit_in = (fb: FallingBlock, x: int, y: int) => {
   const { a, b, c, d, e } = fb;
   const collide = m.and(
     m.and(
@@ -262,25 +260,21 @@ Branch["DescendOne"].If(can_descend(1))(
   true = SetVal(Self.f_y, Self.f_y - 1)
     .SetVal(b, Self.f_y - Self.PADDING, Self.tetris_c, true)
     .SetVal(Self.left_frames, Self.frame_per_descend),
-  /** @todo: distinguish comparing or type */
-  // false = If(Self.lock_delay <= 0)(
-  false = If(Self.lock_delay == 0)(
+  /** @done: distinguish comparing or type */
+  false = If(Self.lock_delay <= 0)(
     true = SetVal(Self.lock_delay, Self.LOCK_DELAY),
     false = SetVal(Self.lock_delay, Self.lock_delay - 1)
-      /** @todo: distinguish comparing or type */
-      // .If(Self.lock_delay <= 0) >> "LockTetris"()
-      .If(Self.lock_delay == 0) >> "LockTetris"()
+      /** @done: distinguish comparing or type */
+      .If(Self.lock_delay <= 0) >> "LockTetris"()
   )
 );
 
 function LockTetrisAtColumn(x: int, t: int) {
   In().If(t !== 0)
-    /** @todo: distinguish comparing or type or shifting */
-    // .Modify(Self.existBlocks, x, Self.existBlocks[x] | (t << Self.f_y))
-    .Modify(Self.existBlocks, x, Self.existBlocks[x] | (t == Self.f_y))
-    /** @todo: distinguish comparing or type or shifting */
-    .SetVal(change_rows, Self.existBlocks[x] == Self.PADDING, target = Self.columns[x - Self.PADDING], trigger_event = true)
-    // .SetVal(change_rows, Self.existBlocks[x] >> Self.PADDING, target = Self.columns[x - Self.PADDING], trigger_event = true)
+    /** @done: distinguish comparing or type or shifting */
+    .Modify(Self.existBlocks, x, Self.existBlocks[x] | (t << Self.f_y))
+    /** @done: distinguish comparing or type or shifting */
+    .SetVal(change_rows, Self.existBlocks[x] >> Self.PADDING, target = Self.columns[x - Self.PADDING], trigger_event = true)
     .Out();
 };
 
@@ -299,9 +293,8 @@ Branch["TranslateX"]
   .SetVal(Self.f_x, Self.f_x + _translate_x);
 
 
-/** @todo: support structs */
-// const _temp_f_b: FallingBlock;
-const _temp_f_b: Unk;
+/** @done: support structs */
+const _temp_f_b: FallingBlock;
 Branch["RotateT"]
   .SetVal(_temp_f_b, extract_tetris_shape(Self.currentBlock, (Self.f_r + _rotate_t) % 4))
   .If(tetris_fit_in(_temp_f_b, Self.f_x, Self.f_y))

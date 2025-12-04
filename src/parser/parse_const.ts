@@ -38,7 +38,7 @@ export function parseConst(state: ParserState): LocalVarDecl | DefineDecl | Shar
  *  const sharedFuncName = Shared(ComponentName, PortId)
  * ```
  */
-function parseSharedFunc(state: ParserState): SharedFuncDecl {
+export function parseSharedFunc(state: ParserState): SharedFuncDecl {
   const ret: SharedFuncDecl = {
     _id: IR_Id_Counter.value,
     _srcRange: { start: src_pos(state), end: -1 },
@@ -79,7 +79,7 @@ function parseSharedFunc(state: ParserState): SharedFuncDecl {
  *  }
  * ```
  */
-function parseLambda(state: ParserState): LambdaDecl {
+export function parseLambda(state: ParserState): LambdaDecl {
   const ret: LambdaDecl = {
     _id: IR_Id_Counter.value,
     _srcRange: { start: src_pos(state), end: -1 },
@@ -141,7 +141,7 @@ function parseLambda(state: ParserState): LambdaDecl {
  * - LocalVarDecl: `const _var_name: type = defaultValue;`
  * - DefineDecl: `const VAR_NAME: type = defaultValue;`
  */
-function parseVarDecl(state: ParserState, isDefine: boolean): LocalVarDecl | DefineDecl {
+export function parseVarDecl(state: ParserState, isDefine: boolean): LocalVarDecl | DefineDecl {
   const ret: LocalVarDecl | DefineDecl = {
     _id: IR_Id_Counter.value,
     _srcRange: { start: src_pos(state), end: -1 },

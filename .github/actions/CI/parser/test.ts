@@ -4,6 +4,7 @@ import { decompile, ir_to_string } from "../../src/parser/decompiler.ts";
 import { src_pos } from "../../src/parser/utils.ts";
 import { readFileSync, writeFileSync } from "fs";
 import { inspect } from "util";
+import assert from "assert";
 
 function BigIntStringify(key: string, value: any) {
   if (typeof value === 'bigint') {
@@ -50,8 +51,45 @@ function main() {
   console.log("Decompile IR to generated DSL saved to `dist/GeneratedDSL.dsl.ts`");
 }
 
+/** After `dsl -> IR1 -> DSL1 -> IR2 -> DSL2`
+ * - Check if `IR1 === IR2`
+ * - Check if `DSL1 === DSL2`
+ * */
+function double_check() {
+  function remove_id(p: any) {
+    if (!p) return p;
+    if (typeof p === "object") {
+      if (p instanceof Array) {
+        p.forEach(remove_id);
+      } else {
+        delete p._id;
+        delete p._srcRange;
+        delete p.pos;
+        Object.values(p).forEach(remove_id);
+      }
+    }
+    return p;
+  }
+  try {
+    const dsl = readFileSync(import.meta.dirname + "/test.dsl.ts").toString().replaceAll("\r", "");
+    const ir1 = parse(createParserState(dsl));
+    const dsl1 = decompile(ir1);
+    const ir2 = parse(createParserState(dsl1));
+    const dsl2 = decompile(ir2);
+    assert(dsl1 === dsl2);
+    const IR1 = JSON.stringify(remove_id(ir1), BigIntStringify);
+    const IR2 = JSON.stringify(remove_id(ir2), BigIntStringify);
+    assert(IR1 === IR2);
+    console.info("Double check passed");
+  } catch (e) {
+    console.info("Double check failed");
+    console.error(e);
+  }
+}
+
 
 
 if (import.meta.main) {
   main();
+  double_check();
 }
