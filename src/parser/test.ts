@@ -2,7 +2,7 @@ import { decompile, ir_to_string } from "./decompiler.ts";
 import { parseExecutionBlock } from "./parse_block.ts";
 import { parseEval } from "./parse_node.ts";
 import { parse_args } from "./parse_utils.ts";
-import { parse } from "./parser.ts";
+import { parse } from "./types.ts";
 import { createParserState } from "./tokenizer.ts";
 import { src_pos } from "./utils.ts";
 

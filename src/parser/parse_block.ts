@@ -1,5 +1,5 @@
 import type { IR_ExecutionBlock, IR_NodeChain, IR_Trigger } from "../types/IR_node.ts";
-import type { ParserState } from "../types/parser.ts";
+import type { ParserState } from "../types/types.ts";
 
 import { IR_Id_Counter } from "../types/consts.ts";
 import { parseAnchorNode, parseCallNode, parseInOutNode, parseNode } from "./parse_node.ts";

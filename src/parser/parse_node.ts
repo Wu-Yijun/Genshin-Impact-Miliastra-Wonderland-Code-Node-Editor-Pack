@@ -1,6 +1,6 @@
 
 import type { IR_AnchorNode, IR_BranchNode, IR_CallNode, IR_EvalNode, IR_InOutNode, IR_JumpNode, IR_Node } from "../types/IR_node.ts";
-import type { ParserState } from "../types/parser.ts";
+import type { ParserState } from "../types/types.ts";
 
 import { BUILD_IN_SYS_NODE_Set, IR_Id_Counter } from "../types/consts.ts";
 import { extractBalancedTokens } from "./balanced_extract.ts";

@@ -1,6 +1,7 @@
 
 import { TOKENIZER_PATTERNS } from "../types/consts.ts";
-import type { ParserState, Token } from "../types/parser.ts";
+import type { ParserState, Token } from "../types/types.ts";
+import { post_lexing_disambiguation } from "./disambiguation.ts";
 
 export function tokenEqual(t1: Token, t2: Token) {
   return t1.value === t2.value && t1.type === t2.type;
@@ -9,7 +10,7 @@ export function tokenEqual(t1: Token, t2: Token) {
 /** Create a new parser state */
 export function createParserState(source: string): ParserState {
   const src = source.replaceAll("\r", "")
-  const tokens = tokenize(src);
+  const tokens = post_lexing_disambiguation(tokenize(src));
   return {
     tokens,
     index: 0,

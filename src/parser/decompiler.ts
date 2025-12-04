@@ -1,6 +1,6 @@
 import { stringify, type NodeType } from "../../utils/gia_gen/nodes.ts";
 import type { NodeVar } from "../types/class.ts";
-import type { Token } from "../types/parser.ts";
+import type { Token } from "../types/types.ts";
 import type {
   ComponentDecl,
   DefineDecl,

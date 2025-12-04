@@ -1,6 +1,6 @@
 import type { NodeType } from "../../utils/gia_gen/nodes.ts";
 import { BUILD_IN_SYS_NODE } from "./consts.ts";
-import type { Token } from "./parser.ts";
+import type { Token } from "./types.ts";
 import type { BranchId, IRBase } from "./types.ts";
 
 /**

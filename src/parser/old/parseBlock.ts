@@ -1,4 +1,4 @@
-import type { ParserState, Token } from "../types/parser.ts";
+import type { ParserState, Token } from "../types/types.ts";
 import { TOKEN_GROUPS, TOKENS } from "./consts.ts";
 import {
   assert,

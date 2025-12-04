@@ -1,7 +1,7 @@
 import { NodeType } from "../../utils/gia_gen/nodes.ts";
 import { LocalVarDecl } from "./IR_decl.ts";
 import { IR_ExecutionBlock } from "./IR_node.ts";
-import { Token } from "./parser.ts";
+import { Token } from "./types.ts";
 import { BranchId, IRBase } from "./types.ts";
 
 /** 声明共享复合节点

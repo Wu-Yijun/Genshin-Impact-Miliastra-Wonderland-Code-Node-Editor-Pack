@@ -1,6 +1,6 @@
 import type { NodeType } from "../../utils/index.ts";
 import type { IR_FunctionArg } from "../types/IR_node.ts";
-import type { ParserState, Token } from "../types/parser.ts";
+import type { ParserState, Token } from "../types/types.ts";
 import type { BranchId, IR_NodeVarValue } from "../types/types.ts";
 import { TOKEN_GROUPS, TOKENS, UNK_TYPE } from "../types/consts.ts";
 import { extractBalancedTokens, splitBalancedTokens, try_capture_type } from "./balanced_extract.ts";

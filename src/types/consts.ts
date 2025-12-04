@@ -1,6 +1,6 @@
 import type { NodeType } from "../../utils/index.ts";
 import { Counter } from "../../utils/index.ts";
-import type { PatternTypes, Token } from "./parser.ts";
+import type { PatternTypes, Token } from "./types.ts";
 
 export const IR_Id_Counter = new Counter();
 
@@ -12,11 +12,11 @@ export const TOKENS = {
   openParentheses: { type: "brackets", value: "(", pos: 0 },
   openSquare: { type: "brackets", value: "[", pos: 0 },
   openCurly: { type: "brackets", value: "{", pos: 0 },
-  openAngle: { type: "symbol", value: "<", pos: 0 },
+  openAngle: { type: "brackets", value: "<", pos: 0 },
   closeParentheses: { type: "brackets", value: ")", pos: 0 },
   closeSquare: { type: "brackets", value: "]", pos: 0 },
   closeCurly: { type: "brackets", value: "}", pos: 0 },
-  closeAngle: { type: "symbol", value: ">", pos: 0 },
+  closeAngle: { type: "brackets", value: ">", pos: 0 },
   comma: { type: "symbol", value: ",", pos: 0 },
 } as const satisfies Record<string, Token>;
 
@@ -42,8 +42,6 @@ export const TOKENIZER_PATTERNS = [
   { type: "whitespace", regex: /^[\s\r\n\t]+/ },
   { type: "comment", regex: /^\/\/.*/ },
   { type: "comment", regex: /^\/\*.*?\*\//s },
-  // { type: "right", regex: /^>>/ }, // undistinguished from two closing angle brackets
-  // { type: "left", regex: /^<</ },  // undistinguished from two opening angle brackets
   { type: "arrow", regex: /^=>/ },
   { type: "equal", regex: /^==(=)?/ },
   { type: "assign", regex: /^=/ },
@@ -53,10 +51,10 @@ export const TOKENIZER_PATTERNS = [
   { type: "float", regex: /^(([1-9]([0-9_]*)|0))\.([0-9]([0-9_]*))?|^\.([0-9]([0-9_]*))/ },
   { type: "int", regex: /^[1-9]([0-9_]*)|^0/ },
   { type: "string", regex: /^"(?:[^"\\]|\\.)*"|^'(?:[^'\\]|\\.)*'|^`(?:[^`\\]|\\.)*`/ },
-  { type: "brackets", regex: /^[\[\]\(\)\{\}]/ },
+  { type: "brackets", regex: /^[\[\]\(\)\{\}<>]/ },
   { type: "decorator", regex: /^[@]/ },
   { type: "dot", regex: /^[\.]/ },
-  { type: "symbol", regex: /^[,;:<>]/ },
+  { type: "symbol", regex: /^[,;:]/ },
   { type: "math", regex: /^[+\-*\/^&|~!%|]/ },
   { type: "Unknown", regex: /^./ },
 ] as const satisfies { type: PatternTypes; regex: RegExp }[];

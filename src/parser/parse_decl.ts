@@ -1,5 +1,5 @@
 import type { GlobalDecl, GlobalVarDecl, NodeVarDecl, SignalDecl, StructDecl, TimerDecl } from "../types/IR_decl.ts";
-import type { ParserState } from "../types/parser.ts";
+import type { ParserState } from "../types/types.ts";
 
 import { IR_Id_Counter } from "../types/consts.ts";
 import { try_capture_type } from "./balanced_extract.ts";

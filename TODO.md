@@ -66,6 +66,8 @@
   - [ ] **post-lexing disambiguation** 区分 
   - [ ] 一元 +、- 与二元 +、- 的区分 (operator context disambiguation)
   - [ ] 负数的解析 (区分 2-1 与 2--1 ?)
+  - [ ] decompiler 在 {} 之前改为使用 ">>"
+  - [ ] decompiler 增加换行策略
 - [ ] 更新文档
 - [ ] 解析复合节点, 添加接口
 - [ ] 定义 DSL 函数签名和与原神对应关系

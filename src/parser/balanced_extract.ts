@@ -1,5 +1,5 @@
 import { tokenEqual } from "./tokenizer.ts";
-import type { ParserState, Token } from "../types/parser.ts";
+import type { ParserState, Token } from "../types/types.ts";
 import { expect, next, peek } from "./utils.ts";
 
 /** Extract content between balanced tokens, including the boundaries */
