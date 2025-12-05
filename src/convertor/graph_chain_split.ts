@@ -176,13 +176,13 @@ export function analyzeGraph(nodes: number[], edges: Edge[]): ChainResult {
       let next = v;
       while (true) {
         // 终点（sink）
-        if (outDeg.get(next) === 0) {
+        if (outDeg.get(next) === 0 && inDeg.get(next) == 1) {
           chainNodes.push(next);
           targets.push(null);
           break;
         }
 
-        // 不加入链：合并/分叉点(in!=1 || out!=1)
+        // 不加入链：合并/分叉点（入度!=1 或 出度!=1），但要避免 sink 误被当作链尾节点加入链
         if (inDeg.get(next)! !== 1 || outDeg.get(next)! !== 1) {
           targets.push(next);
           break;
@@ -223,7 +223,7 @@ export function analyzeGraph(nodes: number[], edges: Edge[]): ChainResult {
 /* 示例（可在本地 TypeScript 环境测试）：
  
 const nodes = [1,2,3,4,5,6,7,8];
-const edges: Edge[] = [[1,2],[2,3],[3,4],[4,2],[1,5],[5,6],[6,7],[7,8]];
+const edges: Edge[] = [[1,2],[2,3],[3,4],[2,4],[1,5],[5,6],[6,7],[7,8]];
 // 这里 2-3-4 是一个纯环（2->3->4->2），starter = 2
 // 1->2 链会进入环，1 的一条链为 [1], target = 2
 // 1->5->6->7->8 是一条链，终点 8 为 sink, target = null
@@ -234,6 +234,6 @@ console.log(analyzeGraph(nodes, edges));
 
 if (import.meta.main) {
   const nodes = [1, 2, 3, 4, 5, 6, 7, 8];
-  const edges: Edge[] = [[1, 2], [2, 3], [3, 4], [4, 2], [5, 6], [6, 7], [7, 5]];
+  const edges: Edge[] = [[1, 2], [2, 3], [3, 4], [2, 4], [5, 6], [6, 7], [7, 5]];
   console.dir(analyzeGraph(nodes, edges), { depth: null });
 }

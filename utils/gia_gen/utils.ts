@@ -3,6 +3,9 @@ export class Counter {
   constructor(start_from: number = 0) {
     this.count = start_from;
   }
+  set lower_bound(v: number) {
+    if (v > this.count) this.count = v;
+  }
   get value() {
     this.count++;
     return this.count;
