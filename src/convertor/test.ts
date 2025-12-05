@@ -44,6 +44,7 @@ function testAnalyzeGraph(max_id: number = 10000, nodeCount: number = 20, edgeCo
 
   for (const group of res.chain) {
     const { starter, chains, targets } = group;
+    assert(chains.length === targets.length && chains.length > 0, `链与目标数量不匹配: ${chains.length} != ${targets.length}`);
 
 
     for (let i = 0; i < chains.length; i++) {
@@ -87,16 +88,17 @@ function testAnalyzeGraph(max_id: number = 10000, nodeCount: number = 20, edgeCo
 
 class Test {
   static analyzeGraph(iter = 1000, max_count: number = 50) {
+    console.log("开始随机测试 analyzeGraph...","参数:","iter =", iter, ", max_count =", max_count);
     for (let i = 0; i < iter; i++) {
       const count = randomInt(max_count) + 1;
       const edgeNum = randomInt(count * (count - 1) / 2);
       const max_id = count * (randomInt(10) + 1);
-      testAnalyzeGraph(10000, count, edgeNum);
+      testAnalyzeGraph(max_id, count, edgeNum);
     }
-    console.log("随机测试通过");
+    console.log("随机测试通过!");
   }
 }
 
 if (import.meta.main) {
-  Test.analyzeGraph(1000, 100);
+  Test.analyzeGraph(2000, 100);
 }
