@@ -43,6 +43,9 @@ class RawIRModuleBuilder {
     this.addNodeAnchor();
     this.modifyCases();
     // link as chain
+    this.createAllChain();
+
+    // Link starter/Anchor with chain.
 
 
     return {
@@ -114,7 +117,9 @@ class RawIRModuleBuilder {
    *  - node with single in_deg but not the first: Selector Func for it. saved to id2selector
    *  - node with single out_deg but not the first: modified to Cases on itself to jump out
    *  - node with multi out_deg and are not shared: create anchor before it saving to id2anchor
-   *  - node with multi out_deg: modified to Cases on itself; 
+   *  - node with multi out_deg: modified to Cases on itself; <--- not considered before chain makes
+   * 
+   * nodes could be (shared, anchored, )
    * */
   addAnchor() {
     for (const id of this.pin2flow.keys()) {
@@ -218,7 +223,7 @@ class RawIRModuleBuilder {
       const out_deg = this.structure!.out_deg.get(id._id)!;
       if (out_deg === 0) continue;
       const index = remove_duplicates(this.graph.get_flows_from(node).map(f => f.from_index));
-      if (index.length === 0) {
+      if (index.length === 1) {
         id.branches.push(ir_branch_jump_to(branch_name(index[0]), 0));
         continue;
       } else {
@@ -254,6 +259,8 @@ class RawIRModuleBuilder {
   }
   /** starter node id --> list of chains */
   starter_chains: Map<number, IR_NodeChain[]> = new Map();
+  /** Notice! only save the FIRST created Shared Instance for some id */
+  id2shared: Map<number, IR_CallNode> = new Map();
   /** chain -> Jump to merge branch. exclude starter node/branches */
   createAllChain() {
     for (const chains of this.structure!.chain) {
@@ -263,8 +270,23 @@ class RawIRModuleBuilder {
 
         const target = chains.targets[i];
         if (target !== null) {
-          assert(this.id2anchor.has(target));
-          chain.push(ir_jump_to(anchor_name(target)));
+          if (this.id2anchor.has(target)) {
+            // jump to some anchor (before pins, or before single in multi out node)
+            chain.push(ir_jump_to(anchor_name(target)));
+          } else {
+            // call for shared decl
+            const ir_node = this.node2id.get(this.id2node.get(target)!)!;
+            assert(ir_node.kind === "call");
+            const shared = this.id2shared_decl.get(target);
+            assert(shared !== undefined);
+            const from_pin = chain[chain.length - 1];
+            const index = this.pin2flow.get(from_pin._id)![1];
+            assert(index !== undefined);
+            const node = ir_call_shared(shared, index);
+            move_data(node, ir_node);
+            if (this.id2shared.get(target) === undefined) this.id2shared.set(target, node);
+            chain.push(node);
+          }
         }
 
         res.push({
@@ -279,6 +301,27 @@ class RawIRModuleBuilder {
     }
   }
 
+  linkChainToBranches() {
+    for (const chain of this.structure!.chain) {
+      const branch = this.id2branch.get(chain.starter);
+      if (branch === undefined) continue;
+      branch.branches.push(...this.starter_chains.get(chain.starter)!.map((nodes, id) => ({ id, nodes: [nodes] })));
+    }
+  }
+  linkChainToCases() {
+    for (const chain of this.structure!.chain) {
+      const selector = this.id2selector.get(chain.starter);
+      if (selector === undefined) continue;
+      selector.branches.push(...this.starter_chains.get(chain.starter)!.map((nodes, id) => ({ branchId: branch_name(id), nodes: [nodes] })));
+    }
+  }
+
+  /**
+   * Starters should be either:
+   * - Node whose in_deg = 0
+   * - Node with branch before
+   * - 
+   */
 }
 
 function move_data(dest: IR_CallNode, src: IR_CallNode) {
@@ -319,29 +362,6 @@ function ir_jump_to(target: BranchId): IR_JumpNode {
 }
 
 
-function ir_selector_node(node: IR_Node, index: number): IR_CallNode {
-  assert(node.kind === "call");
-  return {
-    kind: "call",
-    class: "Sys",
-    specific: "Selector",
-    name: "Selector",
-    inputs: [{
-      expr: [{ type: "identifier", value: node.name, pos: 0 }],
-      name: null,
-      type: null,
-    }, {
-      expr: [{ type: "string", value: branch_name(index), pos: 0 }],
-      name: null,
-      type: null,
-    }],
-    outputs: [],
-    branches: [],
-    _id: IR_Id_Counter.value,
-    _srcRange,
-  }
-}
-
 function anchor_name(id: number): string {
   return "ANCHOR_" + id;
 }
@@ -362,7 +382,7 @@ function token_branch_id(id: BranchId): Token {
   throw new Error("Invalid branch id type");
 }
 
-function ir_shared_node(node: SharedFuncDecl, port: BranchId): IR_CallNode {
+function ir_call_shared(node: SharedFuncDecl, port: BranchId): IR_CallNode {
   return {
     kind: "call",
     class: "Sys",
@@ -378,6 +398,7 @@ function ir_shared_node(node: SharedFuncDecl, port: BranchId): IR_CallNode {
     _srcRange,
   };
 }
+
 
 function ir_node(n: Node): IR_Node {
   const gid = n.GenericId;
