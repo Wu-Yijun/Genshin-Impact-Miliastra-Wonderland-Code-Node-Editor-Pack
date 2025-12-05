@@ -1,7 +1,7 @@
 
 import assert from "assert";
 import { helper, Graph, Node, Connect, todo, gia_node } from "../../utils/index.ts";
-import type { ComponentDecl, IR_AnchorNode, IR_CallNode, IR_ExecutionBlock, IR_FunctionArg, IR_GraphModule, IR_InOutNode, IR_JumpNode, IR_Node, IR_NodeChain, IR_Trigger, SharedFuncDecl } from "../types/IR.ts";
+import type { ComponentDecl, IR_AnchorNode, IR_BranchNode, IR_CallNode, IR_ExecutionBlock, IR_FunctionArg, IR_GraphModule, IR_InOutNode, IR_JumpNode, IR_Node, IR_NodeChain, IR_Trigger, SharedFuncDecl } from "../types/IR.ts";
 import { IR_Id_Counter } from "../types/consts.ts";
 import { analyzeGraph, ChainResult } from "./graph_chain_split.ts";
 import type { BranchId, Token } from "../types/types.ts";
@@ -20,11 +20,7 @@ class RawIRModuleBuilder {
   pin2flow: Map<number, [number, number]> = new Map();
   /** {node id}-{in/out}-{pin index} to pin id */
   str2pin_id: Map<string, number> = new Map();
-  /** virtual node: anchor */
-  id2anchor: Map<number, IR_AnchorNode> = new Map();
-  /** id to some first shared node's call */
-  id2shared: Map<number, IR_CallNode> = new Map();
-  chains: IR_Node[][] = [];
+
 
   structure: null | ChainResult = null;
 
@@ -39,9 +35,16 @@ class RawIRModuleBuilder {
       [...this.id2node.keys(), ...this.pin2flow.keys()],
       this.flows,
     );
-    this.initAnchors();
-    this.createChain();
-    this.addBranches();
+    // Add anchors, branches, shared decls, selectors, and modify cases
+    this.addAnchor();
+    this.addBranch();
+    this.addSharedDecl();
+    this.addSelectorDecl();
+    this.addNodeAnchor();
+    this.modifyCases();
+    // link as chain
+
+
     return {
       kind: "module",
       imports: [],
@@ -99,147 +102,203 @@ class RawIRModuleBuilder {
       }
     }
   }
-  initAnchors() {
-    for (const { targets } of this.structure!.chain) {
-      for (const t of targets) {
-        if (t === null) continue;
-        if (this.id2anchor.has(t)) continue;
-        // test if it is a node
-        if (this.id2node.has(t)) {
-          // add shared node decl
-          this.addSharedNode(this.id2node.get(t)!);
-          const chain = this.structure?.chain.find(c => c.starter === t);
-          if (!chain) {
-            // good. no outgoing branches
-            continue;
-          }
-          for (let k = 0; k < chain.chains.length; k++) {
-            const out_pin = chain.chains[k][1];
-            assert(out_pin !== undefined);
-            assert(!this.id2anchor.has(out_pin));
-            this.id2anchor.set(out_pin, {
-              kind: "anchor",
-              id: anchor_name(t) + "_" + branch_name(k),
-              _id: IR_Id_Counter.value,
-              _srcRange
-            });
-          }
-          continue;
-        }
-        // always it is a in pin
-        assert(!this.id2anchor.has(t));
-        this.id2anchor.set(t, {
+
+  id2anchor: Map<number, IR_AnchorNode> = new Map();
+  id2branch: Map<number, IR_BranchNode> = new Map();
+  id2shared_decl: Map<number, SharedFuncDecl> = new Map();
+  id2selector: Map<number, IR_CallNode> = new Map();
+  /** 循环遍历每一个节点, 如果发现这些特征, 则创建这些节点:
+   *  - in pin with multi in_deg: Anchor before it. saved to id2anchor
+   *  - out pin with multi out_deg: Branch after it. saved to id2branch
+   *  - node with multi in_deg: Shared Func for it. saved to id2shared_decl
+   *  - node with single in_deg but not the first: Selector Func for it. saved to id2selector
+   *  - node with single out_deg but not the first: modified to Cases on itself to jump out
+   *  - node with multi out_deg and are not shared: create anchor before it saving to id2anchor
+   *  - node with multi out_deg: modified to Cases on itself; 
+   * */
+  addAnchor() {
+    for (const id of this.pin2flow.keys()) {
+      const in_deg = this.structure!.in_deg.get(id)!;
+      // const out_deg = this.structure!.out_deg.get(node_id)!;
+      if (in_deg > 1) { // must be in pin
+        // anchor
+        this.id2anchor.set(id, {
           kind: "anchor",
-          id: anchor_name(t),
           _id: IR_Id_Counter.value,
-          _srcRange
+          _srcRange,
+          id: anchor_name(id),
         });
-        // to check it is a in pin
-        const flow_id = this.pin2flow.get(t);
-        assert(flow_id !== undefined && this.str2pin_id.get(`${flow_id[0]}-in-${flow_id[1]}`) === t);
       }
     }
   }
-  shared_nodes: Map<Node, SharedFuncDecl> = new Map();
-  /** Add shared node to module */
-  addSharedNode(n: Node) {
-    if (this.shared_nodes.has(n)) return;
-    const ir_node = this.node2id.get(n)!;
-    assert(ir_node.kind === "call");
-    const node: SharedFuncDecl = {
-      kind: "shared",
-      name: ir_node.name + "_" + ir_node._id,
-      component_name: ir_node.name,
-      port: null,
-      _id: IR_Id_Counter.value,
-      _srcRange,
+  addBranch() {
+    for (const id of this.pin2flow.keys()) {
+      const out_deg = this.structure!.out_deg.get(id)!;
+      if (out_deg > 1) { // must be out pin
+        // branch
+        this.id2branch.set(id, {
+          kind: "branch",
+          _id: IR_Id_Counter.value,
+          _srcRange,
+          branches: []
+        });
+      }
     }
-    assert(!this.shared_nodes.has(n));
-    this.shared_nodes.set(n, node);
+  }
+  addSharedDecl() {
+    for (const id of this.node2id.values()) {
+      const in_deg = this.structure!.in_deg.get(id._id)!;
+      assert(id.kind === "call");
+      // const out_deg = this.structure!.out_deg.get(node_id)!;
+      if (in_deg > 1) {
+        // shared decl
+        this.id2shared_decl.set(id._id, {
+          kind: "shared",
+          _id: IR_Id_Counter.value,
+          _srcRange,
+          name: id.name + "_" + id._id,
+          component_name: id.name,
+          port: null
+        });
+      }
+    }
+  }
+  addSelectorDecl() {
+    for (const [node, id] of this.node2id) {
+      assert(id.kind === "call");
+      const in_deg = this.structure!.in_deg.get(id._id)!;
+      if (in_deg !== 1) continue;
+      const index = remove_duplicates(this.graph.get_flows_to(node).map(f => f.to_index));
+      assert(index.length === 1);
+      if (index[0] === 0) continue;
+      // selector
+      this.id2selector.set(id._id, {
+        kind: "call",
+        _id: IR_Id_Counter.value,
+        _srcRange,
+        class: "Sys",
+        name: "Selector",
+        specific: "Selector",
+        inputs: [{
+          expr: [{
+            type: "identifier",
+            value: id.name,
+            pos: 0
+          }, {
+            type: "int",
+            value: index[0].apply.toString(),
+            pos: 0
+          }],
+          name: null,
+          type: null
+        }],
+        outputs: [],
+        branches: []
+      });
+    }
+  }
+  addNodeAnchor() {
+    for (const id of this.node2id.values()) {
+      assert(id.kind === "call");
+      const out_deg = this.structure!.out_deg.get(id._id)!;
+      if (out_deg <= 1) continue;
+      if (this.id2shared_decl.has(id._id)) continue;
+      // anchor before
+      this.id2anchor.set(id._id, {
+        kind: "anchor",
+        _id: IR_Id_Counter.value,
+        _srcRange,
+        id: anchor_name(id._id),
+      });
+    }
+  }
+  modifyCases() {
+    for (const [node, id] of this.node2id) {
+      assert(id.kind === "call");
+      const out_deg = this.structure!.out_deg.get(id._id)!;
+      if (out_deg === 0) continue;
+      const index = remove_duplicates(this.graph.get_flows_from(node).map(f => f.from_index));
+      if (index.length === 0) {
+        id.branches.push(ir_branch_jump_to(branch_name(index[0]), 0));
+        continue;
+      } else {
+        for (const i of index.sort()) {
+          id.branches.push(ir_branch_jump_to(branch_name(i), undefined));
+        }
+      }
+    }
+  }
+
+
+  createChain(chain: number[]): IR_Node[] {
+    const nodes: IR_Node[] = [];
+    for (let j = 1; j < chain.length; j++) {
+      const id = chain[j];
+      const ir_node = this.node2id.get(this.id2node.get(id)!)!;
+      assert(ir_node.kind === "call");
+      // skip pins
+      if (!this.id2node.has(id)) {
+        continue;
+      }
+      const selector = this.id2selector.get(id);
+      if (selector !== undefined) {
+        // use selector
+        move_data(selector, ir_node);
+        nodes.push(selector);
+      } else {
+        // use node
+        nodes.push(ir_node);
+      }
+    }
+    return nodes;
   }
   /** starter node id --> list of chains */
   starter_chains: Map<number, IR_NodeChain[]> = new Map();
   /** chain -> Jump to merge branch. exclude starter node/branches */
-  createChain() {
+  createAllChain() {
     for (const chains of this.structure!.chain) {
       const res: IR_NodeChain[] = [];
       for (let i = 0; i < chains.chains.length; i++) {
-        const chain = chains.chains[i];
-        const nodes: IR_Node[] = [];
-        for (let j = 1; j < chain.length; j++) {
-          const id = chain[j];
-          const ir_node = this.node2id.get(this.id2node.get(id)!)!;
-          assert(ir_node.kind === "call");
-          // skip pins
-          if (!this.id2node.has(id)) {
-            continue;
-          }
-          const in_pin = chain[j - 1];
-          const in_node = this.pin2flow.get(in_pin);
-          assert(in_node !== undefined && in_node[0] === id);
-          if (in_node[1] !== 0) {
-            nodes.push(ir_selector_node(ir_node, in_node[1]));
-          } else {
-            nodes.push(ir_node);
-          }
+        const chain = this.createChain(chains.chains[i]);
 
-          const out_pin = j === chain.length - 1 ? chains.targets[i] : chain[j + 1];
-          assert(out_pin !== undefined);
-          if (out_pin === null) continue;
-          const out_node = this.pin2flow.get(out_pin);
-          assert(out_node !== undefined && out_node[0] === id);
-          if (out_node[1] !== 0) {
-            ir_node.branches.push(ir_branch_jump_zero(branch_name(out_node[1])));
-          }
-        }
         const target = chains.targets[i];
         if (target !== null) {
-          if (this.id2node.has(target)) {
-            const last_node = nodes[nodes.length - 1]; // should be in pin
-            // shared node
-            const ir_shared = this.shared_nodes.get(this.id2node.get(target)!)!;
-            const branch_index = this.pin2flow.get(last_node._id)![1];
-            // add shared call
-            nodes.push(ir_shared_node(ir_shared, branch_index));
-            // add shared node call to next node jump
-            nodes.push(ir_jump_node(anchor_name(target)));
-          } else {
-            // anchor node
-            nodes.push(ir_jump_node(anchor_name(target)));
-          }
+          assert(this.id2anchor.has(target));
+          chain.push(ir_jump_to(anchor_name(target)));
         }
+
         res.push({
           kind: "chain",
-          chain: nodes,
+          chain: chain,
           suspend: false,
           _id: IR_Id_Counter.value,
           _srcRange,
         });
       }
-      assert(!this.starter_chains.has(chains.starter));
       this.starter_chains.set(chains.starter, res);
     }
   }
-  addBranches() {
-    for (const chain of this.structure!.chain) {
-      if (chain.chains.length <= 1) continue;
-      const fragments = this.starter_chains.get(chain.starter);
-      // **Node** with multiple outgoing branches
-      // Node **Pin** with parallel branches
-      if (this.id2node.has(chain.starter)) { // Node
-        const ir_node = this.node2id.get(this.id2node.get(chain.starter)!)!;
-      } else { // Pin
-        // Branching node
 
-      }
-    }
-  }
 }
 
-function ir_branch_jump_zero(branch_id?: BranchId | null): IR_CallNode["branches"][number] {
+function move_data(dest: IR_CallNode, src: IR_CallNode) {
+  dest.branches.push(...src.branches.splice(0));
+  dest.inputs.push(...src.inputs.splice(0));
+  dest.outputs.push(...src.outputs.splice(0));
+}
+
+function remove_duplicates<T>(arr: T[]): T[] {
+  if (arr.length <= 1) return arr;
+  return [...new Set(arr)];
+}
+
+/** branch_id is the branch id of the node, jump_to is the branch id of the next node
+ * By not setting jump_to, the chain will set to empty
+ */
+function ir_branch_jump_to(branch_id?: BranchId | null, jump_to?: BranchId): IR_CallNode["branches"][number] {
   const chain: IR_NodeChain = {
     kind: "chain",
-    chain: [ir_jump_zero()],
+    chain: jump_to === undefined ? [] : [ir_jump_to(jump_to)],
     suspend: false,
     _id: IR_Id_Counter.value,
     _srcRange,
@@ -250,14 +309,15 @@ function ir_branch_jump_zero(branch_id?: BranchId | null): IR_CallNode["branches
   }
 }
 
-function ir_jump_zero(): IR_JumpNode {
+function ir_jump_to(target: BranchId): IR_JumpNode {
   return {
     kind: "jump",
-    id: 0,
+    id: target,
     _id: IR_Id_Counter.value,
     _srcRange,
   }
 }
+
 
 function ir_selector_node(node: IR_Node, index: number): IR_CallNode {
   assert(node.kind === "call");
@@ -288,15 +348,6 @@ function anchor_name(id: number): string {
 
 function branch_name(index: number): string {
   return "index_" + index;
-}
-
-function ir_jump_node(target: string): IR_JumpNode {
-  return {
-    kind: "jump",
-    id: target,
-    _id: IR_Id_Counter.value,
-    _srcRange,
-  }
 }
 
 function token_branch_id(id: BranchId): Token {

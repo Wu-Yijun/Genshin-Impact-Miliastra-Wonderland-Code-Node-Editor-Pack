@@ -40,6 +40,8 @@ type Edge = [number, number];
 export interface ChainResult {
   single: number[];
   chain: { starter: number; chains: number[][]; targets: (number | null)[] }[];
+  in_deg: Map<number, number>;
+  out_deg: Map<number, number>;
 }
 
 export function analyzeGraph(nodes: number[], edges: Edge[]): ChainResult {
@@ -211,7 +213,7 @@ export function analyzeGraph(nodes: number[], edges: Edge[]): ChainResult {
   chainResults.sort((a, b) => a.starter - b.starter);
   single.sort((a, b) => a - b);
 
-  return { single, chain: chainResults };
+  return { single, chain: chainResults, in_deg: inDeg, out_deg: outDeg };
 }
 
 
