@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-22+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-24+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
 **原神千星奇域节点图开发的综合工具集**
 
@@ -145,50 +145,50 @@ const compOp = ENUM_VALUE.ComparisonOperators_EqualTo;
 
 ```
 .
-├── src/                      # 核心源代码
-│   ├── convertor/            # GIA ⇔ IR 转换器
-│   │   ├── gia_ir.ts         #   转换入口
-│   │   ├── gia_ir_raw.ts     #   原始 IR 构建器
-│   │   └── graph_chain_split.ts  #   图结构分析算法
-│   ├── parser/               # DSL 解析器
-│   │   ├── tokenizer.ts      #   词法分析
-│   │   ├── parser.ts         #   语法分析
-│   │   ├── decompiler.ts     #   IR → DSL 反编译
-│   │   └── parse_*.ts        #   子解析器
-│   └── types/                # IR 类型定义
-│       ├── IR*.ts            #   IR 节点类型
-│       ├── types.ts          #   基础类型
-│       └── consts.ts         #   常量定义
+├── src/                          # 核心源代码
+│   ├── convertor/                # GIA ⇔ IR 转换器
+│   │   ├── gia_ir.ts             #     转换入口
+│   │   ├── gia_ir_raw.ts         #     原始 IR 构建器
+│   │   └── graph_chain_split.ts  #  图结构分析算法
+│   ├── parser/                 # DSL 解析器
+│   │   ├── tokenizer.ts        #     词法分析
+│   │   ├── parser.ts           #     语法分析
+│   │   ├── decompiler.ts       #     IR → DSL 反编译
+│   │   └── parse_*.ts          #     子解析器
+│   └── types/                  # IR 类型定义
+│       ├── IR*.ts              #     IR 节点类型
+│       ├── types.ts            #     基础类型
+│       └── consts.ts           #     常量定义
+│ 
+├── utils/                      # 工具库
+│   ├── gia_gen/                # GIA 图生成器
+│   │   ├── graph.ts            #     Graph 类 (推荐)
+│   │   ├── basic.ts            #     基础组件生成
+│   │   ├── nodes.ts            #     节点生成器
+│   │   ├── auto_layout.ts      #     自动布局算法
+│   │   └── ......              #     其他组件
+│   ├── node_data/              # 节点静态数据
+│   │   ├── node_id.ts          #     节点 ID 映射
+│   │   ├── enum_id.ts          #     枚举定义
+│   │   ├── helpers.ts          #     查询辅助函数
+│   │   └── ......              #     其他静态定义
+│   ├── protobuf/               # Protobuf 工具
+│   │   ├── gia.proto           #     Protobuf 结构定义
+│   │   ├── decode.ts           #     TypeScript 编解码 (规范结构)
+│   │   ├── decode.py           #     Python 编解码 (可显示未知字段)
+│   │   └── gia.proto.ts        #     自动生成的类型
+│   ├── functions/              # DSL 函数定义
+│   │   ├── math.ts             #     函数定义列表
+│   │   └── function_defs.ts    #     类型系统和解析器
+│   └── gen_def.ts              # DSL 类型定义生成器
 │
-├── utils/                    # 工具库
-│   ├── gia_gen/              # GIA 图生成器
-│   │   ├── graph.ts          #     Graph 类 (推荐)
-│   │   ├── basic.ts          #     基础组件生成
-│   │   ├── nodes.ts          #     节点生成器
-│   │   ├── auto_layout.ts    #     自动布局算法
-│   │   └── ......            #     其他组件
-│   ├── node_data/            # 节点静态数据
-│   │   ├── node_id.ts        #     节点 ID 映射
-│   │   ├── enum_id.ts        #     枚举定义
-│   │   ├── helpers.ts        #     查询辅助函数
-│   │   └── ......            #     其他静态定义
-│   ├── protobuf/             # Protobuf 工具
-│   │   ├── gia.proto         #     Protobuf 结构定义
-│   │   ├── decode.ts         #     TypeScript 编解码 (规范结构)
-│   │   ├── decode.py         #     Python 编解码 (可显示未知字段)
-│   │   └── gia.proto.ts      #     自动生成的类型
-│   ├── functions/            # DSL 函数定义
-│   │   ├── math.ts           #     函数定义列表
-│   │   └── function_defs.ts  #     类型系统和解析器
-│   └── gen_def.ts            # DSL 类型定义生成器
+├── docs/                       # 用户文档
+│   ├── UserGuide.md            # DSL 使用手册
+│   ├── SystemDesign.md         # 语言设计文档
+│   └── dsl.enbf                # DSL 语法规范
 │
-├── docs/                     # 用户文档
-│   ├── UserGuide.md          # DSL 使用手册
-│   ├── SystemDesign.md       # 语言设计文档
-│   └── dsl.enbf              # DSL 语法规范
-│
-├── test.CI/                  # CI 测试用例
-└── static/                   # 静态资源
+├── test.CI/                    # CI 测试用例 (github actions运行)
+└── static/                     # 图片资源 (Readme.md显示)
 ```
 
 ---
@@ -197,7 +197,7 @@ const compOp = ENUM_VALUE.ComparisonOperators_EqualTo;
 
 ### 环境要求
 
-- **Node.js** 22+
+- **Node.js** 23.6+
 - **npm** 或 **pnpm**
 
 ### 安装依赖
@@ -209,14 +209,7 @@ npm install
 ### 运行示例
 
 ```bash
-# 运行解析器测试
-node src/test/parser.ts
-
-# 生成 DSL 类型定义文件
-node utils/gen_def.ts
-
-# 运行 GIA 生成测试
-node utils/gia_gen/test.ts
+// 进行中, 暂无完整示例
 ```
 
 ### 快速使用
@@ -298,7 +291,7 @@ encode_gia_file("./newGraph.gia", graph.encode());
 
 ## GIA 文件格式
 
-[.gia](cci:7://file:///d:/Program/GenshinImpact/projs/Convertor/static/link.gia:0:0-0:0) 文件是原神千星奇域节点图的二进制存储格式，使用 Protobuf 序列化。
+`.gia` 文件是原神千星奇域节点图的二进制存储格式，使用 Protobuf 序列化。
 
 ![GIA 文件结构](./static/image.png)
 
@@ -354,7 +347,7 @@ encode_gia_file("./newGraph.gia", graph.encode());
 
 ## 文件可见性
 
-根据 [sync-list.json](cci:7://file:///d:/Program/GenshinImpact/projs/Convertor/sync-list.json:0:0-0:0)，以下内容仅在开发分支 (`dev`) 可见：
+根据 [sync-list.json](./sync-list.json)，以下内容仅在开发分支 (`dev`) 可见：
 
 | 路径 | 原因 |
 | :--- | :--- |
@@ -371,7 +364,7 @@ encode_gia_file("./newGraph.gia", graph.encode());
 | 项目 | 说明 |
 | :--- | :--- |
 | [WebMiliastraNodesEditor](https://github.com/Columbina-Dev/WebMiliastraNodesEditor) | 网页版节点编辑器 |
-| [genshin-miliastra-file-format](https://github.com/script-1024/genshin-miliastra-file-format) | 文件格式文档 |
+| [genshin-miliastra-file-format](https://github.com/script-1024/genshin-miliastra-file-format) | `gil` 等其它文件格式介绍 |
 
 ---
 
