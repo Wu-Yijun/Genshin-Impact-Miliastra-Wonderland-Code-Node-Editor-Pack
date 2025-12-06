@@ -1,8 +1,8 @@
 /** Node pins `index of concrete` defines
  *
  * @author Aluria
- * @date 2025-11-30
- * @version 1.5.0
+ * @date 2025-12-6
+ * @version 1.6.0
  * 
  * @field server nodes
  */

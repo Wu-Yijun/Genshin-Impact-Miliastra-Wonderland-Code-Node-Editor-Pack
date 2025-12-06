@@ -2,7 +2,7 @@
  *
  * @author Aluria
  * @date 2025-11-30
- * @version 1.4.0
+ * @version 1.6.0
  * 
  * @field server nodes
  */
@@ -6059,6 +6059,42 @@ export const NODE_PIN_RECORDS = [
       [3517, "S<T:D<Pfb,L<Vec>>>"],
       [3518, "S<T:D<Pfb,L<Cfg>>>"],
     ],
+  },
+  {
+    name: "When CaIIing GM (This Node is Hidden Externally)",
+    id: 100000,
+    inputs: [],
+    outputs: ["Ety", "Gid", "Int", "Int", "Str", "Str"],
+  },
+  {
+    name: "Send Signal",
+    id: 300000,
+    inputs: ["Str"],
+    outputs: [],
+  },
+  {
+    name: "Monitor Signal",
+    id: 300001,
+    inputs: ["Str"],
+    outputs: ["Ety", "Gid", "Ety"],
+  },
+  {
+    name: "Assemble Structure",
+    id: 300002,
+    inputs: [],
+    outputs: [],
+  },
+  {
+    name: "Split Structure",
+    id: 300003,
+    inputs: [],
+    outputs: [],
+  },
+  {
+    name: "Modify Structure",
+    id: 300004,
+    inputs: [],
+    outputs: [],
   },
 ] as const satisfies SingleNodeData[];
 

@@ -65,8 +65,9 @@ export function decode_gia_file(gia_path_or_data: string | Uint8Array<ArrayBuffe
   const root = new proto.Root().loadSync(proto_path, { keepCase: true });
   const message = root.lookupType("Root");
 
-  const msg = message.decode(unwrap_gia(gia_path_or_data, check_header)) as any as Root;
-  return msg;
+  const msg = message.decode(unwrap_gia(gia_path_or_data, check_header));
+  // return msg as Root;
+  return message.toObject(msg, { defaults: true, longs: Number }) as Root;
 }
 
 
@@ -111,7 +112,7 @@ function test() {
     n.x = x * 300 + 0.124356;
     n.y = y * 200 + 0.12345;
     n.nodeIndex = getId();
-    n.concreteId.nodeId = info.id as any;
+    n.concreteId!.nodeId = info.id as any;
     n.pins[0].value.bConcreteValue!.indexOfConcrete = info.type as any;
     n.pins[1].value.bConcreteValue!.indexOfConcrete = info.type as any;
     n.pins[0].value.bConcreteValue!.value.bEnum!.val = info.from as any;

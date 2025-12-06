@@ -1,31 +1,32 @@
 syntax = "proto3";
-// @version: 1.3.0
+// @version: 1.3.2
 // package gia;
 
 message Root {
-  NodeUnit graph = 1;          // graph info
-  repeated NodeUnit utils = 2; // data_structure, input/output
-  string filePath = 3;         // {UID}-{TIME}-{LEVEL_ID}-\{FILE_NAME}.gia
+  GraphUnit graph = 1;                // graph info
+  repeated GraphUnit accessories = 2; // data_structure, input/output
+  string filePath = 3;    // {UID}-{TIME}-{LEVEL_ID}-\{FILE_NAME}.gia
+  string gameVersion = 5; // 6.2.0 by now
 }
 
-message NodeUnit {
+message GraphUnit {
   message Id {
-    enum Type {
+    enum Class {
       Unknown1 = 0;
       Node = 1;            // Such as boolean filter
       Basic = 5;           // Such as graph node
       AffiliatedNode = 23; // Assembly/Split for Structure
     }
-    enum NodeType {
-      Unknown2 = 0;
+    enum Type {
+      ServerGraph = 0;
       ClientGraph = 3;
       StructureDefinition = 15;
     }
-    Type type = 2;              // base type
-    optional NodeType kind = 3; // enable when type is Node
-    int32 id = 4;               // Node Graph Id
+    Class class = 2; // base type
+    Type type = 3;   // decide one of graph type
+    int32 id = 4;    // Node Graph Id
   }
-  enum Type {
+  enum Which {
     Unknown = 0;
     EntityNode = 9;
     BooleanFilter = 10;
@@ -41,7 +42,7 @@ message NodeUnit {
   Id id = 1;                  // Self id
   repeated Id relatedIds = 2; // Some related accompanying units(If exist)
   string name = 3;            // Node Graph Name
-  Type type = 5;              // Enumeration of Node Graph Type
+  Which which = 5;            // Enumeration of Node Graph Type
 
   oneof graphType {
     NodeGraphWrapper graph = 13;           // Else
@@ -123,6 +124,7 @@ message CompositeDef {
 
   string name = 200;
   string description = 201;
+  int32 xxx = 203;
 }
 
 message NodeGraph {
@@ -161,6 +163,8 @@ message NodeGraph {
   repeated Comments comments = 5;
   repeated GraphVariable graphValues = 6;
   repeated GraphAffiliation affiliations = 7;
+
+  float xxxx = 101;
 }
 
 message Comments {
@@ -296,6 +300,9 @@ message VarBase {
       VarType value = 2;
       optional int64 structId = 3; // only when value is struct
     }
+    message ClientEnum {
+      VarType enumId = 2; // TODO: 13/5/1/2 我不确定有什么关联? 很独特的一个值
+    }
     message Inner {
       enum Kind {
         Normal = 0;
@@ -311,7 +318,10 @@ message VarBase {
       }
     }
     int32 classBase = 1; // Always 1
-    Inner itemType = 100;
+    oneof class {
+      Inner itemType = 100;
+      ClientEnum enumType = 101;
+    }
   }
   message StructInfo {
     // TODO: What is this
@@ -369,7 +379,6 @@ message ConcreteBaseValue {
   // e.g. EnumNode.EnumEqualList
   int32 indexOfConcrete = 1;
   VarBase value = 2;
-  // TODO: What is this
   optional ComplexValueStruct structs = 5;
 }
 message ComplexValueStruct { // Map KV, Array Item, Struct Item
@@ -387,14 +396,13 @@ message ComplexValueStruct { // Map KV, Array Item, Struct Item
 // ========== End of Variable Defs ========== //
 
 message GraphNode {
-  int32 nodeIndex = 1;            // 1
-  NodeProperty genericId = 2;     // Node's Template's Id
-  NodeProperty concreteId = 3;    // Node's own Id(Null for generic nodes)
-  repeated NodePin pins = 4;      // connect to other nodes
-  float x = 5;                    // xpos
-  float y = 6;                    // ypos
-  optional Comments comments = 7; // comments
-
+  int32 nodeIndex = 1;                  // 1
+  NodeProperty genericId = 2;           // Node's Template's Id
+  optional NodeProperty concreteId = 3; // Node's own Id(Null for generic nodes)
+  repeated NodePin pins = 4;            // connect to other nodes
+  float x = 5;                          // xpos
+  float y = 6;                          // ypos
+  optional Comments comments = 7;       // comments
   repeated GraphAffiliation.Info usingStruct = 10;
 }
 
@@ -402,7 +410,8 @@ message NodeProperty {
   enum Type {
     Unknown = 0;
     Server = 20000;
-    Client = 20002;
+    Filter = 20001;
+    Skill = 20002;
   }
 
   NodeGraph.Id.Class class = 1; // 10001

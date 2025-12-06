@@ -52,7 +52,7 @@ export function get_pin_info(pin: NodePin): PinInfo_ {
 
 interface NodeInfo_ {
   generic_id: number;
-  concrete_id: number;
+  concrete_id: number | undefined;
   pins: PinInfo_[];
 }
 export function get_node_info(node: GraphNode): NodeInfo_ {

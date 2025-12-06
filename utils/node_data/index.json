@@ -1,7 +1,7 @@
 {
-  "Version": "1.5.0",
+  "Version": "1.6.0",
   "Author": "Aluria",
-  "Date": "Sat Dec 06 2025 11:02:14 GMT+0800 (中国标准时间)",
+  "Date": "Sat Dec 06 2025 16:23:43 GMT+0800 (中国标准时间)",
   "Description": "This document contains all necessary information for this project, including types, nodes, and enums.",
   "Schema": "// ====== Begin of Document Schema ====== //\ninterface Document {\n  Version: string;\n  Author: string;\n  Date: string;\n  Description: string;\n  Schema: string;\n  TypesList: TypeEntry[];\n  NodesList: NodeEntry[];\n  EnumList: EnumEntry[];\n}\ninterface Entry {\n  Name: string;               // Safe name used as object keys or query keys\n  Translations: Translations; // Raw texts displayed in game\n  ID: number;                 // An in-game unique id of the entry\n}\ninterface TypeEntry extends Entry {\n  Expression: string;     // Static representation expression for convertor\n  DSLName: string;        // Name of var class(type) in DSL\n  BaseType: string;       // Base type of the entry in game runtime\n  BaseTypeID: number;     // Id of the base type\n}\ninterface NodeEntry extends Entry {\n  Type: \"Simple\" | \"Generic\";         // Whether a node is fixed-defined or generic-defined \n  Range: \"Server\" | \"Client\";         // The applicable range of the node\n  Class: typeof NodeClasses[number];  // The class of the node\n  Family: string;                     // Family(sub-class) of the node\n  Inputs: string[];                   // List of Input parameter types of the node\n  Outputs: string[];                  // List of Output parameter types of the node\n  TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic. \n}\ninterface EnumEntry extends Entry {\n  Items: EnumItem[];  // List of Enum items of current enum\n}\ninterface TypeMapping {\n  ConcreteId: number;                         // Id of this concrete type\n  Type: string;                               // Type mapping rules of this concrete type\n  InputsIndexOfConcrete: (number | null)[];   // List of Input parameters' index of concrete\n  OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete\n}\ninterface EnumItem extends Entry {\n}\nconst NodeClasses = [\"Execution\", \"Trigger\", \"Control\", \"Query\", \"Arithmetic\", \"Hidden\"] as const;\nconst Language = [\"cs\", \"de\", \"es\", \"en\", \"fr\", \"it\", \"ja\", \"ko\", \"pl\", \"pt-BR\", \"ru\", \"tr\", \"zh-Hans\", \"zh-Hant\"] as const;\ntype Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages\n// ====== End of Document Schema ====== //\n",
   "TypesList": [
@@ -54400,6 +54400,99 @@
           ]
         }
       ]
+    },
+    {
+      "Name": "When_CaIIing_GM_This_Node_is_Hidden_Externally",
+      "Translations": {
+        "en": "When CaIIing GM (This Node is Hidden Externally)"
+      },
+      "ID": 100000,
+      "Type": "Simple",
+      "Range": "Server",
+      "Class": "Hidden",
+      "Family": "Trigger",
+      "Inputs": [],
+      "Outputs": [
+        "Ety",
+        "Gid",
+        "Int",
+        "Int",
+        "Str",
+        "Str"
+      ]
+    },
+    {
+      "Name": "Send_Signal",
+      "Translations": {
+        "en": "Send Signal"
+      },
+      "ID": 300000,
+      "Type": "Simple",
+      "Range": "Server",
+      "Class": "Execution",
+      "Family": "XXIX. Signals",
+      "Inputs": [
+        "Str"
+      ],
+      "Outputs": []
+    },
+    {
+      "Name": "Monitor_Signal",
+      "Translations": {
+        "en": "Monitor Signal"
+      },
+      "ID": 300001,
+      "Type": "Simple",
+      "Range": "Server",
+      "Class": "Trigger",
+      "Family": "XIX. Signals",
+      "Inputs": [
+        "Str"
+      ],
+      "Outputs": [
+        "Ety",
+        "Gid",
+        "Ety"
+      ]
+    },
+    {
+      "Name": "Assemble_Structure",
+      "Translations": {
+        "en": "Assemble Structure"
+      },
+      "ID": 300002,
+      "Type": "Simple",
+      "Range": "Server",
+      "Class": "Arithmetic",
+      "Family": "Structure",
+      "Inputs": [],
+      "Outputs": []
+    },
+    {
+      "Name": "Split_Structure",
+      "Translations": {
+        "en": "Split Structure"
+      },
+      "ID": 300003,
+      "Type": "Simple",
+      "Range": "Server",
+      "Class": "Arithmetic",
+      "Family": "Structure",
+      "Inputs": [],
+      "Outputs": []
+    },
+    {
+      "Name": "Modify_Structure",
+      "Translations": {
+        "en": "Modify Structure"
+      },
+      "ID": 300004,
+      "Type": "Simple",
+      "Range": "Server",
+      "Class": "Execution",
+      "Family": "XXXVI. Structures",
+      "Inputs": [],
+      "Outputs": []
     }
   ],
   "EnumList": [

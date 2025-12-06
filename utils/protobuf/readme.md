@@ -91,13 +91,13 @@ encode_gia_file({
     将节点列表包装成完整的图结构对象。这个结构层级较深，大致结构为 `Root` -> `NodeUnit` (图单元) -> `NodeGraph` (图本身) -> `nodes` (节点列表)。你需要生成唯一的 `graph_id` 和 `file_id`，并设置图的名称。
 
     ```typescript
-    import { type Root, NodeUnit_Id_Type, NodeUnit_Type, NodeGraph_Id_Type } from "../protobuf/gia.proto.ts";
+    import { type Root, GraphUnit_Id_Class, GraphUnit_Which, NodeGraph_Id_Type } from "../protobuf/gia.proto.ts";
 
     function wrap_nodes_into_root(graph_name: string, nodes: GraphNode[]): Root {
       const graph_id = 123456; // 生成随机 ID
       return {
         graph: {
-          id: { type: NodeUnit_Id_Type.Basic, id: graph_id },
+          id: { type: GraphUnit_Id_Class.Basic, id: graph_id },
           relatedIds: [],
           name: graph_name,
           type: NodeUnit$Type.EntityNode,

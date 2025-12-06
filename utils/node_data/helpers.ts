@@ -1,4 +1,4 @@
-import { DEBUG, STRICT } from "../gia_gen/utils.ts";
+import { DEBUG, STRICT } from "../utils.ts";
 import { CONCRETE_MAP, type ConcreteMap } from "./concrete_map.ts";
 import { NODE_ID } from "./node_id.ts";
 import { NODE_PIN_RECORDS, type SingleNodeData } from "./node_pin_records.ts";

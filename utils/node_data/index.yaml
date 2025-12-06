@@ -1,6 +1,6 @@
-Version: 1.5.0
+Version: 1.6.0
 Author: Aluria
-Date: Sat Dec 06 2025 11:02:14 GMT+0800 (中国标准时间)
+Date: Sat Dec 06 2025 16:23:43 GMT+0800 (中国标准时间)
 Description: This document contains all necessary information for this project, including types, nodes, and enums.
 Schema: |
   // ====== Begin of Document Schema ====== //
@@ -41805,6 +41805,77 @@ NodesList:
         InputsIndexOfConcrete: []
         OutputsIndexOfConcrete:
           - 20
+  - Name: When_CaIIing_GM_This_Node_is_Hidden_Externally
+    Translations:
+      en: When CaIIing GM (This Node is Hidden Externally)
+    ID: 100000
+    Type: Simple
+    Range: Server
+    Class: Hidden
+    Family: Trigger
+    Inputs: []
+    Outputs:
+      - Ety
+      - Gid
+      - Int
+      - Int
+      - Str
+      - Str
+  - Name: Send_Signal
+    Translations:
+      en: Send Signal
+    ID: 300000
+    Type: Simple
+    Range: Server
+    Class: Execution
+    Family: XXIX. Signals
+    Inputs:
+      - Str
+    Outputs: []
+  - Name: Monitor_Signal
+    Translations:
+      en: Monitor Signal
+    ID: 300001
+    Type: Simple
+    Range: Server
+    Class: Trigger
+    Family: XIX. Signals
+    Inputs:
+      - Str
+    Outputs:
+      - Ety
+      - Gid
+      - Ety
+  - Name: Assemble_Structure
+    Translations:
+      en: Assemble Structure
+    ID: 300002
+    Type: Simple
+    Range: Server
+    Class: Arithmetic
+    Family: Structure
+    Inputs: []
+    Outputs: []
+  - Name: Split_Structure
+    Translations:
+      en: Split Structure
+    ID: 300003
+    Type: Simple
+    Range: Server
+    Class: Arithmetic
+    Family: Structure
+    Inputs: []
+    Outputs: []
+  - Name: Modify_Structure
+    Translations:
+      en: Modify Structure
+    ID: 300004
+    Type: Simple
+    Range: Server
+    Class: Execution
+    Family: XXXVI. Structures
+    Inputs: []
+    Outputs: []
 EnumList:
   - Name: Comparison_Operators
     Translations:

@@ -1,32 +1,38 @@
 import assert from "node:assert";
+import type {
+  GraphNode,
+  NodeConnection,
+  NodePin,
+  ComplexValueStruct,
+  Root,
+  VarBase,
+  VarBase_ItemType,
+  Comments,
+  GraphVariable,
+} from "../protobuf/gia.proto.ts";
 import {
-  type GraphNode,
-  type NodeConnection,
   NodeGraph_Id_Class,
   NodeGraph_Id_Kind,
   NodeGraph_Id_Type,
-  type NodePin,
   NodePin_Index_Kind,
   NodeProperty_Type,
-  NodeUnit_Id_Type,
-  NodeUnit_Type,
-  type ComplexValueStruct,
-  type Root,
-  type VarBase,
+  GraphUnit_Id_Class,
+  GraphUnit_Which,
   VarBase_Class,
-  type VarBase_ItemType,
   VarBase_ItemType_Inner_Kind,
   VarType,
-  type Comments,
-  type GraphVariable,
+  GraphUnit_Id_Type,
 } from "../protobuf/gia.proto.ts";
 import { get_id, get_type, type NodePins, type NodeType } from "./nodes.ts";
 
-import { counter_dynamic_id, counter_index, randomInt, todo } from "./utils.ts";
+import { counter_dynamic_id, counter_index, randomInt } from "./utils.ts";
 import { type ConcreteMap } from "../node_data/concrete_map.ts";
 import { get_concrete_index } from "../node_data/helpers.ts";
 import { ENUM_ID } from "../node_data/enum_id.ts";
 import type { AnyType, GraphVar } from "./graph.ts";
+import { todo } from "../utils.ts";
+
+const gameVersion = "6.2.0";
 
 /**
  * GraphBody_ 接口定义了构建图的基本参数
@@ -72,12 +78,13 @@ export function graph_body(body: GraphBody_): Root {
   const gia: Root = {
     graph: {
       id: {
-        type: NodeUnit_Id_Type.Basic,
+        class: GraphUnit_Id_Class.Basic,
+        type: GraphUnit_Id_Type.ServerGraph,
         id: body.graph_id,
       },
       relatedIds: [],
       name: graph_name,
-      type: NodeUnit_Type.EntityNode,
+      which: GraphUnit_Which.EntityNode,
       graph: {
         inner: {
           graph: {
@@ -97,8 +104,9 @@ export function graph_body(body: GraphBody_): Root {
         },
       },
     },
-    utils: [],
+    accessories: [],
     filePath,
+    gameVersion,
   };
   return gia;
 }
