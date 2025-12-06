@@ -251,7 +251,7 @@ function read_derive_graph() {
   const nodes = graph.graph.graph!.inner.graph.nodes!;
   const missing = new Set(nodes.map(x => x.genericId.nodeId as number));
   const tags = nodes.filter(x => x.concreteId?.nodeId !== undefined)
-    .map(x => ({ id: x.genericId.nodeId, derived: x.concreteId.nodeId }));
+    .map(x => ({ id: x.genericId.nodeId, derived: x.concreteId!.nodeId }));
   const g = Object.entries(Object.groupBy(tags, x => x.id)).map(([k, v]) => ({ id: parseInt(k), derived: v!.map(x => x.derived) }));
   g.forEach(({ id }) => missing.delete(id));
 
@@ -399,7 +399,7 @@ function extract_types() {
       }
       const type = get_type(g[j].pins[0].type);
       const exp = stringify({ t: "s", f: [["T", type]] });
-      rec.reflectMap!.push([g[j].concreteId.nodeId, exp]);
+      rec.reflectMap!.push([g[j].concreteId!.nodeId, exp]);
     }
     ret.push(rec);
     // console.log(to_string(rec));
@@ -451,7 +451,7 @@ function read_concrete_map() {
   const nodes = get_nodes(decode_gia_file(PATH + "temp4.gia"))!;
   const cm = new Set<string>();
   const concrete_id_mapping =
-    Object.entries(Object.groupBy(nodes.map(n => [n.genericId.nodeId, n.concreteId?.nodeId]), x => x[0]))
+    Object.entries(Object.groupBy(nodes.map(n => [n.genericId.nodeId, n.concreteId?.nodeId!]), x => x[0]))
       .map(([k, v]) => [[parseInt(k)], [...new Set(v!.map(x => x[1]))].filter(x => x !== undefined).sort()])
   // .filter(x => x[0] === "1938")
   // util.inspect , { maxArrayLength: null }

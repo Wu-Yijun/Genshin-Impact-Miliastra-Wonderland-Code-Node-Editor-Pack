@@ -45,12 +45,18 @@ function read() {
 
 
 
+
+
 function graph_ts() {
-  // const g = decode_gia_file(PATH + "GeneratedGraph.gia");
-  const g = decode_gia_file("./dist/GeneratedGraph.gia");
+  const g = decode_gia_file(PATH + "temp.gia");
+  // const g = decode_gia_file("./dist/GeneratedGraph.gia");
   const graph = Graph.decode(g);
-  // console.dir(graph.get_node(), { depth: null });
-  encode_gia_file(PATH + "temp.gia", graph.encode());
+  console.dir(graph, { depth: null });
+  graph.set_graph_var("Variable_1", -1);
+  graph.set_graph_var("Variable_2", [3, 4, 5]);
+  graph.add_graph_var("New Var 2", { t: "d", k: { t: "b", b: "Str" }, v: { t: "l", i: { t: "b", b: "Int" } } },
+    true, [["Hello", [1, 2]], ["From", [2, 3, 4]], ["Graph.ts", []]]);
+  encode_gia_file(PATH + "temp2.gia", graph.encode());
 
 }
 

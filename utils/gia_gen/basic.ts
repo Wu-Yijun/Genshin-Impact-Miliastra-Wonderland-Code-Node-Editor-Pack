@@ -1,24 +1,27 @@
 import assert from "node:assert";
+import type {
+  GraphNode,
+  NodeConnection,
+  NodePin,
+  ComplexValueStruct,
+  Root,
+  VarBase,
+  VarBase_ItemType,
+  Comments,
+  GraphVariable,
+} from "../protobuf/gia.proto.ts";
 import {
-  type GraphNode,
-  type NodeConnection,
   NodeGraph_Id_Class,
   NodeGraph_Id_Kind,
   NodeGraph_Id_Type,
-  type NodePin,
   NodePin_Index_Kind,
   NodeProperty_Type,
   NodeUnit_Id_Type,
   NodeUnit_Type,
-  type ComplexValueStruct,
-  type Root,
-  type VarBase,
   VarBase_Class,
-  type VarBase_ItemType,
   VarBase_ItemType_Inner_Kind,
   VarType,
-  type Comments,
-  type GraphVariable,
+  NodeUnit_Id_NodeType,
 } from "../protobuf/gia.proto.ts";
 import { get_id, get_type, type NodePins, type NodeType } from "./nodes.ts";
 
@@ -73,6 +76,7 @@ export function graph_body(body: GraphBody_): Root {
     graph: {
       id: {
         type: NodeUnit_Id_Type.Basic,
+        kind: NodeUnit_Id_NodeType.ServerGraph,
         id: body.graph_id,
       },
       relatedIds: [],
@@ -97,7 +101,7 @@ export function graph_body(body: GraphBody_): Root {
         },
       },
     },
-    utils: [],
+    accessories: [],
     filePath,
   };
   return gia;

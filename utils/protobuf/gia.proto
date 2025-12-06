@@ -1,11 +1,11 @@
 syntax = "proto3";
-// @version: 1.3.0
+// @version: 1.3.1
 // package gia;
 
 message Root {
-  NodeUnit graph = 1;          // graph info
-  repeated NodeUnit utils = 2; // data_structure, input/output
-  string filePath = 3;         // {UID}-{TIME}-{LEVEL_ID}-\{FILE_NAME}.gia
+  NodeUnit graph = 1;                // graph info
+  repeated NodeUnit accessories = 2; // data_structure, input/output
+  string filePath = 3;               // {UID}-{TIME}-{LEVEL_ID}-\{FILE_NAME}.gia
 }
 
 message NodeUnit {
@@ -17,13 +17,13 @@ message NodeUnit {
       AffiliatedNode = 23; // Assembly/Split for Structure
     }
     enum NodeType {
-      Unknown2 = 0;
+      ServerGraph = 0;
       ClientGraph = 3;
       StructureDefinition = 15;
     }
-    Type type = 2;              // base type
-    optional NodeType kind = 3; // enable when type is Node
-    int32 id = 4;               // Node Graph Id
+    Type type = 2;     // base type
+    NodeType kind = 3; //
+    int32 id = 4;      // Node Graph Id
   }
   enum Type {
     Unknown = 0;
@@ -369,7 +369,6 @@ message ConcreteBaseValue {
   // e.g. EnumNode.EnumEqualList
   int32 indexOfConcrete = 1;
   VarBase value = 2;
-  // TODO: What is this
   optional ComplexValueStruct structs = 5;
 }
 message ComplexValueStruct { // Map KV, Array Item, Struct Item
@@ -387,14 +386,13 @@ message ComplexValueStruct { // Map KV, Array Item, Struct Item
 // ========== End of Variable Defs ========== //
 
 message GraphNode {
-  int32 nodeIndex = 1;            // 1
-  NodeProperty genericId = 2;     // Node's Template's Id
-  NodeProperty concreteId = 3;    // Node's own Id(Null for generic nodes)
-  repeated NodePin pins = 4;      // connect to other nodes
-  float x = 5;                    // xpos
-  float y = 6;                    // ypos
-  optional Comments comments = 7; // comments
-
+  int32 nodeIndex = 1;                  // 1
+  NodeProperty genericId = 2;           // Node's Template's Id
+  optional NodeProperty concreteId = 3; // Node's own Id(Null for generic nodes)
+  repeated NodePin pins = 4;            // connect to other nodes
+  float x = 5;                          // xpos
+  float y = 6;                          // ypos
+  optional Comments comments = 7;       // comments
   repeated GraphAffiliation.Info usingStruct = 10;
 }
 
