@@ -4,7 +4,6 @@
   "include": [
     "*",
     "docs/**",
-    "ref/**",
     "src/**",
     "utils/**",
     "static/**",
