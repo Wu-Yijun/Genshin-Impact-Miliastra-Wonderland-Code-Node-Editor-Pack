@@ -10,4 +10,4 @@ export { Graph, Node, Pin, Connect, Comment } from "./graph.ts";
 export type * as GiaNode from "./nodes.ts";
 export * as gia_node from "./nodes.ts";
 
-export { Counter, randomInt, randomBigInt, randomName, panic, todo } from "./utils.ts";
+export { Counter, randomInt, randomBigInt, randomName } from "./utils.ts";

@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { VarType } from "../protobuf/gia.proto.ts";
-import { DEBUG, STRICT } from "./utils.ts";
+import { DEBUG, STRICT } from "../utils.ts";
 import { ENUM_ID } from "../node_data/enum_id.ts";
 
 export const BasicTypes = [

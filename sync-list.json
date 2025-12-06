@@ -15,6 +15,7 @@
     "!**/temp/**",
     "!**/?(*.)(temp|test|log)?(.*)",
     "!utils/**/ref/**",
+    "!utils/extracting_nodes/**",
     "!utils/protobuf/debug_decode.ts",
     "!utils/node_data/gen_index.ts",
     "!utils/node_data/yaml/**",

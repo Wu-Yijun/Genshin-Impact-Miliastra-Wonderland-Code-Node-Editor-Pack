@@ -1,17 +1,15 @@
 import { inspect } from "util";
 import { decode_gia_file } from "../../protobuf/decode.ts";
 import { assert, assertEq } from "../../utils.ts";
-import { GraphUnit_Id_Class, GraphUnit_Id_Type, GraphUnit_Which, NodeGraph_Id_Class, NodeGraph_Id_Kind, NodeGraph_Id_Type, NodeProperty_Type } from "../../protobuf/gia.proto.ts";
-import { save } from "../util.ts";
+import { GraphInfo, Names, save } from "../util.ts";
 
-const names = ["server", "status", "class", "item", "bool", "int", "skill", "composite"] as const;
-type names = typeof names[number];
+
 
 const dir = import.meta.dirname;
 
 function step1() {
   const range = [];
-  for (const name of names) {
+  for (const name of Names) {
     const g = decode_gia_file(dir + "/" + name + ".gia");
     const ID = g.graph.id;
     const Which = g.graph.which;
@@ -35,7 +33,7 @@ function step1() {
 
 function step2() {
   const ret = [];
-  for (const name of names) {
+  for (const name of Names) {
     const g = decode_gia_file(dir + "/" + name + ".gia");
     const ID = g.graph.id;
     const Which = g.graph.which;
@@ -66,18 +64,7 @@ function step2() {
   save("collection.json", ret);
 }
 
-interface GraphInfo {
-  name: string;
-  class: GraphUnit_Id_Class;
-  type: GraphUnit_Id_Type;
-  which: GraphUnit_Which;
-  graph_class: NodeGraph_Id_Class;
-  graph_type: NodeGraph_Id_Type;
-  graph_kind: NodeGraph_Id_Kind;
-  node_class: NodeGraph_Id_Class
-  node_type: NodeProperty_Type;
-  node_kind: NodeGraph_Id_Kind;
-}
+
 
 step1();
-step2();
+// step2();

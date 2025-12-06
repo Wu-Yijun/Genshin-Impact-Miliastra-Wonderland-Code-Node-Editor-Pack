@@ -1,5 +1,5 @@
 syntax = "proto3";
-// @version: 1.3.1
+// @version: 1.3.2
 // package gia;
 
 message Root {
@@ -163,6 +163,8 @@ message NodeGraph {
   repeated Comments comments = 5;
   repeated GraphVariable graphValues = 6;
   repeated GraphAffiliation affiliations = 7;
+
+  float xxxx = 101;
 }
 
 message Comments {
@@ -298,6 +300,9 @@ message VarBase {
       VarType value = 2;
       optional int64 structId = 3; // only when value is struct
     }
+    message ClientEnum {
+      VarType enumId = 2; // TODO: 13/5/1/2 我不确定有什么关联? 很独特的一个值
+    }
     message Inner {
       enum Kind {
         Normal = 0;
@@ -313,7 +318,10 @@ message VarBase {
       }
     }
     int32 classBase = 1; // Always 1
-    Inner itemType = 100;
+    oneof class {
+      Inner itemType = 100;
+      ClientEnum enumType = 101;
+    }
   }
   message StructInfo {
     // TODO: What is this

@@ -5,7 +5,7 @@
 
 import yaml from 'yaml';
 import { encode_gia_file } from "../protobuf/decode.ts";
-import { type GraphNode, NodeGraph_Id_Class, NodeGraph_Id_Kind, NodeGraph_Id_Type, type NodePin, NodePin_Index_Kind, NodeProperty_Type, NodeUnit_Id_Type, NodeUnit_Type, type Root, VarBase_Class, VarType } from "../protobuf/gia.proto.ts";
+import { type GraphNode, NodeGraph_Id_Class, NodeGraph_Id_Kind, NodeGraph_Id_Type, type NodePin, NodePin_Index_Kind, NodeProperty_Type, GraphUnit_Id_Class, GraphUnit_Which, type Root, VarBase_Class, VarType } from "../protobuf/gia.proto.ts";
 import "./yaml/enum_id.yaml.d.ts";
 import assert from 'assert';
 import { readFileSync } from 'fs';
@@ -20,12 +20,12 @@ function save_nodes(graph_name: string, file_name: string, nodes: GraphNode[]): 
   const gia: Root = {
     graph: {
       id: {
-        type: NodeUnit_Id_Type.Basic,
+        type: GraphUnit_Id_Class.Basic,
         id: graph_id,
       },
       relatedIds: [],
       name: graph_name,
-      type: NodeUnit_Type.EntityNode,
+      type: GraphUnit_Which.EntityNode,
       graph: {
         inner: {
           graph: {
