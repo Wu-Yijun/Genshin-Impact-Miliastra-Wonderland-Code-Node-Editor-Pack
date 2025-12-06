@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { VarType } from "../protobuf/gia.proto.ts";
+import { ClientVarType, VarType } from "../protobuf/gia.proto.ts";
 import { DEBUG, STRICT } from "../utils.ts";
 import { ENUM_ID } from "../node_data/enum_id.ts";
 
@@ -591,7 +591,7 @@ export function get_id(node: NodeType): number {
           }
           break;
         case "s":
-          return VarType.StringList;
+          return VarType.StructList;
         default:
           break;
       }
@@ -685,6 +685,142 @@ export function get_type(id: number): NodeType {
   }
   // throw new Error("Invalid ID: " + id);
   // console.error("Invalid ID: " + id);
+  return undefined as any;
+}
+
+export function get_id_client(node: NodeType): number {
+  switch (node.t) {
+    case "b":
+      switch (node.b) {
+        case "Int":
+          return ClientVarType.Integer_;
+        case "Flt":
+          return ClientVarType.Float_;
+        case "Bol":
+          return ClientVarType.Boolean_;
+        case "Str":
+          return ClientVarType.String_;
+        case "Vec":
+          return ClientVarType.Vector_;
+        case "Gid":
+          return ClientVarType.GUID_;
+        case "Ety":
+          return ClientVarType.Entity_;
+        case "Pfb":
+          return ClientVarType.Prefab_;
+        case "Fct":
+          return ClientVarType.Faction_;
+        case "Cfg":
+          return ClientVarType.Configuration_;
+      }
+      break;
+    case "e":
+      switch (node.e) {
+        case -1:  // Enum type
+          return ClientVarType.Enum_;
+        case 1017:  // Local Variable
+          return ClientVarType.LocalVariable_;
+      }
+      // 其他枚举类型返回 Entity_ 或处理为 UnknownVar_
+      return ClientVarType.Entity_;
+    case "l":
+      switch (node.i.t) {
+        case "b":
+          switch (node.i.b) {
+            case "Int":
+              return ClientVarType.IntegerList_;
+            case "Flt":
+              return ClientVarType.FloatList_;
+            case "Bol":
+              return ClientVarType.BooleanList_;
+            case "Str":
+              return ClientVarType.StringList_;
+            case "Vec":
+              return ClientVarType.VectorList_;
+            case "Gid":
+              return ClientVarType.GUIDList_;
+            case "Ety":
+              return ClientVarType.EntityList_;
+            case "Pfb":
+              return ClientVarType.PrefabList_;
+            case "Cfg":
+              return ClientVarType.ConfigurationList_;
+          }
+          break;
+        default:
+          break;
+      }
+      break;
+    case "d":
+      // 客户端没有 Dictionary 类型，使用错误处理
+      break;
+    case "r":
+      break;
+    case "s":
+      // 客户端没有 Struct 类型，使用错误处理
+      break;
+  }
+
+  // 不包含类型的走最后的报错逻辑
+  if (STRICT) {
+    throw new Error(
+      stringify(node) + " is not a supported client type! Fallback to id = 0 !",
+    );
+  }
+  if (DEBUG) console.warn(node, "is not a supported client type! Fallback to id = 0 !");
+  return ClientVarType.UnknownVar_;
+}
+
+export function get_type_client(id: number): NodeType {
+  switch (id) {
+    case ClientVarType.Entity_:
+      return { t: "b", b: "Ety" };
+    case ClientVarType.EntityList_:
+      return { t: "l", i: { t: "b", b: "Ety" } };
+    case ClientVarType.Integer_:
+      return { t: "b", b: "Int" };
+    case ClientVarType.IntegerList_:
+      return { t: "l", i: { t: "b", b: "Int" } };
+    case ClientVarType.Boolean_:
+      return { t: "b", b: "Bol" };
+    case ClientVarType.BooleanList_:
+      return { t: "l", i: { t: "b", b: "Bol" } };
+    case ClientVarType.Float_:
+      return { t: "b", b: "Flt" };
+    case ClientVarType.FloatList_:
+      return { t: "l", i: { t: "b", b: "Flt" } };
+    case ClientVarType.String_:
+      return { t: "b", b: "Str" };
+    case ClientVarType.StringList_:
+      return { t: "l", i: { t: "b", b: "Str" } };
+    case ClientVarType.Vector_:
+      return { t: "b", b: "Vec" };
+    case ClientVarType.VectorList_:
+      return { t: "l", i: { t: "b", b: "Vec" } };
+    case ClientVarType.Enum_:
+      return { t: "e", e: -1 };
+    case ClientVarType.GUID_:
+      return { t: "b", b: "Gid" };
+    case ClientVarType.GUIDList_:
+      return { t: "l", i: { t: "b", b: "Gid" } };
+    case ClientVarType.Faction_:
+      return { t: "b", b: "Fct" };
+    case ClientVarType.LocalVariable_:
+      return { t: "e", e: 1017 };
+    case ClientVarType.Configuration_:
+      return { t: "b", b: "Cfg" };
+    case ClientVarType.Prefab_:
+      return { t: "b", b: "Pfb" };
+    case ClientVarType.ConfigurationList_:
+      return { t: "l", i: { t: "b", b: "Cfg" } };
+    case ClientVarType.PrefabList_:
+      return { t: "l", i: { t: "b", b: "Pfb" } };
+  }
+  // 对于不支持的 ID，返回 undefined 或抛出错误
+  if (STRICT) {
+    throw new Error("Invalid client ID: " + id);
+  }
+  if (DEBUG) console.error("Invalid client ID: " + id);
   return undefined as any;
 }
 

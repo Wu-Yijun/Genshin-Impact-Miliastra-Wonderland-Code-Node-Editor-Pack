@@ -269,23 +269,23 @@ enum VarType {
 }
 enum ClientVarType {
   UnknownVar_ = 0;
-  Entity_ = 1;      // type: Ety, typeid: 1
-  EntityList_ = 2;  // type: L<Ety>, typeid: 2
-  Integer_ = 3;     // type: Int, typeid: 3
-  IntegerList_ = 4; // type: L<Int>, typeid: 4
-  Boolean_ = 5;     // type: Bol, typeid: 5
-  BooleanList_ = 6; // type: L<Bol>, typeid: 6
-  Float_ = 7;       // type: Flt, typeid: 7
-  FloatList_ = 8;   // type: L<Flt>, typeid: 8
-  String_ = 9;      // type: Str, typeid: 9
-  StringList_ = 10; // type: L<Str>, typeid: 10
-  Vector_ = 11;     // type: Vec, typeid: 11
-  VectorList_ = 12; // type: L<Vec>, typeid: 12
-  // Missing 13
-  GUID_ = 14;     // type: Gid, typeid: 14
-  GUIDList_ = 15; // type: L<Gid>, typeid: 15
-  Faction_ = 16;  // type: Fct, typeid: 16
-  // Missing 17
+  Entity_ = 1;             // type: Ety, typeid: 1
+  EntityList_ = 2;         // type: L<Ety>, typeid: 2
+  Integer_ = 3;            // type: Int, typeid: 3
+  IntegerList_ = 4;        // type: L<Int>, typeid: 4
+  Boolean_ = 5;            // type: Bol, typeid: 5
+  BooleanList_ = 6;        // type: L<Bol>, typeid: 6
+  Float_ = 7;              // type: Flt, typeid: 7
+  FloatList_ = 8;          // type: L<Flt>, typeid: 8
+  String_ = 9;             // type: Str, typeid: 9
+  StringList_ = 10;        // type: L<Str>, typeid: 10
+  Vector_ = 11;            // type: Vec, typeid: 11
+  VectorList_ = 12;        // type: L<Vec>, typeid: 12
+  Enum_ = 13;              // type: E<-1>, typeid: 13
+  GUID_ = 14;              // type: Gid, typeid: 14
+  GUIDList_ = 15;          // type: L<Gid>, typeid: 15
+  Faction_ = 16;           // type: Fct, typeid: 16
+  LocalVariable_ = 17;     // type: E<1017>, typeid: 17
   Configuration_ = 18;     // type: Cfg, typeid: 18
   Prefab_ = 19;            // type: Pfb, typeid: 19
   ConfigurationList_ = 20; // type: L<Cfg>, typeid: 20

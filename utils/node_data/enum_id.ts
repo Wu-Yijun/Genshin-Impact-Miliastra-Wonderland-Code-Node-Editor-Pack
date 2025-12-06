@@ -269,6 +269,7 @@ export const ENUM_VALUE = {
   SettlementStatus_TBC: 4100,
   SettlementStatus_Victory: 4101,
   SettlementStatus_Failed: 4102,
+  ReasonForItemChange_Default: 0, // Same as Default
   ReasonForItemChange_Destroy: 4900,
   ReasonForItemChange_Discard: 4901,
   ReasonForItemChange_Use: 4902,
@@ -318,6 +319,10 @@ export const ENUM_VALUE = {
   InputDeviceType_Touchscreen: 5802,
 
   // 🟨 Below is some values that is not shown in server
+  BasicMathematicalOperators_Addition: 300,  // Same to what 'MathematicalOperators' is in server
+  BasicMathematicalOperators_Subtraction: 301,// Same to what 'MathematicalOperators' is in server
+  BasicMathematicalOperators_Multiplication: 302,  // Same to what 'MathematicalOperators' is in server
+  BasicMathematicalOperators_Division: 303,  // Same to what 'MathematicalOperators' is in server
   QuickMathematicalOperators_ModuloOperation: 304,    // Same to what 'MathematicalOperators' is in server
   QuickMathematicalOperators_Exponentiation: 305,   // Same to what 'MathematicalOperators' is in server
   QuickMathematicalOperators_GetMaximumValue: 306,    // Same to what 'MathematicalOperators' is in server

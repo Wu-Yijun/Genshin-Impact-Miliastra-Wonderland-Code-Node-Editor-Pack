@@ -1,9 +1,9 @@
 {
   "Version": "1.6.0",
   "Author": "Aluria",
-  "Date": "Sat Dec 06 2025 16:23:43 GMT+0800 (中国标准时间)",
+  "Date": "Sat Dec 06 2025 22:48:55 GMT+0800 (中国标准时间)",
   "Description": "This document contains all necessary information for this project, including types, nodes, and enums.",
-  "Schema": "// ====== Begin of Document Schema ====== //\ninterface Document {\n  Version: string;\n  Author: string;\n  Date: string;\n  Description: string;\n  Schema: string;\n  TypesList: TypeEntry[];\n  NodesList: NodeEntry[];\n  EnumList: EnumEntry[];\n}\ninterface Entry {\n  Name: string;               // Safe name used as object keys or query keys\n  Translations: Translations; // Raw texts displayed in game\n  ID: number;                 // An in-game unique id of the entry\n}\ninterface TypeEntry extends Entry {\n  Expression: string;     // Static representation expression for convertor\n  DSLName: string;        // Name of var class(type) in DSL\n  BaseType: string;       // Base type of the entry in game runtime\n  BaseTypeID: number;     // Id of the base type\n}\ninterface NodeEntry extends Entry {\n  Type: \"Simple\" | \"Generic\";         // Whether a node is fixed-defined or generic-defined \n  Range: \"Server\" | \"Client\";         // The applicable range of the node\n  Class: typeof NodeClasses[number];  // The class of the node\n  Family: string;                     // Family(sub-class) of the node\n  Inputs: string[];                   // List of Input parameter types of the node\n  Outputs: string[];                  // List of Output parameter types of the node\n  TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic. \n}\ninterface EnumEntry extends Entry {\n  Items: EnumItem[];  // List of Enum items of current enum\n}\ninterface TypeMapping {\n  ConcreteId: number;                         // Id of this concrete type\n  Type: string;                               // Type mapping rules of this concrete type\n  InputsIndexOfConcrete: (number | null)[];   // List of Input parameters' index of concrete\n  OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete\n}\ninterface EnumItem extends Entry {\n}\nconst NodeClasses = [\"Execution\", \"Trigger\", \"Control\", \"Query\", \"Arithmetic\", \"Hidden\"] as const;\nconst Language = [\"cs\", \"de\", \"es\", \"en\", \"fr\", \"it\", \"ja\", \"ko\", \"pl\", \"pt-BR\", \"ru\", \"tr\", \"zh-Hans\", \"zh-Hant\"] as const;\ntype Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages\n// ====== End of Document Schema ====== //\n",
+  "Schema": "// ====== Begin of Document Schema ====== //\ninterface Document {\n  Version: string;\n  Author: string;\n  Date: string;\n  Description: string;\n  Schema: string;\n  TypesList: TypeEntry[];\n  NodesList: NodeEntry[];\n  EnumList: EnumEntry[];\n  ClientEnumList: EnumEntry[];\n}\ninterface Entry {\n  Name: string;               // Safe name used as object keys or query keys\n  Translations: Translations; // Raw texts displayed in game\n  ID: number;                 // An in-game unique id of the entry\n}\ninterface TypeEntry extends Entry {\n  Expression: string;     // Static representation expression for convertor\n  DSLName: string;        // Name of var class(type) in DSL\n  BaseType: string;       // Base type of the entry in game runtime\n  BaseTypeID: number;     // Id of the base type\n}\ninterface NodeEntry extends Entry {\n  Type: \"Simple\" | \"Generic\";         // Whether a node is fixed-defined or generic-defined \n  Range: \"Server\" | \"Client\";         // The applicable range of the node\n  Class: typeof NodeClasses[number];  // The class of the node\n  Family: string;                     // Family(sub-class) of the node\n  Inputs: string[];                   // List of Input parameter types of the node\n  Outputs: string[];                  // List of Output parameter types of the node\n  TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic. \n}\ninterface EnumEntry extends Entry {\n  Items: EnumItem[];  // List of Enum items of current enum\n}\ninterface TypeMapping {\n  ConcreteId: number;                         // Id of this concrete type\n  Type: string;                               // Type mapping rules of this concrete type\n  InputsIndexOfConcrete: (number | null)[];   // List of Input parameters' index of concrete\n  OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete\n}\ninterface EnumItem extends Entry {\n}\nconst NodeClasses = [\"Execution\", \"Trigger\", \"Control\", \"Query\", \"Arithmetic\", \"Hidden\"] as const;\nconst Language = [\"cs\", \"de\", \"es\", \"en\", \"fr\", \"it\", \"ja\", \"ko\", \"pl\", \"pt-BR\", \"ru\", \"tr\", \"zh-Hans\", \"zh-Hant\"] as const;\ntype Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages\n// ====== End of Document Schema ====== //\n",
   "TypesList": [
     {
       "Name": "Entity",
@@ -54497,6 +54497,14 @@
   ],
   "EnumList": [
     {
+      "Name": "Generic",
+      "Translations": {
+        "en": "Generic"
+      },
+      "ID": 0,
+      "Items": []
+    },
+    {
       "Name": "Comparison_Operators",
       "Translations": {
         "en": "Comparison Operators"
@@ -55316,7 +55324,7 @@
     {
       "Name": "Disruptor_Device_Type",
       "Translations": {
-        "en": "Disruptor Device Types"
+        "en": "Disruptor Device Type"
       },
       "ID": 22,
       "Items": [
@@ -55926,6 +55934,13 @@
       "ID": 35,
       "Items": [
         {
+          "Name": "Default",
+          "Translations": {
+            "en": "Default"
+          },
+          "ID": 0
+        },
+        {
           "Name": "Destroy",
           "Translations": {
             "en": "Destroy"
@@ -55973,12 +55988,6 @@
             "en": "Pick Up"
           },
           "ID": 4950
-        },
-        {
-          "Name": "Default",
-          "Translations": {
-            "en": "Default"
-          }
         }
       ]
     },
@@ -56331,6 +56340,1785 @@
             "en": "Fixed Time"
           },
           "ID": 5601
+        }
+      ]
+    }
+  ],
+  "ClientEnumList": [
+    {
+      "Name": "Generic",
+      "Translations": {
+        "en": "Generic"
+      },
+      "ID": -1,
+      "Items": []
+    },
+    {
+      "Name": "Comparison_Operators",
+      "Translations": {
+        "en": "Comparison Operators"
+      },
+      "ID": 0,
+      "Items": [
+        {
+          "Name": "Equal To",
+          "Translations": {
+            "en": "Equal To"
+          },
+          "ID": 100
+        },
+        {
+          "Name": "Less Than",
+          "Translations": {
+            "en": "Less Than"
+          },
+          "ID": 101
+        },
+        {
+          "Name": "Less Than or Equal To",
+          "Translations": {
+            "en": "Less Than or Equal To"
+          },
+          "ID": 102
+        },
+        {
+          "Name": "Greater Than",
+          "Translations": {
+            "en": "Greater Than"
+          },
+          "ID": 103
+        },
+        {
+          "Name": "Greater Than or Equal To",
+          "Translations": {
+            "en": "Greater Than or Equal To"
+          },
+          "ID": 104
+        }
+      ]
+    },
+    {
+      "Name": "Logical_Operators",
+      "Translations": {
+        "en": "Logical Operators"
+      },
+      "ID": 1,
+      "Items": [
+        {
+          "Name": "AND",
+          "Translations": {
+            "en": "AND"
+          },
+          "ID": 200
+        },
+        {
+          "Name": "OR",
+          "Translations": {
+            "en": "OR"
+          },
+          "ID": 201
+        },
+        {
+          "Name": "XOR",
+          "Translations": {
+            "en": "XOR"
+          },
+          "ID": 202
+        },
+        {
+          "Name": "NOT",
+          "Translations": {
+            "en": "NOT"
+          },
+          "ID": 203
+        }
+      ]
+    },
+    {
+      "Name": "Basic_Mathematical_Operators",
+      "Translations": {
+        "en": "Basic Mathematical Operators"
+      },
+      "ID": 2,
+      "Items": [
+        {
+          "Name": "Addition",
+          "Translations": {
+            "en": "Addition"
+          },
+          "ID": 300
+        },
+        {
+          "Name": "Subtraction",
+          "Translations": {
+            "en": "Subtraction"
+          },
+          "ID": 301
+        },
+        {
+          "Name": "Multiplication",
+          "Translations": {
+            "en": "Multiplication"
+          },
+          "ID": 302
+        },
+        {
+          "Name": "Division",
+          "Translations": {
+            "en": "Division"
+          },
+          "ID": 303
+        }
+      ]
+    },
+    {
+      "Name": "Attack_Shapes",
+      "Translations": {
+        "en": "Attack Shapes"
+      },
+      "ID": 3,
+      "Items": [
+        {
+          "Name": "Rectangle",
+          "Translations": {
+            "en": "Rectangle"
+          },
+          "ID": 400
+        },
+        {
+          "Name": "Sphere",
+          "Translations": {
+            "en": "Sphere"
+          },
+          "ID": 401
+        },
+        {
+          "Name": "Sector",
+          "Translations": {
+            "en": "Sector"
+          },
+          "ID": 402
+        }
+      ]
+    },
+    {
+      "Name": "Survival_Status",
+      "Translations": {
+        "en": "Survival Status"
+      },
+      "ID": 4,
+      "Items": [
+        {
+          "Name": "Alive",
+          "Translations": {
+            "en": "Alive"
+          },
+          "ID": 500
+        },
+        {
+          "Name": "Down",
+          "Translations": {
+            "en": "Down"
+          },
+          "ID": 501
+        }
+      ]
+    },
+    {
+      "Name": "Sorting_Rules",
+      "Translations": {
+        "en": "Sorting Rules"
+      },
+      "ID": 5,
+      "Items": [
+        {
+          "Name": "Ascending",
+          "Translations": {
+            "en": "Ascending"
+          },
+          "ID": 600
+        },
+        {
+          "Name": "Descending",
+          "Translations": {
+            "en": "Descending"
+          },
+          "ID": 601
+        }
+      ]
+    },
+    {
+      "Name": "Rounding_Logic",
+      "Translations": {
+        "en": "Rounding Logic"
+      },
+      "ID": 6,
+      "Items": [
+        {
+          "Name": "Round Up",
+          "Translations": {
+            "en": "Round Up"
+          },
+          "ID": 700
+        },
+        {
+          "Name": "Round Down",
+          "Translations": {
+            "en": "Round Down"
+          },
+          "ID": 701
+        },
+        {
+          "Name": "Round to Nearest",
+          "Translations": {
+            "en": "Round to Nearest"
+          },
+          "ID": 702
+        },
+        {
+          "Name": "Truncate",
+          "Translations": {
+            "en": "Truncate"
+          },
+          "ID": 703
+        }
+      ]
+    },
+    {
+      "Name": "Type_Conversions",
+      "Translations": {
+        "en": "Type Conversions"
+      },
+      "ID": 7,
+      "Items": [
+        {
+          "Name": "Integer to Boolean",
+          "Translations": {
+            "en": "Integer to Boolean"
+          },
+          "ID": 800
+        },
+        {
+          "Name": "Integer to Floating Point",
+          "Translations": {
+            "en": "Integer to Floating Point"
+          },
+          "ID": 801
+        },
+        {
+          "Name": "Integer to String",
+          "Translations": {
+            "en": "Integer to String"
+          },
+          "ID": 802
+        },
+        {
+          "Name": "Entity to String",
+          "Translations": {
+            "en": "Entity to String"
+          },
+          "ID": 803
+        },
+        {
+          "Name": "GUID to String",
+          "Translations": {
+            "en": "GUID to String"
+          },
+          "ID": 804
+        },
+        {
+          "Name": "Boolean to Integer",
+          "Translations": {
+            "en": "Boolean to Integer"
+          },
+          "ID": 805
+        },
+        {
+          "Name": "Boolean to String",
+          "Translations": {
+            "en": "Boolean to String"
+          },
+          "ID": 806
+        },
+        {
+          "Name": "Floating Point to Integer",
+          "Translations": {
+            "en": "Floating Point to Integer"
+          },
+          "ID": 807
+        },
+        {
+          "Name": "Floating Point to String",
+          "Translations": {
+            "en": "Floating Point to String"
+          },
+          "ID": 808
+        },
+        {
+          "Name": "3D Vector to String",
+          "Translations": {
+            "en": "3D Vector to String"
+          },
+          "ID": 809
+        },
+        {
+          "Name": "Faction to String",
+          "Translations": {
+            "en": "Faction to String"
+          },
+          "ID": 810
+        }
+      ]
+    },
+    {
+      "Name": "Type_Conversions",
+      "Translations": {
+        "en": "Type Conversions"
+      },
+      "ID": 7,
+      "Items": [
+        {
+          "Name": "Integer to Boolean",
+          "Translations": {
+            "en": "Integer to Boolean"
+          },
+          "ID": 800
+        },
+        {
+          "Name": "Integer to Floating Point",
+          "Translations": {
+            "en": "Integer to Floating Point"
+          },
+          "ID": 801
+        },
+        {
+          "Name": "Integer to String",
+          "Translations": {
+            "en": "Integer to String"
+          },
+          "ID": 802
+        },
+        {
+          "Name": "Entity to String",
+          "Translations": {
+            "en": "Entity to String"
+          },
+          "ID": 803
+        },
+        {
+          "Name": "GUID to String",
+          "Translations": {
+            "en": "GUID to String"
+          },
+          "ID": 804
+        },
+        {
+          "Name": "Boolean to Integer",
+          "Translations": {
+            "en": "Boolean to Integer"
+          },
+          "ID": 805
+        },
+        {
+          "Name": "Boolean to String",
+          "Translations": {
+            "en": "Boolean to String"
+          },
+          "ID": 806
+        },
+        {
+          "Name": "Floating Point to Integer",
+          "Translations": {
+            "en": "Floating Point to Integer"
+          },
+          "ID": 807
+        },
+        {
+          "Name": "Floating Point to String",
+          "Translations": {
+            "en": "Floating Point to String"
+          },
+          "ID": 808
+        },
+        {
+          "Name": "3D Vector to String",
+          "Translations": {
+            "en": "3D Vector to String"
+          },
+          "ID": 809
+        },
+        {
+          "Name": "Faction to String",
+          "Translations": {
+            "en": "Faction to String"
+          },
+          "ID": 810
+        }
+      ]
+    },
+    {
+      "Name": "Motion_Path_Point_Types",
+      "Translations": {
+        "en": "Motion Path Point Types"
+      },
+      "ID": 8,
+      "Items": [
+        {
+          "Name": "Straight Line",
+          "Translations": {
+            "en": "Straight Line"
+          },
+          "ID": 900
+        },
+        {
+          "Name": "Curve",
+          "Translations": {
+            "en": "Curve"
+          },
+          "ID": 901
+        }
+      ]
+    },
+    {
+      "Name": "Motion_Types",
+      "Translations": {
+        "en": "Motion Types"
+      },
+      "ID": 9,
+      "Items": [
+        {
+          "Name": "One-Way",
+          "Translations": {
+            "en": "One-Way"
+          },
+          "ID": 1000
+        },
+        {
+          "Name": "Back and Forth",
+          "Translations": {
+            "en": "Back and Forth"
+          },
+          "ID": 1001
+        },
+        {
+          "Name": "Cyclic Movement",
+          "Translations": {
+            "en": "Cyclic Movement"
+          },
+          "ID": 1002
+        }
+      ]
+    },
+    {
+      "Name": "Follow_Location_Type",
+      "Translations": {
+        "en": "Follow Location Type"
+      },
+      "ID": 10,
+      "Items": [
+        {
+          "Name": "Completely Follow",
+          "Translations": {
+            "en": "Completely Follow"
+          },
+          "ID": 1100
+        },
+        {
+          "Name": "Follow Location",
+          "Translations": {
+            "en": "Follow Location"
+          },
+          "ID": 1101
+        },
+        {
+          "Name": "Follow Rotation",
+          "Translations": {
+            "en": "Follow Rotation"
+          },
+          "ID": 1102
+        }
+      ]
+    },
+    {
+      "Name": "Coordinate_System_Type",
+      "Translations": {
+        "en": "Coordinate System Type"
+      },
+      "ID": 11,
+      "Items": [
+        {
+          "Name": "Relative Coordinate System",
+          "Translations": {
+            "en": "Relative Coordinate System"
+          },
+          "ID": 1200
+        },
+        {
+          "Name": "World Coordinate System",
+          "Translations": {
+            "en": "World Coordinate System"
+          },
+          "ID": 1201
+        }
+      ]
+    },
+    {
+      "Name": "Elemental_Type",
+      "Translations": {
+        "en": "Elemental Type"
+      },
+      "ID": 12,
+      "Items": [
+        {
+          "Name": "None",
+          "Translations": {
+            "en": "None"
+          },
+          "ID": 1300
+        },
+        {
+          "Name": "Pyro",
+          "Translations": {
+            "en": "Pyro"
+          },
+          "ID": 1301
+        },
+        {
+          "Name": "Hydro",
+          "Translations": {
+            "en": "Hydro"
+          },
+          "ID": 1302
+        },
+        {
+          "Name": "Anemo",
+          "Translations": {
+            "en": "Anemo"
+          },
+          "ID": 1303
+        },
+        {
+          "Name": "Electro",
+          "Translations": {
+            "en": "Electro"
+          },
+          "ID": 1304
+        },
+        {
+          "Name": "Dendro",
+          "Translations": {
+            "en": "Dendro"
+          },
+          "ID": 1305
+        },
+        {
+          "Name": "Cryo",
+          "Translations": {
+            "en": "Cryo"
+          },
+          "ID": 1306
+        },
+        {
+          "Name": "Geo",
+          "Translations": {
+            "en": "Geo"
+          },
+          "ID": 1307
+        }
+      ]
+    },
+    {
+      "Name": "Entity_Type",
+      "Translations": {
+        "en": "Entity Type"
+      },
+      "ID": 13,
+      "Items": [
+        {
+          "Name": "Stage",
+          "Translations": {
+            "en": "Stage"
+          },
+          "ID": 1401
+        },
+        {
+          "Name": "Object",
+          "Translations": {
+            "en": "Object"
+          },
+          "ID": 1402
+        },
+        {
+          "Name": "Player",
+          "Translations": {
+            "en": "Player"
+          },
+          "ID": 1403
+        },
+        {
+          "Name": "Character",
+          "Translations": {
+            "en": "Character"
+          },
+          "ID": 1404
+        },
+        {
+          "Name": "Creation",
+          "Translations": {
+            "en": "Creation"
+          },
+          "ID": 1405
+        }
+      ]
+    },
+    {
+      "Name": "Unit_Status_Addition_Failure_Reason",
+      "Translations": {
+        "en": "Unit Status Addition Failure Reason"
+      },
+      "ID": 14,
+      "Items": []
+    },
+    {
+      "Name": "Unit_Status_Addition_Success_Type",
+      "Translations": {
+        "en": "Unit Status Addition Success Type"
+      },
+      "ID": 15,
+      "Items": []
+    },
+    {
+      "Name": "Unit_Status_Removal_Reason",
+      "Translations": {
+        "en": "Unit Status Removal Reason"
+      },
+      "ID": 16,
+      "Items": [
+        {
+          "Name": "Replaced by other unit status",
+          "Translations": {
+            "en": "Replaced by other unit status"
+          },
+          "ID": 1506
+        },
+        {
+          "Name": "Duration exceeded",
+          "Translations": {
+            "en": "Duration exceeded"
+          },
+          "ID": 1507
+        },
+        {
+          "Name": "Dispelled",
+          "Translations": {
+            "en": "Dispelled"
+          },
+          "ID": 1508
+        },
+        {
+          "Name": "Status expired",
+          "Translations": {
+            "en": "Status expired"
+          },
+          "ID": 1509
+        },
+        {
+          "Name": "Class changed",
+          "Translations": {
+            "en": "Class changed"
+          },
+          "ID": 1510
+        }
+      ]
+    },
+    {
+      "Name": "Unit_Status_Removal_Strategy",
+      "Translations": {
+        "en": "Unit Status Removal Strategy"
+      },
+      "ID": 17,
+      "Items": [
+        {
+          "Name": "All Coexisting Statuses With the Same Name",
+          "Translations": {
+            "en": "All Coexisting Statuses With the Same Name"
+          },
+          "ID": 1540
+        },
+        {
+          "Name": "Status With Fastest Stack Loss",
+          "Translations": {
+            "en": "Status With Fastest Stack Loss"
+          },
+          "ID": 1541
+        }
+      ]
+    },
+    {
+      "Name": "Revive_Point_Selection_Strategy",
+      "Translations": {
+        "en": "Revive Point Selection Strategy"
+      },
+      "ID": 18,
+      "Items": [
+        {
+          "Name": "Nearest",
+          "Translations": {
+            "en": "Nearest"
+          },
+          "ID": 1601
+        },
+        {
+          "Name": "Most Recently Activated",
+          "Translations": {
+            "en": "Most Recently Activated"
+          },
+          "ID": 1602
+        },
+        {
+          "Name": "Highest Priority",
+          "Translations": {
+            "en": "Highest Priority"
+          },
+          "ID": 1603
+        },
+        {
+          "Name": "Random",
+          "Translations": {
+            "en": "Random"
+          },
+          "ID": 1604
+        }
+      ]
+    },
+    {
+      "Name": "Cause_of_Being_Down",
+      "Translations": {
+        "en": "Cause of Being Down"
+      },
+      "ID": 19,
+      "Items": [
+        {
+          "Name": "Node Graph Triggered",
+          "Translations": {
+            "en": "Node Graph Triggered"
+          },
+          "ID": 1605
+        },
+        {
+          "Name": "Normal Defeat",
+          "Translations": {
+            "en": "Normal Defeat"
+          },
+          "ID": 1606
+        },
+        {
+          "Name": "Abnormal Defeat",
+          "Translations": {
+            "en": "Abnormal Defeat"
+          },
+          "ID": 1607
+        }
+      ]
+    },
+    {
+      "Name": "Trigonometric_Functions",
+      "Translations": {
+        "en": "Trigonometric Functions"
+      },
+      "ID": 20,
+      "Items": [
+        {
+          "Name": "cos",
+          "Translations": {
+            "en": "cos"
+          },
+          "ID": 1700
+        },
+        {
+          "Name": "sin",
+          "Translations": {
+            "en": "sin"
+          },
+          "ID": 1701
+        },
+        {
+          "Name": "tan",
+          "Translations": {
+            "en": "tan"
+          },
+          "ID": 1702
+        },
+        {
+          "Name": "arccos",
+          "Translations": {
+            "en": "arccos"
+          },
+          "ID": 1703
+        },
+        {
+          "Name": "arcsin",
+          "Translations": {
+            "en": "arcsin"
+          },
+          "ID": 1704
+        },
+        {
+          "Name": "arctan",
+          "Translations": {
+            "en": "arctan"
+          },
+          "ID": 1705
+        },
+        {
+          "Name": "Radians to Degrees",
+          "Translations": {
+            "en": "Radians to Degrees"
+          },
+          "ID": 1706
+        },
+        {
+          "Name": "Degrees to Radians",
+          "Translations": {
+            "en": "Degrees to Radians"
+          },
+          "ID": 1707
+        }
+      ]
+    },
+    {
+      "Name": "Disruptor_Device_Type",
+      "Translations": {
+        "en": "Disruptor Device Type"
+      },
+      "ID": 21,
+      "Items": [
+        {
+          "Name": "Force Field Device",
+          "Translations": {
+            "en": "Force Field Device"
+          },
+          "ID": 1801
+        },
+        {
+          "Name": "Ejector",
+          "Translations": {
+            "en": "Ejector"
+          },
+          "ID": 1802
+        },
+        {
+          "Name": "Tractor Device",
+          "Translations": {
+            "en": "Tractor Device"
+          },
+          "ID": 1803
+        }
+      ]
+    },
+    {
+      "Name": "Disruptor_Device_Orientation",
+      "Translations": {
+        "en": "Disruptor Device Orientation"
+      },
+      "ID": 22,
+      "Items": [
+        {
+          "Name": "Associate Character Orientation",
+          "Translations": {
+            "en": "Associate Character Orientation"
+          },
+          "ID": 1810
+        },
+        {
+          "Name": "Fixed Unidirectional",
+          "Translations": {
+            "en": "Fixed Unidirectional"
+          },
+          "ID": 1811
+        }
+      ]
+    },
+    {
+      "Name": "UI_Control_Group_Status",
+      "Translations": {
+        "en": "UI Control Group Status"
+      },
+      "ID": 23,
+      "Items": [
+        {
+          "Name": "Off",
+          "Translations": {
+            "en": "Off"
+          },
+          "ID": 1900
+        },
+        {
+          "Name": "On",
+          "Translations": {
+            "en": "On"
+          },
+          "ID": 1901
+        },
+        {
+          "Name": "Hidden",
+          "Translations": {
+            "en": "Hidden"
+          },
+          "ID": 1902
+        }
+      ]
+    },
+    {
+      "Name": "Target_Type",
+      "Translations": {
+        "en": "Target Type"
+      },
+      "ID": 24,
+      "Items": [
+        {
+          "Name": "None",
+          "Translations": {
+            "en": "None"
+          },
+          "ID": 2000
+        },
+        {
+          "Name": "Allied Faction",
+          "Translations": {
+            "en": "Allied Faction"
+          },
+          "ID": 2001
+        },
+        {
+          "Name": "Hostile Faction",
+          "Translations": {
+            "en": "Hostile Faction"
+          },
+          "ID": 2002
+        },
+        {
+          "Name": "Self",
+          "Translations": {
+            "en": "Self"
+          },
+          "ID": 2003
+        },
+        {
+          "Name": "Own Faction",
+          "Translations": {
+            "en": "Own Faction"
+          },
+          "ID": 2004
+        },
+        {
+          "Name": "All",
+          "Translations": {
+            "en": "All"
+          },
+          "ID": 2005
+        },
+        {
+          "Name": "All Except Self",
+          "Translations": {
+            "en": "All Except Self"
+          },
+          "ID": 2006
+        },
+        {
+          "Name": "Allied Faction Self Included",
+          "Translations": {
+            "en": "Allied Faction Self Included"
+          },
+          "ID": 2007
+        }
+      ]
+    },
+    {
+      "Name": "Quick_Mathematical_Operators",
+      "Translations": {
+        "en": "Quick Mathematical Operators"
+      },
+      "ID": 25,
+      "Items": [
+        {
+          "Name": "Modulo Operation",
+          "Translations": {
+            "en": "Modulo Operation"
+          },
+          "ID": 304
+        },
+        {
+          "Name": "Exponentiation",
+          "Translations": {
+            "en": "Exponentiation"
+          },
+          "ID": 305
+        },
+        {
+          "Name": "Get Maximum Value",
+          "Translations": {
+            "en": "Get Maximum Value"
+          },
+          "ID": 306
+        },
+        {
+          "Name": "Get Minimum Value",
+          "Translations": {
+            "en": "Get Minimum Value"
+          },
+          "ID": 307
+        },
+        {
+          "Name": "Logarithm",
+          "Translations": {
+            "en": "Logarithm"
+          },
+          "ID": 308
+        }
+      ]
+    },
+    {
+      "Name": "Hit_Type",
+      "Translations": {
+        "en": "Hit Type"
+      },
+      "ID": 26,
+      "Items": [
+        {
+          "Name": "None",
+          "Translations": {
+            "en": "None"
+          },
+          "ID": 2200
+        },
+        {
+          "Name": "Default",
+          "Translations": {
+            "en": "Default"
+          },
+          "ID": 2201
+        },
+        {
+          "Name": "Slash",
+          "Translations": {
+            "en": "Slash"
+          },
+          "ID": 2202
+        },
+        {
+          "Name": "Smash",
+          "Translations": {
+            "en": "Smash"
+          },
+          "ID": 2203
+        },
+        {
+          "Name": "Projectile",
+          "Translations": {
+            "en": "Projectile"
+          },
+          "ID": 2204
+        },
+        {
+          "Name": "Piercing Attack",
+          "Translations": {
+            "en": "Piercing Attack"
+          },
+          "ID": 2205
+        }
+      ]
+    },
+    {
+      "Name": "Attack_Type",
+      "Translations": {
+        "en": "Attack Type"
+      },
+      "ID": 27,
+      "Items": [
+        {
+          "Name": "None",
+          "Translations": {
+            "en": "None"
+          },
+          "ID": 2300
+        },
+        {
+          "Name": "Melee Attack",
+          "Translations": {
+            "en": "Melee Attack"
+          },
+          "ID": 2301
+        },
+        {
+          "Name": "Ranged Attack",
+          "Translations": {
+            "en": "Ranged Attack"
+          },
+          "ID": 2302
+        },
+        {
+          "Name": "Default",
+          "Translations": {
+            "en": "Default"
+          },
+          "ID": 2303
+        }
+      ]
+    },
+    {
+      "Name": "Hit_Performance_Level",
+      "Translations": {
+        "en": "Hit Performance Level"
+      },
+      "ID": 28,
+      "Items": [
+        {
+          "Name": "Default",
+          "Translations": {
+            "en": "Default"
+          },
+          "ID": 2400
+        },
+        {
+          "Name": "No Hit Performance",
+          "Translations": {
+            "en": "No Hit Performance"
+          },
+          "ID": 2401
+        },
+        {
+          "Name": "Hit by Normal Arrow Without Charging",
+          "Translations": {
+            "en": "Hit by Normal Arrow Without Charging"
+          },
+          "ID": 2402
+        },
+        {
+          "Name": "Combo Hit",
+          "Translations": {
+            "en": "Combo Hit"
+          },
+          "ID": 2403
+        },
+        {
+          "Name": "Normal Hit",
+          "Translations": {
+            "en": "Normal Hit"
+          },
+          "ID": 2404
+        },
+        {
+          "Name": "Heavy Hit",
+          "Translations": {
+            "en": "Heavy Hit"
+          },
+          "ID": 2405
+        },
+        {
+          "Name": "Strong Impact",
+          "Translations": {
+            "en": "Strong Impact"
+          },
+          "ID": 2406
+        },
+        {
+          "Name": "Ultimate Impact",
+          "Translations": {
+            "en": "Ultimate Impact"
+          },
+          "ID": 2407
+        },
+        {
+          "Name": "Vertical Launch",
+          "Translations": {
+            "en": "Vertical Launch"
+          },
+          "ID": 2408
+        },
+        {
+          "Name": "Super Launch",
+          "Translations": {
+            "en": "Super Launch"
+          },
+          "ID": 2409
+        },
+        {
+          "Name": "Long-Range Throw",
+          "Translations": {
+            "en": "Long-Range Throw"
+          },
+          "ID": 2410
+        }
+      ]
+    },
+    {
+      "Name": "Target_Sorting_Rules",
+      "Translations": {
+        "en": "Target Sorting Rules"
+      },
+      "ID": 29,
+      "Items": [
+        {
+          "Name": "Default Sorting",
+          "Translations": {
+            "en": "Default Sorting"
+          },
+          "ID": 1000001
+        },
+        {
+          "Name": "Random Order",
+          "Translations": {
+            "en": "Random Order"
+          },
+          "ID": 1000002
+        },
+        {
+          "Name": "Sort From Near to Far",
+          "Translations": {
+            "en": "Sort From Near to Far"
+          },
+          "ID": 1000003
+        }
+      ]
+    },
+    {
+      "Name": "Attack_Layer_Config",
+      "Translations": {
+        "en": "Attack Layer Config"
+      },
+      "ID": 30,
+      "Items": [
+        {
+          "Name": "Only On-Hit Hurtbox",
+          "Translations": {
+            "en": "Only On-Hit Hurtbox"
+          },
+          "ID": 2601
+        },
+        {
+          "Name": "Only On-Hit Scene",
+          "Translations": {
+            "en": "Only On-Hit Scene"
+          },
+          "ID": 2602
+        },
+        {
+          "Name": "Hit All",
+          "Translations": {
+            "en": "Hit All"
+          },
+          "ID": 2604
+        }
+      ]
+    },
+    {
+      "Name": "Knockback_Direction_Type",
+      "Translations": {
+        "en": "Knockback Direction Type"
+      },
+      "ID": 31,
+      "Items": [
+        {
+          "Name": "Line Connecting Attacker and Hit Point",
+          "Translations": {
+            "en": "Line Connecting Attacker and Hit Point"
+          },
+          "ID": 2501
+        },
+        {
+          "Name": "Hitbox On-Hit Direction",
+          "Translations": {
+            "en": "Hitbox On-Hit Direction"
+          },
+          "ID": 2502
+        },
+        {
+          "Name": "Line Connecting Attacker's Owner and Hit Point",
+          "Translations": {
+            "en": "Line Connecting Attacker's Owner and Hit Point"
+          },
+          "ID": 2503
+        },
+        {
+          "Name": "Tangent Line Between Attacker and Hit Point",
+          "Translations": {
+            "en": "Tangent Line Between Attacker and Hit Point"
+          },
+          "ID": 2504
+        },
+        {
+          "Name": "Opposite Direction to Hit",
+          "Translations": {
+            "en": "Opposite Direction to Hit"
+          },
+          "ID": 2505
+        },
+        {
+          "Name": "Attacker's Facing Orientation",
+          "Translations": {
+            "en": "Attacker's Facing Orientation"
+          },
+          "ID": 2506
+        },
+        {
+          "Name": "Opposite Direction to Line Connecting Attacker and Hit Point",
+          "Translations": {
+            "en": "Opposite Direction to Line Connecting Attacker and Hit Point"
+          },
+          "ID": 2507
+        }
+      ]
+    },
+    {
+      "Name": "Rotation_Type",
+      "Translations": {
+        "en": "Rotation Type"
+      },
+      "ID": 32,
+      "Items": [
+        {
+          "Name": "Target First, Then Input",
+          "Translations": {
+            "en": "Target First, Then Input"
+          },
+          "ID": 2900
+        },
+        {
+          "Name": "Input Orientation",
+          "Translations": {
+            "en": "Input Orientation"
+          },
+          "ID": 2901
+        },
+        {
+          "Name": "Target Orientation",
+          "Translations": {
+            "en": "Target Orientation"
+          },
+          "ID": 2902
+        },
+        {
+          "Name": "Target First, Then Camera",
+          "Translations": {
+            "en": "Target First, Then Camera"
+          },
+          "ID": 2903
+        },
+        {
+          "Name": "Camera Orientation",
+          "Translations": {
+            "en": "Camera Orientation"
+          },
+          "ID": 2904
+        },
+        {
+          "Name": "Input First, Then Target",
+          "Translations": {
+            "en": "Input First, Then Target"
+          },
+          "ID": 2905
+        }
+      ]
+    },
+    {
+      "Name": "Sector_Detection_Direction",
+      "Translations": {
+        "en": "Sector Detection Direction"
+      },
+      "ID": 33,
+      "Items": [
+        {
+          "Name": "From Inside Out",
+          "Translations": {
+            "en": "From Inside Out"
+          },
+          "ID": 450
+        },
+        {
+          "Name": "Clockwise",
+          "Translations": {
+            "en": "Clockwise"
+          },
+          "ID": 451
+        },
+        {
+          "Name": "Counterclockwise",
+          "Translations": {
+            "en": "Counterclockwise"
+          },
+          "ID": 452
+        }
+      ]
+    },
+    {
+      "Name": "Retracing_Type",
+      "Translations": {
+        "en": "Retracing Type"
+      },
+      "ID": 35,
+      "Items": [
+        {
+          "Name": "Self",
+          "Translations": {
+            "en": "Self"
+          },
+          "ID": 3200
+        },
+        {
+          "Name": "Self Owner",
+          "Translations": {
+            "en": "Self Owner"
+          },
+          "ID": 3201
+        },
+        {
+          "Name": "Top Layer Self Owner",
+          "Translations": {
+            "en": "Top Layer Self Owner"
+          },
+          "ID": 3202
+        }
+      ]
+    },
+    {
+      "Name": "Hit_Level",
+      "Translations": {
+        "en": "Hit Level"
+      },
+      "ID": 36,
+      "Items": [
+        {
+          "Name": "No Effect",
+          "Translations": {
+            "en": "No Effect"
+          },
+          "ID": 3900
+        },
+        {
+          "Name": "Light Tremor",
+          "Translations": {
+            "en": "Light Tremor"
+          },
+          "ID": 3901
+        },
+        {
+          "Name": "Light Hit",
+          "Translations": {
+            "en": "Light Hit"
+          },
+          "ID": 3902
+        },
+        {
+          "Name": "Knockback Hit",
+          "Translations": {
+            "en": "Knockback Hit"
+          },
+          "ID": 3903
+        },
+        {
+          "Name": "Launch",
+          "Translations": {
+            "en": "Launch"
+          },
+          "ID": 3904
+        }
+      ]
+    },
+    {
+      "Name": "Elemental_Reaction_Type",
+      "Translations": {
+        "en": "Elemental Reaction Type"
+      },
+      "ID": 37,
+      "Items": [
+        {
+          "Name": "Overloaded",
+          "Translations": {
+            "en": "Overloaded"
+          },
+          "ID": 4701
+        },
+        {
+          "Name": "Vaporize",
+          "Translations": {
+            "en": "Vaporize"
+          },
+          "ID": 4702
+        },
+        {
+          "Name": "Burning",
+          "Translations": {
+            "en": "Burning"
+          },
+          "ID": 4703
+        },
+        {
+          "Name": "Wet",
+          "Translations": {
+            "en": "Wet"
+          },
+          "ID": 4705
+        },
+        {
+          "Name": "Bloom",
+          "Translations": {
+            "en": "Bloom"
+          },
+          "ID": 4706
+        },
+        {
+          "Name": "Melt",
+          "Translations": {
+            "en": "Melt"
+          },
+          "ID": 4707
+        },
+        {
+          "Name": "Frozen",
+          "Translations": {
+            "en": "Frozen"
+          },
+          "ID": 4708
+        },
+        {
+          "Name": "Electro-Charged",
+          "Translations": {
+            "en": "Electro-Charged"
+          },
+          "ID": 4712
+        },
+        {
+          "Name": "Superconduct",
+          "Translations": {
+            "en": "Superconduct"
+          },
+          "ID": 4716
+        },
+        {
+          "Name": "Swirl: Pyro",
+          "Translations": {
+            "en": "Swirl: Pyro"
+          },
+          "ID": 4717
+        },
+        {
+          "Name": "Swirl: Hydro",
+          "Translations": {
+            "en": "Swirl: Hydro"
+          },
+          "ID": 4718
+        },
+        {
+          "Name": "Swirl: Electro",
+          "Translations": {
+            "en": "Swirl: Electro"
+          },
+          "ID": 4719
+        },
+        {
+          "Name": "Swirl: Cryo",
+          "Translations": {
+            "en": "Swirl: Cryo"
+          },
+          "ID": 4720
+        },
+        {
+          "Name": "Crystallize: Pyro",
+          "Translations": {
+            "en": "Crystallize: Pyro"
+          },
+          "ID": 4727
+        },
+        {
+          "Name": "Crystallize: Hydro",
+          "Translations": {
+            "en": "Crystallize: Hydro"
+          },
+          "ID": 4728
+        },
+        {
+          "Name": "Crystallize: Electro",
+          "Translations": {
+            "en": "Crystallize: Electro"
+          },
+          "ID": 4729
+        },
+        {
+          "Name": "Crystallize: Cryo",
+          "Translations": {
+            "en": "Crystallize: Cryo"
+          },
+          "ID": 4730
+        },
+        {
+          "Name": "Catalyze",
+          "Translations": {
+            "en": "Catalyze"
+          },
+          "ID": 4733
+        },
+        {
+          "Name": "Aggravate",
+          "Translations": {
+            "en": "Aggravate"
+          },
+          "ID": 4734
+        },
+        {
+          "Name": "Spread",
+          "Translations": {
+            "en": "Spread"
+          },
+          "ID": 4735
+        },
+        {
+          "Name": "Burgeon",
+          "Translations": {
+            "en": "Burgeon"
+          },
+          "ID": 4736
+        },
+        {
+          "Name": "Hyperbloom",
+          "Translations": {
+            "en": "Hyperbloom"
+          },
+          "ID": 4737
+        }
+      ]
+    },
+    {
+      "Name": "Filter_Return_Type",
+      "Translations": {
+        "en": "Filter Return Type"
+      },
+      "ID": 38,
+      "Items": [
+        {
+          "Name": "Return Boolean",
+          "Translations": {
+            "en": "Return Boolean"
+          },
+          "ID": 1000010
+        },
+        {
+          "Name": "Return Integer",
+          "Translations": {
+            "en": "Return Integer"
+          },
+          "ID": 10000011
+        }
+      ]
+    },
+    {
+      "Name": "Target_Type_For_Camera_Orientation_Node",
+      "Translations": {
+        "en": "Target Type (For Camera Orientation Node)"
+      },
+      "ID": 39,
+      "Items": [
+        {
+          "Name": "Don't Find Target",
+          "Translations": {
+            "en": "Don't Find Target"
+          },
+          "ID": 2000
+        },
+        {
+          "Name": "Allied Faction",
+          "Translations": {
+            "en": "Allied Faction"
+          },
+          "ID": 2001
+        },
+        {
+          "Name": "Hostile Faction",
+          "Translations": {
+            "en": "Hostile Faction"
+          },
+          "ID": 2002
+        },
+        {
+          "Name": "Own Faction",
+          "Translations": {
+            "en": "Own Faction"
+          },
+          "ID": 2004
+        },
+        {
+          "Name": "All Except Self",
+          "Translations": {
+            "en": "All Except Self"
+          },
+          "ID": 2006
+        }
+      ]
+    },
+    {
+      "Name": "Scan_Status",
+      "Translations": {
+        "en": "Scan Status"
+      },
+      "ID": 40,
+      "Items": [
+        {
+          "Name": "Unusable Target",
+          "Translations": {
+            "en": "Unusable Target"
+          },
+          "ID": 5000
+        },
+        {
+          "Name": "Current Scan Target",
+          "Translations": {
+            "en": "Current Scan Target"
+          },
+          "ID": 5001
+        },
+        {
+          "Name": "Candidate Target",
+          "Translations": {
+            "en": "Candidate Target"
+          },
+          "ID": 5002
+        },
+        {
+          "Name": "Condition Not Met",
+          "Translations": {
+            "en": "Condition Not Met"
+          },
+          "ID": 5003
+        }
+      ]
+    },
+    {
+      "Name": "Input_Device_Type",
+      "Translations": {
+        "en": "Input Device Type"
+      },
+      "ID": 41,
+      "Items": [
+        {
+          "Name": "Keyboard and Mouse",
+          "Translations": {
+            "en": "Keyboard and Mouse"
+          },
+          "ID": 5800
+        },
+        {
+          "Name": "Controller",
+          "Translations": {
+            "en": "Controller"
+          },
+          "ID": 5801
+        },
+        {
+          "Name": "Touchscreen",
+          "Translations": {
+            "en": "Touchscreen"
+          },
+          "ID": 5802
         }
       ]
     }

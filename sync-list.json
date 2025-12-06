@@ -1,5 +1,5 @@
 {
-  "commitMessage": "添加新节点数据: 当呼叫管理员时, Structure/Signal",
+  "commitMessage": "添加客户端节点的 Enum Id 数据(与服务器端完全不同)",
   "notSync": false,
   "include": [
     "*",

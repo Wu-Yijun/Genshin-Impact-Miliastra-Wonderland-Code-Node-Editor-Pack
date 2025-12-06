@@ -1,0 +1,499 @@
+[
+  {
+    "name": "Generic",
+    "id": 10,
+    "indexOfConcrete": -1,
+    "items": {}
+  },
+  {
+    "name": "Comparison Operators",
+    "id": 10,
+    "indexOfConcrete": 0,
+    "items": {
+      "100": "Equal To",
+      "101": "Less Than",
+      "102": "Less Than or Equal To",
+      "103": "Greater Than",
+      "104": "Greater Than or Equal To"
+    }
+  },
+  {
+    "name": "Logical Operators",
+    "id": 10,
+    "indexOfConcrete": 1,
+    "items": {
+      "200": "AND",
+      "201": "OR",
+      "202": "XOR",
+      "203": "NOT"
+    }
+  },
+  {
+    "name": "Basic Mathematical Operators",
+    "id": 10,
+    "indexOfConcrete": 2,
+    "items": {
+      "300": "Addition",
+      "301": "Subtraction",
+      "302": "Multiplication",
+      "303": "Division"
+    }
+  },
+  {
+    "name": "Attack Shapes",
+    "id": 10,
+    "indexOfConcrete": 3,
+    "items": {
+      "400": "Rectangle",
+      "401": "Sphere",
+      "402": "Sector"
+    }
+  },
+  {
+    "name": "Survival Status",
+    "id": 10,
+    "indexOfConcrete": 4,
+    "items": {
+      "500": "Alive",
+      "501": "Down"
+    }
+  },
+  {
+    "name": "Sorting Rules",
+    "id": 10,
+    "indexOfConcrete": 5,
+    "items": {
+      "600": "Ascending",
+      "601": "Descending"
+    }
+  },
+  {
+    "name": "Rounding Logic",
+    "id": 10,
+    "indexOfConcrete": 6,
+    "items": {
+      "700": "Round Up",
+      "701": "Round Down",
+      "702": "Round to Nearest",
+      "703": "Truncate"
+    }
+  },
+  {
+    "name": "Type Conversions",
+    "id": 10,
+    "indexOfConcrete": 7,
+    "items": {
+      "800": "Integer to Boolean",
+      "801": "Integer to Floating Point",
+      "802": "Integer to String",
+      "803": "Entity to String",
+      "804": "GUID to String",
+      "805": "Boolean to Integer",
+      "806": "Boolean to String",
+      "807": "Floating Point to Integer",
+      "808": "Floating Point to String",
+      "809": "3D Vector to String",
+      "810": "Faction to String"
+    }
+  },
+  {
+    "name": "Motion Path Point Types",
+    "id": 10,
+    "indexOfConcrete": 8,
+    "items": {
+      "900": "Straight Line",
+      "901": "Curve"
+    }
+  },
+  {
+    "name": "Motion Types",
+    "id": 10,
+    "indexOfConcrete": 9,
+    "items": {
+      "1000": "One-Way",
+      "1001": "Back and Forth",
+      "1002": "Cyclic Movement"
+    }
+  },
+  {
+    "name": "Follow Location Type",
+    "id": 10,
+    "indexOfConcrete": 10,
+    "items": {
+      "1100": "Completely Follow",
+      "1101": "Follow Location",
+      "1102": "Follow Rotation"
+    }
+  },
+  {
+    "name": "Coordinate System Type",
+    "id": 10,
+    "indexOfConcrete": 11,
+    "items": {
+      "1200": "Relative Coordinate System",
+      "1201": "World Coordinate System"
+    }
+  },
+  {
+    "name": "Elemental Type",
+    "id": 10,
+    "indexOfConcrete": 12,
+    "items": {
+      "1300": "None",
+      "1301": "Pyro",
+      "1302": "Hydro",
+      "1303": "Anemo",
+      "1304": "Electro",
+      "1305": "Dendro",
+      "1306": "Cryo",
+      "1307": "Geo"
+    }
+  },
+  {
+    "name": "Entity Type",
+    "id": 10,
+    "indexOfConcrete": 13,
+    "items": {
+      "1401": "Stage",
+      "1402": "Object",
+      "1403": "Player",
+      "1404": "Character",
+      "1405": "Creation"
+    }
+  },
+  {
+    "name": "Unit Status Addition Failure Reason",
+    "id": 10,
+    "indexOfConcrete": 14,
+    "items": {}
+  },
+  {
+    "name": "Unit Status Addition Success Type",
+    "id": 10,
+    "indexOfConcrete": 15,
+    "items": {}
+  },
+  {
+    "name": "Unit Status Removal Reason",
+    "id": 10,
+    "indexOfConcrete": 16,
+    "items": {
+      "1506": "Replaced by other unit status",
+      "1507": "Duration exceeded",
+      "1508": "Dispelled",
+      "1509": "Status expired",
+      "1510": "Class changed"
+    }
+  },
+  {
+    "name": "Unit Status Removal Strategy",
+    "id": 10,
+    "indexOfConcrete": 17,
+    "items": {
+      "1540": "All Coexisting Statuses With the Same Name",
+      "1541": "Status With Fastest Stack Loss"
+    }
+  },
+  {
+    "name": "Revive Point Selection Strategy",
+    "id": 10,
+    "indexOfConcrete": 18,
+    "items": {
+      "1601": "Nearest",
+      "1602": "Most Recently Activated",
+      "1603": "Highest Priority",
+      "1604": "Random"
+    }
+  },
+  {
+    "name": "Cause of Being Down",
+    "id": 10,
+    "indexOfConcrete": 19,
+    "items": {
+      "1605": "Node Graph Triggered",
+      "1606": "Normal Defeat",
+      "1607": "Abnormal Defeat"
+    }
+  },
+  {
+    "name": "Trigonometric Functions",
+    "id": 10,
+    "indexOfConcrete": 20,
+    "items": {
+      "1700": "cos",
+      "1701": "sin",
+      "1702": "tan",
+      "1703": "arccos",
+      "1704": "arcsin",
+      "1705": "arctan",
+      "1706": "Radians to Degrees",
+      "1707": "Degrees to Radians"
+    }
+  },
+  {
+    "name": "Disruptor Device Type",
+    "id": 10,
+    "indexOfConcrete": 21,
+    "items": {
+      "1801": "Force Field Device",
+      "1802": "Ejector",
+      "1803": "Tractor Device"
+    }
+  },
+  {
+    "name": "Disruptor Device Orientation",
+    "id": 10,
+    "indexOfConcrete": 22,
+    "items": {
+      "1810": "Associate Character Orientation",
+      "1811": "Fixed Unidirectional"
+    }
+  },
+  {
+    "name": "UI Control Group Status",
+    "id": 10,
+    "indexOfConcrete": 23,
+    "items": {
+      "1900": "Off",
+      "1901": "On",
+      "1902": "Hidden"
+    }
+  },
+  {
+    "name": "Target Type",
+    "id": 10,
+    "indexOfConcrete": 24,
+    "items": {
+      "2000": "None",
+      "2001": "Allied Faction",
+      "2002": "Hostile Faction",
+      "2003": "Self",
+      "2004": "Own Faction",
+      "2005": "All",
+      "2006": "All Except Self",
+      "2007": "Allied Faction Self Included"
+    }
+  },
+  {
+    "name": "Quick Mathematical Operators",
+    "id": 10,
+    "indexOfConcrete": 25,
+    "items": {
+      "304": "Modulo Operation",
+      "305": "Exponentiation",
+      "306": "Get Maximum Value",
+      "307": "Get Minimum Value",
+      "308": "Logarithm"
+    }
+  },
+  {
+    "name": "Hit Type",
+    "id": 10,
+    "indexOfConcrete": 26,
+    "items": {
+      "2200": "None",
+      "2201": "Default",
+      "2202": "Slash",
+      "2203": "Smash",
+      "2204": "Projectile",
+      "2205": "Piercing Attack"
+    }
+  },
+  {
+    "name": "Attack Type",
+    "id": 10,
+    "indexOfConcrete": 27,
+    "items": {
+      "2300": "None",
+      "2301": "Melee Attack",
+      "2302": "Ranged Attack",
+      "2303": "Default"
+    }
+  },
+  {
+    "name": "Hit Performance Level",
+    "id": 10,
+    "indexOfConcrete": 28,
+    "items": {
+      "2400": "Default",
+      "2401": "No Hit Performance",
+      "2402": "Hit by Normal Arrow Without Charging",
+      "2403": "Combo Hit",
+      "2404": "Normal Hit",
+      "2405": "Heavy Hit",
+      "2406": "Strong Impact",
+      "2407": "Ultimate Impact",
+      "2408": "Vertical Launch",
+      "2409": "Super Launch",
+      "2410": "Long-Range Throw"
+    }
+  },
+  {
+    "name": "Target Sorting Rules",
+    "id": 10,
+    "indexOfConcrete": 29,
+    "items": {
+      "1000001": "Default Sorting",
+      "1000002": "Random Order",
+      "1000003": "Sort From Near to Far"
+    }
+  },
+  {
+    "name": "Attack Layer Config",
+    "id": 10,
+    "indexOfConcrete": 30,
+    "items": {
+      "2601": "Only On-Hit Hurtbox",
+      "2602": "Only On-Hit Scene",
+      "2604": "Hit All"
+    }
+  },
+  {
+    "name": "Knockback Direction Type",
+    "id": 10,
+    "indexOfConcrete": 31,
+    "items": {
+      "2501": "Line Connecting Attacker and Hit Point",
+      "2502": "Hitbox On-Hit Direction",
+      "2503": "Line Connecting Attacker's Owner and Hit Point",
+      "2504": "Tangent Line Between Attacker and Hit Point",
+      "2505": "Opposite Direction to Hit",
+      "2506": "Attacker's Facing Orientation",
+      "2507": "Opposite Direction to Line Connecting Attacker and Hit Point"
+    }
+  },
+  {
+    "name": "Rotation Type",
+    "id": 10,
+    "indexOfConcrete": 32,
+    "items": {
+      "2900": "Target First, Then Input",
+      "2901": "Input Orientation",
+      "2902": "Target Orientation",
+      "2903": "Target First, Then Camera",
+      "2904": "Camera Orientation",
+      "2905": "Input First, Then Target"
+    }
+  },
+  {
+    "name": "Sector Detection Direction",
+    "id": 10,
+    "indexOfConcrete": 33,
+    "items": {
+      "450": "From Inside Out",
+      "451": "Clockwise",
+      "452": "Counterclockwise"
+    }
+  },
+  {
+    "name": "Type Conversions",
+    "id": 10,
+    "indexOfConcrete": 7,
+    "items": {
+      "800": "Integer to Boolean",
+      "801": "Integer to Floating Point",
+      "802": "Integer to String",
+      "803": "Entity to String",
+      "804": "GUID to String",
+      "805": "Boolean to Integer",
+      "806": "Boolean to String",
+      "807": "Floating Point to Integer",
+      "808": "Floating Point to String",
+      "809": "3D Vector to String",
+      "810": "Faction to String"
+    }
+  },
+  {
+    "name": "Retracing Type",
+    "id": 10,
+    "indexOfConcrete": 35,
+    "items": {
+      "3200": "Self",
+      "3201": "Self Owner",
+      "3202": "Top Layer Self Owner"
+    }
+  },
+  {
+    "name": "Hit Level",
+    "id": 10,
+    "indexOfConcrete": 36,
+    "items": {
+      "3900": "No Effect",
+      "3901": "Light Tremor",
+      "3902": "Light Hit",
+      "3903": "Knockback Hit",
+      "3904": "Launch"
+    }
+  },
+  {
+    "name": "Elemental Reaction Type",
+    "id": 10,
+    "indexOfConcrete": 37,
+    "items": {
+      "4701": "Overloaded",
+      "4702": "Vaporize",
+      "4703": "Burning",
+      "4705": "Wet",
+      "4706": "Bloom",
+      "4707": "Melt",
+      "4708": "Frozen",
+      "4712": "Electro-Charged",
+      "4716": "Superconduct",
+      "4717": "Swirl: Pyro",
+      "4718": "Swirl: Hydro",
+      "4719": "Swirl: Electro",
+      "4720": "Swirl: Cryo",
+      "4727": "Crystallize: Pyro",
+      "4728": "Crystallize: Hydro",
+      "4729": "Crystallize: Electro",
+      "4730": "Crystallize: Cryo",
+      "4733": "Catalyze",
+      "4734": "Aggravate",
+      "4735": "Spread",
+      "4736": "Burgeon",
+      "4737": "Hyperbloom"
+    }
+  },
+  {
+    "name": "Filter Return Type",
+    "id": 10,
+    "indexOfConcrete": 38,
+    "items": {
+      "1000010": "Return Boolean",
+      "10000011": "Return Integer"
+    }
+  },
+  {
+    "name": "Target Type (For Camera Orientation Node)",
+    "id": 10,
+    "indexOfConcrete": 39,
+    "items": {
+      "2000": "Don't Find Target",
+      "2001": "Allied Faction",
+      "2002": "Hostile Faction",
+      "2004": "Own Faction",
+      "2006": "All Except Self"
+    }
+  },
+  {
+    "name": "Scan Status",
+    "id": 10,
+    "indexOfConcrete": 40,
+    "items": {
+      "5000": "Unusable Target",
+      "5001": "Current Scan Target",
+      "5002": "Candidate Target",
+      "5003": "Condition Not Met"
+    }
+  },
+  {
+    "name": "Input Device Type",
+    "id": 10,
+    "indexOfConcrete": 41,
+    "items": {
+      "5800": "Keyboard and Mouse",
+      "5801": "Controller",
+      "5802": "Touchscreen"
+    }
+  }
+]

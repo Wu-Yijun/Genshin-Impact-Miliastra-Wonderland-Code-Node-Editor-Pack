@@ -64,7 +64,7 @@ EnumList:
   - name: Trigonometric Functions
     id: 496
     items: []
-  - name: Disruptor Device Types
+  - name: Disruptor Device Type
     id: 497
     items: []
   - name: Disruptor Device Orientation
@@ -219,10 +219,10 @@ Enums: |
   Trigonometric Functions_arctan
   Trigonometric Functions_Radians to Degrees
   Trigonometric Functions_Degrees to Radians
-  Disruptor Device Types_1
-  Disruptor Device Types_Force Field Device
-  Disruptor Device Types_Ejector
-  Disruptor Device Types_Tractor Device
+  Disruptor Device Type_1
+  Disruptor Device Type_Force Field Device
+  Disruptor Device Type_Ejector
+  Disruptor Device Type_Tractor Device
   Disruptor Device Orientation_10
   Disruptor Device Orientation_Associate Character Orientation
   Disruptor Device Orientation_Fixed Unidirectional

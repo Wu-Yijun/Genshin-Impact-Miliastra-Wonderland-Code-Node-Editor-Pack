@@ -19,6 +19,7 @@ interface Document {
   TypesList: TypeEntry[];
   NodesList: NodeEntry[];
   EnumList: EnumEntry[];
+  ClientEnumList: EnumEntry[];
 }
 interface Entry {
   Name: string;               // Safe name used as object keys or query keys
@@ -105,6 +106,7 @@ function main() {
     TypesList: TYPES_LIST.sort((a, b) => a.ID - b.ID),
     NodesList: [],
     EnumList: [],
+    ClientEnumList: [],
   };
   assert(TYPES_LIST.length === Object.keys(VarType).length - 1);
 
@@ -143,42 +145,80 @@ function main() {
   doc.NodesList.sort((a, b) => a.ID - b.ID);
 
   // ====== Enum List ======
-  const values = Object.entries(ENUM_VALUE);
-  const enum_id = (yaml.parse(readFileSync(DIR + "yaml/enum_id_raw.yaml").toString())["Enums"] as string)
-    .split("\n").map(line => line.trim()).filter(line => line.length > 0)
-    .map(line => line.split("_")).filter(([_, item]) => parseInt(item).toString() !== item);
-  // console.log(enum_id);
-  for (const [Name, ID] of Object.entries(ENUM_ID)) {
-    if (ID === ENUM_ID.Generic) continue;
-    if (ID === ENUM_ID.LocalVariable) continue;
-    if (ID === ENUM_ID.VariableSnapshot) continue;
-    const Translations = {
-      "en": Name.replaceAll("_", " ").replaceAll("For ", "for ").replaceAll("Of ", "of "),
-    }
-    const Items: EnumItem[] = [];
-    const list = enum_id.filter(x => x[0] === Translations.en);
-    assert(list.length > 0);
-    for (const l of list) {
-      const Name1 = l[1].replaceAll(/[^a-zA-Z0-9_]+/g, "_").replace(/^(?=\d)/, "_").replace(/_+$/, "");
-      const Translations1 = { "en": l[1] };
-      const full_name = Name.replaceAll(/_([a-z]?)/g, (_, p1) => p1.toUpperCase()) + "_" + Name1.replaceAll(/_([a-z]?)/g, (_, p1) => p1.toUpperCase());
-      let ID = ENUM_VALUE[full_name as keyof typeof ENUM_VALUE];
-      Items.push({
-        Name: Name1,
-        Translations: Translations1,
-        ID
+
+  (() => {
+    const enum_id = (yaml.parse(readFileSync(DIR + "yaml/enum_id_raw.yaml").toString())["Enums"] as string)
+      .split("\n").map(line => line.trim()).filter(line => line.length > 0)
+      .map(line => line.split("_")).filter(([_, item]) => parseInt(item).toString() !== item);
+    // console.log(enum_id);
+    for (const [Name, ID] of Object.entries(ENUM_ID)) {
+      // if (ID === ENUM_ID.Generic) continue;
+      if (ID === ENUM_ID.LocalVariable) continue;
+      if (ID === ENUM_ID.VariableSnapshot) continue;
+      const Translations = {
+        "en": Name.replaceAll("_", " ").replaceAll("For ", "for ").replaceAll("Of ", "of "),
+      }
+      const Items: EnumItem[] = [];
+      const list = enum_id.filter(x => x[0] === Translations.en);
+      if (Name !== "Generic") assert(list.length > 0);
+      for (const l of list) {
+        const Name1 = l[1].replaceAll(/[^a-zA-Z0-9_]+/g, "_").replace(/^(?=\d)/, "_").replace(/_+$/, "");
+        const Translations1 = { "en": l[1] };
+        const full_name = Name.replaceAll(/_([a-z]?)/g, (_, p1) => p1.toUpperCase()) + "_" + Name1.replaceAll(/_([a-z]?)/g, (_, p1) => p1.toUpperCase());
+        let ID = ENUM_VALUE[full_name as keyof typeof ENUM_VALUE];
+        Items.push({
+          Name: Name1,
+          Translations: Translations1,
+          ID
+        });
+      }
+      Items.sort((a, b) => a.ID - b.ID);
+
+      doc.EnumList.push({
+        Name,
+        Translations,
+        ID,
+        Items,
       })
     }
-    Items.sort((a, b) => a.ID - b.ID);
+    doc.EnumList.sort((a, b) => a.ID - b.ID);
+  })();
 
-    doc.EnumList.push({
-      Name,
-      Translations,
-      ID,
-      Items,
-    })
-  }
-  doc.EnumList.sort((a, b) => a.ID - b.ID);
+  // ====== Enum List 2 ======
+  (() => {
+    const data: { name: string, id: number, indexOfConcrete: number, items: Record<number, string> }[] =
+      JSON.parse(readFileSync(DIR + "yaml/client_enum_list.json").toString());
+    // console.log(enum_id);
+    for (const item of data) {
+      // if (ID === ENUM_ID.Generic) continue;
+      if (item.id === ENUM_ID.LocalVariable) continue;
+      if (item.id === ENUM_ID.VariableSnapshot) continue;
+      const Translations = {
+        "en": item.name,
+      }
+      const Name = item.name.replaceAll(/[^a-zA-Z0-9_]+/g, "_").replace(/^(?=\d)/, "_").replace(/_+$/, "");
+      const Items: EnumItem[] = [];
+      for (const [ID, Name1] of Object.entries(item.items)) {
+        const Translations1 = { "en": Name1 };
+        const full_name = Name1.replaceAll(/_([a-z]?)/g, (_, p1) => p1.toUpperCase());
+        Items.push({
+          Name: full_name,
+          Translations: Translations1,
+          ID: parseInt(ID),
+        });
+      }
+      Items.sort((a, b) => a.ID - b.ID);
+
+      doc.ClientEnumList.push({
+        Name,
+        Translations,
+        ID: item.indexOfConcrete,
+        Items,
+      })
+    }
+    doc.ClientEnumList.sort((a, b) => a.ID - b.ID);
+  })();
+
 
   // console.log(doc.EnumList[0]);
 

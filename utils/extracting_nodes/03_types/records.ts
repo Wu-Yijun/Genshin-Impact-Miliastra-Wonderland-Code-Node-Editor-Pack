@@ -679,12 +679,6 @@ export const records = [
       ]
     ]
   },
-  { // TODO: data type conversion
-    id: 200022,
-    inputs: [],
-    outputs: [],
-    reflectMap: []
-  },
   {
     id: 200032,
     inputs: [
@@ -964,6 +958,25 @@ export const records = [
   }
 ];
 
+const type_conv =
+{
+  id: 200022,
+  inputs: [null, "R<K>"],
+  outputs: ["R<V>"],
+  reflectMap: [
+    [130, "S<K:Int,V:Bol>"],
+    [130, "S<K:Bol,V:Int>"],
+    [130, "S<K:Flt,V:Int>"],
+    [130, "S<K:Int,V:Flt>"],
+    [130, "S<K:Bol,V:Str>"],
+    [130, "S<K:Int,V:Str>"],
+    [130, "S<K:Flt,V:Str>"],
+    [130, "S<K:Gid,V:Str>"],
+    [130, "S<K:Ety,V:Str>"],
+    [130, "S<K:Vec,V:Str>"],
+    [130, "S<K:Fct,V:Str>"],
+  ]
+};
 
 
 
@@ -997,6 +1010,7 @@ export const records = [
 
 
 export const enums = `
+Generic
 Comparison Operators
 Logical Operators
 Basic Mathematical Operators
@@ -1020,7 +1034,7 @@ Cause of Being Down
 Trigonometric Functions
 Disruptor Device Type
 Disruptor Device Orientation
-Ul Control Group Status
+UI Control Group Status
 Target Type
 Quick Mathematical Operators
 Hit Type

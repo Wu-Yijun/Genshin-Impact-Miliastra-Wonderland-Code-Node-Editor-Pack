@@ -6,7 +6,8 @@ import { assert, assertEq } from "../../utils.ts";
 import { enum_val, enums } from "./records.ts";
 import { ENUM_ID, ENUM_VALUE } from "../../node_data/index.ts";
 import { ENUM_ID_CLIENT } from "./enum_id.ts";
-// 200016,40
+import yaml from "yaml";
+import { readFileSync } from "fs";
 
 function create_types_ids() {
   // 200016,40
@@ -247,7 +248,7 @@ function compare_with_server() {
 function read_enum_values() {
   const graph = gia("skill_enum_new", "03_types", true);
   const ret = new Map<number, number[]>();
-  const es = [25, 29, 30, 31, 32, 33, 35, 36, 38, 39, 40].map(x => Object.entries(ENUM_ID_CLIENT).find(z => z[1] === x));
+  const es = enums.split("\n").map(x => x.trim()).filter(x => x.length > 0);
   graph.graph.graph?.inner.graph.nodes!.forEach(n => {
     if (n.genericId.nodeId !== 200005) return;
     if (n.nodeIndex > 99) return;
@@ -276,6 +277,42 @@ function read_enum_values() {
   save("enum_values.json", ret2);
 }
 
+import "../../node_data/yaml/enum_id.yaml.d.ts";
+function create_enum_list() {
+  const es = enums.split("\n").map(x => x.trim()).filter(x => x.length > 0);
+  const val = enum_val.split("\n").map(x => x.trim()).filter(x => x.length > 0);
+  const ret: { name: string, id: number, indexOfConcrete: number, items: Record<number, string> }[] = [];
+  const data: EnumList = yaml.parse(readFileSync("./utils/node_data/yaml/enum_id.yaml").toString());
+  let i = 0, j = 0;
+  for (const name of es) {
+    const id = (ENUM_ID_CLIENT as any)[name.replaceAll(/[^0-9A-Za-z]+/g, " ").trim().replaceAll(/[ ][a-z]/g, s => s.toUpperCase()).replaceAll(" ", "_")];
+    assert(id !== undefined, "Cannot find " + name);
+    const res = {
+      name: name,
+      id: 10,
+      indexOfConcrete: id,
+      items: {} as Record<number, string>
+    }
+    const sn = name.replaceAll(/[^a-zA-Z]/g, "").toLowerCase();
+    const ids = Object.entries(ENUM_VALUE).filter(x => x[0].toLowerCase().startsWith(sn));
+    const server_id = data.EnumList.find(x => name.toLowerCase().endsWith(x.name.toLowerCase()))?.items;
+    for (let k = 0; k < ids.length; k++) {
+      const v = val[j]?.replaceAll(/[^a-zA-Z]/g, "").toLowerCase();
+      if (ids[k][0].toLowerCase().endsWith(v)) {
+        res.items[ids[k][1]] = val[j++];
+      } else if (server_id) {
+        res.items[ids[k][1]] = server_id[ids[k][1]];
+      } else {
+        console.error("Not found:", name);
+      }
+    }
+    ret.push(res);
+  }
+  assertEq(j, val.length);
+  // dir(ret);
+  save("client_enum_list.json", ret);
+}
+
 function compare_enum_value() {
   const ev = Object.entries(read_json("enum_values.json"));
   const EV = Object.entries(ENUM_VALUE);
@@ -287,6 +324,21 @@ function compare_enum_value() {
   }
 }
 
+function read_type_conv_types() {
+  const graph = gia("skill_type_conv", "03_types", true);
+  const nodes = graph.graph.graph?.inner.graph.nodes!;
+  nodes.forEach(n => {
+    if (n.genericId.nodeId !== 200022) return;
+    const cid = n.concreteId?.nodeId;
+    const ioc = n.pins[1].value.bConcreteValue?.indexOfConcrete!;
+    const t1 = n.pins[1].type;
+    const ioc2 = n.pins[2].value.bConcreteValue?.indexOfConcrete!;
+    const t2 = n.pins[2].type;
+    // assertEq(ioc, n.nodeIndex);
+    dir({ cid, ioc, ioc2, t1, t2 });
+  });
+}
+
 // create_types_ids();
 // get_type_ids()
 // create_concrete_pins();
@@ -295,5 +347,8 @@ function compare_enum_value() {
 // read_enum_equals();
 // compare_with_server()
 
-read_enum_values();
-compare_enum_value();
+// read_enum_values();
+// compare_enum_value();
+create_enum_list();
+
+// read_type_conv_types();

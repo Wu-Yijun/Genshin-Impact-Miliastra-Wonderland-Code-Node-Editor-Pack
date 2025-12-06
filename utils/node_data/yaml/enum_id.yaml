@@ -178,7 +178,7 @@ EnumList:
       "1705": arctan
       "1706": Radians to Degrees
       "1707": Degrees to Radians
-  - name: Disruptor Device Types
+  - name: Disruptor Device Type
     id: 497
     indexOfConcrete: 22
     items:
