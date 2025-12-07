@@ -4,7 +4,8 @@ import type { ParserState } from "../types/types.ts";
 import { IR_Id_Counter } from "../types/consts.ts";
 import { try_capture_type } from "./balanced_extract.ts";
 import { parse_int, parse_type, parse_var_decl } from "./parse_utils.ts";
-import { assert, assertEq, expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { assert, assertEq, assertEqs } from "../../utils/utils.ts";
 
 /** 全局声明和定义 (全部文件可用)
  * ```ts
@@ -255,7 +256,7 @@ function parseTimer(state: ParserState): TimerDecl {
   expect(state, "symbol", ":");
 
   const timerType = expect(state, "identifier").value;
-  assertEq(timerType, "Count", "CountDown")
+  assertEqs(timerType, "Count", "CountDown")
   ret.countdown = timerType === "CountDown";
 
   expect(state, "math", "<");

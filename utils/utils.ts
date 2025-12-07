@@ -19,10 +19,10 @@ export function assert(cond: boolean, msg?: string): asserts cond {
   if (cond) return;
   throw new Error(msg ?? "Assertion failed");
 }
-export function assertEq<T>(target: unknown, expect: T, msg?: string): asserts target is T {
+export function assertEq<T>(target: unknown, expect: T): asserts target is T {
   if (target === expect) return;
   console.error(target, "!=", expect);
-  throw new Error(msg ?? "Assertion failed");
+  throw new Error("Assertion failed");
 }
 export function assertEqs<const T extends readonly any[]>(target: unknown, ...expects: T): asserts target is T[number] {
   if (expects.some((v) => v === target)) return;
@@ -35,3 +35,7 @@ export function assertNotEq<T, Excluded>(target: T | Excluded, exclude: Excluded
 export function assertNotEqs<T, const Excluded extends readonly any[]>(target: T | Excluded[number], ...excludes: Excluded): asserts target is Exclude<T | Excluded[number], Excluded[number]> {
   if (excludes.some((v) => v === target)) { debugger; throw new Error(`Assert Unequal Fail: ${target} === ${excludes}`); }
 }
+export function empty(v: any): v is null | undefined {
+  return v === undefined || v === null;
+}
+

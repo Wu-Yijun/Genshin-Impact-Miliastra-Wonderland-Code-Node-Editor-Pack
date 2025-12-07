@@ -6,8 +6,9 @@ import { IR_Id_Counter } from "../types/consts.ts";
 import { extractBalancedTokens, try_capture_type } from "./balanced_extract.ts";
 import { parseExecutionBlock } from "./parse_block.ts";
 import { parse_branch_id, parse_type, parse_var_decl } from "./parse_utils.ts";
-import { assert, expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { expect, next, peek, peekIs, src_pos } from "./utils.ts";
 import { parseVarDecl } from "./parse_const.ts";
+import { assert } from "../../utils/utils.ts";
 
 /** 声明包含完整执行节点的子图，拥有自定义的入口和出口。
  *  ```ts

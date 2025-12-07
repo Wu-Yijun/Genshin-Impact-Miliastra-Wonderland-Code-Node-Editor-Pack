@@ -5,9 +5,10 @@ import type { BranchId, ParserState } from "../types/types.ts";
 import { BUILD_IN_SYS_NODE_Set, IR_Id_Counter } from "../types/consts.ts";
 import { extractBalancedTokens } from "./balanced_extract.ts";
 import { name_style, parse_args, parse_branch_id, parse_int } from "./parse_utils.ts";
-import { assert, assertEq, expect, peekIs, next, src_pos } from "./utils.ts";
+import { expect, peekIs, next, src_pos } from "./utils.ts";
 import { ALL_SYS_NODE_Set, SYS_TRIGGER_NODE_SET } from "../types/consts.gen.ts";
 import { parseNodeChainList } from "./parse_block.ts";
+import { assert, assertEqs } from "../../utils/utils.ts";
 
 
 
@@ -84,7 +85,7 @@ export function parseInOutNode(s: ParserState): IR_InOutNode {
 
   // In("id") / Out("id")
   const which = expect(s, "identifier").value;
-  assertEq(which, "In", "Out");
+  assertEqs(which, "In", "Out");
   ret.specific = which;
 
   expect(s, "brackets", "(");

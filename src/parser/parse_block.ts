@@ -3,7 +3,8 @@ import type { ParserState } from "../types/types.ts";
 
 import { IR_Id_Counter } from "../types/consts.ts";
 import { parseAnchorNode, parseCallNode, parseInOutNode, parseNode } from "./parse_node.ts";
-import { assertEq, expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { assertEq, assertEqs } from "../../utils/utils.ts";
 
 /** from starter to end of block, excluding ';' at the end */
 export function parseExecutionBlock(s: ParserState): IR_ExecutionBlock {
@@ -41,9 +42,8 @@ export function parseTrigger(s: ParserState): IR_Trigger {
     node: null as any
   };
   const node = parseCallNode(s);
-  assertEq(node.specific, "Trigger", "Signal", "Timer");
+  assertEqs(node.specific, "Trigger", "Signal", "Timer");
   assertEq(node.class, "Sys");
-  // 令人无语, 你的类型推断呢?
   ret.node = {
     ...node,
     class: node.class,

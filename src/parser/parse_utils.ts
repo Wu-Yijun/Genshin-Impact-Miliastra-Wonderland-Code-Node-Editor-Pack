@@ -8,7 +8,7 @@ import { expect, next, peek, peekIs } from "./utils.ts";
 import { NodeVar } from "../types/class.ts";
 import { parse as parse_node_type, type_equal } from "../../utils/gia_gen/nodes.ts";
 import { tokenEqual } from "./tokenizer.ts";
-import { assert, assertEq } from "../../utils/utils.ts";
+import { assert, assertEq, assertEqs } from "../../utils/utils.ts";
 
 export function parse_type(tokens: Token[]): NodeType {
   const t = tokens.map(t => {
@@ -93,7 +93,7 @@ export function name_style(name: string): "UpperCamelCase" | "Upper_Camel_Case" 
 
 export function parse_branch_id(s: ParserState): BranchId {
   const tok = peek(s); // string | int | boolean (boolean not allowed), though grammar only expects int/string
-  assertEq(tok?.type, "string", "int", "boolean");
+  assertEqs(tok?.type, "string", "int", "boolean");
   switch (tok.type) {
     case "string":
       return next(s).value.slice(1, -1);

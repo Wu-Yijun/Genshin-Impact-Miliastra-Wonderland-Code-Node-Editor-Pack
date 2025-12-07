@@ -6,9 +6,9 @@ const require = createRequire(import.meta.url);
 const d = require("@dagrejs/dagre");
 
 const WIDTH = 300, HEIGHT = 200;
-export function auto_layout(graph: Graph, distance = 1.0, separation = 1.0) {
+export function auto_layout(graph: Graph<any>, distance = 1.0, separation = 1.0) {
 
-  const nodes_names = new Map<Node, string>(graph.get_nodes().map((n, i) => [n, i.toString()]));
+  const nodes_names = new Map<Node<any>, string>(graph.get_nodes().map((n, i) => [n, i.toString()]));
 
   const g: dTypes.graphlib.Graph = new d.graphlib.Graph();
   g.setGraph({

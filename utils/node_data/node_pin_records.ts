@@ -9,6 +9,7 @@
 
 
 export type NodeReflectRecords = [node_id: number, reflect: string];
+export type NodeReflectRecordsClient = [node_id: string, reflect: string];
 export interface NodePinsRecords {
   inputs: string[];
   outputs: string[];
@@ -17,7 +18,7 @@ export interface NodePinsRecords {
    * or a generic node with extensive ids.
    *
    * A map of NodeType[Struct]->NodeId */
-  reflectMap?: NodeReflectRecords[];
+  reflectMap?: NodeReflectRecords[] | NodeReflectRecordsClient[];
 }
 
 export interface SingleNodeData extends NodePinsRecords {

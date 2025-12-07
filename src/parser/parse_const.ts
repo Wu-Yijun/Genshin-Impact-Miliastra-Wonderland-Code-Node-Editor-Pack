@@ -5,7 +5,8 @@ import type { ParserState } from "../types/types.ts";
 import { IR_Id_Counter } from "../types/consts.ts";
 import { extractBalancedTokens, try_capture_type } from "./balanced_extract.ts";
 import { name_style, parse_branch_id, parse_type, parse_var_decl } from "./parse_utils.ts";
-import { assert, expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { expect, next, peek, peekIs, src_pos } from "./utils.ts";
+import { assert } from "../../utils/utils.ts";
 
 /** Parse const declarations - can be LocalVar, Define, SharedFunc, or Lambda
  * - LocalVarDecl: `const _var_name: type = defaultValue;`

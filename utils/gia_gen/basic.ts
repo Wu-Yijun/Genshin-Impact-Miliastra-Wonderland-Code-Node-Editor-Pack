@@ -28,7 +28,7 @@ import { get_id, get_type, type NodePins, type NodeType } from "./nodes.ts";
 
 import { counter_dynamic_id, counter_index, randomInt } from "./utils.ts";
 import { type ConcreteMap } from "../node_data/concrete_map.ts";
-import { get_concrete_index } from "../node_data/helpers.ts";
+import { get_index_of_concrete } from "../node_data/helpers.ts";
 import { ENUM_ID } from "../node_data/enum_id.ts";
 import type { AnyType, GraphVar } from "./graph.ts";
 import { todo } from "../utils.ts";
@@ -844,7 +844,7 @@ export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
       kind: NodePin_Index_Kind.InParam,
       index: i,
       type: p,
-      indexOfConcrete: get_concrete_index(generic_id, 3, i, get_id(p), body.map),
+      indexOfConcrete: get_index_of_concrete(generic_id, 3, i, get_id(p), body.map),
       reflective: false
     }));
   });
@@ -854,7 +854,7 @@ export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
       kind: NodePin_Index_Kind.OutParam,
       index: i,
       type: p,
-      indexOfConcrete: get_concrete_index(generic_id, 4, i, get_id(p), body.map),
+      indexOfConcrete: get_index_of_concrete(generic_id, 4, i, get_id(p), body.map),
       reflective: false
     }));
   });

@@ -8,9 +8,9 @@
  */
 
 export interface ConcreteMap {
-  /** Each map is a map of concrete_id --> type */
+  /** Each map is a map of index_of_concrete --> type */
   maps: number[][];
-  /** generic_id:pin_type:pin_index --> index in maps */
+  /** generic_id:pin_type:pin_index --> map_index in maps */
   pins: Map<string, number>;
 }
 
