@@ -7,10 +7,9 @@
 </div>
 
 ## Purpose
-This directory contains scripts and tools used to extract node definitions and metadata from the compiled game binaries (Assembly-CSharp.dll) or decompiled C# source files.
+This directory contains scripts and tools used to extract node definitions and metadata from the gia files.
 
 ## Content
-- **Scripts**: TypeScript/Python scripts to parse C# code.
 - **`dist/`**: Output directory for extracted definitions.
 - **`temp/`**: Temporary storage for intermediate extraction results.
 

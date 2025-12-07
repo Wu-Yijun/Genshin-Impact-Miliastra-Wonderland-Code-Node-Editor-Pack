@@ -2,6 +2,7 @@ import assert from "node:assert";
 import { ClientVarType, VarType } from "../protobuf/gia.proto.ts";
 import { DEBUG, STRICT } from "../utils.ts";
 import { ENUM_ID } from "../node_data/enum_id.ts";
+import type { NodePinsRecords, NodeReflectRecords } from "../node_data/node_pin_records.ts";
 
 export const BasicTypes = [
   "Int",
@@ -241,7 +242,6 @@ export function parse(src: string): NodeType {
   }
 }
 
-import type { NodePinsRecords, NodeReflectRecords } from "../node_data/node_pin_records.ts";
 
 /** ⚠️ Using of `NodePinsRecordsFull` is not suggested.
  *

@@ -1,4 +1,4 @@
-export type NodeId = (typeof NODE_ID)[keyof typeof NODE_ID];
+export type NODE_ID = (typeof NODE_ID)[keyof typeof NODE_ID];
 export const NODE_ID = {
   Print_String: 1,
   Print_String__Generic: 1,
@@ -3875,3 +3875,17 @@ export const NODE_ID = {
   Query_Custom_Variable_Snapshot__Dict_Prefab_List_Vec: 3517,
   Query_Custom_Variable_Snapshot__Dict_Prefab_List_Config: 3518
 } as const satisfies { [key: string]: number };
+
+export type CLIENT_NODE_ID = (typeof CLIENT_NODE_ID)[keyof typeof CLIENT_NODE_ID];
+export const CLIENT_NODE_ID = {
+  Print_String: "1",
+  Print_String__Generic: "1",
+  Double_Branch: "2",
+  Double_Branch__Generic: "2",
+  Multiple_Branches__Generic: "3",
+  Multiple_Branches__Int: "3:Int",
+  Multiple_Branches__Str: "4:Str",
+  Finite_Loop: "5",
+  Finite_Loop__Generic: "5",
+  Break_Loop: "6",
+} as const satisfies { [key: string]: string };

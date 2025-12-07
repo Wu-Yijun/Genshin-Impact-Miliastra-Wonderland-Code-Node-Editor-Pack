@@ -1,9 +1,8 @@
-import { dir } from "console";
 import { NodeGraph_Id_Kind, NodePin_Index_Kind, VarBase_Class } from "../../protobuf/gia.proto.ts";
-import { collection, gia, Names, read_json, save } from "../util.ts";
+import { collection, dir, gia, Names, read_json, save } from "../util.ts";
 
 import { assert, assertEq } from "../../utils.ts";
-import { enum_val, enums } from "./records.ts";
+import { enum_val, enums, records, records as records_raw } from "./records.ts";
 import { ENUM_ID, ENUM_VALUE } from "../../node_data/index.ts";
 import { ENUM_ID_CLIENT } from "./enum_id.ts";
 import yaml from "yaml";
@@ -339,6 +338,15 @@ function read_type_conv_types() {
   });
 }
 
+function convert_records_to_name() {
+  records_raw.forEach((r) => {
+    r.reflectMap.map(x => {
+      (x as any[])[1] = "a";
+    })
+  });
+  dir(records);
+}
+
 // create_types_ids();
 // get_type_ids()
 // create_concrete_pins();
@@ -349,6 +357,8 @@ function read_type_conv_types() {
 
 // read_enum_values();
 // compare_enum_value();
-create_enum_list();
+// create_enum_list();
 
 // read_type_conv_types();
+
+convert_records_to_name();

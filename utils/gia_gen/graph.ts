@@ -9,13 +9,19 @@ import { type SingleNodeData } from "../node_data/node_pin_records.ts";
 import { auto_layout } from "./auto_layout.ts";
 import { panic } from "../utils.ts";
 
+import { NODE_ID, CLIENT_NODE_ID } from "../node_data/node_id.ts";
 
-const GraphType = ["server", "client", "composite"] as const;
-type GraphType = typeof GraphType[number];
+type ServerModes = "server" | "status" | "class" | "item" | "composite";
+type ClientModes = "bool" | "int" | "skill";
+type AllModes = ServerModes | ClientModes;
+type ServerOrClient<M extends AllModes> = M extends ServerModes ? "server" : "client";
+type NodeIdFor<M extends AllModes> = M extends ServerModes ? NODE_ID : CLIENT_NODE_ID;
 
-function empty(v: any): v is null | undefined {
-  return v === undefined || v === null;
-}
+
+
+// function empty(v: any): v is null | undefined {
+//   return v === undefined || v === null;
+// }
 
 export type AnyType =
   | number
@@ -23,43 +29,24 @@ export type AnyType =
   | boolean
   | AnyType[];
 
-export class EncodeOptions {
-  private non_zero: boolean;
-  is_non_zero(): boolean {
-    return this.non_zero;
-  }
-  constructor(non_zero = false) {
-    this.non_zero = non_zero;
-  }
-}
 
-export type GraphVar = {
-  name: string;
-  exposed: boolean;
-  type: NodeType;
-  val: AnyType;
-};
-
-export class Graph {
-  private type_: GraphType;
+export class Graph<M extends AllModes = "server"> {
+  public readonly mode: M;
   graph_name: string;
   uid: number;
   private graph_id: number;
   private file_id: number;
   private counter_idx: Counter;
   private counter_dyn_id: Counter;
-  private nodes: Set<Node>;
+  private nodes: Set<Node<M>>;
   private connects: Set<Connect>;
-  private flows: Map<Node, Connect[][]>;
+  private flows: Map<Node<M>, Connect[][]>;
   private comments: Set<Comment>;
   private graph_var: Map<string, GraphVar>;
 
-  get type() {
-    return this.type_;
-  }
-  constructor(type: GraphType = "server", uid?: number, name?: string, graph_id?: number) {
-    this.type_ = type;
-    if (type !== "server") {
+  constructor(mode: M = "server" as M, uid?: number, name?: string, graph_id?: number) {
+    this.mode = mode;
+    if (mode !== "server") {
       panic("Only 'server' type graph is supported currently.");
     }
     this.uid = uid ?? randomInt(9, "201");
@@ -75,16 +62,23 @@ export class Graph {
     this.comments = new Set();
     this.graph_var = new Map();
   }
+
   /** 
    * @param node Node Id or Instance */
-  add_node(node: number | Node | null, generic_id?: number): Node {
-    assert(!empty(node) || !empty(generic_id));
+  add_node(node: NodeIdFor<M> | Node<M> | null, generic_id?: number): Node<M> {
+    assert(node !== null || generic_id !== undefined);
     if (typeof node === "number") {
-      const n = new Node(this.counter_idx.value, node, generic_id);
+      // should be server node
+      const n = new Node(this.counter_idx.value, this.mode, node, generic_id);
       this.nodes.add(n);
       return n;
-    } else if (empty(node)) {
-      const n = new Node(this.counter_idx.value, undefined, generic_id);
+    } else if (typeof node === "string") {
+      // should be client node
+      const n = new Node(this.counter_idx.value, this.mode, node, generic_id);
+      this.nodes.add(n);
+      return n;
+    } else if (node === null) {
+      const n = new Node(this.counter_idx.value, this.mode, undefined, generic_id);
       this.nodes.add(n);
       return n;
     }
@@ -95,12 +89,12 @@ export class Graph {
     this.nodes.add(node);
     return node;
   }
-  get_nodes(): Node[] {
+  get_nodes(): Node<M>[] {
     return [...this.nodes];
   }
-  get_node(unique_id: number): Node | null {
+  get_node(unique_id: number): Node<M> | null {
     for (const node of this.nodes) {
-      if (node.UniqueId === unique_id) {
+      if (node.NodeIndex === unique_id) {
         return node;
       }
     }
@@ -120,7 +114,7 @@ export class Graph {
   get_connects(): Connect[] {
     return [...this.connects];
   }
-  get_connect_from(from: Node): Connect[] {
+  get_connect_from(from: Node<M>): Connect[] {
     const ret: Connect[] = [];
     for (const connect of this.connects) {
       if (connect.from === from) {
@@ -129,7 +123,7 @@ export class Graph {
     }
     return ret;
   }
-  get_connect_from_index(from: Node, index: number): Connect | null {
+  get_connect_from_index(from: Node<M>, index: number): Connect | null {
     for (const connect of this.connects) {
       if (connect.from === from && connect.from_index === index) {
         return connect;
@@ -137,7 +131,7 @@ export class Graph {
     }
     return null;
   }
-  get_connect_to(to: Node): Connect[] {
+  get_connect_to(to: Node<M>): Connect[] {
     const ret: Connect[] = [];
     for (const connect of this.connects) {
       if (connect.to === to) {
@@ -146,7 +140,7 @@ export class Graph {
     }
     return ret;
   }
-  get_connect_to_index(to: Node, index: number): Connect | null {
+  get_connect_to_index(to: Node<M>, index: number): Connect | null {
     for (const connect of this.connects) {
       if (connect.to === to && connect.to_index === index) {
         return connect;
@@ -154,7 +148,7 @@ export class Graph {
     }
     return null;
   }
-  get_connect(from: Node, to: Node, from_index: number, to_index: number): Connect | null {
+  get_connect(from: Node<M>, to: Node<M>, from_index: number, to_index: number): Connect | null {
     for (const connect of this.connects) {
       if (connect.from === from && connect.from_index === from_index && connect.to === to && connect.to_index === to_index) {
         return connect;
@@ -165,20 +159,20 @@ export class Graph {
   get_flows(): Connect[] {
     return [...this.flows.values()].flat(2).filter(x => !empty(x));
   }
-  get_flow(from: Node, to: Node, from_index = 0, to_index = 0): Connect | null {
+  get_flow(from: Node<M>, to: Node<M>, from_index = 0, to_index = 0): Connect | null {
     return this.flows.get(from)?.[from_index]?.find(v => v.to === to && v.to_index === to_index) ?? null;
   }
-  get_flows_from(from: Node): Connect[] {
+  get_flows_from(from: Node<M>): Connect[] {
     return this.flows.get(from)?.flat() ?? [];
   }
   /** returns the pointer to the flow list. if the list is not exist, returns null */
-  get_flows_from_index(from: Node, index: number): Connect[] | null {
+  get_flows_from_index(from: Node<M>, index: number): Connect[] | null {
     return this.flows.get(from)?.[index] ?? null;
   }
-  get_flows_to(to: Node): Connect[] {
+  get_flows_to(to: Node<M>): Connect[] {
     return this.get_flows().filter(v => v.to === to);
   }
-  get_flows_to_index(to: Node, index: number): Connect[] {
+  get_flows_to_index(to: Node<M>, index: number): Connect[] {
     return this.get_flows().filter(v => v.to === to && v.to_index === index);
   }
   disconnect(connect: Connect) {
@@ -193,7 +187,7 @@ export class Graph {
     }
   }
   /** Connect execution flow from a node to another  */
-  flow(from: Node, to: Node, from_index = 0, to_index = 0, insert_pos?: number) {
+  flow(from: Node<M>, to: Node<M>, from_index = 0, to_index = 0, insert_pos?: number) {
     if (!this.flows.has(from)) {
       this.flows.set(from, []);
     }
@@ -202,7 +196,7 @@ export class Graph {
     f[from_index].splice(insert_pos ?? f.length, 0, new Connect(from, to, from_index, to_index));
   }
   /** Connect data flow from a  */
-  connect(from: Node, to: Node, from_index: number, to_index: number) {
+  connect(from: Node<M>, to: Node<M>, from_index: number, to_index: number) {
     const c = this.get_connect(from, to, from_index, to_index);
     if (c) {
       console.info("Already connected!", c.toString());
@@ -223,7 +217,7 @@ export class Graph {
     return connect;
   }
 
-  add_comment(content: string | Comment, x?: number, y?: number, attached_node: Node | null = null): Comment {
+  add_comment(content: string | Comment, x?: number, y?: number, attached_node: Node<M> | null = null): Comment {
     if (typeof content !== "string") {
       this.comments.add(content);
       return content;
@@ -235,7 +229,7 @@ export class Graph {
   get_graph_comments(): Comment[] {
     return [...this.comments].filter(c => empty(c.attached_node));
   }
-  get_node_comment(node: Node): Comment | null {
+  get_node_comment(node: Node<M>): Comment | null {
     return [...this.comments].find(c => c.attached_node === node) ?? null;
   }
 
@@ -315,21 +309,21 @@ export class Graph {
   }
 }
 
-export class Node {
-  private unique_id: number;
+export class Node<M extends AllModes = "server"> {
+  private node_index: number;
   private node_id: number;
   private record: SingleNodeData;
   private pin_len: [number, number];
   pins: Pin[];
   x: number = 0;
   y: number = 0;
-  constructor(unique_id: number, concrete_id?: number, generic_id?: number) {
-    assert(!empty(concrete_id) || !empty(generic_id));
+  constructor(node_index: number, mode: M = "server" as M, concrete_id?: NodeIdFor<M>, generic_id?: number) {
+    assert(concrete_id !== undefined || generic_id !== undefined);
     // use generic_id if exist, or assume node_id is concrete, otherwise use node_id;
     const gid = generic_id ?? get_generic_id(concrete_id!) ?? concrete_id!;
     const cid = concrete_id;
 
-    this.unique_id = unique_id;
+    this.node_index = node_index;
     this.node_id = cid as number;
     this.record = get_node_record_generic(gid) ?? {
       id: gid,
@@ -340,11 +334,11 @@ export class Node {
     this.pins = [];
     this.pin_len = [this.record.inputs.length, this.record.outputs.length];
     // Initialize pins based on node record
-    if (!empty(cid)) {
+    if (cid !== undefined) {
       this.setConcrete(cid);
     }
   }
-  setConcrete(id: number) {
+  setConcrete(id: NodeIdFor<M>) {
     assert(this.record.id === id || this.record.reflectMap?.find(x => x[0] === id) !== undefined);
     this.node_id = id;
 
@@ -398,7 +392,7 @@ export class Node {
       /** 节点的引脚列表 */
       pins,
       /** ⚠️ Warning: This may cause ID collision. 节点唯一索引，不建议填入 */
-      unique_index: this.unique_id,
+      unique_index: this.node_index,
       comment: comment?.encode(),
     });
   }
@@ -460,8 +454,8 @@ export class Node {
     return { flows, connects };
   }
 
-  get UniqueId() {
-    return this.unique_id;
+  get NodeIndex() {
+    return this.node_index;
   }
   get GenericId() {
     return this.record.id;
@@ -555,23 +549,23 @@ export class Pin {
 }
 
 export class Connect {
-  from: Node;
+  from: Node<AllModes>;
   from_index: number;
-  to: Node;
+  to: Node<AllModes>;
   to_index: number;
-  constructor(from: Node, to: Node, from_index: number, to_index: number) {
+  constructor(from: Node<AllModes>, to: Node<AllModes>, from_index: number, to_index: number) {
     this.from = from;
     this.from_index = from_index;
     this.to = to;
     this.to_index = to_index;
   }
   encode() {
-    return node_connect_from(this.from.UniqueId, this.from_index);
+    return node_connect_from(this.from.NodeIndex, this.from_index);
   }
   encode_flow() {
-    return node_connect_to(this.to.UniqueId, this.to_index);
+    return node_connect_to(this.to.NodeIndex, this.to_index);
   }
-  static decode_connects(connects: NodeConnection[], self_node: Node, self_index: number, graph: Graph): Connect[] {
+  static decode_connects(connects: NodeConnection[], self_node: Node<AllModes>, self_index: number, graph: Graph): Connect[] {
     const ret: Connect[] = [];
     for (const c of connects) {
       const from_node = graph.get_node(c.id);
@@ -583,7 +577,7 @@ export class Connect {
     }
     return ret;
   }
-  static decode_flows(connects: NodeConnection[], self_node: Node, self_index: number, graph: Graph): Connect[] {
+  static decode_flows(connects: NodeConnection[], self_node: Node<AllModes>, self_index: number, graph: Graph): Connect[] {
     const ret: Connect[] = [];
     for (const c of connects) {
       const to_node = graph.get_node(c.id);
@@ -596,7 +590,7 @@ export class Connect {
     return ret;
   }
   toString() {
-    return `${this.from.UniqueId}-${this.from_index} -> ${this.to.UniqueId}-${this.to_index}`;
+    return `${this.from.NodeIndex}-${this.from_index} -> ${this.to.NodeIndex}-${this.to_index}`;
   }
 }
 
@@ -604,14 +598,14 @@ export class Comment {
   content: string;
   x: number;
   y: number;
-  attached_node: Node | null;
-  constructor(content: string, x: number, y: number, attached_node: Node | null = null) {
+  attached_node: Node<AllModes> | null;
+  constructor(content: string, x: number, y: number, attached_node: Node<AllModes> | null = null) {
     this.content = content;
     this.x = x;
     this.y = y;
     this.attached_node = attached_node;
   }
-  attachTo(node: Node | null) {
+  attachTo(node: Node<AllModes> | null) {
     this.attached_node = node;
   }
   encode(): Comments {
@@ -627,7 +621,7 @@ export class Comment {
       };
     }
   }
-  static decode(c: Comments, parent?: Node): Comment {
+  static decode(c: Comments, parent?: Node<AllModes>): Comment {
     return new Comment(
       c.content,
       c.x ?? 0,
@@ -636,6 +630,25 @@ export class Comment {
     );
   }
 }
+
+export class EncodeOptions {
+  private non_zero: boolean;
+  is_non_zero(): boolean {
+    return this.non_zero;
+  }
+  constructor(non_zero = false) {
+    this.non_zero = non_zero;
+  }
+}
+
+export type GraphVar = {
+  name: string;
+  exposed: boolean;
+  type: NodeType;
+  val: AnyType;
+};
+
+
 
 if (import.meta.main) {
   // Test Graph Encoding
