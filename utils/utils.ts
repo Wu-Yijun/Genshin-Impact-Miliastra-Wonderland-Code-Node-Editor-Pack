@@ -11,17 +11,27 @@ export function panic<T>(msg?: string): T {
 export function todo<T>(msg?: string): T {
   const err = "TODO: Not implemented yet." + (msg ? ` Details: ${msg}` : "")
   if (STRICT) throw new Error(err);
-  else if (DEBUG) console.error(err);
+  if (DEBUG) console.error(err);
   return 0 as any;
 }
 
 export function assert(cond: boolean, msg?: string): asserts cond {
   if (cond) return;
-  throw new Error(msg || "Assertion failed");
+  throw new Error(msg ?? "Assertion failed");
 }
-
-export function assertEq<T>(l: unknown, r: T, msg?: string): asserts l is T {
-  if (l === r) return;
-  console.error(l, "!=", r);
-  throw new Error(msg || "Assertion failed");
+export function assertEq<T>(target: unknown, expect: T, msg?: string): asserts target is T {
+  if (target === expect) return;
+  console.error(target, "!=", expect);
+  throw new Error(msg ?? "Assertion failed");
+}
+export function assertEqs<const T extends readonly any[]>(target: unknown, ...expects: T): asserts target is T[number] {
+  if (expects.some((v) => v === target)) return;
+  console.error(target, "!=", expects);
+  throw new Error("Assertion failed");
+}
+export function assertNotEq<T, Excluded>(target: T | Excluded, exclude: Excluded): asserts target is Exclude<T | Excluded, Excluded> {
+  if (target === exclude) { debugger; throw new Error(`Assert Unequal Fail: ${target} === ${exclude}`); }
+}
+export function assertNotEqs<T, const Excluded extends readonly any[]>(target: T | Excluded[number], ...excludes: Excluded): asserts target is Exclude<T | Excluded[number], Excluded[number]> {
+  if (excludes.some((v) => v === target)) { debugger; throw new Error(`Assert Unequal Fail: ${target} === ${excludes}`); }
 }

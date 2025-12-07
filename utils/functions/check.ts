@@ -1,4 +1,4 @@
-import assert from "assert";
+import { assert } from "../../utils/utils.ts";
 import { MathNodes } from "./math.ts";
 import type { Lambda } from "./function_defs.ts";
 import yaml from "yaml";
@@ -59,5 +59,5 @@ function checkEverythingMatch(nodes: Lambda[], raw_file: string, ref_file: strin
 }
 
 if (import.meta.main) {
-  assert(checkEverythingMatch(MathNodes, import.meta.dirname+"/math_raw.d.ts", import.meta.dirname+"/ref.math.yaml"));
+  assert(checkEverythingMatch(MathNodes, import.meta.dirname + "/math_raw.d.ts", import.meta.dirname + "/ref.math.yaml"));
 }

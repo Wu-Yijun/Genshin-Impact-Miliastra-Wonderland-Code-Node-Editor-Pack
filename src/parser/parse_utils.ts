@@ -4,10 +4,11 @@ import type { ParserState, Token } from "../types/types.ts";
 import type { BranchId, IR_NodeVarValue } from "../types/types.ts";
 import { TOKEN_GROUPS, TOKENS, UNK_TYPE } from "../types/consts.ts";
 import { extractBalancedTokens, splitBalancedTokens, try_capture_type } from "./balanced_extract.ts";
-import { assert, assertEq, expect, next, peek, peekIs } from "./utils.ts";
+import { expect, next, peek, peekIs } from "./utils.ts";
 import { NodeVar } from "../types/class.ts";
 import { parse as parse_node_type, type_equal } from "../../utils/gia_gen/nodes.ts";
 import { tokenEqual } from "./tokenizer.ts";
+import { assert, assertEq } from "../../utils/utils.ts";
 
 export function parse_type(tokens: Token[]): NodeType {
   const t = tokens.map(t => {

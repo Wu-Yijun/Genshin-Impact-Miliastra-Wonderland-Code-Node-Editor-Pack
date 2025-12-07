@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "fs";
 import proto from "protobufjs";
 
 import { type GraphNode, NodePin_Index_Kind, type Root } from "./gia.proto.ts";
-import assert from "assert";
+import { assert } from "../../utils/utils.ts";
 
 const VERSION = "1.1.0";
 

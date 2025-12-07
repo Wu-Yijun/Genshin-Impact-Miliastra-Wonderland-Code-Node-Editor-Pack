@@ -1,4 +1,4 @@
-import assert from "assert";
+import { assert, assertEq } from "../utils.ts";
 import type { Comments, GraphNode, NodeConnection, NodePin, NodePin_Index_Kind, Root } from "../protobuf/gia.proto.ts";
 import { encode_node_graph_var, graph_body, node_body, node_connect_from, node_connect_to, node_type_pin_body, pin_flow_body } from "./basic.ts";
 import { type NodeType, reflects_records, get_id, type_equal, to_records_full, is_reflect } from "./nodes.ts";
@@ -7,7 +7,6 @@ import { get_concrete_index, is_concrete_pin, get_generic_id, get_node_record, g
 import { extract_value, get_graph_vars, get_node_info } from "./extract.ts";
 import { type SingleNodeData } from "../node_data/node_pin_records.ts";
 import { auto_layout } from "./auto_layout.ts";
-import { panic } from "../utils.ts";
 
 import { NODE_ID, CLIENT_NODE_ID } from "../node_data/node_id.ts";
 
@@ -46,9 +45,6 @@ export class Graph<M extends AllModes = "server"> {
 
   constructor(mode: M = "server" as M, uid?: number, name?: string, graph_id?: number) {
     this.mode = mode;
-    if (mode !== "server") {
-      panic("Only 'server' type graph is supported currently.");
-    }
     this.uid = uid ?? randomInt(9, "201");
     this.graph_id = graph_id ?? randomInt(10, "102");
     this.graph_name = name ?? randomName(3);

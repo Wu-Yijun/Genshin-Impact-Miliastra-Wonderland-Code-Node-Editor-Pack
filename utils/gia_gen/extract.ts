@@ -1,4 +1,4 @@
-import assert from "assert";
+import { assert, assertEq } from "../../utils/utils.ts";
 import type {
   ClientVarType,
   GraphNode,
@@ -38,13 +38,13 @@ export function get_pin_info(pin: NodePin): PinInfo_ {
     is_node: pin.value?.class === VarBase_Class.ConcreteBase,
   };
   if (ret.node_type?.t === "d") {
-    assert.equal(
+    assertEq(
       pin.value!.bConcreteValue!.value!.class,
       VarBase_Class.MapBase,
     );
     const t = pin.value!.bConcreteValue!.value.itemType!.type_server!;
-    assert.equal(t.type, VarType.Dictionary);
-    assert.equal(t.kind, VarBase_ItemType_ServerType_Kind.Pair);
+    assertEq(t.type, VarType.Dictionary);
+    assertEq(t.kind, VarBase_ItemType_ServerType_Kind.Pair);
     ret.node_type.k = get_type(t.items!.key);
     ret.node_type.v = get_type(t.items!.value);
   }

@@ -3,7 +3,7 @@ import { NODE_PIN_RECORDS, type NodePinsRecords, type SingleNodeData } from "./n
 import yaml from "yaml";
 import { get_id, is_reflect, reflects } from "../gia_gen/nodes.ts";
 import { get_concrete_index } from "./helpers.ts";
-import assert from "assert";
+import { assert, assertEq } from "../../utils/utils.ts";
 import { ENUM_ID, ENUM_VALUE } from "./enum_id.ts";
 import { VarType } from "../protobuf/gia.proto.ts";
 import { TYPES_LIST } from "./types_list.ts";
@@ -120,7 +120,7 @@ function main() {
     const Translations = { "en": rec.name! };
     const ID = rec.id;
     const [Class, Family, name] = find_class_family(server, rec.id);
-    assert.equal(rec.name, name);
+    assertEq(rec.name, name);
     const Type = rec.reflectMap === undefined ? "Simple" : "Generic";
     const Range = "Server";
     const Inputs = rec.inputs;

@@ -106,16 +106,3 @@ export function peekIsIdLiteral(state: ParserState): boolean {
   }
   return false;
 }
-
-export function assert(cond: boolean, msg?: string): asserts cond {
-  if (cond) return;
-  throw new Error(msg || "Assertion failed");
-}
-
-export function assertEq<T>(l: unknown, r: T, r2?: T, r3?: T, r4?: T): asserts l is T {
-  if (l === r || l === r2 || l === r3 || l === r4) {
-    return;
-  }
-  throw new Error(`The '${l}' is not strict Equal to '${r}'!`);
-}
-

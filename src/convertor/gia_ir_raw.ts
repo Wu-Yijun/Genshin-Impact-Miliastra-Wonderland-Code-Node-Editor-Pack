@@ -1,6 +1,6 @@
 
-import assert from "assert";
-import { helper, Graph, Node, Connect, todo, gia_node } from "../../utils/index.ts";
+import { assert } from "../../utils/utils.ts";
+import { helper, Graph, Node, Connect, gia_node } from "../../utils/index.ts";
 import type { ComponentDecl, IR_AnchorNode, IR_BranchNode, IR_CallNode, IR_ExecutionBlock, IR_FunctionArg, IR_GraphModule, IR_InOutNode, IR_JumpNode, IR_Node, IR_NodeChain, IR_Trigger, SharedFuncDecl } from "../types/IR.ts";
 import { IR_Id_Counter } from "../types/consts.ts";
 import { analyzeGraph, ChainResult } from "./graph_chain_split.ts";

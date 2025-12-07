@@ -2,7 +2,6 @@ import { NODE_PIN_RECORDS } from "../node_data/node_pin_records.ts";
 import { EncodeOptions, Graph, Pin } from "../gia_gen/graph.ts";
 import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
 import { VarBase_Class, type GraphNode, type VarBase } from "../protobuf/gia.proto.ts";
-// import assert from "assert";
 import { get_concrete_index, get_generic_id, get_node_record, get_node_record_generic, is_generic_id } from "../node_data/helpers.ts";
 import { get_id, is_reflect, type NodeType, parse, reflect, reflects, type_equal } from "../gia_gen/nodes.ts";
 import { get_node_info } from "../gia_gen/extract.ts";

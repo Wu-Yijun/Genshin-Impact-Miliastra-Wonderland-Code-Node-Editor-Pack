@@ -1,5 +1,5 @@
-import assert from "assert";
-import { type SysEnumNameTypes, type SysTypeNames } from "../../src/sysTypes.ts";
+import { assert } from "../utils.ts";
+import { type SysEnumNameTypes, type SysTypeNames } from "../../src/test/sysTypes.ts";
 
 
 /** `ArgTypes` could be string or string list (means either type in the list) */

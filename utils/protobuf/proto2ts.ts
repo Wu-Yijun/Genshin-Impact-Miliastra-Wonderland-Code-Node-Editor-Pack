@@ -1,4 +1,4 @@
-import assert from "assert";
+import { assert } from "../../utils/utils.ts";
 import { readFileSync, writeFileSync } from "fs";
 import { argv } from "process";
 
