@@ -14,3 +14,6 @@ This directory contains scripts and tools used to extract node definitions and m
 - **`temp/`**: Temporary storage for intermediate extraction results.
 
 > **Note**: The structure of this directory is volatile and subject to change without notice.
+
+
+![alt text](image.png)!

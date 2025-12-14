@@ -1,136 +1,37 @@
 graph {
   id {
-    class: Node
-    type: ClientGraph
-    id: 1082130434
+    class: Basic
+    id: 1073741825
   }
-  name: "\346\226\260\345\273\272\346\212\200\350\203\275\350\212\202\347\202\271\345\233\276"
-  which: Skills
+  relatedIds {
+    class: AffiliatedNode
+    id: 1610612737
+  }
+  name: "New Node Graph"
+  which: EntityNode
   graph {
     inner {
       graph {
         id {
           class: UserDefined
-          type: Skills
+          type: BasicNode
           kind: NodeGraph
-          id: 1082130434
+          id: 1073741825
         }
-        name: "\346\226\260\345\273\272\346\212\200\350\203\275\350\212\202\347\202\271\345\233\276"
-        nodes {
-          nodeIndex: 1
-          genericId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 200042
-          }
-          concreteId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 2001
-          }
-          8 {
-            1: 6
-          }
-        }
-        nodes {
-          nodeIndex: 2
-          genericId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 200005
-          }
-          concreteId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 10
-          }
-          pins {
-            i1 {
-              kind: InParam
-            }
-            i2 {
-              kind: InParam
-            }
-            value {
-              class: ConcreteBase
-              alreadySetVal: true
-              bConcreteValue {
-                indexOfConcrete: 13
-                value {
-                  class: EnumBase
-                  itemType {
-                    classBase: Client
-                    type_client {
-                      type: EnumItem_
-                    }
-                  }
-                  bEnum {
-                  }
-                }
-              }
-            }
-            type: 13
-            connects {
-              id: 3
-              connect {
-                kind: OutParam
-              }
-              connect2 {
-                kind: OutParam
-              }
-            }
-          }
-          pins {
-            i1 {
-              kind: InParam
-              index: 1
-            }
-            i2 {
-              kind: InParam
-              index: 1
-            }
-            value {
-              class: ConcreteBase
-              alreadySetVal: true
-              bConcreteValue {
-                indexOfConcrete: 13
-                value {
-                  class: EnumBase
-                  alreadySetVal: true
-                  itemType {
-                    classBase: Client
-                    type_client {
-                      type: EnumItem_
-                    }
-                  }
-                  bEnum {
-                    val: 1403
-                  }
-                }
-              }
-            }
-            type: 13
-          }
-          x: -273.6
-          y: -317.8
-        }
+        name: "New Node Graph"
         nodes {
           nodeIndex: 3
           genericId {
             class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 200045
+            type: Server
+            kind: SysGraph
+            nodeId: 1610612737
           }
           concreteId {
             class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 1020
+            type: Server
+            kind: SysGraph
+            nodeId: 1610612737
           }
           pins {
             i1 {
@@ -139,59 +40,7 @@ graph {
             i2 {
               kind: InParam
             }
-            value {
-              itemType {
-                classBase: Client
-                type_client {
-                  type: Entity_
-                }
-              }
-            }
-            type: 1
-          }
-          x: -561.6
-          y: -282.6
-        }
-        nodes {
-          nodeIndex: 4
-          genericId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 200005
-          }
-          concreteId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 10
-          }
-          pins {
-            i1 {
-              kind: InParam
-            }
-            i2 {
-              kind: InParam
-            }
-            value {
-              class: ConcreteBase
-              alreadySetVal: true
-              bConcreteValue {
-                indexOfConcrete: 41
-                value {
-                  class: EnumBase
-                  itemType {
-                    classBase: Client
-                    type_client {
-                      type: EnumItem_
-                    }
-                  }
-                  bEnum {
-                  }
-                }
-              }
-            }
-            type: 13
+            type: 6
             connects {
               id: 5
               connect {
@@ -201,71 +50,96 @@ graph {
                 kind: OutParam
               }
             }
+            compositePinIndex: 3
+          }
+          x: -245.6
+          y: -267.8
+        }
+        nodes {
+          nodeIndex: 4
+          genericId {
+            class: SystemDefined
+            type: Server
+            kind: SysCall
+            nodeId: 1
+          }
+          concreteId {
+            class: SystemDefined
+            type: Server
+            kind: SysCall
+            nodeId: 1
           }
           pins {
             i1 {
-              kind: InParam
-              index: 1
+              kind: OutFlow
             }
             i2 {
-              kind: InParam
-              index: 1
+              kind: OutFlow
             }
-            value {
-              class: ConcreteBase
-              alreadySetVal: true
-              bConcreteValue {
-                indexOfConcrete: 41
-                value {
-                  class: EnumBase
-                  alreadySetVal: true
-                  itemType {
-                    classBase: Client
-                    type_client {
-                      type: EnumItem_
-                    }
-                  }
-                  bEnum {
-                    val: 5802
-                  }
-                }
+            connects {
+              id: 3
+              connect {
+                kind: InFlow
+              }
+              connect2 {
+                kind: InFlow
               }
             }
-            type: 13
           }
-          x: -424
-          y: -108.2
+          x: -731.2
+          y: -248.6
         }
         nodes {
           nodeIndex: 5
           genericId {
             class: SystemDefined
-            type: Skill
+            type: Server
             kind: SysCall
-            nodeId: 200123
+            nodeId: 180
           }
-          concreteId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 3004
+          pins {
+            i1 {
+              kind: OutParam
+            }
+            i2 {
+              kind: OutParam
+            }
+            value {
+              class: ConcreteBase
+              alreadySetVal: true
+              bConcreteValue {
+                indexOfConcrete: 2
+                value {
+                  class: StringBase
+                  itemType {
+                    classBase: Server
+                    type_server {
+                      type: String
+                    }
+                  }
+                  bString {
+                  }
+                }
+              }
+            }
+            type: 6
           }
-          x: -796
-          y: -69
+          x: -615.2
+          y: -17.4
         }
         nodes {
           nodeIndex: 6
           genericId {
             class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 200005
+            type: Server
+            kind: SysGraph
+            nodeId: 1610612737
           }
           concreteId {
             class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 10
+            type: Server
+            kind: SysGraph
+            nodeId: 1610612737
           }
           pins {
             i1 {
@@ -274,27 +148,9 @@ graph {
             i2 {
               kind: InParam
             }
-            value {
-              class: ConcreteBase
-              alreadySetVal: true
-              bConcreteValue {
-                indexOfConcrete: 40
-                value {
-                  class: EnumBase
-                  itemType {
-                    classBase: Client
-                    type_client {
-                      type: EnumItem_
-                    }
-                  }
-                  bEnum {
-                  }
-                }
-              }
-            }
-            type: 13
+            type: 6
             connects {
-              id: 7
+              id: 5
               connect {
                 kind: OutParam
               }
@@ -302,79 +158,157 @@ graph {
                 kind: OutParam
               }
             }
+            compositePinIndex: 3
           }
-          pins {
-            i1 {
-              kind: InParam
-              index: 1
-            }
-            i2 {
-              kind: InParam
-              index: 1
-            }
-            value {
-              class: ConcreteBase
-              alreadySetVal: true
-              bConcreteValue {
-                indexOfConcrete: 40
-                value {
-                  class: EnumBase
-                  alreadySetVal: true
-                  itemType {
-                    classBase: Client
-                    type_client {
-                      type: EnumItem_
-                    }
-                  }
-                  bEnum {
-                    val: 5002
-                  }
-                }
-              }
-            }
-            type: 13
-          }
-          x: -332
-          y: 148.6
+          x: 236
+          y: -155.8
         }
-        nodes {
-          nodeIndex: 7
-          genericId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 200120
-          }
-          concreteId {
-            class: SystemDefined
-            type: Skill
-            kind: SysCall
-            nodeId: 1041
-          }
-          pins {
-            i1 {
-              kind: InParam
-            }
-            i2 {
-              kind: InParam
-            }
-            value {
-              itemType {
-                classBase: Client
-                type_client {
-                  type: Entity_
-                }
-              }
-            }
-            type: 1
-          }
-          x: -652
-          y: 150.2
-        }
-        100: 1
       }
     }
   }
 }
-filePath: "201176311-1765102042-1073741840-\\temp.gia"
+accessories {
+  id {
+    class: AffiliatedNode
+    id: 1610612737
+  }
+  relatedIds {
+    class: Basic
+    id: 1610612737
+  }
+  name: "Create Composite Node"
+  which: CompositeGraph
+  compositeDef {
+    inner {
+      def {
+        id {
+          genericId {
+            class: SystemDefined
+            type: BasicNode
+            kind: SysGraph
+            id: 1610612737
+          }
+          concreteId {
+            class: SystemDefined
+            type: BasicNode
+            kind: SysGraph
+            id: 1610612737
+          }
+          graphId {
+            class: UserDefined
+            type: BasicNode
+            kind: CompositeGraph
+            id: 1610612737
+          }
+        }
+        inflows {
+          visible: true
+          index {
+            kind: InFlow
+          }
+          pinIndex: 1
+        }
+        outflows {
+          visible: true
+          index {
+            kind: OutFlow
+          }
+          pinIndex: 2
+        }
+        inputs {
+          name: "String"
+          visible: true
+          index {
+            kind: InParam
+          }
+          type {
+            class: StringBase
+            type1: String
+            type2: String
+          }
+          pinIndex: 3
+        }
+        type {
+          kind: Composite
+        }
+        name: "Create Composite Node"
+        description: "AAAAAAAA"
+        xxx: 6
+      }
+    }
+  }
+}
+accessories {
+  id {
+    class: Basic
+    id: 1610612737
+  }
+  which: EntityNode
+  graph {
+    inner {
+      graph {
+        id {
+          class: UserDefined
+          type: BasicNode
+          kind: CompositeGraph
+          id: 1610612737
+        }
+        nodes {
+          nodeIndex: 4
+          genericId {
+            class: SystemDefined
+            type: Server
+            kind: SysCall
+            nodeId: 1
+          }
+          concreteId {
+            class: SystemDefined
+            type: Server
+            kind: SysCall
+            nodeId: 1
+          }
+          x: -249
+          y: -210.2
+        }
+        compositePins {
+          outerPin {
+            kind: InFlow
+          }
+          innerNodeId: 4
+          innerPin {
+            kind: InFlow
+          }
+          innerPin2 {
+            kind: InFlow
+          }
+        }
+        compositePins {
+          outerPin {
+            kind: OutFlow
+          }
+          innerNodeId: 4
+          innerPin {
+            kind: OutFlow
+          }
+          innerPin2 {
+            kind: OutFlow
+          }
+        }
+        compositePins {
+          outerPin {
+            kind: InParam
+          }
+          innerNodeId: 4
+          innerPin {
+            kind: InParam
+          }
+          innerPin2 {
+            kind: InParam
+          }
+        }
+      }
+    }
+  }
+}
+filePath: "201176311-1765700859-1073741840-\\22.gia"
 gameVersion: "6.2.0"

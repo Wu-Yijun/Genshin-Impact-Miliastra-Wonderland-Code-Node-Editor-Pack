@@ -96,6 +96,14 @@
     "ioc": 12
   },
   {
+    "type": "E<0>",
+    "typeid": 13,
+    "typeid2": 13,
+    "gid": 200016,
+    "cid": 0,
+    "ioc": -1
+  },
+  {
     "type": "Gid",
     "typeid": 14,
     "typeid2": 14,
@@ -118,6 +126,14 @@
     "gid": 200016,
     "cid": 58,
     "ioc": 18
+  },
+  {
+    "type": "L<E<0>>",
+    "typeid": 17,
+    "typeid2": 17,
+    "gid": 200016,
+    "cid": 0,
+    "ioc": -1
   },
   {
     "type": "Cfg",

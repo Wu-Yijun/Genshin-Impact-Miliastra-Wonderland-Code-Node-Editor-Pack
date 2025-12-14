@@ -1,5 +1,5 @@
 syntax = "proto3";
-// @version: 1.4.0
+// @version: 1.5.0
 // package gia;
 
 message Root {
@@ -164,6 +164,7 @@ message NodeGraph {
   repeated GraphVariable graphValues = 6;
   repeated GraphAffiliation affiliations = 7;
 
+  optional int32 xxx = 100;
   optional float xxxx = 101;
 }
 
@@ -285,11 +286,12 @@ enum ClientVarType {
   GUID_ = 14;              // type: Gid, typeid: 14
   GUIDList_ = 15;          // type: L<Gid>, typeid: 15
   Faction_ = 16;           // type: Fct, typeid: 16
-  LocalVariable_ = 17;     // type: E<1017>, typeid: 17
+  EnumList_ = 17;          // type: L<E<-1>>, typeid: 17
   Configuration_ = 18;     // type: Cfg, typeid: 18
   Prefab_ = 19;            // type: Pfb, typeid: 19
   ConfigurationList_ = 20; // type: L<Cfg>, typeid: 20
   PrefabList_ = 21;        // type
+  LocalVariable_ = 22;     // type
 }
 message GraphVariable {
   string name = 2;
@@ -456,15 +458,23 @@ message NodePin {
       OutFlow = 2;
       InParam = 3;
       OutParam = 4;
+      ClientExecNode = 5; // only in client execution nodes
     }
     Kind kind = 1;
     int32 index = 2; // index of the kind
+
+    message Id { int64 id = 1; }
+    oneof clientExecNode { // only when used inside client nodes
+      Id nodeId = 100;
+    }
   }
   Index i1 = 1;
   Index i2 = 2;
   VarBase value = 3;
   int32 type = 4; // Be careful! VarType in Server and ClientVarType in Client
   repeated NodeConnection connects = 5; // OutFlow or InParam
+  optional Index clientExecNode = 6;    // Only when kind === ClientExecNode
+  optional int32 compositePinIndex = 7; // Only when calling composite node
 }
 
 message NodeConnection {

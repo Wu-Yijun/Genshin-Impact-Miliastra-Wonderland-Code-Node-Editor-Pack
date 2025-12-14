@@ -745,6 +745,8 @@ export function get_id_client(node: NodeType): number {
               return ClientVarType.ConfigurationList_;
           }
           break;
+        case "e":
+          return ClientVarType.EnumList_;
         default:
           break;
       }
@@ -804,7 +806,9 @@ export function get_type_client(id: number): NodeType {
     case ClientVarType.Faction_:
       return { t: "b", b: "Fct" };
     case ClientVarType.LocalVariable_:
-      return { t: "e", e: 1017 };
+      return { t: "e", e: 1022 };
+    case ClientVarType.EnumList_:
+      return { t: "l", i: { t: "e", e: -1 } };
     case ClientVarType.Configuration_:
       return { t: "b", b: "Cfg" };
     case ClientVarType.Prefab_:

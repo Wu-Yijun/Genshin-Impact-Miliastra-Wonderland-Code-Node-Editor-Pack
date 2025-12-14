@@ -32,6 +32,7 @@ type Token =
   | { type: ";"; }
   // | { type: " "; }
   | { type: "."; }
+  | { type: ","; }
   | { type: "{"; }
   | { type: "}"; }
   | { type: "="; }
@@ -49,6 +50,7 @@ function tokenize(str: string) {
         i++;
         continue;
       case ";":
+      case ",":
       case ".":
       case "=":
       case "{":
@@ -117,12 +119,18 @@ function parseDoc(tokens: Token[], index = [0]): Root[] {
               i++;
               continue;
             }
-            const I = tokens[i];
-            const E = tokens[i + 1];
-            const N = tokens[i + 2];
-            assert(I.type === "I" && E.type === "=" && N.type === "N");
-            inner.push([I.val, N.val]);
-            i += 3;
+            const rev = parseReserved(tokens, i);
+            if (rev !== null) {
+              inner.push(...rev[0].map<[string, number]>(i => ["_reserved_" + i, i]));
+              i = rev[1];
+            } else {
+              const I = tokens[i];
+              const E = tokens[i + 1];
+              const N = tokens[i + 2];
+              assert(I.type === "I" && E.type === "=" && N.type === "N");
+              inner.push([I.val, N.val]);
+              i += 3;
+            }
           }
           doc.push({ type: "enum", name: [I.val], inner })
           assert(tokens[i].type === "}");
@@ -140,9 +148,22 @@ function parseDoc(tokens: Token[], index = [0]): Root[] {
               i++;
               continue;
             }
-            const [v, i_] = parseVar(tokens, i);
-            i = i_;
-            arr.push(v);
+            const rev = parseReserved(tokens, i);
+            if (rev !== null) {
+              arr.push(...rev[0].map(t => ({
+                type: "var" as const,
+                class: ["int32"],
+                name: "_reserved_" + t,
+                index: t,
+                optional: true,
+                repeated: false
+              })));
+              i = rev[1];
+            } else {
+              const [v, i_] = parseVar(tokens, i);
+              i = i_;
+              arr.push(v);
+            }
           }
           doc.push({ type: "oneof", name: I.val, inner: arr });
           assert(tokens[i].type === "}");
@@ -150,10 +171,28 @@ function parseDoc(tokens: Token[], index = [0]): Root[] {
           continue;
         }
         default: {
+          // reserved
+          const rev = parseReserved(tokens, i);
+          if (rev !== null) {
+            doc.push(...rev[0].map(t => ({
+              type: "var" as const,
+              class: ["int32"],
+              name: "_reserved_" + t,
+              index: t,
+              optional: true,
+              repeated: false
+            })));
+            i = rev[1];
+            continue;
+          }
           // var def;
           const [v, i_] = parseVar(tokens, i);
           i = i_;
-          doc.push(v);
+          if (v instanceof Array) {
+            doc.push(...v);
+          } else {
+            doc.push(v);
+          }
           continue;
         }
       }
@@ -162,6 +201,38 @@ function parseDoc(tokens: Token[], index = [0]): Root[] {
     throw new Error("Encounter Invalid Token: " + tokens.slice(i, i + 5).forEach(console.dir));
   }
   return doc;
+}
+
+function parseReserved(tokens: Token[], i: number): [number[], new_i: number] | null {
+  const t = tokens[i];
+  if (t.type === "I" && t.val === "reserved") {
+    i += 1;
+    const arr: number[] = [];
+    while (i + 1 < tokens.length) {
+      const N = tokens[i];
+      const T = tokens[i + 1];
+      assert(N.type === "N");
+      if (T?.type === "I" && T.val === "to") {
+        // reserved n to m;
+        const M = tokens[i + 2];
+        assert(M.type === "N");
+        i += 3;
+        assert(M.val >= N.val);
+        arr.push(...Array.from({ length: M.val - N.val + 1 }, (_, i) => N.val + i));
+      } else {
+        // reserved n;
+        arr.push(N.val);
+        i++;
+      }
+      if (tokens[i].type === ",") {
+        i++;
+      } else {
+        break;
+      }
+    }
+    return [arr, i];
+  }
+  return null;
 }
 
 function parseVar(token: Token[], i: number): [VarDef, new_i: number] {
