@@ -11,9 +11,9 @@ const _srcRange = { start: 0, end: 0 } as const;
 class RawIRModuleBuilder {
   graph: Graph;
   /** Node to IR node id */
-  node2id: Map<Node, IR_Node> = new Map();
+  node2id: Map<Node<any>, IR_Node> = new Map();
   /** IR node id to Node */
-  id2node: Map<number, Node> = new Map();
+  id2node: Map<number, Node<any>> = new Map();
   /** [from ir id , to ir id] */
   flows: [number, number][] = []
   /** Map of node pin id, to [node id, branch index] */
@@ -44,6 +44,8 @@ class RawIRModuleBuilder {
     this.modifyCases();
     // link as chain
     this.createAllChain();
+    this.linkChainToBranches();
+    this.linkChainToCases();
 
     // Link starter/Anchor with chain.
 
@@ -305,14 +307,18 @@ class RawIRModuleBuilder {
     for (const chain of this.structure!.chain) {
       const branch = this.id2branch.get(chain.starter);
       if (branch === undefined) continue;
-      branch.branches.push(...this.starter_chains.get(chain.starter)!.map((nodes, id) => ({ id, nodes: [nodes] })));
+      const branches = this.starter_chains.get(chain.starter)!
+        .map((nodes, id) => ({ id, nodes: [nodes] }));
+      branch.branches.push(...branches);
     }
   }
   linkChainToCases() {
     for (const chain of this.structure!.chain) {
       const selector = this.id2selector.get(chain.starter);
       if (selector === undefined) continue;
-      selector.branches.push(...this.starter_chains.get(chain.starter)!.map((nodes, id) => ({ branchId: branch_name(id), nodes: [nodes] })));
+      const branches = this.starter_chains.get(chain.starter)!
+        .map((nodes, id) => ({ branchId: branch_name(id), nodes: [nodes] }));
+      selector.branches.push(...branches);
     }
   }
 
@@ -400,11 +406,11 @@ function ir_call_shared(node: SharedFuncDecl, port: BranchId): IR_CallNode {
 }
 
 
-function ir_node(n: Node): IR_Node {
+function ir_node(n: Node<any>): IR_Node {
   const gid = n.GenericId;
-  const cid: number | undefined = n.ConcreteId;
-  if (cid === undefined) {
-    const node_name = helper.get_node_name_from_id(gid, true);
+  const cid: number | string | null = n.ConcreteId;
+  if (cid === null) {
+    const node_name = helper.get_node_name_from_gid(gid);
     const name = "_" + node_name?.replaceAll("_", "");
     return {
       kind: "call",
@@ -417,7 +423,7 @@ function ir_node(n: Node): IR_Node {
       _srcRange,
     };
   }
-  const node_name = helper.get_node_name_from_id(cid);
+  const node_name = helper.get_node_name_from_cid(cid);
   const name = "_" + node_name?.replaceAll("_", "");
   return {
     kind: "call",
@@ -447,4 +453,9 @@ function nodes_to_execution_block(chains: IR_Node[]): IR_ExecutionBlock {
     _id: IR_Id_Counter.value,
     _srcRange,
   };
+}
+
+
+if(import.meta.main) {
+  // For test
 }
