@@ -338,14 +338,6 @@ function read_type_conv_types() {
   });
 }
 
-function convert_records_to_name() {
-  records_raw.forEach((r) => {
-    r.reflectMap.map(x => {
-      (x as any[])[1] = "a";
-    })
-  });
-  dir(records);
-}
 
 // create_types_ids();
 // get_type_ids()
@@ -361,4 +353,4 @@ function convert_records_to_name() {
 
 // read_type_conv_types();
 
-convert_records_to_name();
+// convert_records_to_name();

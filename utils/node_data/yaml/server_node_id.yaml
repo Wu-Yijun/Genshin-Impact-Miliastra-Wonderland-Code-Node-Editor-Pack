@@ -380,7 +380,7 @@ Trigger:
       620: 1. When Creation Reaches Patrol Waypoint
 
 Control:
-  - Branches:
+  - General:
       2: Double Branch
       3: Multiple Branches
 

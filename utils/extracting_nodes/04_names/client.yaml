@@ -1,0 +1,161 @@
+Execution:
+  - I. Character Skills:
+      - 1. Traverse Entity List
+      - 2. Play Timed Effects
+      - 3. Fixed-Point Projectile Launch
+      - 4. Fixed-Point Displacement
+      - 5. Recover HP
+      - 6. Camera Orientation Detection Data
+      - 7. Force Exit Aiming State
+      - 8. Set Own Attack Target
+      - 9. Trigger Hitbox at Specific Location
+      - 10. Add Unit Status
+      - 11. Notify Server Node Graph
+      - 12. Player Turning
+      - 13. Player Turns to Face Set Direction
+      - 14. Modify Attack Weight
+      - 15. Remove Unit Status
+      - 16. Remove Specified Character Disruptor Device
+      - 17. Trigger Hitbox at Specified Attachment Point
+      - 18. Reset Skill Target
+      # not shown
+      - Trigger Spherical Hitbox at Specific Location
+      - Trigger Rectangular Hitbox at Specific Location
+      - Trigger Sector Hitbox at Specific Location
+      - Trigger Spherical Hitbox at Specified Attachment Point
+      - Trigger Rectangular Hitbox at Specified Attachment Point
+      - Trigger Sector Hitbox at Specified Attachment Point
+  - II. General:
+      - 1. Set Local Variable
+      - 2. Break Loop
+      - 3. Finite Loop
+  - III. Custom Aggro:
+      - 1. Modify the Aggro Value of the Specified Entity Proportionally
+      - 2. Transfer the Aggro Value of the Specified Entity Proportionally
+      - 3. Taunt Target
+      - 4. Remove Target Entity From Aggro List
+      - 5. Clear the Aggro List of the Specified Entity
+      - 6. Set the Aggro Value of the Specified Entity
+      - 7. Modify the Aggro Value of the Specified Entity
+  - IV. Signal:
+      - 1. Send Signal to Server Node Graph
+
+Control:
+  - I. General:
+      - 1. Double Branch
+
+Query:
+  - I. List Related:
+        - 1. Get Corresponding Value From List
+        - 2. Get List Length
+        - 3. Get Maximum Value From List
+        - 4. Get Minimum Value From List
+        - 5. Get Ray Filter Type List
+        - 6. Get Entity Type List
+        - 7. List Includes This Value
+  - II. Custom Variables:
+        - 1. Get Custom Variable
+  - III. Preset Status:
+        - 1. Get Preset Status
+  - IV. Entity Related:
+        - 1. Query If Entity Is on the Field
+        - 2. Get Unit Attack Target
+        - 3. Get Target Attachment Point Location
+        - 4. Get Target Attachment Point Rotation
+        - 5. Get Target Entity
+        - 6. Get Entity's Type
+        - 7. Get Entity Location
+        - 8. Get Entity Rotation
+        - 9. Get Self Entity
+        - 10. Filter Entity List Within Square Range
+        - 11. Filter Entity List Within Spherical Range
+        - 12. Query Entity by GUID
+  - V. Faction Related:
+        - 1. Query Entity Faction
+        - 2. Query If Faction Is Hostile
+  - VI. Player and Character Related:
+        - 1. Query If Self Is in Combat
+        - 2. Get Current Character
+        - 3. Get Player Entity to Which the Character Belongs
+        - 4. Get List of Player Entities on the Field
+        - 5. Get Character Entity of Specified Player
+        - 6. Query GUID by Entity
+        - 7. Get Player Client Input Device Type
+  - VII. Unit Tags:
+        - 1. Get Entity List by Unit Tag
+        - 2. Get Entity's Unit Tag List
+  - VIII. General:
+        - 1. Get Local Variable
+  - IX. Custom Aggro:
+        - 1. Query if Specified Entity is in Combat
+        - 2. Get the Aggro List of the Specified Entity
+        - 3. Get the Aggro Target of the Specified Entity
+  - X. Triggers:
+        - 1. Get All Entities Within the Collision Trigger
+  - XI. Ray:
+        - 1. Get Ray Detection Result
+  - XII. Scanning:
+        - 1. Get All Valid Entities That Are Scannable by Scan Component
+        - 2. Get Entity Currently Scanned by Scan Component
+        - 3. Get Entity's Current Active Scan Tags
+        - 4. Get Entity's Scan Status
+
+Operation:
+  - I. General:
+      - 1. Enumeration Match
+      - 2. Equal
+      - 3. Data Type Conversion
+  - II. Math:
+      - 1. Split 3D Vector
+      - 2. Orientation to Rotation
+      - 3. Multiplication
+      - 4. Division
+      - 5. Arccosine Function
+      - 6. Arctangent Function
+      - 7. Arcsine Function
+      - 8. Direction Vector to Rotation
+      - 9. Radians to Degrees
+      - 10. Get Random Number
+      - 11. Addition
+      - 12. Subtraction
+      - 13. Degrees to Radians
+      - 14. Absolute Value Operation
+      - 15. Logical NOT Operation
+      - 16. Logical OR Operation
+      - 17. Logical XOR Operation
+      - 18. Logical AND Operation
+      - 19. 3D Vector Normalization
+      - 20. 3D Vector Addition
+      - 21. 3D Vector Angle
+      - 22. 3D Vector Subtraction
+      - 23. 3D Vector Modulo Operation
+      - 24. 3D Vector Dot Product
+      - 25. 3D Vector Zoom
+      - 26. 3D Vector Cross Product
+      - 27. 3D Vector Rotation
+      - 28. Greater Than
+      - 29. Greater Than or Equal To
+      - 30. Less Than
+      - 31. Less Than or Equal To
+      - 32. Cosine Function
+      - 33. Tangent Function
+      - 34. Sine Function
+      - 35. Create 3D Vector
+  - III. Lists:
+      - 1. Assembly List
+
+Others:
+  - I. General:
+      - 1. Node Graph Begins
+      - 2. Node Graph End (Boolean)
+      - 3. Node Graph End (Integer)
+
+Hidden:
+  - Execution:
+      - (Test) Send Client Signal
+  - Others:
+      - Node Graph Ends
+  - Query:
+      - Get Current Camera Template
+      - Get Camera Orientation
+

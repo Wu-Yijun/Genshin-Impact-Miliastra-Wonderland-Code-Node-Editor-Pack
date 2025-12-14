@@ -1,0 +1,154 @@
+Execution:
+  - I. Character Skills:
+      "200038": 2. Play Timed Effects
+      "200039": 11. Notify Server Node Graph
+      "200040": 12. Player Turning
+      "200041": 8. Set Own Attack Target
+      "200051": 9. Trigger Hitbox at Specific Location
+      "200052": 3. Fixed-Point Projectile Launch
+      "200053": 4. Fixed-Point Displacement
+      "200055": 1. Traverse Entity List
+      "200057": 10. Add Unit Status
+      "200058": 15. Remove Unit Status
+      "200059": 17. Trigger Hitbox at Specified Attachment Point
+      "200060": 16. Remove Specified Character Disruptor Device
+      "200061": 14. Modify Attack Weight
+      "200062": 6. Camera Orientation Detection Data
+      "200075": 5. Recover HP
+      "200105": 13. Player Turns to Face Set Direction
+      "200106": 18. Reset Skill Target
+      "200108": 7. Force Exit Aiming State
+      "200111": Trigger Spherical Hitbox at Specific Location
+      "200112": Trigger Rectangular Hitbox at Specific Location
+      "200113": Trigger Sector Hitbox at Specific Location
+      "200114": Trigger Spherical Hitbox at Specified Attachment Point
+      "200115": Trigger Rectangular Hitbox at Specified Attachment Point
+      "200116": Trigger Sector Hitbox at Specified Attachment Point
+  - II. General:
+      "200079": 3. Finite Loop
+      "200080": 2. Break Loop
+      "200081": 1. Set Local Variable
+  - III. Custom Aggro:
+      "200083": 6. Set the Aggro Value of the Specified Entity
+      "200084": 7. Modify the Aggro Value of the Specified Entity
+      "200085": 1. Modify the Aggro Value of the Specified Entity Proportionally
+      "200086": 2. Transfer the Aggro Value of the Specified Entity Proportionally
+      "200087": 5. Clear the Aggro List of the Specified Entity
+      "200088": 4. Remove Target Entity From Aggro List
+      "200089": 3. Taunt Target
+  - IV. Signal:
+      "200124": 1. Send Signal to Server Node Graph
+Control:
+  - I. General:
+      "200056": 1. Double Branch
+Query:
+  - I. List Related:
+      "200017": 1. Get Corresponding Value From List
+      "200018": 2. Get List Length
+      "200019": 7. List Includes This Value
+      "200020": 3. Get Maximum Value From List
+      "200021": 4. Get Minimum Value From List
+      "200050": 6. Get Entity Type List
+      "200110": 5. Get Ray Filter Type List
+  - II. Custom Variables:
+      "200016": 1. Get Custom Variable
+  - III. Preset Status:
+      "200028": 1. Get Preset Status
+  - IV. Entity Related:
+      "200023": 12. Query Entity by GUID
+      "200030": 7. Get Entity Location
+      "200031": 8. Get Entity Rotation
+      "200033": 9. Get Self Entity
+      "200034": 5. Get Target Entity
+      "200035": 2. Get Unit Attack Target
+      "200043": 11. Filter Entity List Within Spherical Range
+      "200044": 10. Filter Entity List Within Square Range
+      "200045": 6. Get Entity's Type
+      "200047": 3. Get Target Attachment Point Location
+      "200048": 4. Get Target Attachment Point Rotation
+      "200103": 1. Query If Entity Is on the Field
+  - V. Faction Related:
+      "200029": 1. Query Entity Faction
+      "200093": 2. Query If Faction Is Hostile
+  - VI. Player and Character Related:
+      "200024": 5. Get Character Entity of Specified Player
+      "200025": 3. Get Player Entity to Which the Character Belongs
+      "200026": 4. Get List of Player Entities on the Field
+      "200027": 6. Query GUID by Entity
+      "200037": 1. Query If Self Is in Combat
+      "200076": 2. Get Current Character
+      "200123": 7. Get Player Client Input Device Type
+  - VII. Unit Tags:
+      "200077": 2. Get Entity's Unit Tag List
+      "200078": 1. Get Entity List by Unit Tag
+  - VIII. General:
+      "200082": 1. Get Local Variable
+  - IX. Custom Aggro:
+      "200090": 3. Get the Aggro Target of the Specified Entity
+      "200091": 2. Get the Aggro List of the Specified Entity
+      "200092": 1. Query if Specified Entity is in Combat
+  - X. Triggers:
+      "200107": 1. Get All Entities Within the Collision Trigger
+  - XI. Ray:
+      "200109": 1. Get Ray Detection Result
+  - XII. Scanning:
+      "200118": 2. Get Entity Currently Scanned by Scan Component
+      "200119": 1. Get All Valid Entities That Are Scannable by Scan Component
+      "200120": 4. Get Entity's Scan Status
+      "200121": 3. Get Entity's Current Active Scan Tags
+Operation:
+  - I. General:
+      "200005": 1. Enumeration Match
+      "200006": 2. Equal
+      "200022": 3. Data Type Conversion
+  - II. Math:
+      "200001": 18. Logical AND Operation
+      "200002": 16. Logical OR Operation
+      "200003": 15. Logical NOT Operation
+      "200004": 17. Logical XOR Operation
+      "200007": 28. Greater Than
+      "200008": 30. Less Than
+      "200009": 31. Less Than or Equal To
+      "200010": 29. Greater Than or Equal To
+      "200011": 11. Addition
+      "200012": 12. Subtraction
+      "200013": 3. Multiplication
+      "200014": 4. Division
+      "200015": 14. Absolute Value Operation
+      "200032": 10. Get Random Number
+      "200063": 24. 3D Vector Dot Product
+      "200064": 26. 3D Vector Cross Product
+      "200065": 1. Split 3D Vector
+      "200066": 25. 3D Vector Zoom
+      "200067": 21. 3D Vector Angle
+      "200068": 27. 3D Vector Rotation
+      "200069": 23. 3D Vector Modulo Operation
+      "200070": 35. Create 3D Vector
+      "200071": 20. 3D Vector Addition
+      "200072": 22. 3D Vector Subtraction
+      "200073": 8. Direction Vector to Rotation
+      "200074": 2. Orientation to Rotation
+      "200094": 34. Sine Function
+      "200095": 32. Cosine Function
+      "200096": 33. Tangent Function
+      "200097": 7. Arcsine Function
+      "200098": 5. Arccosine Function
+      "200099": 6. Arctangent Function
+      "200100": 19. 3D Vector Normalization
+      "200101": 9. Radians to Degrees
+      "200102": 13. Degrees to Radians
+  - III. Lists:
+      "200049": 1. Assembly List
+Others:
+  - I. General:
+      "200000": 2. Node Graph End (Boolean)
+      "200042": 1. Node Graph Begins
+      "200122": 3. Node Graph End (Integer)
+Hidden:
+  - Execution:
+      "200117": (Test) Send Client Signal
+  - Others:
+      "200104": Node Graph Ends
+  - Query:
+      "200036": Get Current Camera Template
+      "200046": Get Camera Orientation
