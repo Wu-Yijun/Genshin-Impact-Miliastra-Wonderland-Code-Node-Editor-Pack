@@ -1,0 +1,2404 @@
+[
+  {
+    "name": "Node Graph End (Boolean)",
+    "id": 200000,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "Logical AND Operation",
+    "id": 200001,
+    "inputs": [
+      "Bol",
+      "Bol"
+    ],
+    "outputs": [
+      "Bol"
+    ]
+  },
+  {
+    "name": "Logical OR Operation",
+    "id": 200002,
+    "inputs": [
+      "Bol",
+      "Bol"
+    ],
+    "outputs": [
+      "Bol"
+    ]
+  },
+  {
+    "name": "Logical NOT Operation",
+    "id": 200003,
+    "inputs": [
+      "Bol"
+    ],
+    "outputs": [
+      "Bol"
+    ]
+  },
+  {
+    "name": "Logical XOR Operation",
+    "id": 200004,
+    "inputs": [
+      "Bol",
+      "Bol"
+    ],
+    "outputs": [
+      "Bol"
+    ]
+  },
+  {
+    "name": "Enumeration Match",
+    "id": 200005,
+    "inputs": [
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Bol"
+    ],
+    "reflectMap": [
+      [
+        "10 S<T:E<-1>>",
+        "S<T:E<-1>>"
+      ],
+      [
+        "10 S<T:E<0>>",
+        "S<T:E<0>>"
+      ],
+      [
+        "10 S<T:E<1>>",
+        "S<T:E<1>>"
+      ],
+      [
+        "10 S<T:E<2>>",
+        "S<T:E<2>>"
+      ],
+      [
+        "10 S<T:E<3>>",
+        "S<T:E<3>>"
+      ],
+      [
+        "10 S<T:E<4>>",
+        "S<T:E<4>>"
+      ],
+      [
+        "10 S<T:E<5>>",
+        "S<T:E<5>>"
+      ],
+      [
+        "10 S<T:E<6>>",
+        "S<T:E<6>>"
+      ],
+      [
+        "10 S<T:E<7>>",
+        "S<T:E<7>>"
+      ],
+      [
+        "10 S<T:E<8>>",
+        "S<T:E<8>>"
+      ],
+      [
+        "10 S<T:E<9>>",
+        "S<T:E<9>>"
+      ],
+      [
+        "10 S<T:E<10>>",
+        "S<T:E<10>>"
+      ],
+      [
+        "10 S<T:E<11>>",
+        "S<T:E<11>>"
+      ],
+      [
+        "10 S<T:E<12>>",
+        "S<T:E<12>>"
+      ],
+      [
+        "10 S<T:E<13>>",
+        "S<T:E<13>>"
+      ],
+      [
+        "10 S<T:E<14>>",
+        "S<T:E<14>>"
+      ],
+      [
+        "10 S<T:E<15>>",
+        "S<T:E<15>>"
+      ],
+      [
+        "10 S<T:E<16>>",
+        "S<T:E<16>>"
+      ],
+      [
+        "10 S<T:E<17>>",
+        "S<T:E<17>>"
+      ],
+      [
+        "10 S<T:E<18>>",
+        "S<T:E<18>>"
+      ],
+      [
+        "10 S<T:E<19>>",
+        "S<T:E<19>>"
+      ],
+      [
+        "10 S<T:E<20>>",
+        "S<T:E<20>>"
+      ],
+      [
+        "10 S<T:E<21>>",
+        "S<T:E<21>>"
+      ],
+      [
+        "10 S<T:E<22>>",
+        "S<T:E<22>>"
+      ],
+      [
+        "10 S<T:E<23>>",
+        "S<T:E<23>>"
+      ],
+      [
+        "10 S<T:E<24>>",
+        "S<T:E<24>>"
+      ],
+      [
+        "10 S<T:E<25>>",
+        "S<T:E<25>>"
+      ],
+      [
+        "10 S<T:E<26>>",
+        "S<T:E<26>>"
+      ],
+      [
+        "10 S<T:E<27>>",
+        "S<T:E<27>>"
+      ],
+      [
+        "10 S<T:E<28>>",
+        "S<T:E<28>>"
+      ],
+      [
+        "10 S<T:E<29>>",
+        "S<T:E<29>>"
+      ],
+      [
+        "10 S<T:E<30>>",
+        "S<T:E<30>>"
+      ],
+      [
+        "10 S<T:E<31>>",
+        "S<T:E<31>>"
+      ],
+      [
+        "10 S<T:E<32>>",
+        "S<T:E<32>>"
+      ],
+      [
+        "10 S<T:E<33>>",
+        "S<T:E<33>>"
+      ],
+      [
+        "10 S<T:E<7>>",
+        "S<T:E<7>>"
+      ],
+      [
+        "10 S<T:E<35>>",
+        "S<T:E<35>>"
+      ],
+      [
+        "10 S<T:E<36>>",
+        "S<T:E<36>>"
+      ],
+      [
+        "10 S<T:E<37>>",
+        "S<T:E<37>>"
+      ],
+      [
+        "10 S<T:E<38>>",
+        "S<T:E<38>>"
+      ],
+      [
+        "10 S<T:E<39>>",
+        "S<T:E<39>>"
+      ],
+      [
+        "10 S<T:E<40>>",
+        "S<T:E<40>>"
+      ],
+      [
+        "10 S<T:E<41>>",
+        "S<T:E<41>>"
+      ]
+    ]
+  },
+  {
+    "name": "Equal",
+    "id": 200006,
+    "inputs": [
+      "E<0>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Bol"
+    ],
+    "reflectMap": [
+      [
+        "200006 11 R<T:Bol>",
+        "R<T:Bol>"
+      ],
+      [
+        "200006 12 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200006 13 R<T:Flt>",
+        "R<T:Flt>"
+      ],
+      [
+        "200006 14 R<T:Str>",
+        "R<T:Str>"
+      ],
+      [
+        "200006 15 R<T:Gid>",
+        "R<T:Gid>"
+      ],
+      [
+        "200006 16 R<T:Ety>",
+        "R<T:Ety>"
+      ],
+      [
+        "200006 17 R<T:Vec>",
+        "R<T:Vec>"
+      ],
+      [
+        "200006 18 R<T:Fct>",
+        "R<T:Fct>"
+      ],
+      [
+        "200006 19 R<T:Cfg>",
+        "R<T:Cfg>"
+      ],
+      [
+        "200006 20 R<T:Pfb>",
+        "R<T:Pfb>"
+      ]
+    ]
+  },
+  {
+    "name": "Greater Than",
+    "id": 200007,
+    "inputs": [
+      "E<0>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Bol"
+    ],
+    "reflectMap": [
+      [
+        "200007 12 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200007 13 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Less Than",
+    "id": 200008,
+    "inputs": [
+      "E<0>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Bol"
+    ],
+    "reflectMap": [
+      [
+        "200008 12 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200008 13 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Less Than or Equal To",
+    "id": 200009,
+    "inputs": [
+      "E<0>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Bol"
+    ],
+    "reflectMap": [
+      [
+        "200009 12 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200009 13 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Greater Than or Equal To",
+    "id": 200010,
+    "inputs": [
+      "E<0>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Bol"
+    ],
+    "reflectMap": [
+      [
+        "200010 12 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200010 13 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Addition",
+    "id": 200011,
+    "inputs": [
+      "E<2>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200011 30 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200011 31 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Subtraction",
+    "id": 200012,
+    "inputs": [
+      "E<2>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200012 30 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200012 31 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Multiplication",
+    "id": 200013,
+    "inputs": [
+      "E<2>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200013 30 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200013 31 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Division",
+    "id": 200014,
+    "inputs": [
+      "E<2>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200014 30 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200014 31 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Absolute Value Operation",
+    "id": 200015,
+    "inputs": [
+      "R<T>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200015 32 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200015 33 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Get Custom Variable",
+    "id": 200016,
+    "inputs": [
+      "Ety",
+      "Str"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200016 40 R<T:Bol>",
+        "R<T:Bol>"
+      ],
+      [
+        "200016 41 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200016 42 R<T:Flt>",
+        "R<T:Flt>"
+      ],
+      [
+        "200016 43 R<T:Str>",
+        "R<T:Str>"
+      ],
+      [
+        "200016 44 R<T:Gid>",
+        "R<T:Gid>"
+      ],
+      [
+        "200016 45 R<T:Ety>",
+        "R<T:Ety>"
+      ],
+      [
+        "200016 46 R<T:Vec>",
+        "R<T:Vec>"
+      ],
+      [
+        "200016 47 R<T:L<Int>>",
+        "R<T:L<Int>>"
+      ],
+      [
+        "200016 48 R<T:L<Str>>",
+        "R<T:L<Str>>"
+      ],
+      [
+        "200016 49 R<T:L<Ety>>",
+        "R<T:L<Ety>>"
+      ],
+      [
+        "200016 50 R<T:L<Gid>>",
+        "R<T:L<Gid>>"
+      ],
+      [
+        "200016 51 R<T:L<Flt>>",
+        "R<T:L<Flt>>"
+      ],
+      [
+        "200016 52 R<T:L<Vec>>",
+        "R<T:L<Vec>>"
+      ],
+      [
+        "200016 53 R<T:L<Bol>>",
+        "R<T:L<Bol>>"
+      ],
+      [
+        "200016 54 R<T:Cfg>",
+        "R<T:Cfg>"
+      ],
+      [
+        "200016 55 R<T:Pfb>",
+        "R<T:Pfb>"
+      ],
+      [
+        "200016 56 R<T:L<Cfg>>",
+        "R<T:L<Cfg>>"
+      ],
+      [
+        "200016 57 R<T:L<Pfb>>",
+        "R<T:L<Pfb>>"
+      ],
+      [
+        "200016 58 R<T:Fct>",
+        "R<T:Fct>"
+      ]
+    ]
+  },
+  {
+    "name": "Get Corresponding Value From List",
+    "id": 200017,
+    "inputs": [
+      "Int",
+      "L<R<T>>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200017 60 R<T:Bol>",
+        "R<T:Bol>"
+      ],
+      [
+        "200017 61 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200017 62 R<T:Flt>",
+        "R<T:Flt>"
+      ],
+      [
+        "200017 63 R<T:Str>",
+        "R<T:Str>"
+      ],
+      [
+        "200017 64 R<T:Gid>",
+        "R<T:Gid>"
+      ],
+      [
+        "200017 65 R<T:Ety>",
+        "R<T:Ety>"
+      ],
+      [
+        "200017 66 R<T:Vec>",
+        "R<T:Vec>"
+      ],
+      [
+        "200017 67 R<T:Cfg>",
+        "R<T:Cfg>"
+      ],
+      [
+        "200017 68 R<T:Pfb>",
+        "R<T:Pfb>"
+      ]
+    ]
+  },
+  {
+    "name": "Get List Length",
+    "id": 200018,
+    "inputs": [
+      "R<T>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200018 80 R<T:L<Bol>>",
+        "R<T:L<Bol>>"
+      ],
+      [
+        "200018 81 R<T:L<Int>>",
+        "R<T:L<Int>>"
+      ],
+      [
+        "200018 82 R<T:L<Flt>>",
+        "R<T:L<Flt>>"
+      ],
+      [
+        "200018 83 R<T:L<Str>>",
+        "R<T:L<Str>>"
+      ],
+      [
+        "200018 84 R<T:L<Gid>>",
+        "R<T:L<Gid>>"
+      ],
+      [
+        "200018 85 R<T:L<Ety>>",
+        "R<T:L<Ety>>"
+      ],
+      [
+        "200018 86 R<T:L<Vec>>",
+        "R<T:L<Vec>>"
+      ]
+    ]
+  },
+  {
+    "name": "List Includes This Value",
+    "id": 200019,
+    "inputs": [
+      "R<T>",
+      "L<R<T>>"
+    ],
+    "outputs": [
+      "Bol"
+    ],
+    "reflectMap": [
+      [
+        "200019 100 R<T:Bol>",
+        "R<T:Bol>"
+      ],
+      [
+        "200019 101 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200019 102 R<T:Flt>",
+        "R<T:Flt>"
+      ],
+      [
+        "200019 103 R<T:Str>",
+        "R<T:Str>"
+      ],
+      [
+        "200019 104 R<T:Gid>",
+        "R<T:Gid>"
+      ],
+      [
+        "200019 105 R<T:Ety>",
+        "R<T:Ety>"
+      ],
+      [
+        "200019 106 R<T:Vec>",
+        "R<T:Vec>"
+      ],
+      [
+        "200019 107 R<T:Cfg>",
+        "R<T:Cfg>"
+      ],
+      [
+        "200019 108 R<T:Pfb>",
+        "R<T:Pfb>"
+      ]
+    ]
+  },
+  {
+    "name": "Get Maximum Value From List",
+    "id": 200020,
+    "inputs": [
+      "L<R<T>>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200020 120 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200020 121 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Get Minimum Value From List",
+    "id": 200021,
+    "inputs": [
+      "L<R<T>>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200021 122 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200021 123 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Data Type Conversion",
+    "id": 200022,
+    "inputs": [
+      "E<7>",
+      "R<K>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "130 S<K:Int,V:Bol>",
+        "S<K:Int,V:Bol>"
+      ],
+      [
+        "130 S<K:Bol,V:Int>",
+        "S<K:Bol,V:Int>"
+      ],
+      [
+        "130 S<K:Flt,V:Int>",
+        "S<K:Flt,V:Int>"
+      ],
+      [
+        "130 S<K:Int,V:Flt>",
+        "S<K:Int,V:Flt>"
+      ],
+      [
+        "130 S<K:Bol,V:Str>",
+        "S<K:Bol,V:Str>"
+      ],
+      [
+        "130 S<K:Int,V:Str>",
+        "S<K:Int,V:Str>"
+      ],
+      [
+        "130 S<K:Flt,V:Str>",
+        "S<K:Flt,V:Str>"
+      ],
+      [
+        "130 S<K:Gid,V:Str>",
+        "S<K:Gid,V:Str>"
+      ],
+      [
+        "130 S<K:Ety,V:Str>",
+        "S<K:Ety,V:Str>"
+      ],
+      [
+        "130 S<K:Vec,V:Str>",
+        "S<K:Vec,V:Str>"
+      ],
+      [
+        "130 S<K:Fct,V:Str>",
+        "S<K:Fct,V:Str>"
+      ]
+    ]
+  },
+  {
+    "name": "Query Entity by GUID",
+    "id": 200023,
+    "inputs": [
+      "Gid"
+    ],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get Character Entity of Specified Player",
+    "id": 200024,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get Player Entity to Which the Character Belongs",
+    "id": 200025,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get List of Player Entities on the Field",
+    "id": 200026,
+    "inputs": [],
+    "outputs": [
+      "L<Ety>"
+    ]
+  },
+  {
+    "name": "Query GUID by Entity",
+    "id": 200027,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Gid"
+    ]
+  },
+  {
+    "name": "Get Preset Status",
+    "id": 200028,
+    "inputs": [
+      "Ety",
+      "Int"
+    ],
+    "outputs": [
+      "Int"
+    ]
+  },
+  {
+    "name": "Query Entity Faction",
+    "id": 200029,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Fct"
+    ]
+  },
+  {
+    "name": "Get Entity Location",
+    "id": 200030,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Get Entity Rotation",
+    "id": 200031,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Get Random Number",
+    "id": 200032,
+    "inputs": [
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200032 1011 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200032 1012 R<T:Flt>",
+        "R<T:Flt>"
+      ]
+    ]
+  },
+  {
+    "name": "Get Self Entity",
+    "id": 200033,
+    "inputs": [],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get Target Entity",
+    "id": 200034,
+    "inputs": [],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get Unit Attack Target",
+    "id": 200035,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get Current Camera Template",
+    "id": 200036,
+    "inputs": [],
+    "outputs": [
+      "Int"
+    ]
+  },
+  {
+    "name": "Query If Self Is in Combat",
+    "id": 200037,
+    "inputs": [],
+    "outputs": [
+      "Bol"
+    ]
+  },
+  {
+    "name": "Play Timed Effects",
+    "id": 200038,
+    "inputs": [
+      "Cfg",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Int",
+      "Bol"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Notify Server Node Graph",
+    "id": 200039,
+    "inputs": [
+      "Str",
+      "Str",
+      "Str"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Player Turning",
+    "id": 200040,
+    "inputs": [
+      "E<32>"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Set Own Attack Target",
+    "id": 200041,
+    "inputs": [
+      "Ety",
+      "Bol"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Node Graph Begins",
+    "id": 200042,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "Filter Entity List Within Spherical Range",
+    "id": 200043,
+    "inputs": [
+      "Flt",
+      "Vec",
+      "Int",
+      "E<29>"
+    ],
+    "outputs": [
+      "L<Ety>"
+    ]
+  },
+  {
+    "name": "Filter Entity List Within Square Range",
+    "id": 200044,
+    "inputs": [
+      "Flt",
+      "Flt",
+      "Flt",
+      "Vec",
+      "Int",
+      "E<29>"
+    ],
+    "outputs": [
+      "L<Ety>"
+    ]
+  },
+  {
+    "name": "Get Entity's Type",
+    "id": 200045,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Get Camera Orientation",
+    "id": 200046,
+    "inputs": [],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Get Target Attachment Point Location",
+    "id": 200047,
+    "inputs": [
+      "Ety",
+      "Str"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Get Target Attachment Point Rotation",
+    "id": 200048,
+    "inputs": [
+      "Ety",
+      "Str"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Assembly List",
+    "id": 200049,
+    "inputs": [
+      "Int",
+      "R<T>",
+      "R<T>",
+      "R<T>",
+      "R<T>",
+      "R<T>",
+      "R<T>",
+      "R<T>",
+      "R<T>",
+      "R<T>",
+      "R<T>"
+    ],
+    "outputs": [
+      "L<Int>"
+    ],
+    "reflectMap": [
+      [
+        "1025 S<T:Ety>",
+        "S<T:Ety>"
+      ],
+      [
+        "1026 S<T:Int>",
+        "S<T:Int>"
+      ],
+      [
+        "1027 S<T:Bol>",
+        "S<T:Bol>"
+      ],
+      [
+        "1028 S<T:Flt>",
+        "S<T:Flt>"
+      ],
+      [
+        "1029 S<T:Str>",
+        "S<T:Str>"
+      ],
+      [
+        "1030 S<T:Vec>",
+        "S<T:Vec>"
+      ],
+      [
+        "1043 S<T:Gid>",
+        "S<T:Gid>"
+      ],
+      [
+        "1044 S<T:Cfg>",
+        "S<T:Cfg>"
+      ],
+      [
+        "1045 S<T:Pfb>",
+        "S<T:Pfb>"
+      ]
+    ]
+  },
+  {
+    "name": "Get Entity Type List",
+    "id": 200050,
+    "inputs": [
+      "Int",
+      "E<13>",
+      "E<13>",
+      "E<13>",
+      "E<13>",
+      "E<13>",
+      "E<13>",
+      "E<13>",
+      "E<13>",
+      "E<13>",
+      "E<13>"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Trigger Hitbox at Specific Location",
+    "id": 200051,
+    "inputs": [
+      "E<24>",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "L<E<13>>",
+      "E<1042>",
+      "Int",
+      "E<3>",
+      "L<Vec>",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "E<33>",
+      "E<30>",
+      "L<Str>",
+      "E<12>",
+      "Flt",
+      "E<26>",
+      "E<27>",
+      "Flt",
+      "Bol",
+      "Bol",
+      "Int",
+      "Int",
+      "E<31>",
+      "Bol",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "Int",
+      "E<35>",
+      "E<36>",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Fixed-Point Projectile Launch",
+    "id": 200052,
+    "inputs": [
+      "Pfb",
+      "Vec",
+      "Vec",
+      "Ety",
+      "Fct"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Fixed-Point Displacement",
+    "id": 200053,
+    "inputs": [
+      "Flt",
+      "Flt",
+      "Flt",
+      "Vec",
+      "Bol"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Traverse Entity List",
+    "id": 200055,
+    "inputs": [
+      "L<Ety>"
+    ],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Double Branch",
+    "id": 200056,
+    "inputs": [
+      "Bol"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Add Unit Status",
+    "id": 200057,
+    "inputs": [
+      "Ety",
+      "Int",
+      "Cfg"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Remove Unit Status",
+    "id": 200058,
+    "inputs": [
+      "Ety",
+      "Cfg"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Trigger Hitbox at Specified Attachment Point",
+    "id": 200059,
+    "inputs": [
+      "E<39>",
+      "Str",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "L<E<13>>",
+      "E<1042>",
+      "Int",
+      "E<3>",
+      "L<Vec>",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "E<33>",
+      "E<30>",
+      "L<Str>",
+      "E<12>",
+      "Flt",
+      "E<26>",
+      "E<27>",
+      "Flt",
+      "Bol",
+      "Bol",
+      "Int",
+      "Int",
+      "E<31>",
+      "Bol",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "Int",
+      "E<35>",
+      "E<36>",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Remove Specified Character Disruptor Device",
+    "id": 200060,
+    "inputs": [
+      "E<21>"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Modify Attack Weight",
+    "id": 200061,
+    "inputs": [
+      "Flt",
+      "Bol"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Camera Orientation Detection Data",
+    "id": 200062,
+    "inputs": [
+      "E<39>",
+      "Vec",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": [
+      "Vec",
+      "Vec"
+    ]
+  },
+  {
+    "name": "3D Vector Dot Product",
+    "id": 200063,
+    "inputs": [
+      "Vec",
+      "Vec"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "3D Vector Cross Product",
+    "id": 200064,
+    "inputs": [
+      "Vec",
+      "Vec"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Split 3D Vector",
+    "id": 200065,
+    "inputs": [
+      "Vec"
+    ],
+    "outputs": [
+      "Flt",
+      "Flt",
+      "Flt"
+    ]
+  },
+  {
+    "name": "3D Vector Zoom",
+    "id": 200066,
+    "inputs": [
+      "Flt",
+      "Vec"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "3D Vector Angle",
+    "id": 200067,
+    "inputs": [
+      "Vec",
+      "Vec"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "3D Vector Rotation",
+    "id": 200068,
+    "inputs": [
+      "Vec",
+      "Vec"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "3D Vector Modulo Operation",
+    "id": 200069,
+    "inputs": [
+      "Vec"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "Create 3D Vector",
+    "id": 200070,
+    "inputs": [
+      "Flt",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "3D Vector Addition",
+    "id": 200071,
+    "inputs": [
+      "E<2>",
+      "Vec",
+      "Vec"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "3D Vector Subtraction",
+    "id": 200072,
+    "inputs": [
+      "E<2>",
+      "Vec",
+      "Vec"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Direction Vector to Rotation",
+    "id": 200073,
+    "inputs": [
+      "Vec",
+      "Vec"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Orientation to Rotation",
+    "id": 200074,
+    "inputs": [
+      "Vec",
+      "Vec"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Recover HP",
+    "id": 200075,
+    "inputs": [
+      "Ety",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Bol",
+      "Bol",
+      "L<Str>",
+      "Flt",
+      "Int",
+      "E<35>"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Get Current Character",
+    "id": 200076,
+    "inputs": [],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get Entity's Unit Tag List",
+    "id": 200077,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "L<Int>"
+    ]
+  },
+  {
+    "name": "Get Entity List by Unit Tag",
+    "id": 200078,
+    "inputs": [
+      "Int"
+    ],
+    "outputs": [
+      "L<Ety>"
+    ]
+  },
+  {
+    "name": "Finite Loop",
+    "id": 200079,
+    "inputs": [
+      "Int",
+      "Int"
+    ],
+    "outputs": [
+      "Int"
+    ]
+  },
+  {
+    "name": "Break Loop",
+    "id": 200080,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "Set Local Variable",
+    "id": 200081,
+    "inputs": [
+      "Str",
+      "R<T>"
+    ],
+    "outputs": [],
+    "reflectMap": [
+      [
+        "200081 2000 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200081 2000 R<T:Str>",
+        "R<T:Str>"
+      ],
+      [
+        "200081 2000 R<T:Ety>",
+        "R<T:Ety>"
+      ],
+      [
+        "200081 2000 R<T:Gid>",
+        "R<T:Gid>"
+      ],
+      [
+        "200081 2000 R<T:Flt>",
+        "R<T:Flt>"
+      ],
+      [
+        "200081 2000 R<T:Vec>",
+        "R<T:Vec>"
+      ],
+      [
+        "200081 2000 R<T:Bol>",
+        "R<T:Bol>"
+      ],
+      [
+        "200081 2000 R<T:L<Int>>",
+        "R<T:L<Int>>"
+      ],
+      [
+        "200081 2000 R<T:L<Str>>",
+        "R<T:L<Str>>"
+      ],
+      [
+        "200081 2000 R<T:L<Ety>>",
+        "R<T:L<Ety>>"
+      ],
+      [
+        "200081 2000 R<T:L<Gid>>",
+        "R<T:L<Gid>>"
+      ],
+      [
+        "200081 2000 R<T:L<Flt>>",
+        "R<T:L<Flt>>"
+      ],
+      [
+        "200081 2000 R<T:L<Vec>>",
+        "R<T:L<Vec>>"
+      ],
+      [
+        "200081 2000 R<T:L<Bol>>",
+        "R<T:L<Bol>>"
+      ],
+      [
+        "200081 2000 R<T:Cfg>",
+        "R<T:Cfg>"
+      ],
+      [
+        "200081 2000 R<T:Pfb>",
+        "R<T:Pfb>"
+      ],
+      [
+        "200081 2000 R<T:Fct>",
+        "R<T:Fct>"
+      ]
+    ]
+  },
+  {
+    "name": "Get Local Variable",
+    "id": 200082,
+    "inputs": [
+      "Str"
+    ],
+    "outputs": [
+      "Int"
+    ],
+    "reflectMap": [
+      [
+        "200082 1036 R<T:Int>",
+        "R<T:Int>"
+      ],
+      [
+        "200082 1036 R<T:Str>",
+        "R<T:Str>"
+      ],
+      [
+        "200082 1036 R<T:Ety>",
+        "R<T:Ety>"
+      ],
+      [
+        "200082 1036 R<T:Gid>",
+        "R<T:Gid>"
+      ],
+      [
+        "200082 1036 R<T:Flt>",
+        "R<T:Flt>"
+      ],
+      [
+        "200082 1036 R<T:Vec>",
+        "R<T:Vec>"
+      ],
+      [
+        "200082 1036 R<T:Bol>",
+        "R<T:Bol>"
+      ],
+      [
+        "200082 1036 R<T:L<Int>>",
+        "R<T:L<Int>>"
+      ],
+      [
+        "200082 1036 R<T:L<Str>>",
+        "R<T:L<Str>>"
+      ],
+      [
+        "200082 1036 R<T:L<Ety>>",
+        "R<T:L<Ety>>"
+      ],
+      [
+        "200082 1036 R<T:L<Gid>>",
+        "R<T:L<Gid>>"
+      ],
+      [
+        "200082 1036 R<T:L<Flt>>",
+        "R<T:L<Flt>>"
+      ],
+      [
+        "200082 1036 R<T:L<Vec>>",
+        "R<T:L<Vec>>"
+      ],
+      [
+        "200082 1036 R<T:L<Bol>>",
+        "R<T:L<Bol>>"
+      ],
+      [
+        "200082 1036 R<T:Cfg>",
+        "R<T:Cfg>"
+      ],
+      [
+        "200082 1036 R<T:Pfb>",
+        "R<T:Pfb>"
+      ],
+      [
+        "200082 1036 R<T:Fct>",
+        "R<T:Fct>"
+      ]
+    ]
+  },
+  {
+    "name": "Set the Aggro Value of the Specified Entity",
+    "id": 200083,
+    "inputs": [
+      "Ety",
+      "Ety",
+      "Int"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Modify the Aggro Value of the Specified Entity",
+    "id": 200084,
+    "inputs": [
+      "Ety",
+      "Ety",
+      "Int"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Modify the Aggro Value of the Specified Entity Proportionally",
+    "id": 200085,
+    "inputs": [
+      "Ety",
+      "Ety",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Transfer the Aggro Value of the Specified Entity Proportionally",
+    "id": 200086,
+    "inputs": [
+      "Ety",
+      "Ety",
+      "Ety",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Clear the Aggro List of the Specified Entity",
+    "id": 200087,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Remove Target Entity From Aggro List",
+    "id": 200088,
+    "inputs": [
+      "Ety",
+      "Ety"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Taunt Target",
+    "id": 200089,
+    "inputs": [
+      "Ety",
+      "Ety"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Get the Aggro Target of the Specified Entity",
+    "id": 200090,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get the Aggro List of the Specified Entity",
+    "id": 200091,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "L<Ety>"
+    ]
+  },
+  {
+    "name": "Query if Specified Entity is in Combat",
+    "id": 200092,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Bol"
+    ]
+  },
+  {
+    "name": "Query If Faction Is Hostile",
+    "id": 200093,
+    "inputs": [
+      "Fct",
+      "Fct"
+    ],
+    "outputs": [
+      "Bol"
+    ]
+  },
+  {
+    "name": "Sine Function",
+    "id": 200094,
+    "inputs": [
+      "E<20>",
+      "Flt"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "Cosine Function",
+    "id": 200095,
+    "inputs": [
+      "E<20>",
+      "Flt"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "Tangent Function",
+    "id": 200096,
+    "inputs": [
+      "E<20>",
+      "Flt"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "Arcsine Function",
+    "id": 200097,
+    "inputs": [
+      "E<20>",
+      "Flt"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "Arccosine Function",
+    "id": 200098,
+    "inputs": [
+      "E<20>",
+      "Flt"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "Arctangent Function",
+    "id": 200099,
+    "inputs": [
+      "E<20>",
+      "Flt"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "3D Vector Normalization",
+    "id": 200100,
+    "inputs": [
+      "Vec"
+    ],
+    "outputs": [
+      "Vec"
+    ]
+  },
+  {
+    "name": "Radians to Degrees",
+    "id": 200101,
+    "inputs": [
+      "E<20>",
+      "Flt"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "Degrees to Radians",
+    "id": 200102,
+    "inputs": [
+      "E<20>",
+      "Flt"
+    ],
+    "outputs": [
+      "Flt"
+    ]
+  },
+  {
+    "name": "Query If Entity Is on the Field",
+    "id": 200103,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Bol"
+    ]
+  },
+  {
+    "name": "Node Graph Ends",
+    "id": 200104,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "Player Turns to Face Set Direction",
+    "id": 200105,
+    "inputs": [
+      "Vec"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Reset Skill Target",
+    "id": 200106,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "Get All Entities Within the Collision Trigger",
+    "id": 200107,
+    "inputs": [
+      "Ety",
+      "Int"
+    ],
+    "outputs": [
+      "L<Ety>"
+    ]
+  },
+  {
+    "name": "Force Exit Aiming State",
+    "id": 200108,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "Get Ray Detection Result",
+    "id": 200109,
+    "inputs": [
+      "Ety",
+      "Vec",
+      "Vec",
+      "Flt",
+      "E<39>",
+      "L<E<13>>",
+      "L<E<30>>"
+    ],
+    "outputs": [
+      "Vec",
+      "Ety"
+    ]
+  },
+  {
+    "name": "Get Ray Filter Type List",
+    "id": 200110,
+    "inputs": [
+      "Int",
+      "E<30>",
+      "E<30>",
+      "E<30>",
+      "E<30>",
+      "E<30>",
+      "E<30>",
+      "E<30>",
+      "E<30>",
+      "E<30>",
+      "E<30>"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Trigger Spherical Hitbox at Specific Location",
+    "id": 200111,
+    "inputs": [
+      "E<39>",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "L<E<13>>",
+      "E<1042>",
+      "Int",
+      "E<3>",
+      "L<Vec>",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "E<30>",
+      "L<Str>",
+      "E<12>",
+      "Flt",
+      "E<26>",
+      "E<27>",
+      "Flt",
+      "Bol",
+      "Bol",
+      "Int",
+      "Int",
+      "E<31>",
+      "Bol",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "Int",
+      "E<35>",
+      "E<36>",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Trigger Rectangular Hitbox at Specific Location",
+    "id": 200112,
+    "inputs": [
+      "E<24>",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "L<E<13>>",
+      "E<1042>",
+      "Int",
+      "E<3>",
+      "L<Vec>",
+      "Bol",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "E<30>",
+      "L<Str>",
+      "E<12>",
+      "Flt",
+      "E<26>",
+      "E<27>",
+      "Flt",
+      "Bol",
+      "Bol",
+      "Int",
+      "Int",
+      "E<31>",
+      "Bol",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "Int",
+      "E<35>",
+      "E<36>",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Trigger Sector Hitbox at Specific Location",
+    "id": 200113,
+    "inputs": [
+      "E<39>",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "L<E<13>>",
+      "E<1042>",
+      "Int",
+      "E<3>",
+      "L<Vec>",
+      "Bol",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "E<33>",
+      "E<30>",
+      "L<Str>",
+      "E<12>",
+      "Flt",
+      "E<26>",
+      "E<27>",
+      "Flt",
+      "Bol",
+      "Bol",
+      "Int",
+      "Int",
+      "E<31>",
+      "Bol",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "Int",
+      "E<35>",
+      "E<36>",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Trigger Spherical Hitbox at Specified Attachment Point",
+    "id": 200114,
+    "inputs": [
+      "E<24>",
+      "Str",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "L<E<13>>",
+      "E<1042>",
+      "Int",
+      "E<3>",
+      "L<Vec>",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "E<30>",
+      "L<Str>",
+      "E<12>",
+      "Flt",
+      "E<26>",
+      "E<27>",
+      "Flt",
+      "Bol",
+      "Bol",
+      "Int",
+      "Int",
+      "E<31>",
+      "Bol",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "Int",
+      "E<35>",
+      "E<36>",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Trigger Rectangular Hitbox at Specified Attachment Point",
+    "id": 200115,
+    "inputs": [
+      "E<39>",
+      "Str",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "L<E<13>>",
+      "E<1042>",
+      "Int",
+      "E<3>",
+      "L<Vec>",
+      "Bol",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "E<30>",
+      "L<Str>",
+      "E<12>",
+      "Flt",
+      "E<26>",
+      "E<27>",
+      "Flt",
+      "Bol",
+      "Bol",
+      "Int",
+      "Int",
+      "E<31>",
+      "Bol",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "Int",
+      "E<35>",
+      "E<36>",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Trigger Sector Hitbox at Specified Attachment Point",
+    "id": 200116,
+    "inputs": [
+      "E<39>",
+      "Str",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "L<E<13>>",
+      "E<1042>",
+      "Int",
+      "E<3>",
+      "L<Vec>",
+      "Bol",
+      "Flt",
+      "Flt",
+      "Flt",
+      "Flt",
+      "E<33>",
+      "E<30>",
+      "L<Str>",
+      "E<12>",
+      "Flt",
+      "E<26>",
+      "E<27>",
+      "Flt",
+      "Bol",
+      "Bol",
+      "Int",
+      "Int",
+      "E<31>",
+      "Bol",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Str",
+      "Bol",
+      "Bol",
+      "Vec",
+      "Vec",
+      "Flt",
+      "Flt",
+      "Int",
+      "E<35>",
+      "E<36>",
+      "Flt",
+      "Flt"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "(Test) Send Client Signal",
+    "id": 200117,
+    "inputs": [
+      "Str",
+      "Ety",
+      "L<Ety>",
+      "Int",
+      "L<Int>",
+      "Bol",
+      "L<Bol>",
+      "Flt",
+      "L<Flt>",
+      "Str",
+      "L<Str>",
+      "Vec",
+      "L<Vec>",
+      "Gid",
+      "L<Gid>",
+      "Fct",
+      "Cfg",
+      "L<Cfg>",
+      "Pfb",
+      "L<Pfb>"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Get Entity Currently Scanned by Scan Component",
+    "id": 200118,
+    "inputs": [],
+    "outputs": [
+      "Ety",
+      "Cfg"
+    ]
+  },
+  {
+    "name": "Get All Valid Entities That Are Scannable by Scan Component",
+    "id": 200119,
+    "inputs": [],
+    "outputs": [
+      "L<Ety>"
+    ]
+  },
+  {
+    "name": "Get Entity's Scan Status",
+    "id": 200120,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Get Entity's Current Active Scan Tags",
+    "id": 200121,
+    "inputs": [
+      "Ety"
+    ],
+    "outputs": [
+      "Cfg"
+    ]
+  },
+  {
+    "name": "Node Graph End (Integer)",
+    "id": 200122,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "Get Player Client Input Device Type",
+    "id": 200123,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "Send Signal to Server Node Graph",
+    "id": 200124,
+    "inputs": [],
+    "outputs": []
+  }
+]

@@ -363,6 +363,7 @@ export const ENUM_VALUE = {
   HitLevel_KnockbackHit: 3903,
   HitLevel_Launch: 3904,
   FilterReturnType_ReturnBoolean: 1000010,
+  FilterReturnType_ReturnDefault: 1000011,
   FilterReturnType_ReturnInteger: 10000011,
   TargetTypeForCameraOrientationNode_DontFindTarget: 2000,    // Same to what 'TargetType' is in server
   TargetTypeForCameraOrientationNode_AlliedFaction: 2001,   // Same to what 'TargetType' is in server
