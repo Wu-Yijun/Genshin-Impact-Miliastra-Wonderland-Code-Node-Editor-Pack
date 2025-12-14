@@ -345,7 +345,8 @@
     "items": {
       "2601": "Only On-Hit Hurtbox",
       "2602": "Only On-Hit Scene",
-      "2604": "Hit All"
+      "2604": "Hit All",
+      "2605": "Object Self-Collision"
     }
   },
   {

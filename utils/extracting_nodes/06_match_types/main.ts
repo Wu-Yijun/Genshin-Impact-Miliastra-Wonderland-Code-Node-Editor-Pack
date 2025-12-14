@@ -1,15 +1,19 @@
 import type { NodePin } from "../../protobuf/gia.proto";
-import { collection, dir, gia, save } from "../util.ts";
+import { cls, collection, dir, gia, save } from "../util.ts";
 
 import records_raw from "../dist/node_records_no_type.json" with {type: "json"};
-import records_in from "../dist/node_records_no_outs.json" with {type: "json"};
+import records_in from "./node_records_inputs.json" with {type: "json"};
 import type_name from "../dist/type_ids.json" with { type: 'json' };
-import { assert, assertEq, assertEqs, assertNotEq } from "../../utils.ts";
+import { assert, assertEq, assertEqs, assertNotEq, assertNotEqs } from "../../utils.ts";
 
 import { ENUM_ID_CLIENT, ENUM_VALUE } from "../../node_data/index.ts";
 
 const ENUM_VALUE_ = new Map(Object.entries(ENUM_ID_CLIENT).map(([k, v]) => [k.replaceAll("_", "").toLowerCase(), v]));
-const ENUM_VALUE_TO_ID = new Map<number, number>(Object.entries(ENUM_VALUE).map(([k, v]) => [v, ENUM_VALUE_.get(k.split("_")[0].toLowerCase())!]));
+const ENUM_VALUE_TO_ID = new Map<number, number>(
+  Object.entries(ENUM_VALUE)
+    .map(([k, v]) => [v, ENUM_VALUE_.get(k.split("_")[0].toLowerCase())!] as [number, number])
+    .filter(([k, v]) => v !== undefined)
+);
 ENUM_VALUE_TO_ID.set(0, -1);
 
 
@@ -225,17 +229,188 @@ function read_all_links() {
   console.log("全部 37 个 Execution Node 均含有一个 kind=5 的引脚, 不知道是干啥的, 感觉是个中间体, 没啥有效信息. 且200124有两个 kind=5 的引脚.");
   save("node_pins_no_links.json", state.restricted_pin);
   save("node_pins_default_vals.json", state.default_val);
-  save("node_records_no_outs.json", records_raw);
+  save("../06_match_types/node_records_inputs.json", records_raw);
   // save("all_link.gia", graph, true);
   console.log("all_link saved");
 }
 
+// 生成所有包含枚举输入的节点. 手动添加枚举, 方便获取枚举类型
 function create_all_enums() {
-  const rec = records_in.filter(x => x.inputs.includes("E<-1>"));
-  dir(rec);
-
+  const rec = records_in.filter(x => x.inputs.some(y => y === "E<-1>" || y === "L<E<0>>"));
+  // dir(rec.map(x => x.id));
+  // [200040,200043,200044,200050,200051,200059,200060,200062,200109,200110,200111,200112,200113,200114,200115,200116]
+  const graph = gia("skill");
+  const nodes = graph.graph.graph?.inner.graph.nodes!;
+  const info = collection().find(x => x.name === "skill")!;
+  for (let i = 0; i < rec.length; i++) {
+    nodes.push({
+      nodeIndex: i + 1,
+      genericId: {
+        class: info.node_class,
+        type: info.node_type,
+        kind: info.node_kind,
+        nodeId: rec[i].id
+      },
+      pins: [],
+      x: i * 300,
+      y: 0,
+      usingStruct: []
+    })
+  }
+  dir(rec.map((x, i) => ({
+    index: i + 1,
+    id: x.id,
+    name: x.name,
+    inputs: x.inputs.map((y, j) => (j + ":" + y)).filter(y => y.endsWith("E<-1>") || y.endsWith("L<E<0>>"))
+  })));
+  save("all_enums.gia", graph, true);
+  console.log("all_enums saved");
 }
 
+function read_all_enums() {
+  const rec = records_in.filter(x => x.inputs.some(y => y === "E<-1>" || y === "L<E<0>>"));
+  // dir(rec.map(x => x.id));
+  // [200040,200043,200044,200050,200051,200059,200060,200062,200109,200110,200111,200112,200113,200114,200115,200116]
+  const graph = gia("all_enums.gia", true, true);
+  const nodes = graph.graph.graph?.inner.graph.nodes!;
+  for (let i = 0; i < rec.length; i++) {
+    assertEq(nodes[i].nodeIndex, i + 1);
+    assertEq(nodes[i].genericId.nodeId, rec[i].id);
+    const pins = nodes[i].pins;
+    rec[i].inputs.forEach((t, index) => {
+      if (t !== 'E<-1>') return;
+      const type = pins.find(p => p.i1.index === index)!.value.bEnum!.val;
+      const tp = ENUM_VALUE_TO_ID.get(type);
+      assertNotEqs(tp, undefined);
+      if (tp !== -1) {
+        rec[i].inputs[index] = `E<${tp}>`;
+        return;
+      }
+      if (rec[i].name === "Get Entity Type List" || rec[i].name === "Get Ray Filter Type List") {
+        rec[i].inputs[index] = rec[i].inputs[index - 1];
+      }
+    })
+  }
+  rec.forEach(r => r.inputs.forEach((t, index) => {
+    if (t === "E<-1>")
+      r.inputs[index] = r.inputs[index - 1];
+  }));
+  const setType = (name: string, pos: number, type: string) => {
+    const r = rec.find(r => r.name === name)!.inputs;
+    assertEq(r[pos], "L<E<0>>");
+    r[pos] = type;
+  }
+  const entity_type = "L<E<13>>";
+  const attack_layer_config = "L<E<30>>";
+  setType("Trigger Hitbox at Specific Location", 5, entity_type);
+  setType("Trigger Hitbox at Specified Attachment Point", 6, entity_type);
+  setType("Get Ray Detection Result", 5, entity_type);
+  setType("Get Ray Detection Result", 6, attack_layer_config);
+  setType("Trigger Spherical Hitbox at Specific Location", 5, entity_type);
+  setType("Trigger Rectangular Hitbox at Specific Location", 5, entity_type);
+  setType("Trigger Sector Hitbox at Specific Location", 5, entity_type);
+  setType("Trigger Spherical Hitbox at Specified Attachment Point", 6, entity_type);
+  setType("Trigger Rectangular Hitbox at Specified Attachment Point", 6, entity_type);
+  setType("Trigger Sector Hitbox at Specified Attachment Point", 6, entity_type);
+  dir({
+    "Should be empty": rec.map((x, i) => ({
+      index: i + 1,
+      id: x.id,
+      name: x.name,
+      inputs: x.inputs.map((y, j) => (j + ":" + y)).filter(y => y.endsWith("E<-1>") || y.endsWith("L<E<0>>"))
+    })).filter(x => x.inputs.length > 0)
+  });
+  save("node_records_inputs.json", records_in);
+  console.log("node_records_inputs saved");
+}
+
+// 验证枚举类型是一致的
+import records_2 from "../dist/node_records_inputs.json" with { type: "json" };
+function create_all_nodes_enums() {
+  const ENUM_ID_TO_VALUE = new Map([...ENUM_VALUE_TO_ID.entries()].map(([k, v]) => [v, k]));
+  const graph = gia("skill");
+  const nodes = graph.graph.graph?.inner.graph.nodes!;
+  const info = collection().find(x => x.name === "skill")!;
+  for (let i = 0; i < records_2.length; i++) {
+    const pins: NodePin[] = [];
+    records_2[i].inputs.forEach((t, j) => {
+      const type = records_2[i].inputs[j];
+      if (type.startsWith("E<")) {
+        const val = ENUM_ID_TO_VALUE.get(parseInt(type.slice(2, -1))!);
+        assertNotEq(val, undefined);
+        pins.push({
+          i1: {
+            kind: 3,
+            index: j,
+          },
+          i2: {
+            kind: 3,
+            index: 0,
+          },
+          value: {
+            class: 6,
+            alreadySetVal: true,
+            itemType: {
+              classBase: 1,
+              type_client: {
+                type: 13
+              }
+            },
+            bEnum: {
+              val
+            },
+          },
+          type: 13,
+          connects: []
+        })
+      }
+    });
+    nodes.push({
+      nodeIndex: i + 1,
+      genericId: {
+        class: info.node_class,
+        type: info.node_type,
+        kind: info.node_kind,
+        nodeId: records_2[i].id
+      },
+      pins,
+      x: (i % 10) * 500,
+      y: i / 10 * 500,
+      usingStruct: []
+    });
+  }
+  save("all_nodes_enums.gia", graph, true);
+  console.log("all_nodes saved");
+}
+
+function read_all_nodes_enums() {
+  const graph = gia("all_nodes_enums.gia", true, true);
+  const nodes = graph.graph.graph?.inner.graph.nodes!;
+  for (let i = 0, j = 0; i < nodes.length; i++, j++) {
+    const pins = nodes[i].pins;
+    while (nodes[i].nodeIndex > j + 1) { j++; }
+    assertEq(records_2[j].id, nodes[i].genericId.nodeId);
+    records_2[j].inputs.forEach((t, index) => {
+      if (!t.startsWith('E<')) return;
+      const val = parseInt(t.slice(2, -1));
+      const type = pins.find(p => p.i1.index === index)!.value.bEnum?.val!;
+      const val_type = ENUM_VALUE_TO_ID.get(type);
+      assertEqs(val_type, val, undefined);
+      console.log(records_2[j].id, index, val, val_type, type);
+    })
+  }
+  console.log("Verified!")
+}
+
+cls();
+
 // generate_all_links();
-read_all_links();
+// read_all_links();
+
+// create_all_enums();
+// read_all_enums();
+
+// create_all_nodes_enums();
+read_all_nodes_enums();
+
 

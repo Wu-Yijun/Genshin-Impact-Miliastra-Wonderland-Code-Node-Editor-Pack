@@ -21,19 +21,27 @@ export function assert(cond: boolean, msg?: string): asserts cond {
 }
 export function assertEq<T>(target: unknown, expect: T): asserts target is T {
   if (target === expect) return;
-  console.error(target, "!=", expect);
+  console.error("[Assertion]", target, "!==", expect);
   throw new Error("Assertion failed");
 }
 export function assertEqs<const T extends readonly any[]>(target: unknown, ...expects: T): asserts target is T[number] {
   if (expects.some((v) => v === target)) return;
-  console.error(target, "is not in", expects);
+  console.error("[Assertion]", target, "is not in", expects);
   throw new Error("Assertion failed");
 }
 export function assertNotEq<T, Excluded>(target: T | Excluded, exclude: Excluded): asserts target is Exclude<T | Excluded, Excluded> {
-  if (target === exclude) { debugger; throw new Error(`Assert Unequal Fail: ${target} === ${exclude}`); }
+  if (target === exclude) {
+    debugger;
+    console.error("[Assertion]", target, "===", exclude);
+    throw new Error(`Assert Unequal Failed`);
+  }
 }
 export function assertNotEqs<T, const Excluded extends readonly any[]>(target: T | Excluded[number], ...excludes: Excluded): asserts target is Exclude<T | Excluded[number], Excluded[number]> {
-  if (excludes.some((v) => v === target)) { debugger; throw new Error(`Assert Unequal Fail: ${target} is in ${excludes}`); }
+  if (excludes.some((v) => v === target)) {
+    debugger;
+    console.error("[Assertion]", target, "is in", excludes);
+    throw new Error(`Assert Unequal Failed`);
+  }
 }
 export function empty(v: any): v is null | undefined {
   return v === undefined || v === null;
