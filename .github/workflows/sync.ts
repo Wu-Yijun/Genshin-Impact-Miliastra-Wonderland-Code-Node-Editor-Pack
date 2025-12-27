@@ -77,6 +77,23 @@ function getDevCommitMessage(): string {
   }
 }
 
+function mergeTranslates() {
+  const MAIN_PATH = path.join(process.cwd(), "main");
+  const TARGET_PATH = path.join(process.cwd(), "translate");
+  // 3. 将生成的翻译结果 (TARGET_PATH) 覆盖回主目录 (MAIN_PATH)
+  if (fse.pathExistsSync(TARGET_PATH)) {
+
+    console.log("📂 Syncing translations back to main folder...");
+
+    fse.copySync(TARGET_PATH, MAIN_PATH, {
+      overwrite: true,
+      errorOnExist: false // 确保如果目标目录已存在不会报错
+    });
+
+    console.log("✅ Sync complete: TARGET_PATH copied to MAIN_PATH");
+  }
+}
+
 function main() {
   const config = loadConfig();
 
@@ -86,6 +103,8 @@ function main() {
     console.log("⚠️ Sync is disabled via 'notSync' flag in sync-list.json. Exiting.");
     return;
   }
+
+  mergeTranslates();
 
   let commitMessage =
     config.commitMessage && config.commitMessage.trim() !== ""

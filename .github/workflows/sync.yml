@@ -25,14 +25,17 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 24
-      - name: Install dependency
-        run: npm install fast-glob fs-extra
 
       - uses: actions/checkout@v4
         with:
           ref: main
           path: main
           fetch-depth: 1
+
+      - name: Run tests
+        uses: Wu-Yijun/Genshin-Impact-Miliastra-Wonderland-Code-Node-Editor-Pack/.github/actions/translate@dev
+        with:
+          API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Sync and commit files
         run: node dev/.github/workflows/sync.ts main dev dev/sync-list.json
@@ -42,7 +45,7 @@ jobs:
           
       - name: Run tests
         uses: Wu-Yijun/Genshin-Impact-Miliastra-Wonderland-Code-Node-Editor-Pack/.github/actions/CI@dev
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

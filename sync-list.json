@@ -1,6 +1,6 @@
 {
   "commitMessage": "完成了全部的客户端与服务器节点的数据整理, 并更新到 /utils/node_data 中",
-  "notSync": false,
+  "notSync": true,
   "include": [
     "*",
     "docs/**",

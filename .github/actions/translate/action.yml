@@ -1,0 +1,9 @@
+name: 'Translate Markdowns'
+description: 'Translate all markdown files inside this repo'
+inputs:
+  API_KEY:
+    required: true
+    description: Gemini API Key used to call gemini-2.5-flash to translate the doc.
+runs:
+  using: "node24"
+  main: "index.ts"
