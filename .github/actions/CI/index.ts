@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { readdirSync, cpSync, existsSync, mkdirSync } from "fs";
+import { readdirSync, cpSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import path from "path";
 
 const SRC = import.meta.dirname;
@@ -67,5 +67,6 @@ if (errors.length > 0) {
 // }
 
 if (failCount > 0) {
+  writeFileSync(path.join(PATH, "dist", "failed_list.txt"), errors.map(e => e.split(":")[0]).join("\n"));
   process.exit(1);
 }

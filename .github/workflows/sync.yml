@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 1
           
       - name: Setup Node.js 24
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 24
       - name: Install Dependency
@@ -51,7 +51,17 @@ jobs:
         continue-on-error: true
 
       - name: Upload test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           path: main/dist
           name: test_output
+      
+      - name: Panic on Test Errors
+        run: |
+          # Check if main/dist/failed_list.txt is empty
+          if [ -s main/dist/failed_list.txt ]; then
+            cat main/dist/failed_list.txt
+            echo "Abort Workflow to Send Notification"
+            exit 1
+          fi
+        # continue-on-error: true
