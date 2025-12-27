@@ -2,6 +2,14 @@ import path from "path";
 import fg from "fast-glob";
 import fse from "fs-extra";
 import { GoogleGenAI } from "@google/genai";
+import { readFileSync } from "fs";
+import { exit } from "process";
+
+const notSync = JSON.parse(readFileSync(path.join(process.cwd(), "sync-list.json"), "utf-8")).notSync;
+if (notSync === true) {
+  console.log("Sync is disabled, skip translation.");
+  exit(0);
+}
 
 const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
@@ -15,9 +23,6 @@ const ai = new GoogleGenAI({ apiKey: apiKey });
 const DEV_PATH = path.join(process.cwd(), "dev");
 const MAIN_PATH = path.join(process.cwd(), "main");
 const TARGET_PATH = path.join(process.cwd(), "translate");
-
-// ====================
-
 
 
 const SRC_LAN = "zh";
@@ -39,6 +44,7 @@ const globs = [
   "!node_modules/**",
   "!.github/**",
   "Readme.md",
+  "utils/**/readme.md",
   // "**/readme.md",
 ];
 
