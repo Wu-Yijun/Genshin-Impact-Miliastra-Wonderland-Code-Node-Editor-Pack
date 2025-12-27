@@ -1,5 +1,5 @@
 {
-  "commitMessage": "添加翻译: 自动同步更新的文档",
+  "commitMessage": "为所有文档添加翻译(自动同步), 目前仅支持英文.",
   "notSync": false,
   "include": [
     "*",

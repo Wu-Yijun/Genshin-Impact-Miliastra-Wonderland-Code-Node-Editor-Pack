@@ -43,9 +43,14 @@ const Language: ({ [key in typeof DST_LAN[number]]: string } & { [key: string]: 
 const globs = [
   "!node_modules/**",
   "!.github/**",
+  "!ref/**",
+  "!test.CI/**",
   "Readme.md",
-  "utils/**/readme.md",
-  // "**/readme.md",
+  // "utils/**/readme.md",
+  "**/readme.md",
+
+
+  "docs/**/*.md",
 ];
 
 // Helper: Delay to prevent hitting API rate limits immediately
@@ -180,7 +185,7 @@ async function main() {
     console.log(`Translating: ${file} -> ${targetFileName} (${lang})`);
 
     try {
-      // 如果是英语，批量将相对路径的 .md 替换为 .lang.md
+      // 批量将相对路径的 .md 替换为 .lang.md
       const contentWithPath = content.replace(
         /(\[[^\]]+\]\(\.\/[^)]+)\.md(\))/g,
         `$1.${lang}.md$2`
