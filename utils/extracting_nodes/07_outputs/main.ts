@@ -165,14 +165,34 @@ function add_type_manually() {
   setType("Node Graph End (Integer)", 0, "Bol", true);
   setType("Node Graph End (Integer)", 1, "E<38>", true); // 10000011
 
-  save("node_records.json", record2);
+  save("../07_outputs/node_records_outputs.json", record2);
 }
 
+function add_enum_cid_format() {
+  record2.forEach(rec => {
+    switch (rec.name) {
+      case "Enumeration Match":
+      case "Data Type Conversion":
+      case "Assembly List":
+        rec.reflectMap!.forEach(x => x[0] = rec.id + " " + x[0]);
+        break;
+    }
+    rec.reflectMap?.forEach(([id, type]) => {
+      const [gid, cid, tp, undef] = id.split(" ");
+      assertEq(gid, rec.id.toString());
+      assertEq(tp, type);
+      assertEq(undef, undefined);
+    })
+  })
+  save("node_records.json", record2);
+}
 
 // create_outputs_links();
 // read_output_links();
 
 // create_outputs_special();
 // create_node_graph_end();
-add_type_manually();
+// add_type_manually();
 // 46, 51, 110, 120, 123
+
+add_enum_cid_format();

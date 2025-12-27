@@ -2,7 +2,10 @@
   {
     "name": "Node Graph End (Boolean)",
     "id": 200000,
-    "inputs": [],
+    "inputs": [
+      "Bol",
+      "E<38>"
+    ],
     "outputs": []
   },
   {
@@ -1039,7 +1042,9 @@
     "inputs": [
       "Ety"
     ],
-    "outputs": []
+    "outputs": [
+      "E<13>"
+    ]
   },
   {
     "name": "Get Camera Orientation",
@@ -1145,7 +1150,9 @@
       "E<13>",
       "E<13>"
     ],
-    "outputs": []
+    "outputs": [
+      "L<E<30>>"
+    ]
   },
   {
     "name": "Trigger Hitbox at Specific Location",
@@ -1925,7 +1932,10 @@
   {
     "name": "Node Graph Ends",
     "id": 200104,
-    "inputs": [],
+    "inputs": [
+      "Int",
+      "E<38>"
+    ],
     "outputs": []
   },
   {
@@ -1992,7 +2002,9 @@
       "E<30>",
       "E<30>"
     ],
-    "outputs": []
+    "outputs": [
+      "L<E<13>>"
+    ]
   },
   {
     "name": "Trigger Spherical Hitbox at Specific Location",
@@ -2371,7 +2383,9 @@
     "inputs": [
       "Ety"
     ],
-    "outputs": []
+    "outputs": [
+      "E<40>"
+    ]
   },
   {
     "name": "Get Entity's Current Active Scan Tags",
@@ -2386,14 +2400,19 @@
   {
     "name": "Node Graph End (Integer)",
     "id": 200122,
-    "inputs": [],
+    "inputs": [
+      "Bol",
+      "E<38>"
+    ],
     "outputs": []
   },
   {
     "name": "Get Player Client Input Device Type",
     "id": 200123,
     "inputs": [],
-    "outputs": []
+    "outputs": [
+      "E<41>"
+    ]
   },
   {
     "name": "Send Signal to Server Node Graph",
