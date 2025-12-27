@@ -1,8 +1,8 @@
 import type { ClientVarType, NodeConnection, GraphNode, NodePin } from "../../protobuf/gia.proto.ts";
 import { VarBase_Class, VarBase_ItemType_ClassBase } from "../../protobuf/gia.proto.ts";
-import { collection, dir, gia, save } from "../util.ts";
+import { collection, dir, gia, read_json, save } from "../util.ts";
 import { assert, assertDeepEq, assertEq, exclude_keys } from "../../utils.ts";
-import { get_id_client, is_reflect, parse, reflects } from "../../gia_gen/nodes.ts";
+import { get_id_client, is_reflect, parse, stringify, reflects, get_type } from "../../gia_gen/nodes.ts";
 
 import RECORDS from "../dist/node_records.json" with {type: "json"};
 import ioc_list from "./ioc.json" with {type: "json"};
@@ -106,13 +106,18 @@ function verify_ioc_matches() {
       assertEq(ref[1], ioc_entry.ioc[j].type);
       const node = nodes[node_index++];
       assertEq(node.nodeIndex, index++);
-      if (rec.name === "Enumeration Match" && j === 0) continue;
+      if (rec.name === "Enumeration Match" && j === 0) {
+        (ioc_entry.ioc[j].ins[0] as any).type = "E<-1>";
+        (ioc_entry.ioc[j].ins[1] as any).type = "E<-1>";
+        continue;
+      }
       assertEq(node.concreteId?.nodeId, parseInt(ref[0].split(" ")[1])); // 验证 cid 是存在且对应的
       ioc_entry.ioc[j].ins.forEach((ioc, k) => {
         const pin = node.pins.find(p => p.i1.kind === 3 && p.i1.index === ioc.index);
         const type = reflects(ins[k][1], ref[1]);
         assertEq(pin?.type, get_id_client(type)); // 验证 pin 的类型是否正确
         assertEq(pin?.value.bConcreteValue?.indexOfConcrete, ioc.ioc); // 验证 pin 的类型是否正确
+        (ioc as any).type = stringify(type);  // 添加字段
       })
       const ioc_out = ioc_entry.ioc[j].outs;
       ioc_out.forEach((ioc, k) => {
@@ -120,13 +125,88 @@ function verify_ioc_matches() {
         const type = reflects(outs[k][1], ref[1]);
         assertEq(pin?.type, get_id_client(type)); // 验证 pin 的类型是否正确
         assertEq(pin?.value.bConcreteValue?.indexOfConcrete, ioc.ioc); // 验证 pin 的类型是否正确
+        (ioc as any).type = stringify(type); // 添加字段
       })
-
     }
   });
-
+  save("ioc.json", ioc_list);
   console.log("verified", nodes.length, "nodes");
 }
 
+
+import IOC from "../dist/ioc.json" with {type: "json"};
+import { CONCRETE_MAP } from "../../node_data/index.ts";
+function generate_CONCRETE_MAP() {
+  function transpose<T>(arr: T[][]): T[][] {
+    return arr[0].map((_, i) => arr.map(row => row[i]));
+  }
+  type Item = {
+    name: string,
+    type: 3 | 4,
+    index: number,
+  }[];
+  const ioc = new Map<string, Item>();
+  IOC.forEach(rec => {
+    if (rec.name === "Enumeration Match") {
+      return;
+    }
+    transpose(rec.ioc.map(x => x.ins)).forEach((arr, i) => {
+      const tmp: string[] = [];
+      arr.forEach(x => tmp[x.ioc] = x.type);
+      const data = tmp.join(" ");
+
+      if (!ioc.has(data)) ioc.set(data, []);
+      ioc.get(data)!.push({
+        name: rec.name,
+        type: 3,
+        index: i,
+      })
+    });
+    transpose(rec.ioc.map(x => x.outs)).forEach((arr, i) => {
+      const tmp: string[] = [];
+      arr.forEach(x => tmp[x.ioc] = x.type);
+      const data = tmp.join(" ");
+
+      if (!ioc.has(data)) ioc.set(data, []);
+      ioc.get(data)!.push({
+        name: rec.name,
+        type: 4,
+        index: i,
+      })
+    })
+  })
+  // 合并同类项
+  const combined: [string, Item][] = [];
+  [...ioc.entries()].sort((a, b) => b[0].length - a[0].length).forEach((r) => {
+    const t = combined.find(x => x[0].startsWith(r[0]));
+    if (t !== undefined) {
+      t[1].push(...r[1]);
+    } else {
+      combined.push(r);
+    }
+  })
+  // console.log([...ioc.keys()].sort((a, b) => b.length - a.length));
+  // console.log(combined.map(x => x[0]));
+  const converted = combined.map(x => [
+    x[0].split(" ").map(y => get_id_client(parse(y))),
+    x[1].map(y => `${RECORDS.find(r => r.name === y.name)!.id}:${y.type}:${y.index}`)
+  ]);
+  // console.log(converted.map(x => x[0]));
+  // dir(converted);
+  const server_index = 30;
+  const ids = converted.map(x => x[0]);
+  dir(ids);
+  const servers = converted.map((x, i) => x[1].map(y => [y, i + server_index])).flat();
+  console.log(servers);
+
+  // // const SERVER_KEYS = CONCRETE_MAP.maps.map(x => x.map(i => stringify(get_type(i))).join(" "));
+  // const SERVER_KEYS = CONCRETE_MAP.maps.map(x => x.join(" "));
+
+  // console.log(SERVER_KEYS);
+
+}
+
 // generateAllRefs();
-verify_ioc_matches();
+// verify_ioc_matches();
+
+generate_CONCRETE_MAP();
