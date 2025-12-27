@@ -134,7 +134,9 @@ async function main() {
       const translationExists = fse.existsSync(mainLangFilePath);
       if (translationExists) {
         // copy the translation from main to translate (as backup)
-        fse.copyFileSync(mainLangFilePath, path.join(TARGET_PATH, langFileName));
+        const dest = path.join(TARGET_PATH, langFileName);
+        fse.ensureDirSync(path.dirname(dest));
+        fse.copyFileSync(mainLangFilePath, dest);
       }
 
       // SKIP LOGIC:
