@@ -26,3 +26,5 @@ export {
   TYPES_LIST,
   NODE_ID,
 };
+
+export { DATA } from "./data.ts";

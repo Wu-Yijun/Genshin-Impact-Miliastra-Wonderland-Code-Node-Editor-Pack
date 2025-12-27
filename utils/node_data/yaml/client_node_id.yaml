@@ -96,7 +96,7 @@ Query:
       "200119": 1. Get All Valid Entities That Are Scannable by Scan Component
       "200120": 4. Get Entity's Scan Status
       "200121": 3. Get Entity's Current Active Scan Tags
-Operation:
+Arithmetic:
   - I. General:
       "200005": 1. Enumeration Match
       "200006": 2. Equal

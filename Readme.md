@@ -170,6 +170,7 @@ const compOp = ENUM_VALUE.ComparisonOperators_EqualTo;
 │   ├── node_data/              # 节点静态数据
 │   │   ├── node_id.ts          #     节点 ID 映射
 │   │   ├── enum_id.ts          #     枚举定义
+│   │   ├── data.ts             #     全部数据信息
 │   │   ├── helpers.ts          #     查询辅助函数
 │   │   └── ......              #     其他静态定义
 │   ├── protobuf/               # Protobuf 工具

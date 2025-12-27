@@ -1,6 +1,6 @@
 Version: 2.0.0
 Author: Aluria
-Date: Sat Dec 27 2025 14:55:30 GMT+0800 (中国标准时间)
+Date: Sat Dec 27 2025 15:15:37 GMT+0800 (中国标准时间)
 Description: This document contains all necessary information for this project, including types, nodes, and enums.
 Schema: |
   // ====== Begin of Document Schema ====== //
@@ -48,7 +48,7 @@ Schema: |
   }
   interface EnumItem extends Entry {
   }
-  const NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Hidden"] as const;
+  const NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Others", "Hidden"] as const;
   const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
   type Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages
   // ====== End of Document Schema ====== //
@@ -41869,7 +41869,7 @@ NodesList:
     ID: 200001
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Bol
@@ -41883,7 +41883,7 @@ NodesList:
     ID: 200002
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Bol
@@ -41897,7 +41897,7 @@ NodesList:
     ID: 200003
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Bol
@@ -41910,7 +41910,7 @@ NodesList:
     ID: 200004
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Bol
@@ -41924,7 +41924,7 @@ NodesList:
     ID: 200005
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: I. General
     Inputs:
       - R<T>
@@ -42239,7 +42239,7 @@ NodesList:
     ID: 200006
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: I. General
     Inputs:
       - E<0>
@@ -42334,7 +42334,7 @@ NodesList:
     ID: 200007
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<0>
@@ -42365,7 +42365,7 @@ NodesList:
     ID: 200008
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<0>
@@ -42396,7 +42396,7 @@ NodesList:
     ID: 200009
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<0>
@@ -42427,7 +42427,7 @@ NodesList:
     ID: 200010
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<0>
@@ -42458,7 +42458,7 @@ NodesList:
     ID: 200011
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<2>
@@ -42489,7 +42489,7 @@ NodesList:
     ID: 200012
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<2>
@@ -42520,7 +42520,7 @@ NodesList:
     ID: 200013
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<2>
@@ -42551,7 +42551,7 @@ NodesList:
     ID: 200014
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<2>
@@ -42582,7 +42582,7 @@ NodesList:
     ID: 200015
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - R<T>
@@ -43013,7 +43013,7 @@ NodesList:
     ID: 200022
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: I. General
     Inputs:
       - E<7>
@@ -43221,7 +43221,7 @@ NodesList:
     ID: 200032
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - R<T>
@@ -43464,7 +43464,7 @@ NodesList:
     ID: 200049
     Type: Generic
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: III. Lists
     Inputs:
       - Int
@@ -43897,7 +43897,7 @@ NodesList:
     ID: 200063
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -43911,7 +43911,7 @@ NodesList:
     ID: 200064
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -43925,7 +43925,7 @@ NodesList:
     ID: 200065
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -43940,7 +43940,7 @@ NodesList:
     ID: 200066
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Flt
@@ -43954,7 +43954,7 @@ NodesList:
     ID: 200067
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -43968,7 +43968,7 @@ NodesList:
     ID: 200068
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -43982,7 +43982,7 @@ NodesList:
     ID: 200069
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -43995,7 +43995,7 @@ NodesList:
     ID: 200070
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Flt
@@ -44010,7 +44010,7 @@ NodesList:
     ID: 200071
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<2>
@@ -44025,7 +44025,7 @@ NodesList:
     ID: 200072
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<2>
@@ -44040,7 +44040,7 @@ NodesList:
     ID: 200073
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -44054,7 +44054,7 @@ NodesList:
     ID: 200074
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -44532,7 +44532,7 @@ NodesList:
     ID: 200094
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<20>
@@ -44546,7 +44546,7 @@ NodesList:
     ID: 200095
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<20>
@@ -44560,7 +44560,7 @@ NodesList:
     ID: 200096
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<20>
@@ -44574,7 +44574,7 @@ NodesList:
     ID: 200097
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<20>
@@ -44588,7 +44588,7 @@ NodesList:
     ID: 200098
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<20>
@@ -44602,7 +44602,7 @@ NodesList:
     ID: 200099
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<20>
@@ -44616,7 +44616,7 @@ NodesList:
     ID: 200100
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - Vec
@@ -44629,7 +44629,7 @@ NodesList:
     ID: 200101
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<20>
@@ -44643,7 +44643,7 @@ NodesList:
     ID: 200102
     Type: Simple
     Range: Client
-    Class: Operation
+    Class: Arithmetic
     Family: II. Math
     Inputs:
       - E<20>
