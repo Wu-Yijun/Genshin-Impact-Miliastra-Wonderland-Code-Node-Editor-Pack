@@ -269,8 +269,18 @@ function print_CLIENT_NODE_ID() {
   save("CLIENT_NODE_ID.js", "const CLIENT_NODE_ID = " + inspect(Object.fromEntries(ret)));
 }
 
+function print_CLIENT_NODE_RECORDS() {
+  const cid_nr = read_json(`node_id_skill`) as any[];
+  const cid_nr2 = read_json(`node_id_int`) as any[];
+
+  RECORDS.forEach(rec => (rec as any).cid = cid_nr.find(x => x.gid === rec.id)?.cid ?? cid_nr2.find(x => x.gid === rec.id)?.cid);
+
+  save("NODE_PIN_RECORDS_CLIENT.js", "const NODE_PIN_RECORDS_CLIENT = " + inspect(RECORDS, { maxArrayLength: Infinity, depth: Infinity }));
+}
+
 // generateAllRefs();
 // verify_ioc_matches();
 
 // print_CONCRETE_MAP();
-print_CLIENT_NODE_ID();
+// print_CLIENT_NODE_ID();
+print_CLIENT_NODE_RECORDS();

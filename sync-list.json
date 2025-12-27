@@ -1,5 +1,5 @@
 {
-  "commitMessage": "重构了 ConcreteId 的数据结构, 为引入客户端节点图数据和分析做准备",
+  "commitMessage": "完成了全部的客户端与服务器节点的数据整理",
   "notSync": true,
   "include": [
     "*",
