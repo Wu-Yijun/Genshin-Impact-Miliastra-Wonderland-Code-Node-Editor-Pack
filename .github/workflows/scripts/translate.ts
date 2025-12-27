@@ -33,12 +33,35 @@ const DST_LAN = ["en"] as const; // Currently supports English, extendable array
 type DST_LAN = typeof DST_LAN[number];
 
 const Language: ({ [key in typeof DST_LAN[number]]: string } & { [key: string]: string }) = {
-  zh: "Chinese (Simple)",
+  zh: "Chinese (Simplified)",
+  zhTW: "Chinese (Traditional)",
   en: "English",
   fr: "French",
   jp: "Japanese",
   ru: "Russian",
+  ko: "Korean",
+  vi: "Vietnamese",
+  es: "Spanish",
+  de: "German",
+  it: "Italian",
+  pt: "Portuguese",
+  id: "Indonesian",
+  pl: "Polish",
+  el: "Greek",
+  la: "Latin",
 };
+
+// Model fallback list in order of preference
+const MODELS = [
+  "gemini-1.5-flash",
+  "gemini-2.5-flash",
+  "gemini-3-flash",
+  "gemini-2.5-flash-lite",
+  "gemini-2-flash",
+  "gemini-2.5-pro",
+  "gemini-3-pro",
+  "gemini-1.5-flash" // Added as a safe fallback since it's widely available
+];
 
 const globs = [
   "!node_modules/**",
@@ -48,7 +71,6 @@ const globs = [
   "Readme.md",
   // "utils/**/readme.md",
   "**/readme.md",
-
 
   "docs/**/*.md",
 ];
@@ -70,22 +92,45 @@ async function translateContent(content: string, targetLang: DST_LAN): Promise<s
     ${content}
   `;
 
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-    });
+  let lastError: any;
 
-    if (response.text) {
-      return response.text!;
-    } else {
-      throw new Error("No text returned from Gemini API");
+  // Try each model in sequence
+  for (const modelName of MODELS) {
+    try {
+      // console.log(`Attempting translation with model: ${modelName}`); 
+      const response = await ai.models.generateContent({
+        model: modelName,
+        contents: prompt,
+      });
+
+      if (response.text) {
+        console.log(`   └─ ✅ Success using ${modelName}`);
+        return response.text!;
+      } else {
+        throw new Error("No text returned from Gemini API");
+      }
+
+    } catch (error: any) {
+      // Analyze error type
+      const isQuotaError = error.status === 429 ||
+        (error.message && error.message.includes("Resource has been exhausted")) ||
+        (error.toString().includes("429"));
+
+      const errorMessage = error.message || error.toString();
+
+      if (isQuotaError) {
+        console.warn(`   └─ ⚠️ Quota exceeded (RPD/RPM) for ${modelName}. Switching to next model...`);
+      } else {
+        console.warn(`   └─ ⚠️ Failed with ${modelName}: ${errorMessage}. Switching to next model...`);
+      }
+
+      lastError = error;
+      // Loop continues to next model
     }
-
-  } catch (error) {
-    console.error(`Translation API error for ${targetLang}:`, error);
-    throw error;
   }
+
+  console.error(`❌ All models failed for this file.`);
+  throw lastError || new Error("All translation models failed.");
 }
 
 // Helper to construct the localized filename, e.g., README.md -> README.en.md
@@ -185,9 +230,9 @@ async function main() {
     console.log(`Translating: ${file} -> ${targetFileName} (${lang})`);
 
     try {
-      // 批量将相对路径的 .md 替换为 .lang.md
+      // replace relative path from .md to .lang.md
       const contentWithPath = content.replace(
-        /(\[[^\]]+\]\(\.\/[^)]+)\.md(\))/g,
+        /(\[[^\]]+\]\((?!http)[^)]+)\.md(\))/g,
         `$1.${lang}.md$2`
       );
       const translatedContent = (await translateContent(contentWithPath, lang))

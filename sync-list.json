@@ -1,6 +1,6 @@
 {
-  "commitMessage": "为所有文档添加翻译(自动同步), 目前仅支持英文.",
-  "notSync": false,
+  "commitMessage": "",
+  "notSync": true,
   "include": [
     "*",
     "docs/**",

@@ -176,9 +176,9 @@ const typeIndex = get_concrete_index(genericId, 0, 0, VarType.Int);
 
 ## 数据来源
 
-这些数据通过 `extracting_nodes` 目录中的脚本从游戏程序集中提取，然后经过处理生成。
+这些数据通过 `extracting_nodes` 目录中的脚本从游戏程序集中提取，然后经过 手动处理, 并使用 gen_index.ts 集中生成。
 
-> **注**：本目录下的其他文件为生成过程中的中间产物或源文件，发布版本中可能不包含。
+> **注**：本目录下的其他文件(dev版本中)为生成过程中的中间产物或源文件，发布版本中不包含。
 
 ---
 
