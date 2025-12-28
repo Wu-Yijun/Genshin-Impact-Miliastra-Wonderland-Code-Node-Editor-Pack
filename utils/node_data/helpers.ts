@@ -3,7 +3,7 @@ import { assert, DEBUG, STRICT } from "../utils.ts";
 import { CONCRETE_MAP, type ConcreteMap } from "./concrete_map.ts";
 import { GRAPH_CONSTS, type GraphConst } from "./consts.ts";
 import { CLIENT_NODE_ID, NODE_ID } from "./node_id.ts";
-import { NODE_PIN_RECORDS, NODE_PIN_RECORDS_CLIENT, type SingleNodeData } from "./node_pin_records.ts";
+import { NODE_PIN_RECORDS, NODE_PIN_RECORDS_CLIENT, type SingleNodeDataClient, type SingleNodeDataServer, type SingleNodeData } from "./node_pin_records.ts";
 
 
 
@@ -90,11 +90,11 @@ export function get_concrete_type(
 
 
 // ======================== Node Records Helpers ========================
-const GENERIC_ID_TO_RECORD_SERVER = Object.freeze(new Map<number, SingleNodeData>(
-  NODE_PIN_RECORDS.map(r => [r.id, r] as [number, SingleNodeData]),
+const GENERIC_ID_TO_RECORD_SERVER = Object.freeze(new Map<number, SingleNodeDataServer>(
+  NODE_PIN_RECORDS.map(r => [r.id, r] as [number, SingleNodeDataServer]),
 ));
-const GENERIC_ID_TO_RECORD_CLIENT = Object.freeze(new Map<number, SingleNodeData>(
-  NODE_PIN_RECORDS_CLIENT.map(r => [r.id, r] as [number, SingleNodeData]),
+const GENERIC_ID_TO_RECORD_CLIENT = Object.freeze(new Map<number, SingleNodeDataClient>(
+  NODE_PIN_RECORDS_CLIENT.map(r => [r.id, r] as [number, SingleNodeDataClient]),
 ));
 const SERVER_CONCRETE_ID_TO_GENERIC_ID = Object.freeze(new Map<number, number>([
   ...NODE_PIN_RECORDS.map(r => [r.id, r.id] as [number, number]),
@@ -118,6 +118,12 @@ export function is_generic_id(generic_id: number): boolean {
   return GENERIC_ID_TO_RECORD_SERVER.has(generic_id) || GENERIC_ID_TO_RECORD_CLIENT.has(generic_id);
 }
 /** using a valid generic id to get node record */
+export function get_node_record_generic_server(generic_id: number): SingleNodeDataServer | null {
+  return GENERIC_ID_TO_RECORD_SERVER.get(generic_id) ?? null;
+}
+export function get_node_record_generic_client(generic_id: number): SingleNodeDataClient | null {
+  return GENERIC_ID_TO_RECORD_CLIENT.get(generic_id) ?? null;
+}
 export function get_node_record_generic(generic_id: number): SingleNodeData | null {
   return GENERIC_ID_TO_RECORD_SERVER.get(generic_id) ?? GENERIC_ID_TO_RECORD_CLIENT.get(generic_id) ?? null;
 }
