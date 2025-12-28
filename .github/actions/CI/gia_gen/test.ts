@@ -19,7 +19,7 @@ const DSL = `
 
 function createGraph() {
   console.log("Creating Graph......");
-  const graph = new Graph("server", undefined, "Github Actions CI Test Generated Graph");
+  const graph = new Graph("class", undefined, "Github Actions CI Test Generated Graph");
 
   // column 1
   const Trig = graph.add_node(NODE_ID.When_Tab_Is_Selected);
@@ -96,6 +96,14 @@ function createGraph() {
   // auto analysis layout
   graph.autoLayout(1, 2);
 
+  return graph;
+
+}
+
+if (import.meta.main) {
+  console.log("The equivalent DSL is:", DSL);
+  const graph = createGraph();
+
   const encoded = graph.encode({ pos_jitter: false, fill_undefined: 2 });
   const decode = Graph.decode(encoded);
   const encoded2 = decode.encode({ pos_jitter: false });
@@ -128,10 +136,4 @@ function createGraph() {
   */
   encode_gia_file("./dist/GeneratedGraph.gia", graph.encode());
   console.log("Saved to `./dist/GeneratedGraph.gia`");
-
-}
-
-if (import.meta.main) {
-  console.log("The equivalent DSL is:", DSL);
-  createGraph();
 }

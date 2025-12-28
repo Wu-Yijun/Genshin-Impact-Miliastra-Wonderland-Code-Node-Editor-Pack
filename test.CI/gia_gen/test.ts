@@ -96,7 +96,15 @@ function createGraph() {
   // auto analysis layout
   graph.autoLayout(1, 2);
 
-  const encoded = graph.encode({ pos_jitter: false, fill_undefined: 2 });
+  return graph;
+
+}
+
+if (import.meta.main) {
+  console.log("The equivalent DSL is:", DSL);
+  const graph = createGraph();
+
+  const encoded = graph.encode({ pos_jitter: false, fill_undefined: false });
   const decode = Graph.decode(encoded);
   const encoded2 = decode.encode({ pos_jitter: false });
   const decode2 = Graph.decode(encoded2);
@@ -116,7 +124,7 @@ function createGraph() {
 
   assertDeepEq(encoded, encoded2);
   assertDeepEq(decode, decode2);
-  // assertDeepEq(graph_trim, decode_trim);
+  assertDeepEq(graph_trim, decode_trim);
 
   /** graph --> encoded --> decode --> encoded2 --> decode2
    * 
@@ -128,10 +136,4 @@ function createGraph() {
   */
   encode_gia_file("./dist/GeneratedGraph.gia", graph.encode());
   console.log("Saved to `./dist/GeneratedGraph.gia`");
-
-}
-
-if (import.meta.main) {
-  console.log("The equivalent DSL is:", DSL);
-  createGraph();
 }

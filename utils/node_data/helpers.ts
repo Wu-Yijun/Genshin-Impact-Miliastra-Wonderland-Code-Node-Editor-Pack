@@ -1,11 +1,22 @@
 import { get_type, get_id, type NodeType, get_id_client } from "../gia_gen/nodes.ts";
 import { assert, DEBUG, STRICT } from "../utils.ts";
 import { CONCRETE_MAP, type ConcreteMap } from "./concrete_map.ts";
+import { GRAPH_CONSTS, type GraphConst } from "./consts.ts";
 import { CLIENT_NODE_ID, NODE_ID } from "./node_id.ts";
 import { NODE_PIN_RECORDS, type SingleNodeData } from "./node_pin_records.ts";
 
-// ======================== Concrete Map Helpers ========================
 
+
+// ======================== Graph Consts Helpers ========================
+
+export function get_graph_const(name: string | GraphConst): GraphConst {
+  return typeof name === "string" ? GRAPH_CONSTS.find((g) => g.Name === name)! : name;
+}
+export function get_graph_const_by_which(which: number): GraphConst | undefined {
+  return GRAPH_CONSTS.find((g) => g.Which === which);
+}
+
+// ======================== Concrete Map Helpers ========================
 
 export function get_index_of_concrete(generic_id: number, is_input: boolean, pin_index: number, type: number): number | null;
 export function get_index_of_concrete(generic_id: number, is_input: boolean, pin_index: number, type: NodeType, is_server: boolean): number | null;
@@ -77,6 +88,7 @@ export function get_concrete_type(
   assert(type !== undefined);
   return get_type(type);
 }
+
 
 // ======================== Node Records Helpers ========================
 

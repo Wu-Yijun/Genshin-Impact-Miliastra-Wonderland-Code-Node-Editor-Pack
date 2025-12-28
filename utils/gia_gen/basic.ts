@@ -10,18 +10,12 @@ import type {
   GraphVariable,
 } from "../protobuf/gia.proto.ts";
 import {
-  NodeGraph_Id_Class,
-  NodeGraph_Id_Kind,
-  NodeGraph_Id_Type,
   NodePin_Index_Kind,
-  NodeProperty_Type,
-  GraphUnit_Id_Class,
-  GraphUnit_Which,
   VarBase_Class,
   VarType,
-  GraphUnit_Id_Type,
   VarBase_ItemType_ServerType_Kind,
   VarBase_ItemType_ClassBase,
+  NodeGraph_Id_Kind,
 } from "../protobuf/gia.proto.ts";
 import { get_id, get_type, type NodePins, type NodeType } from "./nodes.ts";
 import { counter_dynamic_id, counter_index, randomInt } from "./utils.ts";
@@ -29,11 +23,14 @@ import { ENUM_ID } from "../node_data/enum_id.ts";
 import type { AnyType, GraphVar } from "./graph.ts";
 import { assert, todo } from "../utils.ts";
 import { GAME_VERSION } from "../node_data/consts.ts";
+import type { GraphConst } from "../node_data/consts.ts";
+import { get_graph_const } from "../node_data/helpers.ts";
 
 /**
  * GraphBody_ 接口定义了构建图的基本参数
  */
 export interface GraphBody_ {
+  graph_const: GraphConst | string;
   /** 唯一标识符 */
   uid: number;
   /** 图的 ID */
@@ -68,26 +65,27 @@ export function graph_body(body: GraphBody_): Root {
     /[A-Z]/g,
     (m) => m.toLowerCase(),
   );
+  const gc = get_graph_const(body.graph_const);
   const timestamp = Math.floor(Date.now() / 1000);
   const file_id = body.file_id ?? body.graph_id + counter_dynamic_id.value;
   const filePath = `${body.uid}-${timestamp}-${file_id}-\\${file_name}`;
   const gia: Root = {
     graph: {
       id: {
-        class: GraphUnit_Id_Class.Basic,
-        type: GraphUnit_Id_Type.ServerGraph,
+        class: gc.Class,
+        type: gc.Type,
         id: body.graph_id,
       },
       relatedIds: [],
       name: graph_name,
-      which: GraphUnit_Which.EntityNode,
+      which: gc.Which,
       graph: {
         inner: {
           graph: {
             id: {
-              class: NodeGraph_Id_Class.UserDefined,
-              type: NodeGraph_Id_Type.BasicNode,
-              kind: NodeGraph_Id_Kind.NodeGraph,
+              class: gc.GraphClass,
+              type: gc.GraphType,
+              kind: gc.GraphKind,
               id: body.graph_id,
             },
             name: graph_name,
@@ -111,10 +109,11 @@ export function graph_body(body: GraphBody_): Root {
  * NodeBody_ 接口定义了构建节点的基本参数
  */
 export interface NodeBody_ {
+  graph_const: GraphConst | string;
   /** 通用 ID */
   generic_id: number;
-  /** 具体 ID */
-  concrete_id: number;
+  /** 具体 ID, 可选 */
+  concrete_id?: number;
   /** X 坐标 */
   x: number;
   /** Y 坐标 */
@@ -145,21 +144,22 @@ export interface NodeBody_ {
  * @returns GraphNode 节点对象
  */
 export function node_body(body: NodeBody_): GraphNode {
+  const gc = get_graph_const(body.graph_const);
   const nodeIndex = body.unique_index ?? counter_index.value;
   const node: GraphNode = {
     nodeIndex: nodeIndex,
     genericId: {
-      class: NodeGraph_Id_Class.SystemDefined,
-      type: NodeProperty_Type.Server,
-      kind: NodeGraph_Id_Kind.SysCall,
+      class: gc.NodeClass,
+      type: gc.NodeType,
+      kind: gc.NodeKind,
       nodeId: body.generic_id,
     },
-    concreteId: {
-      class: NodeGraph_Id_Class.SystemDefined,
-      type: NodeProperty_Type.Server,
+    concreteId: body.concrete_id ? {
+      class: gc.NodeClass,
+      type: gc.NodeType,
       kind: NodeGraph_Id_Kind.SysCall,
       nodeId: body.concrete_id,
-    },
+    } : undefined,
     pins: body.pins,
     comments: body.comment,
     x: body.x * 300 + (body.pos_jitter ?? true ? Math.random() * 20 : 0), // shakings

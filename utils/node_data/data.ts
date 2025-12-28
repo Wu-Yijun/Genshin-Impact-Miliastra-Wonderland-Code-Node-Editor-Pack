@@ -6,23 +6,23 @@
  * 
  * @author Aluria
  * @version 2.1.0
- * @date Sun Dec 28 2025 11:15:23 GMT+0800 (中国标准时间)
+ * @date Sun Dec 28 2025 12:49:14 GMT+0800 (中国标准时间)
  */
 
 
 // ====== Begin of Document Schema ====== //
 interface Document {
-  SchemaVersion: string;
-  GameVersion: string;
-  Author: string;
-  Date: string;
-  Description: string;
-  Schema: string;
-  TypesList: TypeEntry[];
-  NodesList: NodeEntry[];
-  EnumList: EnumEntry[];
-  ClientEnumList: EnumEntry[];
-  GraphConstList: GraphConst[];
+  Version: string;              // Data & Schema version
+  GameVersion: string;          // Game version
+  Author: string;               // Author
+  Date: string;                 // Date of generation
+  Description: string;          // Description
+  Schema: string;               // TypeScript type definition source code
+  TypesList: TypeEntry[];       // Type list
+  NodesList: NodeEntry[];       // Node list
+  EnumList: EnumEntry[];        // Server enum list
+  ClientEnumList: EnumEntry[];  // Client enum list
+  GraphConstList: GraphConst[]; // Different node graph fixed field adoption value information
 }
 interface Entry {
   Name: string;               // Safe name used as object keys or query keys
@@ -58,16 +58,16 @@ interface TypeMapping {
 interface EnumItem extends Entry {
 }
 interface GraphConst {
-  Name: string;
-  Class: number;
-  Type: number;
-  Which: number;
-  GraphClass: number;
-  GraphType: number;
-  GraphKind: number;
-  NodeClass: number;
-  NodeType: number;
-  NodeKind: number;
+  Name: string;        // Name of each graph type (used to identify inside gia_gen interface)
+  Class: number;       // Root.graph.id.class
+  Type: number;        // Root.graph.id.type
+  Which: number;       // Root.graph.which --> Also used to identify the graph type
+  GraphClass: number;  // Graph.id.class
+  GraphType: number;   // Graph.id.type
+  GraphKind: number;   // Graph.id.kind
+  NodeClass: number;   // Node.(genericId|concreteId).class
+  NodeType: number;    // Node.(genericId|concreteId).type
+  NodeKind: number;    // Node.genericId.kind (The Node.concreteId.kind is always SysCall(22000))
 }
 const NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Others", "Hidden"] as const;
 const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
@@ -75,9 +75,9 @@ type Translations = Partial<{ [key in typeof Language[number]]: string }>; // Di
 // ====== End of Document Schema ====== //
 
 
-export const SCHEMA_VERSION = '2.1.0' as const satisfies string;
+export const VERSION = '2.1.0' as const satisfies string;
 
-export const SchemaVersion: string = SCHEMA_VERSION;
+export const Version: string = VERSION;
 
 export const GAME_VERSION = '6.2.0' as const satisfies string;
 
@@ -87,7 +87,7 @@ export const AUTHOR = 'Aluria' as const satisfies string;
 
 export const Author: string = AUTHOR;
 
-export const DATE = 'Sun Dec 28 2025 11:15:23 GMT+0800 (中国标准时间)' as const satisfies string;
+export const DATE = 'Sun Dec 28 2025 12:49:14 GMT+0800 (中国标准时间)' as const satisfies string;
 
 export const Date: string = DATE;
 
@@ -95,7 +95,7 @@ export const DESCRIPTION = 'This document contains all necessary information for
 
 export const Description: string = DESCRIPTION;
 
-export const SCHEMA = `// ====== Begin of Document Schema ====== //\ninterface Document {\n  SchemaVersion: string;\n  GameVersion: string;\n  Author: string;\n  Date: string;\n  Description: string;\n  Schema: string;\n  TypesList: TypeEntry[];\n  NodesList: NodeEntry[];\n  EnumList: EnumEntry[];\n  ClientEnumList: EnumEntry[];\n  GraphConstList: GraphConst[];\n}\ninterface Entry {\n  Name: string;               // Safe name used as object keys or query keys\n  Translations: Translations; // Raw texts displayed in game\n  ID: number;                 // An in-game unique id of the entry\n}\ninterface TypeEntry extends Entry {\n  ClientID: number | null;    // An in-game unique id of the any type in client \n  Expression: string;         // Static representation expression for convertor\n  DSLName: string;            // Name of var class(type) in DSL\n  BaseType: string;           // Base type of the entry in game runtime\n  BaseTypeID: number;         // Id of the base type\n}\ninterface NodeEntry extends Entry {\n  Type: "Simple" | "Generic";         // Whether a node is fixed-defined or generic-defined \n  Range: "Server" | "Client";         // The applicable range of the node\n  Class: typeof NodeClasses[number];  // The class of the node\n  Family: string;                     // Family(sub-class) of the node\n  Inputs: string[];                   // List of Input parameter types of the node\n  Outputs: string[];                  // List of Output parameter types of the node\n  ConcreteID?: number;                // Concrete id for non-reflective nodes (different from ID in Client Graph)\n  TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic.\n}\ninterface EnumEntry extends Entry {\n  Items: EnumItem[];  // List of Enum items of current enum\n}\ninterface TypeMapping {\n  ConcreteId: number;                         // Id of this concrete type\n  Type: string;                               // Type mapping rules of this concrete type\n  InputsIndexOfConcrete: (number | null)[];   // List of Input parameters' index of concrete\n  OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete\n}\ninterface EnumItem extends Entry {\n}\ninterface GraphConst {\n  Name: string;\n  Class: number;\n  Type: number;\n  Which: number;\n  GraphClass: number;\n  GraphType: number;\n  GraphKind: number;\n  NodeClass: number;\n  NodeType: number;\n  NodeKind: number;\n}\nconst NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Others", "Hidden"] as const;\nconst Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;\ntype Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages\n// ====== End of Document Schema ====== //\n` as const satisfies string;
+export const SCHEMA = `// ====== Begin of Document Schema ====== //\ninterface Document {\n  Version: string;              // Data & Schema version\n  GameVersion: string;          // Game version\n  Author: string;               // Author\n  Date: string;                 // Date of generation\n  Description: string;          // Description\n  Schema: string;               // TypeScript type definition source code\n  TypesList: TypeEntry[];       // Type list\n  NodesList: NodeEntry[];       // Node list\n  EnumList: EnumEntry[];        // Server enum list\n  ClientEnumList: EnumEntry[];  // Client enum list\n  GraphConstList: GraphConst[]; // Different node graph fixed field adoption value information\n}\ninterface Entry {\n  Name: string;               // Safe name used as object keys or query keys\n  Translations: Translations; // Raw texts displayed in game\n  ID: number;                 // An in-game unique id of the entry\n}\ninterface TypeEntry extends Entry {\n  ClientID: number | null;    // An in-game unique id of the any type in client \n  Expression: string;         // Static representation expression for convertor\n  DSLName: string;            // Name of var class(type) in DSL\n  BaseType: string;           // Base type of the entry in game runtime\n  BaseTypeID: number;         // Id of the base type\n}\ninterface NodeEntry extends Entry {\n  Type: "Simple" | "Generic";         // Whether a node is fixed-defined or generic-defined \n  Range: "Server" | "Client";         // The applicable range of the node\n  Class: typeof NodeClasses[number];  // The class of the node\n  Family: string;                     // Family(sub-class) of the node\n  Inputs: string[];                   // List of Input parameter types of the node\n  Outputs: string[];                  // List of Output parameter types of the node\n  ConcreteID?: number;                // Concrete id for non-reflective nodes (different from ID in Client Graph)\n  TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic.\n}\ninterface EnumEntry extends Entry {\n  Items: EnumItem[];  // List of Enum items of current enum\n}\ninterface TypeMapping {\n  ConcreteId: number;                         // Id of this concrete type\n  Type: string;                               // Type mapping rules of this concrete type\n  InputsIndexOfConcrete: (number | null)[];   // List of Input parameters' index of concrete\n  OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete\n}\ninterface EnumItem extends Entry {\n}\ninterface GraphConst {\n  Name: string;        // Name of each graph type (used to identify inside gia_gen interface)\n  Class: number;       // Root.graph.id.class\n  Type: number;        // Root.graph.id.type\n  Which: number;       // Root.graph.which --> Also used to identify the graph type\n  GraphClass: number;  // Graph.id.class\n  GraphType: number;   // Graph.id.type\n  GraphKind: number;   // Graph.id.kind\n  NodeClass: number;   // Node.(genericId|concreteId).class\n  NodeType: number;    // Node.(genericId|concreteId).type\n  NodeKind: number;    // Node.genericId.kind (The Node.concreteId.kind is always SysCall(22000))\n}\nconst NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Others", "Hidden"] as const;\nconst Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;\ntype Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages\n// ====== End of Document Schema ====== //\n` as const satisfies string;
 
 export const Schema: string = SCHEMA;
 
@@ -29880,7 +29880,7 @@ export const GRAPH_CONST_LIST = [
     NodeKind: 22000
   },
   {
-    Name: 'Class',
+    Name: 'class',
     Class: 5,
     Type: 0,
     Which: 23,
@@ -29956,7 +29956,7 @@ export const GRAPH_CONST_LIST = [
 export const GraphConstList: GraphConst[] = GRAPH_CONST_LIST;
 
 export const DOCUMENT = {
-  SchemaVersion: SCHEMA_VERSION,
+  Version: VERSION,
   GameVersion: GAME_VERSION,
   Author: AUTHOR,
   Date: DATE,

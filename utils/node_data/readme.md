@@ -40,6 +40,7 @@
 ```typescript
 interface Document {
   Version: string;              // 数据版本号
+  GameVersion: string;          // 游戏版本号
   Author: string;               // 作者
   Date: string;                 // 生成日期
   Description: string;          // 文档描述
@@ -48,6 +49,7 @@ interface Document {
   NodesList: NodeEntry[];       // 节点列表
   EnumList: EnumEntry[];        // 服务端枚举列表
   ClientEnumList: EnumEntry[];  // 客户端枚举列表
+  GraphConstList: GraphConst[]; // 不同节点图的固定字段采用值信息
 }
 ```
 

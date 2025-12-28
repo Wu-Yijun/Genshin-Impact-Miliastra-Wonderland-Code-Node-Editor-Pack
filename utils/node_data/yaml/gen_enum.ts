@@ -3,6 +3,7 @@ import yaml from 'yaml';
 import { decode_gia_file } from '../../protobuf/decode.ts';
 import { readFileSync, writeFileSync } from 'fs';
 import { type GraphNode } from '../../protobuf/gia.proto.ts';
+import { AUTHOR } from '../consts.ts';
 
 const inputFileName = import.meta.dirname + 'enum_id_raw.yaml';
 const outputFileName = import.meta.dirname + 'enum_id.yaml';
@@ -102,7 +103,7 @@ assert(count === enums.length, `Enum count mismatch: expected ${enums.length}, g
 
 const output = {
   Version: parsedYaml.Version,
-  Author: "Aluria",
+  Author: AUTHOR,
   Date: new Date().toString(),
   EnumList: list,
 };

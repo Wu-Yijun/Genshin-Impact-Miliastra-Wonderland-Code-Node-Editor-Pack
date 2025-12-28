@@ -3,12 +3,13 @@ import type { Comments, GraphNode, NodeConnection, NodePin, NodePin_Index_Kind, 
 import { encode_node_graph_var, graph_body, node_body, node_connect_from, node_connect_to, node_type_pin_body, pin_flow_body } from "./basic.ts";
 import { type NodeType, reflects_records, get_id, type_equal, is_reflect, to_node_pin } from "./nodes.ts";
 import { Counter, randomInt, randomName } from "./utils.ts";
-import { get_index_of_concrete, is_concrete_pin, get_generic_id, get_node_record, get_node_record_generic } from "../node_data/helpers.ts";
+import { get_index_of_concrete, is_concrete_pin, get_generic_id, get_node_record, get_node_record_generic, get_graph_const, get_graph_const_by_which } from "../node_data/helpers.ts";
 import { extract_value, get_graph_vars, get_node_info } from "./extract.ts";
 import type { NodePinsRecords, SingleNodeData } from "../node_data/node_pin_records.ts";
 import { auto_layout } from "./auto_layout.ts";
 
 import { NODE_ID, CLIENT_NODE_ID } from "../node_data/node_id.ts";
+import { type GraphConst } from "../node_data/consts.ts";
 
 type ServerModes = "server" | "status" | "class" | "item" | "composite";
 type ClientModes = "bool" | "int" | "skill";
@@ -30,20 +31,23 @@ export type AnyType =
 
 export class Graph<M extends AllModes = "server"> {
   public readonly mode: M;
-  graph_name: string;
-  uid: number;
-  private graph_id: number;
-  private file_id: number;
+  public readonly GraphConst: GraphConst;
+  public graph_name: string;
+  public uid: number;
+
+  public readonly graph_id: number;
+  public readonly file_id: number;
   private counter_idx: Counter;
   private counter_dyn_id: Counter;
-  private nodes: Set<Node<M>>;
-  private connects: Set<Connect>;
-  private flows: Map<Node<M>, Connect[][]>;
-  private comments: Set<Comment>;
-  private graph_var: Map<string, GraphVar>;
+  public readonly nodes: Set<Node<M>>;
+  public readonly connects: Set<Connect>;
+  public readonly flows: Map<Node<M>, Connect[][]>;
+  public readonly comments: Set<Comment>;
+  public readonly graph_var: Map<string, GraphVar>;
 
   constructor(mode: M = "server" as M, uid?: number, name?: string, graph_id?: number) {
     this.mode = mode;
+    this.GraphConst = get_graph_const(mode);
     this.uid = uid ?? randomInt(9, "201");
     this.graph_id = graph_id ?? randomInt(10, "102");
     this.graph_name = name ?? randomName(3);
@@ -271,32 +275,34 @@ export class Graph<M extends AllModes = "server"> {
     const option = new EncodeOptionsBuilder(opt ?? {});
     const nodes = [...this.nodes].map((n) => n.encode(option, this.get_connect_to(n), this.flows.get(n), this.get_node_comment(n)));
     const graphValues = [...this.graph_var.values()].map(v => encode_node_graph_var(v));
-    return graph_body({/** 唯一标识符 */
+    return graph_body({
+      graph_const: this.GraphConst,
       uid: this.uid,
-      /** 图的 ID */
       graph_id: this.graph_id,
-      /** 图文件的ID，可选, 通常是 graph_id + i */
       file_id: this.file_id,
-      /** 图的名称，可选 */
       graph_name: this.graph_name,
-      /** 图中包含的节点列表，可选 */
       nodes,
       comments: this.get_graph_comments().map(c => c.encode()),
       graphValues: graphValues,
     });
   }
-  static decode(root: Root): Graph {
+  static decode(root: Root): Graph<AllModes> {
     const [uid, time, file_id, file_name] = root.filePath.split("-");
     const name = root.graph.name;
     const graph_id = root.graph.id.id;
 
-    // TODO: discriminate mode!
-    const graph = new Graph("server", parseInt(uid), name, graph_id);
+    const gc = get_graph_const_by_which(root.graph.which);
+    if (empty(gc)) {
+      console.warn("Graph Const not found!", root.graph.which);
+      return null as any;
+    }
+    const mode: AllModes = gc.Name;
+    const graph = new Graph(mode, parseInt(uid), name, graph_id);
     const graph_vars = get_graph_vars(root.graph.graph?.inner.graph!);
     graph_vars.forEach((v) => graph.graph_var.set(v.name, v));
     root.graph.graph?.inner.graph.nodes.forEach(node => {
       // node itself
-      const n = graph.add_node(Node.decode(node, graph.mode));
+      const n = graph.add_node(Node.decode(node, mode));
       // comments
       if (!empty(node.comments)) {
         graph.add_comment(Comment.decode(node.comments, n));
@@ -319,15 +325,17 @@ export class Graph<M extends AllModes = "server"> {
 
 export class Node<M extends AllModes = "server"> {
   public readonly mode: M;
-  private node_index: number;
+  public readonly GraphConst: GraphConst;
+  public readonly node_index: number;
   private node_id: NodeIdFor<M> | null;
-  private record: NodePinsRecords;
-  private pin_len: [number, number];
-  pins: Pin[];
-  x: number = 0;
-  y: number = 0;
+  public readonly record: NodePinsRecords;
+  public readonly pin_len: [number, number];
+  public pins: Pin[];
+  public x: number = 0;
+  public y: number = 0;
   constructor(node_index: number, mode: M = "server" as M, concrete_id?: NodeIdFor<M>, generic_id?: number) {
     this.mode = mode;
+    this.GraphConst = get_graph_const(mode);
     assert(!empty(concrete_id) || !empty(generic_id));
     // use generic_id if exist, or assume node_id is concrete, otherwise use node_id;
     const gid: number = generic_id ?? get_generic_id(concrete_id!)! ?? (typeof concrete_id === "number" ? concrete_id : parseInt(concrete_id!));
@@ -400,6 +408,7 @@ export class Node<M extends AllModes = "server"> {
       }
     }
     return node_body({
+      graph_const: this.GraphConst,
       /** 通用 ID */
       generic_id: this.record.id as number,
       /** 具体 ID */
@@ -450,7 +459,7 @@ export class Node<M extends AllModes = "server"> {
     });
     return n;
   }
-  static decode_connects(node: GraphNode, graph: Graph): { flows: Connect[], connects: Connect[] } {
+  static decode_connects<M extends AllModes>(node: GraphNode, graph: Graph<M>): { flows: Connect[], connects: Connect[] } {
     const flows: Connect[] = [];
     const connects: Connect[] = [];
     if (!empty(node.pins)) {
@@ -578,7 +587,7 @@ export class Connect {
   encode_flow() {
     return node_connect_to(this.to.NodeIndex, this.to_index);
   }
-  static decode_connects(connects: NodeConnection[], self_node: Node<AllModes>, self_index: number, graph: Graph): Connect[] {
+  static decode_connects<M extends AllModes>(connects: NodeConnection[], self_node: Node<M>, self_index: number, graph: Graph<M>): Connect[] {
     const ret: Connect[] = [];
     for (const c of connects) {
       const from_node = graph.get_node(c.id);
@@ -590,7 +599,7 @@ export class Connect {
     }
     return ret;
   }
-  static decode_flows(connects: NodeConnection[], self_node: Node<AllModes>, self_index: number, graph: Graph): Connect[] {
+  static decode_flows<M extends AllModes>(connects: NodeConnection[], self_node: Node<M>, self_index: number, graph: Graph<M>): Connect[] {
     const ret: Connect[] = [];
     for (const c of connects) {
       const to_node = graph.get_node(c.id);

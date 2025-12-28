@@ -23,6 +23,6 @@
   ],
   "exclude": [
     "node_modules",
-    // "utils/node_data/data.ts"
+    "utils/node_data/data.ts"
   ]
 }

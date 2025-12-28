@@ -1,22 +1,22 @@
-SchemaVersion: 2.1.0
+Version: 2.1.0
 GameVersion: 6.2.0
 Author: Aluria
-Date: Sun Dec 28 2025 11:15:23 GMT+0800 (中国标准时间)
+Date: Sun Dec 28 2025 12:49:14 GMT+0800 (中国标准时间)
 Description: This document contains all necessary information for this project, including types, nodes, and enums.
 Schema: |
   // ====== Begin of Document Schema ====== //
   interface Document {
-    SchemaVersion: string;
-    GameVersion: string;
-    Author: string;
-    Date: string;
-    Description: string;
-    Schema: string;
-    TypesList: TypeEntry[];
-    NodesList: NodeEntry[];
-    EnumList: EnumEntry[];
-    ClientEnumList: EnumEntry[];
-    GraphConstList: GraphConst[];
+    Version: string;              // Data & Schema version
+    GameVersion: string;          // Game version
+    Author: string;               // Author
+    Date: string;                 // Date of generation
+    Description: string;          // Description
+    Schema: string;               // TypeScript type definition source code
+    TypesList: TypeEntry[];       // Type list
+    NodesList: NodeEntry[];       // Node list
+    EnumList: EnumEntry[];        // Server enum list
+    ClientEnumList: EnumEntry[];  // Client enum list
+    GraphConstList: GraphConst[]; // Different node graph fixed field adoption value information
   }
   interface Entry {
     Name: string;               // Safe name used as object keys or query keys
@@ -52,16 +52,16 @@ Schema: |
   interface EnumItem extends Entry {
   }
   interface GraphConst {
-    Name: string;
-    Class: number;
-    Type: number;
-    Which: number;
-    GraphClass: number;
-    GraphType: number;
-    GraphKind: number;
-    NodeClass: number;
-    NodeType: number;
-    NodeKind: number;
+    Name: string;        // Name of each graph type (used to identify inside gia_gen interface)
+    Class: number;       // Root.graph.id.class
+    Type: number;        // Root.graph.id.type
+    Which: number;       // Root.graph.which --> Also used to identify the graph type
+    GraphClass: number;  // Graph.id.class
+    GraphType: number;   // Graph.id.type
+    GraphKind: number;   // Graph.id.kind
+    NodeClass: number;   // Node.(genericId|concreteId).class
+    NodeType: number;    // Node.(genericId|concreteId).type
+    NodeKind: number;    // Node.genericId.kind (The Node.concreteId.kind is always SysCall(22000))
   }
   const NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Others", "Hidden"] as const;
   const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
@@ -47395,7 +47395,7 @@ GraphConstList:
     NodeClass: 10001
     NodeType: 20000
     NodeKind: 22000
-  - Name: Class
+  - Name: class
     Class: 5
     Type: 0
     Which: 23

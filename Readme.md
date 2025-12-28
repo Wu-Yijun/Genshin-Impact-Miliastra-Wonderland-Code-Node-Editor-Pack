@@ -133,11 +133,11 @@ const compOp = ENUM_VALUE.ComparisonOperators_EqualTo;
 
 | 数据类型 | 说明 | 格式 |
 | :--- | :--- | :--- |
-| 节点 ID | 770+ 个节点的名称和 ID | TypeScript |
-| 枚举定义 | 60+ 个枚举类型和值 | TypeScript |
+| 节点 ID | 558(3730) 个节点的ID和类型扩展 | TypeScript |
+| 枚举定义 | 85(264) 个枚举类型和枚举值 | TypeScript |
 | 引脚记录 | 所有节点的输入/输出引脚定义 | TypeScript |
 | 类型映射 | 泛型节点的类型索引表 | TypeScript |
-| 综合数据 | 上述数据的结构化汇总 | YAML / JSON |
+| 综合数据 | 上述数据的结构化汇总 | YAML / JSON / TypeScript |
 
 📖 详情：[节点数据](./utils/node_data/readme.md)
 

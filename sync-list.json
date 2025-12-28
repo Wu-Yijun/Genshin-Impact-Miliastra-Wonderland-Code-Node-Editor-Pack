@@ -1,6 +1,6 @@
 {
   "commitMessage": "update data schema",
-  "notSync": false,
+  "notSync": true,
   "include": [
     "*",
     "docs/**",
