@@ -70,42 +70,83 @@ export function assertEq<T>(target: unknown, expect: T): asserts target is T {
   console.error("[Assertion]", target, "!==", expect);
   throw new Error("Assertion failed");
 }
-export function assertDeepEq<T>(target: T, expect: T, { client = false, print_l_r = true }: { client?: boolean, print_l_r?: boolean } = {}): asserts target is T {
-  const isObject = (v: any) => v && typeof v === "object";
-  const failure = {
-    stack: [] as string[],
-    info: ""
-  };
-  const pts = new Set();
-  function deepEqual(a: any, b: any, depth = 0): boolean {
-    if (depth > 100) {
-      failure.info = "Recursion depth exceeded";
+
+export function deepEqual<T>(
+  target: T,
+  expect: T,
+  {
+    breakpoint = false,
+    ignore_rules = (a: any, b: any) => false,
+    reason = {
+      stack: [],
+      info: "",
+    },
+    pointers = new Set(),
+    max_depth = 100,
+  }: {
+    breakpoint?: boolean,
+    ignore_rules?: (a: any, b: any) => boolean,
+    reason?: {
+      stack: string[],
+      info: string,
+    },
+    pointers?: Set<any>,
+    max_depth?: number,
+  } = {}
+): boolean {
+  const deep_equal = (a: any, b: any, depth: number): boolean => {
+    if (depth <= 0) {
+      reason.info = "Recursion depth exceeded";
+      if (breakpoint) debugger;
       return false;
     }
+    if (ignore_rules(a, b)) return true;
     if (typeof a === "function" && typeof b === "function") return true;
     if (a === b) return true;
     if (a === undefined || a === null || b === undefined || b === null) {
-      failure.info = `Null or Undefined: ${a} !== ${b}`;
+      reason.info = `Null or Undefined: ${a} !== ${b}`;
+      if (breakpoint) debugger;
       return false;
     }
     if (typeof a !== typeof b) {
-      failure.info = `Type mismatch: ${typeof a} !== ${typeof b}`;
+      reason.info = `Type mismatch: ${typeof a} !== ${typeof b}`;
+      if (breakpoint) debugger;
       return false;
     }
-    if (isObject(a)) {
+    if (typeof a === "object" && typeof b === "object") {
       // Avoid infinite loop and self-comparison
-      if (pts.has(a) && pts.has(b)) return true;
-      pts.add(a);
-      pts.add(b);
+      if (pointers.has(a) && pointers.has(b)) {
+        if (a === b) {
+          return true;
+        }
+        // todo: second
+        const ret = deepEqual(a, b, {
+          breakpoint,
+          ignore_rules,
+          reason,
+          pointers: new Set(),
+          max_depth: depth - 1,
+        });
+        if (!ret) {
+          reason.info = `Self-comparison: ${a} !== ${b}. ${reason.info}`;
+          reason.stack.push("<recursion>");
+          if (breakpoint) debugger;
+          return false;
+        }
+        return true;
+      }
+      pointers.add(a);
+      pointers.add(b);
       // Test Array
       if (a instanceof Array && b instanceof Array) {
         if (a.length !== b.length) {
-          failure.info = `Array length mismatch: ${a.length} !== ${b.length}`;
+          reason.info = `Array length mismatch: ${a.length} !== ${b.length}.`;
+          if (breakpoint) debugger;
           return false;
         }
         for (let i = 0; i < a.length; i++) {
-          if (!deepEqual(a[i], b[i], depth + 1)) {
-            failure.stack.push(`\b[${i}]`);
+          if (!deep_equal(a[i], b[i], depth - 1)) {
+            reason.stack.push(`\b[${i}]`);
             return false;
           }
         }
@@ -114,14 +155,15 @@ export function assertDeepEq<T>(target: T, expect: T, { client = false, print_l_
       // Test Set
       if (a instanceof Set && b instanceof Set) {
         if (a.size !== b.size) {
-          failure.info = `Set size mismatch: ${a.size} !== ${b.size}`;
+          reason.info = `Set size mismatch: ${a.size} !== ${b.size}`;
+          if (breakpoint) debugger;
           return false;
         }
         const a_arr = [...a];
         const b_arr = [...b];
         for (let i = 0; i < a_arr.length; i++) {
-          if (!deepEqual(a_arr[i], b_arr[i], depth + 1)) {
-            failure.stack.push(`Set(${i}:${a_arr[i]})`);
+          if (!deep_equal(a_arr[i], b_arr[i], depth - 1)) {
+            reason.stack.push(`Set(${i}:${a_arr[i]}|${b_arr[i]})`);
             return false;
           }
         }
@@ -130,18 +172,19 @@ export function assertDeepEq<T>(target: T, expect: T, { client = false, print_l_
       // Test Map
       if (a instanceof Map && b instanceof Map) {
         if (a.size !== b.size) {
-          failure.info = `Map size mismatch: ${a.size} !== ${b.size}`;
+          reason.info = `Map size mismatch: ${a.size} !== ${b.size}`;
+          if (breakpoint) debugger;
           return false;
         }
         const a_keys = [...a.keys()].sort();
         const b_keys = [...b.keys()].sort();
         for (let i = 0; i < a_keys.length; i++) {
-          if (!deepEqual(a_keys[i], b_keys[i])) {
-            failure.stack.push(`MapKey(${i}:${a_keys[i]})`);
+          if (!deep_equal(a_keys[i], b_keys[i], depth - 1)) {
+            reason.stack.push(`MapKey(${i}:${a_keys[i]}|${b_keys[i]})`);
             return false;
           }
-          if (!deepEqual(a.get(a_keys[i]), b.get(b_keys[i]), depth + 1)) {
-            failure.stack.push(`Map(${a_keys[i]})`);
+          if (!deep_equal(a.get(a_keys[i]), b.get(b_keys[i]), depth - 1)) {
+            reason.stack.push(`Map(${a_keys[i]}|${b_keys[i]})`);
             return false;
           }
         }
@@ -152,28 +195,61 @@ export function assertDeepEq<T>(target: T, expect: T, { client = false, print_l_
         const a_keys = Object.keys(a).sort();
         const b_keys = Object.keys(b).sort();
         if (a_keys.length !== b_keys.length) {
-          failure.info = `Object key Length Mismatch: ${a_keys.length} !== ${b_keys.length}`;
+          reason.info = `Object key Length Mismatch: ${a_keys.length} !== ${b_keys.length}`;
+          if (breakpoint) debugger;
           return false;
         }
         for (let i = 0; i < a_keys.length; i++) {
-          if (!deepEqual(a_keys[i], b_keys[i])) {
-            failure.stack.push(`ObjectKey(${i}:${a_keys[i]})`);
+          if (!deep_equal(a_keys[i], b_keys[i], depth - 1)) {
+            reason.stack.push(`ObjectKey(${i}:${a_keys[i]})`);
             return false;
           }
-          if (!deepEqual(a[a_keys[i]], b[b_keys[i]], depth + 1)) {
-            failure.stack.push(`${a_keys[i]}`);
+          if (!deep_equal(a[a_keys[i]], b[b_keys[i]], depth - 1)) {
+            reason.stack.push(`${a_keys[i]}`);
             return false;
           }
         }
         return true;
       }
-      failure.info = "UNKNOWN"
+      reason.info = `Should not reach here: ${a} !== ${b}`;
+      if (breakpoint) debugger;
       return false;
     }
-    failure.info = `[Value mismatch]: ${a} !== ${b}`;
+    reason.info = `[Value mismatch]: ${a} !== ${b}`;
+    if (breakpoint) debugger;
     return false;
   }
-  if (deepEqual(target, expect)) return;
+
+  return deep_equal(target, expect, max_depth);
+}
+
+export function assertDeepEq<T>(
+  target: T,
+  expect: T,
+  {
+    client = false,
+    print_l_r = true,
+    ignore_rules = (a: any, b: any) => false,
+    enable_debugger = false,
+  }: {
+    client?: boolean,
+    print_l_r?: boolean,
+    ignore_rules?: (a: any, b: any) => boolean,
+    enable_debugger?: boolean
+  } = {}
+): asserts target is T {
+  const failure = {
+    stack: [] as string[],
+    info: ""
+  };
+  const eq = deepEqual(target, expect, {
+    breakpoint: enable_debugger,
+    ignore_rules,
+    reason: failure,
+    pointers: new Set(),
+    max_depth: 100,
+  });
+  if (eq) return;
   if (!client) {
     if (print_l_r) console.error("[Assertion]", target, "not deep equal to", expect);
     console.error("[Assertion Stack]", failure.stack.reverse().join("."));

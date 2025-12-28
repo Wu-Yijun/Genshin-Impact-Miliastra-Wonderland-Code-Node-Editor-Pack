@@ -1,24 +1,36 @@
 import { assert, assertEq, empty, todo } from "../utils.ts";
 import type { Comments, GraphNode, NodeConnection, NodePin, NodePin_Index_Kind, Root } from "../protobuf/gia.proto.ts";
-import { encode_node_graph_var, graph_body, node_body, node_connect_from, node_connect_to, node_type_pin_body, pin_flow_body } from "./basic.ts";
-import { type NodeType, reflects_records, get_id, type_equal, is_reflect, to_node_pin } from "./nodes.ts";
+import { encode_node_graph_var_server, graph_body, node_body, node_connect_from, node_connect_to, node_type_pin_body, pin_flow_body } from "./basic.ts";
+import { type NodeType, reflects_records, get_id, type_equal, is_reflect, to_node_pin, parse, stringify, reflects } from "./nodes.ts";
 import { Counter, randomInt, randomName } from "./utils.ts";
-import { get_index_of_concrete, is_concrete_pin, get_generic_id, get_node_record, get_node_record_generic } from "../node_data/helpers.ts";
-import { extract_value, get_graph_vars, get_node_info } from "./extract.ts";
-import type { NodePinsRecords, SingleNodeData } from "../node_data/node_pin_records.ts";
+import { get_index_of_concrete, is_concrete_pin, get_node_record_generic, get_graph_const, get_graph_const_by_which, get_generic_id_client, get_generic_id_server, get_node_record_generic_server, get_node_record_generic_client, is_generic_id } from "../node_data/helpers.ts";
+import { extract_value, get_client_node_cid_from_info, get_graph_vars, get_node_info } from "./extract.ts";
+import type { NodePinsRecords, SingleNodeData, SingleNodeDataClient, SingleNodeDataServer } from "../node_data/node_pin_records.ts";
 import { auto_layout } from "./auto_layout.ts";
 
-import { NODE_ID, CLIENT_NODE_ID } from "../node_data/node_id.ts";
+// import { NODE_ID, CLIENT_NODE_ID } from "../node_data/node_id.ts";
+import { GRAPH_ID_RANGE, type GraphConst } from "../node_data/consts.ts";
 
-type ServerModes = "server" | "status" | "class" | "item" | "composite";
-type ClientModes = "bool" | "int" | "skill";
-type AllModes = ServerModes | ClientModes;
-type ServerOrClient<M extends AllModes> = M extends ServerModes ? "server" : "client";
-type NodeIdFor<M extends AllModes> = M extends ServerModes ? NODE_ID : CLIENT_NODE_ID;
+export type ServerModes = "server" | "status" | "class" | "item" | "composite";
+export type ClientModes = "bool" | "int" | "skill";
+export type AllModes = ServerModes | ClientModes;
+type NodeIdFor<M extends AllModes> = M extends ServerModes ? number : string;
+
 function isServer(mode: AllModes): mode is ServerModes {
   return mode === "server" || mode === "status" || mode === "class" || mode === "item" || mode === "composite";
 }
-
+function assert_is_client(mode: AllModes): asserts mode is ClientModes {
+  assert(!isServer(mode));
+}
+function assert_is_server(mode: AllModes): asserts mode is ServerModes {
+  assert(isServer(mode));
+}
+function NodeIdNotNull<M extends AllModes>(id: number | string): id is NodeIdFor<M> {
+  return id !== 0 && id !== "";
+}
+function Null<M extends AllModes>(mode: M): NodeIdFor<M> {
+  return isServer(mode) ? 0 as NodeIdFor<M> : "" as NodeIdFor<M>;
+}
 
 
 export type AnyType =
@@ -30,22 +42,30 @@ export type AnyType =
 
 export class Graph<M extends AllModes = "server"> {
   public readonly mode: M;
-  graph_name: string;
-  uid: number;
-  private graph_id: number;
-  private file_id: number;
+  public readonly GraphConst: GraphConst;
+  public graph_name: string;
+  public uid: number;
+
+  public readonly graph_id: number;
+  public readonly file_id: number;
   private counter_idx: Counter;
   private counter_dyn_id: Counter;
-  private nodes: Set<Node<M>>;
-  private connects: Set<Connect>;
-  private flows: Map<Node<M>, Connect[][]>;
-  private comments: Set<Comment>;
-  private graph_var: Map<string, GraphVar>;
+  public readonly nodes: Set<Node<M>>;
+  public readonly connects: Set<Connect>;
+  public readonly flows: Map<Node<M>, Connect[][]>;
+  public readonly comments: Set<Comment>;
+  public readonly graph_var: Map<string, GraphVar>;
 
   constructor(mode: M = "server" as M, uid?: number, name?: string, graph_id?: number) {
     this.mode = mode;
+    this.GraphConst = get_graph_const(mode);
     this.uid = uid ?? randomInt(9, "201");
-    this.graph_id = graph_id ?? randomInt(10, "102");
+    const ID_RANGE = GRAPH_ID_RANGE[isServer(mode) ? "server" : mode === "composite" ? "composite" : "client"];
+    this.graph_id = graph_id ?? randomInt(3) + ID_RANGE;
+    if (this.graph_id < ID_RANGE || this.graph_id > ID_RANGE + 0x9999) {
+      console.error(`Graph ID out of range! Should be ${ID_RANGE}(0x${ID_RANGE.toString(16)}) ~ ${ID_RANGE + 0x9999}(0x${(ID_RANGE + 0x9999).toString(16)})`);
+      console.info(`Current graph ID: ${this.graph_id}(0x${this.graph_id.toString(16)}). This could lead to failure in loading the graph.`);
+    }
     this.graph_name = name ?? randomName(3);
     this.counter_idx = new Counter();
     this.counter_dyn_id = new Counter(Number(this.graph_id));
@@ -58,31 +78,28 @@ export class Graph<M extends AllModes = "server"> {
     this.graph_var = new Map();
   }
 
-  private assert_is_server(): asserts this is Graph<ServerModes> {
-    assert(isServer(this.mode));
-  }
-  private assert_is_client(): asserts this is Graph<ServerModes> {
-    assert(!isServer(this.mode));
-  }
-
   /** 
    * @param node Node Id or Instance */
+  add_node(node: Node<M>): Node<M>;
+  add_node(node: NodeIdFor<M>, generic_id?: number): Node<M>;
+  add_node(node: null, generic_id?: number): Node<M>;
   add_node(node: NodeIdFor<M> | Node<M> | null, generic_id?: number): Node<M> {
     assert(!empty(node) || !empty(generic_id));
     if (typeof node === "number") {
       // should be server node
-      this.assert_is_server();
+      assert_is_server(this.mode);
       const n = new Node(this.counter_idx.value, this.mode, node, generic_id);
       this.nodes.add(n);
       return n;
     } else if (typeof node === "string") {
       // should be client node
-      this.assert_is_client();
+      assert_is_client(this.mode);
       const n = new Node(this.counter_idx.value, this.mode, node, generic_id);
       this.nodes.add(n);
       return n;
     } else if (empty(node)) {
-      const n = new Node(this.counter_idx.value, this.mode, undefined, generic_id);
+      assert(!empty(generic_id));
+      const n = new Node(this.counter_idx.value, this.mode, Null(this.mode), generic_id);
       this.nodes.add(n);
       return n;
     }
@@ -204,12 +221,12 @@ export class Graph<M extends AllModes = "server"> {
   connect(from: Node<M>, to: Node<M>, from_index: number, to_index: number) {
     const c = this.get_connect(from, to, from_index, to_index);
     if (c) {
-      console.info("Already connected!", c.toString());
+      console.info(`Already connected! ${c} === ${from}:${from_index}-->${to}:${to_index}`);
       return c;
     }
     const old_to = this.get_connect_to_index(to, to_index);
     if (old_to) {
-      console.info("Already connected!", old_to.toString());
+      console.info(`Already connected! ${old_to} === X-->${to}:${to_index}`);
       this.disconnect(old_to);
     }
     // const old_from = this.get_connect_from_index(from, from_index);
@@ -222,12 +239,20 @@ export class Graph<M extends AllModes = "server"> {
     return connect;
   }
 
-  add_comment(content: string | Comment, x?: number, y?: number, attached_node: Node<M> | null = null): Comment {
+  add_comment(content: Comment): Comment;
+  add_comment(content: Comment, attach_to: Node<M>): Comment;
+  add_comment(content: string, attached_node: Node<M>): Comment;
+  add_comment(content: string, x: number, y: number): Comment;
+  add_comment(content: string | Comment, x?: number | Node<M>, y?: number): Comment {
     if (typeof content !== "string") {
+      if (x !== undefined && typeof x !== "number") content.attached_node = x;
       this.comments.add(content);
       return content;
     }
-    const comment = new Comment(content, x ?? 0, y ?? 0, attached_node);
+    const attached_node = typeof x === "number" ? null : x;
+    x = typeof x === "number" ? x : 0;
+    y = y ?? 0;
+    const comment = new Comment(content, x, y, attached_node);
     this.comments.add(comment);
     return comment;
   }
@@ -268,35 +293,39 @@ export class Graph<M extends AllModes = "server"> {
   }
 
   encode(opt?: EncodeOptions): Root {
-    const option = new EncodeOptionsBuilder(opt ?? {});
+    if (opt) opt.is_server ??= isServer(this.mode);
+    const option = new EncodeOptionsBuilder(opt ?? { is_server: isServer(this.mode) });
+    assertEq(option.is_server, isServer(this.mode));
     const nodes = [...this.nodes].map((n) => n.encode(option, this.get_connect_to(n), this.flows.get(n), this.get_node_comment(n)));
-    const graphValues = [...this.graph_var.values()].map(v => encode_node_graph_var(v));
-    return graph_body({/** 唯一标识符 */
+    const graphValues = [...this.graph_var.values()].map(v => encode_node_graph_var_server(v));
+    return graph_body({
+      graph_const: this.GraphConst,
       uid: this.uid,
-      /** 图的 ID */
       graph_id: this.graph_id,
-      /** 图文件的ID，可选, 通常是 graph_id + i */
       file_id: this.file_id,
-      /** 图的名称，可选 */
       graph_name: this.graph_name,
-      /** 图中包含的节点列表，可选 */
       nodes,
       comments: this.get_graph_comments().map(c => c.encode()),
       graphValues: graphValues,
     });
   }
-  static decode(root: Root): Graph {
+  static decode(root: Root): Graph<AllModes> {
     const [uid, time, file_id, file_name] = root.filePath.split("-");
     const name = root.graph.name;
     const graph_id = root.graph.id.id;
 
-    // TODO: discriminate mode!
-    const graph = new Graph("server", parseInt(uid), name, graph_id);
+    const gc = get_graph_const_by_which(root.graph.which);
+    if (empty(gc)) {
+      console.warn("Graph Const not found!", root.graph.which);
+      return null as any;
+    }
+    const mode: AllModes = gc.Name;
+    const graph = new Graph(mode, parseInt(uid), name, graph_id);
     const graph_vars = get_graph_vars(root.graph.graph?.inner.graph!);
     graph_vars.forEach((v) => graph.graph_var.set(v.name, v));
     root.graph.graph?.inner.graph.nodes.forEach(node => {
       // node itself
-      const n = graph.add_node(Node.decode(node, graph.mode));
+      const n = graph.add_node(Node.decode(node, mode));
       // comments
       if (!empty(node.comments)) {
         graph.add_comment(Comment.decode(node.comments, n));
@@ -317,72 +346,167 @@ export class Graph<M extends AllModes = "server"> {
   }
 }
 
-export class Node<M extends AllModes = "server"> {
+export class Node<M extends AllModes> {
   public readonly mode: M;
-  private node_index: number;
-  private node_id: NodeIdFor<M> | null;
-  private record: NodePinsRecords;
-  private pin_len: [number, number];
-  pins: Pin[];
-  x: number = 0;
-  y: number = 0;
-  constructor(node_index: number, mode: M = "server" as M, concrete_id?: NodeIdFor<M>, generic_id?: number) {
-    this.mode = mode;
-    assert(!empty(concrete_id) || !empty(generic_id));
-    // use generic_id if exist, or assume node_id is concrete, otherwise use node_id;
-    const gid: number = generic_id ?? get_generic_id(concrete_id!)! ?? (typeof concrete_id === "number" ? concrete_id : parseInt(concrete_id!));
-    const cid = concrete_id;
+  public readonly GraphConst: GraphConst;
+  public readonly node_index: number;
+  /** Node concrete Id */
+  // private node_id: NodeIdFor<M> | NodeNullFor<M>;
+  private concreteId: number | null;
+  private reflectType: string | null;
+  // pointer of NodePinsRecords, used for update pins
+  public readonly record: NodePinsRecords;
+  public pins: Pin[];
+  public x: number = 0;
+  public y: number = 0;
 
-    assert(!empty(gid));
+  private init_server(gid: number, cid?: number): NodePinsRecords {
+    const record = get_node_record_generic_server(gid)!;
+    assert(!empty(record)); // exist such gid
+    assert(record.id === gid); // record id matches
 
-    this.node_index = node_index;
-    this.node_id = cid ?? null;
-    this.record = get_node_record_generic(gid) ?? {
-      id: gid,
-      inputs: [],
-      outputs: [],
-      reflectMap: undefined,
-    };
-    this.pins = [];
-    this.pin_len = [this.record.inputs.length, this.record.outputs.length];
-    // Initialize pins based on node record
-    if (!empty(cid)) {
-      this.setConcrete(cid);
+    if (record.reflectMap === undefined) {
+      assert(cid === undefined || cid === gid);
+      // In Server Graphs, any Non-reflective Node should have a concreteId that is equal to the record.id
+      this.concreteId = record.id;
+      return record;
     }
+
+    if (cid === undefined) {
+      // reflect node but take a generic type
+      this.concreteId = null;
+      return record;
+    }
+
+    this.set_concrete_id_server(record, cid);
+    return record;
+  }
+  private init_client(gid: number, cid?: number, type?: NodeType): NodePinsRecords {
+    const record = get_node_record_generic_client(gid)!;
+    assert(!empty(record)); // exist such gid
+    assert(record.id === gid); // record id matches
+
+    if (record.reflectMap === undefined) {
+      cid ??= record.cid;
+      // Always, the cid Exist for non-reflective nodes and is often different from the gid
+      assert(cid === record.cid);
+      // even if cid is undefined, it is safe to create that node
+      this.concreteId = cid ?? null;
+      return record;
+    }
+
+    // And for reflective nodes, the record.cid does not exist
+    assert(record.cid === undefined);
+
+    if (type === undefined) {
+      // A reflective node with no type specified
+      this.concreteId = null;
+      this.reflectType = null;
+      // Should have no cid
+      assert(cid === undefined);
+      return record;
+    }
+
+    // A reflective node with a type specified
+    const tp_str = stringify(type);
+    const key = `${gid} ${cid} ${tp_str}`;
+    this.set_concrete_id_client(record, key, tp_str);
+    return record;
   }
 
-  private assert_is_server(): asserts this is Graph<ServerModes> {
-    assert(isServer(this.mode));
+  private set_concrete_id_server(record: SingleNodeDataServer, key: number) {
+    assert(record.reflectMap !== undefined);
+    const reflect = record.reflectMap.find(ref => ref[0] === key);
+    assert(!empty(reflect), `There's no reflect cid:${key}`);
+    this.concreteId = key;
+    this.reflectType = reflect[1];
   }
-  private assert_is_client(): asserts this is Graph<ServerModes> {
-    assert(!isServer(this.mode));
+  private set_concrete_id_client(record: SingleNodeDataClient, key: string, fall_back_type: string) {
+    assert(record.reflectMap !== undefined);
+    let reflect = record.reflectMap.find(ref => ref[0] === key);
+    if (empty(reflect)) {
+      console.warn(`There's no reflect cid:${key}, fall back to find ${fall_back_type}`);
+      reflect = record.reflectMap.find(ref => ref[0].endsWith(fall_back_type));
+    }
+    assert(!empty(reflect));
+    this.concreteId = parseInt(reflect[0].split(" ")[1]);
+    this.reflectType = reflect[1];
   }
 
-  setConcrete(id: NodeIdFor<M>) {
-    assert(this.record.id === id || this.record.reflectMap?.find(x => x[0] === id) !== undefined);
-    this.node_id = id;
+  constructor(node_index: number, mode: M, concrete_id: NodeIdFor<M>, generic_id?: number) {
+    this.mode = mode;
+    this.GraphConst = get_graph_const(mode);
+    this.node_index = node_index;
 
-    const rec = empty(this.record.reflectMap) ? to_node_pin(this.record) : reflects_records(this.record, id, true);
-    for (let i = 0; i < rec.inputs.length; i++) {
+    assert(NodeIdNotNull(concrete_id) || !empty(generic_id));
+    this.concreteId = null;
+    this.reflectType = null;
+    if (isServer(mode)) {
+      assert(typeof concrete_id === "number");
+      if (generic_id === undefined) {
+        generic_id = get_generic_id_server(concrete_id) ?? undefined;
+        if (generic_id === undefined) {
+          generic_id = is_generic_id(concrete_id) ? concrete_id : undefined;
+          console.warn(`You may use ${concrete_id} incorrectly inside concrete id for Node.constructor`);
+          assert(generic_id !== undefined);
+        }
+      }
+      this.record = this.init_server(generic_id, concrete_id);
+    } else {
+      assert(typeof concrete_id === "string");
+      const [_g, _c, _t] = concrete_id.split(" ");
+      if (generic_id === undefined) {
+        assert(_g?.length > 0);
+        generic_id = parseInt(_g);
+      }
+      if (_g?.length > 0) assert(generic_id.toString() === _g);
+      const cid = _c?.length > 0 ? parseInt(_c) : undefined;
+      if (cid !== undefined) assert(cid.toString() === _c);
+      const tp = _t?.length > 0 ? parse(_t) : undefined;
+      this.record = this.init_client(generic_id, cid, tp);
+    }
+
+    this.pins = [];
+
+    // Initialize pins based on node record
+    this.updatePins();
+  }
+  changeConcreteId(concrete_id: NodeIdFor<M>) {
+    if (isServer(this.mode)) {
+      assert(typeof concrete_id === "number");
+      this.set_concrete_id_server(this.record as SingleNodeDataServer, concrete_id);
+    } else {
+      assert(typeof concrete_id === "string");
+      const fall_back_type = concrete_id.split(" ").pop()!;
+      assert(fall_back_type?.length > 0);
+      this.set_concrete_id_client(this.record as SingleNodeDataClient, concrete_id, fall_back_type!);
+    }
+    this.updatePins();
+  }
+  private updatePins() {
+    const state = this.record.reflectMap === undefined ? "simple" : this.reflectType === null ? "generic" : "reflect";
+    for (let i = 0; i < this.record.inputs.length; i++) {
       if (empty(this.pins[i])) {
         this.pins[i] = new Pin(this.GenericId, 3, i);
       }
-      if (empty(rec.inputs[i])) {
-        this.pins[i].clear();
-      } else {
-        this.pins[i].setType(rec.inputs[i], isServer(this.mode));
+      let type: NodeType | null = parse(this.record.inputs[i]);
+      if (is_reflect(type)) {
+        if (state === "reflect") type = reflects(type, this.reflectType!);
+        else if (state === "generic") type = null;
       }
+      this.pins[i].setType(type, isServer(this.mode));
     }
-    for (let j = 0; j < rec.outputs.length; j++) {
-      const i = j + rec.inputs.length;
+    for (let j = 0; j < this.record.outputs.length; j++) {
+      const i = j + this.record.inputs.length;
       if (empty(this.pins[i])) {
         this.pins[i] = new Pin(this.GenericId, 4, j);
       }
-      if (empty(rec.outputs[j])) {
-        this.pins[i].clear();
-      } else {
-        this.pins[i].setType(rec.outputs[j], isServer(this.mode));
+      let type: NodeType | null = parse(this.record.outputs[j]);
+      if (is_reflect(type)) {
+        if (state === "reflect") type = reflects(type, this.reflectType!);
+        else if (state === "generic") type = null;
       }
+      this.pins[i].setType(type, isServer(this.mode));
     }
   }
   setPos(x: number, y: number) {
@@ -391,7 +515,7 @@ export class Node<M extends AllModes = "server"> {
   }
   encode(opt?: EncodeOptions, connects?: Connect[], flows?: Connect[][], comment?: Comment | null): GraphNode {
     const option = new EncodeOptionsBuilder(opt ?? {});
-    const pins = this.pins.map((p, i) => p.encode(option, connects)).filter((p) => !empty(p));
+    const pins = this.pins.map((p, i) => p.encode(option, connects, this)).filter((p) => !empty(p));
     if (!empty(flows)) {
       for (let i = 0; i < flows.length; i++) {
         if (!empty(flows[i]) && flows[i].length !== 0) {
@@ -400,10 +524,11 @@ export class Node<M extends AllModes = "server"> {
       }
     }
     return node_body({
+      graph_const: this.GraphConst,
       /** 通用 ID */
       generic_id: this.record.id as number,
       /** 具体 ID */
-      concrete_id: this.node_id as number,
+      concrete_id: this.concreteId ?? undefined,
       /** X 坐标 */
       x: this.x,
       /** Y 坐标 */
@@ -419,6 +544,10 @@ export class Node<M extends AllModes = "server"> {
 
   setVal(pin: number | Pin, val: AnyType) {
     if (typeof pin === "number") {
+      if (empty(this.pins[pin])) {
+        console.error("Pin not found: index", pin, this.toString());
+        return;
+      }
       this.pins[pin].setVal(val);
     } else {
       pin.setVal(val);
@@ -426,13 +555,10 @@ export class Node<M extends AllModes = "server"> {
   }
 
   static decode<M extends AllModes>(node: GraphNode, mode: M): Node<M> {
-    const info = get_node_info(node);
+    const info = get_node_info(node, isServer(mode));
     const g_id = info.generic_id;
-    const c_id = info.concrete_id;
-    const n = new Node(node.nodeIndex, mode, isServer(mode) ? c_id as NodeIdFor<M> : undefined, g_id);
-    if (!isServer(mode) && c_id !== undefined) {
-      todo("extract cid using index of concrete in client nodes");
-    }
+    const c_id = (isServer(mode) ? info.concrete_id : get_client_node_cid_from_info(info)) as NodeIdFor<M> ?? Null(mode);
+    const n = new Node(node.nodeIndex, mode, c_id, g_id);
     n.setPos(node.x / 300, node.y / 200);
     const values = node.pins.filter((p) => p.i1.kind === 3).map((p) => Pin.decode(p));
     info.pins.forEach((p) => {
@@ -445,12 +571,12 @@ export class Node<M extends AllModes = "server"> {
         }
       } else if (p.kind === 4) {
         // Output
-        n.pins[n.pin_len[0] + p.index].setType(p.node_type, isServer(mode));
+        n.pins[n.record.inputs.length + p.index].setType(p.node_type, isServer(mode));
       }
     });
     return n;
   }
-  static decode_connects(node: GraphNode, graph: Graph): { flows: Connect[], connects: Connect[] } {
+  static decode_connects<M extends AllModes>(node: GraphNode, graph: Graph<M>): { flows: Connect[], connects: Connect[] } {
     const flows: Connect[] = [];
     const connects: Connect[] = [];
     if (!empty(node.pins)) {
@@ -485,7 +611,18 @@ export class Node<M extends AllModes = "server"> {
   }
   /** May return `undefined` when the node is constructed with **only** generic id for **generic node** */
   get ConcreteId() {
-    return this.node_id;
+    if (isServer(this.mode)) {
+      return this.concreteId;
+    } else {
+      if (this.concreteId === null) return this.GenericId.toString();
+      if (this.reflectType === null) return this.concreteId.toString();
+      return this.concreteId.toString() + " " + this.reflectType.toString();
+    }
+  }
+
+
+  toString() {
+    return `Node(${this.node_index}.${this.GenericId}.${this.ConcreteId}.${this.reflectType})`;
   }
 }
 
@@ -517,14 +654,20 @@ export class Pin {
     this.value = null;
   }
   // auto change index of concrete
-  setType(type: NodeType, is_server: boolean) {
+  // set type to null for generic index of concrete
+  setType(type: NodeType | null, is_server: boolean) {
+    if (type === null) {
+      this.type = null;
+      this.indexOfConcrete = -1;
+      return;
+    }
     if (!empty(this.type) && type_equal(this.type, type)) {
       return;
     }
     this.type = type;
     this.indexOfConcrete = get_index_of_concrete(this.generic_id, this.kind === 3, this.index, this.type, is_server);
   }
-  encode(opt?: EncodeOptions, connects?: Connect[]): NodePin | null {
+  encode(opt?: EncodeOptions, connects?: Connect[], debugger_node?: Node<AllModes>): NodePin | null {
     const option = new EncodeOptionsBuilder(opt ?? {});
     if (empty(this.type)) {
       // Normal pin without determined type
@@ -533,22 +676,28 @@ export class Pin {
     // if (this.kind === 4 || this.kind === 1) return null;
     // if (connects?.length !== 0) debugger;
     const connect = connects?.find((c) => this.kind === 3 && c.to_index === this.index)?.encode(); // input can be connected
-    const pin = node_type_pin_body({
-      reflective: this.indexOfConcrete !== null,
-      /** 引脚类型 (输入/输出) */
-      kind: this.kind as NodePin_Index_Kind,
-      /** 引脚索引 */
-      index: this.index,
-      /** 节点类型系统中的类型描述对象 NodeType */
-      type: this.type,
-      /** 具体类型的索引，用于支持类型实例化 */
-      indexOfConcrete: this.indexOfConcrete ?? undefined,
-      /** 引脚的初始值，可选 */
-      value: this.value ?? undefined,
-      fill_undefined: option.fill_undefined === false ? undefined : option.fill_undefined === true ? 0 : option.fill_undefined,
-      connects: connect === undefined ? undefined : [connect],
-    });
-    return pin;
+    try {
+      return node_type_pin_body({
+        is_server: option.is_server,
+        reflective: this.indexOfConcrete !== null,
+        /** 引脚类型 (输入/输出) */
+        kind: this.kind as NodePin_Index_Kind,
+        /** 引脚索引 */
+        index: this.index,
+        /** 节点类型系统中的类型描述对象 NodeType */
+        type: this.type,
+        /** 具体类型的索引，用于支持类型实例化 */
+        indexOfConcrete: this.indexOfConcrete ?? undefined,
+        /** 引脚的初始值，可选 */
+        value: this.value ?? undefined,
+        fill_undefined: option.fill_undefined === false ? undefined : option.fill_undefined === true ? 0 : option.fill_undefined,
+        connects: connect === undefined ? undefined : [connect],
+      });
+    } catch (e) {
+      console.info(`Failed to encode ${debugger_node}${this} with type ${stringify(this.type)} and value ${JSON.stringify(this.value)}`);
+      console.error(e);
+      return null;
+    }
   }
   static decode(pin: NodePin): { index: number, value: AnyType | undefined } {
     return { index: pin.i1.index, value: extract_value(pin.value) };
@@ -558,6 +707,11 @@ export class Pin {
       index,
       connects: flows.map((f) => f.encode_flow()),
     })
+  }
+
+  toString() {
+    const type = ["", "FlowIn", "FlowOut", "In", "Out"]
+    return `${type[this.kind]}(${this.index})`;
   }
 }
 
@@ -578,7 +732,7 @@ export class Connect {
   encode_flow() {
     return node_connect_to(this.to.NodeIndex, this.to_index);
   }
-  static decode_connects(connects: NodeConnection[], self_node: Node<AllModes>, self_index: number, graph: Graph): Connect[] {
+  static decode_connects<M extends AllModes>(connects: NodeConnection[], self_node: Node<M>, self_index: number, graph: Graph<M>): Connect[] {
     const ret: Connect[] = [];
     for (const c of connects) {
       const from_node = graph.get_node(c.id);
@@ -590,7 +744,7 @@ export class Connect {
     }
     return ret;
   }
-  static decode_flows(connects: NodeConnection[], self_node: Node<AllModes>, self_index: number, graph: Graph): Connect[] {
+  static decode_flows<M extends AllModes>(connects: NodeConnection[], self_node: Node<M>, self_index: number, graph: Graph<M>): Connect[] {
     const ret: Connect[] = [];
     for (const c of connects) {
       const to_node = graph.get_node(c.id);
@@ -603,7 +757,7 @@ export class Connect {
     return ret;
   }
   toString() {
-    return `${this.from.NodeIndex}-${this.from_index} -> ${this.to.NodeIndex}-${this.to_index}`;
+    return `${this.from.NodeIndex}_${this.from_index}-->${this.to.NodeIndex}_${this.to_index}`;
   }
 }
 
@@ -647,13 +801,16 @@ export class Comment {
 export interface EncodeOptions {
   pos_jitter?: boolean;
   fill_undefined?: boolean | number;
+  is_server?: boolean;
 }
 export class EncodeOptionsBuilder implements Required<EncodeOptions> {
   pos_jitter: boolean;
   fill_undefined: boolean | number;
-  constructor({ pos_jitter = true, fill_undefined = false }: EncodeOptions) {
+  is_server: boolean;
+  constructor({ pos_jitter = true, fill_undefined = false, is_server = true }: EncodeOptions) {
     this.pos_jitter = pos_jitter;
     this.fill_undefined = fill_undefined;
+    this.is_server = is_server;
   }
 }
 

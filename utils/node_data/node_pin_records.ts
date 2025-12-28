@@ -26,6 +26,8 @@ export interface NodePinsRecords {
 export interface SingleNodeData extends NodePinsRecords {
   name: string;
 }
+export type SingleNodeDataServer = SingleNodeData & { reflectMap?: NodeReflectRecords[] };
+export type SingleNodeDataClient = SingleNodeData & { reflectMap?: NodeReflectRecordsClient[], cid?: number };
 
 export const NODE_PIN_RECORDS = [
   { name: "Print String", id: 1, inputs: ["Str"], outputs: [] },
@@ -6098,7 +6100,7 @@ export const NODE_PIN_RECORDS = [
     inputs: [],
     outputs: [],
   },
-] as const satisfies (SingleNodeData & { reflectMap?: NodeReflectRecords[] })[];
+] as const satisfies SingleNodeDataServer[];
 
 export const NODE_PIN_RECORDS_CLIENT = [
   {
@@ -7654,7 +7656,7 @@ export const NODE_PIN_RECORDS_CLIENT = [
     outputs: [],
     cid: 2000,
   },
-] as const satisfies (SingleNodeData & { reflectMap?: NodeReflectRecordsClient[], cid?: number })[];
+] as const satisfies SingleNodeDataClient[];
 
 if (import.meta.main) {
   const set = new Set();

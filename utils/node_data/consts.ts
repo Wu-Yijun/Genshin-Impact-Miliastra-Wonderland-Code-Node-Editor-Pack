@@ -1,21 +1,21 @@
-export const SCHEMA_VERSION = "2.1.0";
+export const DATA_SCHEMA_VERSION = "2.1.0";
 export const AUTHOR = "Aluria";
 
 export const GAME_VERSION = "6.2.0";
 
 // ====== Begin of Document Schema ====== //
 interface Document {
-  SchemaVersion: string;
-  GameVersion: string;
-  Author: string;
-  Date: string;
-  Description: string;
-  Schema: string;
-  TypesList: TypeEntry[];
-  NodesList: NodeEntry[];
-  EnumList: EnumEntry[];
-  ClientEnumList: EnumEntry[];
-  GraphConstList: GraphConst[];
+  Version: string;              // Data & Schema version
+  GameVersion: string;          // Game version
+  Author: string;               // Author
+  Date: string;                 // Date of generation
+  Description: string;          // Description
+  Schema: string;               // TypeScript type definition source code
+  TypesList: TypeEntry[];       // Type list
+  NodesList: NodeEntry[];       // Node list
+  EnumList: EnumEntry[];        // Server enum list
+  ClientEnumList: EnumEntry[];  // Client enum list
+  GraphConstList: GraphConst[]; // Different node graph fixed field adoption value information
 }
 interface Entry {
   Name: string;               // Safe name used as object keys or query keys
@@ -51,16 +51,16 @@ interface TypeMapping {
 interface EnumItem extends Entry {
 }
 interface GraphConst {
-  Name: string;
-  Class: number;
-  Type: number;
-  Which: number;
-  GraphClass: number;
-  GraphType: number;
-  GraphKind: number;
-  NodeClass: number;
-  NodeType: number;
-  NodeKind: number;
+  Name: string;        // Name of each graph type (used to identify inside gia_gen interface)
+  Class: number;       // Root.graph.id.class
+  Type: number;        // Root.graph.id.type
+  Which: number;       // Root.graph.which --> Also used to identify the graph type
+  GraphClass: number;  // Graph.id.class
+  GraphType: number;   // Graph.id.type
+  GraphKind: number;   // Graph.id.kind
+  NodeClass: number;   // Node.(genericId|concreteId).class
+  NodeType: number;    // Node.(genericId|concreteId).type
+  NodeKind: number;    // Node.genericId.kind (The Node.concreteId.kind is always SysCall(22000))
 }
 const NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Others", "Hidden"] as const;
 const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
@@ -69,6 +69,19 @@ type Translations = Partial<{ [key in typeof Language[number]]: string }>; // Di
 export { NodeClasses, Language };
 export type { Document, Entry, TypeEntry, NodeEntry, EnumEntry, TypeMapping, EnumItem, Translations };
 
+interface GraphConstStrict extends GraphConst {
+  Name: typeof GRAPH_CONSTS[number]["Name"];
+  Class: typeof GRAPH_CONSTS[number]["Class"];
+  Type: typeof GRAPH_CONSTS[number]["Type"];
+  Which: typeof GRAPH_CONSTS[number]["Which"];
+  GraphClass: typeof GRAPH_CONSTS[number]["GraphClass"];
+  GraphType: typeof GRAPH_CONSTS[number]["GraphType"];
+  GraphKind: typeof GRAPH_CONSTS[number]["GraphKind"];
+  NodeClass: typeof GRAPH_CONSTS[number]["NodeClass"];
+  NodeType: typeof GRAPH_CONSTS[number]["NodeType"];
+  NodeKind: typeof GRAPH_CONSTS[number]["NodeKind"];
+};
+export type { GraphConstStrict as GraphConst };
 
 export const GRAPH_CONSTS = [
   {
@@ -96,7 +109,7 @@ export const GRAPH_CONSTS = [
     "NodeKind": 22000
   },
   {
-    "Name": "Class",
+    "Name": "class",
     "Class": 5,
     "Type": 0,
     "Which": 23,
@@ -168,3 +181,9 @@ export const GRAPH_CONSTS = [
     "NodeKind": 22000
   }
 ] as const satisfies GraphConst[];
+
+export const GRAPH_ID_RANGE = {
+  "server": 0x4000_0000,
+  "client": 0x4080_0000,
+  "composite": 0x6000_0000,
+} as const;

@@ -1,11 +1,22 @@
 import { get_type, get_id, type NodeType, get_id_client } from "../gia_gen/nodes.ts";
 import { assert, DEBUG, STRICT } from "../utils.ts";
 import { CONCRETE_MAP, type ConcreteMap } from "./concrete_map.ts";
+import { GRAPH_CONSTS, type GraphConst } from "./consts.ts";
 import { CLIENT_NODE_ID, NODE_ID } from "./node_id.ts";
-import { NODE_PIN_RECORDS, type SingleNodeData } from "./node_pin_records.ts";
+import { NODE_PIN_RECORDS, NODE_PIN_RECORDS_CLIENT, type SingleNodeDataClient, type SingleNodeDataServer, type SingleNodeData } from "./node_pin_records.ts";
+
+
+
+// ======================== Graph Consts Helpers ========================
+
+export function get_graph_const(name: string | GraphConst): GraphConst {
+  return typeof name === "string" ? GRAPH_CONSTS.find((g) => g.Name === name)! : name;
+}
+export function get_graph_const_by_which(which: number): GraphConst | undefined {
+  return GRAPH_CONSTS.find((g) => g.Which === which);
+}
 
 // ======================== Concrete Map Helpers ========================
-
 
 export function get_index_of_concrete(generic_id: number, is_input: boolean, pin_index: number, type: number): number | null;
 export function get_index_of_concrete(generic_id: number, is_input: boolean, pin_index: number, type: NodeType, is_server: boolean): number | null;
@@ -23,7 +34,10 @@ export function get_index_of_concrete(
   const map = get_concrete_map(generic_id, is_input, pin_index);
   if (map === null) {
     if (typeof type !== "number" && type.t === "e") {
-      return type.e;
+      // only when generic id is reflective we get cid = e;
+      if (get_node_record_generic(generic_id)?.reflectMap !== undefined) {
+        return type.e;
+      }
     }
     return null;
   }
@@ -40,10 +54,9 @@ export function get_index_of_concrete(
 export function is_concrete_pin(
   generic_id: number,
   is_input: boolean,
-  pin_index: number,
-  maps: ConcreteMap = CONCRETE_MAP
+  pin_index: number
 ): boolean {
-  return maps.pins.has(
+  return CONCRETE_MAP.pins.has(
     generic_id + ":" + (is_input ? 3 : 4) + ":" + pin_index,
   );
 }
@@ -78,43 +91,52 @@ export function get_concrete_type(
   return get_type(type);
 }
 
+
 // ======================== Node Records Helpers ========================
-
-/** generic id --> index */
-const NODE_RECORDS_INDEX_MAP: Map<number, number> = Object.freeze(new Map(
-  NODE_PIN_RECORDS.map((r, i) => [r.id, i])
+const GENERIC_ID_TO_RECORD_SERVER = Object.freeze(new Map<number, SingleNodeDataServer>(
+  NODE_PIN_RECORDS.map(r => [r.id, r] as [number, SingleNodeDataServer]),
 ));
-/** concrete id --> generic id */
-const NODE_ID_MAP: Map<number | string, number> = Object.freeze(new Map(
-  NODE_PIN_RECORDS.map(r =>
-    "reflectMap" in r ?
-      r.reflectMap?.map(ref => [ref[0], r.id] as [number | string, number])
-      : undefined
-  ).filter(x => x !== undefined).flat()
+const GENERIC_ID_TO_RECORD_CLIENT = Object.freeze(new Map<number, SingleNodeDataClient>(
+  NODE_PIN_RECORDS_CLIENT.map(r => [r.id, r] as [number, SingleNodeDataClient]),
 ));
-/** generic id -- NODE_REC[id].reflectMap --> concrete id */
+const SERVER_CONCRETE_ID_TO_GENERIC_ID = Object.freeze(new Map<number, number>([
+  ...NODE_PIN_RECORDS.map(r => [r.id, r.id] as [number, number]),
+  ...NODE_PIN_RECORDS.filter(r => "reflectMap" in r).map(r => r.reflectMap.map(x => [x[0], r.id] as [number, number])).flat(),
+]));
 
-/** Notice that generic id and concrete id are in different spaces. */
-export function get_generic_id(concrete_id: number | string): number | null {
-  return NODE_ID_MAP.get(concrete_id) ?? null;
+/** Get Generic Id from Concrete Id of Server Graph */
+export function get_generic_id_server(concrete_id: number): number | null {
+  return SERVER_CONCRETE_ID_TO_GENERIC_ID.get(concrete_id) ?? null;
+}
+/** Get Generic Id from Concrete Id of Client Graph */
+export function get_generic_id_client(concrete_id: string): number | null {
+  const str = concrete_id.split(" ")[0];
+  const id = parseInt(str);
+  if (id.toString() !== str) return null;
+  if (GENERIC_ID_TO_RECORD_CLIENT.has(id)) return id;
+  return null;
 }
 /** Is it a valid generic id */
 export function is_generic_id(generic_id: number): boolean {
-  return NODE_RECORDS_INDEX_MAP.has(generic_id);
+  return GENERIC_ID_TO_RECORD_SERVER.has(generic_id) || GENERIC_ID_TO_RECORD_CLIENT.has(generic_id);
 }
-
 /** using a valid generic id to get node record */
-export function get_node_record_generic(generic_id: number): SingleNodeData | null {
-  const idx = NODE_RECORDS_INDEX_MAP.get(generic_id);
-  return idx === undefined ? null : NODE_PIN_RECORDS[idx] ?? null;
+export function get_node_record_generic_server(generic_id: number): SingleNodeDataServer | null {
+  return GENERIC_ID_TO_RECORD_SERVER.get(generic_id) ?? null;
 }
-
+export function get_node_record_generic_client(generic_id: number): SingleNodeDataClient | null {
+  return GENERIC_ID_TO_RECORD_CLIENT.get(generic_id) ?? null;
+}
+export function get_node_record_generic(generic_id: number): SingleNodeData | null {
+  return GENERIC_ID_TO_RECORD_SERVER.get(generic_id) ?? GENERIC_ID_TO_RECORD_CLIENT.get(generic_id) ?? null;
+}
 /** using a valid concrete id to get node record */
-export function get_node_record(concrete_id: number | string): SingleNodeData | null {
-  const id = get_generic_id(concrete_id);
-  if (id === null) return null;
-  const idx = NODE_RECORDS_INDEX_MAP.get(id);
-  return idx === undefined ? null : NODE_PIN_RECORDS[idx] ?? null;
+export function get_node_record_concrete(concrete_id: number | string): SingleNodeData | null {
+  if (typeof concrete_id === "number") {
+    return GENERIC_ID_TO_RECORD_SERVER.get(get_generic_id_server(concrete_id) ?? NaN) ?? null;
+  } else {
+    return GENERIC_ID_TO_RECORD_CLIENT.get(get_generic_id_client(concrete_id) ?? NaN) ?? null;
+  }
 }
 
 // ======================== GIA IR Convertor ========================

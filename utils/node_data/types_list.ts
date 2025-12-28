@@ -1,17 +1,5 @@
 import { ClientVarType, VarBase_Class, VarType } from "../protobuf/gia.proto.ts";
-
-export interface TypeEntry {
-  Name: string;               // Safe name used as object keys or query keys
-  Translations: Translations; // Raw texts displayed in game
-  ID: number;                 // An in-game unique id of the entry
-  ClientID: number | null;    // An in-game unique id of the any type in client 
-  Expression: string;         // Static representation expression for convertor
-  DSLName: string;            // Name of var class(type) in DSL
-  BaseType: string;           // Base type of the entry in game runtime
-  BaseTypeID: number;         // Id of the base type
-}
-export const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
-export type Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages
+import type { TypeEntry } from "./consts.ts";
 
 export const TYPES_LIST = [
   {

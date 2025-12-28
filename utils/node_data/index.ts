@@ -3,14 +3,18 @@
 import { CONCRETE_MAP } from "./concrete_map.ts";
 import { ENUM_ID, ENUM_VALUE, ENUM_ID_CLIENT } from "./enum_id.ts";
 import { TYPES_LIST } from "./types_list.ts";
-import { NODE_ID } from "./node_id.ts";
+import { NODE_ID, CLIENT_NODE_ID } from "./node_id.ts";
+import { DATA_SCHEMA_VERSION, AUTHOR, GAME_VERSION, GRAPH_CONSTS } from "./consts.ts";
 
 import * as helper from "./helpers.ts";
+import * as consts from "./consts.ts";
+import type * as Consts from "./consts.ts";
 
-const DATA_VERSION = "2.0.1";
-const GAME_VERSION = "6.2.0";
+export { helper, consts, type Consts };
 
-export { helper };
+export type { ConcreteMap } from "./concrete_map.ts";
+export type { EnumId, EnumIdClient, EnumValue } from "./enum_id.ts";
+export type { GraphConst } from "./consts.ts";
 
 export {
   /** 不同节点 id 不同端口对应的 concreteId - type 查找表.
@@ -29,7 +33,8 @@ export {
   ENUM_ID_CLIENT,
   TYPES_LIST,
   NODE_ID,
+  CLIENT_NODE_ID,
+  DATA_SCHEMA_VERSION,
+  AUTHOR,
+  GAME_VERSION, GRAPH_CONSTS
 };
-
-export * as consts from "./consts.ts";
-export type * as Consts from "./consts.ts";

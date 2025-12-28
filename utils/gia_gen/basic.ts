@@ -5,35 +5,46 @@ import type {
   ComplexValueStruct,
   Root,
   VarBase,
+  VarType,
+  ClientVarType,
   VarBase_ItemType,
   Comments,
   GraphVariable,
 } from "../protobuf/gia.proto.ts";
 import {
-  NodeGraph_Id_Class,
-  NodeGraph_Id_Kind,
-  NodeGraph_Id_Type,
   NodePin_Index_Kind,
-  NodeProperty_Type,
-  GraphUnit_Id_Class,
-  GraphUnit_Which,
   VarBase_Class,
-  VarType,
-  GraphUnit_Id_Type,
   VarBase_ItemType_ServerType_Kind,
   VarBase_ItemType_ClassBase,
+  NodeGraph_Id_Kind,
 } from "../protobuf/gia.proto.ts";
-import { get_id, get_type, type NodePins, type NodeType } from "./nodes.ts";
+import { get_id, get_id_client, parse, stringify, type NodeType } from "./nodes.ts";
 import { counter_dynamic_id, counter_index, randomInt } from "./utils.ts";
-import { ENUM_ID } from "../node_data/enum_id.ts";
 import type { AnyType, GraphVar } from "./graph.ts";
 import { assert, todo } from "../utils.ts";
 import { GAME_VERSION } from "../node_data/consts.ts";
+import type { GraphConst } from "../node_data/consts.ts";
+import { get_graph_const } from "../node_data/helpers.ts";
+
+function tid(type: string | NodeType, is_server: true): VarType;
+function tid(type: string | NodeType, is_server: false): ClientVarType;
+function tid(type: string | NodeType, is_server: boolean, return_type: "number"): number;
+function tid(type: string | NodeType, is_server: boolean, _?: "number"): VarType | ClientVarType {
+  if (typeof type === "string") {
+    type = parse(type);
+  }
+  if (is_server) {
+    return get_id(type) as VarType;
+  } else {
+    return get_id_client(type) as ClientVarType;
+  }
+}
 
 /**
  * GraphBody_ 接口定义了构建图的基本参数
  */
 export interface GraphBody_ {
+  graph_const: GraphConst | string;
   /** 唯一标识符 */
   uid: number;
   /** 图的 ID */
@@ -68,26 +79,27 @@ export function graph_body(body: GraphBody_): Root {
     /[A-Z]/g,
     (m) => m.toLowerCase(),
   );
+  const gc = get_graph_const(body.graph_const);
   const timestamp = Math.floor(Date.now() / 1000);
   const file_id = body.file_id ?? body.graph_id + counter_dynamic_id.value;
   const filePath = `${body.uid}-${timestamp}-${file_id}-\\${file_name}`;
   const gia: Root = {
     graph: {
       id: {
-        class: GraphUnit_Id_Class.Basic,
-        type: GraphUnit_Id_Type.ServerGraph,
+        class: gc.Class,
+        type: gc.Type,
         id: body.graph_id,
       },
       relatedIds: [],
       name: graph_name,
-      which: GraphUnit_Which.EntityNode,
+      which: gc.Which,
       graph: {
         inner: {
           graph: {
             id: {
-              class: NodeGraph_Id_Class.UserDefined,
-              type: NodeGraph_Id_Type.BasicNode,
-              kind: NodeGraph_Id_Kind.NodeGraph,
+              class: gc.GraphClass,
+              type: gc.GraphType,
+              kind: gc.GraphKind,
               id: body.graph_id,
             },
             name: graph_name,
@@ -111,10 +123,11 @@ export function graph_body(body: GraphBody_): Root {
  * NodeBody_ 接口定义了构建节点的基本参数
  */
 export interface NodeBody_ {
+  graph_const: GraphConst | string;
   /** 通用 ID */
   generic_id: number;
-  /** 具体 ID */
-  concrete_id: number;
+  /** 具体 ID, 可选 */
+  concrete_id?: number;
   /** X 坐标 */
   x: number;
   /** Y 坐标 */
@@ -145,21 +158,22 @@ export interface NodeBody_ {
  * @returns GraphNode 节点对象
  */
 export function node_body(body: NodeBody_): GraphNode {
+  const gc = get_graph_const(body.graph_const);
   const nodeIndex = body.unique_index ?? counter_index.value;
   const node: GraphNode = {
     nodeIndex: nodeIndex,
     genericId: {
-      class: NodeGraph_Id_Class.SystemDefined,
-      type: NodeProperty_Type.Server,
-      kind: NodeGraph_Id_Kind.SysCall,
+      class: gc.NodeClass,
+      type: gc.NodeType,
+      kind: gc.NodeKind,
       nodeId: body.generic_id,
     },
-    concreteId: {
-      class: NodeGraph_Id_Class.SystemDefined,
-      type: NodeProperty_Type.Server,
+    concreteId: body.concrete_id ? {
+      class: gc.NodeClass,
+      type: gc.NodeType,
       kind: NodeGraph_Id_Kind.SysCall,
       nodeId: body.concrete_id,
-    },
+    } : undefined,
     pins: body.pins,
     comments: body.comment,
     x: body.x * 300 + (body.pos_jitter ?? true ? Math.random() * 20 : 0), // shakings
@@ -180,7 +194,8 @@ export interface PinBody_ {
   /** 引脚的值，可选 */
   value?: VarBase;
   /** 引脚的数据类型 */
-  type: VarType;
+  type: string;
+  is_server: boolean;
   /** 引脚的连接 */
   connects?: NodeConnection[];
 }
@@ -208,8 +223,8 @@ export function pin_body(body: PinBody_): NodePin {
       kind: body.kind,
       index: body.index,
     },
-    value: body.value ?? {} as any, // may cause unpredictable behavior
-    type: body.type,
+    value: body.value ?? {} as any,
+    type: tid(body.type, body.is_server, "number"),
     connects: body.connects ?? [],
   };
   return pin;
@@ -284,14 +299,38 @@ export function wrapped_pin_value(body: PinValue_): VarBase {
  * @param type 变量类型
  * @returns VarBase_ItemType
  */
-export function item_type(type: VarType): VarBase_ItemType {
-  return {
-    classBase: 1,
-    type_server: {
-      type: type,
-      kind: 0,
-    },
-  };
+export function item_type(type: string | NodeType, is_server: boolean): VarBase_ItemType {
+  if (is_server) {
+    const t = typeof type === "string" ? parse(type) : type;
+    if (t.t === "d") {
+      return {
+        classBase: VarBase_ItemType_ClassBase.Server,
+        type_server: {
+          type: tid(type, is_server),
+          kind: VarBase_ItemType_ServerType_Kind.Pair,
+          items: {
+            key: tid(t.k, is_server),
+            value: tid(t.v, is_server),
+            structId: 0,
+          }
+        },
+      };
+    }
+    return {
+      classBase: VarBase_ItemType_ClassBase.Server,
+      type_server: {
+        type: tid(type, is_server),
+        kind: 0,
+      },
+    };
+  } else {
+    return {
+      classBase: VarBase_ItemType_ClassBase.Client,
+      type_client: {
+        type: tid(type, is_server),
+      },
+    };
+  }
 }
 
 /**
@@ -299,7 +338,9 @@ export function item_type(type: VarType): VarBase_ItemType {
  */
 export interface EnumValue_ {
   /** 枚举值 */
-  value: number;
+  value?: number;
+  type: string;
+  is_server: boolean;
 }
 /**
  * 构建枚举类型值 VarBase
@@ -314,8 +355,8 @@ export function enum_value(body: EnumValue_) {
   const value: VarBase = {
     class: VarBase_Class.EnumBase,
     alreadySetVal: true,
-    itemType: item_type(VarType.EnumItem),
-    bEnum: { val: body.value },
+    itemType: item_type(body.type, body.is_server),
+    bEnum: body.value === undefined ? undefined : { val: body.value },
   };
   return value;
 }
@@ -329,9 +370,9 @@ export interface MapPinBody_ {
   /** 引脚索引 */
   index: number;
   /** 键的类型 */
-  key_type: VarType;
+  key_type: NodeType;
   /** 值的类型 */
-  value_type: VarType;
+  value_type: NodeType;
   /** 具体类型的索引，可选 */
   indexOfConcrete?: number;
   /** 引脚的连接 */
@@ -339,7 +380,7 @@ export interface MapPinBody_ {
   value?: AnyType;
 }
 /**
- * 构建 Map 类型引脚
+ * 构建 Map 类型引脚(仅限 Server)
  *
  * 参数列表：
  * - body: {
@@ -353,23 +394,11 @@ export interface MapPinBody_ {
  * @param body Map 引脚参数
  * @returns NodePin
  */
-export function map_pin_body(body: MapPinBody_): NodePin {
-  const map_pair = {
-    key: body.key_type,
-    value: body.value_type,
-    structId: 0,
-  };
+export function map_pin_body_server(body: MapPinBody_): NodePin {
   const value: VarBase = {
     class: VarBase_Class.MapBase,
     alreadySetVal: false,
-    itemType: {
-      classBase: VarBase_ItemType_ClassBase.Server,
-      type_server: {
-        type: VarType.Dictionary,
-        kind: VarBase_ItemType_ServerType_Kind.Pair,
-        items: structuredClone(map_pair),
-      },
-    },
+    itemType: item_type({ t: "d", k: body.key_type, v: body.value_type }, true),
     bMap: { mapPairs: [] },
   };
   if (body.value !== undefined) {
@@ -383,8 +412,8 @@ export function map_pin_body(body: MapPinBody_): NodePin {
       wrapper: {
         class: VarBase_Class.MapBase,
         mapPair: {
-          key: body.key_type,
-          value: body.value_type,
+          key: tid(body.key_type, true),
+          value: tid(body.value_type, true),
           structId: 0,
         },
       },
@@ -393,9 +422,10 @@ export function map_pin_body(body: MapPinBody_): NodePin {
   return pin_body({
     kind: body.kind,
     index: body.index,
-    type: VarType.Dictionary,
+    type: stringify({ t: "d", k: body.key_type, v: body.value_type }),
     value: wrapped_pin_value({ value, wrapper, indexOfConcrete: body.indexOfConcrete }),
     connects: body.connects,
+    is_server: true,
   });
 }
 
@@ -410,10 +440,11 @@ export interface ListPinBody_ {
   /** 引脚索引 */
   index: number;
   /** 列表中元素的类型 */
-  value_type: VarType;
+  value_type: string;
   /** 引脚的连接 */
   connects?: NodeConnection[];
   value?: AnyType;
+  is_server: boolean;
 }
 /**
  * 构建 List 类型引脚
@@ -433,16 +464,16 @@ export function list_pin_body(body: ListPinBody_): NodePin {
   const value: VarBase = {
     class: VarBase_Class.ArrayBase,
     alreadySetVal: true,
-    itemType: item_type(body.value_type),
+    itemType: item_type(body.value_type, body.is_server),
     bArray: { entries: [] },
   };
   if (body.value !== undefined) {
     assert(Array.isArray(body.value), "List pin body value must be an array!");
-    const v_t = get_type(body.value_type);
+    const v_t = parse(body.value_type);
     assert(v_t.t === "l");
-    const item_type = get_id(v_t.i) as VarType;
+    const item_type = stringify(v_t.i);
     for (let i = 0; i < body.value.length; i++) {
-      value.bArray!.entries.push(simple_value_var(item_type, body.value[i]));
+      value.bArray!.entries.push(simple_value_var(body.is_server, item_type, body.value[i]));
     }
   }
   const val = wrapped_pin_value({
@@ -455,6 +486,7 @@ export function list_pin_body(body: ListPinBody_): NodePin {
     type: body.value_type,
     value: val,
     connects: body.connects,
+    is_server: body.is_server,
   });
 }
 
@@ -467,11 +499,11 @@ export function list_pin_body(body: ListPinBody_): NodePin {
  * @param val 整数值
  * @returns VarBase
  */
-export function int_pin_body(val?: number): VarBase {
+export function int_pin_body(val: number | undefined, is_server: boolean): VarBase {
   return {
     class: VarBase_Class.IntBase,
     alreadySetVal: true,
-    itemType: item_type(VarType.Integer),
+    itemType: item_type("Int", is_server),
     bInt: val === undefined ? undefined : { val },
   };
 }
@@ -484,11 +516,11 @@ export function int_pin_body(val?: number): VarBase {
  * @param val 布尔或 0/1
  * @returns VarBase
  */
-export function bool_pin_body(val?: boolean | number): VarBase {
+export function bool_pin_body(val: boolean | number | undefined, is_server: boolean): VarBase {
   return {
     class: VarBase_Class.EnumBase,
     alreadySetVal: true,
-    itemType: item_type(VarType.Boolean),
+    itemType: item_type("Bol", is_server),
     bEnum: val === undefined ? undefined : { val: val ? 1 : 0 },
   };
 }
@@ -504,13 +536,14 @@ export function bool_pin_body(val?: boolean | number): VarBase {
  * @returns VarBase
  */
 export function id_pin_body(
-  val?: number,
-  type: VarType = VarType.GUID,
+  val: number | undefined,
+  type: string,
+  is_server: boolean,
 ): VarBase {
   return {
     class: VarBase_Class.IdBase,
     alreadySetVal: true,
-    itemType: item_type(type),
+    itemType: item_type(type, is_server),
     bId: val === undefined ? undefined : { val },
   };
 }
@@ -523,11 +556,11 @@ export function id_pin_body(
  * @param val 浮点数
  * @returns VarBase
  */
-export function float_pin_body(val?: number): VarBase {
+export function float_pin_body(val: number | undefined, is_server: boolean): VarBase {
   return {
     class: VarBase_Class.FloatBase,
     alreadySetVal: true,
-    itemType: item_type(VarType.Float),
+    itemType: item_type("Flt", is_server),
     bFloat: val === undefined ? undefined : { val },
   };
 }
@@ -540,11 +573,11 @@ export function float_pin_body(val?: number): VarBase {
  * @param val 字符串
  * @returns VarBase
  */
-export function string_pin_body(val?: string): VarBase {
+export function string_pin_body(val: string | undefined, is_server: boolean): VarBase {
   return {
     class: VarBase_Class.StringBase,
     alreadySetVal: true,
-    itemType: item_type(VarType.String),
+    itemType: item_type("Str", is_server),
     bString: val === undefined ? undefined : { val },
   };
 }
@@ -557,11 +590,11 @@ export function string_pin_body(val?: string): VarBase {
  * @param vec 向量 [x,y,z]
  * @returns VarBase
  */
-export function vector_pin_body(vec?: number[]): VarBase {
+export function vector_pin_body(vec: number[] | undefined, is_server: boolean): VarBase {
   return {
     class: VarBase_Class.VectorBase,
     alreadySetVal: true,
-    itemType: item_type(VarType.Vector),
+    itemType: item_type("Vec", is_server),
     bVector: vec === undefined ? {} as any : {
       val: {
         x: vec[0],
@@ -572,75 +605,67 @@ export function vector_pin_body(vec?: number[]): VarBase {
   };
 }
 
-export function simple_value_var(var_type: VarType, value?: AnyType, fill_undefined?: number): VarBase {
+export function simple_value_var(is_server: boolean, var_type: string, value?: AnyType, fill_undefined?: number): VarBase {
+  if (var_type.startsWith("E<")) {
+    // Notice that LocalVariable and VariableSnapshot is also included
+    assert(value === undefined || typeof value === "number");
+    return enum_value({ value: value ?? fill_undefined, type: var_type, is_server });
+  }
   switch (var_type) {
-    case VarType.EnumItem:
+    case "Int":
       assert(value === undefined || typeof value === "number");
-      return enum_value({ value: value ?? (fill_undefined as any) });
-    case VarType.Integer:
+      return int_pin_body(value ?? fill_undefined, is_server);
+    case "Gid":
+    case "Cfg":
+    case "Ety":
+    case "Fct":
+    case "Pfb":
       assert(value === undefined || typeof value === "number");
-      return int_pin_body(value ?? fill_undefined);
-    case VarType.GUID:
-    case VarType.Configuration:
-    case VarType.Entity:
-    case VarType.Faction:
-    case VarType.Prefab:
-      assert(value === undefined || typeof value === "number");
-      return id_pin_body(value ?? fill_undefined);
-    case VarType.Boolean:
+      return id_pin_body(value ?? fill_undefined, var_type, is_server);
+    case "Bol":
       assert(value === undefined || typeof value === "boolean" || typeof value === "number");
-      return bool_pin_body(value ?? fill_undefined);
-    case VarType.Float:
+      return bool_pin_body(value ?? fill_undefined, is_server);
+    case "Flt":
       assert(value === undefined || typeof value === "number");
-      return float_pin_body(value ?? fill_undefined);
-    case VarType.String:
+      return float_pin_body(value ?? fill_undefined, is_server);
+    case "Str":
       assert(value === undefined || typeof value === "string");
-      return string_pin_body(value ?? fill_undefined?.toString());
-    case VarType.Vector:
+      return string_pin_body(value ?? fill_undefined?.toString(), is_server);
+    case "Vec":
       assert(
         value === undefined ||
         (Array.isArray(value) && value.length == 3 && value.every((v) => typeof v === "number"))
       );
-      return vector_pin_body(value ?? (fill_undefined === undefined ? undefined : [fill_undefined, fill_undefined, fill_undefined]));
+      return vector_pin_body(value ?? (fill_undefined === undefined ? undefined : [fill_undefined, fill_undefined, fill_undefined]), is_server);
   }
   return todo("Not implemented AnyPinBody for type " + var_type);
 }
 
-export function all_value_var(var_type: NodeType, value?: AnyType, fill_undefined?: number): VarBase {
-  const id = get_id(var_type) as VarType;
-  switch (id) {
-    case VarType.EnumItem:
-    case VarType.Integer:
-    case VarType.GUID:
-    case VarType.Configuration:
-    case VarType.Entity:
-    case VarType.Faction:
-    case VarType.Prefab:
-    case VarType.Boolean:
-    case VarType.Float:
-    case VarType.String:
-    case VarType.Vector:
-      return simple_value_var(id, value, fill_undefined);
+export function all_value_var(var_type: NodeType, is_server: boolean, value?: AnyType, fill_undefined?: number): VarBase {
+
+  if (var_type.t === "e" || var_type.t === "b") {
+    return simple_value_var(is_server, stringify(var_type), value, fill_undefined);
   }
   if (var_type.t === "l") {
     const ret: VarBase = {
       class: VarBase_Class.ArrayBase,
       alreadySetVal: true,
-      itemType: item_type(id),
+      itemType: item_type(var_type.i, is_server),
       bArray: { entries: [] },
     }
     if (value !== undefined && typeof value === "object" && value instanceof Array) {
       for (const v of value) {
-        ret.bArray!.entries.push(all_value_var(var_type.i, v));
+        ret.bArray!.entries.push(all_value_var(var_type.i, is_server, v));
       }
     }
     return ret;
   }
   if (var_type.t === "d") {
+    assert(is_server);
     const ret: VarBase = {
       class: VarBase_Class.MapBase,
       alreadySetVal: true,
-      itemType: item_type(id),
+      itemType: item_type(var_type, is_server),
       bMap: {
         mapPairs: []
       },
@@ -653,10 +678,10 @@ export function all_value_var(var_type: NodeType, value?: AnyType, fill_undefine
           const map_pair: VarBase = {
             class: VarBase_Class.MapPair,
             alreadySetVal: true,
-            itemType: item_type(id),
+            itemType: item_type(var_type, is_server),
             bMapPair: {
-              key: all_value_var(var_type.k, key),
-              value: all_value_var(var_type.v, val),
+              key: all_value_var(var_type.k, is_server, key),
+              value: all_value_var(var_type.v, is_server, val),
             }
           };
           ret.bMap!.mapPairs.push(map_pair);
@@ -680,6 +705,7 @@ export interface NodeTypePinBody_ {
   index: number;
   /** 引脚的数据类型 (VarType)，例如 Integer / Float / Dictionary 等 */
   type: NodeType;
+  is_server: boolean;
   /** 具体类型的索引，可选，用于多态类型的选择 */
   indexOfConcrete?: number;
   /** 引脚的初始值，可选，不同类型对应不同值结构 */
@@ -708,77 +734,36 @@ export interface NodeTypePinBody_ {
  * @returns NodePin
  */
 export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
-
-  /**
-   * 当引脚类型为字典(Dictionary)时需要提供的键值类型对
-   * [key_type, value_type]
-   * 仅在 type === VarType.Dictionary 时有效
-   */
-  let key_val_type: [VarType, VarType] | undefined;
   if (body.type.t === "d") {
-    key_val_type = [get_id(body.type.k), get_id(body.type.v)] as any;
-  }
-  let var_type: VarType = get_id(body.type) as VarType;
-  if (body.type.t === "e") {
-    switch (body.type.e) {
-      case ENUM_ID.VariableSnapshot:
-        var_type = VarType.VariableSnapshot;
-        break;
-      case ENUM_ID.LocalVariable:
-        var_type = VarType.LocalVariable;
-        break;
-    }
+    assert(body.is_server);
+    return map_pin_body_server({
+      kind: body.kind,
+      index: body.index,
+      key_type: body.type.k,
+      value_type: body.type.v,
+      indexOfConcrete: body.indexOfConcrete,
+      connects: body.connects,
+      value: body.value,
+    });
+  } else if (body.type.t === "l") {
+    return list_pin_body({
+      indexOfConcrete: body.indexOfConcrete,
+      kind: body.kind,
+      index: body.index,
+      value_type: stringify(body.type),
+      connects: body.connects,
+      value: body.value,
+      is_server: body.is_server,
+    });
   }
 
-  switch (var_type) {
-    case VarType.Dictionary:
-      assert(
-        key_val_type !== undefined,
-        "Dict Type should pass parameter `key_val_type`!",
-      );
-      return map_pin_body({
-        kind: body.kind,
-        index: body.index,
-        key_type: key_val_type![0],
-        value_type: key_val_type![1],
-        indexOfConcrete: body.indexOfConcrete,
-        connects: body.connects,
-        value: body.value,
-      });
-    case VarType.BooleanList:
-    case VarType.ConfigurationList:
-    case VarType.EntityList:
-    case VarType.FactionList:
-    case VarType.FloatList:
-    case VarType.GUIDList:
-    case VarType.IntegerList:
-    case VarType.PrefabList:
-    case VarType.StringList:
-    case VarType.StructList:
-    case VarType.VectorList:
-      return list_pin_body({
-        indexOfConcrete: body.indexOfConcrete,
-        kind: body.kind,
-        index: body.index,
-        value_type: var_type,
-        connects: body.connects,
-        value: body.value,
-      });
-    case VarType.LocalVariable:
-    case VarType.VariableSnapshot:
-      return pin_body({
-        kind: body.kind,
-        index: body.index,
-        type: var_type,
-        connects: body.connects,
-      });
-  }
-  const value = body.kind === 3 ? all_value_var(body.type, body.value, body.fill_undefined) : undefined;
+  const value = body.kind === 3 ? all_value_var(body.type, body.is_server, body.value, body.fill_undefined) : undefined;
   if (body.reflective === true) {
     return pin_body({
       kind: body.kind,
       index: body.index,
-      type: var_type,
+      type: stringify(body.type),
+      is_server: body.is_server,
       value: wrapped_pin_value({
         indexOfConcrete: body.indexOfConcrete,
         value: value,
@@ -789,162 +774,13 @@ export function node_type_pin_body(body: NodeTypePinBody_): NodePin {
     return pin_body({
       kind: body.kind,
       index: body.index,
-      type: var_type,
+      type: stringify(body.type),
       value: value,
       connects: body.connects,
+      is_server: body.is_server,
     });
   }
 }
-
-// /**
-//  * NodeTypeNodeBody_ 接口定义了构建基于 NodeType 的节点的参数
-//  */
-// export interface NodeTypeNodeBody_ {
-//   /** 节点类型定义，包括输入/输出引脚类型列表 */
-//   pins: NodePins;
-//   /** 类型到具体实例映射表，用于确定具体类型索引，可选，默认使用 node.id 检索 */
-//   map?: ConcreteMap;
-//   /** 节点的泛类 ID，可选，默认使用 node.id */
-//   generic_id?: number;
-//   /** 节点的具体 ID，可选，默认使用 node.id */
-//   concrete_id?: number;
-//   /** 节点的 X 坐标 */
-//   x?: number;
-//   /** 节点的 Y 坐标 */
-//   y?: number;
-//   /** ⚠️ Warning: This may cause ID collision. 节点唯一索引，不建议填入 */
-//   unique_index?: number;
-// }
-// /**
-//  * 根据 NodeType 构建完整 GraphNode（自动构建 pins&类型映射）
-//  *
-//  * 参数列表：
-//  * - body: {
-//  *     pins: NodePins;
-//  *     map?: TypeConcreteMap;
-//  *     generic_id?: number;
-//  *     concrete_id?: number;
-//  *     x?: number;
-//  *     y?: number;
-//  *   }
-//  *
-//  * @param body NodeType 节点参数
-//  * @returns GraphNode
-//  */
-// export function node_type_node_body(body: NodeTypeNodeBody_): GraphNode {
-//   const generic_id = body.generic_id ?? any_id_to_gid(body.pins.id);
-//   const concrete_id = body.concrete_id ?? any_id_to_cid(body.pins.id);
-//   const is_server = typeof body.pins.id === "number";
-
-//   const pins: NodePin[] = [];
-//   body.pins.inputs.forEach((p, i) => {
-//     if (p === undefined) return;
-//     pins.push(node_type_pin_body({
-//       kind: NodePin_Index_Kind.InParam,
-//       index: i,
-//       type: p,
-//       indexOfConcrete: get_index_of_concrete(generic_id, true, i,),
-//       reflective: false
-//     }));
-//   });
-//   body.pins.outputs.forEach((p, i) => {
-//     if (p === undefined) return;
-//     pins.push(node_type_pin_body({
-//       kind: NodePin_Index_Kind.OutParam,
-//       index: i,
-//       type: p,
-//       indexOfConcrete: get_index_of_concrete(generic_id, 4, i, get_id(p), body.map),
-//       reflective: false
-//     }));
-//   });
-//   return node_body({
-//     pins,
-//     generic_id: generic_id as any,
-//     concrete_id: concrete_id as any,
-//     x: body.x ?? 0,
-//     y: body.y ?? 0,
-//     unique_index: body.unique_index,
-//   });
-// }
-
-/** ⚠️ Warning: Do not use in productive environment.
- * @deprecated Create an empty frame for genshin to auto derive pin contents. */
-export interface NodeTypePinBodyEmpty_ {
-  /** 引脚类型 (输入/输出) */
-  kind: number;
-  /** 引脚索引 */
-  index: number;
-  /** 具体类型的索引，用于支持类型实例化 */
-  indexOfConcrete: number;
-  /** careful. this is type rather than indexOfConcrete */
-  map_type?: [number, number];
-}
-export function node_type_pin_body_frame(pin: NodeTypePinBodyEmpty_): NodePin {
-  if (pin.map_type === undefined) {
-    return {
-      i1: { kind: pin.kind as any, index: pin.index },
-      i2: { kind: pin.kind as any, index: pin.index },
-      value: {
-        class: VarBase_Class.ConcreteBase,
-        alreadySetVal: true,
-        bConcreteValue: {
-          indexOfConcrete: pin.indexOfConcrete,
-          value: {} as any,
-        },
-      },
-      type: 0,
-      connects: [],
-    };
-  }
-  return {
-    i1: { kind: pin.kind as any, index: pin.index },
-    i2: { kind: pin.kind as any, index: pin.index },
-    value: {
-      class: VarBase_Class.ConcreteBase,
-      alreadySetVal: true,
-      bConcreteValue: {
-        indexOfConcrete: pin.indexOfConcrete,
-        value: {} as any,
-        structs: {
-          class: 1,
-          inner: {
-            wrapper: {
-              class: VarBase_Class.MapBase,
-              mapPair: { key: pin.map_type[0], value: pin.map_type[1] } as any,
-            },
-          },
-        },
-      },
-    },
-    type: 0,
-    connects: [],
-  };
-}
-/** ⚠️ Warning: Do not use in productive environment.
- * @deprecated Create an empty frame for genshin to auto derive pin contents
- * therefore we can get a full id-reflect list
- * @param id 泛类 id
- * @param pins 引脚类型列表, number: 普通引脚, [number, number]: 字典引脚
- * @returns
- */
-export function node_type_node_body_empty(
-  id: number,
-  pins: NodeTypePinBodyEmpty_[],
-  x: number = 0,
-  y: number = 0,
-) {
-  return node_body({
-    pins: pins.map(node_type_pin_body_frame),
-    generic_id: id,
-    concrete_id: id,
-    x: x,
-    y: y,
-  } as any);
-}
-
-
-
-
 
 export function node_connect_from(from: number, from_index: number): NodeConnection {
   return {
@@ -976,14 +812,14 @@ export function node_connect_to(to: number, to_index: number): NodeConnection {
 }
 
 
-export function encode_node_graph_var(v: GraphVar): GraphVariable {
+export function encode_node_graph_var_server(v: GraphVar): GraphVariable {
   return {
     name: v.name,
-    type: get_id(v.type) as VarType,
-    values: all_value_var(v.type, v.val),
+    type: tid(v.type, true),
+    values: all_value_var(v.type, true, v.val),
     exposed: v.exposed,
     structId: 0,
-    keyType: v.type.t === "d" ? get_id(v.type.k) as VarType : 6,
-    valueType: v.type.t === "d" ? get_id(v.type.v) as VarType : 6
+    keyType: v.type.t === "d" ? tid(v.type.k, true) : 6,
+    valueType: v.type.t === "d" ? tid(v.type.v, true) : 6
   };
 }
