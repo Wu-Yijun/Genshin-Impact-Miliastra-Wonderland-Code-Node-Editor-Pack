@@ -13,7 +13,7 @@ import {
   VarBase_ItemType_ServerType_Kind,
   VarType,
 } from "../protobuf/gia.proto.ts";
-import { get_type, type NodeType } from "./nodes.ts";
+import { get_type, get_type_client, type NodeType } from "./nodes.ts";
 import type { AnyType, GraphVar } from "./graph.ts";
 import { get_node_record_generic_client } from "../node_data/helpers.ts";
 
@@ -29,13 +29,13 @@ interface PinInfo_ {
   node_type: NodeType;
   is_node: boolean;
 }
-export function get_pin_info(pin: NodePin): PinInfo_ {
+export function get_pin_info(pin: NodePin, is_server: boolean): PinInfo_ {
   const ret: PinInfo_ = {
     kind: pin.i1.kind,
     index: pin.i1.index ?? 0,
     type: pin.type as VarType | ClientVarType,
     indexOfConcrete: pin.value?.bConcreteValue?.indexOfConcrete ?? 0,
-    node_type: get_type(pin.type),
+    node_type: is_server ? get_type(pin.type ?? 0) : get_type_client(pin.type ?? 0),
     is_node: pin.value?.class === VarBase_Class.ConcreteBase,
   };
   if (ret.node_type?.t === "d") {
@@ -46,8 +46,8 @@ export function get_pin_info(pin: NodePin): PinInfo_ {
     const t = pin.value!.bConcreteValue!.value.itemType!.type_server!;
     assertEq(t.type, VarType.Dictionary);
     assertEq(t.kind, VarBase_ItemType_ServerType_Kind.Pair);
-    ret.node_type.k = get_type(t.items!.key);
-    ret.node_type.v = get_type(t.items!.value);
+    ret.node_type.k = is_server ? get_type(t.items!.key) : get_type_client(t.items!.key);
+    ret.node_type.v = is_server ? get_type(t.items!.value) : get_type_client(t.items!.value);
   }
   return ret;
 }
@@ -57,11 +57,11 @@ interface NodeInfo_ {
   concrete_id: number | null;
   pins: PinInfo_[];
 }
-export function get_node_info(node: GraphNode): NodeInfo_ {
+export function get_node_info(node: GraphNode, is_server: boolean): NodeInfo_ {
   const ret: NodeInfo_ = {
     generic_id: node.genericId.nodeId,
     concrete_id: node.concreteId?.nodeId ?? null,
-    pins: node.pins.map((v) => get_pin_info(v)),
+    pins: node.pins.map((v) => get_pin_info(v, is_server)),
   };
   return ret;
 }

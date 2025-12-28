@@ -56,6 +56,8 @@ export type NodeType = {
   r: string;
 };
 
+export const UNK_TYPE: NodeType = { t: "b", b: "Unk" as BasicTypes } as const;
+
 /**
  * 将 NodeType（或字符串形式的类型表达式）转为可读字符串。
  * 用于序列化类型结构，例如：S<a:Int,b:L<Str>>
@@ -84,7 +86,7 @@ export function stringify(node: NodeType | string): string {
  * 会在语法非法时抛出异常。
  */
 export function parse(src: string): NodeType {
-  if (src === undefined) return undefined as any;
+  if (src === undefined) return UNK_TYPE;
   let p = 0;
   const tokens = src.split(/([ ]+|\<|\,|\:|\>)/g).filter((x) =>
     x.trim().length > 0
@@ -316,7 +318,7 @@ export function reflects(
   allow_undefined = false,
 ): NodeType {
   // console.log(type, refs);
-  if (type === undefined && allow_undefined === true) return undefined as any;
+  if (type === undefined && allow_undefined === true) return UNK_TYPE;
   const t = typeof type === "string" ? parse(type) : type;
   const r = typeof refs === "string"
     ? ((x) => (assert(x.t === "s"), x.f))(parse(refs))
@@ -564,6 +566,8 @@ export function get_id(node: NodeType): number {
           return VarType.Faction;
         case "Cfg":
           return VarType.Configuration;
+        case "Unk" as any:
+          return VarType.UnknownVar;
       }
       break;
     case "e":
@@ -635,6 +639,8 @@ export function get_id(node: NodeType): number {
  */
 export function get_type(id: number): NodeType {
   switch (id) {
+    case VarType.UnknownVar:
+      return UNK_TYPE;
     case VarType.Entity:
       return { t: "b", b: "Ety" };
     case VarType.GUID:
@@ -715,6 +721,8 @@ export function get_id_client(node: NodeType): number {
           return ClientVarType.Faction_;
         case "Cfg":
           return ClientVarType.Configuration_;
+        case "Unk" as any:
+          return ClientVarType.UnknownVar_;
       }
       break;
     case "e":
@@ -772,6 +780,8 @@ export function get_id_client(node: NodeType): number {
 
 export function get_type_client(id: number): NodeType {
   switch (id) {
+    case ClientVarType.UnknownVar_:
+      return UNK_TYPE;
     case ClientVarType.Entity_:
       return { t: "b", b: "Ety" };
     case ClientVarType.EntityList_:

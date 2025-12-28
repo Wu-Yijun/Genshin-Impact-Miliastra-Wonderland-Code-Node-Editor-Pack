@@ -4,7 +4,6 @@ import type { PatternTypes, Token } from "./types.ts";
 
 export const IR_Id_Counter = new Counter();
 
-export const UNK_TYPE: gia_node.NodeType = { t: "b", b: "Unk" as "Int" } as const;
 
 /** Default token fot quick access */
 export const TOKENS = {

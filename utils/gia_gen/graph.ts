@@ -293,6 +293,7 @@ export class Graph<M extends AllModes = "server"> {
   }
 
   encode(opt?: EncodeOptions): Root {
+    if (opt) opt.is_server ??= isServer(this.mode);
     const option = new EncodeOptionsBuilder(opt ?? { is_server: isServer(this.mode) });
     assertEq(option.is_server, isServer(this.mode));
     const nodes = [...this.nodes].map((n) => n.encode(option, this.get_connect_to(n), this.flows.get(n), this.get_node_comment(n)));
@@ -554,7 +555,7 @@ export class Node<M extends AllModes> {
   }
 
   static decode<M extends AllModes>(node: GraphNode, mode: M): Node<M> {
-    const info = get_node_info(node);
+    const info = get_node_info(node, isServer(mode));
     const g_id = info.generic_id;
     const c_id = (isServer(mode) ? info.concrete_id : get_client_node_cid_from_info(info)) as NodeIdFor<M> ?? Null(mode);
     const n = new Node(node.nodeIndex, mode, c_id, g_id);

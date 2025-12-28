@@ -34,7 +34,10 @@ export function get_index_of_concrete(
   const map = get_concrete_map(generic_id, is_input, pin_index);
   if (map === null) {
     if (typeof type !== "number" && type.t === "e") {
-      return type.e;
+      // only when generic id is reflective we get cid = e;
+      if (get_node_record_generic(generic_id)?.reflectMap !== undefined) {
+        return type.e;
+      }
     }
     return null;
   }

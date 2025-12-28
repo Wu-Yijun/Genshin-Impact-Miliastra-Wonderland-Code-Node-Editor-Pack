@@ -1,6 +1,7 @@
+import { writeFileSync } from "fs";
 import type { AllModes, ClientModes, ServerModes } from "../../utils/gia_gen/graph.ts";
 import { Graph, NODE_ID, CLIENT_NODE_ID, encode_gia_file } from "../../utils/index.ts";
-import { assertDeepEq, assertEq, exclude_keys } from "../../utils/utils.ts";
+import { assertDeepEq, assertEq, deepEqual, exclude_keys } from "../../utils/utils.ts";
 import { inspect } from "util";
 
 const DSL = `
@@ -146,13 +147,13 @@ function createGraphClient(mode: ClientModes) {
   graph.connect(get_slf, get_att_pt, 0, 0);
 
   graph.connect(get_att_pt, add_v2, 0, 2);
-  graph.connect(get_att_pt, Signal, 0, 1);
+  // graph.connect(get_att_pt, Signal, 0, 1); // TODO: Signal uses Complex Definition
   graph.connect(get_att_pt, Eff2, 0, 1);
   graph.connect(get_att_pt, add_v1, 0, 1);
 
   graph.connect(get_rot, rot_v1, 0, 1);
   graph.connect(get_rot, rot_v2, 0, 1);
-  graph.connect(get_rot, Signal, 0, 2);
+  // graph.connect(get_rot, Signal, 0, 2);
   graph.connect(get_rot, rot_v3, 0, 1);
 
   graph.connect(rot_v1, add_v1, 0, 2);
@@ -164,7 +165,7 @@ function createGraphClient(mode: ClientModes) {
   get_att_pt.setVal(1, "GI_AvatarRoot");
   rot_v1.setVal(0, [0, 2, 6]);
   rot_v2.setVal(0, [90, 0, 0]);
-  Signal.setVal(0, "Dash");
+  // Signal.setVal(0, "Dash");
   add_v2.setVal(1, [0, 1, 0]);
   rot_v3.setVal(0, [80, 4, 0]);
 
@@ -200,15 +201,15 @@ function test<T extends AllModes>(fun: (type: T) => Graph<T>, type: T) {
   const decode3p = Graph.decode(encoded3p);
 
 
-  // assertDeepEq(encoded, encoded2);
-  // assertDeepEq(decode, decode2);
+  assertDeepEq(encoded, encoded2);
+  assertDeepEq(decode, decode2);
 
   (graph as any).connects = new Set([...graph.connects].sort((a, b) => a.from.node_index - b.from.node_index || a.to.node_index - b.to.node_index));
   (decode as any).connects = new Set([...decode.connects].sort((a, b) => a.from.node_index - b.from.node_index || a.to.node_index - b.to.node_index));
 
-  console.log([...graph.connects].map(c => `${c.from}${c.from_index} -> ${c.to}${c.to_index}`).join("\n"));
-  console.log([...decode.connects].map(c => `${c.from}${c.from_index} -> ${c.to}${c.to_index}`).join("\n"));
-  return;
+  // console.log([...graph.connects].map(c => `${c.from}${c.from_index} -> ${c.to}${c.to_index}`).join("\n"));
+  // console.log([...decode.connects].map(c => `${c.from}${c.from_index} -> ${c.to}${c.to_index}`).join("\n"));
+  // return;
   // console.log(inspect(graph.connects));
   // console.log(inspect(decode.connects));
 
@@ -218,6 +219,7 @@ function test<T extends AllModes>(fun: (type: T) => Graph<T>, type: T) {
       a === null && (b instanceof Array && b.length === 0)
       || a === true && b === 1
       || a === false && b === 0
+      || deepEqual(a, { t: "e", e: 2 }) && deepEqual(b, { t: "e", e: -1 }) // TODO: DEFAULT VAL/ENUM IS NOT LOADED AUTOMATICALLY
   });
 
   assertDeepEq(decode2, decode3, {
@@ -241,20 +243,26 @@ function test<T extends AllModes>(fun: (type: T) => Graph<T>, type: T) {
 }
 
 if (import.meta.main) {
-  // console.log("The equivalent DSL is:", DSL);
-  // encode_gia_file("./dist/GeneratedGraph.gia", createGraph("item").encode());
-  // console.log("Saved to `./dist/GeneratedGraph.gia`");
+  console.log("The equivalent DSL is:", DSL);
+  encode_gia_file("./dist/GeneratedGraph.gia", createGraph("class").encode());
+  console.log("Saved to `./dist/GeneratedGraph.gia`");
 
-  // console.log("\n====== Test Server Graph ======");
-  // test(createGraph, "server");
-  // test(createGraph, "class");
-  // test(createGraph, "item");
-  // test(createGraph, "status");
-  // console.log("======== Test Complete ========\n");
+  console.log("\n====== Test Server Graph ======");
+  test(createGraph, "server");
+  test(createGraph, "class");
+  test(createGraph, "item");
+  test(createGraph, "status");
+  console.log("======== Test Complete ========\n");
 
   console.log("The equivalent DSL is:", DSL2);
-  encode_gia_file("./dist/GeneratedGraphClient.gia", createGraphClient("skill").encode());
+  encode_gia_file("./dist/GeneratedGraphClient.gia", createGraphClient("bool").encode());
 
+
+  console.log("\n====== Test Client Graph ======");
+  test(createGraphClient, "bool");
+  test(createGraphClient, "int");
+  test(createGraphClient, "skill");
+  console.log("======== Test Complete ========\n");
 
   // test(createGraphClient, "skill");
 

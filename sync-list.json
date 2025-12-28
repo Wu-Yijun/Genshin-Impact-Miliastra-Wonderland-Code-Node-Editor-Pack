@@ -1,6 +1,6 @@
 {
-  "commitMessage": "update data schema",
-  "notSync": true,
+  "commitMessage": "Refract Gia Gen Interface",
+  "notSync": false,
   "include": [
     "*",
     "docs/**",
