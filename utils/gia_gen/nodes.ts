@@ -265,6 +265,23 @@ export interface NodePins {
 }
 
 /**
+ * Be careful that an invalid id will lead to 0
+ */
+export function any_id_to_gid(id: number | string): number {
+  if (typeof id === "number") return id;
+  const a = parseInt(id.split(' ')[0]);
+  return Number.isNaN(a) ? 0 : a;
+}
+/**
+ * Be careful that a number id will lead to undefined
+ */
+export function any_id_to_cid(id: number | string): number | undefined {
+  if (typeof id === "number") return undefined;
+  const a = parseInt(id.split(' ')[1]);
+  return Number.isNaN(a) ? undefined : a;
+}
+
+/**
  * 在给定类型中执行一次单一反射替换。
  * 若遇到 R<refName>，则替换为对应节点结构。
  * 其他节点类型将递归替换。

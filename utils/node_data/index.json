@@ -1,9 +1,10 @@
 {
-  "Version": "2.0.0",
+  "SchemaVersion": "2.1.0",
+  "GameVersion": "6.2.0",
   "Author": "Aluria",
-  "Date": "Sat Dec 27 2025 15:15:37 GMT+0800 (中国标准时间)",
+  "Date": "Sun Dec 28 2025 11:15:23 GMT+0800 (中国标准时间)",
   "Description": "This document contains all necessary information for this project, including types, nodes, and enums.",
-  "Schema": "// ====== Begin of Document Schema ====== //\ninterface Document {\n  Version: string;\n  Author: string;\n  Date: string;\n  Description: string;\n  Schema: string;\n  TypesList: TypeEntry[];\n  NodesList: NodeEntry[];\n  EnumList: EnumEntry[];\n  ClientEnumList: EnumEntry[];\n}\ninterface Entry {\n  Name: string;               // Safe name used as object keys or query keys\n  Translations: Translations; // Raw texts displayed in game\n  ID: number;                 // An in-game unique id of the entry\n}\ninterface TypeEntry extends Entry {\n  ClientID: number | null;    // An in-game unique id of the any type in client \n  Expression: string;         // Static representation expression for convertor\n  DSLName: string;            // Name of var class(type) in DSL\n  BaseType: string;           // Base type of the entry in game runtime\n  BaseTypeID: number;         // Id of the base type\n}\ninterface NodeEntry extends Entry {\n  Type: \"Simple\" | \"Generic\";         // Whether a node is fixed-defined or generic-defined \n  Range: \"Server\" | \"Client\";         // The applicable range of the node\n  Class: typeof NodeClasses[number];  // The class of the node\n  Family: string;                     // Family(sub-class) of the node\n  Inputs: string[];                   // List of Input parameter types of the node\n  Outputs: string[];                  // List of Output parameter types of the node\n  ConcreteID?: number;                // Concrete id for non-reflective nodes (different from ID in Client Graph)\n  TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic.\n}\ninterface EnumEntry extends Entry {\n  Items: EnumItem[];  // List of Enum items of current enum\n}\ninterface TypeMapping {\n  ConcreteId: number;                         // Id of this concrete type\n  Type: string;                               // Type mapping rules of this concrete type\n  InputsIndexOfConcrete: (number | null)[];   // List of Input parameters' index of concrete\n  OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete\n}\ninterface EnumItem extends Entry {\n}\nconst NodeClasses = [\"Execution\", \"Trigger\", \"Control\", \"Query\", \"Arithmetic\", \"Others\", \"Hidden\"] as const;\nconst Language = [\"cs\", \"de\", \"es\", \"en\", \"fr\", \"it\", \"ja\", \"ko\", \"pl\", \"pt-BR\", \"ru\", \"tr\", \"zh-Hans\", \"zh-Hant\"] as const;\ntype Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages\n// ====== End of Document Schema ====== //\n",
+  "Schema": "// ====== Begin of Document Schema ====== //\ninterface Document {\n  SchemaVersion: string;\n  GameVersion: string;\n  Author: string;\n  Date: string;\n  Description: string;\n  Schema: string;\n  TypesList: TypeEntry[];\n  NodesList: NodeEntry[];\n  EnumList: EnumEntry[];\n  ClientEnumList: EnumEntry[];\n  GraphConstList: GraphConst[];\n}\ninterface Entry {\n  Name: string;               // Safe name used as object keys or query keys\n  Translations: Translations; // Raw texts displayed in game\n  ID: number;                 // An in-game unique id of the entry\n}\ninterface TypeEntry extends Entry {\n  ClientID: number | null;    // An in-game unique id of the any type in client \n  Expression: string;         // Static representation expression for convertor\n  DSLName: string;            // Name of var class(type) in DSL\n  BaseType: string;           // Base type of the entry in game runtime\n  BaseTypeID: number;         // Id of the base type\n}\ninterface NodeEntry extends Entry {\n  Type: \"Simple\" | \"Generic\";         // Whether a node is fixed-defined or generic-defined \n  Range: \"Server\" | \"Client\";         // The applicable range of the node\n  Class: typeof NodeClasses[number];  // The class of the node\n  Family: string;                     // Family(sub-class) of the node\n  Inputs: string[];                   // List of Input parameter types of the node\n  Outputs: string[];                  // List of Output parameter types of the node\n  ConcreteID?: number;                // Concrete id for non-reflective nodes (different from ID in Client Graph)\n  TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic.\n}\ninterface EnumEntry extends Entry {\n  Items: EnumItem[];  // List of Enum items of current enum\n}\ninterface TypeMapping {\n  ConcreteId: number;                         // Id of this concrete type\n  Type: string;                               // Type mapping rules of this concrete type\n  InputsIndexOfConcrete: (number | null)[];   // List of Input parameters' index of concrete\n  OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete\n}\ninterface EnumItem extends Entry {\n}\ninterface GraphConst {\n  Name: string;\n  Class: number;\n  Type: number;\n  Which: number;\n  GraphClass: number;\n  GraphType: number;\n  GraphKind: number;\n  NodeClass: number;\n  NodeType: number;\n  NodeKind: number;\n}\nconst NodeClasses = [\"Execution\", \"Trigger\", \"Control\", \"Query\", \"Arithmetic\", \"Others\", \"Hidden\"] as const;\nconst Language = [\"cs\", \"de\", \"es\", \"en\", \"fr\", \"it\", \"ja\", \"ko\", \"pl\", \"pt-BR\", \"ru\", \"tr\", \"zh-Hans\", \"zh-Hant\"] as const;\ntype Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages\n// ====== End of Document Schema ====== //\n",
   "TypesList": [
     {
       "Name": "Entity",
@@ -62813,6 +62814,104 @@
           "ID": 5802
         }
       ]
+    }
+  ],
+  "GraphConstList": [
+    {
+      "Name": "server",
+      "Class": 5,
+      "Type": 0,
+      "Which": 9,
+      "GraphClass": 10000,
+      "GraphType": 20000,
+      "GraphKind": 21001,
+      "NodeClass": 10001,
+      "NodeType": 20000,
+      "NodeKind": 22000
+    },
+    {
+      "Name": "status",
+      "Class": 5,
+      "Type": 0,
+      "Which": 22,
+      "GraphClass": 10000,
+      "GraphType": 20003,
+      "GraphKind": 21001,
+      "NodeClass": 10001,
+      "NodeType": 20000,
+      "NodeKind": 22000
+    },
+    {
+      "Name": "Class",
+      "Class": 5,
+      "Type": 0,
+      "Which": 23,
+      "GraphClass": 10000,
+      "GraphType": 20004,
+      "GraphKind": 21001,
+      "NodeClass": 10001,
+      "NodeType": 20000,
+      "NodeKind": 22000
+    },
+    {
+      "Name": "item",
+      "Class": 5,
+      "Type": 0,
+      "Which": 46,
+      "GraphClass": 10000,
+      "GraphType": 20005,
+      "GraphKind": 21001,
+      "NodeClass": 10001,
+      "NodeType": 20000,
+      "NodeKind": 22000
+    },
+    {
+      "Name": "bool",
+      "Class": 1,
+      "Type": 3,
+      "Which": 10,
+      "GraphClass": 10000,
+      "GraphType": 20001,
+      "GraphKind": 21001,
+      "NodeClass": 10001,
+      "NodeType": 20001,
+      "NodeKind": 22000
+    },
+    {
+      "Name": "int",
+      "Class": 1,
+      "Type": 3,
+      "Which": 47,
+      "GraphClass": 10000,
+      "GraphType": 20006,
+      "GraphKind": 21001,
+      "NodeClass": 10001,
+      "NodeType": 20001,
+      "NodeKind": 22000
+    },
+    {
+      "Name": "skill",
+      "Class": 1,
+      "Type": 3,
+      "Which": 11,
+      "GraphClass": 10000,
+      "GraphType": 20002,
+      "GraphKind": 21001,
+      "NodeClass": 10001,
+      "NodeType": 20002,
+      "NodeKind": 22000
+    },
+    {
+      "Name": "composite",
+      "Class": 23,
+      "Type": 0,
+      "Which": 12,
+      "GraphClass": 10000,
+      "GraphType": 20000,
+      "GraphKind": 21002,
+      "NodeClass": 10001,
+      "NodeType": 20000,
+      "NodeKind": 22000
     }
   ]
 }

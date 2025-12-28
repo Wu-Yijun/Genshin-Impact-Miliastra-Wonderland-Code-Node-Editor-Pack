@@ -6,6 +6,10 @@ import { TYPES_LIST } from "./types_list.ts";
 import { NODE_ID } from "./node_id.ts";
 
 import * as helper from "./helpers.ts";
+
+const DATA_VERSION = "2.0.1";
+const GAME_VERSION = "6.2.0";
+
 export { helper };
 
 export {
@@ -27,4 +31,5 @@ export {
   NODE_ID,
 };
 
-export { DATA } from "./data.ts";
+export * as consts from "./consts.ts";
+export type * as Consts from "./consts.ts";

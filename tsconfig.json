@@ -1,30 +1,28 @@
 {
   "compilerOptions": {
     /* 模块化配置 */
-    "module": "NodeNext",          // 指定输出的模块系统为 Node.js 的原生 ESM 格式
-    "moduleResolution": "NodeNext",// 指定模块解析策略，以匹配 Node.js 的行为
-    "target": "ES2022",            // 指定编译后的 JS 版本，现代环境通常支持 ES2022
-
+    "module": "NodeNext", // 指定输出的模块系统为 Node.js 的原生 ESM 格式
+    "moduleResolution": "NodeNext", // 指定模块解析策略，以匹配 Node.js 的行为
+    "target": "ES2022", // 指定编译后的 JS 版本，现代环境通常支持 ES2022
     /* 推荐的严格检查选项 */
-    "strict": true,                // 启用所有严格类型检查
-    "esModuleInterop": true,       // 允许 CommonJS 和 ES Module 之间的互操作性
-    "skipLibCheck": true,          // 跳过库声明文件的类型检查，提高编译速度
+    "strict": true, // 启用所有严格类型检查
+    "esModuleInterop": true, // 允许 CommonJS 和 ES Module 之间的互操作性
+    "skipLibCheck": true, // 跳过库声明文件的类型检查，提高编译速度
     "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致性
     "noEmit": true, // 或者 "emitDeclarationOnly": true
     "allowImportingTsExtensions": true, // 允许导入 .ts 文件
-
     /* 输出目录 */
-    "outDir": "./dist",            // 编译输出目录
-    "rootDir": ".",            // 源文件根目录
-
+    "outDir": "./dist", // 编译输出目录
+    "rootDir": ".", // 源文件根目录
     /* 其他有用选项 */
-    "sourceMap": true,             // 生成 source map 以便调试
-    "declaration": true,           // 为您的模块生成 .d.ts 声明文件 (如果您要发布库)
+    "sourceMap": true, // 生成 source map 以便调试
+    "declaration": true, // 为您的模块生成 .d.ts 声明文件 (如果您要发布库)
   },
   "include": [
     "src/**/*",
-   ],
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    // "utils/node_data/data.ts"
   ]
 }

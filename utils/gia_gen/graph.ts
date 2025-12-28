@@ -91,6 +91,7 @@ export class Graph<M extends AllModes = "server"> {
       return node;
     }
     this.nodes.add(node);
+    this.counter_idx.lower_bound = node.NodeIndex;
     return node;
   }
   get_nodes(): Node<M>[] {
@@ -267,8 +268,8 @@ export class Graph<M extends AllModes = "server"> {
   }
 
   encode(opt?: EncodeOptions): Root {
-    opt ??= new EncodeOptions();
-    const nodes = [...this.nodes].map((n) => n.encode(opt, this.get_connect_to(n), this.flows.get(n), this.get_node_comment(n)));
+    const option = new EncodeOptionsBuilder(opt ?? {});
+    const nodes = [...this.nodes].map((n) => n.encode(option, this.get_connect_to(n), this.flows.get(n), this.get_node_comment(n)));
     const graphValues = [...this.graph_var.values()].map(v => encode_node_graph_var(v));
     return graph_body({/** 唯一标识符 */
       uid: this.uid,
@@ -285,10 +286,12 @@ export class Graph<M extends AllModes = "server"> {
     });
   }
   static decode(root: Root): Graph {
-    const [uid, time, graph_id_str, file_name] = root.filePath.split("-");
-    const name = file_name.endsWith(".gia") ? file_name.slice(1, -4) : file_name.slice(1);
+    const [uid, time, file_id, file_name] = root.filePath.split("-");
+    const name = root.graph.name;
+    const graph_id = root.graph.id.id;
+
     // TODO: discriminate mode!
-    const graph = new Graph("server", parseInt(uid), name, parseInt(graph_id_str));
+    const graph = new Graph("server", parseInt(uid), name, graph_id);
     const graph_vars = get_graph_vars(root.graph.graph?.inner.graph!);
     graph_vars.forEach((v) => graph.graph_var.set(v.name, v));
     root.graph.graph?.inner.graph.nodes.forEach(node => {
@@ -386,8 +389,9 @@ export class Node<M extends AllModes = "server"> {
     this.x = x;
     this.y = y;
   }
-  encode(opt: EncodeOptions, connects?: Connect[], flows?: Connect[][], comment?: Comment | null): GraphNode {
-    const pins = this.pins.map((p, i) => p.encode(opt, connects)).filter((p) => !empty(p));
+  encode(opt?: EncodeOptions, connects?: Connect[], flows?: Connect[][], comment?: Comment | null): GraphNode {
+    const option = new EncodeOptionsBuilder(opt ?? {});
+    const pins = this.pins.map((p, i) => p.encode(option, connects)).filter((p) => !empty(p));
     if (!empty(flows)) {
       for (let i = 0; i < flows.length; i++) {
         if (!empty(flows[i]) && flows[i].length !== 0) {
@@ -404,6 +408,7 @@ export class Node<M extends AllModes = "server"> {
       x: this.x,
       /** Y 坐标 */
       y: this.y,
+      pos_jitter: option.pos_jitter,
       /** 节点的引脚列表 */
       pins,
       /** ⚠️ Warning: This may cause ID collision. 节点唯一索引，不建议填入 */
@@ -519,7 +524,8 @@ export class Pin {
     this.type = type;
     this.indexOfConcrete = get_index_of_concrete(this.generic_id, this.kind === 3, this.index, this.type, is_server);
   }
-  encode(opt: EncodeOptions, connects?: Connect[]): NodePin | null {
+  encode(opt?: EncodeOptions, connects?: Connect[]): NodePin | null {
+    const option = new EncodeOptionsBuilder(opt ?? {});
     if (empty(this.type)) {
       // Normal pin without determined type
       return null;
@@ -539,7 +545,7 @@ export class Pin {
       indexOfConcrete: this.indexOfConcrete ?? undefined,
       /** 引脚的初始值，可选 */
       value: this.value ?? undefined,
-      non_zero: opt.is_non_zero(),
+      fill_undefined: option.fill_undefined === false ? undefined : option.fill_undefined === true ? 0 : option.fill_undefined,
       connects: connect === undefined ? undefined : [connect],
     });
     return pin;
@@ -638,13 +644,16 @@ export class Comment {
   }
 }
 
-export class EncodeOptions {
-  private non_zero: boolean;
-  is_non_zero(): boolean {
-    return this.non_zero;
-  }
-  constructor(non_zero = false) {
-    this.non_zero = non_zero;
+export interface EncodeOptions {
+  pos_jitter?: boolean;
+  fill_undefined?: boolean | number;
+}
+export class EncodeOptionsBuilder implements Required<EncodeOptions> {
+  pos_jitter: boolean;
+  fill_undefined: boolean | number;
+  constructor({ pos_jitter = true, fill_undefined = false }: EncodeOptions) {
+    this.pos_jitter = pos_jitter;
+    this.fill_undefined = fill_undefined;
   }
 }
 

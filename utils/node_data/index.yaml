@@ -1,11 +1,13 @@
-Version: 2.0.0
+SchemaVersion: 2.1.0
+GameVersion: 6.2.0
 Author: Aluria
-Date: Sat Dec 27 2025 15:15:37 GMT+0800 (中国标准时间)
+Date: Sun Dec 28 2025 11:15:23 GMT+0800 (中国标准时间)
 Description: This document contains all necessary information for this project, including types, nodes, and enums.
 Schema: |
   // ====== Begin of Document Schema ====== //
   interface Document {
-    Version: string;
+    SchemaVersion: string;
+    GameVersion: string;
     Author: string;
     Date: string;
     Description: string;
@@ -14,6 +16,7 @@ Schema: |
     NodesList: NodeEntry[];
     EnumList: EnumEntry[];
     ClientEnumList: EnumEntry[];
+    GraphConstList: GraphConst[];
   }
   interface Entry {
     Name: string;               // Safe name used as object keys or query keys
@@ -47,6 +50,18 @@ Schema: |
     OutputsIndexOfConcrete: (number | null)[];  // List of Output parameters' index of concrete
   }
   interface EnumItem extends Entry {
+  }
+  interface GraphConst {
+    Name: string;
+    Class: number;
+    Type: number;
+    Which: number;
+    GraphClass: number;
+    GraphType: number;
+    GraphKind: number;
+    NodeClass: number;
+    NodeType: number;
+    NodeKind: number;
   }
   const NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Others", "Hidden"] as const;
   const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
@@ -47359,3 +47374,84 @@ ClientEnumList:
         Translations:
           en: Touchscreen
         ID: 5802
+GraphConstList:
+  - Name: server
+    Class: 5
+    Type: 0
+    Which: 9
+    GraphClass: 10000
+    GraphType: 20000
+    GraphKind: 21001
+    NodeClass: 10001
+    NodeType: 20000
+    NodeKind: 22000
+  - Name: status
+    Class: 5
+    Type: 0
+    Which: 22
+    GraphClass: 10000
+    GraphType: 20003
+    GraphKind: 21001
+    NodeClass: 10001
+    NodeType: 20000
+    NodeKind: 22000
+  - Name: Class
+    Class: 5
+    Type: 0
+    Which: 23
+    GraphClass: 10000
+    GraphType: 20004
+    GraphKind: 21001
+    NodeClass: 10001
+    NodeType: 20000
+    NodeKind: 22000
+  - Name: item
+    Class: 5
+    Type: 0
+    Which: 46
+    GraphClass: 10000
+    GraphType: 20005
+    GraphKind: 21001
+    NodeClass: 10001
+    NodeType: 20000
+    NodeKind: 22000
+  - Name: bool
+    Class: 1
+    Type: 3
+    Which: 10
+    GraphClass: 10000
+    GraphType: 20001
+    GraphKind: 21001
+    NodeClass: 10001
+    NodeType: 20001
+    NodeKind: 22000
+  - Name: int
+    Class: 1
+    Type: 3
+    Which: 47
+    GraphClass: 10000
+    GraphType: 20006
+    GraphKind: 21001
+    NodeClass: 10001
+    NodeType: 20001
+    NodeKind: 22000
+  - Name: skill
+    Class: 1
+    Type: 3
+    Which: 11
+    GraphClass: 10000
+    GraphType: 20002
+    GraphKind: 21001
+    NodeClass: 10001
+    NodeType: 20002
+    NodeKind: 22000
+  - Name: composite
+    Class: 23
+    Type: 0
+    Which: 12
+    GraphClass: 10000
+    GraphType: 20000
+    GraphKind: 21002
+    NodeClass: 10001
+    NodeType: 20000
+    NodeKind: 22000

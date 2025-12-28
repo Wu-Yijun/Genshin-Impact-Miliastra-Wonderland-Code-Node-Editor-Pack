@@ -70,6 +70,9 @@ export function extract_value(value: VarBase): AnyType | undefined {
     return undefined;
   }
   switch (value.class) {
+    case undefined:
+    case null:
+      return undefined;
     case VarBase_Class.ConcreteBase: {
       const v = value.bConcreteValue?.value;
       if (v === undefined) {
