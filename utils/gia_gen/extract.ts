@@ -15,6 +15,7 @@ import {
 } from "../protobuf/gia.proto.ts";
 import { get_type, type NodeType } from "./nodes.ts";
 import type { AnyType, GraphVar } from "./graph.ts";
+import { get_node_record_generic_client } from "../node_data/helpers.ts";
 
 export function get_nodes(graph: Root): GraphNode[] | null {
   return graph?.graph?.graph?.inner?.graph?.nodes ?? null;
@@ -65,8 +66,27 @@ export function get_node_info(node: GraphNode): NodeInfo_ {
   return ret;
 }
 
-export function get_client_node_cid_from_info(info: NodeInfo_): number | null {
-  throw new Error("Not implemented");
+/**
+ * Returns "gid" or "gid cid" for non-reflective nodes
+ * Returns "gid" for reflective nodes with generic type
+ * Returns "gid cid type" for normal reflective nodes
+ */
+export function get_client_node_cid_from_info(info: NodeInfo_): string {
+  const record = get_node_record_generic_client(info.generic_id);
+  assert(record !== null);
+  assert(record.id === info.generic_id);
+  if (record.reflectMap === undefined) {
+    if (info.concrete_id === null) {
+      return record.id.toString();
+    }
+    if (info.concrete_id !== record.cid) {
+      console.warn("Concrete id does not match record cid:", info.generic_id, info.concrete_id, record.cid);
+    }
+    return `${record.id} ${info.concrete_id}`;
+  }
+  // reflective node
+  console.warn("Type matches does not implement. Use generic id as fallback.", info.generic_id, info.concrete_id);
+  return `${record.id}`;
 }
 
 export function extract_value(value: VarBase): AnyType | undefined {

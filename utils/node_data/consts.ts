@@ -181,3 +181,9 @@ export const GRAPH_CONSTS = [
     "NodeKind": 22000
   }
 ] as const satisfies GraphConst[];
+
+export const GRAPH_ID_RANGE = {
+  "server": 0x4000_0000,
+  "client": 0x4080_0000,
+  "composite": 0x6000_0000,
+} as const;

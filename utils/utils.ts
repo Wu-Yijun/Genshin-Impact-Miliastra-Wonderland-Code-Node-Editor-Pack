@@ -141,7 +141,7 @@ export function assertDeepEq<T>(
         const b_arr = [...b];
         for (let i = 0; i < a_arr.length; i++) {
           if (!deepEqual(a_arr[i], b_arr[i], depth + 1)) {
-            failure.stack.push(`Set(${i}:${a_arr[i]}|${b_arr[i]}|)`);
+            failure.stack.push(`Set(${i}:${a_arr[i]}|${b_arr[i]})`);
             return false;
           }
         }
