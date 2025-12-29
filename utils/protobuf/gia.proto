@@ -466,7 +466,7 @@ message NodePin {
       ClientExecNode = 5; // only in client execution nodes
     }
     Kind kind = 1;
-    int32 index = 2; // index of the kind
+    int32 index = 2; // index of the pin
 
     message Id { int64 id = 1; }
     oneof clientExecNode { // only when used inside client nodes

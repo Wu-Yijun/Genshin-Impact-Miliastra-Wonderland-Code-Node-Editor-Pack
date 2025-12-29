@@ -34,10 +34,29 @@ interface NodeEntry extends Entry {
   Range: "Server" | "Client";         // The applicable range of the node
   Class: typeof NodeClasses[number];  // The class of the node
   Family: string;                     // Family(sub-class) of the node
-  Inputs: string[];                   // List of Input parameter types of the node
-  Outputs: string[];                  // List of Output parameter types of the node
+  Flows: FlowEntry[];                 // List of control flow pins of the node
+  Pins: PinEntry[];                   // List of data io pins of the node
   ConcreteID?: number;                // Concrete id for non-reflective nodes (different from ID in Client Graph)
   TypeMappings?: TypeMapping[];       // Type mappings is required when the node Type is Generic.
+}
+interface PinBase {
+  Kind: string;                                     // The kind of the pin
+  Index: number;                                    // Index of the pin on each side
+  ConcreteIndex: number;                            // Inner index of the pin
+  Label: Translations;                              // Display name of the pin (Always be "" for most flows)
+  Visibility: "Display" | "Hidden" | "Conditional"; // Whether the pin is displayed, hidden or conditional
+  Remarks?: string                                  // Some additional information about the pin with special behavior
+}
+interface FlowEntry extends PinBase {
+  Kind: "FlowIn" | "FlowOut";                       // At Input or Output side
+}
+interface PinEntry extends PinBase {
+  Kind: "Input" | "Output" | "ClientSpecialInput";  // I'm unsure what ClientSpecialInput is
+  Placeholder: Translations;                        // Placeholder of the pin
+  Type: string;                                     // Type of the pin, could be generic type for reflective nodes
+  FixedVal?: PinValue;                              // Fixed value of the pin (For part of the hidden pin)
+  Connectable: boolean;                             // Whether the pin can be connected to another
+  IndexOfConcrete?: number;                         // For reflective nodes, the index of the pin for concrete type
 }
 interface EnumEntry extends Entry {
   Items: EnumItem[];  // List of Enum items of current enum
@@ -62,6 +81,7 @@ interface GraphConst {
   NodeType: number;    // Node.(genericId|concreteId).type
   NodeKind: number;    // Node.genericId.kind (The Node.concreteId.kind is always SysCall(22000))
 }
+type PinValue = string | number | boolean | null; // number could be enum or int
 const NodeClasses = ["Execution", "Trigger", "Control", "Query", "Arithmetic", "Others", "Hidden"] as const;
 const Language = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
 type Translations = Partial<{ [key in typeof Language[number]]: string }>; // Display names of the entry in different languages

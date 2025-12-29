@@ -53,8 +53,8 @@ const Language: ({ [key in typeof DST_LAN[number]]: string } & { [key: string]: 
 
 // Model fallback list in order of preference
 const MODELS = [
-  "gemini-2.5-flash",
   "gemini-3-flash",
+  "gemini-2.5-flash",
   "gemini-2.5-flash-lite",
   "gemini-2-flash",
   "gemini-2.5-pro",

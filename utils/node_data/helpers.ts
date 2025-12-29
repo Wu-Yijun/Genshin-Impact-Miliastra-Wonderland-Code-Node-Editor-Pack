@@ -100,7 +100,7 @@ const GENERIC_ID_TO_RECORD_CLIENT = Object.freeze(new Map<number, SingleNodeData
   NODE_PIN_RECORDS_CLIENT.map(r => [r.id, r] as [number, SingleNodeDataClient]),
 ));
 const SERVER_CONCRETE_ID_TO_GENERIC_ID = Object.freeze(new Map<number, number>([
-  ...NODE_PIN_RECORDS.map(r => [r.id, r.id] as [number, number]),
+  // ...NODE_PIN_RECORDS.map(r => [r.id, r.id] as [number, number]),
   ...NODE_PIN_RECORDS.filter(r => "reflectMap" in r).map(r => r.reflectMap.map(x => [x[0], r.id] as [number, number])).flat(),
 ]));
 

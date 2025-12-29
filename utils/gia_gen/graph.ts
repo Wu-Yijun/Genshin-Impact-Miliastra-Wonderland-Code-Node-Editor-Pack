@@ -366,13 +366,13 @@ export class Node<M extends AllModes> {
     assert(record.id === gid); // record id matches
 
     if (record.reflectMap === undefined) {
-      assert(cid === undefined || cid === gid);
+      assert(cid === undefined || cid === 0 || cid === gid);
       // In Server Graphs, any Non-reflective Node should have a concreteId that is equal to the record.id
       this.concreteId = record.id;
       return record;
     }
 
-    if (cid === undefined) {
+    if (cid === undefined || cid === 0) {
       // reflect node but take a generic type
       this.concreteId = null;
       return record;
@@ -447,8 +447,10 @@ export class Node<M extends AllModes> {
         generic_id = get_generic_id_server(concrete_id) ?? undefined;
         if (generic_id === undefined) {
           generic_id = is_generic_id(concrete_id) ? concrete_id : undefined;
-          console.warn(`You may use ${concrete_id} incorrectly inside concrete id for Node.constructor`);
-          assert(generic_id !== undefined);
+          concrete_id = Null(mode);
+          if (generic_id === undefined) {
+            throw new Error(`You may use ${concrete_id} incorrectly inside concrete id for Node.constructor`);
+          }
         }
       }
       this.record = this.init_server(generic_id, concrete_id);
