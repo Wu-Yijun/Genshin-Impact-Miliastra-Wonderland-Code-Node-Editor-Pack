@@ -532,13 +532,21 @@
           "Direction": "In"
         },
         {
-          "Identifier": "FlowOut",
-          "Direction": "Out"
+          "Identifier": "True",
+          "Direction": "Out",
+          "ShellIndex": 0,
+          "KernelIndex": 0
+        },
+        {
+          "Identifier": "False",
+          "Direction": "Out",
+          "ShellIndex": 1,
+          "KernelIndex": 1
         }
       ],
       "DataPins": [
         {
-          "Identifier": "Input0",
+          "Identifier": "Condition",
           "Direction": "In",
           "Type": "Bol",
           "Label": null,
@@ -569,13 +577,87 @@
           "Direction": "In"
         },
         {
-          "Identifier": "FlowOut",
-          "Direction": "Out"
+          "Identifier": "DefaultBranch",
+          "Direction": "Out",
+          "ShellIndex": 0,
+          "KernelIndex": 0
+        },
+        {
+          "Identifier": "Case1",
+          "Direction": "Out",
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
+        },
+        {
+          "Identifier": "Case2",
+          "Direction": "Out",
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
+        },
+        {
+          "Identifier": "Case3",
+          "Direction": "Out",
+          "ShellIndex": 3,
+          "KernelIndex": 3,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
+        },
+        {
+          "Identifier": "Case4",
+          "Direction": "Out",
+          "ShellIndex": 4,
+          "KernelIndex": 4,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
+        },
+        {
+          "Identifier": "Case5",
+          "Direction": "Out",
+          "ShellIndex": 5,
+          "KernelIndex": 5,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
+        },
+        {
+          "Identifier": "Case6",
+          "Direction": "Out",
+          "ShellIndex": 6,
+          "KernelIndex": 6,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
+        },
+        {
+          "Identifier": "Case7",
+          "Direction": "Out",
+          "ShellIndex": 7,
+          "KernelIndex": 7,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
+        },
+        {
+          "Identifier": "Case8",
+          "Direction": "Out",
+          "ShellIndex": 8,
+          "KernelIndex": 8,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
+        },
+        {
+          "Identifier": "Case9",
+          "Direction": "Out",
+          "ShellIndex": 9,
+          "KernelIndex": 9,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList"
         }
       ],
       "DataPins": [
         {
-          "Identifier": "Input0",
+          "Identifier": "Statement",
           "Direction": "In",
           "Type": "R<T>",
           "Label": null,
@@ -586,7 +668,7 @@
           "Connectability": true
         },
         {
-          "Identifier": "Input1",
+          "Identifier": "CasesList",
           "Direction": "In",
           "Type": "L<R<T>>",
           "Label": null,
@@ -594,6 +676,7 @@
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
+          "Editability": true,
           "Connectability": true
         }
       ],
@@ -45578,13 +45661,17 @@
           "Direction": "In"
         },
         {
-          "Identifier": "FlowOut",
+          "Identifier": "True",
+          "Direction": "Out"
+        },
+        {
+          "Identifier": "False",
           "Direction": "Out"
         }
       ],
       "DataPins": [
         {
-          "Identifier": "Input0",
+          "Identifier": "Condition",
           "Direction": "In",
           "Type": "Bol",
           "Label": null,
@@ -45592,7 +45679,8 @@
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Visibility": "Display",
-          "Connectability": true
+          "Connectability": true,
+          "Editability": true
         }
       ],
       "Implementation": null

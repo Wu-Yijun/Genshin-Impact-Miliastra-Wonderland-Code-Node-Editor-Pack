@@ -2,6 +2,8 @@
 
 <div align="center">
 
+# ⚠️ 警告 ⚠️ : 数据重构中(2025.12.30), 请暂时不要引用此数据
+
 [中文文档](Readme.md) | [English Documentation](Readme.en.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)

@@ -79,9 +79,10 @@ interface PinDef {
   KernelIndex: number;                              // Inner index of the pin
   Type: string | null;                              // Type of the pin, could be generic type for reflective nodes
   DefaultValue?: PinValue;                          // Fixed value of the pin (For part of the hidden pin)
-  Visibility: "Display" | "Hidden" | "Conditional"; // Whether the pin is displayed, hidden or conditional
-  Connectability: boolean;                          // Whether the pin can be connected by another one
-  Remarks?: string;                                 // Some additional information about the pin with special behavior
+  Visibility?: "Display" | "Hidden" | "Conditional";  // Whether the pin is displayed, hidden or conditional
+  Connectability?: boolean;                           // Whether the pin can be connected by another one
+  Editability?: boolean;                                 // Whether the pin can be edited by user manually
+  Remarks?: string;                                   // Some additional information about the pin with special behavior
 }
 // ------------------------------------------------------------------
 // Implementation & Mapping (The Kernel)
