@@ -1,77 +1,89 @@
-参考上面我们总结的结构, 以及我之前猜测的proto3结构, 重新规范每个字段的名称和作用, 有不清楚的地方, 或有一些猜测要询问我.
 
-message GraphNode {
-  int32 nodeIndex = 1;                  // 1
-  NodeProperty shellId = 2;             // Node's Template's Id
-  optional NodeProperty kernelId = 3;   // Node's own Id(Null for generic nodes without types)
-  repeated NodePin pins = 4;            // connect to other nodes
-  float x = 5;                          // xpos
-  float y = 6;                          // ypos
-  optional Comments comments = 7;       // comments
-  optional PinIndex specialPin = 8;     // Only in client Nodes
-  optional int32 signalVersion = 9;     // Signals modified times
-  repeated GraphAffiliation.Info usingStruct = 10;
-}
 
-message NodeProperty {
-  enum Type {
-    Unknown = 0;
-    Server = 20000;
-    Filter = 20001;
-    Skill = 20002;
-  }
+export const BasicTypes = [
+  "Int",
+  "Flt",
+  "Bol",
+  "Str",
+  "Vec",
+  "Gid",
+  "Ety",
+  "Pfb",
+  "Fct",
+  "Cfg",
+] as const;
+export type BasicTypes = typeof BasicTypes[number];
 
-  NodeGraph.Id.Class class = 1; // 10001
-  Type type = 2;                // 20000 / 20002
-  NodeGraph.Id.Kind kind = 3;   // 22000
-  int32 nodeId = 5;             // enum.ts/NodeId
-}
 
-message PinIndex {
-  enum Kind {
-    Unknown = 0;
-    InFlow = 1;
-    OutFlow = 2;
-    InParam = 3;
-    OutParam = 4;
+type EnumId = number;
+export type NodeType = {
+  /** Type = Basic Types */
+  t: "b";
+  /** Basic Types */
+  b: BasicTypes;
+} | {
+  /** Type = Basic Enums, or some unique vars */
+  t: "e";
+  /** Enum Id */
+  e: EnumId;
+} | {
+  /** Type = List */
+  t: "l";
+  /** item = NodeType*/
+  i: NodeType;
+} | {
+  /** Type = Struct, or reflect src map */
+  t: "s";
+  /** fields = [name, NodeType][] */
+  f: [string, NodeType][];
+} | {
+  /** Type = Dict */
+  t: "d";
+  /** Key = NodeType */
+  k: NodeType;
+  /** Value = NodeType */
+  v: NodeType;
+} | {
+  /** Type = Reflect */
+  t: "r";
+  /** Reflect Name = string */
+  r: string;
+};
 
-    SignalClient = 5;
-    Signal = 6;
-    Struct = 13;
-    ModifyStructKey = 14;
-    SetStructKey = 15;
-    SelectStructKeys = 16;
-  }
-  Kind kind = 1;
-  int32 index = 2; // index of the pin
+export const UNK_TYPE: NodeType = { t: "b", b: "Unk" as BasicTypes } as const;
 
-  message SignalId { int64 id = 1; }
-  optional SignalId signalSource = 100;
-}
-
-message NodePin {
-  PinIndex i1 = 1;
-  PinIndex i2 = 2;
-  VarBase value = 3;
-  int32 type = 4; // Be careful! VarType in Server and ClientVarType in Client
-  repeated NodeConnection connects = 5; // OutFlow or InParam
-  optional PinIndex signalPin = 6;
-  optional int32 compositePinUid = 7; // Only when calling composite node
-}
-
-message NodeConnection {
-  int32 id = 1;
-  PinIndex connect = 2;
-  PinIndex connect2 = 3;
-}
-
-message CompositePin {
-  PinIndex outerPin = 1;
-  int32 innerNodeId = 2;
-  PinIndex innerPin = 3;
-  PinIndex innerPin2 = 4;
-}
-
+/**
+ * 将 NodeType（或字符串形式的类型表达式）转为可读字符串。
+ * 用于序列化类型结构，例如：S<a:Int,b:L<Str>>
+ */
+export function stringify(node: NodeType | string): string;
+/**
+ * 将字符串形式的类型表达式解析为 NodeType。
+ * 支持 L<>, D<,>, S< : >, R<>, E<> 等表达式。
+ * 会在语法非法时抛出异常。
+ */
+export function parse(src: string): NodeType;
+/**
+ * 在给定类型中执行一次单一反射替换。
+ * 若遇到 R<refName>，则替换为对应节点结构。
+ * 其他节点类型将递归替换。
+ */
+export function reflects(type: NodeType, ref: [string, NodeType]): NodeType;
+/**
+ * 对类型执行一次或多次 reflect() 替换。
+ * type 与 refs 允许为字符串（自动 parse）。
+ * allow_undefined=true 时允许输入 undefined。
+ */
+export function reflects(type: NodeType | string,refs: [string, NodeType][] | string): NodeType;
+/**
+ * 判断某个 NodeType 是否包含反射节点（R<...>）。
+ */
+export function is_reflect(type: NodeType | string | undefined): boolean;
+export function get_id(type: NodeType|string):number;
+export function get_type(id:number):NodeType;
+export function get_id_client(type: NodeType|string):number;
+export function get_type_client(id:number):NodeType;
+// .......
 
 
 

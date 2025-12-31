@@ -4,26 +4,32 @@ export const AUTHOR = "Aluria";
 export const GAME_VERSION = "6.2.0";
 
 // ====== Begin of Document Schema ====== //
+// ------------------------------------------------------------------
+// Core Container
+// ------------------------------------------------------------------
 interface Document {
+  // Header fields
   Version: string;              // Data & Schema version
   GameVersion: string;          // Game version
   Author: string;               // Author
   Date: string;                 // Date of generation
   Description: string;          // Description
   Schema: string;               // TypeScript type definition source code
-  TypesList: TypeEntry[];       // Type list
-  NodesList: NodeEntry[];       // Node list
-  EnumList: EnumEntry[];        // Server enum list
-  ClientEnumList: EnumEntry[];  // Client enum list
-  GraphConstList: GraphConst[]; // Different node graph fixed field adoption value information
+  // Core Data
+  Types: Record<string, TypeDef>;       // 类型定义 (Key: SafeName)
+  Nodes: NodeDef[];                     // 节点定义列表
+  Enums: Record<string, EnumDef>;       // 枚举定义
+  // Protocol/System Consts Tables
+  SystemConstants: SystemConstDef;   // 用于存放那些 Magic Numbers (如 Class=10001, RPC_Kernel=2000)
 }
-interface Entry {
-  Name: string;               // Safe name used as object keys or query keys
-  Translations: Translations; // Raw texts displayed in game
-  ID: number;                 // An in-game unique id of the entry
-}
-interface TypeEntry extends Entry {
-  ClientID: number | null;    // An in-game unique id of the any type in client 
+
+// ------------------------------------------------------------------
+// Type System (Enhanced)
+// ------------------------------------------------------------------
+interface TypeDef {
+  Name: string;
+  ID: number;                 // Server ID
+  ClientID: number|null;      // Client ID (if exists)
   Expression: string;         // Static representation expression for convertor
   DSLName: string;            // Name of var class(type) in DSL
   BaseType: string;           // Base type of the entry in game runtime
