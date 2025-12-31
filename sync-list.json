@@ -1,6 +1,6 @@
 {
   "commitMessage": "Refract Gia Gen Interface",
-  "notSync": false,
+  "notSync": true,
   "include": [
     "*",
     "docs/**",

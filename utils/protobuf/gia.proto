@@ -81,8 +81,8 @@ message Any {}
 
 message CompositeDef {
   message Id {
-    NodeGraph.Id genericId = 1;
-    NodeGraph.Id concreteId = 2;
+    NodeGraph.Id shellId = 1;
+    NodeGraph.Id kernelId = 2;
     NodeGraph.Id graphId = 4;
     int32 signalVersion = 5;
   }
@@ -494,8 +494,8 @@ message ComplexValueStruct { // Map KV, Array Item, Struct Item
 
 message GraphNode {
   int32 nodeIndex = 1;                  // 1
-  NodeProperty genericId = 2;           // Node's Template's Id
-  optional NodeProperty concreteId = 3; // Node's own Id(Null for generic nodes)
+  NodeProperty shellId = 2;           // Node's Template's Id
+  optional NodeProperty kernelId = 3; // Node's own Id(Null for generic nodes without types)
   repeated NodePin pins = 4;            // connect to other nodes
   float x = 5;                          // xpos
   float y = 6;                          // ypos
