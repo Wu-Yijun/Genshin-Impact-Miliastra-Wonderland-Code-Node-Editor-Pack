@@ -36,12 +36,13 @@ data.Nodes.forEach(node => {
   const refOut = ref.ports.filter(p => p.kind === "data-out");
   if (refOut.length === 0) return;
   if (node.DataPins.filter(x => x.Direction === "Out").length !== refOut.length) {
-    // console.log(
-    //   "Output Pin Count is not Equal:",
-    //   node.Identifier,
-    //   node.DataPins.filter(x => x.Direction === "Out").length,
-    //   ref.ports.filter(p => p.kind === "data-out").length
-    // );
+    console.log(
+      "Output Pin Count is not Equal:",
+      node.Identifier,
+      node.DataPins.filter(x => x.Direction === "Out").length,
+      refOut.length
+    );
+    node.__todo_set_out_pin = true;
     return;
   }
 
@@ -76,4 +77,4 @@ data.Nodes.forEach(node => {
 
 });
 
-// save("data.json", data);
+save("data.json", data);
