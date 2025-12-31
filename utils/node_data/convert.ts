@@ -40,7 +40,8 @@ import { assert, assertDeepEq, assertEq, exclude_keys } from "../utils.ts";
 // const m = new Map();
 // data.Enums.forEach(x => {
 //   x.Items.forEach(z => {
-//     const y = exclude_keys(z, "Alias");
+//     // const y = exclude_keys(z, "Alias");
+//     const y = z;
 //     if (m.has(y.ID)) {
 //       assertDeepEq(y, m.get(y.ID));
 //     } else {
