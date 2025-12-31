@@ -512,7 +512,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.printString"
     },
     {
       "Identifier": "Control.General.Branch",
@@ -557,7 +558,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "flow.branch.ifElse"
     },
     {
       "Identifier": "Control.General.Switch",
@@ -692,7 +694,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "flow.branch.multi"
     },
     {
       "Identifier": "Execution.Common_Node.For_Loop",
@@ -751,7 +754,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.loopFinite"
     },
     {
       "Identifier": "Execution.Common_Node.Break",
@@ -776,7 +780,8 @@
         }
       ],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.breakLoop"
     },
     {
       "Identifier": "Query.Math.Random_Float",
@@ -826,7 +831,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.randomFloat"
     },
     {
       "Identifier": "Query.Math.Weighted_Random",
@@ -865,7 +871,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.weightedRandomIndex"
     },
     {
       "Identifier": "Arithmetic.Math.Split_Vector",
@@ -926,7 +933,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.split"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Add",
@@ -976,7 +984,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.add"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Subtract",
@@ -1026,7 +1035,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.sub"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Scale",
@@ -1076,7 +1086,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.scale"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Angle",
@@ -1126,7 +1137,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.angle"
     },
     {
       "Identifier": "Arithmetic.General.Equal",
@@ -1228,7 +1240,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.equals"
     },
     {
       "Identifier": "Query.General.Get_Local",
@@ -1380,7 +1393,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.getLocalVariable"
     },
     {
       "Identifier": "Execution.Common_Node.Set_Local",
@@ -1530,7 +1544,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.setLocalVariable"
     },
     {
       "Identifier": "Execution.Custom_Variable.Set_Variable",
@@ -2378,7 +2393,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.setCustomVariable"
     },
     {
       "Identifier": "Trigger.Custom_Variable.On_Variable_Change",
@@ -3222,7 +3238,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.customVariableChanged"
     },
     {
       "Identifier": "Query.Custom_Variable.Get_Variable",
@@ -4050,7 +4067,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.customVar.get"
     },
     {
       "Identifier": "Execution.Preset_Status.Set_Status",
@@ -4109,7 +4127,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.setPresetState"
     },
     {
       "Identifier": "Trigger.Preset_Status.On_Status_Change",
@@ -4186,7 +4205,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.presetStateChanged"
     },
     {
       "Identifier": "Query.Preset_Status.Get_Status",
@@ -4236,7 +4256,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.presetState.get"
     },
     {
       "Identifier": "Execution.Entity_Related.Destroy_Entity",
@@ -4273,7 +4294,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.destroyEntity"
     },
     {
       "Identifier": "Execution.Entity_Related.Create_Entity",
@@ -4321,7 +4343,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.createEntity"
     },
     {
       "Identifier": "Trigger.Entity_Related.On_Created",
@@ -4365,7 +4388,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.entityCreated"
     },
     {
       "Identifier": "Trigger.Entity_Related.On_Removed",
@@ -4398,7 +4422,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.entityRemovedOrDestroyed"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Self",
@@ -4426,7 +4451,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.self"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Normalize",
@@ -4465,7 +4491,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.normalize"
     },
     {
       "Identifier": "Query.Entity_Related.Get_By_GUID",
@@ -4504,7 +4531,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.byGuid"
     },
     {
       "Identifier": "Query.Entity_Related.Get_GUID",
@@ -4543,7 +4571,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.guid.byEntity"
     },
     {
       "Identifier": "Execution.Stage_Related.Settle",
@@ -4580,7 +4609,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.finishLevel"
     },
     {
       "Identifier": "Execution.Timer.Start",
@@ -4661,7 +4691,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.timer.start"
     },
     {
       "Identifier": "Execution.Timer.Pause",
@@ -4709,7 +4740,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.timer.pause"
     },
     {
       "Identifier": "Execution.Timer.Resume",
@@ -4757,7 +4789,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.timer.resume"
     },
     {
       "Identifier": "Execution.Timer.Stop",
@@ -4805,7 +4838,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.timer.stop"
     },
     {
       "Identifier": "Trigger.Timer.On_Timer_Trigger",
@@ -4893,7 +4927,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.timerTriggered"
     },
     {
       "Identifier": "Execution.Motion_Device.Add_Linear_Motion",
@@ -4963,7 +4998,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverBase.addUniformLinear"
     },
     {
       "Identifier": "Execution.Motion_Device.Add_Rotation_Motion",
@@ -5044,7 +5080,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverBase.addUniformRotate"
     },
     {
       "Identifier": "Execution.Motion_Device.Stop_Delete",
@@ -5103,7 +5140,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverBase.stopAndRemove"
     },
     {
       "Identifier": "Execution.Motion_Device.Pause",
@@ -5151,7 +5189,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverBase.pause"
     },
     {
       "Identifier": "Execution.Motion_Device.Resume",
@@ -5199,7 +5238,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverBase.resume"
     },
     {
       "Identifier": "Trigger.Motion_Device.On_Motion_Stop",
@@ -5254,7 +5294,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.basicMoverStopped"
     },
     {
       "Identifier": "Execution.Collision_Trigger.Set_Trigger_State",
@@ -5313,7 +5354,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.toggleCollisionTrigger"
     },
     {
       "Identifier": "Trigger.Collision_Trigger.On_Exit",
@@ -5390,7 +5432,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.leaveCollisionTrigger"
     },
     {
       "Identifier": "Trigger.Collision_Trigger.On_Enter",
@@ -5467,7 +5510,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.enterCollisionTrigger"
     },
     {
       "Identifier": "Execution.Special_Effect.Play_Timed",
@@ -5592,7 +5636,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.fx.playTimed"
     },
     {
       "Identifier": "Execution.Special_Effect.Play_Loop",
@@ -5728,7 +5773,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.fx.attachLoop"
     },
     {
       "Identifier": "Execution.Special_Effect.Stop_Loop",
@@ -5776,7 +5822,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.fx.clearLoop"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Transform",
@@ -5826,7 +5873,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.transform"
     },
     {
       "Identifier": "Execution.List_Operation.Concatenate",
@@ -5926,7 +5974,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.list.concat"
     },
     {
       "Identifier": "Execution.List_Operation.Clear",
@@ -6015,7 +6064,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.list.clear"
     },
     {
       "Identifier": "Query.List_Related.Contains",
@@ -6117,7 +6167,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.list.contains"
     },
     {
       "Identifier": "Query.List_Related.Find_Index",
@@ -6219,7 +6270,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.list.findIndicesByValue"
     },
     {
       "Identifier": "Query.List_Related.Get_At_Index",
@@ -6310,7 +6362,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.list.getAt"
     },
     {
       "Identifier": "Execution.List_Operation.Insert",
@@ -6421,7 +6474,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.list.insert"
     },
     {
       "Identifier": "Query.List_Related.Get_Length",
@@ -6512,7 +6566,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.list.length"
     },
     {
       "Identifier": "Query.List_Related.Get_Max",
@@ -6563,7 +6618,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.list.max"
     },
     {
       "Identifier": "Query.List_Related.Get_Min",
@@ -6614,7 +6670,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.list.min"
     },
     {
       "Identifier": "Execution.List_Operation.Remove",
@@ -6714,7 +6771,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.list.remove"
     },
     {
       "Identifier": "Execution.List_Operation.Modify_Index",
@@ -6825,7 +6883,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.list.modify"
     },
     {
       "Identifier": "Execution.List_Operation.Sort",
@@ -6874,7 +6933,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.list.sort"
     },
     {
       "Identifier": "Arithmetic.General.Assemble_List",
@@ -7515,7 +7575,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.list.assemble"
     },
     {
       "Identifier": "Trigger.Motion_Device.On_Reach_Waypoint",
@@ -7592,7 +7653,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.pathReachedWaypoint"
     },
     {
       "Identifier": "Execution.Entity_Deployment.Set_Group_State",
@@ -7640,7 +7702,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.placement.toggleGroup"
     },
     {
       "Identifier": "Query.Entity_Layout.Get_Active_Groups",
@@ -7668,7 +7731,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entityLayoutGroups.active"
     },
     {
       "Identifier": "Arithmetic.General.Convert_Type",
@@ -7764,7 +7828,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.typeCast"
     },
     {
       "Identifier": "Execution.Common_Node.Forward_Event",
@@ -7801,7 +7866,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.forwardEvent"
     },
     {
       "Identifier": "Query.Math.Pi",
@@ -7840,7 +7906,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.pi"
     },
     {
       "Identifier": "Query.Math.Vector_Zero",
@@ -7879,7 +7946,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.vector3.zero"
     },
     {
       "Identifier": "Query.Math.Vector_Up",
@@ -7918,7 +7986,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.vector3.up"
     },
     {
       "Identifier": "Query.Math.Vector_Down",
@@ -7957,7 +8026,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.vector3.down"
     },
     {
       "Identifier": "Query.Math.Vector_Left",
@@ -7996,7 +8066,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.vector3.left"
     },
     {
       "Identifier": "Query.Math.Vector_Right",
@@ -8035,7 +8106,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.vector3.right"
     },
     {
       "Identifier": "Query.Math.Vector_Forward",
@@ -8074,7 +8146,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.vector3.forward"
     },
     {
       "Identifier": "Query.Math.Vector_Backward",
@@ -8113,7 +8186,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.vector3.back"
     },
     {
       "Identifier": "Arithmetic.Math.Add",
@@ -8175,7 +8249,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.add"
     },
     {
       "Identifier": "Arithmetic.Math.Subtract",
@@ -8237,7 +8312,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.sub"
     },
     {
       "Identifier": "Arithmetic.Math.Multiply",
@@ -8299,7 +8375,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.mul"
     },
     {
       "Identifier": "Arithmetic.Math.Divide",
@@ -8361,7 +8438,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.div"
     },
     {
       "Identifier": "Arithmetic.Math.Modulo",
@@ -8411,7 +8489,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.mod"
     },
     {
       "Identifier": "Arithmetic.Math.Power",
@@ -8473,7 +8552,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.pow"
     },
     {
       "Identifier": "Arithmetic.Math.Max",
@@ -8535,7 +8615,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.max"
     },
     {
       "Identifier": "Arithmetic.Math.Min",
@@ -8597,7 +8678,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.min"
     },
     {
       "Identifier": "Arithmetic.Math.Log",
@@ -8647,7 +8729,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.log"
     },
     {
       "Identifier": "Arithmetic.Math.Abs",
@@ -8698,7 +8781,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.abs"
     },
     {
       "Identifier": "Arithmetic.Math.Sign",
@@ -8749,7 +8833,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.sign"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Length",
@@ -8788,7 +8873,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.magnitude"
     },
     {
       "Identifier": "Arithmetic.Math.Sqrt",
@@ -8827,7 +8913,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.sqrt"
     },
     {
       "Identifier": "Arithmetic.Math.Clamp",
@@ -8900,7 +8987,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.clamp"
     },
     {
       "Identifier": "Arithmetic.Math.Round",
@@ -8939,7 +9027,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.truncate"
     },
     {
       "Identifier": "Arithmetic.Math.Create_Vector",
@@ -9000,7 +9089,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.create"
     },
     {
       "Identifier": "Arithmetic.Math.And",
@@ -9050,7 +9140,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.logic.and"
     },
     {
       "Identifier": "Arithmetic.Math.Or",
@@ -9100,7 +9191,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.logic.or"
     },
     {
       "Identifier": "Arithmetic.Math.Xor",
@@ -9150,7 +9242,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.logic.xor"
     },
     {
       "Identifier": "Arithmetic.Math.Not",
@@ -9200,7 +9293,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.logic.not"
     },
     {
       "Identifier": "Arithmetic.Math.Less_Than",
@@ -9262,7 +9356,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.lt"
     },
     {
       "Identifier": "Arithmetic.Math.Less_Equal",
@@ -9324,7 +9419,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.lte"
     },
     {
       "Identifier": "Arithmetic.Math.Greater_Than",
@@ -9386,7 +9482,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.gt"
     },
     {
       "Identifier": "Arithmetic.Math.Greater_Equal",
@@ -9448,7 +9545,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.gte"
     },
     {
       "Identifier": "Execution.Collision.Set_Native_Collision",
@@ -9496,7 +9594,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.toggleNativeCollision"
     },
     {
       "Identifier": "Execution.Collision.Set_Native_Climb",
@@ -9544,7 +9643,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.toggleNativeCollisionClimbable"
     },
     {
       "Identifier": "Execution.Collision.Set_Extra_Collision",
@@ -9603,7 +9703,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.toggleExtraCollision"
     },
     {
       "Identifier": "Execution.Collision.Set_Extra_Climb",
@@ -9662,7 +9763,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.toggleExtraCollisionClimbable"
     },
     {
       "Identifier": "Arithmetic.Math.Distance",
@@ -9712,7 +9814,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.distance"
     },
     {
       "Identifier": "Execution.Follow_Motion.Set_Target_GUID",
@@ -9793,7 +9896,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverFollow.switchTargetByGuid"
     },
     {
       "Identifier": "Query.Follow_Motion.Get_Target",
@@ -9843,7 +9947,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.follower.target"
     },
     {
       "Identifier": "Query.Character_Related.Get_All_Players",
@@ -9871,7 +9976,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.players.inField"
     },
     {
       "Identifier": "Query.Faction_Related.Get_Faction",
@@ -9910,7 +10016,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.camp.ofEntity"
     },
     {
       "Identifier": "Execution.Faction_Related.Set_Faction",
@@ -9958,7 +10065,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.modifyEntityFaction"
     },
     {
       "Identifier": "Trigger.Faction_Related.On_Faction_Change",
@@ -10024,7 +10132,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.entityCampChanged"
     },
     {
       "Identifier": "Execution.Entity_Related.Create_Prefab",
@@ -10149,7 +10258,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.createComponent"
     },
     {
       "Identifier": "Trigger.Hit_Detection.On_Hit_Detected",
@@ -10226,7 +10336,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.hitCheckTriggered"
     },
     {
       "Identifier": "Execution.Projectile.Create",
@@ -10351,7 +10462,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.projectile.create"
     },
     {
       "Identifier": "Query.Math.Random_Int",
@@ -10401,7 +10513,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.randomInt"
     },
     {
       "Identifier": "Query.Character_Related.Get_Player_Characters",
@@ -10440,7 +10553,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.player.allCharacterEntities"
     },
     {
       "Identifier": "Query.Character_Related.Get_Owner_Player",
@@ -10479,7 +10593,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.player.ofCharacter"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Type",
@@ -10507,7 +10622,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.type"
     },
     {
       "Identifier": "Execution.Camera.Switch_Template",
@@ -10555,7 +10671,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.camera.switchTemplate"
     },
     {
       "Identifier": "Hidden.Execution.Activate_Entity_Camera",
@@ -10594,7 +10711,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Hidden.Execution.Disable_Entity_Camera",
@@ -10622,7 +10740,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Hidden.Execution.Activate_Focus_Camera",
@@ -10661,7 +10780,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Hidden.Execution.Disable_Focus_Camera",
@@ -10689,7 +10809,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Hidden.Execution.Play_Screen_Shake",
@@ -10750,7 +10871,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Motion_Device.Activate",
@@ -10798,7 +10920,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverBase.activate"
     },
     {
       "Identifier": "Query.Preset_Point.Get_Transform",
@@ -10848,7 +10971,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.preset.transformByIndex"
     },
     {
       "Identifier": "Query.Preset_Point.Get_By_Tag",
@@ -10887,7 +11011,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.preset.indicesByUnitTag"
     },
     {
       "Identifier": "Execution.Character_Related.Activate_Revive_Point",
@@ -10935,7 +11060,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.activateRevivePoint"
     },
     {
       "Identifier": "Execution.Character_Related.Deactivate_Revive_Point",
@@ -10983,7 +11109,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.unregisterRevivePoint"
     },
     {
       "Identifier": "Execution.Character_Related.Set_Revive_Allowed",
@@ -11031,7 +11158,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.togglePlayerRevive"
     },
     {
       "Identifier": "Query.Character_Related.Get_Revives",
@@ -11070,7 +11198,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.player.reviveRemaining"
     },
     {
       "Identifier": "Execution.Character_Related.Set_Revive_Count",
@@ -11118,7 +11247,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.setPlayerReviveCount"
     },
     {
       "Identifier": "Query.Character_Related.Get_Revive_Time",
@@ -11157,7 +11287,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.player.reviveDuration"
     },
     {
       "Identifier": "Execution.Character_Related.Set_Revive_Time",
@@ -11205,7 +11336,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.setPlayerReviveDuration"
     },
     {
       "Identifier": "Execution.Character_Related.Revive_Single",
@@ -11242,7 +11374,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.reviveCharacter"
     },
     {
       "Identifier": "Trigger.Character_Related.On_Character_Down",
@@ -11297,7 +11430,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.characterDown"
     },
     {
       "Identifier": "Trigger.Character_Related.On_Character_Revive",
@@ -11330,7 +11464,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.characterRevived"
     },
     {
       "Identifier": "Execution.Character_Related.Defeat_All",
@@ -11367,7 +11502,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.knockdownAllPlayerCharacters"
     },
     {
       "Identifier": "Execution.Character_Related.Revive_All",
@@ -11415,7 +11551,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.reviveAllPlayerCharacters"
     },
     {
       "Identifier": "Trigger.Character_Related.On_All_Down",
@@ -11448,7 +11585,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.playerAllCharactersDown"
     },
     {
       "Identifier": "Trigger.Character_Related.On_Abnormal_Revive",
@@ -11481,7 +11619,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.playerAbnormalDownAndRevived"
     },
     {
       "Identifier": "Trigger.Character_Related.On_All_Revived",
@@ -11514,7 +11653,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.playerAllCharactersRevived"
     },
     {
       "Identifier": "Query.Character_Related.Is_All_Down",
@@ -11553,7 +11693,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.player.allCharactersDown"
     },
     {
       "Identifier": "Execution.Character_Related.Teleport",
@@ -11612,7 +11753,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.teleportPlayer"
     },
     {
       "Identifier": "Trigger.Character_Related.On_Teleport_Complete",
@@ -11656,7 +11798,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.playerTeleportFinished"
     },
     {
       "Identifier": "Query.Stage_Related.Get_Elapsed_Time",
@@ -11684,7 +11827,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.level.gameElapsed"
     },
     {
       "Identifier": "Arithmetic.Math.Sin",
@@ -11723,7 +11867,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.sin"
     },
     {
       "Identifier": "Arithmetic.Math.Cos",
@@ -11762,7 +11907,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.cos"
     },
     {
       "Identifier": "Arithmetic.Math.Tan",
@@ -11801,7 +11947,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.tan"
     },
     {
       "Identifier": "Arithmetic.Math.Asin",
@@ -11840,7 +11987,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.asin"
     },
     {
       "Identifier": "Arithmetic.Math.Acos",
@@ -11879,7 +12027,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.acos"
     },
     {
       "Identifier": "Arithmetic.Math.Atan",
@@ -11918,7 +12067,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.atan"
     },
     {
       "Identifier": "Execution.Unit_Status.Add_Status",
@@ -12021,7 +12171,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.unitState.add"
     },
     {
       "Identifier": "Trigger.Unit_Status.On_Status_End",
@@ -12153,7 +12304,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.unitStateEnded"
     },
     {
       "Identifier": "Trigger.Unit_Status.On_Status_Change",
@@ -12274,7 +12426,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.unitStateChanged"
     },
     {
       "Identifier": "Execution.Unit_Status.Remove_Status",
@@ -12355,7 +12508,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.unitState.remove"
     },
     {
       "Identifier": "Execution.Character_Disruptor.Modify_Device",
@@ -12403,7 +12557,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.playerDisturber.modify"
     },
     {
       "Identifier": "Execution.Combat.Attack",
@@ -12517,7 +12672,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.combat.attack"
     },
     {
       "Identifier": "Trigger.Combat.On_Be_Attacked",
@@ -12616,7 +12772,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.attacked"
     },
     {
       "Identifier": "Trigger.Combat.On_Hit_Target",
@@ -12715,7 +12872,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.attackHit"
     },
     {
       "Identifier": "Execution.Tab.Set_State",
@@ -12774,7 +12932,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.tab.toggle"
     },
     {
       "Identifier": "Trigger.Tab.On_Tab_Select",
@@ -12851,7 +13010,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.tabSelected"
     },
     {
       "Identifier": "Execution.Entity_Related.Set_Model_Visible",
@@ -12899,7 +13059,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.toggleModelVisibility"
     },
     {
       "Identifier": "Execution.Global_Timer.Pause",
@@ -12947,7 +13108,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.globalTimer.pause"
     },
     {
       "Identifier": "Query.Global_Timer.Get_Time",
@@ -12997,7 +13159,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.timer.globalCurrent"
     },
     {
       "Identifier": "Execution.Global_Timer.Start",
@@ -13045,7 +13208,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.globalTimer.start"
     },
     {
       "Identifier": "Execution.Global_Timer.Resume",
@@ -13093,7 +13257,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.globalTimer.resume"
     },
     {
       "Identifier": "Execution.Global_Timer.Stop",
@@ -13141,7 +13306,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.globalTimer.stop"
     },
     {
       "Identifier": "Execution.Global_Timer.Modify",
@@ -13200,7 +13366,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.globalTimer.modify"
     },
     {
       "Identifier": "Trigger.Global_Timer.On_Timer_Trigger",
@@ -13255,7 +13422,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.globalTimerTriggered"
     },
     {
       "Identifier": "Trigger.UI_Control_Group.On_Group_Trigger",
@@ -13321,7 +13489,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.uiControlGroupTriggered"
     },
     {
       "Identifier": "Query.UI_Control_Group.Get_Current_Layout",
@@ -13360,7 +13529,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.ui.currentLayout"
     },
     {
       "Identifier": "Query.Entity_Related.Get_All_Entities",
@@ -13388,7 +13558,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entities.getAll"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Entities_By_Type",
@@ -13416,7 +13587,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entities.byTypeOnField"
     },
     {
       "Identifier": "Query.Entity_Related.Get_By_Prefab",
@@ -13455,7 +13627,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entities.byComponentOnField"
     },
     {
       "Identifier": "Arithmetic.Math.Rad_To_Deg",
@@ -13494,7 +13667,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.rad2deg"
     },
     {
       "Identifier": "Arithmetic.Math.Deg_To_Rad",
@@ -13533,7 +13707,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.deg2rad"
     },
     {
       "Identifier": "Execution.Custom_Variable.Set_Graph_Variable",
@@ -14359,7 +14534,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.setGraphVariable"
     },
     {
       "Identifier": "Query.Custom_Variable.Get_Graph_Variable",
@@ -15154,7 +15330,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.graphVar.get"
     },
     {
       "Identifier": "Trigger.Custom_Variable.On_Graph_Variable_Change",
@@ -15998,7 +16175,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.graphVariableChanged"
     },
     {
       "Identifier": "Execution.Follow_Motion.Set_Device_State",
@@ -16057,7 +16235,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverFollow.toggle"
     },
     {
       "Identifier": "Hidden.Execution.Set_Disruptor_State",
@@ -16107,7 +16286,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Collision_Trigger_Source.Set_Source_State",
@@ -16166,7 +16346,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.collisionSource.toggle"
     },
     {
       "Identifier": "Execution.Entity_Related.Remove_Entity",
@@ -16203,7 +16384,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.removeEntity"
     },
     {
       "Identifier": "Trigger.Entity_Related.On_Destroyed",
@@ -16324,7 +16506,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.entityDestroyed"
     },
     {
       "Identifier": "Trigger.Creation.On_Enter_Combat",
@@ -16368,7 +16551,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.constructEnterCombat"
     },
     {
       "Identifier": "Trigger.Creation.On_Leave_Combat",
@@ -16412,7 +16596,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.constructExitCombat"
     },
     {
       "Identifier": "Query.Creation.Get_Target",
@@ -16451,7 +16636,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.creation.currentTarget"
     },
     {
       "Identifier": "Query.Entity_Related.Get_By_Type",
@@ -16490,7 +16676,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entities.filterByType"
     },
     {
       "Identifier": "Query.Entity_Related.Get_By_Prefab",
@@ -16540,7 +16727,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entities.filterByComponentId"
     },
     {
       "Identifier": "Query.Entity_Related.Get_By_Faction",
@@ -16590,7 +16778,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entities.filterByCamp"
     },
     {
       "Identifier": "Query.Entity_Related.Get_By_Range",
@@ -16651,7 +16840,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entities.filterByRange"
     },
     {
       "Identifier": "Query.Creation.Get_Attribute",
@@ -16756,7 +16946,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.creation.stats"
     },
     {
       "Identifier": "Execution.UI_Control_Group.Switch_Layout",
@@ -16804,7 +16995,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.uiGroup.switchLayout"
     },
     {
       "Identifier": "Execution.UI_Control_Group.Activate_Group",
@@ -16852,7 +17044,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.uiGroup.enableFromLibrary"
     },
     {
       "Identifier": "Execution.UI_Control_Group.Modify_Status",
@@ -16900,7 +17093,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.uiGroup.modifyControl"
     },
     {
       "Identifier": "Trigger.Class.On_Class_Change",
@@ -16966,7 +17160,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.playerCareerChanged"
     },
     {
       "Identifier": "Trigger.Class.On_Level_Change",
@@ -17032,7 +17227,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.playerCareerLevelChanged"
     },
     {
       "Identifier": "Query.Class.Get_Class",
@@ -17071,7 +17267,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.career.ofPlayer"
     },
     {
       "Identifier": "Query.Class.Get_Level",
@@ -17121,7 +17318,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.career.level"
     },
     {
       "Identifier": "Execution.Class.Change_Class",
@@ -17169,7 +17367,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.class.switch"
     },
     {
       "Identifier": "Execution.Class.Add_Exp",
@@ -17217,7 +17416,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.class.addExp"
     },
     {
       "Identifier": "Execution.Class.Set_Level",
@@ -17265,7 +17465,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.class.setLevel"
     },
     {
       "Identifier": "Trigger.Skill.On_Skill_Call",
@@ -17342,7 +17543,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.skillNodeInvoked"
     },
     {
       "Identifier": "Execution.Skill.Modify_Resource",
@@ -17401,7 +17603,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.modifyResource"
     },
     {
       "Identifier": "Execution.Skill.Set_Resource",
@@ -17460,7 +17663,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.setResource"
     },
     {
       "Identifier": "Execution.Skill.Add_Skill",
@@ -17508,7 +17712,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.add"
     },
     {
       "Identifier": "Execution.Skill.Remove_By_ID",
@@ -17556,7 +17761,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.removeById"
     },
     {
       "Identifier": "Execution.Skill.Init_Skill",
@@ -17593,7 +17799,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.init"
     },
     {
       "Identifier": "Query.Skill.Get_Skill_Info",
@@ -17632,7 +17839,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.character.skill"
     },
     {
       "Identifier": "Execution.Skill.Remove_By_Slot",
@@ -17669,7 +17877,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.removeBySlot"
     },
     {
       "Identifier": "Hidden.Trigger.On_Native_Value_Change",
@@ -18519,7 +18728,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Hidden.Execution.Set_Native_Value",
@@ -19358,7 +19568,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Hidden.Query.Get_Native_Value",
@@ -20186,7 +20397,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Special_Effect.Stop_By_Asset",
@@ -20234,7 +20446,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.fx.clearByAsset"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Rotate",
@@ -20284,7 +20497,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.rotate"
     },
     {
       "Identifier": "Arithmetic.General.Enum_Equal",
@@ -20531,7 +20745,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.enumEquals"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Dot",
@@ -20581,7 +20796,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.dot"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_Cross",
@@ -20631,7 +20847,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.vector3.cross"
     },
     {
       "Identifier": "Query.Entity_Related.Is_Active",
@@ -20670,7 +20887,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.isAlive"
     },
     {
       "Identifier": "Query.Unit_Status.Has_Status",
@@ -20720,7 +20938,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.unitState.hasState"
     },
     {
       "Identifier": "Execution.List_Operation.For_Each",
@@ -20820,7 +21039,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.list.iterate"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Forward",
@@ -20859,7 +21079,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.forwardVector"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Right",
@@ -20898,7 +21119,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.rightVector"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Up",
@@ -20937,7 +21159,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.upVector"
     },
     {
       "Identifier": "Arithmetic.Math.Vector_To_Rotation",
@@ -20987,7 +21210,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.direction.rotate"
     },
     {
       "Identifier": "Execution.Motion_Device.Add_Target_Rotation",
@@ -21057,7 +21281,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverBase.addLookAtTargetRot"
     },
     {
       "Identifier": "Execution.UI_Control_Group.Remove_Group",
@@ -21105,7 +21330,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.uiGroup.removeFromLibrary"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Obj_Attr",
@@ -21210,7 +21436,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.object.stats"
     },
     {
       "Identifier": "Execution.Combat.Recover_HP",
@@ -21291,7 +21518,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.combat.heal"
     },
     {
       "Identifier": "Trigger.Combat.On_HP_Recover",
@@ -21368,7 +21596,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.healed"
     },
     {
       "Identifier": "Trigger.Combat.On_HP_Recovery_Start",
@@ -21445,7 +21674,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.healIssued"
     },
     {
       "Identifier": "Execution.Unit_Tag.Add_Tag",
@@ -21493,7 +21723,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.unitTags.add"
     },
     {
       "Identifier": "Execution.Unit_Tag.Remove_Tag",
@@ -21541,7 +21772,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.unitTags.remove"
     },
     {
       "Identifier": "Execution.Unit_Tag.Clear_Tags",
@@ -21578,7 +21810,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.unitTags.clearAll"
     },
     {
       "Identifier": "Query.Unit_Tag.Get_Tags",
@@ -21617,7 +21850,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.tags.ofEntity"
     },
     {
       "Identifier": "Query.Unit_Tag.Get_By_Tag",
@@ -21656,7 +21890,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.tags.entitiesByUnitTagIndex"
     },
     {
       "Identifier": "Execution.Sound_Effect.Close_Player",
@@ -21704,7 +21939,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.audio.closeSpecificPlayer"
     },
     {
       "Identifier": "Execution.Sound_Effect.Toggle_Player",
@@ -21763,7 +21999,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.audio.toggleSpecificPlayer"
     },
     {
       "Identifier": "Execution.Sound_Effect.Adjust_Player",
@@ -21833,7 +22070,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.audio.tuneSpecificPlayer"
     },
     {
       "Identifier": "Execution.Sound_Effect.Add_Player",
@@ -21991,7 +22229,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.audio.addPlayer"
     },
     {
       "Identifier": "Execution.Sound_Effect.Toggle_BGM",
@@ -22039,7 +22278,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.audio.togglePlayerBgm"
     },
     {
       "Identifier": "Execution.Sound_Effect.Set_BGM_Volume",
@@ -22087,7 +22327,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.audio.setPlayerBgmVolume"
     },
     {
       "Identifier": "Execution.Sound_Effect.Set_BGM",
@@ -22212,7 +22453,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.audio.modifyPlayerBgm"
     },
     {
       "Identifier": "Execution.Sound_Effect.Play_2D_One_Shot",
@@ -22282,7 +22524,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.audio.play2DOnceForPlayer"
     },
     {
       "Identifier": "Execution.Custom_Aggro.Set_Aggro",
@@ -22341,7 +22584,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.hatred.setValue"
     },
     {
       "Identifier": "Execution.Custom_Aggro.Remove_Aggro",
@@ -22389,7 +22633,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.hatred.removeTarget"
     },
     {
       "Identifier": "Execution.Custom_Aggro.Clear_Aggro",
@@ -22426,7 +22671,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.hatred.clearForTarget"
     },
     {
       "Identifier": "Execution.Custom_Aggro.Taunt",
@@ -22474,7 +22720,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.hatred.taunt"
     },
     {
       "Identifier": "Query.Custom_Aggro.Get_Aggro_Value",
@@ -22524,7 +22771,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.hatred.valueOfEntity"
     },
     {
       "Identifier": "Query.Custom_Aggro.Get_Multiplier",
@@ -22563,7 +22811,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.hatred.multiplierOfEntity"
     },
     {
       "Identifier": "Query.Custom_Aggro.Get_Global_Multiplier",
@@ -22591,7 +22840,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.hatred.globalTransferMultiplier"
     },
     {
       "Identifier": "Query.Custom_Aggro.Get_Aggro_Target",
@@ -22630,7 +22880,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.hatred.targetOfOwner"
     },
     {
       "Identifier": "Query.Custom_Aggro.Get_Aggro_Owners",
@@ -22669,7 +22920,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.hatred.ownersByListContainingTarget"
     },
     {
       "Identifier": "Query.Custom_Aggro.Get_Targeting_Owners",
@@ -22708,7 +22960,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.hatred.ownersByTarget"
     },
     {
       "Identifier": "Query.Custom_Aggro.Get_Aggro_List",
@@ -22747,7 +23000,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.hatred.listOfEntity"
     },
     {
       "Identifier": "Query.Custom_Aggro.Is_In_Combat",
@@ -22786,7 +23040,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.hatred.isInCombat"
     },
     {
       "Identifier": "Trigger.Custom_Aggro.On_Target_Change",
@@ -22852,7 +23107,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.hatredTargetChanged"
     },
     {
       "Identifier": "Trigger.Custom_Aggro.On_Enter_Combat",
@@ -22896,7 +23152,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.selfEnterCombat"
     },
     {
       "Identifier": "Trigger.Custom_Aggro.On_Leave_Combat",
@@ -22940,7 +23197,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.selfExitCombat"
     },
     {
       "Identifier": "Query.Faction_Related.Is_Hostile",
@@ -22990,7 +23248,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.camp.isHostile"
     },
     {
       "Identifier": "Hidden.Execution.Add_Nameplate",
@@ -23029,7 +23288,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Hidden.Execution.Remove_Nameplate",
@@ -23068,7 +23328,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Nameplate.Set_Nameplate",
@@ -23116,7 +23377,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.nameplate.apply"
     },
     {
       "Identifier": "Execution.Creation_Patrol.Switch_Template",
@@ -23164,7 +23426,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.patrol.switchTemplate"
     },
     {
       "Identifier": "Query.Creature_Patrol.Get_Patrol_Template",
@@ -23225,7 +23488,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.creation.patrolTemplate"
     },
     {
       "Identifier": "Trigger.Creation_Patrol.On_Reach_Waypoint",
@@ -23313,7 +23577,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.constructReachedPatrolWaypoint"
     },
     {
       "Identifier": "Query.Global_Path.Get_Waypoint",
@@ -23374,7 +23639,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.path.pointInfo"
     },
     {
       "Identifier": "Execution.Text_Bubble.Set_Bubble",
@@ -23422,7 +23688,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.textBubble.switchActive"
     },
     {
       "Identifier": "Execution.Deck_Selector.Open",
@@ -23569,7 +23836,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.cardPicker.invoke"
     },
     {
       "Identifier": "Trigger.Deck_Selector.On_Deck_Selected",
@@ -23635,7 +23903,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.cardPickerCompleted"
     },
     {
       "Identifier": "Execution.Minimap_Marker.Set_Zoom",
@@ -23683,7 +23952,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.minimap.setScale"
     },
     {
       "Identifier": "Execution.Minimap_Marker.Set_Marker_State",
@@ -23742,7 +24012,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.minimap.setMarkerEnabledState"
     },
     {
       "Identifier": "Execution.Minimap_Marker.Set_Visible_List",
@@ -23801,7 +24072,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.minimap.setVisibleMarkerPlayers"
     },
     {
       "Identifier": "Execution.Minimap_Marker.Set_Track_List",
@@ -23860,7 +24132,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.minimap.setTrackingMarkerPlayers"
     },
     {
       "Identifier": "Query.Minimap_Marker.Get_Marker_Info",
@@ -23932,7 +24205,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.minimap.markerInfo"
     },
     {
       "Identifier": "Query.Minimap_Marker.Get_Marker_Status",
@@ -23993,7 +24267,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.minimap.markerStates"
     },
     {
       "Identifier": "Execution.Minimap_Marker.Update_Markers",
@@ -24052,7 +24327,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.minimap.setMarkerPlayerTag"
     },
     {
       "Identifier": "Execution.Deck_Selector.Close",
@@ -24100,7 +24376,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.cardPicker.close"
     },
     {
       "Identifier": "Trigger.Unit_Status.On_Element_Reaction",
@@ -24177,7 +24454,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.elementReaction"
     },
     {
       "Identifier": "Trigger.Unit_Status.On_Shield_Hit",
@@ -24298,7 +24576,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.shieldAttacked"
     },
     {
       "Identifier": "Query.Achievement.Is_Completed",
@@ -24348,7 +24627,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.achievement.isCompleted"
     },
     {
       "Identifier": "Execution.Achievement.Set_Progress",
@@ -24407,7 +24687,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.achievement.setProgressCount"
     },
     {
       "Identifier": "Execution.Achievement.Add_Progress",
@@ -24466,7 +24747,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.achievement.changeProgressCount"
     },
     {
       "Identifier": "Execution.Stage_Settlement.Set_Scoreboard",
@@ -24553,7 +24835,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.settlement.setPlayerScoreboardItem"
     },
     {
       "Identifier": "Execution.Stage_Settlement.Set_Player_Rank",
@@ -24601,7 +24884,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.settlement.setPlayerRankValue"
     },
     {
       "Identifier": "Query.Stage_Settlement.Get_Player_Rank",
@@ -24640,7 +24924,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.settlement.playerRankValue"
     },
     {
       "Identifier": "Execution.Stage_Settlement.Set_Player_Result",
@@ -24677,7 +24962,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.settlement.setPlayerSuccess"
     },
     {
       "Identifier": "Query.Stage_Settlement.Get_Player_Result",
@@ -24705,7 +24991,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.settlement.playerSuccess"
     },
     {
       "Identifier": "Execution.Stage_Settlement.Set_Faction_Rank",
@@ -24753,7 +25040,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.settlement.setCampRankValue"
     },
     {
       "Identifier": "Query.Stage_Settlement.Get_Faction_Rank",
@@ -24792,7 +25080,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.settlement.campRankValue"
     },
     {
       "Identifier": "Execution.Stage_Settlement.Set_Faction_Result",
@@ -24829,7 +25118,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.settlement.setCampSuccess"
     },
     {
       "Identifier": "Query.Stage_Settlement.Get_Faction_Result",
@@ -24857,7 +25147,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.settlement.campSuccess"
     },
     {
       "Identifier": "Query.Rank_Tier.Get_Rank_Info",
@@ -24929,7 +25220,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.rank.info"
     },
     {
       "Identifier": "Execution.Rank.Modify_Score",
@@ -24988,7 +25280,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.rank.setPlayerRankDeltaScore"
     },
     {
       "Identifier": "Query.Rank_Tier.Get_Score_Change",
@@ -25027,7 +25320,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.rank.deltaScore"
     },
     {
       "Identifier": "Execution.Rank.Set_Escape_Valid",
@@ -25075,7 +25369,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.rank.setPlayerEscapeValidity"
     },
     {
       "Identifier": "Query.Rank_Tier.Get_Escape_Status",
@@ -25114,7 +25409,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.rank.escapeLegal"
     },
     {
       "Identifier": "Execution.Rank.Switch_Score_Group",
@@ -25162,7 +25458,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.rank.switchActiveScoreGroup"
     },
     {
       "Identifier": "Query.Stage_Related.Get_Env_Time",
@@ -25201,7 +25498,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.level.environmentTime"
     },
     {
       "Identifier": "Execution.Stage_Related.Set_Time",
@@ -25238,7 +25536,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.setEnvironmentTime"
     },
     {
       "Identifier": "Execution.Stage_Related.Set_Time_Speed",
@@ -25275,7 +25574,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.setEnvironmentTimeRate"
     },
     {
       "Identifier": "Execution.Light_Component.Toggle_Light",
@@ -25334,7 +25634,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.light.toggleEntityLight"
     },
     {
       "Identifier": "Execution.Follow_Motion.Set_Target_Entity",
@@ -25415,7 +25716,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverFollow.switchTargetByEntity"
     },
     {
       "Identifier": "Query.Collision_Trigger.Get_Overlapping_Entities",
@@ -25465,7 +25767,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.collisionTrigger.entitiesIn"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Adv_Attr",
@@ -25581,7 +25884,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.advancedStats"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Elem_Attr",
@@ -25785,7 +26089,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.elementStats"
     },
     {
       "Identifier": "Execution.Equipment.Add_Affix",
@@ -25855,7 +26160,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.affix.add"
     },
     {
       "Identifier": "Execution.Equipment.Remove_Affix",
@@ -25903,7 +26209,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.affix.remove"
     },
     {
       "Identifier": "Execution.Equipment.Modify_Affix",
@@ -25962,7 +26269,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.affix.modifyValue"
     },
     {
       "Identifier": "Query.Equipment.Get_Affixes",
@@ -26001,7 +26309,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.equip.entryList"
     },
     {
       "Identifier": "Query.Equipment.Get_Affix_Config",
@@ -26051,7 +26360,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.equip.entryConfigId"
     },
     {
       "Identifier": "Query.Equipment.Get_Affix_Value",
@@ -26101,7 +26411,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.equip.entryValue"
     },
     {
       "Identifier": "Hidden.Execution.Update_Leaderboard",
@@ -26151,7 +26462,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Trigger.Text_Bubble.On_Bubble_Complete",
@@ -26217,7 +26529,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.textBubbleCompleted"
     },
     {
       "Identifier": "Trigger.Equipment.On_Affix_Change",
@@ -26305,7 +26618,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.equipmentAffixValueChanged"
     },
     {
       "Identifier": "Trigger.Item.On_Item_Add",
@@ -26371,7 +26685,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.backpackItemAdded"
     },
     {
       "Identifier": "Trigger.Item.On_Item_Lose",
@@ -26437,7 +26752,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.backpackItemLost"
     },
     {
       "Identifier": "Trigger.Item.On_Item_Quantity_Change",
@@ -26514,7 +26830,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.backpackItemCountChanged"
     },
     {
       "Identifier": "Trigger.Item.On_Currency_Change",
@@ -26580,7 +26897,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.backpackCurrencyChanged"
     },
     {
       "Identifier": "Execution.Inventory.Expand_Capacity",
@@ -26628,7 +26946,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.backpack.increaseMaxCapacity"
     },
     {
       "Identifier": "Execution.Inventory.Modify_Item",
@@ -26687,7 +27006,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.backpack.modifyItem"
     },
     {
       "Identifier": "Execution.Inventory.Set_Drop_Currency",
@@ -26746,7 +27066,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.backpack.setDropItemCurrencyCount"
     },
     {
       "Identifier": "Execution.Inventory.Modify_Currency",
@@ -26805,7 +27126,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.backpack.modifyCurrency"
     },
     {
       "Identifier": "Query.Item.Get_Capacity",
@@ -26844,7 +27166,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.backpack.capacity"
     },
     {
       "Identifier": "Query.Item.Get_Item_Amount",
@@ -26894,7 +27217,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.backpack.itemCount"
     },
     {
       "Identifier": "Query.Item.Get_Currency_Amount",
@@ -26944,7 +27268,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.backpack.coinCount"
     },
     {
       "Identifier": "Trigger.Equipment.On_Init",
@@ -26999,7 +27324,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.equipmentInitialized"
     },
     {
       "Identifier": "Trigger.Equipment.On_Equip",
@@ -27054,7 +27380,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.equipmentEquipped"
     },
     {
       "Identifier": "Trigger.Equipment.On_Unequip",
@@ -27109,7 +27436,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.equipmentUnequipped"
     },
     {
       "Identifier": "Execution.Combat.HP_Loss",
@@ -27190,7 +27518,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.combat.loseHp"
     },
     {
       "Identifier": "Execution.Combat.Recover_HP_Instant",
@@ -27293,7 +27622,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.combat.directHeal"
     },
     {
       "Identifier": "Trigger.Shop.On_Custom_Item_Sold",
@@ -27381,7 +27711,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.shopSellCustomItem"
     },
     {
       "Identifier": "Trigger.Shop.On_Inv_Item_Sold",
@@ -27469,7 +27800,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.shopSellBackpackItem"
     },
     {
       "Identifier": "Execution.Shop.Open",
@@ -27528,7 +27860,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.open"
     },
     {
       "Identifier": "Execution.Shop.Close",
@@ -27565,7 +27898,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.close"
     },
     {
       "Identifier": "Execution.Shop.Modify_Custom_Sale",
@@ -27701,7 +28035,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.modifyCustomSellInfo"
     },
     {
       "Identifier": "Trigger.Shop.On_Sell_Item",
@@ -27778,7 +28113,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.shopBuyItems"
     },
     {
       "Identifier": "Execution.Shop.Modify_Inventory_Sale",
@@ -27881,7 +28217,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.modifyBackpackSellInfo"
     },
     {
       "Identifier": "Execution.Shop.Modify_Cart_Item",
@@ -27962,7 +28299,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.modifyBuyInfo"
     },
     {
       "Identifier": "Execution.Shop.Add_Custom_Sale",
@@ -28098,7 +28436,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.addCustomSellItem"
     },
     {
       "Identifier": "Execution.Shop.Add_Inventory_Sale",
@@ -28201,7 +28540,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.addBackpackSellItem"
     },
     {
       "Identifier": "Execution.Shop.Add_To_Cart",
@@ -28282,7 +28622,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.addBuyItem"
     },
     {
       "Identifier": "Execution.Shop.Remove_Custom_Sale",
@@ -28341,7 +28682,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.removeCustomSellItemByIndex"
     },
     {
       "Identifier": "Execution.Shop.Remove_Inventory_Sale",
@@ -28400,7 +28742,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.removeBackpackSellItem"
     },
     {
       "Identifier": "Execution.Shop.Remove_From_Cart",
@@ -28459,7 +28802,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.shop.removeBuyItem"
     },
     {
       "Identifier": "Query.Shop.Get_Custom_Sales",
@@ -28509,7 +28853,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.shop.customSellList"
     },
     {
       "Identifier": "Query.Shop.Get_Inv_Sales",
@@ -28559,7 +28904,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.shop.backpackSellList"
     },
     {
       "Identifier": "Query.Shop.Get_Cart_Items",
@@ -28609,7 +28955,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.shop.purchaseList"
     },
     {
       "Identifier": "Query.Shop.Get_Custom_Item_Info",
@@ -28736,7 +29083,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.shop.customSellInfo"
     },
     {
       "Identifier": "Query.Shop.Get_Inv_Item_Info",
@@ -28819,7 +29167,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.shop.backpackSellInfo"
     },
     {
       "Identifier": "Query.Shop.Get_Purchase_Info",
@@ -28891,7 +29240,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.shop.purchaseInfo"
     },
     {
       "Identifier": "Execution.Inventory.Set_Drop_Items",
@@ -28950,7 +29300,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.backpack.setItemDropContent"
     },
     {
       "Identifier": "Query.Item.Get_Basic_Items",
@@ -28989,7 +29340,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.backpack.basicItems"
     },
     {
       "Identifier": "Query.Item.Get_Currency_All",
@@ -29028,7 +29380,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.backpack.allCoins"
     },
     {
       "Identifier": "Query.Item.Get_Equipment_All",
@@ -29067,7 +29420,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.backpack.allEquip"
     },
     {
       "Identifier": "Execution.Inventory.Trigger_Drop",
@@ -29115,7 +29469,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.loot.setDropType"
     },
     {
       "Identifier": "Execution.Inventory.Set_Loot_Content",
@@ -29152,7 +29507,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.loot.setDropContent"
     },
     {
       "Identifier": "Execution.Inventory.Modify_Loot_Item",
@@ -29211,7 +29567,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.loot.modifyItemCountOnDropEntity"
     },
     {
       "Identifier": "Execution.Inventory.Modify_Loot_Currency",
@@ -29270,7 +29627,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.loot.modifyCurrencyCountOnDropEntity"
     },
     {
       "Identifier": "Query.Item.Get_Loot_Item",
@@ -29320,7 +29678,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.drop.itemCount"
     },
     {
       "Identifier": "Query.Item.Get_Loot_Currency",
@@ -29370,7 +29729,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.drop.coinCount"
     },
     {
       "Identifier": "Query.Item.Get_Trophy_Items",
@@ -29398,7 +29758,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.reward.allItems"
     },
     {
       "Identifier": "Query.Item.Get_Trophy_Currency",
@@ -29426,7 +29787,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.reward.allCoins"
     },
     {
       "Identifier": "Query.Item.Get_Loot_Equipment",
@@ -29465,7 +29827,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.drop.allEquip"
     },
     {
       "Identifier": "Trigger.Item.On_Item_Use",
@@ -29531,7 +29894,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.backpackItemUsed"
     },
     {
       "Identifier": "Query.Equipment.Get_Tags",
@@ -29570,7 +29934,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.equip.tagList"
     },
     {
       "Identifier": "Execution.Scan_Tag.Set_Rules",
@@ -29607,7 +29972,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.scan.setTagRule"
     },
     {
       "Identifier": "Execution.Scan_Tag.Set_Active_Tag",
@@ -29655,7 +30021,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.scan.setActiveScanTagIndex"
     },
     {
       "Identifier": "Query.Scan_Tag.Get_Active_Tag",
@@ -29694,7 +30061,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.scanTag.activeConfigId"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Character_Attr",
@@ -29821,7 +30189,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.character.stats"
     },
     {
       "Identifier": "Execution.Skill.Set_CD",
@@ -29891,7 +30260,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.setCooldown"
     },
     {
       "Identifier": "Execution.Skill.Modify_CD",
@@ -29961,7 +30331,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.modifyCooldown"
     },
     {
       "Identifier": "Execution.Skill.Modify_CD_Ratio",
@@ -30031,7 +30402,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.skill.modifyCooldownByMaxPct"
     },
     {
       "Identifier": "Execution.Equipment.Add_Affix_By_ID",
@@ -30112,7 +30484,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.affix.addAtIndex"
     },
     {
       "Identifier": "Execution.Deck_Selector.Get_Random_List",
@@ -30149,7 +30522,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.cardPicker.randomizeList"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Owner",
@@ -30188,7 +30562,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.owner"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Owned_Entities",
@@ -30227,7 +30602,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.entity.ownedEntities"
     },
     {
       "Identifier": "Query.Unit_Status.Get_Status_Stacks",
@@ -30288,7 +30664,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.unitState.layerCountBySlot"
     },
     {
       "Identifier": "Query.Unit_Status.Get_Status_Applier",
@@ -30349,7 +30726,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.unitState.applierBySlot"
     },
     {
       "Identifier": "Query.Unit_Status.Get_Status_Slots",
@@ -30399,7 +30777,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.unitState.slotIndexList"
     },
     {
       "Identifier": "Query.Equipment.Get_Config_ID",
@@ -30438,7 +30817,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.equip.configIdByIndex"
     },
     {
       "Identifier": "Query.Character_Related.Get_GUID_By_ID",
@@ -30477,7 +30857,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.playerGuid.byIndex"
     },
     {
       "Identifier": "Query.Character_Related.Get_ID_By_GUID",
@@ -30516,7 +30897,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.playerIndex.byGuid"
     },
     {
       "Identifier": "Arithmetic.Math.Timestamp_To_Time",
@@ -30610,7 +30992,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.time.formatFromTimestamp"
     },
     {
       "Identifier": "Arithmetic.Math.Time_To_Timestamp",
@@ -30704,7 +31087,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.time.timestampFromFormat"
     },
     {
       "Identifier": "Arithmetic.Math.Timestamp_To_Weekday",
@@ -30743,7 +31127,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.time.weekdayFromTimestamp"
     },
     {
       "Identifier": "Query.Math.Get_Timestamp",
@@ -30771,7 +31156,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.utcTimestamp"
     },
     {
       "Identifier": "Query.Math.Get_Timezone",
@@ -30799,7 +31185,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.serverTimezone"
     },
     {
       "Identifier": "Execution.Entity_Related.Create_Prefab_Group",
@@ -30924,7 +31311,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.createComponentGroup"
     },
     {
       "Identifier": "Query.Creation.Get_Aggro_List",
@@ -30963,7 +31351,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.creation.defaultAggroList"
     },
     {
       "Identifier": "Execution.Leaderboard.Set_Score_Int",
@@ -31022,7 +31411,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.leaderboard.setScoreInt"
     },
     {
       "Identifier": "Execution.Leaderboard.Set_Score_Float",
@@ -31081,7 +31471,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.leaderboard.setScoreFloat"
     },
     {
       "Identifier": "Execution.Character_Related.Modify_Environment",
@@ -31151,7 +31542,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.updateEnvironmentConfig"
     },
     {
       "Identifier": "Trigger.Class.On_Class_Remove",
@@ -31217,7 +31609,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.playerCareerRemoved"
     },
     {
       "Identifier": "Trigger.Combat.On_Interruptible",
@@ -31272,7 +31665,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.enterInterruptible"
     },
     {
       "Identifier": "Query.General.Get_Game_Info",
@@ -31300,7 +31694,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.matchModeAndPlayerCount"
     },
     {
       "Identifier": "Query.Character_Related.Get_Nickname",
@@ -31339,7 +31734,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.player.nickname"
     },
     {
       "Identifier": "Query.Character_Related.Get_Input_Type",
@@ -31367,7 +31763,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.player.inputDeviceType"
     },
     {
       "Identifier": "Execution.Chat_Channel.Set_Switch",
@@ -31426,7 +31823,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.chat.setChannelEnabled"
     },
     {
       "Identifier": "Execution.Chat_Channel.Modify_Permission",
@@ -31485,7 +31883,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.chat.modifyPlayerChannelPermission"
     },
     {
       "Identifier": "Execution.Chat_Channel.Set_Current_Channel",
@@ -31533,7 +31932,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.chat.setPlayerCurrentChannel"
     },
     {
       "Identifier": "Execution.Wonderland_Box.Consume_Box",
@@ -31592,7 +31992,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.giftBox.consume"
     },
     {
       "Identifier": "Query.Wonderland_Box_Related.Get_Box_Quantity",
@@ -31642,7 +32043,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.giftBox.count"
     },
     {
       "Identifier": "Query.Wonderland_Box_Related.Get_Box_Consumption",
@@ -31692,7 +32094,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.giftBox.consumeCount"
     },
     {
       "Identifier": "Execution.Motion_Device.Activate_Fixed_Point",
@@ -31817,7 +32220,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.moverFixed.start"
     },
     {
       "Identifier": "Arithmetic.Math.Left_Shift",
@@ -31867,7 +32271,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.shift.left"
     },
     {
       "Identifier": "Arithmetic.Math.Right_Shift",
@@ -31917,7 +32322,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.shift.right"
     },
     {
       "Identifier": "Arithmetic.Math.Bitwise_And",
@@ -31967,7 +32373,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.bit.and"
     },
     {
       "Identifier": "Arithmetic.Math.Bitwise_Or",
@@ -32017,7 +32424,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.bit.or"
     },
     {
       "Identifier": "Arithmetic.Math.Bitwise_Xor",
@@ -32067,7 +32475,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.bit.xor"
     },
     {
       "Identifier": "Arithmetic.Math.Bitwise_Not",
@@ -32106,7 +32515,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.bit.not"
     },
     {
       "Identifier": "Arithmetic.Math.Write_Bit",
@@ -32178,7 +32588,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.bit.write"
     },
     {
       "Identifier": "Arithmetic.Math.Read_Bit",
@@ -32239,7 +32650,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.bit.read"
     },
     {
       "Identifier": "Trigger.Entity_Related.On_Speed_Condition",
@@ -32327,7 +32739,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.characterMoveSpeedReached"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Move_Speed",
@@ -32377,7 +32790,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.character.moveSpeed"
     },
     {
       "Identifier": "Execution.Dictionary.Set_Value",
@@ -33103,7 +33517,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.dict.setOrAdd"
     },
     {
       "Identifier": "Arithmetic.Dictionary.Create_Dictionary",
@@ -33505,7 +33920,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.dict.create"
     },
     {
       "Identifier": "Query.Dictionary.Get_Value",
@@ -34222,7 +34638,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.dict.getByKey"
     },
     {
       "Identifier": "Execution.Dictionary.Remove_By_Key",
@@ -34937,7 +35354,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.dict.removeByKey"
     },
     {
       "Identifier": "Query.Dictionary.Has_Key",
@@ -35654,7 +36072,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.dict.containsKey"
     },
     {
       "Identifier": "Query.Dictionary.Has_Value",
@@ -36056,7 +36475,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.dict.containsValue"
     },
     {
       "Identifier": "Query.Dictionary.Get_Keys",
@@ -36762,7 +37182,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.dict.keys"
     },
     {
       "Identifier": "Query.Dictionary.Get_Values",
@@ -37153,7 +37574,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.dict.values"
     },
     {
       "Identifier": "Query.Dictionary.Get_Length",
@@ -37859,7 +38281,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.dict.length"
     },
     {
       "Identifier": "Execution.Dictionary.Clear",
@@ -38563,7 +38986,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.dict.clear"
     },
     {
       "Identifier": "Arithmetic.Dictionary.Assemble_Dictionary",
@@ -40369,7 +40793,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "math.dict.assemble"
     },
     {
       "Identifier": "Execution.Dictionary.Sort_By_Key",
@@ -40480,7 +40905,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.dict.sortByKey"
     },
     {
       "Identifier": "Execution.Dictionary.Sort_By_Value",
@@ -40611,7 +41037,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.dict.sortByValue"
     },
     {
       "Identifier": "Query.Custom_Variable.Get_Snapshot",
@@ -41406,7 +41833,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "query.customVar.snapshot"
     },
     {
       "Identifier": "Hidden.Trigger.On_GM_Call",
@@ -41489,7 +41917,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Others.Port_Client.Graph_End_Bool",
@@ -41529,7 +41958,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "flow.graphEndBoolean"
     },
     {
       "Identifier": "Arithmetic.Math_Client.And",
@@ -41580,7 +42010,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.logicalAnd"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Or",
@@ -41631,7 +42062,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.logicalOr"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Not",
@@ -41671,7 +42103,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.logicalNot"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Xor",
@@ -41722,7 +42155,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.logicalXor"
     },
     {
       "Identifier": "Arithmetic.General_Client.Enum_Match",
@@ -41989,7 +42423,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.enumMatch"
     },
     {
       "Identifier": "Arithmetic.General_Client.Equal",
@@ -42102,7 +42537,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.isEqual"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Greater_Than",
@@ -42175,7 +42611,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.greaterThan"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Less_Than",
@@ -42248,7 +42685,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.lessThan"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Less_Equal",
@@ -42321,7 +42759,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.lessOrEqual"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Greater_Equal",
@@ -42394,7 +42833,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.greaterOrEqual"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Add",
@@ -42467,7 +42907,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.add"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Subtract",
@@ -42540,7 +42981,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.subtract"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Multiply",
@@ -42613,7 +43055,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.math.multiply"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Divide",
@@ -42686,7 +43129,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.math.divide"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Abs",
@@ -42737,7 +43181,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.abs"
     },
     {
       "Identifier": "Query.Custom_Variable_Client.Get_Variable",
@@ -42884,7 +43329,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.customVariable.get"
     },
     {
       "Identifier": "Query.List_Related_Client.Get_At_Index",
@@ -42981,7 +43427,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.list.getValue"
     },
     {
       "Identifier": "Query.List_Related_Client.Get_Length",
@@ -43057,7 +43504,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.list.length"
     },
     {
       "Identifier": "Query.List_Related_Client.Contains",
@@ -43154,7 +43602,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.list.contains"
     },
     {
       "Identifier": "Query.List_Related_Client.Get_Max",
@@ -43205,7 +43654,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.list.max"
     },
     {
       "Identifier": "Query.List_Related_Client.Get_Min",
@@ -43256,7 +43706,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.list.min"
     },
     {
       "Identifier": "Arithmetic.General_Client.Convert_Type",
@@ -43363,7 +43814,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.typeCast"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_By_GUID",
@@ -43403,7 +43855,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.findEntityByGuid"
     },
     {
       "Identifier": "Query.Character_Related_Client.Get_Player_Character",
@@ -43443,7 +43896,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.player.getCharacter"
     },
     {
       "Identifier": "Query.Character_Related_Client.Get_Owner_Player",
@@ -43483,7 +43937,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.character.getOwnerPlayer"
     },
     {
       "Identifier": "Query.Character_Related_Client.Get_All_Players",
@@ -43512,7 +43967,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.player.listPresent"
     },
     {
       "Identifier": "Query.Character_Related_Client.Get_GUID",
@@ -43552,7 +44008,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entityToGuid"
     },
     {
       "Identifier": "Query.Preset_Status_Client.Get_Status",
@@ -43603,7 +44060,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.presetState.get"
     },
     {
       "Identifier": "Query.Faction_Related_Client.Get_Faction",
@@ -43643,7 +44101,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getEntityCamp"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_Location",
@@ -43683,7 +44142,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getEntityPosition"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_Rotation",
@@ -43723,7 +44183,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getEntityRotation"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Random",
@@ -43785,7 +44246,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.randomInRange"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_Self",
@@ -43814,7 +44276,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getSelfEntity"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_Target",
@@ -43843,7 +44306,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getTargetEntity"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_Attack_Target",
@@ -43883,7 +44347,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entity.getAttackTarget"
     },
     {
       "Identifier": "Hidden.Query_Client.Get_Camera_Template",
@@ -43912,7 +44377,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Query.Character_Related_Client.Is_In_Combat",
@@ -43941,7 +44407,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.player.isSelfInCombat"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Play_Timed_FX",
@@ -44034,7 +44501,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.playTimedEffect"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Notify_Server",
@@ -44094,7 +44562,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.notifyServerGraph"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Turn_Player",
@@ -44132,7 +44601,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.playerTurn"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Set_Target",
@@ -44181,7 +44651,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.setSelfAttackTarget"
     },
     {
       "Identifier": "Others.Port_Client.Graph_Start",
@@ -44198,7 +44669,8 @@
       "Domain": "Others",
       "FlowPins": [],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.graphStart"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Filter_Sphere",
@@ -44271,7 +44743,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.filterEntitiesInSphere"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Filter_Square",
@@ -44366,7 +44839,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.filterEntitiesInBox"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_Type",
@@ -44406,7 +44880,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getEntityType"
     },
     {
       "Identifier": "Hidden.Query_Client.Get_Camera_Rotation",
@@ -44435,7 +44910,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_Socket_Loc",
@@ -44486,7 +44962,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entity.getSocketPosition"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Get_Socket_Rot",
@@ -44537,7 +45014,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entity.getSocketRotation"
     },
     {
       "Identifier": "Arithmetic.List_Client.Assemble_List",
@@ -44733,7 +45211,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.assembleList"
     },
     {
       "Identifier": "Query.List_Related_Client.Get_Entity_Types",
@@ -44883,7 +45362,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entity.typeList"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Hitbox_Loc",
@@ -45427,7 +45907,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Launch_Projectile",
@@ -45509,7 +45990,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.fireProjectileAtPoint"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Move_To_Point",
@@ -45591,7 +46073,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.moveToPoint"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.For_Each_Entity",
@@ -45640,7 +46123,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.iterateEntities"
     },
     {
       "Identifier": "Control.General_Client.Branch",
@@ -45683,7 +46167,8 @@
           "Editability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.flow.branch.ifElse"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Add_Status",
@@ -45743,7 +46228,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.addUnitState"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Remove_Status",
@@ -45792,7 +46278,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.removeUnitState"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Hitbox_Socket",
@@ -46347,7 +46834,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Remove_Device",
@@ -46385,7 +46873,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.removeCharacterDisturbDevice"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Modify_Weight",
@@ -46434,7 +46923,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.modifyAttackWeight"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Get_Camera_Data",
@@ -46527,7 +47017,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.cameraRaycastData"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Dot",
@@ -46578,7 +47069,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.dotVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Cross",
@@ -46629,7 +47121,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.crossVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Split_Vector",
@@ -46691,7 +47184,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.vector3.split"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Scale",
@@ -46742,7 +47236,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.scaleVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Angle",
@@ -46793,7 +47288,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.angleBetweenVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Rotate",
@@ -46844,7 +47340,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.rotateVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Length",
@@ -46884,7 +47381,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.vector3Length"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Create_Vector",
@@ -46946,7 +47444,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.makeVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Add",
@@ -47008,7 +47507,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.addVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Subtract",
@@ -47070,7 +47570,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.subtractVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_To_Rotation",
@@ -47121,7 +47622,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.directionVectorToRotation"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Orientation_To_Rotation",
@@ -47172,7 +47674,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Recover_HP",
@@ -47331,7 +47834,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.restoreHp"
     },
     {
       "Identifier": "Query.Character_Related_Client.Get_Current_Character",
@@ -47360,7 +47864,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.player.getCurrentCharacter"
     },
     {
       "Identifier": "Query.Unit_Tag_Client.Get_Tags",
@@ -47400,7 +47905,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entityUnitTagIndexes"
     },
     {
       "Identifier": "Query.Unit_Tag_Client.Get_By_Tag",
@@ -47440,7 +47946,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.unitTagEntities"
     },
     {
       "Identifier": "Execution.General_Client.For_Loop",
@@ -47500,7 +48007,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.loopFinite"
     },
     {
       "Identifier": "Execution.General_Client.Break",
@@ -47526,7 +48034,8 @@
         }
       ],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.breakLoop"
     },
     {
       "Identifier": "Execution.General_Client.Set_Local",
@@ -47661,7 +48170,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.setLocalVariable"
     },
     {
       "Identifier": "Query.General_Client.Get_Local",
@@ -47787,7 +48297,8 @@
           "InjectedContents": []
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getLocalVariable"
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Set_Aggro",
@@ -47847,7 +48358,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.hate.setValue"
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Modify_Aggro",
@@ -47907,7 +48419,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.hate.addValue"
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Modify_Aggro_Ratio",
@@ -47967,7 +48480,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.hate.modifyByRatio"
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Transfer_Aggro",
@@ -48038,7 +48552,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.hate.transferByRatio"
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Clear_Aggro",
@@ -48076,7 +48591,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.hate.clearTargetList"
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Remove_Aggro",
@@ -48125,7 +48641,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.hate.removeTargetFromList"
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Taunt",
@@ -48174,7 +48691,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.hate.taunt"
     },
     {
       "Identifier": "Query.Custom_Aggro_Client.Get_Aggro_Target",
@@ -48214,7 +48732,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entityHateTarget"
     },
     {
       "Identifier": "Query.Custom_Aggro_Client.Get_Aggro_List",
@@ -48254,7 +48773,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entityHateList"
     },
     {
       "Identifier": "Query.Custom_Aggro_Client.Is_In_Combat",
@@ -48294,7 +48814,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.isEntityInCombat"
     },
     {
       "Identifier": "Query.Faction_Related_Client.Is_Hostile",
@@ -48345,7 +48866,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.campsAreHostile"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Sin",
@@ -48396,7 +48918,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.sin"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Cos",
@@ -48447,7 +48970,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.cos"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Tan",
@@ -48498,7 +49022,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Arithmetic.Math_Client.Asin",
@@ -48549,7 +49074,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.arcSin"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Acos",
@@ -48600,7 +49126,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.arcCos"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Atan",
@@ -48651,7 +49178,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.arcTan"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Normalize",
@@ -48691,7 +49219,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.normalizeVector3"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Rad_To_Deg",
@@ -48742,7 +49271,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.radToDeg"
     },
     {
       "Identifier": "Arithmetic.Math_Client.Deg_To_Rad",
@@ -48793,7 +49323,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.math.degToRad"
     },
     {
       "Identifier": "Query.Entity_Related_Client.Is_Active",
@@ -48833,7 +49364,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.entity.isPresent"
     },
     {
       "Identifier": "Hidden.Other_Client.Graph_End",
@@ -48873,7 +49405,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Turn_To_Face",
@@ -48911,7 +49444,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.playerTurnToDirection"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Reset_Target",
@@ -48937,7 +49471,8 @@
         }
       ],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.resetSkillTarget"
     },
     {
       "Identifier": "Query.Trigger_Client.Get_Overlapping_Entities",
@@ -48988,7 +49523,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getEntitiesInCollisionTrigger"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Exit_Aiming",
@@ -49014,7 +49550,8 @@
         }
       ],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.forceExitAim"
     },
     {
       "Identifier": "Query.Ray_Client.Get_Ray_Result",
@@ -49131,7 +49668,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Query.List_Related_Client.Get_Ray_Filters",
@@ -49281,7 +49819,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.raycast.filterList"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc",
@@ -49825,7 +50364,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.sphericalAttackBoxAtPosition"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc",
@@ -50369,7 +50909,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.rectangularAttackBoxAtPosition"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Loc",
@@ -50913,7 +51454,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.sectorAttackBoxAtPosition"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Socket",
@@ -51468,7 +52010,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Socket",
@@ -52023,7 +52566,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Socket",
@@ -52578,7 +53122,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Hidden.Execution_Client.Test_Send_Signal",
@@ -52816,7 +53361,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Query.Scanning_Client.Get_Scanned_Entity",
@@ -52856,7 +53402,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.scanCurrentHit"
     },
     {
       "Identifier": "Query.Scanning_Client.Get_Scannable_Entities",
@@ -52885,7 +53432,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.scanAllValidObjects"
     },
     {
       "Identifier": "Query.Scanning_Client.Get_Scan_Status",
@@ -52925,7 +53473,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getEntityScanState"
     },
     {
       "Identifier": "Query.Scanning_Client.Get_Active_Tags",
@@ -52965,7 +53514,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getEntityScanTag"
     },
     {
       "Identifier": "Others.Port_Client.Graph_End_Int",
@@ -53005,7 +53555,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Query.Character_Related_Client.Get_Input_Type",
@@ -53034,7 +53585,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.query.getInputDeviceType"
     },
     {
       "Identifier": "Execution.Signal_Client.Send_To_Server",
@@ -53060,7 +53612,8 @@
         }
       ],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "client.action.sendSignalToServer"
     },
     {
       "Identifier": "Execution.Signal.Send",
@@ -53097,7 +53650,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Trigger.Signal.On_Signal",
@@ -53163,7 +53717,8 @@
           "Connectability": true
         }
       ],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "event.signalListen"
     },
     {
       "Identifier": "Arithmetic.Structure.Assemble_Struct",
@@ -53179,7 +53734,8 @@
       "Domain": "Arithmetic",
       "FlowPins": [],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Arithmetic.Structure.Split_Struct",
@@ -53195,7 +53751,8 @@
       "Domain": "Arithmetic",
       "FlowPins": [],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__not_find_in_ref": true
     },
     {
       "Identifier": "Execution.Structure.Modify",
@@ -53220,7 +53777,8 @@
         }
       ],
       "DataPins": [],
-      "Implementation": null
+      "Implementation": null,
+      "__ref_id": "action.struct.modify"
     }
   ],
   "Enums": [
