@@ -7,6 +7,7 @@ const read = (path: string) => readFileSync(import.meta.dirname + "/" + path).to
 const save = (path: string, data: {} | string) => writeFileSync(import.meta.dirname + "/" + path, typeof data === "string" ? data : JSON.stringify(data, null, 2));
 
 import DFT_VAL from "../extracting_nodes/dist/node_pins_default_vals.json" with {type: "json"};
+import { exit } from "process";
 
 const TypeMap = {
   "string": "Str",
@@ -23,6 +24,19 @@ const TypeMap = {
   "configId": "Cfg",
   "componentId": "Pfb",
 };
+
+data.Nodes.filter(x => x.System === "Client").forEach(node => {
+  if (node.DataPins[0]?.Direction === "In" && node.DataPins[0].Type.startsWith("E<")) {
+    if (node.Domain === "Arithmetic") {
+      console.log("Hide Pin[0]", node.Identifier);
+      node.DataPins[0].Visibility = "Hidden";
+    }
+  }
+});
+
+save("data.json", data);
+
+exit(0);
 
 const dft_map = new Map(DFT_VAL.map(x => [x.node, x]));
 
@@ -47,6 +61,7 @@ data.Nodes.forEach(node => {
       realIn.length,
       refIn.length
     );
+    console.log(...realIn.map((x, i) => [i, x.Type]).flat())
     node.__todo_set_in_pin = true;
     return;
   }

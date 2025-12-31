@@ -1,115 +1,128 @@
 graph {
   id {
-    type_id: Node
-    kind_id: ClientGraph
-    graph_id: 1082130434
+    type_id: Basic
+    graph_id: 1073741828
   }
-  name: "New Skill Node Graph_1"
-  which: Skills
+  name: "New Node Graph"
+  which: EntityNode
   graph {
     inner {
       graph {
         id {
           class: UserDefined
-          type: Skills
+          type: BasicNode
           kind: NodeGraph
-          id: 1082130434
+          id: 1073741828
         }
-        name: "New Skill Node Graph_1"
+        name: "New Node Graph"
         nodes {
-          nodeIndex: 1
+          nodeIndex: 16
           shellId {
             class: SystemDefined
-            type: Skill
+            type: Server
             kind: SysCall
-            nodeId: 200042
+            nodeId: 757
           }
           kernelId {
             class: SystemDefined
-            type: Skill
+            type: Server
             kind: SysCall
-            nodeId: 2001
+            nodeId: 757
           }
-          specialPin {
-            kind: Signal
+          pins {
+            i1 {
+              kind: InParam
+              index: 3
+            }
+            i2 {
+              kind: InParam
+              index: 3
+            }
+            type: 1
+            connects {
+              id: 17
+              connect {
+                kind: OutParam
+              }
+              connect2 {
+                kind: OutParam
+              }
+            }
           }
+          x: -267.2
+          y: -335.4
         }
         nodes {
-          nodeIndex: 2
+          nodeIndex: 17
           shellId {
             class: SystemDefined
-            type: Skill
+            type: Server
             kind: SysCall
-            nodeId: 200124
+            nodeId: 128
           }
           kernelId {
             class: SystemDefined
-            type: Skill
+            type: Server
             kind: SysCall
-            nodeId: 2000
+            nodeId: 130
           }
           pins {
             i1 {
-              kind: SignalClient
+              kind: InParam
             }
             i2 {
-              kind: SignalClient
+              kind: InParam
             }
             value {
-              class: IntBase
-              itemType {
-                classBase: Client
-                type_client {
-                  type: Integer_
-                }
-              }
-              bInt {
-              }
-            }
-            type: 3
-            signalPin {
-              kind: SignalClient
-              index: 1
-              signalSource {
-                id: 200124
-              }
-            }
-          }
-          pins {
-            i1 {
-              kind: SignalClient
-              index: 1
-            }
-            i2 {
-              kind: SignalClient
-              index: 1
-            }
-            value {
-              class: StringBase
+              class: ConcreteBase
               alreadySetVal: true
-              itemType {
-                classBase: Client
-                type_client {
-                  type: String_
+              bConcreteValue {
+                indexOfConcrete: 2
+                value {
+                  class: ArrayBase
+                  itemType {
+                    classBase: Server
+                    type_server {
+                      type: EntityList
+                    }
+                  }
+                  bArray {
+                  }
                 }
               }
-              bString {
-                val: "12345t"
+            }
+            type: 13
+          }
+          pins {
+            i1 {
+              kind: OutParam
+            }
+            i2 {
+              kind: OutParam
+            }
+            value {
+              class: ConcreteBase
+              alreadySetVal: true
+              bConcreteValue {
+                indexOfConcrete: 2
+                value {
+                  itemType {
+                    classBase: Server
+                    type_server {
+                      type: Entity
+                    }
+                  }
+                }
               }
             }
-            type: 9
-            signalPin {
-              kind: Signal
-              index: 1
-            }
+            type: 1
           }
-          x: -120.8
-          y: -242.2
+          x: -707.2
+          y: -3.4
         }
-        xxx_exposed_pin_index: 1
       }
     }
   }
 }
-filePath: "201176311-1767195600-1073741840-\\1.gia"
+filePath: "201176311-1767196784-1073741840-\\1.gia"
 gameVersion: "6.2.0"

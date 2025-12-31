@@ -1637,7 +1637,7 @@
           "Placeholder": null,
           "ShellIndex": 3,
           "KernelIndex": 3,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -3322,7 +3322,7 @@
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -4753,7 +4753,7 @@
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         }
       ],
@@ -9486,7 +9486,7 @@
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -10469,7 +10469,7 @@
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -12886,7 +12886,7 @@
           "Placeholder": null,
           "ShellIndex": 3,
           "KernelIndex": 3,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -16707,7 +16707,7 @@
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -16819,7 +16819,7 @@
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -32551,7 +32551,7 @@
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -33145,7 +33145,7 @@
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
@@ -43401,7 +43401,7 @@
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         }
       ],
@@ -45230,7 +45230,7 @@
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true
         },
         {
