@@ -112,7 +112,7 @@
   },
   "Types": [
     {
-      "Identifier": null,
+      "Identifier": "Ety",
       "Alias": [
         "Entity"
       ],
@@ -126,7 +126,7 @@
       "BaseTypeID": 1
     },
     {
-      "Identifier": null,
+      "Identifier": "Gid",
       "Alias": [
         "GUID"
       ],
@@ -140,7 +140,7 @@
       "BaseTypeID": 1
     },
     {
-      "Identifier": null,
+      "Identifier": "Int",
       "Alias": [
         "Integer"
       ],
@@ -154,7 +154,7 @@
       "BaseTypeID": 2
     },
     {
-      "Identifier": null,
+      "Identifier": "Bol",
       "Alias": [
         "Boolean"
       ],
@@ -168,7 +168,7 @@
       "BaseTypeID": 6
     },
     {
-      "Identifier": null,
+      "Identifier": "Flt",
       "Alias": [
         "Float"
       ],
@@ -182,7 +182,7 @@
       "BaseTypeID": 4
     },
     {
-      "Identifier": null,
+      "Identifier": "Str",
       "Alias": [
         "String"
       ],
@@ -196,7 +196,7 @@
       "BaseTypeID": 5
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Gid>",
       "Alias": [
         "GUIDList"
       ],
@@ -210,7 +210,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Int>",
       "Alias": [
         "IntegerList"
       ],
@@ -224,7 +224,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Bol>",
       "Alias": [
         "BooleanList"
       ],
@@ -238,7 +238,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Flt>",
       "Alias": [
         "FloatList"
       ],
@@ -252,7 +252,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Str>",
       "Alias": [
         "StringList"
       ],
@@ -266,7 +266,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "Vec",
       "Alias": [
         "Vector"
       ],
@@ -280,7 +280,7 @@
       "BaseTypeID": 7
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Ety>",
       "Alias": [
         "EntityList"
       ],
@@ -294,7 +294,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "E<Unk>",
       "Alias": [
         "EnumItem"
       ],
@@ -308,7 +308,7 @@
       "BaseTypeID": 6
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Vec>",
       "Alias": [
         "VectorList"
       ],
@@ -322,7 +322,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "Loc",
       "Alias": [
         "LocalVariable"
       ],
@@ -336,7 +336,7 @@
       "BaseTypeID": 0
     },
     {
-      "Identifier": null,
+      "Identifier": "Fct",
       "Alias": [
         "Faction"
       ],
@@ -350,7 +350,7 @@
       "BaseTypeID": 1
     },
     {
-      "Identifier": null,
+      "Identifier": "Cfg",
       "Alias": [
         "Configuration"
       ],
@@ -364,7 +364,7 @@
       "BaseTypeID": 1
     },
     {
-      "Identifier": null,
+      "Identifier": "Pfb",
       "Alias": [
         "Prefab"
       ],
@@ -378,7 +378,7 @@
       "BaseTypeID": 1
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Cfg>",
       "Alias": [
         "ConfigurationList"
       ],
@@ -392,7 +392,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Pfb>",
       "Alias": [
         "PrefabList"
       ],
@@ -406,7 +406,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "L<Fct>",
       "Alias": [
         "FactionList"
       ],
@@ -420,7 +420,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "S<>",
       "Alias": [
         "Struct"
       ],
@@ -434,7 +434,7 @@
       "BaseTypeID": 10001
     },
     {
-      "Identifier": null,
+      "Identifier": "L<S<>>",
       "Alias": [
         "StructList"
       ],
@@ -448,7 +448,7 @@
       "BaseTypeID": 10002
     },
     {
-      "Identifier": null,
+      "Identifier": "D<Unk,Unk>",
       "Alias": [
         "Dictionary"
       ],
@@ -462,7 +462,7 @@
       "BaseTypeID": 10003
     },
     {
-      "Identifier": null,
+      "Identifier": "Vss",
       "Alias": [
         "VariableSnapshot"
       ],
