@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "fs";
 import data from "./data.json" with {type: "json"};
 import { assert, assertDeepEq, assertEq, exclude_keys } from "../utils.ts";
 const read = (path: string) => readFileSync(import.meta.dirname + "/" + path).toString();
-const save = (path: string, data: {}) => writeFileSync(import.meta.dirname + "/" + path, JSON.stringify(data));
+const save = (path: string, data: {}) => writeFileSync(import.meta.dirname + "/" + path, JSON.stringify(data, null, 2));
 
 
 let a = data.Nodes.filter(x => x.System === "Server").sort((l, r) => l.Identifier.localeCompare(r.Identifier)).map(x => x.Identifier.split(".").slice(0, 2).join("."));
@@ -14,6 +14,7 @@ const res = new Map(read("temp.txt").split("\n").map((x, i) => (assertEq(x.split
 data.Nodes.forEach(x => {
   let id = x.Identifier.split(".");
   id[1] = res.get(id[0] + "." + id[1] + (x.System === "Client" ? " Client" : ""))!.trim();
+  x.Identifier = id.join(".");
 });
 
-save("data.ts", data);
+save("data.json", data);
