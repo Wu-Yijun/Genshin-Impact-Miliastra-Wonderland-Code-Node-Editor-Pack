@@ -9,52 +9,23 @@ message Root {
   string gameVersion = 5; // 6.2.0 by now
 }
 
-// 通用资源标识符 (原 NodeGraph.Id, NodeProperty 等)
-// 这是整个系统中"资源的身份证"
-message GlobalIdentifier {
-  enum Metadata {
-    UNKNOWN_CLASS = 0;
-    USER_DEFINED = 10000;    // 用户资产
-    SYSTEM_DEFINED = 10001;  // 系统内置
-  }
-
-  enum Category {
-    UNKNOWN_TYPE = 0;
-
-    Node = 1;            // Such as boolean filter
-    Basic = 5;           // Such as graph node
-    AffiliatedNode = 23; // Assembly/Split for Structure
-
-    // Server Side Types
-    SERVER_BASIC = 20000;    
-    SERVER_STATUS = 20003;
-    SERVER_CLASS = 20004;
-    SERVER_ITEM = 20005;
-    
-    // Client Side Types
-    CLIENT_FILTER = 20001;   // 本地运算
-    CLIENT_SKILL = 20002;    // RPC / 技能流程
-    CLIENT_INT_FILTER = 20006;
-  }
-
-  enum AssetKind {
-    ServerGraph = 0;
-    ClientGraph = 3;
-    StructureDefinition = 15;
-    CUSTOM_GRAPH = 21001;      // NodeGraph
-    COMPOSITE_GRAPH = 21002;   // CompositeGraph
-    SYS_CALL_STUB = 22000;     // SysCall (Kernel 2000/2001 等)
-    GENERATED_STUB = 22001;    // SysGraph (Struct/Signal 定义生成的节点)
-  }
-
-  Metadata class_id = 1;    // 原 class
-  Category type_id = 2;     // 原 type
-  AssetKind kind_id = 3;    // 原 kind
-  int64 graph_id = 4;       // Node Graph Id
-  int64 uid = 5;            // 原 id / nodeId
-}
-
 message GraphUnit {
+  message Id {
+    enum Class {
+      Unknown1 = 0;
+      Node = 1;            // Such as boolean filter
+      Basic = 5;           // Such as graph node
+      AffiliatedNode = 23; // Assembly/Split for Structure
+    }
+    enum Type {
+      ServerGraph = 0;
+      ClientGraph = 3;
+      StructureDefinition = 15;
+    }
+    Class class = 2; // base type
+    Type type = 3;   // decide one of graph type
+    int32 id = 4;    // Node Graph Id
+  }
   enum Which {
     Unknown = 0;
     EntityNode = 9;
@@ -69,8 +40,8 @@ message GraphUnit {
     IntegerFilter = 47;
   };
 
-  GlobalIdentifier id = 1;                  // Self id
-  repeated GlobalIdentifier relatedIds = 2; // Some related accompanying units(If exist)
+  Id id = 1;                  // Self id
+  repeated Id relatedIds = 2; // Some related accompanying units(If exist)
   string name = 3;            // Node Graph Name
   Which which = 5;            // Enumeration of Node Graph Type
 

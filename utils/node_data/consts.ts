@@ -129,7 +129,7 @@ type GraphCategoryConstsDef = Record<string, {
   NodeKind: number;
 }>;
 // ====== End of Document Schema ====== //
-export type { Document, Translations, NodeDef, EnumDef, EnumEntryDef, SystemConstDef };
+export type { Document, Translations, NodeDef, EnumDef, EnumEntryDef, SystemConstDef, PinDef, TypeDef };
 
 
 export const GRAPH_CATEGORY_CONSTS = {
