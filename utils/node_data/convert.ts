@@ -26,26 +26,16 @@ const TypeMap = {
 };
 
 // TODO: VisiblePin8(10) of Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc's type conflicts with others
+// TODO: 添加 index of type selector
 
 data.Nodes.forEach(node => {
-  // 验证每一个出入口数量与类型对应
-  if (["Others", "Hidden"].includes(node.Domain)) {
-    switch (node.Identifier.split(".")[1]) {
-      case "Execution":
-        node.FlowPins.push({
-          "Identifier": "FlowIn",
-          "Direction": "In",
-        });
-      case "Trigger":
-        node.FlowPins.push({
-          "Identifier": "FlowOut",
-          "Direction": "Out",
-        });
-        return;
-    }
+  // 校验 flow-pin 数量一致:
+  const ref = REF.find(ref => ref.id === node.__ref_id);
+  if (!ref) return;
+  if (node.FlowPins.length !== ref.ports.filter(x => x.kind.startsWith("flow-")).length) {
+    console.log(node.Identifier);
   }
-  assertEq(node.FlowPins.length > 0, ["Execution", "Control", "Trigger"].includes(node.Domain))
 })
 
 
-save("data.json", data);
+// save("data.json", data);

@@ -71,17 +71,17 @@ interface NodeDef {
 // Pin Definition (Logical/UI)
 // ------------------------------------------------------------------
 interface PinDef {
-  Identifier: string;                               // 每个节点内部唯一标识 (e.g., "Arg1", "FlowIn")
-  Label: Translations;                              // UI 显示文本
-  Placeholder?: Translations;                       // Placeholder of the pin
-  Direction: "In" | "Out";                          // Direction of the pin
-  ShellIndex: number;                               // Outer index of the pin
-  KernelIndex: number;                              // Inner index of the pin
-  Type: string | null;                              // Type of the pin, could be generic type for reflective nodes
-  DefaultValue?: PinValue;                          // Fixed value of the pin (For part of the hidden pin)
+  Identifier: string;                                 // 每个节点内部唯一标识 (e.g., "Arg1", "FlowIn")
+  Label: Translations;                                // UI 显示文本
+  Placeholder?: Translations;                         // Placeholder of the pin
+  Direction: "In" | "Out";                            // Direction of the pin
+  ShellIndex: number;                                 // Outer index of the pin
+  KernelIndex: number;                                // Inner index of the pin
+  Type?: string;                                      // Type of the pin, could be generic type for reflective nodes
+  DefaultValue?: PinValue;                            // Fixed value of the pin (For part of the hidden pin)
   Visibility?: "Display" | "Hidden" | "Conditional";  // Whether the pin is displayed, hidden or conditional
   Connectability?: boolean;                           // Whether the pin can be connected by another one
-  Editability?: boolean;                                 // Whether the pin can be edited by user manually
+  Editability?: boolean;                              // Whether the pin can be edited by user manually
   Remarks?: string;                                   // Some additional information about the pin with special behavior
 }
 // ------------------------------------------------------------------
