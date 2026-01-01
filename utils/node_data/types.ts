@@ -1,12 +1,7 @@
-export const DATA_SCHEMA_VERSION = "3.0.0";
-export const AUTHOR = "Aluria";
-export const GAME_VERSION = "6.2.0";
-
-// ====== Begin of Document Schema ====== //
 // ------------------------------------------------------------------
 // Core Container
 // ------------------------------------------------------------------
-interface Document {
+export interface Document {
   // Header fields
   Version: string;              // Data & Schema version
   GameVersion: string;          // Game version
@@ -22,14 +17,14 @@ interface Document {
   // Protocol/System Consts Tables
   SystemConstants: SystemConstDef;   // 用于存放那些 Magic Numbers (如 Class=10001, RPC_Kernel=2000)
 }
-const Languages = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
-type Translations = Partial<{ [key in typeof Languages[number]]: string }>; // Display names of the entry in different languages
-type PinValue = string | number | boolean | null; // number could be enum or int
+export const Languages = ["cs", "de", "es", "en", "fr", "it", "ja", "ko", "pl", "pt-BR", "ru", "tr", "zh-Hans", "zh-Hant"] as const;
+export type Translations = Partial<{ [key in typeof Languages[number]]: string }>; // Display names of the entry in different languages
+export type PinValue = string | number | boolean | null; // number could be enum or int
 // ------------------------------------------------------------------
 // Type System (Enhanced)
 // ------------------------------------------------------------------
-interface TypeDef {
-  Identifier: string;         // see node_types.ts
+export interface TypeDef {
+  Identifier: string;         // <Category>.<Type>
   ID: number;                 // Server ID
   ClientID: number | null;    // Client ID (if exists)
   BaseType: string;           // Base type of the entry in game runtime
@@ -37,7 +32,7 @@ interface TypeDef {
   DSLName: string;            // Name of var class(type) in DSL
   InGameName: Translations;   // In-game name
 }
-interface EnumTypeDef {
+export interface EnumTypeDef {
   Identifier: string;                     // FourCC: /[ABD-Z][A-Z]{3}/ for Server, /C[A-Z]{3}/ for Client
   ID: number;                             // 游戏内部类型系统中使用的 ID (Server: 0~100, Client: 200000~200100)
   TypeID: number;                         // 游戏内部类型系统中使用的类型 ID (ID + 10000)
@@ -47,7 +42,7 @@ interface EnumTypeDef {
   Alias?: string[];                       // 保证游戏中的名称发生变化后仍有历史记录, 增强抗干扰能力
   Collection: string[];                   // List of Enum items of current enum type
 }
-interface EnumDef {
+export interface EnumDef {
   Identifier: string;                     // <Category>.<Type>
   ID: number;                             // 游戏内部类型系统中使用的 ID
   Category: string;                       // 由功能与值区分的类别<Category>, 无太多实际作用
@@ -57,7 +52,7 @@ interface EnumDef {
 // ------------------------------------------------------------------
 // Node Definition (The Shell)
 // ------------------------------------------------------------------
-interface NodeDef {
+export interface NodeDef {
   Identifier: string;                     // <Domain>.<Category>.<Action>
   ID: number;                             // Node ID
   KernelID?: number;                      // Kernel ID (if exists)
@@ -74,7 +69,7 @@ interface NodeDef {
 // ------------------------------------------------------------------
 // Pin Definition (Logical/UI)
 // ------------------------------------------------------------------
-interface PinDef {
+export interface PinDef {
   Identifier: string;                                 // 每个节点内部唯一标识 (e.g., "Arg1", "FlowIn")
   Direction: "In" | "Out";                            // Direction of the pin
   ShellIndex: number;                                 // Outer index of the pin
@@ -91,7 +86,7 @@ interface PinDef {
 // ------------------------------------------------------------------
 // Implementation & Mapping (The Kernel)
 // ------------------------------------------------------------------
-interface VariantDef {
+export interface VariantDef {
   // 匹配条件: 泛型参数 -> 具体类型的映射
   Constraints: string;
   // 对应的内核 ID
@@ -99,7 +94,7 @@ interface VariantDef {
   // 变体的常量注入
   InjectedContents: InjectedDef[]; // Key 是 Pin Identifier
 }
-interface InjectedDef {
+export interface InjectedDef {
   Identifier: string; // 引用 Inputs/Outputs 中的 Name
   TypeSelectorIndex?: number; // 可变引脚的 Selector Index (用于 UI 下拉菜单分组)
   ShellIndex?: number;   // Inner index of the pin
@@ -108,18 +103,18 @@ interface InjectedDef {
   Visibility?: "Display" | "Hidden" | "Conditional";
   Connectability?: boolean;
 }
-type ImplementationDef = {
+export type ImplementationDef = {
   Kind: "RPC";
   Messages: Partial<PinDef>[];  // Signal Pins(With data)
 };
 // ------------------------------------------------------------------
 // System Constants (Registry)
 // ------------------------------------------------------------------
-interface SystemConstDef {
+export interface SystemConstDef {
   GRAPH_CATEGORY_CONSTS: GraphCategoryConstsDef;
   GRAPH_ID_RANGE: Record<string, number>;
 }
-type GraphCategoryConstsDef = Record<string, {
+export type GraphCategoryConstsDef = Record<string, {
   AssetsOrigin: number;
   AssetsCategory: number;
   AssetsKind: number;
@@ -134,110 +129,3 @@ type GraphCategoryConstsDef = Record<string, {
   NodeKind: number;
 }>;
 // ====== End of Document Schema ====== //
-export type { Document, Translations, NodeDef, EnumDef, EnumTypeDef, SystemConstDef, PinDef, TypeDef };
-
-
-export const GRAPH_CATEGORY_CONSTS = {
-  server: {
-    AssetsOrigin: 0,
-    AssetsCategory: 5,
-    AssetsKind: 0,
-    AssetsWhich: 9,
-    GraphOrigin: 10000,
-    GraphCategory: 20000,
-    GraphKind: 21001,
-    NodeOrigin: 10001,
-    NodeCategory: 20000,
-    NodeKind: 22000
-  },
-  status: {
-    AssetsOrigin: 0,
-    AssetsCategory: 5,
-    AssetsKind: 0,
-    AssetsWhich: 22,
-    GraphOrigin: 10000,
-    GraphCategory: 20003,
-    GraphKind: 21001,
-    NodeOrigin: 10001,
-    NodeCategory: 20000,
-    NodeKind: 22000
-  },
-  class: {
-    AssetsOrigin: 0,
-    AssetsCategory: 5,
-    AssetsKind: 0,
-    AssetsWhich: 23,
-    GraphOrigin: 10000,
-    GraphCategory: 20004,
-    GraphKind: 21001,
-    NodeOrigin: 10001,
-    NodeCategory: 20000,
-    NodeKind: 22000
-  },
-  item: {
-    AssetsOrigin: 0,
-    AssetsCategory: 5,
-    AssetsKind: 0,
-    AssetsWhich: 46,
-    GraphOrigin: 10000,
-    GraphCategory: 20005,
-    GraphKind: 21001,
-    NodeOrigin: 10001,
-    NodeCategory: 20000,
-    NodeKind: 22000
-  },
-  bool: {
-    AssetsOrigin: 0,
-    AssetsCategory: 1,
-    AssetsKind: 3,
-    AssetsWhich: 10,
-    GraphOrigin: 10000,
-    GraphCategory: 20001,
-    GraphKind: 21001,
-    NodeOrigin: 10001,
-    NodeCategory: 20001,
-    NodeKind: 22000
-  },
-  int: {
-    AssetsOrigin: 0,
-    AssetsCategory: 1,
-    AssetsKind: 3,
-    AssetsWhich: 47,
-    GraphOrigin: 10000,
-    GraphCategory: 20006,
-    GraphKind: 21001,
-    NodeOrigin: 10001,
-    NodeCategory: 20001,
-    NodeKind: 22000
-  },
-  skill: {
-    AssetsOrigin: 0,
-    AssetsCategory: 1,
-    AssetsKind: 3,
-    AssetsWhich: 11,
-    GraphOrigin: 10000,
-    GraphCategory: 20002,
-    GraphKind: 21001,
-    NodeOrigin: 10001,
-    NodeCategory: 20002,
-    NodeKind: 22000
-  },
-  composite: {
-    AssetsOrigin: 0,
-    AssetsCategory: 23,
-    AssetsKind: 0,
-    AssetsWhich: 12,
-    GraphOrigin: 10000,
-    GraphCategory: 20000,
-    GraphKind: 21002,
-    NodeOrigin: 10001,
-    NodeCategory: 20000,
-    NodeKind: 22000
-  }
-} as const satisfies GraphCategoryConstsDef;
-
-export const GRAPH_ID_RANGE = {
-  "server": 0x4000_0000,
-  "client": 0x4080_0000,
-  "composite": 0x6000_0000,
-} as const satisfies SystemConstDef["GRAPH_ID_RANGE"];

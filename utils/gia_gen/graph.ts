@@ -9,7 +9,7 @@ import type { NodePinsRecords, SingleNodeData, SingleNodeDataClient, SingleNodeD
 import { auto_layout } from "./auto_layout.ts";
 
 // import { NODE_ID, CLIENT_NODE_ID } from "../node_data/node_id.ts";
-import { GRAPH_ID_RANGE, type GraphConst } from "../node_data/consts.ts";
+import { GRAPH_ID_RANGE, type GraphConst } from "../node_data/types.ts";
 
 export type ServerModes = "server" | "status" | "class" | "item" | "composite";
 export type ClientModes = "bool" | "int" | "skill";

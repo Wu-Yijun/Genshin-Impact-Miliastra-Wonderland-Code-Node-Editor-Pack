@@ -22,8 +22,8 @@ import { get_id, get_id_client, parse, stringify, type NodeType } from "./nodes.
 import { counter_dynamic_id, counter_index, randomInt } from "./utils.ts";
 import type { AnyType, GraphVar } from "./graph.ts";
 import { assert, todo } from "../utils.ts";
-import { GAME_VERSION } from "../node_data/consts.ts";
-import type { GraphConst } from "../node_data/consts.ts";
+import { GAME_VERSION } from "../node_data/types.ts";
+import type { GraphConst } from "../node_data/types.ts";
 import { get_graph_const } from "../node_data/helpers.ts";
 
 function tid(type: string | NodeType, is_server: true): VarType;
