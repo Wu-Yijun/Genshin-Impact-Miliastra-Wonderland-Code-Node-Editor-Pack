@@ -20,7 +20,11 @@ const save = (path: string, data: {} | string) =>
 
 // TODO: 添加 index of type selector
 
+
+save("data.json", data);
+exit();
 import { NodesList as old } from "./data.ts";
+import { exit } from "process";
 data.Nodes.forEach(node => {
   if (node.Variants === undefined) return;
   const ref = old.filter(x => x.ID === node.ID);
