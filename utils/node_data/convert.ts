@@ -28,30 +28,24 @@ const TypeMap = {
 // TODO: VisiblePin8(10) of Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc's type conflicts with others
 
 data.Nodes.forEach(node => {
-  // 验证每一个数据的关联项都是正确的.
-  data.Nodes.forEach(node => {
-    node.DataPins.filter(x => x.Direction === "In").forEach((pin, i) => {
-      if (pin.Identifier.startsWith("Input")) assertEq(pin.Identifier, "Input" + i);
-      assertEq(pin.ShellIndex, i);
-    })
-    node.DataPins.filter(x => x.Direction === "Out").forEach((pin, i) => {
-      if (pin.Identifier.startsWith("Output")) assertEq(pin.Identifier, "Output" + i);
-      assertEq(pin.ShellIndex, i);
-    });
-    assertEq(node.DataPins.length, new Set(node.DataPins.map(v => v.Identifier)).size)
-    // pass
-
-    assertEq(node.Type === "Fixed", node.Variants === undefined);
-    node.Variants?.forEach(v => {
-      assert(v.Constraints.length > 0);
-      assert(v.KernelID > 0);// 似乎有一个不是
-    });
-    assertEq(node.Variants?.length ?? 0, new Set(node.Variants?.map(v => v.Constraints)).size);
-    // pass
-  })
+  // 验证每一个出入口数量与类型对应
+  if (["Others", "Hidden"].includes(node.Domain)) {
+    switch (node.Identifier.split(".")[1]) {
+      case "Execution":
+        node.FlowPins.push({
+          "Identifier": "FlowIn",
+          "Direction": "In",
+        });
+      case "Trigger":
+        node.FlowPins.push({
+          "Identifier": "FlowOut",
+          "Direction": "Out",
+        });
+        return;
+    }
+  }
+  assertEq(node.FlowPins.length > 0, ["Execution", "Control", "Trigger"].includes(node.Domain))
 })
-
-assertEq(data.Enums.length, new Set(data.Enums.map(v => v.Identifier)).size)
 
 
 save("data.json", data);

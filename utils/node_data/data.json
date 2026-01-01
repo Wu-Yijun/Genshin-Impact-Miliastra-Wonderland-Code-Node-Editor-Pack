@@ -11500,7 +11500,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -11540,7 +11549,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -11569,7 +11587,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -11609,7 +11636,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -11638,7 +11674,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -17468,7 +17513,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -19395,7 +19449,12 @@
       "Type": "Variant",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Output0",
@@ -20246,7 +20305,16 @@
       "Type": "Variant",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -25095,7 +25163,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -25135,7 +25212,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -28730,7 +28816,16 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -45251,7 +45346,12 @@
       "Type": "Fixed",
       "System": "Server",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out"
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Output0",
@@ -48302,7 +48402,12 @@
       "Type": "Fixed",
       "System": "Client",
       "Domain": "Others",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In"
+        }
+      ],
       "DataPins": [],
       "Implementation": null,
       "__ref_id": "event.graphStart"
