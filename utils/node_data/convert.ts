@@ -29,6 +29,11 @@ const TypeMap = {
 // TODO: 添加 index of type selector
 
 data.Nodes.forEach(node => {
+  node.FlowPins.forEach(p => {
+    p.Label ??= {};
+    p.Label["en"] ??= "";
+    p.Label["zh-Hans"] ??= "";
+  });
   // 校验 flow-pin 数量一致:
   const ref = REF.find(ref => ref.id === node.__ref_id);
   if (!ref) return;
@@ -69,4 +74,4 @@ Execution.General_Client.For_Loop 循环完成
 })
 
 
-// save("data.json", data);
+save("data.json", data);
