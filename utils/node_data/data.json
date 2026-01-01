@@ -126234,7 +126234,7 @@
         {
           "Identifier": "Input1",
           "Direction": "In",
-          "Type": "E<FRTY>",
+          "Type": "E<CFLT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 1,
@@ -126541,7 +126541,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<CPRS>>",
+          "Constraints": "S<T:E<CCMP>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126555,7 +126555,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<LOGI>>",
+          "Constraints": "S<T:E<CLOG>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126569,7 +126569,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<BMAT>>",
+          "Constraints": "S<T:E<CBMO>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126583,7 +126583,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<ASHX>>",
+          "Constraints": "S<T:E<CASH>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126597,7 +126597,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<SURX>>",
+          "Constraints": "S<T:E<CSVL>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126625,7 +126625,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<ROUN>>",
+          "Constraints": "S<T:E<CRND>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126639,7 +126639,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<CNVT>>",
+          "Constraints": "S<T:E<CCOV>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126653,7 +126653,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<MPPX>>",
+          "Constraints": "S<T:E<CMPP>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126667,7 +126667,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<MTYP>>",
+          "Constraints": "S<T:E<CMOT>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126681,7 +126681,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<FLOC>>",
+          "Constraints": "S<T:E<CFLL>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126695,7 +126695,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<CSYS>>",
+          "Constraints": "S<T:E<CCOR>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126709,7 +126709,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<ELEM>>",
+          "Constraints": "S<T:E<CELM>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126723,7 +126723,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<ETIT>>",
+          "Constraints": "S<T:E<CETY>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126751,7 +126751,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<USAS>>",
+          "Constraints": "S<T:E<CUSS>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126765,7 +126765,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<USTR>>",
+          "Constraints": "S<T:E<CUSR>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126779,7 +126779,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<USTS>>",
+          "Constraints": "S<T:E<CUSX>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126793,7 +126793,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<RVPS>>",
+          "Constraints": "S<T:E<CRPT>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126807,7 +126807,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<DWNX>>",
+          "Constraints": "S<T:E<CDWN>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126821,7 +126821,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<TFNX>>",
+          "Constraints": "S<T:E<CTFX>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126835,7 +126835,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<DISD>>",
+          "Constraints": "S<T:E<CDDT>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126849,7 +126849,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<DORI>>",
+          "Constraints": "S<T:E<CDDO>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126863,7 +126863,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<UISG>>",
+          "Constraints": "S<T:E<CUIS>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126877,7 +126877,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<TARG>>",
+          "Constraints": "S<T:E<CTTP>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126891,7 +126891,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<QMAT>>",
+          "Constraints": "S<T:E<CQMA>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126905,7 +126905,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<HITX>>",
+          "Constraints": "S<T:E<CHIT>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126919,7 +126919,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<ATKX>>",
+          "Constraints": "S<T:E<CATK>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126933,7 +126933,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<HPRL>>",
+          "Constraints": "S<T:E<CHLV>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126947,7 +126947,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<TGSR>>",
+          "Constraints": "S<T:E<CTST>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126975,7 +126975,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<KBDT>>",
+          "Constraints": "S<T:E<CKBD>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -126989,7 +126989,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<ROTT>>",
+          "Constraints": "S<T:E<CROT>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127003,7 +127003,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<SDIR>>",
+          "Constraints": "S<T:E<CSCT>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127017,7 +127017,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<CONV>>",
+          "Constraints": "S<T:E<CCON>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127031,7 +127031,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<RTRA>>",
+          "Constraints": "S<T:E<CRTR>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127045,7 +127045,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<HLVL>>",
+          "Constraints": "S<T:E<CHTS>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127059,7 +127059,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<EREA>>",
+          "Constraints": "S<T:E<CERE>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127073,7 +127073,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<FRTY>>",
+          "Constraints": "S<T:E<CFLT>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127087,7 +127087,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<TCON>>",
+          "Constraints": "S<T:E<CCAM>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127101,7 +127101,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<SCAN>>",
+          "Constraints": "S<T:E<CSCN>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127115,7 +127115,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<IDVC>>",
+          "Constraints": "S<T:E<CDEV>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -127150,7 +127150,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<CPRS>",
+          "Type": "E<CCMP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -127360,7 +127360,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<CPRS>",
+          "Type": "E<CCMP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -127458,7 +127458,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<CPRS>",
+          "Type": "E<CCMP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -127556,7 +127556,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<CPRS>",
+          "Type": "E<CCMP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -127654,7 +127654,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<CPRS>",
+          "Type": "E<CCMP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -127752,7 +127752,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<BMAT>",
+          "Type": "E<CBMO>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -127858,7 +127858,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<BMAT>",
+          "Type": "E<CBMO>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -127964,7 +127964,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<BMAT>",
+          "Type": "E<CBMO>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -128070,7 +128070,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<BMAT>",
+          "Type": "E<CBMO>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -129140,7 +129140,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<CNVT>",
+          "Type": "E<CCOV>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -130258,7 +130258,7 @@
         {
           "Identifier": "turn_mode",
           "Direction": "In",
-          "Type": "E<ROTT>",
+          "Type": "E<CROT>",
           "Label": {
             "zh-Hans": "转向模式"
           },
@@ -130427,7 +130427,7 @@
         {
           "Identifier": "rule",
           "Direction": "In",
-          "Type": "E<TGSR>",
+          "Type": "E<CTST>",
           "Label": {
             "zh-Hans": "筛选规则"
           },
@@ -130538,7 +130538,7 @@
         {
           "Identifier": "rule",
           "Direction": "In",
-          "Type": "E<TGSR>",
+          "Type": "E<CTST>",
           "Label": {
             "zh-Hans": "筛选规则"
           },
@@ -130597,7 +130597,7 @@
         {
           "Identifier": "entity_type",
           "Direction": "Out",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": {
             "zh-Hans": "实体类型"
           },
@@ -131395,7 +131395,7 @@
         {
           "Identifier": "Input1",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 1,
@@ -131406,7 +131406,7 @@
         {
           "Identifier": "Input2",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 2,
@@ -131417,7 +131417,7 @@
         {
           "Identifier": "Input3",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 3,
@@ -131428,7 +131428,7 @@
         {
           "Identifier": "Input4",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 4,
@@ -131439,7 +131439,7 @@
         {
           "Identifier": "Input5",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 5,
@@ -131450,7 +131450,7 @@
         {
           "Identifier": "Input6",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 6,
@@ -131461,7 +131461,7 @@
         {
           "Identifier": "Input7",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 7,
@@ -131472,7 +131472,7 @@
         {
           "Identifier": "Input8",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 8,
@@ -131483,7 +131483,7 @@
         {
           "Identifier": "Input9",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 9,
@@ -131494,7 +131494,7 @@
         {
           "Identifier": "Input10",
           "Direction": "In",
-          "Type": "E<ETIT>",
+          "Type": "E<CETY>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 10,
@@ -131555,7 +131555,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TARG>",
+          "Type": "E<CTTP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -131610,7 +131610,7 @@
         {
           "Identifier": "Input5",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 5,
@@ -131643,7 +131643,7 @@
         {
           "Identifier": "Input8",
           "Direction": "In",
-          "Type": "E<ASHX>",
+          "Type": "E<CASH>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 8,
@@ -131720,7 +131720,7 @@
         {
           "Identifier": "Input15",
           "Direction": "In",
-          "Type": "E<SDIR>",
+          "Type": "E<CSCT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 15,
@@ -131753,7 +131753,7 @@
         {
           "Identifier": "Input18",
           "Direction": "In",
-          "Type": "E<ELEM>",
+          "Type": "E<CELM>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 18,
@@ -131775,7 +131775,7 @@
         {
           "Identifier": "Input20",
           "Direction": "In",
-          "Type": "E<HITX>",
+          "Type": "E<CHIT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 20,
@@ -131786,7 +131786,7 @@
         {
           "Identifier": "Input21",
           "Direction": "In",
-          "Type": "E<ATKX>",
+          "Type": "E<CATK>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 21,
@@ -131841,7 +131841,7 @@
         {
           "Identifier": "Input26",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 26,
@@ -131852,7 +131852,7 @@
         {
           "Identifier": "Input27",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 27,
@@ -132028,7 +132028,7 @@
         {
           "Identifier": "Input43",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 43,
@@ -132040,7 +132040,7 @@
         {
           "Identifier": "Input44",
           "Direction": "In",
-          "Type": "E<HLVL>",
+          "Type": "E<CHTS>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 44,
@@ -132609,7 +132609,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TARG>",
+          "Type": "E<CTTP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -132675,7 +132675,7 @@
         {
           "Identifier": "Input6",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 6,
@@ -132708,7 +132708,7 @@
         {
           "Identifier": "Input9",
           "Direction": "In",
-          "Type": "E<ASHX>",
+          "Type": "E<CASH>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 9,
@@ -132785,7 +132785,7 @@
         {
           "Identifier": "Input16",
           "Direction": "In",
-          "Type": "E<SDIR>",
+          "Type": "E<CSCT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 16,
@@ -132818,7 +132818,7 @@
         {
           "Identifier": "Input19",
           "Direction": "In",
-          "Type": "E<ELEM>",
+          "Type": "E<CELM>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 19,
@@ -132840,7 +132840,7 @@
         {
           "Identifier": "Input21",
           "Direction": "In",
-          "Type": "E<HITX>",
+          "Type": "E<CHIT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 21,
@@ -132851,7 +132851,7 @@
         {
           "Identifier": "Input22",
           "Direction": "In",
-          "Type": "E<ATKX>",
+          "Type": "E<CATK>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 22,
@@ -132917,7 +132917,7 @@
         {
           "Identifier": "Input28",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 28,
@@ -133093,7 +133093,7 @@
         {
           "Identifier": "Input44",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 44,
@@ -133105,7 +133105,7 @@
         {
           "Identifier": "Input45",
           "Direction": "In",
-          "Type": "E<HLVL>",
+          "Type": "E<CHTS>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 45,
@@ -133179,7 +133179,7 @@
         {
           "Identifier": "device_type",
           "Direction": "In",
-          "Type": "E<DISD>",
+          "Type": "E<CDDT>",
           "Label": {
             "zh-Hans": "扰动装置类型"
           },
@@ -133300,7 +133300,7 @@
         {
           "Identifier": "target_type",
           "Direction": "In",
-          "Type": "E<TCON>",
+          "Type": "E<CCAM>",
           "Label": {
             "zh-Hans": "目标类型"
           },
@@ -133883,7 +133883,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<BMAT>",
+          "Type": "E<CBMO>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -133954,7 +133954,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<BMAT>",
+          "Type": "E<CBMO>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -134288,7 +134288,7 @@
         {
           "Identifier": "Input11",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 11,
@@ -135759,7 +135759,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TFNX>",
+          "Type": "E<CTFX>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -135817,7 +135817,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TFNX>",
+          "Type": "E<CTFX>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -135874,7 +135874,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TFNX>",
+          "Type": "E<CTFX>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -135928,7 +135928,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TFNX>",
+          "Type": "E<CTFX>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -135986,7 +135986,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TFNX>",
+          "Type": "E<CTFX>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -136044,7 +136044,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TFNX>",
+          "Type": "E<CTFX>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -136148,7 +136148,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TFNX>",
+          "Type": "E<CTFX>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -136206,7 +136206,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TFNX>",
+          "Type": "E<CTFX>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -136320,7 +136320,7 @@
         {
           "Identifier": "Input1",
           "Direction": "In",
-          "Type": "E<FRTY>",
+          "Type": "E<CFLT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 1,
@@ -136587,7 +136587,7 @@
         {
           "Identifier": "Input4",
           "Direction": "In",
-          "Type": "E<TCON>",
+          "Type": "E<CCAM>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 4,
@@ -136598,7 +136598,7 @@
         {
           "Identifier": "Input5",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 5,
@@ -136783,7 +136783,7 @@
         {
           "Identifier": "list",
           "Direction": "Out",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": {
             "zh-Hans": "列表"
           },
@@ -136838,7 +136838,7 @@
         {
           "Identifier": "camp_filter",
           "Direction": "In",
-          "Type": "E<TARG>",
+          "Type": "E<CTTP>",
           "Label": {
             "zh-Hans": "目标阵营筛选"
           },
@@ -136903,7 +136903,7 @@
         {
           "Identifier": "entity_type_filter_list",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": {
             "zh-Hans": "攻击盒实体类型筛选列表"
           },
@@ -136942,7 +136942,7 @@
         {
           "Identifier": "Input8",
           "Direction": "In",
-          "Type": "E<ASHX>",
+          "Type": "E<CASH>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 8,
@@ -137058,7 +137058,7 @@
         {
           "Identifier": "element_type",
           "Direction": "In",
-          "Type": "E<ELEM>",
+          "Type": "E<CELM>",
           "Label": {
             "zh-Hans": "元素类型"
           },
@@ -137084,7 +137084,7 @@
         {
           "Identifier": "hit_type",
           "Direction": "In",
-          "Type": "E<HITX>",
+          "Type": "E<CHIT>",
           "Label": {
             "zh-Hans": "打击类型"
           },
@@ -137097,7 +137097,7 @@
         {
           "Identifier": "attack_type",
           "Direction": "In",
-          "Type": "E<ATKX>",
+          "Type": "E<CATK>",
           "Label": {
             "zh-Hans": "攻击类型"
           },
@@ -137160,7 +137160,7 @@
         {
           "Identifier": "Input26",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 26,
@@ -137171,7 +137171,7 @@
         {
           "Identifier": "knockback_direction",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": {
             "zh-Hans": "受击击退朝向"
           },
@@ -137367,7 +137367,7 @@
         {
           "Identifier": "Input43",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 43,
@@ -137379,7 +137379,7 @@
         {
           "Identifier": "hit_level",
           "Direction": "In",
-          "Type": "E<HLVL>",
+          "Type": "E<CHTS>",
           "Label": {
             "zh-Hans": "受击等级"
           },
@@ -137460,7 +137460,7 @@
         {
           "Identifier": "camp_filter",
           "Direction": "In",
-          "Type": "E<TARG>",
+          "Type": "E<CTTP>",
           "Label": {
             "zh-Hans": "目标阵营筛选"
           },
@@ -137525,7 +137525,7 @@
         {
           "Identifier": "entity_type_filter_list",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": {
             "zh-Hans": "攻击盒实体类型筛选列表"
           },
@@ -137564,7 +137564,7 @@
         {
           "Identifier": "Input8",
           "Direction": "In",
-          "Type": "E<ASHX>",
+          "Type": "E<CASH>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 8,
@@ -137643,7 +137643,7 @@
         {
           "Identifier": "Input15",
           "Direction": "In",
-          "Type": "E<SDIR>",
+          "Type": "E<CSCT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 15,
@@ -137680,7 +137680,7 @@
         {
           "Identifier": "element_type",
           "Direction": "In",
-          "Type": "E<ELEM>",
+          "Type": "E<CELM>",
           "Label": {
             "zh-Hans": "元素类型"
           },
@@ -137706,7 +137706,7 @@
         {
           "Identifier": "hit_type",
           "Direction": "In",
-          "Type": "E<HITX>",
+          "Type": "E<CHIT>",
           "Label": {
             "zh-Hans": "打击类型"
           },
@@ -137719,7 +137719,7 @@
         {
           "Identifier": "attack_type",
           "Direction": "In",
-          "Type": "E<ATKX>",
+          "Type": "E<CATK>",
           "Label": {
             "zh-Hans": "攻击类型"
           },
@@ -137782,7 +137782,7 @@
         {
           "Identifier": "Input26",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 26,
@@ -137793,7 +137793,7 @@
         {
           "Identifier": "knockback_direction",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": {
             "zh-Hans": "受击击退朝向"
           },
@@ -137989,7 +137989,7 @@
         {
           "Identifier": "Input43",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 43,
@@ -138001,7 +138001,7 @@
         {
           "Identifier": "hit_level",
           "Direction": "In",
-          "Type": "E<HLVL>",
+          "Type": "E<CHTS>",
           "Label": {
             "zh-Hans": "受击等级"
           },
@@ -138082,7 +138082,7 @@
         {
           "Identifier": "camp_filter",
           "Direction": "In",
-          "Type": "E<TARG>",
+          "Type": "E<CTTP>",
           "Label": {
             "zh-Hans": "目标阵营筛选"
           },
@@ -138147,7 +138147,7 @@
         {
           "Identifier": "entity_type_filter_list",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": {
             "zh-Hans": "攻击盒实体类型筛选列表"
           },
@@ -138186,7 +138186,7 @@
         {
           "Identifier": "Input8",
           "Direction": "In",
-          "Type": "E<ASHX>",
+          "Type": "E<CASH>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 8,
@@ -138271,7 +138271,7 @@
         {
           "Identifier": "sector_direction",
           "Direction": "In",
-          "Type": "E<SDIR>",
+          "Type": "E<CSCT>",
           "Label": {
             "zh-Hans": "攻击盒为扇形时的检测方向"
           },
@@ -138310,7 +138310,7 @@
         {
           "Identifier": "element_type",
           "Direction": "In",
-          "Type": "E<ELEM>",
+          "Type": "E<CELM>",
           "Label": {
             "zh-Hans": "元素类型"
           },
@@ -138336,7 +138336,7 @@
         {
           "Identifier": "hit_type",
           "Direction": "In",
-          "Type": "E<HITX>",
+          "Type": "E<CHIT>",
           "Label": {
             "zh-Hans": "打击类型"
           },
@@ -138349,7 +138349,7 @@
         {
           "Identifier": "attack_type",
           "Direction": "In",
-          "Type": "E<ATKX>",
+          "Type": "E<CATK>",
           "Label": {
             "zh-Hans": "攻击类型"
           },
@@ -138412,7 +138412,7 @@
         {
           "Identifier": "Input26",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 26,
@@ -138423,7 +138423,7 @@
         {
           "Identifier": "knockback_direction",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": {
             "zh-Hans": "受击击退朝向"
           },
@@ -138619,7 +138619,7 @@
         {
           "Identifier": "Input43",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 43,
@@ -138631,7 +138631,7 @@
         {
           "Identifier": "hit_level",
           "Direction": "In",
-          "Type": "E<HLVL>",
+          "Type": "E<CHTS>",
           "Label": {
             "zh-Hans": "受击等级"
           },
@@ -138707,7 +138707,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TARG>",
+          "Type": "E<CTTP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -138773,7 +138773,7 @@
         {
           "Identifier": "Input6",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 6,
@@ -138806,7 +138806,7 @@
         {
           "Identifier": "Input9",
           "Direction": "In",
-          "Type": "E<ASHX>",
+          "Type": "E<CASH>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 9,
@@ -138883,7 +138883,7 @@
         {
           "Identifier": "Input16",
           "Direction": "In",
-          "Type": "E<SDIR>",
+          "Type": "E<CSCT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 16,
@@ -138916,7 +138916,7 @@
         {
           "Identifier": "Input19",
           "Direction": "In",
-          "Type": "E<ELEM>",
+          "Type": "E<CELM>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 19,
@@ -138938,7 +138938,7 @@
         {
           "Identifier": "Input21",
           "Direction": "In",
-          "Type": "E<HITX>",
+          "Type": "E<CHIT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 21,
@@ -138949,7 +138949,7 @@
         {
           "Identifier": "Input22",
           "Direction": "In",
-          "Type": "E<ATKX>",
+          "Type": "E<CATK>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 22,
@@ -139015,7 +139015,7 @@
         {
           "Identifier": "Input28",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 28,
@@ -139191,7 +139191,7 @@
         {
           "Identifier": "Input44",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 44,
@@ -139203,7 +139203,7 @@
         {
           "Identifier": "Input45",
           "Direction": "In",
-          "Type": "E<HLVL>",
+          "Type": "E<CHTS>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 45,
@@ -139272,7 +139272,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TARG>",
+          "Type": "E<CTTP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -139338,7 +139338,7 @@
         {
           "Identifier": "Input6",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 6,
@@ -139371,7 +139371,7 @@
         {
           "Identifier": "Input9",
           "Direction": "In",
-          "Type": "E<ASHX>",
+          "Type": "E<CASH>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 9,
@@ -139448,7 +139448,7 @@
         {
           "Identifier": "Input16",
           "Direction": "In",
-          "Type": "E<SDIR>",
+          "Type": "E<CSCT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 16,
@@ -139481,7 +139481,7 @@
         {
           "Identifier": "Input19",
           "Direction": "In",
-          "Type": "E<ELEM>",
+          "Type": "E<CELM>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 19,
@@ -139503,7 +139503,7 @@
         {
           "Identifier": "Input21",
           "Direction": "In",
-          "Type": "E<HITX>",
+          "Type": "E<CHIT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 21,
@@ -139514,7 +139514,7 @@
         {
           "Identifier": "Input22",
           "Direction": "In",
-          "Type": "E<ATKX>",
+          "Type": "E<CATK>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 22,
@@ -139580,7 +139580,7 @@
         {
           "Identifier": "Input28",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 28,
@@ -139756,7 +139756,7 @@
         {
           "Identifier": "Input44",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 44,
@@ -139768,7 +139768,7 @@
         {
           "Identifier": "Input45",
           "Direction": "In",
-          "Type": "E<HLVL>",
+          "Type": "E<CHTS>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 45,
@@ -139837,7 +139837,7 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "E<TARG>",
+          "Type": "E<CTTP>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 0,
@@ -139903,7 +139903,7 @@
         {
           "Identifier": "Input6",
           "Direction": "In",
-          "Type": "L<E<ETIT>>",
+          "Type": "L<E<CETY>>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 6,
@@ -139936,7 +139936,7 @@
         {
           "Identifier": "Input9",
           "Direction": "In",
-          "Type": "E<ASHX>",
+          "Type": "E<CASH>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 9,
@@ -140013,7 +140013,7 @@
         {
           "Identifier": "Input16",
           "Direction": "In",
-          "Type": "E<SDIR>",
+          "Type": "E<CSCT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 16,
@@ -140046,7 +140046,7 @@
         {
           "Identifier": "Input19",
           "Direction": "In",
-          "Type": "E<ELEM>",
+          "Type": "E<CELM>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 19,
@@ -140068,7 +140068,7 @@
         {
           "Identifier": "Input21",
           "Direction": "In",
-          "Type": "E<HITX>",
+          "Type": "E<CHIT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 21,
@@ -140079,7 +140079,7 @@
         {
           "Identifier": "Input22",
           "Direction": "In",
-          "Type": "E<ATKX>",
+          "Type": "E<CATK>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 22,
@@ -140145,7 +140145,7 @@
         {
           "Identifier": "Input28",
           "Direction": "In",
-          "Type": "E<KBDT>",
+          "Type": "E<CKBD>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 28,
@@ -140321,7 +140321,7 @@
         {
           "Identifier": "Input44",
           "Direction": "In",
-          "Type": "E<RTRA>",
+          "Type": "E<CRTR>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 44,
@@ -140333,7 +140333,7 @@
         {
           "Identifier": "Input45",
           "Direction": "In",
-          "Type": "E<HLVL>",
+          "Type": "E<CHTS>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 45,
@@ -140717,7 +140717,7 @@
         {
           "Identifier": "scan_state",
           "Direction": "Out",
-          "Type": "E<SCAN>",
+          "Type": "E<CSCN>",
           "Label": {
             "zh-Hans": "扫描状态"
           },
@@ -140806,7 +140806,7 @@
         {
           "Identifier": "Input1",
           "Direction": "In",
-          "Type": "E<FRTY>",
+          "Type": "E<CFLT>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 1,
@@ -140837,7 +140837,7 @@
         {
           "Identifier": "input_device_type",
           "Direction": "Out",
-          "Type": "E<IDVC>",
+          "Type": "E<CDEV>",
           "Label": {
             "zh-Hans": "输入设备类型"
           },
@@ -144107,7 +144107,7 @@
       "TypeID": 10041
     },
     {
-      "Identifier": "GENE",
+      "Identifier": "CGEN",
       "System": "Client",
       "ID": -1,
       "InGameName": {
@@ -144119,7 +144119,7 @@
       "Items": []
     },
     {
-      "Identifier": "CPRS",
+      "Identifier": "CCMP",
       "System": "Client",
       "ID": 0,
       "InGameName": {
@@ -144182,7 +144182,7 @@
       ]
     },
     {
-      "Identifier": "LOGI",
+      "Identifier": "CLOG",
       "System": "Client",
       "ID": 1,
       "InGameName": {
@@ -144235,7 +144235,7 @@
       ]
     },
     {
-      "Identifier": "BMAT",
+      "Identifier": "CBMO",
       "System": "Client",
       "ID": 2,
       "InGameName": {
@@ -144288,7 +144288,7 @@
       ]
     },
     {
-      "Identifier": "ASHX",
+      "Identifier": "CASH",
       "System": "Client",
       "ID": 3,
       "InGameName": {
@@ -144331,7 +144331,7 @@
       ]
     },
     {
-      "Identifier": "SURX",
+      "Identifier": "CSVL",
       "System": "Client",
       "ID": 4,
       "InGameName": {
@@ -144397,7 +144397,7 @@
       ]
     },
     {
-      "Identifier": "ROUN",
+      "Identifier": "CRND",
       "System": "Client",
       "ID": 6,
       "InGameName": {
@@ -144450,7 +144450,7 @@
       ]
     },
     {
-      "Identifier": "CNVT",
+      "Identifier": "CCOV",
       "System": "Client",
       "ID": 7,
       "InGameName": {
@@ -144573,7 +144573,7 @@
       ]
     },
     {
-      "Identifier": "CONV",
+      "Identifier": "CCON",
       "System": "Client",
       "ID": 34,
       "InGameName": {
@@ -144696,7 +144696,7 @@
       ]
     },
     {
-      "Identifier": "MPPX",
+      "Identifier": "CMPP",
       "System": "Client",
       "ID": 8,
       "InGameName": {
@@ -144729,7 +144729,7 @@
       ]
     },
     {
-      "Identifier": "MTYP",
+      "Identifier": "CMOT",
       "System": "Client",
       "ID": 9,
       "InGameName": {
@@ -144772,7 +144772,7 @@
       ]
     },
     {
-      "Identifier": "FLOC",
+      "Identifier": "CFLL",
       "System": "Client",
       "ID": 10,
       "InGameName": {
@@ -144815,7 +144815,7 @@
       ]
     },
     {
-      "Identifier": "CSYS",
+      "Identifier": "CCOR",
       "System": "Client",
       "ID": 11,
       "InGameName": {
@@ -144848,7 +144848,7 @@
       ]
     },
     {
-      "Identifier": "ELEM",
+      "Identifier": "CELM",
       "System": "Client",
       "ID": 12,
       "InGameName": {
@@ -144941,7 +144941,7 @@
       ]
     },
     {
-      "Identifier": "ETIT",
+      "Identifier": "CETY",
       "System": "Client",
       "ID": 13,
       "InGameName": {
@@ -145057,7 +145057,7 @@
       ]
     },
     {
-      "Identifier": "USAS",
+      "Identifier": "CUSS",
       "System": "Client",
       "ID": 15,
       "InGameName": {
@@ -145090,7 +145090,7 @@
       ]
     },
     {
-      "Identifier": "USTR",
+      "Identifier": "CUSR",
       "System": "Client",
       "ID": 16,
       "InGameName": {
@@ -145153,7 +145153,7 @@
       ]
     },
     {
-      "Identifier": "USTS",
+      "Identifier": "CUSX",
       "System": "Client",
       "ID": 17,
       "InGameName": {
@@ -145186,7 +145186,7 @@
       ]
     },
     {
-      "Identifier": "RVPS",
+      "Identifier": "CRPT",
       "System": "Client",
       "ID": 18,
       "InGameName": {
@@ -145239,7 +145239,7 @@
       ]
     },
     {
-      "Identifier": "DWNX",
+      "Identifier": "CDWN",
       "System": "Client",
       "ID": 19,
       "InGameName": {
@@ -145282,7 +145282,7 @@
       ]
     },
     {
-      "Identifier": "TFNX",
+      "Identifier": "CTFX",
       "System": "Client",
       "ID": 20,
       "InGameName": {
@@ -145375,7 +145375,7 @@
       ]
     },
     {
-      "Identifier": "DISD",
+      "Identifier": "CDDT",
       "System": "Client",
       "ID": 21,
       "InGameName": {
@@ -145418,7 +145418,7 @@
       ]
     },
     {
-      "Identifier": "DORI",
+      "Identifier": "CDDO",
       "System": "Client",
       "ID": 22,
       "InGameName": {
@@ -145451,7 +145451,7 @@
       ]
     },
     {
-      "Identifier": "UISG",
+      "Identifier": "CUIS",
       "System": "Client",
       "ID": 23,
       "InGameName": {
@@ -145494,7 +145494,7 @@
       ]
     },
     {
-      "Identifier": "TARG",
+      "Identifier": "CTTP",
       "System": "Client",
       "ID": 24,
       "InGameName": {
@@ -145589,7 +145589,7 @@
       ]
     },
     {
-      "Identifier": "QMAT",
+      "Identifier": "CQMA",
       "System": "Client",
       "ID": 25,
       "InGameName": {
@@ -145652,7 +145652,7 @@
       ]
     },
     {
-      "Identifier": "HITX",
+      "Identifier": "CHIT",
       "System": "Client",
       "ID": 26,
       "InGameName": {
@@ -145725,7 +145725,7 @@
       ]
     },
     {
-      "Identifier": "ATKX",
+      "Identifier": "CATK",
       "System": "Client",
       "ID": 27,
       "InGameName": {
@@ -145778,7 +145778,7 @@
       ]
     },
     {
-      "Identifier": "HPRL",
+      "Identifier": "CHLV",
       "System": "Client",
       "ID": 28,
       "InGameName": {
@@ -145901,7 +145901,7 @@
       ]
     },
     {
-      "Identifier": "TGSR",
+      "Identifier": "CTST",
       "System": "Client",
       "ID": 29,
       "InGameName": {
@@ -145997,7 +145997,7 @@
       ]
     },
     {
-      "Identifier": "KBDT",
+      "Identifier": "CKBD",
       "System": "Client",
       "ID": 31,
       "InGameName": {
@@ -146080,7 +146080,7 @@
       ]
     },
     {
-      "Identifier": "ROTT",
+      "Identifier": "CROT",
       "System": "Client",
       "ID": 32,
       "InGameName": {
@@ -146153,7 +146153,7 @@
       ]
     },
     {
-      "Identifier": "SDIR",
+      "Identifier": "CSCT",
       "System": "Client",
       "ID": 33,
       "InGameName": {
@@ -146196,7 +146196,7 @@
       ]
     },
     {
-      "Identifier": "RTRA",
+      "Identifier": "CRTR",
       "System": "Client",
       "ID": 35,
       "InGameName": {
@@ -146239,7 +146239,7 @@
       ]
     },
     {
-      "Identifier": "HLVL",
+      "Identifier": "CHTS",
       "System": "Client",
       "ID": 36,
       "InGameName": {
@@ -146302,7 +146302,7 @@
       ]
     },
     {
-      "Identifier": "EREA",
+      "Identifier": "CERE",
       "System": "Client",
       "ID": 37,
       "InGameName": {
@@ -146535,7 +146535,7 @@
       ]
     },
     {
-      "Identifier": "FRTY",
+      "Identifier": "CFLT",
       "System": "Client",
       "ID": 38,
       "InGameName": {
@@ -146568,7 +146568,7 @@
       ]
     },
     {
-      "Identifier": "TCON",
+      "Identifier": "CCAM",
       "System": "Client",
       "ID": 39,
       "InGameName": {
@@ -146633,7 +146633,7 @@
       ]
     },
     {
-      "Identifier": "SCAN",
+      "Identifier": "CSCN",
       "System": "Client",
       "ID": 40,
       "InGameName": {
@@ -146686,7 +146686,7 @@
       ]
     },
     {
-      "Identifier": "IDVC",
+      "Identifier": "CDEV",
       "System": "Client",
       "ID": 41,
       "InGameName": {
