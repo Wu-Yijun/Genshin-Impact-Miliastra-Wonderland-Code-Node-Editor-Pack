@@ -358,24 +358,13 @@
   items:
     "5600": Fixed Speed
     "5601": Fixed Time
-- INTS: 200043
-  name: Interrupt Status
-  items:
-    "5200": Interrupt Resistance Status
-    "5201": Interrupt Vulnerability Status
-    "5202": Protected Status
-- DMGP: 200045
-  name: Damage Pop-Up Type
-  items:
-    "5400": No Pop-Up
-    "5401": Regular Pop-Up
-    "5402": CRIT Hit Pop-Up
+
 
 - GENE: -1 # CGEN
   id: 200000
   name: Generic
   items: {}
-- XXXX: 1 # CBOL
+- CBOL: 1
   id: 200001
   name: Boolean
   items:
@@ -419,7 +408,7 @@
   items:
     "500": Alive
     "501": Down
-- SRTR: 5 # CSRT
+- CSRT: 5
   id: 200007
   name: Sorting Rules
   items:
@@ -786,7 +775,7 @@
     "2601": Only On-Hit Hurtbox
     "2602": Only On-Hit Scene
     "2605": Object Self-Collision
-- CITR: 200043
+- CIRS: 200043
   id: 200043
   name: Interrupt Status
   items:
@@ -801,7 +790,7 @@
     "5001": Current Scan Target
     "5002": Candidate Target
     "5003": Condition Not Met
-- CDMG: 200045
+- DMGP: 200045 # CDMG
   id: 200045
   name: Damage Pop-Up Type
   items:
@@ -815,8 +804,8 @@
     "5800": Keyboard and Mouse
     "5801": Controller
     "5802": Touchscreen
-- TIGR: 1042 # CTRG
-  id: 200047
+- CTRG: 1042
+  id: 27
   name: Trigger Restriction
   items:
     "2101": Trigger Only Once

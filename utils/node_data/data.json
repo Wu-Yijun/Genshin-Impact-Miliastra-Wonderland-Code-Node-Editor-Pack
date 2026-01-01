@@ -28794,7 +28794,7 @@
         {
           "Identifier": "poise_state",
           "Direction": "Out",
-          "Type": "E<INTS>",
+          "Type": "E<CIRS>",
           "Label": {
             "zh-Hans": "当前受打断状态"
           },
@@ -36042,7 +36042,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<TRGR>>",
+          "Constraints": "S<T:E<TIGR>>",
           "KernelID": 501,
           "InjectedContents": [
             {
@@ -36098,7 +36098,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<INTS>>",
+          "Constraints": "S<T:E<CIRS>>",
           "KernelID": 759,
           "InjectedContents": [
             {
@@ -44872,7 +44872,7 @@
         {
           "Identifier": "damage_floating_text_type",
           "Direction": "In",
-          "Type": "E<DMGP>",
+          "Type": "E<CDMG>",
           "Label": {
             "zh-Hans": "伤害跳字类型"
           },
@@ -48226,7 +48226,7 @@
         {
           "Identifier": "poise_state",
           "Direction": "Out",
-          "Type": "E<INTS>",
+          "Type": "E<CIRS>",
           "Label": {
             "zh-Hans": "当前受打断状态"
           },
@@ -126611,7 +126611,7 @@
           ]
         },
         {
-          "Constraints": "S<T:E<SRTR>>",
+          "Constraints": "S<T:E<CSRT>>",
           "KernelID": 10,
           "InjectedContents": [
             {
@@ -131621,7 +131621,7 @@
         {
           "Identifier": "Input6",
           "Direction": "In",
-          "Type": "E<TIGR>",
+          "Type": "E<CTRG>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 6,
@@ -132686,7 +132686,7 @@
         {
           "Identifier": "Input7",
           "Direction": "In",
-          "Type": "E<TIGR>",
+          "Type": "E<CTRG>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 7,
@@ -136916,7 +136916,7 @@
         {
           "Identifier": "trigger_type",
           "Direction": "In",
-          "Type": "E<TIGR>",
+          "Type": "E<CTRG>",
           "Label": {
             "zh-Hans": "触发类型"
           },
@@ -137538,7 +137538,7 @@
         {
           "Identifier": "trigger_type",
           "Direction": "In",
-          "Type": "E<TIGR>",
+          "Type": "E<CTRG>",
           "Label": {
             "zh-Hans": "触发类型"
           },
@@ -138160,7 +138160,7 @@
         {
           "Identifier": "trigger_type",
           "Direction": "In",
-          "Type": "E<TIGR>",
+          "Type": "E<CTRG>",
           "Label": {
             "zh-Hans": "触发类型"
           },
@@ -138784,7 +138784,7 @@
         {
           "Identifier": "Input7",
           "Direction": "In",
-          "Type": "E<TIGR>",
+          "Type": "E<CTRG>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 7,
@@ -139349,7 +139349,7 @@
         {
           "Identifier": "Input7",
           "Direction": "In",
-          "Type": "E<TIGR>",
+          "Type": "E<CTRG>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 7,
@@ -139914,7 +139914,7 @@
         {
           "Identifier": "Input7",
           "Direction": "In",
-          "Type": "E<TIGR>",
+          "Type": "E<CTRG>",
           "Label": null,
           "Placeholder": null,
           "ShellIndex": 7,
@@ -142660,7 +142660,7 @@
       "TypeID": 10026
     },
     {
-      "Identifier": "TRGR",
+      "Identifier": "TIGR",
       "System": "Server",
       "ID": 27,
       "InGameName": {
@@ -143796,8 +143796,8 @@
       "TypeID": 10039
     },
     {
-      "Identifier": "INTS",
-      "System": "Server",
+      "Identifier": "CIRS",
+      "System": "Client",
       "ID": 200043,
       "InGameName": {
         "en": "Interrupt Status"
@@ -144002,8 +144002,8 @@
       ]
     },
     {
-      "Identifier": "DMGP",
-      "System": "Server",
+      "Identifier": "CDMG",
+      "System": "Client",
       "ID": 200045,
       "__old_id": 200045,
       "TypeID": 210045,
@@ -144364,7 +144364,7 @@
       ]
     },
     {
-      "Identifier": "SRTR",
+      "Identifier": "CSRT",
       "System": "Client",
       "ID": 5,
       "InGameName": {
@@ -146729,7 +146729,7 @@
       ]
     },
     {
-      "Identifier": "TIGR",
+      "Identifier": "CTRG",
       "System": "Client",
       "ID": 1042,
       "InGameName": {
