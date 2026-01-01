@@ -42,7 +42,7 @@ interface EnumTypeDef {
   ID: number;                             // 游戏内部类型系统中使用的 ID (Server: 0~100, Client: 200000~200100)
   TypeID: number;                         // 游戏内部类型系统中使用的类型 ID (ID + 10000)
   System: "Server" | "Client";            // The applicable range of the node, 尽管在Server中可以使用Client的类型, 反之亦然
-  Category: number;                       // 由功能与值区分的类别<Category>, 无太多实际作用
+  Category: string;                       // 由功能与值区分的类别<Category>, 无太多实际作用
   InGameName: Translations;               // In-game display name
   Alias?: string[];                       // 保证游戏中的名称发生变化后仍有历史记录, 增强抗干扰能力
   Collection: string[];                   // List of Enum items of current enum type

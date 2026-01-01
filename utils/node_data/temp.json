@@ -1,0 +1,1854 @@
+[
+  {
+    "Identifier": "GNRC",
+    "ID": 0,
+    "TypeID": 10000,
+    "System": "Server",
+    "Category": "Generic",
+    "InGameName": {
+      "en": "Generic"
+    },
+    "Alias": [
+      "Generic"
+    ],
+    "Collection": []
+  },
+  {
+    "Identifier": "BOOL",
+    "ID": 1,
+    "TypeID": 10001,
+    "System": "Server",
+    "Category": "BooleanGeneric",
+    "InGameName": {
+      "en": "Boolean"
+    },
+    "Alias": [
+      "Boolean"
+    ],
+    "Collection": [
+      "BooleanGeneric.FALSE_DEFAULT",
+      "BooleanGeneric.TRUE_YES"
+    ]
+  },
+  {
+    "Identifier": "OCMP",
+    "ID": 2,
+    "TypeID": 10002,
+    "System": "Server",
+    "Category": "ComparisonOperator",
+    "InGameName": {
+      "en": "Comparison Operators"
+    },
+    "Alias": [
+      "Comparison Operators"
+    ],
+    "Collection": [
+      "ComparisonOperator.EQUAL",
+      "ComparisonOperator.LESS_THAN",
+      "ComparisonOperator.LESS_EQUAL",
+      "ComparisonOperator.GREATER_THAN",
+      "ComparisonOperator.GREATER_EQUAL"
+    ]
+  },
+  {
+    "Identifier": "LOGC",
+    "ID": 3,
+    "TypeID": 10003,
+    "System": "Server",
+    "Category": "LogicalOperator",
+    "InGameName": {
+      "en": "Logical Operators"
+    },
+    "Alias": [
+      "Logical Operators"
+    ],
+    "Collection": [
+      "LogicalOperator.AND",
+      "LogicalOperator.OR",
+      "LogicalOperator.XOR",
+      "LogicalOperator.NOT"
+    ]
+  },
+  {
+    "Identifier": "MATH",
+    "ID": 4,
+    "TypeID": 10004,
+    "System": "Server",
+    "Category": "MathOperator",
+    "InGameName": {
+      "en": "Mathematical Operators"
+    },
+    "Alias": [
+      "Mathematical Operators"
+    ],
+    "Collection": [
+      "MathOperator.ADD",
+      "MathOperator.SUBTRACT",
+      "MathOperator.MULTIPLY",
+      "MathOperator.DIVIDE",
+      "MathOperator.MODULO",
+      "MathOperator.POWER",
+      "MathOperator.MAX",
+      "MathOperator.MIN",
+      "MathOperator.LOG"
+    ]
+  },
+  {
+    "Identifier": "SHAP",
+    "ID": 5,
+    "TypeID": 10005,
+    "System": "Server",
+    "Category": "AttackShape",
+    "InGameName": {
+      "en": "Attack Shapes"
+    },
+    "Alias": [
+      "Attack Shapes"
+    ],
+    "Collection": [
+      "AttackShape.RECTANGLE",
+      "AttackShape.SPHERE",
+      "AttackShape.SECTOR"
+    ]
+  },
+  {
+    "Identifier": "SURV",
+    "ID": 6,
+    "TypeID": 10006,
+    "System": "Server",
+    "Category": "SurvivalStatus",
+    "InGameName": {
+      "en": "Survival Status"
+    },
+    "Alias": [
+      "Survival Status"
+    ],
+    "Collection": [
+      "SurvivalStatus.ALIVE",
+      "SurvivalStatus.DOWN"
+    ]
+  },
+  {
+    "Identifier": "SORT",
+    "ID": 7,
+    "TypeID": 10007,
+    "System": "Server",
+    "Category": "SortingRule",
+    "InGameName": {
+      "en": "Sorting Rules"
+    },
+    "Alias": [
+      "Sorting Rules"
+    ],
+    "Collection": [
+      "SortingRule.ASCENDING",
+      "SortingRule.DESCENDING"
+    ]
+  },
+  {
+    "Identifier": "ROND",
+    "ID": 8,
+    "TypeID": 10008,
+    "System": "Server",
+    "Category": "RoundingLogic",
+    "InGameName": {
+      "en": "Rounding Logic"
+    },
+    "Alias": [
+      "Rounding Logic"
+    ],
+    "Collection": [
+      "RoundingLogic.ROUND_UP",
+      "RoundingLogic.ROUND_DOWN",
+      "RoundingLogic.ROUND_NEAREST",
+      "RoundingLogic.TRUNCATE"
+    ]
+  },
+  {
+    "Identifier": "TCOV",
+    "ID": 9,
+    "TypeID": 10009,
+    "System": "Server",
+    "Category": "TypeConversion",
+    "InGameName": {
+      "en": "Type Conversions"
+    },
+    "Alias": [
+      "Type Conversions"
+    ],
+    "Collection": [
+      "TypeConversion.INT_TO_BOOL",
+      "TypeConversion.INT_TO_FLOAT",
+      "TypeConversion.INT_TO_STRING",
+      "TypeConversion.ENTITY_TO_STRING",
+      "TypeConversion.GUID_TO_STRING",
+      "TypeConversion.BOOL_TO_INT",
+      "TypeConversion.BOOL_TO_STRING",
+      "TypeConversion.FLOAT_TO_INT",
+      "TypeConversion.FLOAT_TO_STRING",
+      "TypeConversion.VEC3_TO_STRING",
+      "TypeConversion.FACTION_TO_STRING"
+    ]
+  },
+  {
+    "Identifier": "MPPT",
+    "ID": 10,
+    "TypeID": 10010,
+    "System": "Server",
+    "Category": "PathPointType",
+    "InGameName": {
+      "en": "Motion Path Point Types"
+    },
+    "Alias": [
+      "Motion Path Point Types",
+      "Motion Path Points"
+    ],
+    "Collection": [
+      "PathPointType.STRAIGHT",
+      "PathPointType.CURVE"
+    ]
+  },
+  {
+    "Identifier": "MOTN",
+    "ID": 11,
+    "TypeID": 10011,
+    "System": "Server",
+    "Category": "MotionType",
+    "InGameName": {
+      "en": "Motion Types"
+    },
+    "Alias": [
+      "Motion Types"
+    ],
+    "Collection": [
+      "MotionType.ONE_WAY",
+      "MotionType.PING_PONG",
+      "MotionType.CYCLIC"
+    ]
+  },
+  {
+    "Identifier": "FOLO",
+    "ID": 12,
+    "TypeID": 10012,
+    "System": "Server",
+    "Category": "FollowType",
+    "InGameName": {
+      "en": "Follow Location Type"
+    },
+    "Alias": [
+      "Follow Location Type"
+    ],
+    "Collection": [
+      "FollowType.FULL_FOLLOW",
+      "FollowType.FOLLOW_LOCATION",
+      "FollowType.FOLLOW_ROTATION"
+    ]
+  },
+  {
+    "Identifier": "SYSC",
+    "ID": 13,
+    "TypeID": 10013,
+    "System": "Server",
+    "Category": "CoordinateSystem",
+    "InGameName": {
+      "en": "Coordinate System Type"
+    },
+    "Alias": [
+      "Coordinate System Type",
+      "Follow Location"
+    ],
+    "Collection": [
+      "CoordinateSystem.RELATIVE",
+      "CoordinateSystem.WORLD"
+    ]
+  },
+  {
+    "Identifier": "ELMT",
+    "ID": 14,
+    "TypeID": 10014,
+    "System": "Server",
+    "Category": "ElementType",
+    "InGameName": {
+      "en": "Elemental Type"
+    },
+    "Alias": [
+      "Elemental Type"
+    ],
+    "Collection": [
+      "ElementType.NONE",
+      "ElementType.PYRO",
+      "ElementType.HYDRO",
+      "ElementType.ANEMO",
+      "ElementType.ELECTRO",
+      "ElementType.DENDRO",
+      "ElementType.CRYO",
+      "ElementType.GEO"
+    ]
+  },
+  {
+    "Identifier": "ENTY",
+    "ID": 15,
+    "TypeID": 10015,
+    "System": "Server",
+    "Category": "EntityType",
+    "InGameName": {
+      "en": "Entity Type"
+    },
+    "Alias": [
+      "Entity Type"
+    ],
+    "Collection": [
+      "EntityType.STAGE",
+      "EntityType.OBJECT",
+      "EntityType.PLAYER",
+      "EntityType.CHARACTER",
+      "EntityType.CREATION"
+    ]
+  },
+  {
+    "Identifier": "USAF",
+    "ID": 16,
+    "TypeID": 10016,
+    "System": "Server",
+    "Category": "StatusChangeReason",
+    "InGameName": {
+      "en": "Unit Status Addition Failure Reason"
+    },
+    "Alias": [
+      "Unit Status Addition Failure Reason"
+    ],
+    "Collection": [
+      "StatusChangeReason.FAIL_UNKNOWN",
+      "StatusChangeReason.FAIL_PAUSED",
+      "StatusChangeReason.FAIL_LIMIT_REACHED",
+      "StatusChangeReason.FAIL_STACK_LIMIT"
+    ]
+  },
+  {
+    "Identifier": "STAD",
+    "ID": 17,
+    "TypeID": 10017,
+    "System": "Server",
+    "Category": "StatusChangeReason",
+    "InGameName": {
+      "en": "Unit Status Addition Result"
+    },
+    "Alias": [
+      "Unit Status Addition Result"
+    ],
+    "Collection": [
+      "StatusChangeReason.FAIL_UNKNOWN",
+      "StatusChangeReason.FAIL_PAUSED",
+      "StatusChangeReason.FAIL_LIMIT_REACHED",
+      "StatusChangeReason.FAIL_STACK_LIMIT",
+      "StatusChangeReason.SUCCESS_NEW",
+      "StatusChangeReason.SUCCESS_STACK"
+    ]
+  },
+  {
+    "Identifier": "STRE",
+    "ID": 18,
+    "TypeID": 10018,
+    "System": "Server",
+    "Category": "StatusChangeReason",
+    "InGameName": {
+      "en": "Unit Status Removal Reason"
+    },
+    "Alias": [
+      "Unit Status Removal Reason"
+    ],
+    "Collection": [
+      "StatusChangeReason.REPLACED",
+      "StatusChangeReason.DURATION_EXCEEDED",
+      "StatusChangeReason.DISPELLED",
+      "StatusChangeReason.EXPIRED",
+      "StatusChangeReason.CLASS_CHANGED",
+      "StatusChangeReason.AFFIX_EXPIRED",
+      "StatusChangeReason.SHIELD_BROKEN"
+    ]
+  },
+  {
+    "Identifier": "STRS",
+    "ID": 19,
+    "TypeID": 10019,
+    "System": "Server",
+    "Category": "StatusChangeReason",
+    "InGameName": {
+      "en": "Unit Status Removal Strategy"
+    },
+    "Alias": [
+      "Unit Status Removal Strategy"
+    ],
+    "Collection": [
+      "StatusChangeReason.ALL_SAME_NAME",
+      "StatusChangeReason.FASTEST_STACK_LOSS"
+    ]
+  },
+  {
+    "Identifier": "RPSS",
+    "ID": 20,
+    "TypeID": 10020,
+    "System": "Server",
+    "Category": "ReviveSelection",
+    "InGameName": {
+      "en": "Revive Point Selection Strategy"
+    },
+    "Alias": [
+      "Revive Point Selection Strategy"
+    ],
+    "Collection": [
+      "ReviveSelection.NEAREST",
+      "ReviveSelection.RECENT",
+      "ReviveSelection.HIGHEST_PRIORITY",
+      "ReviveSelection.RANDOM"
+    ]
+  },
+  {
+    "Identifier": "DWNR",
+    "ID": 21,
+    "TypeID": 10021,
+    "System": "Server",
+    "Category": "ReviveSelection",
+    "InGameName": {
+      "en": "Cause of Being Down"
+    },
+    "Alias": [
+      "Cause of Being Down"
+    ],
+    "Collection": [
+      "ReviveSelection.NODE_GRAPH",
+      "ReviveSelection.NORMAL_DEFEAT",
+      "ReviveSelection.ABNORMAL_DEFEAT"
+    ]
+  },
+  {
+    "Identifier": "TRIG",
+    "ID": 22,
+    "TypeID": 10022,
+    "System": "Server",
+    "Category": "TrigFunction",
+    "InGameName": {
+      "en": "Trigonometric Functions"
+    },
+    "Alias": [
+      "Trigonometric Functions"
+    ],
+    "Collection": [
+      "TrigFunction.COS",
+      "TrigFunction.SIN",
+      "TrigFunction.TAN",
+      "TrigFunction.ARCCOS",
+      "TrigFunction.ARCSIN",
+      "TrigFunction.ARCTAN",
+      "TrigFunction.RAD_TO_DEG",
+      "TrigFunction.DEG_TO_RAD"
+    ]
+  },
+  {
+    "Identifier": "DDVT",
+    "ID": 23,
+    "TypeID": 10023,
+    "System": "Server",
+    "Category": "DisruptorType",
+    "InGameName": {
+      "en": "Disruptor Device Type"
+    },
+    "Alias": [
+      "Disruptor Device Type"
+    ],
+    "Collection": [
+      "DisruptorType.FORCE_FIELD",
+      "DisruptorType.EJECTOR",
+      "DisruptorType.TRACTOR"
+    ]
+  },
+  {
+    "Identifier": "DDOR",
+    "ID": 24,
+    "TypeID": 10024,
+    "System": "Server",
+    "Category": "DisruptorType",
+    "InGameName": {
+      "en": "Disruptor Device Orientation"
+    },
+    "Alias": [
+      "Disruptor Device Orientation"
+    ],
+    "Collection": [
+      "DisruptorType.CHAR_ORIENT",
+      "DisruptorType.FIXED_DIR"
+    ]
+  },
+  {
+    "Identifier": "UICG",
+    "ID": 25,
+    "TypeID": 10025,
+    "System": "Server",
+    "Category": "UIControlStatus",
+    "InGameName": {
+      "en": "UI Control Group Status"
+    },
+    "Alias": [
+      "UI Control Group Status"
+    ],
+    "Collection": [
+      "UIControlStatus.OFF",
+      "UIControlStatus.ON",
+      "UIControlStatus.HIDDEN"
+    ]
+  },
+  {
+    "Identifier": "TGTT",
+    "ID": 26,
+    "TypeID": 10026,
+    "System": "Server",
+    "Category": "TargetType",
+    "InGameName": {
+      "en": "Target Type"
+    },
+    "Alias": [
+      "Target Type"
+    ],
+    "Collection": [
+      "TargetType.NONE",
+      "TargetType.ALLY",
+      "TargetType.ENEMY",
+      "TargetType.SELF",
+      "TargetType.OWN_FACTION",
+      "TargetType.ALL",
+      "TargetType.ALL_EXCEPT_SELF",
+      "TargetType.ALLY_WITH_SELF"
+    ]
+  },
+  {
+    "Identifier": "TIGR",
+    "ID": 27,
+    "TypeID": 10027,
+    "System": "Server",
+    "Category": "TriggerRestriction",
+    "InGameName": {
+      "en": "Trigger Restriction"
+    },
+    "Alias": [
+      "Trigger Restriction"
+    ],
+    "Collection": [
+      "TriggerRestriction.ONCE_GLOBAL",
+      "TriggerRestriction.ONCE_PER_ENTITY"
+    ]
+  },
+  {
+    "Identifier": "CTRG",
+    "ID": 27,
+    "TypeID": 10027,
+    "System": "Client",
+    "Category": "TriggerRestriction",
+    "InGameName": {
+      "en": "Trigger Restriction"
+    },
+    "Alias": [
+      "Trigger Restriction"
+    ],
+    "Collection": [
+      "TriggerRestriction.ONCE_GLOBAL",
+      "TriggerRestriction.ONCE_PER_ENTITY"
+    ]
+  },
+  {
+    "Identifier": "HITT",
+    "ID": 28,
+    "TypeID": 10028,
+    "System": "Server",
+    "Category": "HitType",
+    "InGameName": {
+      "en": "Hit Type"
+    },
+    "Alias": [
+      "Hit Type"
+    ],
+    "Collection": [
+      "HitType.NONE",
+      "HitType.DEFAULT",
+      "HitType.SLASH",
+      "HitType.SMASH",
+      "HitType.PROJECTILE",
+      "HitType.PIERCING"
+    ]
+  },
+  {
+    "Identifier": "ATKT",
+    "ID": 29,
+    "TypeID": 10029,
+    "System": "Server",
+    "Category": "AttackType",
+    "InGameName": {
+      "en": "Attack Type"
+    },
+    "Alias": [
+      "Attack Type"
+    ],
+    "Collection": [
+      "AttackType.NONE",
+      "AttackType.MELEE",
+      "AttackType.RANGED",
+      "AttackType.DEFAULT"
+    ]
+  },
+  {
+    "Identifier": "HITP",
+    "ID": 30,
+    "TypeID": 10030,
+    "System": "Server",
+    "Category": "HitPerformance",
+    "InGameName": {
+      "en": "Hit Performance Level"
+    },
+    "Alias": [
+      "Hit Performance Level"
+    ],
+    "Collection": [
+      "HitPerformance.DEFAULT",
+      "HitPerformance.NONE",
+      "HitPerformance.LIGHT_ARROW",
+      "HitPerformance.COMBO",
+      "HitPerformance.NORMAL",
+      "HitPerformance.HEAVY",
+      "HitPerformance.STRONG",
+      "HitPerformance.ULTIMATE",
+      "HitPerformance.VERTICAL_LAUNCH",
+      "HitPerformance.SUPER_LAUNCH",
+      "HitPerformance.LONG_THROW"
+    ]
+  },
+  {
+    "Identifier": "SLOT",
+    "ID": 31,
+    "TypeID": 10031,
+    "System": "Server",
+    "Category": "SkillSlot",
+    "InGameName": {
+      "en": "Skill Slot"
+    },
+    "Alias": [
+      "Skill Slot"
+    ],
+    "Collection": [
+      "SkillSlot.NORMAL_ATTACK",
+      "SkillSlot.SKILL_E",
+      "SkillSlot.SKILL_Q",
+      "SkillSlot.SKILL_R",
+      "SkillSlot.SKILL_T",
+      "SkillSlot.CUSTOM_1",
+      "SkillSlot.CUSTOM_2",
+      "SkillSlot.CUSTOM_3",
+      "SkillSlot.CUSTOM_4",
+      "SkillSlot.CUSTOM_5",
+      "SkillSlot.CUSTOM_6",
+      "SkillSlot.CUSTOM_7",
+      "SkillSlot.CUSTOM_8",
+      "SkillSlot.CUSTOM_9",
+      "SkillSlot.CUSTOM_10",
+      "SkillSlot.CUSTOM_11",
+      "SkillSlot.CUSTOM_12",
+      "SkillSlot.CUSTOM_13",
+      "SkillSlot.CUSTOM_14",
+      "SkillSlot.CUSTOM_15"
+    ]
+  },
+  {
+    "Identifier": "SNDM",
+    "ID": 32,
+    "TypeID": 10032,
+    "System": "Server",
+    "Category": "SoundAttenuation",
+    "InGameName": {
+      "en": "Sound Attenuation Mode"
+    },
+    "Alias": [
+      "Sound Attenuation Mode"
+    ],
+    "Collection": [
+      "SoundAttenuation.LINEAR",
+      "SoundAttenuation.FAST_TO_SLOW",
+      "SoundAttenuation.SLOW_TO_FAST"
+    ]
+  },
+  {
+    "Identifier": "SLCR",
+    "ID": 33,
+    "TypeID": 10033,
+    "System": "Server",
+    "Category": "SelectionResult",
+    "InGameName": {
+      "en": "Select Completion Reason"
+    },
+    "Alias": [
+      "Select Completion Reason"
+    ],
+    "Collection": [
+      "SelectionResult.PLAYER_DONE",
+      "SelectionResult.TIMEOUT",
+      "SelectionResult.FIXED_REFRESH",
+      "SelectionResult.REFRESH_ALL",
+      "SelectionResult.MANUAL_CLOSE",
+      "SelectionResult.NODE_GRAPH_CLOSE"
+    ]
+  },
+  {
+    "Identifier": "SETL",
+    "ID": 34,
+    "TypeID": 10034,
+    "System": "Server",
+    "Category": "SettlementStatus",
+    "InGameName": {
+      "en": "Settlement Status"
+    },
+    "Alias": [
+      "Settlement Status"
+    ],
+    "Collection": [
+      "SettlementStatus.PENDING",
+      "SettlementStatus.VICTORY",
+      "SettlementStatus.FAILED"
+    ]
+  },
+  {
+    "Identifier": "STMT",
+    "ID": 35,
+    "TypeID": 10035,
+    "System": "Server",
+    "Category": "SettlementStatus",
+    "InGameName": {
+      "en": "Settlement Status"
+    },
+    "Alias": [
+      "Settlement Status"
+    ],
+    "Collection": [
+      "SettlementStatus.PENDING",
+      "SettlementStatus.VICTORY",
+      "SettlementStatus.FAILED",
+      "SettlementStatus.ESCAPED"
+    ]
+  },
+  {
+    "Identifier": "ITMC",
+    "ID": 36,
+    "TypeID": 10036,
+    "System": "Server",
+    "Category": "ItemChangeReason",
+    "InGameName": {
+      "en": "Reason for Item Change"
+    },
+    "Alias": [
+      "Reason for Item Change"
+    ],
+    "Collection": [
+      "BooleanGeneric.FALSE_DEFAULT",
+      "ItemChangeReason.DESTROY",
+      "ItemChangeReason.DISCARD",
+      "ItemChangeReason.USE",
+      "ItemChangeReason.DEFEAT_DROP",
+      "ItemChangeReason.SHOP_TRADE",
+      "ItemChangeReason.NODE_GRAPH",
+      "ItemChangeReason.PICK_UP"
+    ]
+  },
+  {
+    "Identifier": "LOOT",
+    "ID": 37,
+    "TypeID": 10037,
+    "System": "Server",
+    "Category": "LootType",
+    "InGameName": {
+      "en": "Item Loot Type"
+    },
+    "Alias": [
+      "Item Loot Type"
+    ],
+    "Collection": [
+      "LootType.SHARED",
+      "LootType.INDIVIDUAL"
+    ]
+  },
+  {
+    "Identifier": "DRFM",
+    "ID": 38,
+    "TypeID": 10038,
+    "System": "Server",
+    "Category": "SelectionResult",
+    "InGameName": {
+      "en": "Decision Refresh Mode"
+    },
+    "Alias": [
+      "Decision Refresh Mode"
+    ],
+    "Collection": [
+      "SelectionResult.NO_REFRESH",
+      "SelectionResult.PARTIAL_REFRESH",
+      "SelectionResult.REFRESH_TOTAL"
+    ]
+  },
+  {
+    "Identifier": "REAC",
+    "ID": 39,
+    "TypeID": 10039,
+    "System": "Server",
+    "Category": "ElementReaction",
+    "InGameName": {
+      "en": "Elemental Reaction Type"
+    },
+    "Alias": [
+      "Elemental Reaction Type"
+    ],
+    "Collection": [
+      "ElementReaction.OVERLOADED",
+      "ElementReaction.VAPORIZE",
+      "ElementReaction.BURNING",
+      "ElementReaction.WET",
+      "ElementReaction.BLOOM",
+      "ElementReaction.MELT",
+      "ElementReaction.FROZEN",
+      "ElementReaction.ELECTRO_CHARGED",
+      "ElementReaction.SUPERCONDUCT",
+      "ElementReaction.SWIRL_PYRO",
+      "ElementReaction.SWIRL_HYDRO",
+      "ElementReaction.SWIRL_ELECTRO",
+      "ElementReaction.SWIRL_CRYO",
+      "ElementReaction.CRYSTAL_PYRO",
+      "ElementReaction.CRYSTAL_HYDRO",
+      "ElementReaction.CRYSTAL_ELECTRO",
+      "ElementReaction.CRYSTAL_CRYO",
+      "ElementReaction.CATALYZE",
+      "ElementReaction.AGGRAVATE",
+      "ElementReaction.SPREAD",
+      "ElementReaction.BURGEON",
+      "ElementReaction.HYPERBLOOM"
+    ]
+  },
+  {
+    "Identifier": "STPT",
+    "ID": 40,
+    "TypeID": 10040,
+    "System": "Server",
+    "Category": "ScanPriority",
+    "InGameName": {
+      "en": "Scan Tag Prioritize Type"
+    },
+    "Alias": [
+      "Scan Tag Prioritize Type"
+    ],
+    "Collection": [
+      "ScanPriority.VIEW_FIRST",
+      "ScanPriority.DISTANCE_FIRST"
+    ]
+  },
+  {
+    "Identifier": "SRTR",
+    "ID": 41,
+    "TypeID": 10041,
+    "System": "Server",
+    "Category": "SortingRule",
+    "InGameName": {
+      "en": "Sorting Rules"
+    },
+    "Alias": [
+      "Sorting Rules"
+    ],
+    "Collection": [
+      "SortingRule.RANDOM"
+    ]
+  },
+  {
+    "Identifier": "GMOD",
+    "ID": 42,
+    "TypeID": 10042,
+    "System": "Server",
+    "Category": "GameplayMode",
+    "InGameName": {
+      "en": "Gameplay Mode"
+    },
+    "Alias": [
+      "Gameplay Mode"
+    ],
+    "Collection": [
+      "GameplayMode.TEST_PLAY",
+      "GameplayMode.ROOM_PLAY",
+      "GameplayMode.MATCH_PLAY"
+    ]
+  },
+  {
+    "Identifier": "IDVT",
+    "ID": 43,
+    "TypeID": 10043,
+    "System": "Server",
+    "Category": "InputDevice",
+    "InGameName": {
+      "en": "Input Device Type"
+    },
+    "Alias": [
+      "Input Device Type"
+    ],
+    "Collection": [
+      "InputDevice.KEYBOARD_MOUSE",
+      "InputDevice.CONTROLLER",
+      "InputDevice.TOUCHSCREEN"
+    ]
+  },
+  {
+    "Identifier": "MOVE",
+    "ID": 44,
+    "TypeID": 10044,
+    "System": "Server",
+    "Category": "MovementMode",
+    "InGameName": {
+      "en": "Movement Mode"
+    },
+    "Alias": [
+      "Movement Mode"
+    ],
+    "Collection": [
+      "MovementMode.INSTANT",
+      "MovementMode.LINEAR"
+    ]
+  },
+  {
+    "Identifier": "FMPR",
+    "ID": 45,
+    "TypeID": 10045,
+    "System": "Server",
+    "Category": "MotionParamType",
+    "InGameName": {
+      "en": "Fixed Motion Parameter Type"
+    },
+    "Alias": [
+      "Fixed Motion Parameter Type"
+    ],
+    "Collection": [
+      "MotionParamType.SPEED",
+      "MotionParamType.TIME"
+    ]
+  },
+  {
+    "Identifier": "CGEN",
+    "ID": 200000,
+    "TypeID": 210000,
+    "System": "Client",
+    "Category": "Generic",
+    "InGameName": {
+      "en": "Generic"
+    },
+    "Alias": [
+      "Generic"
+    ],
+    "Collection": []
+  },
+  {
+    "Identifier": "CBOL",
+    "ID": 200001,
+    "TypeID": 210001,
+    "System": "Client",
+    "Category": "BooleanGeneric",
+    "InGameName": {
+      "en": "Boolean"
+    },
+    "Alias": [
+      "Boolean"
+    ],
+    "Collection": [
+      "BooleanGeneric.FALSE_DEFAULT",
+      "BooleanGeneric.TRUE_YES"
+    ]
+  },
+  {
+    "Identifier": "CCMP",
+    "ID": 200002,
+    "TypeID": 210002,
+    "System": "Client",
+    "Category": "ComparisonOperator",
+    "InGameName": {
+      "en": "Comparison Operators"
+    },
+    "Alias": [
+      "Comparison Operators"
+    ],
+    "Collection": [
+      "ComparisonOperator.EQUAL",
+      "ComparisonOperator.LESS_THAN",
+      "ComparisonOperator.LESS_EQUAL",
+      "ComparisonOperator.GREATER_THAN",
+      "ComparisonOperator.GREATER_EQUAL"
+    ]
+  },
+  {
+    "Identifier": "CLOG",
+    "ID": 200003,
+    "TypeID": 210003,
+    "System": "Client",
+    "Category": "LogicalOperator",
+    "InGameName": {
+      "en": "Logical Operators"
+    },
+    "Alias": [
+      "Logical Operators"
+    ],
+    "Collection": [
+      "LogicalOperator.AND",
+      "LogicalOperator.OR",
+      "LogicalOperator.XOR",
+      "LogicalOperator.NOT"
+    ]
+  },
+  {
+    "Identifier": "CBMO",
+    "ID": 200004,
+    "TypeID": 210004,
+    "System": "Client",
+    "Category": "MathOperator",
+    "InGameName": {
+      "en": "Basic Mathematical Operators"
+    },
+    "Alias": [
+      "Basic Mathematical Operators"
+    ],
+    "Collection": [
+      "MathOperator.ADD",
+      "MathOperator.SUBTRACT",
+      "MathOperator.MULTIPLY",
+      "MathOperator.DIVIDE"
+    ]
+  },
+  {
+    "Identifier": "CASH",
+    "ID": 200005,
+    "TypeID": 210005,
+    "System": "Client",
+    "Category": "AttackShape",
+    "InGameName": {
+      "en": "Attack Shapes"
+    },
+    "Alias": [
+      "Attack Shapes"
+    ],
+    "Collection": [
+      "AttackShape.RECTANGLE",
+      "AttackShape.SPHERE",
+      "AttackShape.SECTOR"
+    ]
+  },
+  {
+    "Identifier": "CSVL",
+    "ID": 200006,
+    "TypeID": 210006,
+    "System": "Client",
+    "Category": "SurvivalStatus",
+    "InGameName": {
+      "en": "Survival Status"
+    },
+    "Alias": [
+      "Survival Status"
+    ],
+    "Collection": [
+      "SurvivalStatus.ALIVE",
+      "SurvivalStatus.DOWN"
+    ]
+  },
+  {
+    "Identifier": "CSRT",
+    "ID": 200007,
+    "TypeID": 210007,
+    "System": "Client",
+    "Category": "SortingRule",
+    "InGameName": {
+      "en": "Sorting Rules"
+    },
+    "Alias": [
+      "Sorting Rules"
+    ],
+    "Collection": [
+      "SortingRule.ASCENDING",
+      "SortingRule.DESCENDING"
+    ]
+  },
+  {
+    "Identifier": "CRND",
+    "ID": 200008,
+    "TypeID": 210008,
+    "System": "Client",
+    "Category": "RoundingLogic",
+    "InGameName": {
+      "en": "Rounding Logic"
+    },
+    "Alias": [
+      "Rounding Logic"
+    ],
+    "Collection": [
+      "RoundingLogic.ROUND_UP",
+      "RoundingLogic.ROUND_DOWN",
+      "RoundingLogic.ROUND_NEAREST"
+    ]
+  },
+  {
+    "Identifier": "CCOV",
+    "ID": 200009,
+    "TypeID": 210009,
+    "System": "Client",
+    "Category": "TypeConversion",
+    "InGameName": {
+      "en": "Type Conversions"
+    },
+    "Alias": [
+      "Type Conversions"
+    ],
+    "Collection": [
+      "TypeConversion.INT_TO_BOOL",
+      "TypeConversion.INT_TO_FLOAT",
+      "TypeConversion.INT_TO_STRING",
+      "TypeConversion.ENTITY_TO_STRING",
+      "TypeConversion.GUID_TO_STRING",
+      "TypeConversion.BOOL_TO_INT",
+      "TypeConversion.BOOL_TO_STRING",
+      "TypeConversion.FLOAT_TO_INT",
+      "TypeConversion.FLOAT_TO_STRING",
+      "TypeConversion.VEC3_TO_STRING",
+      "TypeConversion.FACTION_TO_STRING"
+    ]
+  },
+  {
+    "Identifier": "CMPP",
+    "ID": 200010,
+    "TypeID": 210010,
+    "System": "Client",
+    "Category": "PathPointType",
+    "InGameName": {
+      "en": "Motion Path Point Types"
+    },
+    "Alias": [
+      "Motion Path Point Types"
+    ],
+    "Collection": [
+      "PathPointType.STRAIGHT",
+      "PathPointType.CURVE"
+    ]
+  },
+  {
+    "Identifier": "CMOT",
+    "ID": 200011,
+    "TypeID": 210011,
+    "System": "Client",
+    "Category": "MotionType",
+    "InGameName": {
+      "en": "Motion Types"
+    },
+    "Alias": [
+      "Motion Types"
+    ],
+    "Collection": [
+      "MotionType.ONE_WAY",
+      "MotionType.PING_PONG",
+      "MotionType.CYCLIC"
+    ]
+  },
+  {
+    "Identifier": "CFLL",
+    "ID": 200012,
+    "TypeID": 210012,
+    "System": "Client",
+    "Category": "FollowType",
+    "InGameName": {
+      "en": "Follow Location Type"
+    },
+    "Alias": [
+      "Follow Location Type"
+    ],
+    "Collection": [
+      "FollowType.FULL_FOLLOW",
+      "FollowType.FOLLOW_LOCATION",
+      "FollowType.FOLLOW_ROTATION"
+    ]
+  },
+  {
+    "Identifier": "CCOR",
+    "ID": 200013,
+    "TypeID": 210013,
+    "System": "Client",
+    "Category": "CoordinateSystem",
+    "InGameName": {
+      "en": "Coordinate System Type"
+    },
+    "Alias": [
+      "Coordinate System Type"
+    ],
+    "Collection": [
+      "CoordinateSystem.RELATIVE",
+      "CoordinateSystem.WORLD"
+    ]
+  },
+  {
+    "Identifier": "CELM",
+    "ID": 200014,
+    "TypeID": 210014,
+    "System": "Client",
+    "Category": "ElementType",
+    "InGameName": {
+      "en": "Elemental Type"
+    },
+    "Alias": [
+      "Elemental Type"
+    ],
+    "Collection": [
+      "ElementType.NONE",
+      "ElementType.PYRO",
+      "ElementType.HYDRO",
+      "ElementType.ANEMO",
+      "ElementType.ELECTRO",
+      "ElementType.DENDRO",
+      "ElementType.CRYO",
+      "ElementType.GEO"
+    ]
+  },
+  {
+    "Identifier": "CETY",
+    "ID": 200015,
+    "TypeID": 210015,
+    "System": "Client",
+    "Category": "EntityType",
+    "InGameName": {
+      "en": "Entity Type"
+    },
+    "Alias": [
+      "Entity Type"
+    ],
+    "Collection": [
+      "EntityType.STAGE",
+      "EntityType.OBJECT",
+      "EntityType.PLAYER",
+      "EntityType.CHARACTER",
+      "EntityType.CREATION"
+    ]
+  },
+  {
+    "Identifier": "CUSF",
+    "ID": 200016,
+    "TypeID": 210016,
+    "System": "Client",
+    "Category": "StatusChangeReason",
+    "InGameName": {
+      "en": "Unit Status Addition Failure Reason"
+    },
+    "Alias": [
+      "Unit Status Addition Failure Reason"
+    ],
+    "Collection": [
+      "StatusChangeReason.FAIL_UNKNOWN",
+      "StatusChangeReason.FAIL_PAUSED",
+      "StatusChangeReason.FAIL_LIMIT_REACHED",
+      "StatusChangeReason.FAIL_STACK_LIMIT"
+    ]
+  },
+  {
+    "Identifier": "CUSS",
+    "ID": 200017,
+    "TypeID": 210017,
+    "System": "Client",
+    "Category": "StatusChangeReason",
+    "InGameName": {
+      "en": "Unit Status Addition Success Type"
+    },
+    "Alias": [
+      "Unit Status Addition Success Type"
+    ],
+    "Collection": [
+      "StatusChangeReason.SUCCESS_NEW",
+      "StatusChangeReason.SUCCESS_STACK"
+    ]
+  },
+  {
+    "Identifier": "CUSR",
+    "ID": 200018,
+    "TypeID": 210018,
+    "System": "Client",
+    "Category": "StatusChangeReason",
+    "InGameName": {
+      "en": "Unit Status Removal Reason"
+    },
+    "Alias": [
+      "Unit Status Removal Reason"
+    ],
+    "Collection": [
+      "StatusChangeReason.REPLACED",
+      "StatusChangeReason.DURATION_EXCEEDED",
+      "StatusChangeReason.DISPELLED",
+      "StatusChangeReason.EXPIRED",
+      "StatusChangeReason.CLASS_CHANGED",
+      "StatusChangeReason.AFFIX_EXPIRED",
+      "StatusChangeReason.SHIELD_BROKEN"
+    ]
+  },
+  {
+    "Identifier": "CUSX",
+    "ID": 200019,
+    "TypeID": 210019,
+    "System": "Client",
+    "Category": "StatusChangeReason",
+    "InGameName": {
+      "en": "Unit Status Removal Strategy"
+    },
+    "Alias": [
+      "Unit Status Removal Strategy"
+    ],
+    "Collection": [
+      "StatusChangeReason.ALL_SAME_NAME",
+      "StatusChangeReason.FASTEST_STACK_LOSS"
+    ]
+  },
+  {
+    "Identifier": "CRPT",
+    "ID": 200020,
+    "TypeID": 210020,
+    "System": "Client",
+    "Category": "ReviveSelection",
+    "InGameName": {
+      "en": "Revive Point Selection Strategy"
+    },
+    "Alias": [
+      "Revive Point Selection",
+      "Revive Point Selection Strategy"
+    ],
+    "Collection": [
+      "ReviveSelection.NEAREST",
+      "ReviveSelection.RECENT",
+      "ReviveSelection.HIGHEST_PRIORITY",
+      "ReviveSelection.RANDOM"
+    ]
+  },
+  {
+    "Identifier": "CDWN",
+    "ID": 200021,
+    "TypeID": 210021,
+    "System": "Client",
+    "Category": "ReviveSelection",
+    "InGameName": {
+      "en": "Cause of Being Down"
+    },
+    "Alias": [
+      "Cause of Being Down"
+    ],
+    "Collection": [
+      "ReviveSelection.NODE_GRAPH",
+      "ReviveSelection.NORMAL_DEFEAT",
+      "ReviveSelection.ABNORMAL_DEFEAT"
+    ]
+  },
+  {
+    "Identifier": "CTFX",
+    "ID": 200022,
+    "TypeID": 210022,
+    "System": "Client",
+    "Category": "TrigFunction",
+    "InGameName": {
+      "en": "Trigonometric Functions"
+    },
+    "Alias": [
+      "Trigonometric Functions"
+    ],
+    "Collection": [
+      "TrigFunction.COS",
+      "TrigFunction.SIN",
+      "TrigFunction.TAN",
+      "TrigFunction.ARCCOS",
+      "TrigFunction.ARCSIN",
+      "TrigFunction.ARCTAN",
+      "TrigFunction.RAD_TO_DEG",
+      "TrigFunction.DEG_TO_RAD"
+    ]
+  },
+  {
+    "Identifier": "CDDT",
+    "ID": 200023,
+    "TypeID": 210023,
+    "System": "Client",
+    "Category": "DisruptorType",
+    "InGameName": {
+      "en": "Disruptor Device Type"
+    },
+    "Alias": [
+      "Disruptor Device Type"
+    ],
+    "Collection": [
+      "DisruptorType.FORCE_FIELD",
+      "DisruptorType.EJECTOR",
+      "DisruptorType.TRACTOR"
+    ]
+  },
+  {
+    "Identifier": "CDDO",
+    "ID": 200024,
+    "TypeID": 210024,
+    "System": "Client",
+    "Category": "DisruptorType",
+    "InGameName": {
+      "en": "Disruptor Device Orientation"
+    },
+    "Alias": [
+      "Disruptor Device Orientation"
+    ],
+    "Collection": [
+      "DisruptorType.CHAR_ORIENT",
+      "DisruptorType.FIXED_DIR"
+    ]
+  },
+  {
+    "Identifier": "CUIS",
+    "ID": 200025,
+    "TypeID": 210025,
+    "System": "Client",
+    "Category": "UIControlStatus",
+    "InGameName": {
+      "en": "UI Control Group Status"
+    },
+    "Alias": [
+      "UI Control Group Status"
+    ],
+    "Collection": [
+      "UIControlStatus.OFF",
+      "UIControlStatus.ON",
+      "UIControlStatus.HIDDEN"
+    ]
+  },
+  {
+    "Identifier": "CTTP",
+    "ID": 200026,
+    "TypeID": 210026,
+    "System": "Client",
+    "Category": "TargetType",
+    "InGameName": {
+      "en": "Target Type"
+    },
+    "Alias": [
+      "Target Type"
+    ],
+    "Collection": [
+      "TargetType.NONE",
+      "TargetType.ALLY",
+      "TargetType.ENEMY",
+      "TargetType.SELF",
+      "TargetType.OWN_FACTION",
+      "TargetType.ALL",
+      "TargetType.ALL_EXCEPT_SELF",
+      "TargetType.ALLY_WITH_SELF"
+    ]
+  },
+  {
+    "Identifier": "CQMA",
+    "ID": 200027,
+    "TypeID": 210027,
+    "System": "Client",
+    "Category": "MathOperator",
+    "InGameName": {
+      "en": "Quick Mathematical Operators"
+    },
+    "Alias": [
+      "Quick Mathematical Operators"
+    ],
+    "Collection": [
+      "MathOperator.MODULO",
+      "MathOperator.POWER",
+      "MathOperator.MAX",
+      "MathOperator.MIN",
+      "MathOperator.LOG"
+    ]
+  },
+  {
+    "Identifier": "CHIT",
+    "ID": 200028,
+    "TypeID": 210028,
+    "System": "Client",
+    "Category": "HitType",
+    "InGameName": {
+      "en": "Hit Type"
+    },
+    "Alias": [
+      "Hit Type"
+    ],
+    "Collection": [
+      "HitType.NONE",
+      "HitType.DEFAULT",
+      "HitType.SLASH",
+      "HitType.SMASH",
+      "HitType.PROJECTILE",
+      "HitType.PIERCING"
+    ]
+  },
+  {
+    "Identifier": "CATK",
+    "ID": 200029,
+    "TypeID": 210029,
+    "System": "Client",
+    "Category": "AttackType",
+    "InGameName": {
+      "en": "Attack Type"
+    },
+    "Alias": [
+      "Attack Type"
+    ],
+    "Collection": [
+      "AttackType.NONE",
+      "AttackType.MELEE",
+      "AttackType.RANGED",
+      "AttackType.DEFAULT"
+    ]
+  },
+  {
+    "Identifier": "CHLV",
+    "ID": 200030,
+    "TypeID": 210030,
+    "System": "Client",
+    "Category": "HitPerformance",
+    "InGameName": {
+      "en": "Hit Performance Level"
+    },
+    "Alias": [
+      "Hit Performance Level"
+    ],
+    "Collection": [
+      "HitPerformance.DEFAULT",
+      "HitPerformance.NONE",
+      "HitPerformance.LIGHT_ARROW",
+      "HitPerformance.COMBO",
+      "HitPerformance.NORMAL",
+      "HitPerformance.HEAVY",
+      "HitPerformance.STRONG",
+      "HitPerformance.ULTIMATE",
+      "HitPerformance.VERTICAL_LAUNCH",
+      "HitPerformance.SUPER_LAUNCH",
+      "HitPerformance.LONG_THROW"
+    ]
+  },
+  {
+    "Identifier": "CTST",
+    "ID": 200031,
+    "TypeID": 210031,
+    "System": "Client",
+    "Category": "FilterRule",
+    "InGameName": {
+      "en": "Target Sorting Rules"
+    },
+    "Alias": [
+      "Target Sorting Rules"
+    ],
+    "Collection": [
+      "FilterRule.DEFAULT",
+      "FilterRule.RANDOM",
+      "FilterRule.NEAR_TO_FAR"
+    ]
+  },
+  {
+    "Identifier": "CALC",
+    "ID": 200032,
+    "TypeID": 210032,
+    "System": "Client",
+    "Category": "AttackLayer",
+    "InGameName": {
+      "en": "Attack Layer Config"
+    },
+    "Alias": [
+      "Attack Layer Config"
+    ],
+    "Collection": [
+      "AttackLayer.HURTBOX_ONLY",
+      "AttackLayer.SCENE_ONLY",
+      "AttackLayer.HIT_ALL"
+    ]
+  },
+  {
+    "Identifier": "CKBD",
+    "ID": 200033,
+    "TypeID": 210033,
+    "System": "Client",
+    "Category": "KnockbackDirection",
+    "InGameName": {
+      "en": "Knockback Direction Type"
+    },
+    "Alias": [
+      "Knockback Direction Type"
+    ],
+    "Collection": [
+      "KnockbackDirection.ATTACKER_TO_HIT",
+      "KnockbackDirection.HITBOX_DIR",
+      "KnockbackDirection.OWNER_TO_HIT",
+      "KnockbackDirection.TANGENT",
+      "KnockbackDirection.OPPOSITE_HIT",
+      "KnockbackDirection.ATTACKER_FACING",
+      "KnockbackDirection.HIT_TO_ATTACKER"
+    ]
+  },
+  {
+    "Identifier": "CROT",
+    "ID": 200034,
+    "TypeID": 210034,
+    "System": "Client",
+    "Category": "RotationType",
+    "InGameName": {
+      "en": "Rotation Type"
+    },
+    "Alias": [
+      "Rotation Type"
+    ],
+    "Collection": [
+      "RotationType.TARGET_THEN_INPUT",
+      "RotationType.INPUT_DIR",
+      "RotationType.TARGET_DIR",
+      "RotationType.TARGET_THEN_CAMERA",
+      "RotationType.CAMERA_DIR",
+      "RotationType.INPUT_THEN_TARGET"
+    ]
+  },
+  {
+    "Identifier": "CSCT",
+    "ID": 200035,
+    "TypeID": 210035,
+    "System": "Client",
+    "Category": "AttackShape",
+    "InGameName": {
+      "en": "Sector Detection Direction"
+    },
+    "Alias": [
+      "Sector Detection Direction"
+    ],
+    "Collection": [
+      "AttackShape.INSIDE_OUT",
+      "AttackShape.CLOCKWISE",
+      "AttackShape.COUNTER_CLOCKWISE"
+    ]
+  },
+  {
+    "Identifier": "CCON",
+    "ID": 200036,
+    "TypeID": 210036,
+    "System": "Client",
+    "Category": "TypeConversion",
+    "InGameName": {
+      "en": "Type Conversions"
+    },
+    "Alias": [
+      "Type Conversions"
+    ],
+    "Collection": [
+      "TypeConversion.INT_TO_BOOL",
+      "TypeConversion.INT_TO_FLOAT",
+      "TypeConversion.INT_TO_STRING",
+      "TypeConversion.ENTITY_TO_STRING",
+      "TypeConversion.GUID_TO_STRING",
+      "TypeConversion.BOOL_TO_INT",
+      "TypeConversion.BOOL_TO_STRING",
+      "TypeConversion.FLOAT_TO_INT",
+      "TypeConversion.FLOAT_TO_STRING",
+      "TypeConversion.VEC3_TO_STRING",
+      "TypeConversion.FACTION_TO_STRING"
+    ]
+  },
+  {
+    "Identifier": "CRTR",
+    "ID": 200037,
+    "TypeID": 210037,
+    "System": "Client",
+    "Category": "RetracingType",
+    "InGameName": {
+      "en": "Retracing Type"
+    },
+    "Alias": [
+      "Retracing Type"
+    ],
+    "Collection": [
+      "RetracingType.SELF",
+      "RetracingType.OWNER",
+      "RetracingType.ROOT_OWNER"
+    ]
+  },
+  {
+    "Identifier": "CHTS",
+    "ID": 200038,
+    "TypeID": 210038,
+    "System": "Client",
+    "Category": "HitLevel",
+    "InGameName": {
+      "en": "Hit Level"
+    },
+    "Alias": [
+      "Hit Level"
+    ],
+    "Collection": [
+      "HitLevel.NONE",
+      "HitLevel.TREMOR",
+      "HitLevel.LIGHT",
+      "HitLevel.KNOCKBACK",
+      "HitLevel.LAUNCH"
+    ]
+  },
+  {
+    "Identifier": "CERE",
+    "ID": 200039,
+    "TypeID": 210039,
+    "System": "Client",
+    "Category": "ElementReaction",
+    "InGameName": {
+      "en": "Elemental Reaction Type"
+    },
+    "Alias": [
+      "Elemental Reaction Type"
+    ],
+    "Collection": [
+      "ElementReaction.OVERLOADED",
+      "ElementReaction.VAPORIZE",
+      "ElementReaction.BURNING",
+      "ElementReaction.WET",
+      "ElementReaction.BLOOM",
+      "ElementReaction.MELT",
+      "ElementReaction.FROZEN",
+      "ElementReaction.ELECTRO_CHARGED",
+      "ElementReaction.SUPERCONDUCT",
+      "ElementReaction.SWIRL_PYRO",
+      "ElementReaction.SWIRL_HYDRO",
+      "ElementReaction.SWIRL_ELECTRO",
+      "ElementReaction.SWIRL_CRYO",
+      "ElementReaction.CRYSTAL_PYRO",
+      "ElementReaction.CRYSTAL_HYDRO",
+      "ElementReaction.CRYSTAL_ELECTRO",
+      "ElementReaction.CRYSTAL_CRYO",
+      "ElementReaction.CATALYZE",
+      "ElementReaction.AGGRAVATE",
+      "ElementReaction.SPREAD",
+      "ElementReaction.BURGEON",
+      "ElementReaction.HYPERBLOOM"
+    ]
+  },
+  {
+    "Identifier": "CFLT",
+    "ID": 200040,
+    "TypeID": 210040,
+    "System": "Client",
+    "Category": "FilterRule",
+    "InGameName": {
+      "en": "Filter Return Type"
+    },
+    "Alias": [
+      "Filter Return Type"
+    ],
+    "Collection": [
+      "FilterRule.RET_BOOL",
+      "FilterRule.RET_INT"
+    ]
+  },
+  {
+    "Identifier": "CCAM",
+    "ID": 200041,
+    "TypeID": 210041,
+    "System": "Client",
+    "Category": "TargetType",
+    "InGameName": {
+      "en": "Target Type (For Camera Orientation Node)"
+    },
+    "Alias": [
+      "Target Type (For Camera Orientation Node)"
+    ],
+    "Collection": [
+      "TargetType.NONE",
+      "TargetType.ALLY",
+      "TargetType.ENEMY",
+      "TargetType.OWN_FACTION",
+      "TargetType.ALL_EXCEPT_SELF"
+    ]
+  },
+  {
+    "Identifier": "CATX",
+    "ID": 200042,
+    "TypeID": 210042,
+    "System": "Client",
+    "Category": "AttackLayer",
+    "InGameName": {
+      "en": "Attack Layer Config"
+    },
+    "Alias": [
+      "Attack Layer Config"
+    ],
+    "Collection": [
+      "AttackLayer.HURTBOX_ONLY",
+      "AttackLayer.SCENE_ONLY",
+      "AttackLayer.SELF_COLLISION"
+    ]
+  },
+  {
+    "Identifier": "CIRS",
+    "ID": 200043,
+    "TypeID": 210043,
+    "System": "Client",
+    "Category": "InterruptStatus",
+    "InGameName": {
+      "en": "Interrupt Status"
+    },
+    "Alias": [
+      "Interrupt Status"
+    ],
+    "Collection": [
+      "InterruptStatus.RESISTANCE",
+      "InterruptStatus.VULNERABILITY",
+      "InterruptStatus.PROTECTED"
+    ]
+  },
+  {
+    "Identifier": "CSCN",
+    "ID": 200044,
+    "TypeID": 210044,
+    "System": "Client",
+    "Category": "ScanStatus",
+    "InGameName": {
+      "en": "Scan Status"
+    },
+    "Alias": [
+      "Scan Status"
+    ],
+    "Collection": [
+      "ScanStatus.UNUSABLE",
+      "ScanStatus.CURRENT",
+      "ScanStatus.CANDIDATE",
+      "ScanStatus.COND_NOT_MET"
+    ]
+  },
+  {
+    "Identifier": "CDMG",
+    "ID": 200045,
+    "TypeID": 210045,
+    "System": "Client",
+    "Category": "DamagePopType",
+    "InGameName": {
+      "en": "Damage Pop-Up Type"
+    },
+    "Alias": [
+      "Damage Pop-Up Type"
+    ],
+    "Collection": [
+      "DamagePopType.NONE",
+      "DamagePopType.REGULAR",
+      "DamagePopType.CRITICAL"
+    ]
+  },
+  {
+    "Identifier": "CDEV",
+    "ID": 200046,
+    "TypeID": 210046,
+    "System": "Client",
+    "Category": "InputDevice",
+    "InGameName": {
+      "en": "Input Device Type"
+    },
+    "Alias": [
+      "Input Device Type"
+    ],
+    "Collection": [
+      "InputDevice.KEYBOARD_MOUSE",
+      "InputDevice.CONTROLLER",
+      "InputDevice.TOUCHSCREEN"
+    ]
+  }
+]

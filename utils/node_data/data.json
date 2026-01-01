@@ -141149,6 +141149,42 @@
       "TypeID": 10001
     },
     {
+      "Identifier": "CBOL",
+      "System": "Client",
+      "ID": 1,
+      "InGameName": {
+        "en": "Boolean"
+      },
+      "Alias": [
+        "Boolean"
+      ],
+      "Items": [
+        {
+          "Identifier": "false",
+          "ID": 0,
+          "InGameName": {
+            "en": "No"
+          },
+          "Alias": [
+            "No",
+            "False"
+          ]
+        },
+        {
+          "Identifier": "true",
+          "ID": 1,
+          "InGameName": {
+            "en": "Yes"
+          },
+          "Alias": [
+            "Yes",
+            "True"
+          ]
+        }
+      ],
+      "TypeID": 10001
+    },
+    {
       "Identifier": "OCMP",
       "System": "Server",
       "ID": 2,
@@ -145992,6 +146028,41 @@
           },
           "Alias": [
             "Hit All"
+          ]
+        }
+      ]
+    },
+    {
+      "Identifier": "CATX",
+      "System": "Client",
+      "ID": 30,
+      "InGameName": {
+        "en": "Attack Layer Config"
+      },
+      "Alias": [
+        "Attack_Layer_Config"
+      ],
+      "Items": [
+        {
+          "Identifier": "hurtbox_only",
+          "ID": 2601,
+          "InGameName": {
+            "en": "Only On-Hit Hurtbox"
+          },
+          "Alias": [
+            "Only On-Hit Hurtbox",
+            "Hurtbox"
+          ]
+        },
+        {
+          "Identifier": "scene_only",
+          "ID": 2602,
+          "InGameName": {
+            "en": "Only On-Hit Scene"
+          },
+          "Alias": [
+            "Only On-Hit Scene",
+            "Scene"
           ]
         },
         {

@@ -360,7 +360,7 @@
     "5601": Fixed Time
 
 
-- GENE: 1 
+- CGEN: 1 
   id: 200000
   name: Generic
   items: {}
@@ -370,7 +370,7 @@
   items:
     "0": No
     "1": Yes
-- CPRS: 0 
+- CCMP: 0 
   id: 200002
   name: Comparison Operators
   items:
@@ -379,7 +379,7 @@
     "102": Less Than or Equal To
     "103": Greater Than
     "104": Greater Than or Equal To
-- LOGI: 1 
+- CLOG: 1 
   id: 200003
   name: Logical Operators
   items:
@@ -387,7 +387,7 @@
     "201": OR
     "202": XOR
     "203": NOT
-- BMAT: 2 
+- CBMO: 2 
   id: 200004
   name: Basic Mathematical Operators
   items:
@@ -395,14 +395,14 @@
     "301": Subtraction
     "302": Multiplication
     "303": Division
-- ASHX: 3 
+- CASH: 3 
   id: 200005
   name: Attack Shapes
   items:
     "400": Rectangle
     "401": Sphere
     "402": Sector
-- SURX: 4 
+- CSVL: 4 
   id: 200006
   name: Survival Status
   items:
@@ -414,14 +414,14 @@
   items:
     "600": Ascending
     "601": Descending
-- ROUN: 6 
+- CRND: 6 
   id: 200008
   name: Rounding Logic
   items:
     "700": Round Up
     "701": Round Down
     "702": Round to Nearest
-- CNVT: 7 
+- CCOV: 7 
   id: 200009
   name: Type Conversions
   items:
@@ -436,33 +436,33 @@
     "808": Floating Point to String
     "809": 3D Vector to String
     "810": Faction to String
-- MPPX: 8 
+- CMPP: 8 
   id: 200010
   name: Motion Path Point Types
   items:
     "900": Straight Line
     "901": Curve
-- MTYP: 9 
+- CMOT: 9 
   id: 200011
   name: Motion Types
   items:
     "1000": One-Way
     "1001": Back and Forth
     "1002": Cyclic Movement
-- FLOC: 10 
+- CFLL: 10 
   id: 200012
   name: Follow Location Type
   items:
     "1100": Completely Follow
     "1101": Follow Location
     "1102": Follow Rotation
-- CSYS: 11 
+- CCOR: 11 
   id: 200013
   name: Coordinate System Type 
   items:
     "1200": Relative Coordinate System 
     "1201": World Coordinate System 
-- ELEM: 12 
+- CELM: 12 
   id: 200014
   name: Elemental Type
   items:
@@ -474,7 +474,7 @@
     "1305": Dendro
     "1306": Cryo
     "1307": Geo
-- ETIT: 13 
+- CETY: 13 
   id: 200015
   name: Entity Type
   items:
@@ -491,13 +491,13 @@
     "1501": "Failed: Operation paused for another process"
     "1502": "Failed: Maximum coexistence limit reached"
     "1503": "Failed: Unable to add additional stack"
-- USAS: 15 
+- CUSS: 15 
   id: 200017
   name: Unit Status Addition Success Type
   items:
     "1504": "Success: New status applied"
     "1505": "Success: Slot stacking"
-- USTR: 16 
+- CUSR: 16 
   id: 200018
   name: Unit Status Removal Reason
   items:
@@ -508,13 +508,13 @@
     "1510": Class changed
     "1511": Affix Expired
     "1512": Shield Depleted to Zero
-- USTS: 17 
+- CUSX: 17 
   id: 200019
   name: Unit Status Removal Strategy
   items:
     "1540": All Coexisting Statuses With the Same Name
     "1541": Status With Fastest Stack Loss
-- RVPS: 18 
+- CRPT: 18 
   id: 200020
   name: Revive Point Selection Strategy 
   items:
@@ -522,14 +522,14 @@
     "1602": Most Recently Activated
     "1603": Highest Priority
     "1604": Random
-- DWNX: 19 
+- CDWN: 19 
   id: 200021
   name: Cause of Being Down
   items:
     "1605": Node Graph Triggered
     "1606": Normal Defeat
     "1607": Abnormal Defeat
-- TFNX: 20 
+- CTFX: 20 
   id: 200022
   name: Trigonometric Functions
   items: 
@@ -541,27 +541,27 @@
     "1705": arctan
     "1706": Radians to Degrees
     "1707": Degrees to Radians
-- DISD: 21 
+- CDDT: 21 
   id: 200023
   name: Disruptor Device Type
   items:
     "1801": Force Field Device
     "1802": Ejector
     "1803": Tractor Device
-- DORI: 22 
+- CDDO: 22 
   id: 200024
   name: Disruptor Device Orientation
   items:
     "1810": Associate Character Orientation
     "1811": Fixed Unidirectional
-- UISG: 23 
+- CUIS: 23 
   id: 200025
   name: UI Control Group Status
   items:
     "1900": Off
     "1901": On
     "1902": Hidden
-- TARG: 24 
+- CTTP: 24 
   id: 200026
   name: Target Type
   items:
@@ -573,7 +573,7 @@
     "2005": All
     "2006": All Except Self
     "2007": Allied Faction Self Included
-- QMAT: 25 
+- CQMA: 25 
   id: 200027
   name: Quick Mathematical Operators
   items:
@@ -582,7 +582,7 @@
     "306": Get Maximum Value
     "307": Get Minimum Value
     "308": Logarithm
-- HITX: 26 
+- CHIT: 26 
   id: 200028
   name: Hit Type
   items:
@@ -592,7 +592,7 @@
     "2203": Smash
     "2204": Projectile
     "2205": Piercing Attack
-- ATKX: 27 
+- CATK: 27 
   id: 200029
   name: Attack Type
   items:
@@ -600,7 +600,7 @@
     "2301": Melee Attack
     "2302": Ranged Attack
     "2303": Default
-- HPRL: 28 
+- CHLV: 28 
   id: 200030
   name: Hit Performance Level
   items:
@@ -615,21 +615,21 @@
     "2408": Vertical Launch
     "2409": Super Launch
     "2410": Long-Range Throw
-- TGSR: 29 
+- CTST: 29 
   id: 200031
   name: Target Sorting Rules
   items:
     "1000001": Default Sorting
     "1000002": Random Order
     "1000003": Sort From Near to Far
-- ALCF: 30 
+- CALC: 30 
   id: 200032
   name: Attack Layer Config
   items:
     "2601": Only On-Hit Hurtbox
     "2602": Only On-Hit Scene
     "2604": Hit All
-- KBDT: 31 
+- CKBD: 31 
   id: 200033
   name: Knockback Direction Type
   items:
@@ -640,7 +640,7 @@
     "2505": Opposite Direction to Hit
     "2506": Attacker's Facing Orientation
     "2507": Opposite Direction to Line Connecting Attacker and Hit Point
-- ROTT: 32 
+- CROT: 32 
   id: 200034
   name: Rotation Type
   items:
@@ -650,14 +650,14 @@
     "2903": Target First, Then Camera
     "2904": Camera Orientation
     "2905": Input First, Then Target
-- SDIR: 33 
+- CSCT: 33 
   id: 200035
   name: Sector Detection Direction
   items:
     "450": From Inside Out
     "451": Clockwise
     "452": Counterclockwise
-- CONV: 34 
+- CCON: 34 
   id: 200036
   name: Type Conversions
   items:
@@ -672,14 +672,14 @@
     "808": Floating Point to String
     "809": 3D Vector to String
     "810": Faction to String
-- RTRA: 35 
+- CRTR: 35 
   id: 200037
   name: Retracing Type
   items:
     "3200": Self
     "3201": Self Owner
     "3202": Top Layer Self Owner
-- HLVL: 36 
+- CHTS: 36 
   id: 200038
   name: Hit Level
   items:
@@ -688,7 +688,7 @@
     "3902": Light Hit
     "3903": Knockback Hit
     "3904": Launch
-- EREA: 37 
+- CERE: 37 
   id: 200039
   name: Elemental Reaction Type
   items:
@@ -714,13 +714,13 @@
     "4735": Spread
     "4736": Burgeon
     "4737": Hyperbloom
-- FRTY: 38 
+- CFLT: 38 
   id: 200040
   name: Filter Return Type
   items:
     "1000010": Return Boolean
-    "10000011": Return Integer
-- TCON: 39 
+    "1000011": Return Integer
+- CCAM: 39 
   id: 200041
   name: Target Type (For Camera Orientation Node)
   items:
@@ -743,7 +743,7 @@
     "5200": Interrupt Resistance Status
     "5201": Interrupt Vulnerability Status
     "5202": Protected Status
-- SCAN: 40 
+- CSCN: 40 
   id: 200044
   name: Scan Status
   items:
@@ -751,14 +751,14 @@
     "5001": Current Scan Target
     "5002": Candidate Target
     "5003": Condition Not Met
-- DMGP: 200045 
+- CDMG: 200045 
   id: 200045
   name: Damage Pop-Up Type
   items:
     "5400": No Pop-Up
     "5401": Regular Pop-Up
     "5402": CRIT Hit Pop-Up
-- IDVC: 41 
+- CDEV: 41 
   id: 200046
   name: Input Device Type
   items:

@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import data from "./data.json" with {type: "json"};
-import { assert, assertDeepEq, assertEq, exclude_keys } from "../utils.ts";
+import type { EnumDef, EnumTypeDef } from "./consts.ts";
+import { assert, assertDeepEq, assertEq, assertEqs, exclude_keys } from "../utils.ts";
 import { nodeDefinitions as REF } from "../../ref/Columbina-Dev/WebMiliastraNodesEditor/src/data/nodeDefinitions.ts"
 import { parse, stringify } from "yaml";
 const read = (path: string) => readFileSync(import.meta.dirname + "/" + path).toString();
@@ -31,44 +32,64 @@ import { exit } from "process";
 // })));
 
 // 重构, 汇总整理enumEntry
-const enums = data.Enums.map(e => e.Items).flat(2).sort((a, b) => a.ID - b.ID);
-const groups = Object.groupBy(enums, (x) => x.ID);
-const ret = Object.values(groups).map((v) => {
-  const res = v![0];
-  assert(res !== undefined);
-  res.Alias.push(res.InGameName.en);
-  v!.slice(1).forEach(i => {
-    if (!["No", "Remove All of Self"].includes(res.InGameName.en)) assertEq(res.InGameName.en, i.InGameName.en);
-    res.Alias.push(...i.Alias, i.InGameName.en);
-  });
-  return res;
-}).map(x => ({
-  ...x,
-  Alias: [...new Set(x.Alias)]
-}));
+import enums from "./enums.json" with {type: "json"};
+const EnumDef = enums.map(i => {
+  const p: EnumDef = {
+    Identifier: i.Identifier,
+    ID: i.ID,
+    Category: i.Category,
+    InGameName: i.InGameName,
+    Alias: i.Alias.filter(x => !x.includes("_")).sort(),
+  };
+  return p;
+}).sort((a, b) => a.ID - b.ID);
 
-save("enums.json", ret);
+const COLLECTION = parse(read("enum_lookup.yaml"));
 
-const NEW_NAME = parse(read("all_enums.yaml"));
-// console.log(NEW_NAME);
-const map = new Map();
-NEW_NAME.forEach((items) => {
-  const range = parseInt(items.id) * 100;
-  const Category = items.abbr;
-  Object.entries(items.item_abbrs).forEach(([k, abbr]) => {
-    map.set(range + parseInt(k), Category + "." + abbr);
-  });
-});
-console.log(map.size, ret.length);
 
-ret.forEach(item => {
-  const id = map.get(item.ID);
-  assert(id !== undefined, item.ID);
-  item.Identifier = id;
-  item.Category = id.split(".")[0];
+
+const EnumTypes = COLLECTION.map((entry: any) => {
+  const Identifier = Object.keys(entry)[0];
+  const e = data.Enums.find(e => e.Identifier === Identifier);
+  assert(e !== undefined)
+  assertEqs(e.System, "Server", "Client");
+  if (e.System === "Server") assert(entry.id === undefined);
+  else assert(entry.id !== undefined);
+
+  const Collection = Object.keys(entry.items).map(k => EnumDef.find(x => x.ID.toString() === k)).map(x => (assert(x !== undefined), x))
+  const Category = Collection[Collection.length - 1]?.Category;
+  if (Category === undefined) {
+    console.log(e.Identifier);
+    // Generic
+  }
+  const ID = entry.id ?? e.ID;
+
+  const p: EnumTypeDef = {
+    Identifier: e.Identifier,
+    ID: ID,
+    TypeID: ID + 10000,
+    System: e.System,
+    Category: Category ?? "Generic",
+    InGameName: e.InGameName,
+    Alias: [...new Set([e.InGameName.en, entry.name, ...e.Alias.filter(x => !x.includes("_"))])].sort(),
+    Collection: Collection.map(x => x.Identifier),
+  };
+  return p;
+}).sort((a, b) => a.ID - b.ID);
+save('temp.json', EnumTypes);
+
+exit();
+data.Enums.map(e => {
+  const entry = COLLECTION.find((x: any) => Object.keys(x)[0] === e.Identifier);
+  delete entry[e.Identifier];
+  const collectionId = entry.id
+  assert(collectionId !== undefined);
+  if (e.System === "Server") assert(entry.id === e.ID);
+
 })
-save("enums.json", ret);
 
+
+const enumTypes = data.Enums.map(e => e.Items).flat(2).sort((a, b) => a.ID - b.ID);
 exit();
 
 // IMPORTANT 提取 ENUM id 信息的很新颖的方法: 导入composite节点时是不检查内外一致性的, 因此可以手动生成接口而不用找到内部实际对应的节点......
