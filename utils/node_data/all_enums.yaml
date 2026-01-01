@@ -1,0 +1,398 @@
+- id: "0"
+  name: Boolean, Reason for Item Change
+  items:
+    "0": No, Default
+    "1": Yes
+- id: "1"
+  name: Comparison Operators
+  items:
+    "0": Equal To
+    "1": Less Than
+    "2": Less Than or Equal To
+    "3": Greater Than
+    "4": Greater Than or Equal To
+- id: "2"
+  name: Logical Operators
+  items:
+    "0": AND
+    "1": OR
+    "2": XOR
+    "3": NOT
+- id: "3"
+  name: Mathematical Operators, Basic Mathematical Operators, Quick Mathematical
+    Operators
+  items:
+    "0": Addition
+    "1": Subtraction
+    "2": Multiplication
+    "3": Division
+    "4": Modulo Operation
+    "5": Exponentiation
+    "6": Get Maximum Value
+    "7": Get Minimum Value
+    "8": Logarithm
+- id: "4"
+  name: Attack Shapes, Sector Detection Direction
+  items:
+    "0": Rectangle
+    "1": Sphere
+    "2": Sector
+    "50": From Inside Out
+    "51": Clockwise
+    "52": Counterclockwise
+- id: "5"
+  name: Survival Status
+  items:
+    "0": Alive
+    "1": Down
+- id: "6"
+  name: Sorting Rules
+  items:
+    "0": Ascending
+    "1": Descending
+    "2": Random
+- id: "7"
+  name: Rounding Logic
+  items:
+    "0": Round Up
+    "1": Round Down
+    "2": Round to Nearest
+    "3": Truncate
+- id: "8"
+  name: Type Conversions
+  items:
+    "0": Integer to Boolean
+    "1": Integer to Floating Point
+    "2": Integer to String
+    "3": Entity to String
+    "4": GUID to String
+    "5": Boolean to Integer
+    "6": Boolean to String
+    "7": Floating Point to Integer
+    "8": Floating Point to String
+    "9": 3D Vector to String
+    "10": Faction to String
+- id: "9"
+  name: Motion Path Point Types, Motion Path Points
+  items:
+    "0": Straight Line
+    "1": Curve
+- id: "10"
+  name: Motion Types
+  items:
+    "0": One-Way
+    "1": Back and Forth
+    "2": Cyclic Movement
+- id: "11"
+  name: Follow Location Type
+  items:
+    "0": Completely Follow
+    "1": Follow Location
+    "2": Follow Rotation
+- id: "12"
+  name: Coordinate System Type
+  items:
+    "0": Relative Coordinate System
+    "1": World Coordinate System
+- id: "13"
+  name: Elemental Type
+  items:
+    "0": None
+    "1": Pyro
+    "2": Hydro
+    "3": Anemo
+    "4": Electro
+    "5": Dendro
+    "6": Cryo
+    "7": Geo
+- id: "14"
+  name: Entity Type
+  items:
+    "1": Stage
+    "2": Object
+    "3": Player
+    "4": Character
+    "5": Creation
+- id: "15"
+  name: Unit Status Addition Failure Reason, Unit Status Addition Result, Unit
+    Status Addition Success Type, Unit Status Removal Reason, Unit Status
+    Removal Strategy
+  items:
+    "0": "Failed: Unexpected error"
+    "1": "Failed: Operation paused for another process"
+    "2": "Failed: Maximum coexistence limit reached"
+    "3": "Failed: Unable to add additional stack"
+    "4": "Success: New status applied"
+    "5": "Success: Slot stacking"
+    "6": Replaced by other unit status
+    "7": Duration exceeded
+    "8": Dispelled
+    "9": Status expired
+    "10": Class changed
+    "11": Affix Expired
+    "12": Shield Depleted to Zero
+    "40": All Coexisting Statuses With the Same Name
+    "41": Status With Fastest Stack Loss
+- id: "16"
+  name: Revive Point Selection Strategy, Cause of Being Down
+  items:
+    "1": Nearest
+    "2": Most Recently Activated
+    "3": Highest Priority
+    "4": Random
+    "5": Node Graph Triggered
+    "6": Normal Defeat
+    "7": Abnormal Defeat
+- id: "17"
+  name: Trigonometric Functions
+  items:
+    "0": cos
+    "1": sin
+    "2": tan
+    "3": arccos
+    "4": arcsin
+    "5": arctan
+    "6": Radians to Degrees
+    "7": Degrees to Radians
+- id: "18"
+  name: Disruptor Device Type, Disruptor Device Orientation
+  items:
+    "1": Force Field Device
+    "2": Ejector
+    "3": Tractor Device
+    "10": Associate Character Orientation
+    "11": Fixed Unidirectional
+- id: "19"
+  name: UI Control Group Status
+  items:
+    "0": Off
+    "1": On
+    "2": Hidden
+- id: "20"
+  name: Target Type, Target Type (For Camera Orientation Node)
+  items:
+    "0": None, Don't Find Target
+    "1": Allied Faction
+    "2": Hostile Faction
+    "3": Self
+    "4": Own Faction
+    "5": All
+    "6": Remove All of Self, All Except Self
+    "7": Allied Faction Self Included
+- id: "21"
+  name: Trigger Restriction
+  items:
+    "1": Trigger Only Once
+    "2": Trigger Only Once per Entity
+- id: "22"
+  name: Hit Type
+  items:
+    "0": None
+    "1": Default
+    "2": Slash
+    "3": Smash
+    "4": Projectile
+    "5": Piercing Attack
+- id: "23"
+  name: Attack Type
+  items:
+    "0": None
+    "1": Melee Attack
+    "2": Ranged Attack
+    "3": Default
+- id: "24"
+  name: Hit Performance Level
+  items:
+    "0": Default
+    "1": No Hit Performance
+    "2": Hit by Normal Arrow Without Charging
+    "3": Combo Hit
+    "4": Normal Hit
+    "5": Heavy Hit
+    "6": Strong Impact
+    "7": Ultimate Impact
+    "8": Vertical Launch
+    "9": Super Launch
+    "10": Long-Range Throw
+- id: "25"
+  name: Knockback Direction Type
+  items:
+    "1": Line Connecting Attacker and Hit Point
+    "2": Hitbox On-Hit Direction
+    "3": Line Connecting Attacker's Owner and Hit Point
+    "4": Tangent Line Between Attacker and Hit Point
+    "5": Opposite Direction to Hit
+    "6": Attacker's Facing Orientation
+    "7": Opposite Direction to Line Connecting Attacker and Hit Point
+- id: "26"
+  name: Attack Layer Config
+  items:
+    "1": Only On-Hit Hurtbox
+    "2": Only On-Hit Scene
+    "4": Hit All
+    "5": Object Self-Collision
+- id: "29"
+  name: Rotation Type
+  items:
+    "0": Target First, Then Input
+    "1": Input Orientation
+    "2": Target Orientation
+    "3": Target First, Then Camera
+    "4": Camera Orientation
+    "5": Input First, Then Target
+- id: "31"
+  name: Skill Slot
+  items:
+    "0": Normal Attack
+    "11": "1: E"
+    "12": "2: Q"
+    "13": "3: R"
+    "14": "4: T"
+    "21": Custom Skill Slot 1
+    "22": Custom Skill Slot 2
+    "23": Custom Skill Slot 3
+    "24": Custom Skill Slot 4
+    "25": Custom Skill Slot 5
+    "26": Custom Skill Slot 6
+    "27": Custom Skill Slot 7
+    "28": Custom Skill Slot 8
+    "29": Custom Skill Slot 9
+    "30": Custom Skill Slot 10
+    "31": Custom Skill Slot 11
+    "32": Custom Skill Slot 12
+    "33": Custom Skill Slot 13
+    "34": Custom Skill Slot 14
+    "35": Custom Skill Slot 15
+- id: "32"
+  name: Retracing Type
+  items:
+    "0": Self
+    "1": Self Owner
+    "2": Top Layer Self Owner
+- id: "34"
+  name: Sound Attenuation Mode
+  items:
+    "0": Linear Attenuation
+    "1": Fast Then Slow
+    "2": Slow Then Fast
+- id: "35"
+  name: Select Completion Reason, Decision Refresh Mode
+  items:
+    "0": Completed by Player
+    "1": Timeout
+    "2": Fixed-Quantity Refresh
+    "3": Refresh All
+    "4": Closed Manually
+    "5": Closed by Node Graph
+    "10": Cannot Refresh
+    "11": Partial Refresh
+    "12": Refresh All
+- id: "39"
+  name: Hit Level
+  items:
+    "0": No Effect
+    "1": Light Tremor
+    "2": Light Hit
+    "3": Knockback Hit
+    "4": Launch
+- id: "41"
+  name: Settlement Status
+  items:
+    "0": TBC
+    "1": Victory
+    "2": Failed
+    "3": Escape
+- id: "43"
+  name: Item Loot Type
+  items:
+    "50": Shared Reward
+    "51": Individualized Reward
+- id: "47"
+  name: Elemental Reaction Type
+  items:
+    "1": Overloaded
+    "2": Vaporize
+    "3": Burning
+    "5": Wet
+    "6": Bloom
+    "7": Melt
+    "8": Frozen
+    "12": Electro-Charged
+    "16": Superconduct
+    "17": "Swirl: Pyro"
+    "18": "Swirl: Hydro"
+    "19": "Swirl: Electro"
+    "20": "Swirl: Cryo"
+    "27": "Crystallize: Pyro"
+    "28": "Crystallize: Hydro"
+    "29": "Crystallize: Electro"
+    "30": "Crystallize: Cryo"
+    "33": Catalyze
+    "34": Aggravate
+    "35": Spread
+    "36": Burgeon
+    "37": Hyperbloom
+- id: "49"
+  name: Reason for Item Change
+  items:
+    "0": Destroy
+    "1": Discard
+    "2": Use
+    "3": Defeat Drops
+    "4": Shop Trade
+    "5": Node Graph Operation
+    "50": Pick Up
+- id: "50"
+  name: Scan Status
+  items:
+    "0": Unusable Target
+    "1": Current Scan Target
+    "2": Candidate Target
+    "3": Condition Not Met
+- id: "51"
+  name: Scan Tag Prioritize Type
+  items:
+    "0": Prioritize View
+    "1": Prioritize Distance
+- id: "52"
+  name: Interrupt Status
+  items:
+    "0": Interrupt Resistance Status
+    "1": Interrupt Vulnerability Status
+    "2": Protected Status
+- id: "54"
+  name: Damage Pop-Up Type
+  items:
+    "0": No Pop-Up
+    "1": Regular Pop-Up
+    "2": CRIT Hit Pop-Up
+- id: "55"
+  name: Movement Mode
+  items:
+    "0": Instant Movement
+    "1": Uniform Linear Motion
+- id: "56"
+  name: Fixed Motion Parameter Type
+  items:
+    "0": Fixed Speed
+    "1": Fixed Time
+- id: "57"
+  name: Gameplay Mode
+  items:
+    "0": Test Play
+    "1": Room Play
+    "2": Match Play
+- id: "58"
+  name: Input Device Type
+  items:
+    "0": Keyboard and Mouse
+    "1": Controller
+    "2": Touchscreen
+- id: "10000"
+  name: Target Sorting Rules, Filter Return Type
+  items:
+    "1": Default Sorting
+    "2": Random Order
+    "3": Sort From Near to Far
+    "10": Return Boolean
+    "11": Return Integer
