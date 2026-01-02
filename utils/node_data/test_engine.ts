@@ -15,10 +15,23 @@ const runTests = () => {
 
   console.log("--- Starting TypeEngine Verification ---");
 
+  // DEBUG: Inspect TypeEngine internal maps
+  // Access private member via any cast
+  const typeByStructure = (engine as any)._typeByStructure as Map<string, any>;
+  if (!typeByStructure) {
+    // Force init
+    engine.getTypeByID(0);
+  }
+  const map = (engine as any)._typeByStructure as Map<string, any>;
+
   // 1. Test basic type conversion
   const intNode: NT.NodeType = { t: "b", b: "Int" };
   const intDef = engine.toTypeDef(intNode);
-  log("Basic Type (Int) Lookup", !!intDef && intDef.BaseType === "Int", intDef);
+  log("Basic Type (Int) Lookup", !!intDef && intDef.Identifier === "Int", intDef);
+
+  const unkNode: NT.NodeType = { t: "b", b: "Xyz" as "Unk" };
+  const unkDef = engine.toTypeDef(unkNode);
+  log("Basic Type (Unk) Lookup", !!unkDef && unkDef.Identifier === "Unk", unkDef);
 
   // 2. Test Dict lossy conversion
   const dictNode: NT.NodeType = {
@@ -30,15 +43,18 @@ const runTests = () => {
   // Should return generic D<Unk,Unk> or similar logic if implemented as lossy
   // Based on implementation: return this._typeByStructure!.get("D<Unk,Unk>");
   // We assume "D<Unk,Unk>" exists in the loaded data.
-  log("Dict Lossy Lookup", !!dictDef && dictDef.BaseType === "D<Unk,Unk>", dictDef?.BaseType);
+  log("Dict Lossy Lookup", !!dictDef && dictDef.Identifier === "D<Unk,Unk>", dictDef?.Identifier);
 
   // 3. Test Full Dict Resolution
   const fullDict = engine.toTypeDefFull(dictNode);
   const validFullDict = fullDict &&
     fullDict.map_type &&
-    fullDict.map_type[0].BaseType === "Str" &&
-    fullDict.map_type[1].BaseType === "Int";
-  log("Dict Full Resolution", !!validFullDict, fullDict);
+    fullDict.map_type[0].Identifier === "Str" &&
+    fullDict.map_type[1].Identifier === "Int";
+  log("Dict Full Resolution", !!validFullDict, {
+    baseType: fullDict?.Identifier,
+    mapKeys: fullDict?.map_type?.map(t => t.Identifier)
+  });
 
   // 4. Test Enum Lookup
   // We need a valid Enum Identifier from the data to test properly.
@@ -47,7 +63,7 @@ const runTests = () => {
   const enumNode: NT.NodeType = { t: "e", e: "Unk" }; // "Unk" as generic enum
   const enumDef = engine.toTypeDef(enumNode);
   // Should return E<Unk>
-  log("Enum Lossy Lookup", !!enumDef && enumDef.BaseType === "E<Unk>", enumDef?.BaseType);
+  log("Enum Lossy Lookup", !!enumDef && enumDef.Identifier === "E<Unk>", enumDef?.Identifier);
 
   // 5. Test Full Enum Resolution
   // This requires a real Enum ID.
@@ -63,11 +79,11 @@ const runTests = () => {
 
   // 6. Test List
   const listNode: NT.NodeType = { t: "l", i: { t: "b", b: "Str" } };
-  const listDef = engine.toTypeDef(listNode);
-  // This might fail if L<Str> is not in data directly, depends on data.json content
-  // But we can check full resolution which resolves inner item
   const fullList = engine.toTypeDefFull(listNode);
-  log("List Full Resolution", !!fullList && fullList.list_type?.BaseType === "Str", fullList);
+  log("List Full Resolution", !!fullList && fullList.list_type?.Identifier === "Str", {
+    baseType: fullList?.Identifier,
+    listType: fullList?.list_type?.Identifier
+  });
 
   console.log("--- Verification Complete ---");
 };

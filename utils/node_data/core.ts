@@ -639,14 +639,14 @@ export class TypeEngine {
       // Map by Identifier
       this._typeByIdentifier.set(t.Identifier, t);
 
-      // Map by Structure (BaseType)
-      // Note: BaseType is assumed to be the unique structural representation (e.g. "Int", "List<...>")
+      // Map by Structure (Identifier)
+      // Note: Identifier is assumed to be the unique structural representation (e.g. "Int", "List<...>")
       // If multiple TypeDefs share the same structure, the LAST one wins or checks precedence?
       // Assuming 1:1 or taking first/last found. Here we overwrite, effectively taking the last one.
       // Ideally TypeDefs should differ by Identifier but might share structure.
       // The TODO asks "From NodeType get type TypeDef", implying we want *a* TypeDef that matches.
-      if (!this._typeByStructure.has(t.BaseType)) {
-        this._typeByStructure.set(t.BaseType, t);
+      if (!this._typeByStructure.has(t.Identifier)) {
+        this._typeByStructure.set(t.Identifier, t);
       }
     }
   }
@@ -710,18 +710,18 @@ export class TypeEngine {
 
     if (!typeDef) return undefined;
 
-    // Parse the structural string from BaseType
+    // Parse the structural string from Identifier
     try {
-      return NT.parse(typeDef.BaseType);
+      return NT.parse(typeDef.Identifier);
     } catch (e) {
-      console.error(`Failed to parse BaseType '${typeDef.BaseType}' for TypeDef ${typeDef.Identifier}`, e);
+      console.error(`Failed to parse Identifier '${typeDef.Identifier}' for TypeDef ${typeDef.Identifier}`, e);
       return undefined;
     }
   }
 
   /**
    * Convert a structural NodeType to a matching TypeDef
-   * Finds a TypeDef whose BaseType matches stringified nodeType.
+   * Finds a TypeDef whose Identifier matches stringified nodeType.
    * 
    * NOTE: This is a lossy conversion for non-atomic types like Dict and Enum,
    * which resolve to their generic counterparts D<Unk,Unk> and E<Unk>.
@@ -812,9 +812,9 @@ export class TypeEngine {
     const itemType = this.getTypeByID(itemId);
     if (!itemType) return undefined;
 
-    // Construct the expected structure L<ItemBaseType>
-    // Note: This relies on the item type being atomic or having a simple BaseType name
-    const listStructure = `L<${itemType.BaseType}>`;
+    // Construct the expected structure L<ItemIdentifier>
+    // Note: This relies on the item type being atomic or having a simple Identifier name
+    const listStructure = `L<${itemType.Identifier}>`;
     return this._typeByStructure!.get(listStructure);
   }
 
