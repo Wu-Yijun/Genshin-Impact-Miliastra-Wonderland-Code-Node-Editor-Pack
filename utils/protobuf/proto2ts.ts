@@ -443,16 +443,6 @@ class TypeLayers {
 }
 
 
-
-if (import.meta.main) {
-  if (argv[2] === "-h" || argv[2] === "--help") {
-    console.log("Usage: node ./utils/protobuf/proto2ts.ts [output_path] [input_path]");
-  } else {
-    const path = argv[3] ?? import.meta.dirname + '/gia.proto';
-    main(path);
-  }
-}
-
 function main(input_path: string) {
   const proto_raw = readFileSync(input_path).toString();
   const version = /^\s*\/\/\s*@?version:?\s*(.+)$/m.exec(proto_raw);
@@ -476,5 +466,13 @@ function main(input_path: string) {
     src_path: input_path,
     separator: "_",
   });
+}
 
+if (import.meta.main) {
+  if (argv[2] === "-h" || argv[2] === "--help") {
+    console.log("Usage: node ./utils/protobuf/proto2ts.ts [output_path] [input_path]");
+  } else {
+    const path = argv[3] ?? import.meta.dirname + '/gia.proto';
+    main(path);
+  }
 }

@@ -3,13 +3,14 @@ syntax = "proto3";
 // package gia;
 
 message Root {
-  GraphUnit          graph        = 1; // graph info
-  repeated GraphUnit accessories  = 2; // data_structure, input/output
-  string             file_path    = 3; // {UID}-{TIME}-{LEVEL_ID}-\{FILE_NAME}.gia
-  string             game_version = 5; // 6.2.0 by now
+  // 主要
+  Asset          asset        = 1; // graph info
+  repeated Asset accessories  = 2; // data_structure, input/output
+  string         file_path    = 3; // {UID}-{TIME}-{LEVEL_ID}-\{FILE_NAME}.gia
+  string         game_version = 5; // 6.2.0 by now
 }
 
-message GraphUnit {
+message Asset  {
   enum Which {
     Unknown                  = 0;
     EntityNode               = 9;

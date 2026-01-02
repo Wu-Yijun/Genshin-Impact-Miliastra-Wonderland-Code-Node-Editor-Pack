@@ -19,7 +19,8 @@ const save = (path: string, data: {} | string) =>
 
 // IMPORTANT 提取 ENUM id 信息的很新颖的方法: 导入composite节点时是不检查内外一致性的, 因此可以手动生成接口而不用找到内部实际对应的节点......
 const g = decode_gia_file("c:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/2.gia");
-g.graph.graph!.inner.graph.repeat_interval = 0.1;
+console.log(g.asset.graph.inner.graph.nodes)
+// g.graph.graph!.inner.graph.repeat_interval = 0.1;
 // g.graph.graph!.inner.graph.xxx_exposed_pin_index = 2;
 
 
@@ -57,7 +58,7 @@ g.graph.graph!.inner.graph.repeat_interval = 0.1;
 // input[1].index.index = 1;
 // // input[0].xxxx_always_1 = 100;
 // input[0].type.special_pin_state = { state: 4 };
-encode_gia_file("c:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/2.gia", g)
+// encode_gia_file("c:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/2.gia", g)
 
 // data.Enums.filter(x => x.System === "Client" && x.TypeID === undefined).forEach(e => {
 //   // console.log(e.Identifier);

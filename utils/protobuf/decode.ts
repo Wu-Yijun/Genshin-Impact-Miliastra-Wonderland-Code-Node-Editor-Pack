@@ -79,75 +79,7 @@ export function encode_gia_file(out_path: string, gia_struct: Root, proto_path?:
   writeFileSync(out_path, Buffer.from(wrap_gia(message, gia_struct)));
 }
 
-// 内部测试, 请自己写你自己的, 用 decode_gia_file encode_gia_file 函数
-function test() {
-  interface Info {
-    index: number;
-    id: number;
-    type: number;
-    from: number;
-    to: number;
-  }
-  function getInfo(node: GraphNode): Info | null {
-    const p: NodePin_Index_Kind = node.pins[1]?.i1.kind;
-    const temp = {
-      index: node.nodeIndex,
-      id: node.concreteId?.nodeId,
-      type: node.pins[0]?.value.bConcreteValue?.indexOfConcrete,
-      from: node.pins[0]?.value.bConcreteValue?.value.bEnum?.val,
-      to: node.pins[1]?.value.bConcreteValue?.value.bEnum?.val,
-    };
-    if (temp.id === undefined) {
-      return null;
-    }
-    return temp as Info;
-  }
-
-  let id = 0;
-  function getId() {
-    return ++id;
-  }
-  function getNode(info: Info, x: number, y: number, node: GraphNode): GraphNode {
-    const n = structuredClone(node);
-    n.x = x * 300 + 0.124356;
-    n.y = y * 200 + 0.12345;
-    n.nodeIndex = getId();
-    n.concreteId!.nodeId = info.id as any;
-    n.pins[0].value.bConcreteValue!.indexOfConcrete = info.type as any;
-    n.pins[1].value.bConcreteValue!.indexOfConcrete = info.type as any;
-    n.pins[0].value.bConcreteValue!.value.bEnum!.val = info.from as any;
-    n.pins[1].value.bConcreteValue!.value.bEnum!.val = info.to as any;
-    return n;
-  }
-
-  // increase nodes ranging from `from` to `to`
-  function increase(info: Info): GraphNode[] {
-    const f = 100 * Math.floor(info.from / 100);
-    const len = Math.max((info.to - f + 3) / 2, 5);
-    const result: GraphNode[] = [];
-    for (let i = 0; i < len; i++) {
-      const newInfo: Info = {
-        ...info,
-        from: f + i * 2,
-        to: f + i * 2 + 1,
-      };
-      result.push(getNode(newInfo, info.index, i, node));
-    }
-    return result;
-  }
-
-
-  const msg = decode_gia_file(import.meta.dirname + "/../../utils/ref/enumAll.gia");
-  const nodes = msg.graph.graph!.inner.graph.nodes;
-
-  const node = nodes[0];
-
-  const new_nodes = nodes.map(getInfo).filter(x => x !== null).map(increase).flat();
-  msg.graph.graph!.inner.graph.nodes = new_nodes;
-
-  encode_gia_file(import.meta.dirname + `/../../utils/ref/all_enums_v${VERSION}.gia`, msg);
-}
 
 if (import.meta.main) {
-  test();
+  // test();
 }
