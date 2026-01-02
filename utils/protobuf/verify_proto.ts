@@ -41,7 +41,7 @@ const SystemTypeMap: Record<string, string> = {
 export function verifyProto(
   data: ParsedResult,
   layer: TypeLayers,
-  path: string = "root"
+  { path = "root", replaceEnum = false }: { path?: string, replaceEnum?: boolean } = {}
 ): { errors: ValidationError[], result: any } {
   const errors: ValidationError[] = [];
   const result: any = {};
@@ -96,7 +96,7 @@ export function verifyProto(
     // 2c. Type check for each value and reconstruct
     const reconstructedValues: any[] = [];
     for (const value of values) {
-      const { errors: typeErrors, value: processedValue } = checkType(value, varDef, layer, currentPath);
+      const { errors: typeErrors, value: processedValue } = checkType(value, varDef, layer, currentPath, replaceEnum);
       errors.push(...typeErrors);
       reconstructedValues.push(processedValue);
     }
@@ -120,7 +120,8 @@ function checkType(
   value: any,
   varDef: VarDef,
   currentLayer: TypeLayers,
-  path: string
+  path: string,
+  replaceEnum: boolean
 ): { errors: ValidationError[], value: any } {
   const errors: ValidationError[] = [];
   const fieldIndex = varDef.index;
@@ -190,8 +191,8 @@ function checkType(
   const enumValues = typeLayer.parent?.enums.get(typeLayer.name);
   if (enumValues) {
     const val = Number(value);
-    const isValid = enumValues.some(([_, v]) => v === val);
-    if (!isValid) {
+    const isValid = enumValues.find(([_, v]) => v === val);
+    if (isValid === undefined) {
       errors.push({
         type: "INVALID_ENUM",
         path: path,
@@ -202,12 +203,12 @@ function checkType(
       // Keep original
       return { errors, value };
     }
-    return { errors, value: val };
+    return { errors, value: replaceEnum ? isValid[0] : val };
   }
 
   // If it's a message
   if (typeof value === "object" && value !== null && !(value instanceof Uint8Array)) {
-    const { errors: subErrors, result: subResult } = verifyProto(value as ParsedResult, typeLayer, path);
+    const { errors: subErrors, result: subResult } = verifyProto(value as ParsedResult, typeLayer, { path, replaceEnum });
     errors.push(...subErrors);
     return { errors, value: subResult };
   } else {

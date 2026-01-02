@@ -11,3 +11,4 @@ temp/
 /del/
 
 /*.cs
+/temp*.js

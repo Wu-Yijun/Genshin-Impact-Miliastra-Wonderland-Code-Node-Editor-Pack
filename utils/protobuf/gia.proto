@@ -2,53 +2,180 @@ syntax = "proto3";
 // @version: 2.0.0
 // package gia;
 
-message Root {
+// .gia file (Genshin Impact Assets)
+message AssetBundle {
   // 主要
-  Asset          asset        = 1; // graph info
-  repeated Asset accessories  = 2; // data_structure, input/output
-  string         file_path    = 3; // {UID}-{TIME}-{LEVEL_ID}-\{FILE_NAME}.gia
-  string         game_version = 5; // 6.2.0 by now
+  ResourceEntry          primary_resource = 1; // 主要导出对象
+  repeated ResourceEntry dependencies     = 2; // 包含所有生成的存根、结构体、信号等
+  string                 export_tag       = 3; // {UID}-{TIME}-{LEVEL_ID}-\{EXPORT_FILE_NAME}.gia // 或者叫导出信息
+  string                 engine_version   = 5; // 6.2.0 by now
 }
 
-message Asset  {
-  enum Which {
-    Unknown                  = 0;
-    EntityNode               = 9;
-    BooleanFilter            = 10;
-    Skills                   = 11;
-    CompositeGraph           = 12;
-    SendSignals              = 14;
-    StatusNode               = 22;
-    ClassNode                = 23;
-    StructureDefinition      = 29;
-    LevelStructureDefinition = 37;
-    ItemNode                 = 46;
-    IntegerFilter            = 47;
+// 通用资源标识符 (原 ResourceLocator, NodeProperty 等)
+// 这是整个系统中"资源的身份证"
+message ResourceLocator {
+
+  // Origin (来源域)：
+  //   - 含义：定义了资源的“所有权”和“存储位置”。
+  //   - USER_DEFINED: 存在于玩家/开发者动态生成的数据库中。
+  //   - SYSTEM_DEFINED: 存在于游戏安装包的静态只读数据中。
+  enum Origin {
+    UNKNOWN_CLASS  = 0;
+    USER_DEFINED   = 10000; // 用户资产
+    SYSTEM_DEFINED = 10001; // 系统内置
+  }
+
+  // Category (服务域/子系统)：
+  //   - 含义：定义了哪个“引擎模块”负责处理此资源。
+  //   - 例如：SERVER_BASIC 归后端逻辑引擎管，CLIENT_FILTER 归前端表现引擎管。它决定了数据加载后的分发路径。
+  enum Category {
+    UNKNOWN_TYPE = 0;
+
+    // 资产类型
+    FILTER_NODE_GRAPH     = 1; // Such as boolean filter
+    BASIC_NODE_GRAPH      = 5; // Such as graph node
+    AFFILIATED_NODE_GRAPH = 23; // Assembly/Split for Structure
+
+    // Server Side Node Types
+    SERVER_BASIC  = 20000;
+    SERVER_STATUS = 20003;
+    SERVER_CLASS  = 20004;
+    SERVER_ITEM   = 20005;
+
+    // Client Side Node Types
+    CLIENT_FILTER     = 20001; // 筛选器类型(默认 Bool)
+    CLIENT_SKILL      = 20002; // 技能节点图流程(客户端)
+    CLIENT_INT_FILTER = 20006; // 整数筛选器类型
+  }
+
+  // AssetKind/Kind (原型域/数据结构)：
+  //   - 含义：定义了数据的物理结构。
+  //   - 它告诉解析器：这个资源是一个 COMPOSITE_GRAPH 结构，还是一个 STRUCTURE 结构。
+  enum AssetKind {
+    // 资产类型
+    BASIC                   = 0; // 服务器节点图, 等一些列未定义的(默认值)
+    PREFAB                  = 1; // 预制体（元件）、玩家模板或角色模板
+    ENTITY                  = 2; // 实体或造物
+    CLIENT_NODE_GRAPH       = 3; // 客户端节点图
+    CONFIGURATION           = 4; // 配置信息 (可能有误)
+    TERRAIN                 = 5; // 地形
+    UI                      = 8; // 界面布局或交互控件
+    PRESET_POINT            = 9; // 预设点
+    DECORATION              = 14; // 装饰物
+    STRUCTURE               = 15; // 结构体
+    ENTITY_DEPLOYMENT_GROUP = 18; // 实体布设组
+    PATH                    = 19; // 路径
+    UNIT_TAG                = 23; // 单位标签
+
+    // 节点图子类型
+    CUSTOM_GRAPH    = 21001; // NodeGraph
+    COMPOSITE_GRAPH = 21002; // CompositeGraph
+
+    // 节点子类型
+    SYS_CALL_STUB  = 22000; // SysCall (Kernel 2000/2001 等)
+    GENERATED_STUB = 22001; // SysGraph (Struct/Signal 定义生成的节点)
+  }
+
+  Origin    source_domain  = 1; // 开发者 vs 系统
+  Category  service_domain = 2; // 后端逻辑 vs 前端表现
+  AssetKind kind           = 3; // 物理数据结构分类
+
+  // ====== Optional ======
+
+  // world_entity_guid: EntityUid, 全局/世界空间, 有实体的对象。
+  //   - 如 Prefab、Character、Item。
+  //   - 它们在游戏的世界数据库（World DB）中有唯一的全球唯一标识符，可以通过 API 直接查询其实体属性。
+  int64 world_entity_guid = 4;
+
+  // internal_logic_id: LogicId, 逻辑/局部空间, 纯数据对象。
+  //   - 如 NodeGraph、NodeInterface、Signal。
+  //   - 它们不是世界中的“东西”，而是代码或配置。它们通过 ID 在逻辑引擎内部索引。
+  int64 internal_logic_id = 5;
+
+  // 简单判定法：如果这个东西在游戏场景里能被“生出来”（Spawn），它用 guid；如果这个东西只是一段逻辑或一个定义，它用 id。
+}
+
+message ResourceEntry  {
+  enum AssetType {
+    UNKNOWN_TYPE            = 0; // 未知类型
+    PREFAB                  = 1; // 预制体（元件）
+    CREATION                = 2; // 造物
+    ENTITY                  = 3; // 实体
+    TERRAIN                 = 5; // 地形
+    PRESET_POINT            = 6; // 预设点
+    UNIT_STATUS             = 7; // 单位状态
+    SKILL                   = 8; // 技能
+    ENTITY_NODE_GRAPH       = 9; // 实体节点图
+    BOOLEAN_FILTER_GRAPH    = 10; // 布尔过滤器 (节点图)
+    SKILL_NODE_GRAPH        = 11; // 技能节点图
+    COMPOSITE_NODE_DECL     = 12; // 复合节点声明 (含监听信号、修改/拆分/拼装结构体)
+    CAMERA                  = 13; // 镜头
+    SIGNAL_NODE_DECL        = 14; // 信号节点声明 (发送信号、向服务器节点图发送信号)
+    UI_CONTROL              = 15; // 交互控件
+    SKILL_RESOURCE          = 16; // 技能资源
+    PLAYER                  = 18; // 玩家模板
+    CHARACTER               = 19; // 角色模板
+    INTERFACE_LAYOUT        = 20; // 界面布局
+    UI_CONTROL_GROUP        = 21; // 界面控件组
+    STATUS_NODE_GRAPH       = 22; // 状态节点图
+    CLASS_NODE_GRAPH        = 23; // 职业节点图
+    GLOBAL_TIMER            = 24; // 全局计时器
+    ITEM                    = 26; // 道具
+    DECORATION              = 28; // 装饰物
+    STRUCTURE               = 29; // 结构体定义
+    SHOP                    = 30; // 商店
+    LEVEL_STRUCTURE         = 37; // 关卡结构体定义
+    PATH                    = 38; // 路径
+    SHIELD                  = 39; // 护盾
+    ENTITY_DEPLOYMENT_GROUP = 43; // 实体布设组
+    UNIT_TAG                = 44; // 单位标签
+    SCAN_TAG                = 45; // 扫描标签
+    ITEM_NODE_GRAPH         = 46; // 道具节点图
+    INTEGER_FILTER_GRAPH    = 47; // 整数过滤器 (节点图)
+    LIGHT_SOURCE            = 48; // 光源
+    ENVIRONMENT             = 49; // 环境配置
+    // reserved 4, 17, 25, 27, 31 to 36, 40 to 42;
   };
 
-  GlobalIdentifier          id         = 1; // Self id
-  repeated GlobalIdentifier relatedIds = 2; // Some related accompanying units(If exist)
-  string                    name       = 3; // Node Graph Name
-  Which                     which      = 5; // Enumeration of Node Graph Type
+  ResourceLocator          identity       = 1; // 自身 ID
+  repeated ResourceLocator reference_list = 2; // 显式依赖表
+  string                   internal_name  = 3; // 如节点图名称
+  AssetType                resource_class = 5; // 对节点图说, 明确限定了它的类型
 
-  oneof graphType {
-    NodeGraphWrapper    graph        = 13; // Else
-    CompositeDefWrapper compositeDef = 14; // When type is Composite Graphs
-    StructureDefWrapper structureDef = 22; // When type is Structure Definitions
+  oneof payload {
+    NodeGraphContainer           graph_data     = 13; // Which is Node Graph
+    NodeInterfaceContainer       interface_data = 14; // Which is Interface Definition
+    StructureDefinitionContainer struct_data    = 22; // Which is Structure Definition
+
+    // EntityDefinition      entity       = 11;
+    // Configuration         config       = 15;
+    // Terrain               terrain      = 16;
+    // Camera                camera       = 17;
+    // PresetPoint           point        = 18;
+    // UiControlGroup        ui           = 19;
+    // GlobalTimer           timer        = 20;
+    // UnitTag               unit_tag     = 26;
+    // EntityDeploymentGroup deployment   = 27;
   }
 }
 
-message NodeGraphWrapper {
+// ### 包装结构分析：为何需要 Wrapper？
+// 代码中出现了 NodeGraphWrapper 和 CompositeDefWrapper 且内部嵌套了 InnerWrapper。这种设计在大型引擎（如 Unity 或自定义引擎）中非常常见，原因有三：
+//   - 类型擦除与异构容器：在 oneof 中，如果直接放入原始消息，未来如果想给所有类型的资源添加“通用元数据”（如加密标志、压缩算法、版本号），就必须修改每个具体消息。
+//   - 版本平滑迁移 (Forward Compatibility)：InnerWrapper 提供了一个缓冲区。如果 NodeGraph 的结构发生断代式更新，引擎可以先解析 Wrapper 层的版本号，再决定调用哪个版本的解析器。
+//   - 内存布局优化：在某些序列化框架中，这种嵌套允许引擎在不完全反序列化内部逻辑的情况下，先读取资源的“外壳”信息（如 ID 和名称）。
+
+message NodeGraphContainer {
   message InnerWrapper { NodeGraph graph = 1; }
   InnerWrapper inner = 1;
 }
 
-message CompositeDefWrapper {
-  message InnerWrapper { CompositeDef def = 1; }
+message NodeInterfaceContainer {
+  message InnerWrapper { NodeInterface interface = 1; }
   InnerWrapper inner = 1;
 }
 
-message StructureDefWrapper {
+message StructureDefinitionContainer {
   message StructureDef {
     Field genericField  = 1;
     Field concreteField = 2; // same as 1
@@ -117,7 +244,6 @@ message StructureDefWrapper {
     int32   varIndex = 503; // variable index
   }
   StructureDef def = 1;
-
 }
 
 // ========== Begin of Variable Defs ========== //
@@ -141,7 +267,7 @@ enum VarType {
   LocalVariableRef = 16;
   Faction          = 17;
   EnumList         = 18;
-  reserved 19;
+  // reserved 19;
   Configuration       = 20;
   Prefab              = 21;
   ConfigurationList   = 22;
@@ -153,8 +279,8 @@ enum VarType {
   VariableSnapshotRef = 28;
 
   // EnumTypes 10001.....
-  reserved 10000 to 10099;   // server enum types
-  reserved 210000 to 210099; // client enum types
+  // reserved 10000 to 10099;   // server enum types
+  // reserved 210000 to 210099; // client enum types
 }
 
 enum ClientVarType {
@@ -319,63 +445,10 @@ message ComplexValueStruct { // Map KV, Array Item, Struct Item
 
 // ========== Below are Messages that has been refracted ========== //
 
-// 通用资源标识符 (原 GlobalIdentifier, NodeProperty 等)
-// 这是整个系统中"资源的身份证"
-message GlobalIdentifier {
-  enum Origin {
-    UNKNOWN_CLASS  = 0;
-    USER_DEFINED   = 10000; // 用户资产
-    SYSTEM_DEFINED = 10001; // 系统内置
-  }
-
-  enum Category {
-    UNKNOWN_TYPE = 0;
-
-    // 资产类型
-    FILTER_NODE_GRAPH     = 1; // Such as boolean filter
-    BASIC_NODE_GRAPH      = 5; // Such as graph node
-    AFFILIATED_NODE_GRAPH = 23; // Assembly/Split for Structure
-
-    // Server Side Node Types
-    SERVER_BASIC  = 20000;
-    SERVER_STATUS = 20003;
-    SERVER_CLASS  = 20004;
-    SERVER_ITEM   = 20005;
-
-    // Client Side Node Types
-    CLIENT_FILTER     = 20001; // 筛选器类型(默认 Bool)
-    CLIENT_SKILL      = 20002; // 技能节点图流程(客户端)
-    CLIENT_INT_FILTER = 20006; // 整数筛选器类型
-  }
-
-  enum AssetKind {
-    // 资产类型
-    SERVER_NODE_GRAPH     = 0;
-    CLIENT_NODE_GRAPH     = 3;
-    STRUCTURE_DECLARATION = 15;
-
-    // 节点图类型
-    CUSTOM_GRAPH    = 21001; // NodeGraph
-    COMPOSITE_GRAPH = 21002; // CompositeGraph
-
-    // 节点类型
-    SYS_CALL_STUB  = 22000; // SysCall (Kernel 2000/2001 等)
-    GENERATED_STUB = 22001; // SysGraph (Struct/Signal 定义生成的节点)
-  }
-
-  Origin    origin   = 1;
-  Category  category = 2;
-  AssetKind kind     = 3;
-
-  // ====== Optional ======
-  int64 graph_id = 4; // 资源所属图 ID
-  int64 uid      = 5; // 全局唯一 ID
-}
-
 // 节点图逻辑容器
 message NodeGraph {
   // 资源的唯一身份标识
-  GlobalIdentifier identity = 1;
+  ResourceLocator identity = 1;
   // 图的友好显示名称
   string display_name = 2;
 
@@ -447,15 +520,15 @@ message InterfaceMapping {
 }
 
 // 复合节点定义
-message CompositeDef {
+message NodeInterface {
   // 复合节点的身份标识
   message Signature {
-    GlobalIdentifier shell_ref  = 1;
-    GlobalIdentifier kernel_ref = 2; // 这种生成的节点通常 shell == kernel
+    ResourceLocator shell_ref  = 1;
+    ResourceLocator kernel_ref = 2; // 这种生成的节点通常 shell == kernel
 
     // 关键：对于用户子图，指向内部逻辑图；对于系统生成节点，此字段为空
-    GlobalIdentifier graph_ref      = 4;
-    optional int32   signal_version = 5;
+    ResourceLocator graph_ref      = 4;
+    optional int32  signal_version = 5;
   }
 
   // 参数/数据引脚定义
@@ -526,9 +599,9 @@ message CompositeDef {
 
     message Id { int64 id = 1; }
     message SignalBinding {
-      string           signal_name    = 1;
-      GlobalIdentifier server_node_id = 2;
-      GlobalIdentifier client_node_id = 3;
+      string          signal_name    = 1;
+      ResourceLocator server_node_id = 2;
+      ResourceLocator client_node_id = 3;
     }
 
     oneof template {
@@ -581,7 +654,7 @@ message NodeInstance {
   // 核心定义与实现分离
 
   // 外壳定义(UI): shell_ref: 决定节点长什么样
-  GlobalIdentifier shell_ref = 2;
+  ResourceLocator shell_ref = 2;
 
   // 内核实现(Logic): kernel_ref : 决定节点怎么跑
   // - 对于固定节点: 始终有值。
@@ -590,7 +663,7 @@ message NodeInstance {
   //    - 若有值: 表示已根据用户选择的类型，映射到了具体的内核函数 ID。
   // - 对于 Client Skill 入口 (Start): 通常为 Kernel 2001。(Listen)
   // - 对于 Client Skill 执行节点 (Execution): 通常为 Kernel 2000。(POST)
-  optional GlobalIdentifier kernel_ref = 3;
+  optional ResourceLocator kernel_ref = 3;
 
   // 引脚与参数
   repeated PinInstance pins = 4;
@@ -612,7 +685,7 @@ message NodeInstance {
   optional int32 signal_version = 9;
 
   // 结构体依赖声明
-  repeated GlobalIdentifier using_structs = 10;
+  repeated ResourceLocator using_structs = 10;
 }
 
 message PinSignature {
