@@ -17,7 +17,7 @@ export const AtomTypes = [
 ] as const;
 export type AtomTypes = typeof AtomTypes[number];
 
-export type EnumId = string; // length 4
+export type EnumId = string; // length 4, EnumIdentifier
 
 export type BasicType = { t: "b", b: AtomTypes }; // 'Abc'
 export type EnumType = { t: "e", e: EnumId };  // E<ABCD>

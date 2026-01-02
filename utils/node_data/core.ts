@@ -1,6 +1,7 @@
 import { readFileSync, statSync } from "fs";
 import type * as D from "./types.ts";
 import path from "path";
+import type { NodeType } from "./node_type.ts";
 
 /**
  * Document class - Main entry point for accessing node data
@@ -12,15 +13,27 @@ export class Document {
   public readonly doc: D.Document;
   private nodes: Nodes | null = null;
   private enums: Enums | null = null;
+  private typeEngine: TypeEngine | null = null;
+  private clientTypeEngine: TypeEngine | null = null;
 
   /** Lazy-loaded Nodes collection */
   get Node(): Nodes {
-    return this.nodes ?? (this.nodes = new Nodes(this.doc));
+    return this.nodes ?? (this.nodes = new Nodes(this));
   }
 
   /** Lazy-loaded Enums collection */
   get Enum(): Enums {
-    return this.enums ?? (this.enums = new Enums(this.doc));
+    return this.enums ?? (this.enums = new Enums(this));
+  }
+
+  /** Lazy-loaded TypeEngine (Server) */
+  get Type(): TypeEngine {
+    return this.typeEngine ?? (this.typeEngine = new TypeEngine(this, "Server"));
+  }
+
+  /** Lazy-loaded TypeEngine (Client) */
+  get ClientType(): TypeEngine {
+    return this.clientTypeEngine ?? (this.clientTypeEngine = new TypeEngine(this, "Client"));
   }
 
   /**
@@ -557,7 +570,185 @@ export class Enums {
   }
 }
 
-// Used to get type info from NodeType
-export class TypeEngine {
+import * as NT from "./node_type.ts";
 
+/**
+ * TypeEngine class - Manages type system, conversions, and enum mappings
+ * 
+ * Provides conversion between high-level TypeDefs and structural NodeTypes.
+ * Handles ID <-> Identifier mappings for Types and Enums.
+ * Respects Server/Client system context.
+ */
+export class TypeEngine {
+  public readonly types: D.TypeDef[];
+  public readonly enumTypes: D.EnumTypeDef[];
+  public readonly system: "Server" | "Client";
+
+  // Lazy-loaded lookup maps
+  private _typeByID: Map<number, D.TypeDef> | null = null;
+  private _typeByIdentifier: Map<string, D.TypeDef> | null = null;
+  private _typeByStructure: Map<string, D.TypeDef> | null = null; // Map stringified structure -> TypeDef
+
+  private _enumTypeByID: Map<number, D.EnumTypeDef> | null = null;
+  private _enumTypeByTypeID: Map<number, D.EnumTypeDef> | null = null;
+  private _enumTypeByIdentifier: Map<string, D.EnumTypeDef> | null = null;
+
+  constructor(doc?: Document | TypeEngine | D.Document | string, system: "Server" | "Client" = "Server") {
+    if (doc === undefined) doc = path.join(import.meta.dirname, "data.json");
+    if (typeof doc === "string" && statSync(doc).isFile()) doc = readFileSync(doc).toString();
+    if (typeof doc === "string") doc = JSON.parse(doc) as D.Document;
+
+    if (doc instanceof Document) {
+      this.types = doc.types;
+      this.enumTypes = doc.Enum.enumTypes; // Use Enum accessor to get EnumTypes
+    } else if (doc instanceof TypeEngine) {
+      this.types = doc.types;
+      this.enumTypes = doc.enumTypes;
+      system = doc.system; // Inherit system if copying engine
+    } else {
+      // D.Document
+      this.types = (doc as D.Document).Types;
+      this.enumTypes = (doc as D.Document).EnumTypes;
+    }
+    this.system = system;
+  }
+
+  // --- Initialization Helpers ---
+
+  private ensureTypeMaps() {
+    if (this._typeByID) return;
+    this._typeByID = new Map();
+    this._typeByIdentifier = new Map();
+    this._typeByStructure = new Map();
+
+    for (const t of this.types) {
+      // Map by ID based on system
+      const id = this.system === "Server" ? t.ID : t.ClientID;
+      if (id !== null) {
+        this._typeByID.set(id, t);
+      }
+
+      // Map by Identifier
+      this._typeByIdentifier.set(t.Identifier, t);
+
+      // Map by Structure (BaseType)
+      // Note: BaseType is assumed to be the unique structural representation (e.g. "Int", "List<...>")
+      // If multiple TypeDefs share the same structure, the LAST one wins or checks precedence?
+      // Assuming 1:1 or taking first/last found. Here we overwrite, effectively taking the last one.
+      // Ideally TypeDefs should differ by Identifier but might share structure.
+      // The TODO asks "From NodeType get type TypeDef", implying we want *a* TypeDef that matches.
+      if (!this._typeByStructure.has(t.BaseType)) {
+        this._typeByStructure.set(t.BaseType, t);
+      }
+    }
+  }
+
+  private ensureEnumTypeMaps() {
+    if (this._enumTypeByID) return;
+    this._enumTypeByID = new Map();
+    this._enumTypeByTypeID = new Map();
+    this._enumTypeByIdentifier = new Map();
+
+    for (const et of this.enumTypes) {
+      // Filter by system if strict mapping is needed, but EnumTypes usually exist in both or have specific flags
+      // The EnumTypeDef has a 'System' field.
+      // If we are strictly in one system, we might only want to index compatible Enums?
+      // But "Server" might use "Client" enums and vice versa in some contexts?
+      // For safety, we index all, but we could filter.
+      // Given the requirement "From EnumID get EnumIdentifier", we assume global visibility or filter by system.
+      // Let's index all but maybe prefer system match? For straight ID lookup, ID should be unique within expected range.
+
+      // Map by ID
+      this._enumTypeByID.set(et.ID, et);
+      this._enumTypeByTypeID.set(et.TypeID, et);
+      this._enumTypeByIdentifier.set(et.Identifier, et);
+
+      if (et.Alias) {
+        for (const alias of et.Alias) {
+          this._enumTypeByIdentifier.set(alias, et);
+        }
+      }
+    }
+  }
+
+  // --- Type Conversions ---
+
+  /**
+   * Get values of the TypeDef by ID (ServerID or ClientID depending on System)
+   */
+  getTypeByID(id: number): D.TypeDef | undefined {
+    this.ensureTypeMaps();
+    return this._typeByID!.get(id);
+  }
+
+  /**
+   * Get values of the TypeDef by Identifier
+   */
+  getTypeByIdentifier(identifier: string): D.TypeDef | undefined {
+    this.ensureTypeMaps();
+    return this._typeByIdentifier!.get(identifier);
+  }
+
+  /**
+   * Convert a TypeDef (or Type ID) to a structural NodeType
+   */
+  toNodeType(typeOrId: D.TypeDef | number): NT.NodeType | undefined {
+    let typeDef: D.TypeDef | undefined;
+    if (typeof typeOrId === "number") {
+      typeDef = this.getTypeByID(typeOrId);
+    } else {
+      typeDef = typeOrId;
+    }
+
+    if (!typeDef) return undefined;
+
+    // Parse the structural string from BaseType
+    try {
+      return NT.parse(typeDef.BaseType);
+    } catch (e) {
+      console.error(`Failed to parse BaseType '${typeDef.BaseType}' for TypeDef ${typeDef.Identifier}`, e);
+      return undefined;
+    }
+  }
+
+  /**
+   * Convert a structural NodeType to a matching TypeDef
+   * Finds a TypeDef whose BaseType matches stringified nodeType.
+   */
+  toTypeDef(nodeType: NT.NodeType): D.TypeDef | undefined {
+    this.ensureTypeMaps();
+    const structure = NT.stringify(nodeType);
+    return this._typeByStructure!.get(structure);
+  }
+
+  // --- Enum Conversions ---
+
+  getEnumTypeByID(id: number): D.EnumTypeDef | undefined {
+    this.ensureEnumTypeMaps();
+    return this._enumTypeByID!.get(id);
+  }
+
+  getEnumTypeByTypeID(typeId: number): D.EnumTypeDef | undefined {
+    this.ensureEnumTypeMaps();
+    return this._enumTypeByTypeID!.get(typeId);
+  }
+
+  getEnumTypeByIdentifier(identifier: string): D.EnumTypeDef | undefined {
+    this.ensureEnumTypeMaps();
+    return this._enumTypeByIdentifier!.get(identifier);
+  }
+
+  /**
+   * Get EnumIdentifier (FourCC) from EnumID
+   */
+  getEnumIdentifierFromID(id: number): string | undefined {
+    return this.getEnumTypeByID(id)?.Identifier;
+  }
+
+  /**
+   * Get EnumID from EnumIdentifier (FourCC)
+   */
+  getEnumIDFromIdentifier(identifier: string): number | undefined {
+    return this.getEnumTypeByIdentifier(identifier)?.ID;
+  }
 }
