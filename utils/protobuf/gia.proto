@@ -9,59 +9,6 @@ message Root {
   string             game_version = 5; // 6.2.0 by now
 }
 
-// 通用资源标识符 (原 GlobalIdentifier, NodeProperty 等)
-// 这是整个系统中"资源的身份证"
-message GlobalIdentifier {
-  enum Origin {
-    UNKNOWN_CLASS  = 0;
-    USER_DEFINED   = 10000; // 用户资产
-    SYSTEM_DEFINED = 10001; // 系统内置
-  }
-
-  enum Category {
-    UNKNOWN_TYPE = 0;
-
-    // 资产类型
-    FILTER_NODE_GRAPH     = 1; // Such as boolean filter
-    BASIC_NODE_GRAPH      = 5; // Such as graph node
-    AFFILIATED_NODE_GRAPH = 23; // Assembly/Split for Structure
-
-    // Server Side Node Types
-    SERVER_BASIC  = 20000;
-    SERVER_STATUS = 20003;
-    SERVER_CLASS  = 20004;
-    SERVER_ITEM   = 20005;
-
-    // Client Side Node Types
-    CLIENT_FILTER     = 20001; // 筛选器类型(默认 Bool)
-    CLIENT_SKILL      = 20002; // 技能节点图流程(客户端)
-    CLIENT_INT_FILTER = 20006; // 整数筛选器类型
-  }
-
-  enum AssetKind {
-    // 资产类型
-    SERVER_NODE_GRAPH     = 0;
-    CLIENT_NODE_GRAPH     = 3;
-    STRUCTURE_DECLARATION = 15;
-
-    // 节点图类型
-    CUSTOM_GRAPH    = 21001; // NodeGraph
-    COMPOSITE_GRAPH = 21002; // CompositeGraph
-
-    // 节点类型
-    SYS_CALL_STUB  = 22000; // SysCall (Kernel 2000/2001 等)
-    GENERATED_STUB = 22001; // SysGraph (Struct/Signal 定义生成的节点)
-  }
-
-  Origin    origin   = 1;
-  Category  category = 2;
-  AssetKind kind     = 3;
-
-  // ====== Optional ======
-  int64 graph_id = 4; // 资源所属图 ID
-  int64 uid      = 5; // 全局唯一 ID
-}
-
 message GraphUnit {
   enum Which {
     Unknown                  = 0;
@@ -97,116 +44,6 @@ message NodeGraphWrapper {
 message CompositeDefWrapper {
   message InnerWrapper { CompositeDef def = 1; }
   InnerWrapper inner = 1;
-}
-
-message CompositeDef {
-  message Id {
-    GlobalIdentifier shellId       = 1;
-    GlobalIdentifier kernelId      = 2;
-    GlobalIdentifier graphId       = 4;
-    optional int32   signalVersion = 5;
-  }
-  message ParameterFlow {
-    message Type {
-      VarBase.Class class         = 1; // 决定了基础类型与对外显示形式(int输入框, boolean选择, vec3 输入, list 连线....)
-      int32         varTypeShell  = 3; // could be Client Var Type for Client Composite
-      int32         varTypeKernel = 4; // could be Client Var Type for Client Composite
-
-      optional DisplayState special_pin_state = 7; // 只有在信号节点的填入名称pin(Type5)的才有此字段和值, 作用不明
-      message DisplayState {
-        enum State {
-          None       = 0;
-          SignalName = 4;
-        }
-        State state = 1;
-      }
-
-      oneof type {
-        EnumType enumType = 101;
-        ListType listType = 102;
-        ID       valueId  = 104;
-        MapType  mapType  = 105;
-      }
-
-      message EnumType { int32 enumId = 1; }
-      message ListType {
-        Type item_type = 1;
-      }
-      message ID { int64 id = 2; }
-      message MapType {
-        VarType key   = 3;
-        VarType value = 4;
-      }
-
-    }
-
-    string                name               = 1;
-    int32                 xxxx_always_1      = 2; // not sure wtf it is(or bool type maybe) // 修改后导入导出会自动恢复为1
-    PinSignature          index              = 3; // Index of this pin on the shell
-    Type                  type               = 4; // pin value type
-    optional PinSignature specialPinType     = 5; // for generated signals/structs
-    int32                 persistent_pin_uid = 8;
-  }
-  message ControlFlow {
-    string       name               = 1;
-    int32        xxxx_always_1      = 2;
-    PinSignature index              = 3;
-    string       description        = 4;
-    int32        persistent_pin_uid = 8;
-  }
-  message Type {
-    enum Class {
-      Unknown   = 0;
-      Composite = 1000; // User-defined composite
-      // generate composite_def
-      SendSignal   = 1001;
-      ListenSignal = 1002;
-      Assembly     = 1003;
-      Split        = 1004;
-      Modify       = 1005;
-    }
-
-    Class class = 1;
-
-    message Id { int64 id = 1; }
-    message SignalDef {
-      string           signalName   = 1;
-      GlobalIdentifier serverNodeId = 2;
-      GlobalIdentifier clientNodeId = 3;
-    }
-    oneof parent {
-      SignalDef sendSignal   = 101;
-      SignalDef listenSignal = 102;
-      Id        assemble     = 104;
-      Id        split        = 105;
-      Id        modify       = 106;
-    }
-  }
-
-  Id id = 4;
-
-  repeated ControlFlow   inflows  = 100;
-  repeated ControlFlow   outflows = 101;
-  repeated ParameterFlow inputs   = 102;
-  repeated ParameterFlow outputs  = 103;
-  repeated ParameterFlow signals  = 106;
-
-  Type type = 107;
-
-  enum WhichDef {
-    Unknown       = 0;
-    SubWhich      = 1;
-    ListenSignal  = 2;
-    ModifyStruct  = 3;
-    StructSub     = 4;
-    Struct        = 5;
-    UserComposite = 6;
-    SignalSub     = 8;
-  }
-  string   name        = 200;
-  string   description = 201;
-  WhichDef which       = 203;
-  WhichDef subWhich    = 204; // Why this complex?
 }
 
 message NodeGraph {
@@ -498,6 +335,187 @@ message ComplexValueStruct { // Map KV, Array Item, Struct Item
 }
 // ========== End of Variable Defs ========== //
 
+// ========== Below are Messages that has been refracted ========== //
+
+// 通用资源标识符 (原 GlobalIdentifier, NodeProperty 等)
+// 这是整个系统中"资源的身份证"
+message GlobalIdentifier {
+  enum Origin {
+    UNKNOWN_CLASS  = 0;
+    USER_DEFINED   = 10000; // 用户资产
+    SYSTEM_DEFINED = 10001; // 系统内置
+  }
+
+  enum Category {
+    UNKNOWN_TYPE = 0;
+
+    // 资产类型
+    FILTER_NODE_GRAPH     = 1; // Such as boolean filter
+    BASIC_NODE_GRAPH      = 5; // Such as graph node
+    AFFILIATED_NODE_GRAPH = 23; // Assembly/Split for Structure
+
+    // Server Side Node Types
+    SERVER_BASIC  = 20000;
+    SERVER_STATUS = 20003;
+    SERVER_CLASS  = 20004;
+    SERVER_ITEM   = 20005;
+
+    // Client Side Node Types
+    CLIENT_FILTER     = 20001; // 筛选器类型(默认 Bool)
+    CLIENT_SKILL      = 20002; // 技能节点图流程(客户端)
+    CLIENT_INT_FILTER = 20006; // 整数筛选器类型
+  }
+
+  enum AssetKind {
+    // 资产类型
+    SERVER_NODE_GRAPH     = 0;
+    CLIENT_NODE_GRAPH     = 3;
+    STRUCTURE_DECLARATION = 15;
+
+    // 节点图类型
+    CUSTOM_GRAPH    = 21001; // NodeGraph
+    COMPOSITE_GRAPH = 21002; // CompositeGraph
+
+    // 节点类型
+    SYS_CALL_STUB  = 22000; // SysCall (Kernel 2000/2001 等)
+    GENERATED_STUB = 22001; // SysGraph (Struct/Signal 定义生成的节点)
+  }
+
+  Origin    origin   = 1;
+  Category  category = 2;
+  AssetKind kind     = 3;
+
+  // ====== Optional ======
+  int64 graph_id = 4; // 资源所属图 ID
+  int64 uid      = 5; // 全局唯一 ID
+}
+
+// 复合节点定义
+message CompositeDef {
+  // 复合节点的身份标识
+  message Signature {
+    GlobalIdentifier shell_ref  = 1;
+    GlobalIdentifier kernel_ref = 2; // 这种生成的节点通常 shell == kernel
+
+    // 关键：对于用户子图，指向内部逻辑图；对于系统生成节点，此字段为空
+    GlobalIdentifier graph_ref      = 4;
+    optional int32   signal_version = 5;
+  }
+
+  // 参数/数据引脚定义
+  message DataPinDef {
+    string       name            = 1;
+    int32        visibility_mask = 2; // 原 xxxx_always_1 (位掩码)
+    PinSignature sig             = 3; // 包含 Kind (IN_PARAM/OUT_PARAM) 和 Index
+
+    //
+    message TypeInfo {
+      VarBase.Class ui_class        = 1; // UI表现形式 (IntBase, VecBase等)
+      VarType       var_type_shell  = 3; // VarType 枚举, 对于 Enum, 为 [100id](EnumCategoryId)
+      VarType       var_type_kernel = 4; // VarType 枚举, 对于 Enum, 为 14(EnumType)
+
+      // 元数据引脚特有的显示状态 (如显示为信号名称输入框)
+      message DisplayState {
+        enum State { NONE = 0; SIGNAL_NAME = 4; }
+        State state = 1;
+      }
+      optional DisplayState display_state = 7;
+
+      oneof detail {
+        EnumId   enum_id        = 101;
+        ListType list_item_type = 102;
+        StructId struct_id      = 104;
+        MapType  map_type       = 105;
+      }
+
+      message EnumId { int64 val = 1; }
+      message ListType {
+        TypeInfo item_type = 1;
+      }
+      message StructId { int64 val = 2; }
+      message MapType {
+        VarType key   = 3;
+        VarType value = 4;
+      }
+    }
+
+    TypeInfo type = 4;
+    // 如果是系统生成的结构体/信号节点，标记其元数据类型
+    optional PinSignature meta_sig_type      = 5;
+    int32                 persistent_pin_uid = 8;
+  }
+
+  // 流程引脚定义
+  message FlowPinDef {
+    string       name               = 1;
+    int32        visibility_mask    = 2;
+    PinSignature sig                = 3;
+    string       description        = 4;
+    int32        persistent_pin_uid = 8;
+  }
+
+  // 实现模板定义
+  message Implementation {
+    enum Category {
+      UNKNOWN       = 0;
+      COMPOSITE     = 1000; // 用户子图
+      SEND_SIGNAL   = 1001; // 发送信号
+      LISTEN_SIGNAL = 1002; // 监听信号
+      STRUCT_SPLIT  = 1004; // 拆分结构体
+      STRUCT_MODIFY = 1005; // 修改结构体
+    }
+    Category category = 1;
+
+    message Id { int64 id = 1; }
+    message SignalBinding {
+      string           signal_name    = 1;
+      GlobalIdentifier server_node_id = 2;
+      GlobalIdentifier client_node_id = 3;
+    }
+
+    oneof template {
+      // 对应 Send/Listen 的信号信息
+      SignalBinding send_signal   = 101;
+      SignalBinding listen_signal = 102;
+      // 对应 Assembly/Split 的结构体 ID
+      Id assemble_struct = 104;
+      Id split_struct    = 105;
+      Id modify_struct   = 106;
+    }
+  }
+
+  Signature id = 4;
+
+  repeated FlowPinDef inflows   = 100;
+  repeated FlowPinDef outflows  = 101;
+  repeated DataPinDef inputs    = 102;
+  repeated DataPinDef outputs   = 103;
+  repeated DataPinDef meta_pins = 106; // 原 signals，存放 Type 5 引脚
+
+  Implementation impl = 107;
+
+// 这里的 Which 逻辑建议保留原本命名，因为它们是模板系统的索引
+  enum TemplateRoot {
+    UNKNOWN        = 0;
+    SUB_TEMPLATE   = 1;
+    LISTEN_SIGNAL  = 2;
+    STRUCT         = 5;
+    USER_COMPOSITE = 6;
+  }
+  enum TemplateSub  {
+    NONE          = 0;
+    MODIFY_STRUCT = 3;
+    STRUCT_SUB    = 4;
+    SIGNAL_SUB    = 8;
+  }
+
+  string       name          = 200;
+  string       description   = 201;
+  TemplateRoot template_root = 203; // 原 which
+  TemplateSub  template_sub  = 204; // 原 subWhich
+}
+
+// 节点图中单个节点实例
 message NodeInstance {
   // 节点在图中的唯一索引 (运行时句柄)
   int32 index = 1;
