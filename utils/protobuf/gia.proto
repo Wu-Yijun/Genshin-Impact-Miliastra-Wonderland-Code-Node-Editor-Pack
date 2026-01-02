@@ -46,39 +46,6 @@ message CompositeDefWrapper {
   InnerWrapper inner = 1;
 }
 
-message NodeGraph {
-  GlobalIdentifier id   = 1; // graph id (types, id)
-  string           name = 2; // Graph Name
-
-  repeated NodeInstance     nodes         = 3;
-  repeated CompositePin     compositePins = 4;
-  repeated Comments         comments      = 5;
-  repeated GraphVariable    graphValues   = 6;
-  repeated GraphAffiliation affiliations  = 7;
-
-  optional int32 xxx_exposed_pin_index = 100; // always 1, not sure what it is
-  optional float xxxx                  = 101; // 0.3 for Bool/Int Filter, or 0x3e99999a
-}
-
-message Comments {
-  string         content = 1;
-  optional float x       = 2;
-  optional float y       = 3;
-}
-
-message GraphAffiliation {
-  message Info {
-    GlobalIdentifier source        = 1;
-    int32            typeXxx       = 2;
-    int32            alwaysOneXxxx = 3;
-    oneof extend { VarBase.ItemType.StructItem structId = 100; }
-  }
-  Info info = 1;
-  message Type { int32 type = 1; }
-  Type type = 2;
-  // TODO
-}
-
 message StructureDefWrapper {
   message StructureDef {
     Field genericField  = 1;
@@ -97,14 +64,15 @@ message StructureDefWrapper {
     int32  index      = 503; // same as StructureDef
   }
   message VarDef {
-    message SubType {
-      VarType type      = 1;
-      string  xxxx_desc = 2; // What are they?
-      VarType key       = 502;
-      VarType value     = 503;
-      int64   valueId   = 504;
-    }
+
     message TypeDef {
+      message SubType {
+        VarType type    = 1;
+        int64   xxxx_id = 2; // What are they?
+        VarType key     = 502;
+        VarType value   = 503;
+        int64   valueId = 504;
+      }
       VarType type    = 1;
       SubType subType = 2;
 
@@ -117,15 +85,37 @@ message StructureDefWrapper {
         // ESPECIALLY MAP/STRUCT BASE
       }
     }
-    TypeDef typedef1 = 1;
-    TypeDef typedef3 = 3;
-    string  name     = 5;
+    message TypeDef3 {
+      message SubType {
+        VarType type = 1;
+        message Any {}
+        Any     xxxx_id = 2; // Why diff from TypeDef3
+        VarType key     = 502;
+        VarType value   = 503;
+        int64   valueId = 504;
+      }
+      VarType type    = 1;
+      SubType subType = 2;
+
+      oneof val {
+        IntBaseValue    intVal  = 13;
+        EnumBaseValue   boolVal = 14;
+        StringBaseValue strVal  = 16;
+        // TODO: What A mess here! I can't bear anymore!!!!!
+        // He who trust himself could take a try.
+        // ESPECIALLY MAP/STRUCT BASE
+      }
+    }
+    TypeDef  typedef1 = 1;
+    TypeDef3 typedef3 = 3;
+    string   name     = 5;
 
     string  varName  = 501;
     VarType varType  = 502;
     int32   varIndex = 503; // variable index
   }
   StructureDef def = 1;
+
 }
 
 // ========== Begin of Variable Defs ========== //
@@ -187,16 +177,6 @@ enum ClientVarType {
   Configuration_     = 18; // type: Cfg, typeid: 18
   Prefab_            = 19; // type: Pfb, typeid: 19
   ConfigurationList_ = 20; // type: L<Cfg>, typeid: 20
-}
-
-message GraphVariable {
-  string  name      = 2;
-  VarType type      = 3;
-  VarBase values    = 4;
-  bool    exposed   = 5; // Expose vars out of node graph?
-  int64   structId  = 6; // Only in struct, otherwise 0
-  VarType keyType   = 7; // ? Simple type also have this field (=6)
-  VarType valueType = 8; // ? (=6)
 }
 
 message VarBase {
@@ -390,6 +370,80 @@ message GlobalIdentifier {
   int64 uid      = 5; // 全局唯一 ID
 }
 
+// 节点图逻辑容器
+message NodeGraph {
+  // 资源的唯一身份标识
+  GlobalIdentifier identity = 1;
+  // 图的友好显示名称
+  string display_name = 2;
+
+// --- 执行层 ---
+  // 逻辑节点实例列表
+  repeated NodeInstance nodes = 3;
+
+  // --- 接口层 ---
+  // 接口映射表：定义外部引脚如何穿透到内部节点
+  // 仅在作为“复合节点(Composite)”被调用时生效
+  repeated InterfaceMapping port_mappings = 4;
+
+  // --- 数据层 ---
+  // 局部变量池/黑板变量：存储图内部共享的数据
+  repeated GraphVariable blackboard = 6;
+
+  // --- 注释与展示 ---
+  repeated Annotation comments = 5;
+
+  // --- 子系统特定参数 ---
+
+  // 入口索引：对应“入口节点”或“外部触发槽位”的索引
+  optional int32 entry_slot_index = 100;
+
+  // 轮询/判定频率 (仅用于过滤器)：定义该图逻辑被重新计算的时间间隔
+  optional float evaluation_interval = 101;
+}
+
+// 注释/文字说明
+message Annotation {
+  string text = 1;
+  // 如果坐标为空，说明该注释是“吸附”在某个节点实例上的（通过 NodeInstance.attached_comment 关联）
+  optional float pos_x = 2;
+  optional float pos_y = 3;
+}
+
+// 节点图变量(黑板变量)
+message GraphVariable {
+  string var_name = 2;
+
+  // 变量的数据类型定义
+  VarType base_type = 3;
+
+  // 变量的初始值/当前值
+  VarBase storage_value = 4;
+
+  // 是否暴露为外部可配置参数
+  bool is_public = 5;
+
+  // 如果是结构体变量，指向其定义的 ID
+  optional int64 schema_ref_id = 6;
+
+  // 容器类型的子类型定义 (残留字段)
+  VarType container_key_type   = 7;
+  VarType container_value_type = 8;
+}
+
+// 接口映射：穿墙管线
+message InterfaceMapping {
+  // 复合节点外壳上的引脚定义 (对外)
+  PinSignature external_port = 1;
+
+  // 映射到的内部目标节点索引 (对内)
+  int32 internal_target_node_handle = 2;
+
+  // 映射到的具体内部引脚 (逻辑/物理)
+  PinSignature internal_port_shell  = 3;
+  PinSignature internal_port_kernel = 4;
+}
+
 // 复合节点定义
 message CompositeDef {
   // 复合节点的身份标识
@@ -541,7 +595,7 @@ message NodeInstance {
   float y_pos = 6;
 
   // 附加在节点上的用户备注
-  optional Comments attached_comment = 7;
+  optional Annotation attached_comment = 7;
 
   // 特殊上下文标记 (Legacy / Context Provider)
 
@@ -613,13 +667,4 @@ message NodeConnection {
   int32        target_node_index = 1;
   PinSignature target_pin_shell  = 2;
   PinSignature target_pin_kernel = 3;
-}
-
-message CompositePin {
-  // 对外接口
-  PinSignature shell_sig = 1;
-  // 对内连线
-  int32        target_node_index = 2;
-  PinSignature target_pin_shell  = 3;
-  PinSignature target_pin_kernel = 4;
 }
