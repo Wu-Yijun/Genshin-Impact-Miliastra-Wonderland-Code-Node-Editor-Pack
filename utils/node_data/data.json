@@ -112,6 +112,22 @@
   },
   "Types": [
     {
+      "Identifier": "Unk",
+      "Alias": [
+        "Unknown",
+        "VarType is not found",
+        "Invalid Type"
+      ],
+      "ID": 0,
+      "ClientID": 0,
+      "InGameName": {
+        "en": "Unknown"
+      },
+      "DSLName": "Any",
+      "BaseType": "Unknown",
+      "BaseTypeID": 0
+    },
+    {
       "Identifier": "Ety",
       "Alias": [
         "Entity"

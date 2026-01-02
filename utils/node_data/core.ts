@@ -1,7 +1,6 @@
 import { readFileSync, statSync } from "fs";
 import type * as D from "./types.ts";
 import path from "path";
-import type { NodeType } from "./node_type.ts";
 
 /**
  * Document class - Main entry point for accessing node data
@@ -89,7 +88,7 @@ export class Nodes {
     if (typeof nodes === "string") nodes = (JSON.parse(nodes) as D.Document).Nodes;
     if (nodes instanceof Document) nodes = nodes.doc.Nodes;
     if (nodes instanceof Nodes) nodes = nodes.nodes;
-    if ("Nodes" in nodes) nodes = (nodes as D.Document).Nodes;
+    if ("Nodes" in nodes) nodes = nodes.Nodes;
     this.nodes = nodes;
   }
 
@@ -572,6 +571,15 @@ export class Enums {
 
 import * as NT from "./node_type.ts";
 
+export interface TypeDefFull extends D.TypeDef {
+  /** list item's type */
+  list_type?: D.TypeDef;
+  /** enum type */
+  enum_type?: D.EnumTypeDef;
+  /** map key type and val type */
+  map_type?: [D.TypeDef, D.TypeDef];
+}
+
 /**
  * TypeEngine class - Manages type system, conversions, and enum mappings
  * 
@@ -607,8 +615,8 @@ export class TypeEngine {
       system = doc.system; // Inherit system if copying engine
     } else {
       // D.Document
-      this.types = (doc as D.Document).Types;
-      this.enumTypes = (doc as D.Document).EnumTypes;
+      this.types = doc.Types;
+      this.enumTypes = doc.EnumTypes;
     }
     this.system = system;
   }
@@ -714,11 +722,109 @@ export class TypeEngine {
   /**
    * Convert a structural NodeType to a matching TypeDef
    * Finds a TypeDef whose BaseType matches stringified nodeType.
+   * 
+   * NOTE: This is a lossy conversion for non-atomic types like Dict and Enum,
+   * which resolve to their generic counterparts D<Unk,Unk> and E<Unk>.
    */
   toTypeDef(nodeType: NT.NodeType): D.TypeDef | undefined {
     this.ensureTypeMaps();
-    const structure = NT.stringify(nodeType);
-    return this._typeByStructure!.get(structure);
+
+    // Handle specialized lookups
+    switch (nodeType.t) {
+      case "l": {
+        // List: Try to find L<SpecificItem>
+        // Item is guaranteed to be atomic or specialized list itself (recursively)
+        // But for toTypeDef we just look up the string structure
+        const structure = NT.stringify(nodeType);
+        const type = this._typeByStructure!.get(structure);
+        if (!type) {
+          console.warn(`[TypeEngine] Missing specialized list type: ${structure}`);
+          // Fallback to Unk if strictly required, but returning undefined is safer for now
+          // Or find 'Unk' type as a last resort? 
+          // Assuming Unk type exists with structure "Unk"
+          return this._typeByStructure!.get("Unk");
+        }
+        return type;
+      }
+      case "d":
+        // Dict: Lossy lookup -> D<Unk,Unk>
+        return this._typeByStructure!.get("D<Unk,Unk>");
+      case "e":
+        // Enum: Lossy lookup -> E<Unk>
+        return this._typeByStructure!.get("E<Unk>");
+      case "s":
+        // Struct: Not fully supported, return generic S<...> if exists or warn
+        console.warn(`[TypeEngine] Struct resolution not fully supported: ${NT.stringify(nodeType)}`);
+        return this._typeByStructure!.get("Unk"); // Fallback
+      default:
+        // Basic and others: Direct lookup
+        return this._typeByStructure!.get(NT.stringify(nodeType));
+    }
+  }
+
+  /**
+   * Convert a structural NodeType to a full TypeDef with detailed inner types
+   */
+  toTypeDefFull(nodeType: NT.NodeType): TypeDefFull | undefined {
+    const baseType = this.toTypeDef(nodeType);
+    if (!baseType) return undefined;
+
+    const fullType: TypeDefFull = { ...baseType };
+
+    switch (nodeType.t) {
+      case "l": {
+        // List: Resolve item type
+        const itemType = this.toTypeDef(nodeType.i);
+        if (itemType) {
+          fullType.list_type = itemType;
+        }
+        break;
+      }
+      case "d": {
+        // Dict: Resolve key and value types
+        const keyType = this.toTypeDef(nodeType.k);
+        const valType = this.toTypeDef(nodeType.v);
+        if (keyType && valType) {
+          fullType.map_type = [keyType, valType];
+        }
+        break;
+      }
+      case "e": {
+        // Enum: Resolve EnumTypeDef
+        // nodeType.e is the Identifier (FourCC) or string ID
+        // We need the EnumTypeDef associated with this Identifier
+        // If node.e is "E<ABCD>", then identifier is "ABCD"
+        const enumTypeDef = this.getEnumTypeByIdentifier(nodeType.e);
+        if (enumTypeDef) {
+          fullType.enum_type = enumTypeDef;
+        }
+        break;
+      }
+    }
+
+    return fullType;
+  }
+
+  /**
+   * Get TypeDef for a List of a specific Item Type ID
+   */
+  getListTypeByID(itemId: number): D.TypeDef | undefined {
+    const itemType = this.getTypeByID(itemId);
+    if (!itemType) return undefined;
+
+    // Construct the expected structure L<ItemBaseType>
+    // Note: This relies on the item type being atomic or having a simple BaseType name
+    const listStructure = `L<${itemType.BaseType}>`;
+    return this._typeByStructure!.get(listStructure);
+  }
+
+  /**
+   * Get TypeDef for a Dict (always generic D<Unk,Unk>)
+   * Parameters are provided for API completeness but logic is lossy.
+   */
+  getDictTypeByID(keyId: number, valueId: number): D.TypeDef | undefined {
+    // Dict types are generic in the type system
+    return this._typeByStructure!.get("D<Unk,Unk>");
   }
 
   // --- Enum Conversions ---
