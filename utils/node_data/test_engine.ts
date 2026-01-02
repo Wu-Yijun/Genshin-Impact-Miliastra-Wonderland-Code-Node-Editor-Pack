@@ -1,12 +1,15 @@
 
+import { exit } from "process";
 import { TypeEngine } from "./core.ts";
 import { Doc } from "./instances.ts";
 import * as NT from "./node_type.ts";
 
+let fail = false;
 // Helper to log results
 const log = (label: string, valid: boolean, details?: any) => {
   console.log(`[${valid ? "PASS" : "FAIL"}] ${label}`);
   if (!valid && details) console.log("Details:", details);
+  if (!valid) fail = true;
 };
 
 // Test Suite
@@ -29,9 +32,12 @@ const runTests = () => {
   const intDef = engine.toTypeDef(intNode);
   log("Basic Type (Int) Lookup", !!intDef && intDef.Identifier === "Int", intDef);
 
-  const unkNode: NT.NodeType = { t: "b", b: "Xyz" as "Unk" };
+  const unkNode: NT.NodeType = { t: "b", b: "Unk" };
   const unkDef = engine.toTypeDef(unkNode);
   log("Basic Type (Unk) Lookup", !!unkDef && unkDef.Identifier === "Unk", unkDef);
+  const undNode: NT.NodeType = { t: "b", b: "Xyz" as "Unk" };
+  const undDef = engine.toTypeDef(undNode);
+  log("Basic Type (Undef) Lookup", !undDef, undDef);
 
   // 2. Test Dict lossy conversion
   const dictNode: NT.NodeType = {
@@ -86,6 +92,8 @@ const runTests = () => {
   });
 
   console.log("--- Verification Complete ---");
+
+  if (fail) exit(1);
 };
 
 runTests();

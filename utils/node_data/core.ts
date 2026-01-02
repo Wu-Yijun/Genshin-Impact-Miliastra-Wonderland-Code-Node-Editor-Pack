@@ -592,6 +592,9 @@ export class TypeEngine {
   public readonly enumTypes: D.EnumTypeDef[];
   public readonly system: "Server" | "Client";
 
+  public readonly DEFAULT_TYPE: D.TypeDef;
+  public readonly DEFAULT_ENUM: D.EnumTypeDef;
+
   // Lazy-loaded lookup maps
   private _typeByID: Map<number, D.TypeDef> | null = null;
   private _typeByIdentifier: Map<string, D.TypeDef> | null = null;
@@ -619,6 +622,9 @@ export class TypeEngine {
       this.enumTypes = doc.EnumTypes;
     }
     this.system = system;
+
+    this.DEFAULT_TYPE = this.types.find(x => x.ID === 0)!;
+    this.DEFAULT_ENUM = this.enumTypes.find(x => x.Category === "Generic" && x.System === system)!;
   }
 
   // --- Initialization Helpers ---
@@ -742,7 +748,7 @@ export class TypeEngine {
           // Fallback to Unk if strictly required, but returning undefined is safer for now
           // Or find 'Unk' type as a last resort? 
           // Assuming Unk type exists with structure "Unk"
-          return this._typeByStructure!.get("Unk");
+          return undefined;
         }
         return type;
       }
@@ -755,7 +761,7 @@ export class TypeEngine {
       case "s":
         // Struct: Not fully supported, return generic S<...> if exists or warn
         console.warn(`[TypeEngine] Struct resolution not fully supported: ${NT.stringify(nodeType)}`);
-        return this._typeByStructure!.get("Unk"); // Fallback
+        return this._typeByStructure!.get("S<>")!; // Fallback
       default:
         // Basic and others: Direct lookup
         return this._typeByStructure!.get(NT.stringify(nodeType));
