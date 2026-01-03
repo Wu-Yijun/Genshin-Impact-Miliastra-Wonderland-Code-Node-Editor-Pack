@@ -1,290 +1,158 @@
-# Protobuf 工具 (`protobuf`)
+# Protobuf 工具集 (`utils/protobuf`)
 
-本目录包含处理 `.gia` 文件（基于 Protobuf）的相关工具和定义文件。
+本目录包含了一套用于处理、逆向工程和验证 Protobuf 数据（特别是 `.gia` 文件）的完整工具链。该工具集在设计上兼顾了**生产环境的高效性**与**测试环境的透明度**。
 
 ---
 
-## 文件说明
+## 核心组件概述
 
-| 文件 | 说明 | 状态 |
+### 1. 结构定义与类型生成
+*   **[`gia.proto`](./gia.proto)**: **核心定义文件**。包含了 GIA 文件的完整 Protobuf 结构定义。它作为整个系统的“单一真理来源”（Source of Truth）。
+*   **[`gia.proto.ts`](./gia.proto.ts)**: **自动生成的类型定义**。通过 `proto2ts.ts` 将 `.proto` 转换为 TypeScript 接口，供全局使用。
+
+### 2. 双路径编解码系统
+针对不同的使用场景，提供两套互补的解码方案：
+
+| 特性 | **[`decode.ts`](./decode.ts)** (生产/正向) | **[`decode-cli.ts`](./decode-cli.ts)** (调试/逆向) |
 | :--- | :--- | :--- |
-| [`gia.proto`](./gia.proto) | GIA 文件 Protobuf 结构定义 | 核心 |
-| [`gia.proto.ts`](./gia.proto.ts) | 自动生成的 TypeScript 类型 | 生成 |
-| [`decode.ts`](./decode.ts) | TypeScript 编解码工具（**推荐**） | 活跃 |
-| [`proto2ts.ts`](./proto2ts.ts) | Proto → TypeScript 转换器 | 工具 |
-| [`decode.py`](./decode.py) | Python 编解码工具 | 辅助 |
-| [`decode_raw.py`](./decode_raw.py) | 原始 Protobuf 解码（调试用） | 辅助 |
+| **底层库** | 使用标准的 `protobufjs` 库 | **纯手工解析** (基于 `decode_raw.ts`) |
+| **主要目标** | 性能、一致性、标准兼容 | **可见性、报错反馈、结构分析** |
+| **核心逻辑** | 直接根据定义进行快速二进制转换 | 启发式搜索子消息、字符串和字节流 |
+| **错误处理** | 若数据不匹配通常直接报错或产生默认值 | 生成详细的 `ValidationError` 报告，保留原始数据 |
+| **适用场景** | 自动化转换脚本、应用运行时 | 逆向新协议、验证 proto 修改是否正确、数据对齐 |
 
 ---
 
-## 核心接口
+## 重点工具深度分析
 
-### TypeScript 编解码 (`decode.ts`)
+### 🔍 `decode-cli.ts` & `decode_raw.ts` (测试驱动)
+这是本工具集最核心的逆向工程组件。其工作流程不依赖于 `protobufjs` 的默认解码逻辑，而是采用“先解析二进制结构，后比对定义”的策略。
 
-```typescript
-import { decode_gia_file, encode_gia_file } from "./decode";
+*   **`decode_raw.ts` (手工解析核心)**:
+    - 能够递归解析任意 Protobuf 消息，无需任何 `.proto` 文件。
+    - 自动识别 `WireType` (Varint, Fixed32/64, Length-delimited)。
+    - **启发式识别**: 对于 `Length-delimited` 字段，它会尝试将其递归解析为嵌套消息。如果失败，则尝试解析为字符串，最后退化为原始字节。
+*   **`verify_proto.ts` (结构验证器)**:
+    - 将 `decode_raw.ts` 的结果与 `proto2ts.ts` 生成的层级结构进行全量比对。
+    - **报错反馈**: 提供 `MISSING_FIELD` (缺失必填字段), `EXTRA_FIELD` (定义外字段), `TYPE_MISMATCH` (类型不匹配) 等精确到路径的错误提示。
+    - **对齐还原**: 将解析出的匿名数据根据字段名重新组装成结构化对象。
 
-// 读取 GIA 文件
-const data = decode_gia_file("./path/to/file.gia");
+### ⚡ `decode.ts` (生产工具)
+封装了基于 `protobufjs` 的标准加解密流程。
 
-// 写入 GIA 文件
-encode_gia_file("./output.gia", data);
-```
+*   **`unwrap_gia` / `wrap_gia`**: 处理 GIA 特有的文件封装格式。
+    - **GIA 头部 (20 bytes)**: 包含文件大小、版本号 (`0x01`)、Magic Tag (`0x0326`)、文件类型 (`0x03`)。
+    - **GIA 尾部 (4 bytes)**: 包含校验码 (`0x0679`)。
+*   **`decode_gia_file`**: 一键完成“读取文件 -> 解除 GIA 封装 -> Protobuf 反序列化 -> 转换为普通对象”的流程。
 
-| 函数 | 签名 | 说明 |
-| :--- | :--- | :--- |
-| `decode_gia_file` | `(path: string) => AssetBundle` | 读取并解码 GIA 文件 |
-| `encode_gia_file` | `(path: string, data: AssetBundle) => void` | 编码并写入 GIA 文件 |
-| `unwrap_gia` | `(path: string, check?: boolean) => Uint8Array` | 提取 Protobuf 数据 |
-| `wrap_gia` | `(message: Type, data: AssetBundle) => ArrayBuffer` | 包装为 GIA 格式 |
-
-### Proto 类型转换 (`proto2ts.ts`)
-
-将 `gia.proto` 转换为 TypeScript 类型定义文件。
-
-```bash
-node utils/protobuf/proto2ts.ts [output_path] [input_path]
-```
+### 🛠️ 其他辅助工具
+*   **`proto2ts.ts`**: 一个轻量级的 Proto 解析器。它不依赖外部库即可读取 `.proto` 文件，并生成具有命名空间支持的 TypeScript 接口，以及供 `verify_proto.ts` 使用的消息字典。
 
 ---
-
-## GIA 文件格式
-
-![GIA 结构](../../static/image.png)
-
-| 字段 | 偏移 | 值 | 说明 |
-| :--- | :--- | :--- | :--- |
-| 文件大小 | 0x00 | `size - 4` | 文件大小减 4 字节 |
-| 版本号 | 0x04 | `0x01` | 固定值 |
-| 头部标记 | 0x08 | `0x0326` | **严格校验** |
-| 文件类型 | 0x0C | `0x03` | GIA = 3 |
-| 内容长度 | 0x10 | `size - 24` | Protobuf 数据长度 |
-| Protobuf | 0x14 | ... | 节点图数据 |
-| 尾部标记 | 末尾 | `0x0679` | **严格校验** |
-
----
-
-## 使用示例
-
-### 读取并修改 GIA 文件
-
-```typescript
-import { decode_gia_file, encode_gia_file } from "./decode";
-
-// 读取
-const data = decode_gia_file("./input.gia");
-console.log(data.primary_resource.graph_data?.inner.graph.nodes);
-
-// 修改节点位置
-data.primary_resource.graph_data!.inner.graph.nodes[0].x = 100;
-
-// 保存
-encode_gia_file("./output.gia", data);
-```
-
-### 重新生成类型定义
-
-修改 `gia.proto` 后需运行：
-
-```bash
-node utils/protobuf/proto2ts.ts
-```
-
-### Python 工具
-
-**解码为文本：**
-```bash
-python decode.py ./test.gia -o ./test.txt
-```
-
-**编码回 GIA：**
-```bash
-python decode.py ./test.txt --encode -o ./test_new.gia
-```
-
-**原始解码（调试）：**
-```bash
-python decode_raw.py ./test.gia --tags
-```
-
----
-
-## 手动创建 GIA 文件
-
-> 🟩 **推荐使用** [gia_gen](../gia_gen/readme.md) 中的 `Graph` 类快速创建。
-
-如需手动构建，步骤如下：
-
-// 注意, 类型和名称命名都变了(结构相同), 调整
-
-### 1. 构建节点
-
-```typescript
-import { type GraphNode, NodeGraph_Id_Class } from "./gia.proto";
-
-const node: GraphNode = {
-  nodeIndex: 1,
-  genericId: {
-    class: NodeGraph_Id_Class.UserDefined,
-    nodeId: 475,
-    // ...
-  },
-  concreteId: { /* ... */ },
-  pins: [ /* ... */ ],
-  x: 0,
-  y: 0,
-};
-```
-
-### 2. 构建图结构
-
-```typescript
-import { type Root } from "./gia.proto";
-
-const root: Root = {
-  graph: {
-    id: { /* ... */ },
-    name: "MyGraph",
-    graph: {
-      inner: {
-        graph: {
-          nodes: [node],
-          // ...
-        }
-      }
-    }
-  },
-  filePath: "201-1234567890-102-MyGraph",
-};
-```
-
-### 3. 保存文件
-
-```typescript
-encode_gia_file("./output.gia", root);
-```
-
----
-
-## 相关模块
-
-- [GIA 生成器](../gia_gen/readme.md) — 高层节点图构建 API
-- [节点数据](../node_data/readme.md) — 节点 ID 和类型定义
-- [主 README](../readme.md) — 工具库概述
-
-
-# Protobuf Utils
-
-一套用于逆向工程和验证 Protobuf 数据的轻量级工具集。支持从二进制文件恢复结构、解析 `.proto` 定义，以及验证解码后的数据是否符合预期结构。
-
-## 核心组件
-
-### 1. [decode_raw.ts](./decode_raw.ts) - 原始解码器
-一个高效、不依赖外部库的 Protobuf 原始解码器。
-- **功能**: 递归解析二进制 Protobuf 消息。
-- **特点**: 
-    - 自动识别 `WireType` (Varint, Fixed, Length-delimited)。
-    - 启发式地识别嵌套消息（Sub-message）、字符串（String）或原始字节（Bytes）。
-    - 支持严谨模式和宽容模式。
-- **数据结构**: `ParsedResult` 是一个以字段编号（Field Index）为键的字典，值为数组（支持 `repeated` 字段）。
-
-### 2. [proto2ts.ts](./proto2ts.ts) - Proto 说明符
-将 `.proto` 文件解析为层级化的 TypeScript 结构定义。
-- **功能**:
-    - 自行实现 Tokenizer 和 Parser，无需安装 `protobufjs` 等重型依赖。
-    - 生成 `TypeLayers` 表示 protobuf 的命名空间和消息嵌套关系。
-    - 将 `.proto` 定义导出为 TypeScript 接口文件，方便开发。
-- **关键类**: `TypeLayers` 负责解析、搜索类型路径以及生成 TS 代码。
-
-### 3. [verify_proto.ts](./verify_proto.ts) - 结构验证与对齐器
-将原始解码结果与 `.proto` 定义进行比对，验证数据完整性并**还原结构化数据**。
-- **功能**:
-    - **遗漏校验**: 检查非 optional 的字段是否在二进制中存在。
-    - **冗余校验**: 识别 `.proto` 中未定义的字段（以 `field_N` 形式保留）。
-    - **类型校验**: 深度比对每个字段的类型。
-    - **重复性校验**: 检查非 `repeated` 字段是否出现了多次。
-    - **枚举校验**: 验证枚举值是否在定义范围内。
-    - **结构还原**: 将结果转换为带字段名的结构化对象。**对于校验错误的字段，将保留其原始格式。**
-- **报错形式**: 返回 `{ errors: ValidationError[], result: any }`。
-
-### 4. [decode-cli.ts](./decode-cli.ts) - 命令行解析工具
-一个开箱即用的命令行工具，集成了上述组件的功能，用于快速解析和验证二进制文件。
-- **功能**:
-    - 直接从命令行解码 `.gia` 或 Protobuf 二进制文件。
-    - 支持指定自定义 `.proto` 文件和根消息（Root Message）。
-    - 丰富的错误过滤选项（按类型过滤、按路径跳过）。
-    - 支持输出为 JSON 或调试文本。
-
----
-
 
 ## 典型工作流
 
-当你需要逆向一个未知的 Protobuf 文件并将其实例化为 TS 类型时，通常遵循以下流程：
-
-### 第一步：解析 Proto 定义
-```typescript
-import { readFileSync } from "fs";
-import { parse } from "./proto2ts.ts";
-
-const protoContent = readFileSync("gia.proto", "utf-8");
-const layers = parse(protoContent);
-```
-
-### 第二步：解码原始二进制数据
-```typescript
-import { ProtobufParser } from "./decode_raw.ts";
-
-const data = new Uint8Array(readFileSync("data.bin"));
-const parser = new ProtobufParser();
-// 20, -4 通常是为了跳过特定的文件头（如 Gia 数据头）
-const { result } = parser.parseMessage(data.slice(20, -4));
-```
-
-### 第三步：验证并对齐结构
-```typescript
-import { verifyProto } from "./verify_proto.ts";
-
-// 获取 proto 中的特定 Message 定义
-const rootType = layers.message.get("Root");
-const { errors, result: reconstructed } = verifyProto(result, rootType!);
-
-if (errors.length > 0) {
-  console.warn("验证存在问题:", errors);
-}
-
-// reconstructed 是一个带有字段名的对象
-console.log("还原的数据:", reconstructed);
-```
-
-## 命令行使用 (CLI)
-
-可以使用 `decode-cli.ts` 快速查看二进制文件的内容：
-
+### 1. 验证修改后的 Proto 是否与二进制文件兼容
+当你修改了 `gia.proto` 后，可以使用 CLI 工具在测试模式下验证：
 ```bash
-# 基本用法 (默认载入 gia.proto 并解码 Root 消息)
-npx tsx decode-cli.ts <input_file>
+# 运行 CLI，载入 proto 并解码，同时输出所有的验证错误
+node utils/protobuf/decode-cli.ts <path_to_gia> --print-errors
+```
+如果发现 `EXTRA_FIELD`，说明数据中存在你尚未定义的字段；如果是 `TYPE_MISMATCH`，则可能是某个字段的类型定义有误。
 
-# 指定输出文件和消息类型
-npx tsx decode-cli.ts <input_file> -o output.json -m MyMessage
+### 2. 生产环境中读写数据
+```typescript
+import { decode_gia_file, encode_gia_file } from "./utils/protobuf/decode.ts";
 
-# 仅显示 Missing Field 错误并跳过特定路径
-npx tsx decode-cli.ts <input_file> --print-error-mf --skip-paths field_10.field_20
+// 解码
+const bundle = decode_gia_file("input.gia");
+
+// 修改
+bundle.primary_resource.internal_name = "modified_name";
+
+// 编码存回
+encode_gia_file("output.gia", bundle);
 ```
 
-### 可用参数
-
-- `-o <out_path>`: 指定输出路径（`.json` 会保存为 JSON，否则保存为调试文本）。
-- `-p <proto_path>`: 指定 `.proto` 文件路径（默认为 `gia.proto`）。
-- `-m <message_name>`: 指定根消息名称（默认为 `Root`）。
-- `--no-slice`: 禁用默认的 `20:-4` 切片（某些文件可能不需要跳过头尾）。
-- `--print-errors`: 显示所有验证错误。
-- `--print-error-mf/ef/tm/rm/ie`: 分别显示 缺失/多余/类型错误/重复项错误/无效枚举。
-- `--skip-paths <paths>`: 跳过指定路径下的错误汇报（通过空格分隔多个路径）。
+### 3. 生成新的 TS 类型定义
+```bash
+node utils/protobuf/proto2ts.ts ./utils/protobuf/gia.proto.ts ./utils/protobuf/gia.proto
+```
 
 ---
 
-## 参考示例
+## 详细文件列表
 
-- [struct.test.ts](./struct.test.ts): 展示了如何加载 `gia.proto` 并还原二进制数据文件，同时跳过已知的业务相关字段错误。
-- [test_verify.ts](./test_verify.ts): 包含了各种边界情况的单元测试，如类型不匹配、无效枚举和缺失字段。
+| 文件 | 说明 | 关键方法/功能 |
+| :--- | :--- | :--- |
+| [`gia.proto`](./gia.proto) | 核心 Protobuf 定义 | GIA 文件结构、资源定位与类型系统定义 |
+| [`gia.proto.ts`](./gia.proto.ts) | 静态类型定义 | 自动生成的 TypeScript 接口，用于业务代码类型约束 |
+| [`decode.ts`](./decode.ts) | 生产环境编解码 | `decode_gia_file` / `encode_gia_file`: 标准 GIA 文件读写 |
+| [`decode-cli.ts`](./decode-cli.ts) | 逆向分析工具 | 命令行界面，提供深度的结构验证与错误汇总 |
+| [`decode_raw.ts`](./decode_raw.ts) | 原始 Protobuf 解析 | `ProtobufParser`: 递归解析二进制流，推断数据结构 |
+| [`proto2ts.ts`](./proto2ts.ts) | 协议转换器 | 将 `.proto` 定义解析为 TS 代码及内部校验用的 `TypeLayers` |
+| [`verify_proto.ts`](./verify_proto.ts) | 结构校验与还原 | `verifyProto`: 对比原始数据与定义，报告不一致性并还原命名结构 |
+
+## 详细用法
+
+### 1. 原始解析与验证工具链 (`decode_raw.ts` & `verify_proto.ts`)
+当你需要分析未知数据结构或验证协议修改的兼容性时。
+
+```typescript
+import { ProtobufParser } from "./decode_raw.ts";
+import { verifyProto } from "./verify_proto.ts";
+import { parse } from "./proto2ts.ts";
+
+// 1. 原始解析 (无需定义即可提取字段 ID 与数据)
+const parser = new ProtobufParser();
+const { result: rawData } = parser.parseMessage(binaryPayload);
+
+// 2. 加载协议定义
+const layers = parse(protoContent);
+const assetType = layers.message.get("AssetBundle");
+
+// 3. 执行验证与还原 (将字段 ID 映射为名称，并校验类型)
+const { errors, result: formattedData } = verifyProto(rawData, assetType!);
+
+if (errors.length > 0) {
+  console.warn("发现结构差异:", errors);
+}
+```
+
+### 2. 命令行验证工具 (`decode-cli.ts`)
+最便捷的调试方式，直接在终端查看对比差异或导出转化结果。
+
+```bash
+# 基础用法：验证文件结构并打印错误
+node utils/protobuf/decode-cli.ts input.gia --print-errors
+
+# 过滤特定路径错误并导出为 JSON/JS 文件
+node utils/protobuf/decode-cli.ts input.gia --skip-paths root.secondary --out debug_res.json
+
+# 查询用法
+node utils/protobuf/decode-cli.ts -h
+```
+
+```log
+用法：node decode-cli.ts <input_path> [options]
+
+必需参数：
+  input_path                .gia 或 protobuf 二进制文件的路径。
+
+选项：
+  -h, --help                显示此帮助信息。 
+  -o, --out <path>          解码后的 JSON 输出文件路径（默认不保存到文件）。 
+  -p, --protobuf <path>     Protobuf 文件路径（默认加载 gia.proto）。 
+  -m, --message <name>      要解码的 Protobuf 消息名称（默认值：Root）。 
+  -q, --quiet               禁用所有控制台输出。 
+  -s, --strict <boolean>    启用严格解析（默认值：true）。 
+  -n, --no-slice            禁用对输入文件的默认切片操作 (20:-4)。 
+  -e, --print-errors        在错误输出中显示所有错误。 
+  --missing-error           在错误输出中显示缺少字段错误。 
+  --extra-error             在错误输出中显示多余字段错误。 
+  --type-error              在错误输出中显示类型不匹配错误。 
+  --repeated-error          在错误输出中显示重复字段不匹配错误。 
+  --enum-error              在错误输出中显示无效枚举错误。 
+  --skip-paths <paths>      要跳过的错误路径列表（区分大小写，前缀匹配）。 
+                            多个路径可以用空格分隔。
+```

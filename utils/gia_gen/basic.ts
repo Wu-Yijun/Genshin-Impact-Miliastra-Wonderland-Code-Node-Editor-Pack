@@ -1,44 +1,28 @@
-import type {
-  GraphNode,
-  NodeConnection,
-  NodePin,
-  ComplexValueStruct,
-  Root,
-  VarBase,
-  VarType,
-  ClientVarType,
-  VarBase_ItemType,
-  Comments,
-  GraphVariable,
-} from "../protobuf/gia.proto.ts";
-import {
-  NodePin_Index_Kind,
-  VarBase_Class,
-  VarBase_ItemType_ServerType_Kind,
-  VarBase_ItemType_ClassBase,
-  NodeGraph_Id_Kind,
-} from "../protobuf/gia.proto.ts";
-import { get_id, get_id_client, parse, stringify, type NodeType } from "./nodes.ts";
-import { counter_dynamic_id, counter_index, randomInt } from "./utils.ts";
-import type { AnyType, GraphVar } from "./graph.ts";
-import { assert, todo } from "../utils.ts";
-import { GAME_VERSION } from "../node_data/types.ts";
-import type { GraphConst } from "../node_data/types.ts";
-import { get_graph_const } from "../node_data/helpers.ts";
+import { counter_dynamic_id, counter_index, randomInt, type TypedValue } from "./utils.ts";
+import { assert, assertEq, todo } from "../utils.ts";
 
-function tid(type: string | NodeType, is_server: true): VarType;
-function tid(type: string | NodeType, is_server: false): ClientVarType;
-function tid(type: string | NodeType, is_server: boolean, return_type: "number"): number;
-function tid(type: string | NodeType, is_server: boolean, _?: "number"): VarType | ClientVarType {
-  if (typeof type === "string") {
-    type = parse(type);
-  }
-  if (is_server) {
-    return get_id(type) as VarType;
-  } else {
-    return get_id_client(type) as ClientVarType;
-  }
+import * as Gia from "../protobuf/gia.proto.ts";
+
+import type { NodeDef, PinDef, TypeDef, EnumDef, EnumTypeDef, GraphCategoryConstsDef } from "../node_data/types.ts";
+import { type NodeType } from "../node_data/node_type.ts";
+import { Node, Enum, Type as ServerType, ClientType } from "../node_data/instances.ts";
+import { TypeEngine } from "../node_data/core.ts";
+
+function Type(is_server: boolean = true): TypeEngine {
+  return is_server ? ServerType : ClientType;
 }
+
+// 下面内容需要重构, 写入 core.ts 中(不用原地修改这个文件)
+// 注意 gia.proto.ts 的字段和变量名完全变了, 
+// 且可以令传入的节点都是 NodeDef 类型, 类型与类型约束都是是 NodeType 类型.
+// 且假定传入的图中数据值都是 TypedValue 类型.
+// 其余传入类型均在 Gia 中, 比如 Gia.AssetBundle 就是旧的代码的 Root 类型.
+// 因此需要修改优化每个函数的接口.
+// Gia 的字段和类型名称经过了大幅修改, 但结构基本没变(具体字段说明可以看 gia.proto 里的注释)
+// 其中 node_type.ts 提供了 NodeType 类型, instances.ts 中提供了丰富的查询函数(和操作), 可以查找原始数据的 id 等等, 从 NodeDef 获取特定变体.
+// 同时, 还要重构函数, 不要像现在这样使用原始 number 数据作为参数, 而是始终传递我们定义好的规范类型(如 NodeType, NodeDef, PinDef, EnumDef 等等), 直到最后要写入结构了再做转化.
+// 不要管本文件夹的其它文件的调用和引用, 基本上所需的函数与方法我写在 import 了.
+
 
 /**
  * GraphBody_ 接口定义了构建图的基本参数
