@@ -45,7 +45,7 @@ async function main() {
   let inputPath: string | undefined;
   let outPath: string | undefined;
   let protobuf_path = join(__dirname, "gia.proto");
-  let message_name = "Gia";
+  let message_name = "AssetBundle";
   let keepEnum = false;
   let strict = true;
   let slice = true;

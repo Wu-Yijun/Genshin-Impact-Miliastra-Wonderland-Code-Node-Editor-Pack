@@ -196,19 +196,19 @@ message StructureDefinitionContainer {
 
     message TypeDef {
       message SubType {
-        VarType type    = 1;
-        int64   xxxx_id = 2; // What are they?
-        VarType key     = 502;
-        VarType value   = 503;
-        int64   valueId = 504;
+        ValueType type    = 1;
+        int64     xxxx_id = 2; // What are they?
+        ValueType key     = 502;
+        ValueType value   = 503;
+        int64     valueId = 504;
       }
-      VarType type    = 1;
-      SubType subType = 2;
+      ValueType type    = 1;
+      SubType   subType = 2;
 
       oneof val {
-        IntBaseValue    intVal  = 13;
-        EnumBaseValue   boolVal = 14;
-        StringBaseValue strVal  = 16;
+        Int    intVal  = 13;
+        Enum   boolVal = 14;
+        String strVal  = 16;
         // TODO: What A mess here! I can't bear anymore!!!!!
         // He who trust himself could take a try.
         // ESPECIALLY MAP/STRUCT BASE
@@ -216,20 +216,20 @@ message StructureDefinitionContainer {
     }
     message TypeDef3 {
       message SubType {
-        VarType type = 1;
+        ValueType type = 1;
         message Any {}
-        Any     xxxx_id = 2; // Why diff from TypeDef3
-        VarType key     = 502;
-        VarType value   = 503;
-        int64   valueId = 504;
+        Any       xxxx_id = 2; // Why diff from TypeDef3
+        ValueType key     = 502;
+        ValueType value   = 503;
+        int64     valueId = 504;
       }
-      VarType type    = 1;
-      SubType subType = 2;
+      ValueType type    = 1;
+      SubType   subType = 2;
 
       oneof val {
-        IntBaseValue    intVal  = 13;
-        EnumBaseValue   boolVal = 14;
-        StringBaseValue strVal  = 16;
+        Int    intVal  = 13;
+        Enum   boolVal = 14;
+        String strVal  = 16;
         // TODO: What A mess here! I can't bear anymore!!!!!
         // He who trust himself could take a try.
         // ESPECIALLY MAP/STRUCT BASE
@@ -239,15 +239,15 @@ message StructureDefinitionContainer {
     TypeDef3 typedef3 = 3;
     string   name     = 5;
 
-    string  varName  = 501;
-    VarType varType  = 502;
-    int32   varIndex = 503; // variable index
+    string    varName  = 501;
+    ValueType varType  = 502;
+    int32     varIndex = 503; // variable index
   }
   StructureDef def = 1;
 }
 
 // ========== Begin of Variable Defs ========== //
-enum VarType {
+enum ValueType {
   UnknownVar       = 0;
   Entity           = 1;
   GUID             = 2;
@@ -283,7 +283,7 @@ enum VarType {
   // reserved 210000 to 210099; // client enum types
 }
 
-enum ClientVarType {
+enum ClientValueType {
   UnknownVar_        = 0;
   Entity_            = 1; // type: Ety, typeid: 1
   EntityList_        = 2; // type: L<Ety>, typeid: 2
@@ -307,141 +307,156 @@ enum ClientVarType {
   ConfigurationList_ = 20; // type: L<Cfg>, typeid: 20
 }
 
-message VarBase {
-  enum Class {
-    Unknown      = 0;
-    IdBase       = 1;
-    IntBase      = 2;
-    SelectorBase = 3; // (But how to set options?)
-    FloatBase    = 4;
-    StringBase   = 5;
-    EnumBase     = 6;
-    VectorBase   = 7;
+// 统一定义的数值对象，对应原 TypedValue
+message TypedValue {
+// 定义 UI 输入框的展示样式
+  enum WidgetType {
+    UNKNOWN       = 0;
+    ID_INPUT      = 1; // ID 基础，如 Prefab/GUID
+    NUMBER_INPUT  = 2; // 整数
+    DROPDOWN      = 3; // 带有选项的选择器
+    DECIMAL_INPUT = 4; // 浮点数
+    TEXT_INPUT    = 5; // 字符串
+    ENUM_PICKER   = 6; // 枚举, 如 bool, enum
+    VECTOR_GROUP  = 7; // 三维向量组
 
-    ConcreteBase = 10000; // reflective pins
-    StructBase   = 10001;
-    ArrayBase    = 10002;
-    MapBase      = 10003;
-
-    MapPair = 10007;
+    TYPE_SELECTOR = 10000; // 多态类型选择器
+    STRUCT_BLOCK  = 10001; // 结构体块
+    LIST_GROUP    = 10002; // 数组/列表
+    MAP_GROUP     = 10003; // 字典/键值对
+    MAP_PAIR_ITEM = 10007; // 键值对子项
   }
-  message ItemType {
-    message StructItem { int64 structId = 1; }
-    message PairItems {
-      VarType        key      = 1;
-      VarType        value    = 2;
-      optional int64 structId = 3; // only when value is struct
+
+  // 类型的详细定义（元数据）
+  message TypeDefinition {
+// 区分系统来源
+    enum Backend {
+      UNKNOWN = 0;
+      SERVER  = 1;
+      CLIENT  = 2;
     }
-    message ClientType {
-      ClientVarType type = 2; // 不是, 怎么类型枚举都不一样. 想死了
+    message StructReference { int64 schema_id = 1; }
+    message ListReference { int64 schema_id = 1; }
+    message MapKeyValueBinding {
+      ValueType      key_type        = 1;
+      ValueType      value_type      = 2;
+      optional int64 value_struct_id = 3;
     }
+
     message ServerType {
-      enum Kind {
-        Normal = 0;
-        Struct = 1;
-        Pair   = 2;
+      enum Implementation {
+        PRIMITIVE = 0;
+        STRUCT    = 1;
+        PAIR      = 2;
       }
-      VarType type = 1;
-      Kind    kind = 2;
-      oneof id {
-        StructItem item  = 100;
-        PairItems  items = 101;
+      ValueType      type_tag = 1;
+      Implementation impl     = 2;
+      oneof schema {
+        StructReference    struct_ref  = 100;
+        MapKeyValueBinding map_binding = 101;
       }
     }
-    enum ClassBase {
-      Unknown = 0;
-      Server  = 1;
-      Client  = 2;
+
+    message ClientType {
+      ClientValueType type_tag = 2;
     }
-    ClassBase classBase = 1;
-    oneof class {
-      ServerType type_server = 100;
-      ClientType type_client = 101;
+
+    Backend backend = 1;
+    oneof type_detail {
+      ServerType server_side = 100;
+      ClientType client_side = 101;
     }
-  }
-  message StructInfo {
-    // TODO: What is this
-    message Inner { int32 xxx = 1; }
-    int32 xxx   = 1;
-    Inner inner = 100;
   }
 
-  Class             class             = 1;
-  int32             xxx_alreadySetVal = 2;
-  optional ItemType itemType          = 4;
-  // Only Struct contains this field
-  optional StructInfo structInfo = 5;
-
-  // decided by class, id = class + 100, except Struct/Array/Map
-  oneof baseValues {
-    IdBaseValue       bId            = 101;
-    IntBaseValue      bInt           = 102;
-    FloatBaseValue    bFloat         = 104;
-    StringBaseValue   bString        = 105;
-    EnumBaseValue     bEnum          = 106;
-    VectorBaseValue   bVector        = 107;
-    StructBaseValue   bStruct        = 108;
-    ArrayBaseValue    bArray         = 109;
-    ConcreteBaseValue bConcreteValue = 110;
-    MapPairBaseValue  bMapPair       = 111;
-    MapBaseValue      bMap           = 112;
+  // 结构体实例追踪（用于在图中生成唯一的索引名）
+  message InstanceTracker {
+    message Identity {
+      // 不论是不是同一类型的结构体, 计数器从 1 开始记录(仅对单张图生效)
+      // 在同一张图中, 如果有多个结构体值, 会依次记录, 并显示为 (结构体名_index)
+      int32 local_index = 1;
+    }
+    int32    version_tag = 1; // always_one
+    Identity identity    = 100;
   }
+
+  WidgetType               widget            = 1; // 样式类
+  int32                    is_explicitly_set = 2; // 0=空值, 1=用户已修改
+  optional TypeDefinition  type_def          = 4; // 类型元数据
+  optional InstanceTracker tracker           = 5; // 仅结构体有效
+
+  // 实际数据存储区域
+  oneof storage {
+    Id               val_id     = 101; // 实体/GUID 等 ID 类型
+    Int              val_int    = 102; // 整数
+    Float            val_float  = 104; // 浮点
+    String           val_string = 105; // 字符串
+    Enum             val_enum   = 106; // 枚举索引
+    Vector           val_vector = 107; // 向量
+    StructStorage    val_struct = 108; // 结构体数据
+    ListStorage      val_list   = 109; // 数组数据
+    PolymorphicValue val_poly   = 110; // 多态数值数据
+    MapPairStorage   val_pair   = 111; // 单个键值对
+    MapStorage       val_map    = 112; // 完整字典数据
+  }
+
 }
 
-message IdBaseValue { int32 val = 1; }
+// 辅助存储结构
 
-message IntBaseValue { int32 val = 1; }
+message Id { int64 id = 1; }
 
-message FloatBaseValue { float val = 1; }
+message Int { int32 x = 1; }
 
-message StringBaseValue { string val = 1; }
+message Float { float x = 1; }
 
-message EnumBaseValue { int32 val = 1; } // enum.ts/EnumNode_Value
+message String { string str = 1; }
 
-message VectorBaseValue {
+message Enum { int64 enum = 1; }
+
+message Vector {
   message Vec {
     float x = 1;
     float y = 2;
     float z = 3;
   }
-  Vec val = 1;
+  Vec vec = 1;
 }
 
-message StructBaseValue { repeated VarBase items = 1; }
+message StructStorage { repeated TypedValue fields = 1; }
 
-message ArrayBaseValue { repeated VarBase entries = 1; }
+message ListStorage { repeated TypedValue elements = 1; }
 
-message MapBaseValue {
-  // map pairs should be of Class MapPair
-  repeated VarBase mapPairs = 1;
+message MapStorage {
+  repeated TypedValue pairs = 1;
 }
 
-message MapPairBaseValue {
-  VarBase key   = 1;
-  VarBase value = 2;
+message MapPairStorage {
+  TypedValue key   = 1;
+  TypedValue value = 2;
 }
 
-message ConcreteBaseValue {
-  // index of concrete node types
-  // e.g. EnumNode.EnumEqualList
-  int32                       indexOfConcrete = 1;
-  VarBase                     value           = 2;
-  optional ComplexValueStruct structs         = 5;
+// 多态数值：用于可变引脚
+message PolymorphicValue {
+  int32                        chosen_type_index = 1; // 选中的类型索引
+  TypedValue                   actual_value      = 2; // 实际的值对象
+  optional DynamicTypeMetadata extra_meta        = 5; // 针对结构体/Map/List的动态描述
 }
 
-message ComplexValueStruct { // Map KV, Array Item, Struct Item
-  message Base { Wrapper wrapper = 1; }
-  message Wrapper {
-    VarBase.Class class = 1;
-    oneof type {
-      VarBase.ItemType.StructItem item    = 100;
-      VarBase.ItemType.PairItems  mapPair = 102;
+message DynamicTypeMetadata {
+  message TypeWrapper {
+    message Inner {
+      TypedValue.WidgetType widget = 1;
+      oneof type_extra {
+        TypedValue.TypeDefinition.StructReference    struct_ref  = 100;
+        TypedValue.TypeDefinition.ListReference      list_ref    = 101;
+        TypedValue.TypeDefinition.MapKeyValueBinding map_binding = 102;
+      }
     }
+    Inner inner = 1;
   }
-  int32 class = 4;
-  Base  inner = 100;
+  int32       widget_id = 4;
+  TypeWrapper wrapper   = 100;
 }
-// ========== End of Variable Defs ========== //
 
 // ========== Below are Messages that has been refracted ========== //
 
@@ -490,10 +505,10 @@ message GraphVariable {
   string var_name = 2;
 
   // 变量的数据类型定义
-  VarType base_type = 3;
+  ValueType base_type = 3;
 
   // 变量的初始值/当前值
-  VarBase storage_value = 4;
+  TypedValue storage_value = 4;
 
   // 是否暴露为外部可配置参数
   bool is_public = 5;
@@ -501,9 +516,9 @@ message GraphVariable {
   // 如果是结构体变量，指向其定义的 ID
   optional int64 schema_ref_id = 6;
 
-  // 容器类型的子类型定义 (残留字段)
-  VarType container_key_type   = 7;
-  VarType container_value_type = 8;
+  // 容器类型的子类型定义 (残留字段, 仅对 Map 有效)
+  ValueType container_key_type   = 7;
+  ValueType container_value_type = 8;
 }
 
 // 接口映射：穿墙管线
@@ -540,9 +555,9 @@ message NodeInterface {
     // 引脚类型定义
     message TypeInfo {
       // optional for flow pin
-      optional VarBase.Class ui_class        = 1; // UI表现形式 (IntBase, VecBase等)
-      optional VarType       var_type_shell  = 3; // VarType 枚举, 对于 Enum, 为 [100id](EnumCategoryId)
-      optional VarType       var_type_kernel = 4; // VarType 枚举, 对于 Enum, 为 14(EnumType)
+      optional TypedValue.WidgetType ui_class        = 1; // UI表现形式 (IntBase, VecBase等)
+      optional ValueType             var_type_shell  = 3; // ValueType 枚举, 对于 Enum, 为 [100id](EnumCategoryId)
+      optional ValueType             var_type_kernel = 4; // ValueType 枚举, 对于 Enum, 为 14(EnumType)
 
       // 参数框提示文本
       message Placeholder {
@@ -571,8 +586,8 @@ message NodeInterface {
       }
       message StructId { int64 val = 2; }
       message MapType {
-        VarType key   = 3;
-        VarType value = 4;
+        ValueType key   = 3;
+        ValueType value = 4;
         // if value is StructList
         optional int64 struct_id = 5;
       }
@@ -721,8 +736,8 @@ message PinInstance {
   PinSignature kernel_sig = 2; // i2: 对应 Kernel 实现的 参数 槽位
 
   // 值与类型
-  VarBase value = 3;
-  int32   type  = 4; // Be careful! VarType in Server and ClientVarType in Client
+  TypedValue value = 3;
+  int32      type  = 4; // Be careful! ValueType in Server and ClientVarType in Client
 
   // 连接关系
   repeated NodeConnection connections = 5;

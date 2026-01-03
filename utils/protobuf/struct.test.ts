@@ -13,8 +13,9 @@ const { result } = parser.parseMessage(new Uint8Array(readFileSync(PATH)).slice(
 
 // console.log(result);
 
-const res = verifyProto(result, layers.message.get("Root")!);
+const res = verifyProto(result, layers.message.get("AssetBundle")!, { replaceEnum: true });
 console.log("Errors:", inspect(res.errors.filter(x => x.type !== "MISSING_FIELD" && !x.path.startsWith("root.accessories.structureDef")), { depth: Infinity, colors: true }));
 
+console.dir(res.result.primary_resource.graph_data.inner.graph.blackboard.map((val: any) => (val.storage_value)), { depth: Infinity, colors: true });
 
-writeFileSync(import.meta.dirname + "/temp.js", "const res = " + inspect(res.result, { depth: Infinity, maxArrayLength: Infinity }));
+// writeFileSync(import.meta.dirname + "/temp.js", "const res = " + inspect(res.result, { depth: Infinity, maxArrayLength: Infinity }));
