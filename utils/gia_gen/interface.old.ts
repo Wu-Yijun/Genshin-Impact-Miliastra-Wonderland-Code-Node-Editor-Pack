@@ -5,8 +5,7 @@ import {
   node_body,
   pin_body,
   make_typed_value,
-  make_connection,
-  make_annotation
+  make_connection
 } from "./core.ts";
 import { Doc, Node as NodeLib } from "../node_data/instances.ts";
 import type { NodeDef, PinDef, ResourceClass, ServerClient, TypedValue } from "../node_data/types.ts";
@@ -177,24 +176,24 @@ export class Graph {
 }
 
 export class Node {
-  public readonly system: ResourceClass;
+  public def: NodeDef;
   public readonly node_index: number;
-  public readonly def: NodeDef;
-
-  // for variant nodes
+  public readonly system: string;
+  public pins: Pin[];
   public constraint: NodeType | undefined;
-
-  public readonly pin_values: Map<string, TypedValue>;
 
   public x: number = 0;
   public y: number = 0;
   public comment: Comment | null = null;
 
-  constructor(system: ResourceClass, def: NodeDef, index: number) {
+  // For Variant Nodes
+  public concreteId: number | undefined;
+
+  constructor(def: NodeDef, index: number, system: string) {
     this.def = def;
     this.node_index = index;
     this.system = system;
-    this.pin_values = new Map();
+    this.pins = [];
     this.initPins();
   }
 
@@ -229,30 +228,30 @@ export class Node {
     return defIndex;
   }
 
-  findPin(identifier: string): {
-    success: boolean;
-    kind?: "Flow" | "Data" | "Meta"
-    pin?: PinDef;
-  } {
-    const pin = this.def.DataPins.find(p => p.Identifier === identifier);
-    if (pin) {
-      return {
-        success: true,
-        kind: "Data",
-        pin: pin
-      };
+  getPin(arg: number | string, dir?: "In" | "Out"): Pin | undefined {
+    let pin: Pin | undefined;
+    if (typeof arg === "number") {
+      // Ambiguous if we don't know Kind. 
+      // User request said "allow use index ... specify pin"
+      // If just index, we might default to Data pins? Or we search through all?
+      // Old graph.ts assumed absolute index across all pins? 
+      // Or 0-based index for Inputs and 0-based for Outputs? 
+
+      // Let's assume arg is the 'Index' property of the Pin (generic index within its category/kind)
+      // If direction is provided, we filter.
+      if (dir) {
+        pin = this.pins.find(p => p.def.Index === arg && p.def.Direction === dir);
+      } else {
+        // Try to find unique match
+        const matches = this.pins.filter(p => p.def.Index === arg);
+        if (matches.length === 1) pin = matches[0];
+        else if (matches.length > 1) console.warn(`Ambiguous pin index ${arg} on node ${this.def.Identifier}`);
+      }
+    } else {
+      // Identifier
+      pin = this.pins.find(p => p.def.Identifier === arg);
     }
-    const flow = this.def.FlowPins.find(p => p.Identifier === identifier);
-    if (flow) {
-      return {
-        success: true,
-        kind: "Flow",
-        pin: flow
-      };
-    }
-    return {
-      success: false
-    };
+    return pin;
   }
 
   /**
@@ -304,54 +303,124 @@ export class Node {
     this.y = y;
   }
 
-  getVariant(): NodeDef | undefined {
-    if (this.constraint === undefined || this.def.Type === "Fixed") {
-      // not a variant node
-      return undefined;
-    }
-    const def = NodeLib.getVariant(this.def.Identifier, stringify(this.constraint));
-    if (!def) {
-      console.error(`Constraint ${stringify(this.constraint)} not found for node ${this.def.Identifier}`);
-      return undefined;
-    }
-    return def;
-  }
-
-  encode_pins(): Gia.PinInstance[] {
-    const ret: Gia.PinInstance[] = [];
-    const def = this.getVariant() ?? this.def;
-    const is_variant = def !== this.def;
-
-    return ret;
-  }
-
   encode(): Gia.NodeInstance {
-    const comment = this.comment ? make_annotation(this.comment.content) : undefined;
-
-    const pins = this.encode_pins();
+    const pinsEncoded = this.pins.map(p => p.encode()).filter((p): p is Gia.PinInstance => !!p);
 
     return node_body({
-      system: this.system,
       def: this.def,
+      concrete_id: this.concreteId,
       x: this.x,
       y: this.y,
-      comment: comment,
-      pins: pins,
+      pins: pinsEncoded,
       unique_index: this.node_index,
+      comment: this.comment ? this.comment.encode() : undefined
     });
   }
 }
 
-export interface Connect {
-  from: Node;
-  to: Node;
-  from_pin: PinDef;
-  to_pin: PinDef;
+export class Pin {
+  public readonly system: ResourceClass;
+
+  public def: PinDef;
+  public value: TypedValue;
+  public connections: Connection[] = [];
+
+  constructor(system: ResourceClass, def: PinDef) {
+    this.def = def;
+    this.system = system;
+    this.value = this.def.DefaultValue ?? null;
+  }
+
+  addConnection(conn: Connection) {
+    if (!this.connections.includes(conn)) this.connections.push(conn);
+  }
+
+  removeConnection(conn: Connection) {
+    const idx = this.connections.indexOf(conn);
+    if (idx !== -1) this.connections.splice(idx, 1);
+  }
+
+  setVal(val: TypedValue | null) {
+    if (this.def.Direction === "In") {
+      this.value = val;
+    } else {
+      console.error("Cannot set value on output/flow pin");
+    }
+  }
+
+  encode(): Gia.PinInstance | null {
+    // If not connected and no value, maybe skip? 
+    // But Gia usually expects all pins defined in shell.
+
+    // Prepare connections list for this pin
+    // If we are Output, we list who we connect TO (target node, target pin)
+    // If we are Input, usually we don't list connections in efficient mode, OR we list source?
+    // Gia: `connections` field in PinInstance.
+    // Usually contains list of (target_node_index, target_pin_sig).
+    // So valid for OUT pins.
+
+    let encodedConnections: Gia.NodeConnection[] = [];
+    if (this.kind === Gia.PinSignature_Kind.OUT_PARAM || this.kind === Gia.PinSignature_Kind.OUT_FLOW) {
+      encodedConnections = this.connections.map(c => make_connection(
+        c.to.node_index,
+        c.toPin.kind,
+        c.toPin.index
+      ));
+    }
+
+    // Type resolution
+    let type: NodeType = this.def.Type ? parse(this.def.Type) : { t: "b", b: "Int" }; // Default/Fallback?
+
+    // Value encoding
+    let typedValue: Gia.TypedValue | undefined = undefined;
+    if (this.value !== undefined) {
+      typedValue = make_typed_value(type, this.value, this.system === "Server");
+    }
+
+    return pin_body({
+      def: this.def,
+      index: this.index,
+      kind: this.kind,
+      value: typedValue,
+      type: type,
+      is_server: this.system === "Server",
+      connections: encodedConnections
+    });
+  }
+
+  toString() {
+    return `${this.def.Identifier}(${this.index})`;
+  }
 }
 
-export interface Comment {
+export class Connection {
+  from: Node;
+  fromPin: Pin;
+  to: Node;
+  toPin: Pin;
+
+  constructor(from: Node, fromPin: Pin, to: Node, toPin: Pin) {
+    this.from = from;
+    this.fromPin = fromPin;
+    this.to = to;
+    this.toPin = toPin;
+  }
+}
+
+export class Comment {
   content: string;
-  x?: number;
-  y?: number;
-  attached_node?: Node;
+  x: number;
+  y: number;
+  constructor(content: string, x: number, y: number) {
+    this.content = content;
+    this.x = x;
+    this.y = y;
+  }
+  encode(): Gia.Annotation {
+    return {
+      content: this.content,
+      x: this.x,
+      y: this.y
+    };
+  }
 }

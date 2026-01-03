@@ -544,3 +544,12 @@ export function make_connection(target_index: number, target_pin: PinDef, is_flo
     target_pin_kernel: kernel
   };
 }
+
+
+export function make_annotation(text: string, x = 0, y = 0): Gia.Annotation {
+  return {
+    text,
+    x_pos: x,
+    y_pos: y
+  }
+}

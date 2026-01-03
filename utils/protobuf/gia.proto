@@ -852,6 +852,6 @@ message GraphVariable {
 message Annotation {
   string text = 1;
   // 如果坐标为空，说明该注释是“吸附”在某个节点实例上的（通过 NodeInstance.attached_comment 关联）
-  optional float pos_x = 2;
-  optional float pos_y = 3;
+  optional float x_pos = 2;
+  optional float y_pos = 3;
 }
