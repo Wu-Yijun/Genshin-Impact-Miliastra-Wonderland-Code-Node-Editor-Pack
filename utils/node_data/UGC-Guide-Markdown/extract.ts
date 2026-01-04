@@ -1,3 +1,4 @@
+import assert from 'assert';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -12,155 +13,165 @@ interface NodeEntry {
   name: string;
   category: string;
   subcategory: string;
-  imageUrl: string;
   description: string;
   parameters: NodeParameter[];
 }
 
 const workingDir = 'd:/Program/GenshinImpact/projs/Convertor/utils/node_data/UGC-Guide-Markdown';
 const outputFile = path.join(workingDir, 'nodes.json');
-const logFile = path.join(workingDir, 'extraction_logs.txt');
 
-const logs: string[] = [];
-
-function log(msg: string) {
-  console.log(msg);
-  logs.push(msg);
-}
-
-function normalizeHeader(text: string): string {
-  // Remove bolding (**), italics (_ or *), and escaped characters (\.)
-  return text.replace(/\*\*|_|\*|\\/g, '').trim();
-}
-
+type S = "ready" | "header" | "desc" | "params" | "th" | "ts" | "tb";
 
 function parseMarkdownFile(filePath: string): NodeEntry[] {
   const content = fs.readFileSync(filePath, 'utf-8');
-  const lines = content.split('\n');
-  const filename = path.basename(filePath, '.md');
-
-  let category = '';
-  let subcategory = '';
-  const nodes: NodeEntry[] = [];
-
-  let currentNode: Partial<NodeEntry> | null = null;
-  let inParameters = false;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line && !inParameters) continue;
-
-    // H1: Category
-    if (line.startsWith('# ')) {
-      category = normalizeHeader(line.substring(2));
+  const old_lines = content.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  const lines: string[] = [];
+  for (let i = 0; i < old_lines.length; i++) {
+    if (old_lines[i].startsWith("|") && !old_lines[i].endsWith("|")) {
+      let l = old_lines[i];
+      while (!old_lines[i].endsWith("|")) l += '\n' + old_lines[++i];
+      lines.push(l);
+      // console.log(JSON.stringify(l));
+      if (l.split("").filter(x => x === "|").length !== 5) {
+        console.log("[NOTE]: Multiple Lines In Table:", JSON.stringify(l));
+      }
       continue;
     }
+    lines.push(old_lines[i]);
+  }
+
+  let s = "ready" as S;
+  let l_len = 0;
+  let param = 0;
+
+  // format checker
+  lines.forEach((l, ii) => {
+    if (l.startsWith("## ")) {
+      let a = l.slice(3).replace(/\*\*/g, "").trim();
+      if (/^\d+\./.test(a)) {
+        // ## 1.
+        if (s !== "ready" && s !== "tb" && s !== "header") debugger;
+        s = "desc";
+      } else if (/^[IVXLC]+\./.test(a)) {
+        // ## I.
+        if (s !== "ready" && s !== "tb") debugger;
+        s = "header";
+      } else {
+        console.log(filePath, lines.slice(ii - 1, ii + 1));
+        debugger;
+      }
+    } else if (l.startsWith("**")) {
+      if (l === "**Node Functions**") {
+        if (s !== "desc") debugger;
+        s = "params";
+        param = 0;
+      } else if (l === "**Node Parameters**") {
+        if (s !== "params") {
+          console.log(filePath, lines.slice(ii - 1, ii + 1));
+          debugger;
+        }
+        s = "th";
+      }
+    } else if (l.startsWith("|")) {
+      if (s === "th") {
+        s = "ts";
+        if (l !== "| Parameter Type | Parameter Name | Type | Description |"
+          && l !== "| Parameter Type | Parameter Name | Type | Description | Description |") debugger;
+        l_len = l.split("|").length;
+      } else if (s === "ts") {
+        if (!/^\|-+\|-+\|-+\|-+\|(-+\|)?$/.test(l)) debugger;
+        s = "tb";
+        if (l_len !== l.split("|").length) debugger;
+      } else if (s === 'tb') {
+        const cells = l.split("|").map(x => x.trim());
+        if (l_len !== cells.length) debugger;
+        if (l_len === 7) {
+          if (cells[4] !== cells[5] && cells[5] !== "") debugger;
+        }
+        if (cells.every(l => l.length === 0)) {
+          return;
+        }
+        if (cells[1] === "" || cells[3] === "") {
+          debugger;
+        }
+
+      } else {
+        debugger;
+      }
+    } else if (/^[0-9A-Z]/.test(l)) {
+      if (s !== "params") {
+        console.log(filePath, lines.slice(ii - 1, ii + 1));
+        debugger;
+      }
+      param++;
+      if (param > 5) {
+        console.log(filePath, lines.slice(ii - 5, ii));
+        debugger;
+      }
+    } else {
+      console.log(filePath, lines.slice(ii - 1, ii + 1));
+      debugger;
+    }
+  });
+
+  // 保证结构正确 (手动处理异常)
+
+
+  const filename = path.basename(filePath, '.md');
+
+  let subcategory = 'General';
+  const nodes: NodeEntry[] = [];
+
+  let i = 0;
+  while (i < lines.length) {
+    let line = lines[i].trim();
 
     // H2: Potential Node or Subcategory
     if (line.startsWith('## ')) {
-      const headerText = normalizeHeader(line.substring(3));
-
-      const nodeMatch = headerText.match(/^(\d+\.?\s+)?(.+)$/);
-
-      // Heuristic for subcategory: Starts with Roman numerals like "I.", "II."
+      const headerText = line.replace(/\*\*/g, "").substring(3);
+      // console.log(headerText)
+      assert(headerText.match(/^[IVXLC]+\./) || headerText.match(/^\d+\./));
       if (headerText.match(/^[IVXLC]+\./)) {
         subcategory = headerText;
-        continue;
-      }
-
-      if (nodeMatch) {
-        if (currentNode) nodes.push(currentNode as NodeEntry);
-        currentNode = {
-          name: nodeMatch[2].trim(),
-          category: category || filename,
-          subcategory: subcategory,
-          imageUrl: '',
-          description: '',
-          parameters: []
-        };
-        inParameters = false;
+        i++;
         continue;
       }
     }
 
-    // Check for "bold node names" if we just saw a number or it's a stand-alone bold line
-    // e.g., "**Send Signal to Server Node Graph**"
-    if (line.startsWith('**') && line.endsWith('**')) {
-      const potentialName = normalizeHeader(line);
-      if (potentialName.length > 3 && !potentialName.toLowerCase().includes('parameters') && !potentialName.toLowerCase().includes('functions')) {
-        // Check if this is a new node or just repeating the current one
-        if (currentNode && (currentNode.name === potentialName || currentNode.name?.includes(potentialName))) {
-          // Skip
-        } else {
-          if (currentNode) nodes.push(currentNode as NodeEntry);
-          currentNode = {
-            name: potentialName,
-            category: category || filename,
-            subcategory: subcategory,
-            imageUrl: '',
-            description: '',
-            parameters: []
-          };
-          inParameters = false;
-          continue;
-        }
+    const nodeMatch = line.replace(/\*\*/g, "").match(/^## \d+\.(\s+.+)$/);
+    // console.log(line.replace(/\*\*/g, ""));
+    assert(nodeMatch !== null);
+
+    const currentNode: NodeEntry = {
+      name: nodeMatch[1].trim(),
+      category: filename,
+      subcategory: subcategory,
+      description: '',
+      parameters: []
+    };
+
+    assert(lines[++i] === "**Node Functions**");
+    while ((line = lines[++i]) !== '**Node Parameters**') {
+      currentNode!.description += line + '\n';
+    }
+
+    line = lines[++i];
+    assert(line === "| Parameter Type | Parameter Name | Type | Description |" ||
+      line === "| Parameter Type | Parameter Name | Type | Description | Description |");
+    ++i; // skip header
+    while ((line = lines[++i])?.startsWith("|")) {
+      const cells = line.split("|").slice(1, 5).map(x => x.trim());
+      if (cells.every(l => l.length === 0)) {
+        continue;
       }
-    }
-
-    if (!currentNode) continue;
-
-    // Image: ![](...)
-    const imgMatch = line.match(/!\[\]\((.+)\)/);
-    if (imgMatch && !currentNode.imageUrl) {
-      currentNode.imageUrl = imgMatch[1];
-      continue;
-    }
-
-    // Section headers
-    if (line.toLowerCase().includes('node functions')) {
-      inParameters = false;
-      continue;
-    }
-    if (line.toLowerCase().includes('node parameters')) {
-      inParameters = true;
-      continue;
-    }
-
-    // Parameters Table
-    if (inParameters && line.startsWith('|')) {
-      if (line.toLowerCase().includes('parameter type') || line.includes('---')) continue;
-      // Robust split
-      const cells = line.split('|').map(c => c.trim()).filter((c, index, array) => {
-        if (index === 0 && c === '') return false;
-        if (index === array.length - 1 && c === '') return false;
-        return true;
+      currentNode!.parameters!.push({
+        type: cells[0],
+        name: cells[1],
+        dataType: cells[2],
+        description: cells[3]
       });
-
-      if (cells.length >= 3) {
-        currentNode.parameters!.push({
-          type: cells[0] || '',
-          name: cells[1] || '',
-          dataType: cells[2] || '',
-          description: cells[3] || ''
-        });
-      } else {
-        console.debug(line);
-      }
-      continue;
     }
-
-    // Description (under Node Functions or before Node Parameters)
-    if (!inParameters && line && !line.startsWith('!') && !line.startsWith('#')) {
-      const cleaned = line.replace(/^\d+\.\s*/, '').trim();
-      if (cleaned) {
-        if (!currentNode.description) currentNode.description = cleaned;
-        else if (!currentNode.description.includes(cleaned)) currentNode.description += ' ' + cleaned;
-      }
-    }
-  }
-
-  if (currentNode) {
-    nodes.push(currentNode as NodeEntry);
+    nodes.push(currentNode);
   }
 
   return nodes;
@@ -171,24 +182,15 @@ function main() {
   const allNodes: NodeEntry[] = [];
 
   for (const file of files) {
-    log(`Parsing ${file}...`);
+    console.log(`Parsing ${file}...`);
     const nodes = parseMarkdownFile(path.join(workingDir, file));
-    log(`Extracted ${nodes.length} nodes from ${file}`);
+    console.log(`Extracted ${nodes.length} nodes from ${file}`);
     allNodes.push(...nodes);
   }
 
-  // Final check for suspiciously parsed types
-  allNodes.forEach(node => {
-    node.parameters.forEach(p => {
-      if (p.name === 'Damage Coefficient' && p.dataType === '3D Vector') {
-        log(`[WARN] Suspect type for node "${node.name}" in ${node.category}: ${p.name} is ${p.dataType}`);
-      }
-    });
-  });
 
   fs.writeFileSync(outputFile, JSON.stringify(allNodes, null, 2));
-  fs.writeFileSync(logFile, logs.join('\n'));
-  log(`Done! Saved to ${outputFile}`);
+  console.log(`Done! Saved to ${outputFile}`);
 }
 
 main();
