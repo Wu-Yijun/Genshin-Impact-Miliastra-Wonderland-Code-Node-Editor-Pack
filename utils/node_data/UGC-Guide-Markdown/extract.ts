@@ -17,8 +17,31 @@ interface NodeEntry {
   parameters: NodeParameter[];
 }
 
+const EN = {
+  "**Node Functions**": "**Node Functions**",
+  "**Node Parameters**": "**Node Parameters**",
+  "| Parameter Type | Parameter Name | Type | Description |": "| Parameter Type | Parameter Name | Type | Description |",
+  "| Parameter Type | Parameter Name | Type | Description | Description |": "| Parameter Type | Parameter Name | Type | Description | Description |",
+  'General': 'General',
+  "/^## \d+\.(\s+.+)$/": /^## \d+\.(\s+.+)$/,
+  "/^[IVXLC]+\./": /^[IVXLC]+\./,
+  "/^[0-9A-Z]/": /^[0-9A-Z]/
+};
+const ZH = {
+  "**Node Functions**": "**节点功能**",
+  "**Node Parameters**": "**节点参数**",
+  "| Parameter Type | Parameter Name | Type | Description |": "| 参数类型 | 参数名 | 类型 | 说明 |",
+  "| Parameter Type | Parameter Name | Type | Description | Description |": "| 参数类型 | 参数名 | 类型 | 说明 | 说明 |",
+  'General': '通用',
+  "/^## \d+\.(\s+.+)$/": /^## \d+\.(\p{Script=Han}.+)$/u,
+  "/^[IVXLC]+\./": /^[一二三四五六七八九十]+、/,
+  "/^[0-9A-Z]/": /^\p{Script=Han}/u
+};
+
+const t = ZH;
+
 const workingDir = 'd:/Program/GenshinImpact/projs/Convertor/utils/node_data/UGC-Guide-Markdown';
-const outputFile = path.join(workingDir, 'nodes.json');
+const outputFile = path.join(workingDir, 'nodes.zh.json');
 
 type S = "ready" | "header" | "desc" | "params" | "th" | "ts" | "tb";
 
@@ -50,22 +73,34 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
       let a = l.slice(3).replace(/\*\*/g, "").trim();
       if (/^\d+\./.test(a)) {
         // ## 1.
-        if (s !== "ready" && s !== "tb" && s !== "header") debugger;
+        if (s !== "ready" && s !== "tb" && s !== "header") {
+          if (s === "th") {
+            console.warn(l.slice(ii - 3, ii));// 允许空表
+          } else {
+            debugger;
+          }
+        }
         s = "desc";
-      } else if (/^[IVXLC]+\./.test(a)) {
+      } else if (t["/^[IVXLC]+\./"].test(a)) {
         // ## I.
-        if (s !== "ready" && s !== "tb") debugger;
+        if (s !== "ready" && s !== "tb") {
+          if (s === "th") {
+            console.warn(l.slice(ii - 3, ii));// 允许空表
+          } else {
+            debugger;
+          }
+        }
         s = "header";
       } else {
         console.log(filePath, lines.slice(ii - 1, ii + 1));
         debugger;
       }
     } else if (l.startsWith("**")) {
-      if (l === "**Node Functions**") {
+      if (l === t["**Node Functions**"]) {
         if (s !== "desc") debugger;
         s = "params";
         param = 0;
-      } else if (l === "**Node Parameters**") {
+      } else if (l === t["**Node Parameters**"]) {
         if (s !== "params") {
           console.log(filePath, lines.slice(ii - 1, ii + 1));
           debugger;
@@ -75,8 +110,8 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
     } else if (l.startsWith("|")) {
       if (s === "th") {
         s = "ts";
-        if (l !== "| Parameter Type | Parameter Name | Type | Description |"
-          && l !== "| Parameter Type | Parameter Name | Type | Description | Description |") debugger;
+        if (l !== t["| Parameter Type | Parameter Name | Type | Description |"]
+          && l !== t["| Parameter Type | Parameter Name | Type | Description | Description |"]) debugger;
         l_len = l.split("|").length;
       } else if (s === "ts") {
         if (!/^\|-+\|-+\|-+\|-+\|(-+\|)?$/.test(l)) debugger;
@@ -98,7 +133,7 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
       } else {
         debugger;
       }
-    } else if (/^[0-9A-Z]/.test(l)) {
+    } else if (t["/^[0-9A-Z]/"].test(l)) {
       if (s !== "params") {
         console.log(filePath, lines.slice(ii - 1, ii + 1));
         debugger;
@@ -119,7 +154,7 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
 
   const filename = path.basename(filePath, '.md');
 
-  let subcategory = 'General';
+  let subcategory = t['General'];
   const nodes: NodeEntry[] = [];
 
   let i = 0;
@@ -129,16 +164,16 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
     // H2: Potential Node or Subcategory
     if (line.startsWith('## ')) {
       const headerText = line.replace(/\*\*/g, "").substring(3);
-      // console.log(headerText)
-      assert(headerText.match(/^[IVXLC]+\./) || headerText.match(/^\d+\./));
-      if (headerText.match(/^[IVXLC]+\./)) {
+      console.log(headerText)
+      assert(headerText.match(t["/^[IVXLC]+\./"]) || headerText.match(/^\d+\./));
+      if (headerText.match(t["/^[IVXLC]+\./"])) {
         subcategory = headerText;
         i++;
         continue;
       }
     }
 
-    const nodeMatch = line.replace(/\*\*/g, "").match(/^## \d+\.(\s+.+)$/);
+    const nodeMatch = line.replace(/\*\*/g, "").match(t["/^## \d+\.(\s+.+)$/"]);
     // console.log(line.replace(/\*\*/g, ""));
     assert(nodeMatch !== null);
 
@@ -150,14 +185,18 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
       parameters: []
     };
 
-    assert(lines[++i] === "**Node Functions**");
-    while ((line = lines[++i]) !== '**Node Parameters**') {
+    assert(lines[++i] === t["**Node Functions**"]);
+    while ((line = lines[++i]) !== t['**Node Parameters**']) {
       currentNode!.description += line + '\n';
     }
 
     line = lines[++i];
-    assert(line === "| Parameter Type | Parameter Name | Type | Description |" ||
-      line === "| Parameter Type | Parameter Name | Type | Description | Description |");
+    if (line === undefined || line.startsWith("## ")) {
+      // 跳过表格
+      continue;
+    }
+    assert(line === t["| Parameter Type | Parameter Name | Type | Description |"] ||
+      line === t["| Parameter Type | Parameter Name | Type | Description | Description |"]);
     ++i; // skip header
     while ((line = lines[++i])?.startsWith("|")) {
       const cells = line.split("|").slice(1, 5).map(x => x.trim());
@@ -178,7 +217,8 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
 }
 
 function main() {
-  const files = fs.readdirSync(workingDir).filter(f => f.endsWith('.md') && f !== 'readme.md');
+  // const files = fs.readdirSync(workingDir).filter(f => f.endsWith('.md') && !f.endsWith(".zh.md") && f !== 'readme.md');
+  const files = fs.readdirSync(workingDir).filter(f => f.endsWith(".zh.md") && f !== 'readme.md');
   const allNodes: NodeEntry[] = [];
 
   for (const file of files) {

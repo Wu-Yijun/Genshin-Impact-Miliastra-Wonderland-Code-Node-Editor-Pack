@@ -7,6 +7,12 @@
 
 通过 [extract.ts](./extract.ts) 自动分析文档结构并构建数据(需要手动调整少量错误数据).
 
+中文数据见 [nodes.zh.json](./nodes.zh.json), 英文数据见 [nodes.json](./nodes.json).
+
+*P.S. 评价是多半是 AI 自动翻译的, 不然怎么连缺少字段的位置和错误类型都一样?*
+
+*P.P.S 然后我就可以将数据补全进入我的 data.json 了...* 
+
 ## 文件清单
 
 *存档构建日期: 2026-01-01*
@@ -33,6 +39,9 @@
 
 ### 链接地址:
 
+供 MarkSnip 批量下载使用
+
+```
 英文版:
 
 [ServerExecution](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhw66orrrfkm)
@@ -58,3 +67,5 @@
 [ClientExecution.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mh6obvipqv1g)
 [ClientFlowControl.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhxppurzujfq)
 [ClientOther.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhor3u09y7u0)
+
+```
