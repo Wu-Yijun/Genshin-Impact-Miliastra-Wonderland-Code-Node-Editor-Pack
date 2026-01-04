@@ -4,8 +4,9 @@ import path from "path";
 import * as NT from "./node_type.ts";
 
 
-export interface TypedNodeDef extends Omit<D.NodeDef, "DataPins"> {
+export interface TypedNodeDef extends Omit<D.NodeDef, "DataPins" | "FlowPins"> {
   DataPins: TypedPinDef[];
+  FlowPins: TypedPinDef[];
 }
 export interface TypedPinDef extends Omit<D.PinDef, "Type"> {
   Type?: NT.NodeType;
@@ -146,6 +147,20 @@ export class Nodes {
    */
   getByID(id: number): D.NodeDef | undefined {
     return this.ensureIDMap().get(id);
+  }
+
+  toTypedNodeDef(node: D.NodeDef): TypedNodeDef {
+    return {
+      ...node, 
+      DataPins: node.DataPins.map(dp => ({
+        ...dp,
+        Type: NT.parse(dp.Type ?? "Unk")
+      })),
+      FlowPins: node.FlowPins.map(fp => ({
+        ...fp,
+        Type: NT.parse(fp.Type ?? "Unk")
+      }))
+    };
   }
 
   /**

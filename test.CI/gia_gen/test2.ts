@@ -10,9 +10,9 @@ const Trig = graph.add_node(NODES.Trigger_Tab_OnTabSelect)!;
 // column 2
 const Branch1 = graph.add_node(NODES.Control_General_Switch)!;
 const get_val = graph.add_node(NODES.Query_CustomVariable_GetVariable)!;
-Branch1.setConstraints({ t: "c", c: [["R", { t: "b", b: "Int" }]] });
+Branch1.setConstraints({ t: "c", c: [["T", { t: "b", b: "Int" }]] });
 graph.flow(Trig, Branch1);
 graph.connect(Trig, Branch1, 2, 0);
 // graph.connect(Trig, get_val, 0, 0);
 
-writeFileSync("temp.ts", "const res = " + inspect(graph, { depth: null }));
+writeFileSync("temp.cs",  inspect(graph, { depth: null }));

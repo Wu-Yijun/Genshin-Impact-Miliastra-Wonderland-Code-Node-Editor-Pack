@@ -6,7 +6,7 @@ import * as Gia from "../protobuf/gia.proto.ts";
 import type { NodeDef, PinDef, ResourceClass, TypedValue } from "../node_data/types.ts";
 import { type DictType,type ListType, type NodeType, stringify,type StructType } from "../node_data/node_type.ts";
 import { Doc, Node, ServerType, ClientType } from "../node_data/instances.ts";
-import type { TypedPinDef } from "../node_data/core.ts";
+import type { TypedNodeDef, TypedPinDef } from "../node_data/core.ts";
 
 
 export interface GraphBody_ {
@@ -84,7 +84,7 @@ export function graph_body(body: GraphBody_): Gia.AssetBundle {
 
 export interface NodeBody_ {
   system: ResourceClass;
-  def: NodeDef;
+  def: TypedNodeDef | NodeDef; 
   x: number;
   y: number;
   comment?: Gia.Annotation;

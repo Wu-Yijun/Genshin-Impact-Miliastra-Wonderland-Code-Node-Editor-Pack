@@ -10,10 +10,10 @@ import {
   make_variant_value
 } from "./core.ts";
 import { Doc, Node as NodeLib } from "../node_data/instances.ts";
-import type { InjectedDef, NodeDef, PinDef, ResourceClass, ServerClient, TypedValue } from "../node_data/types.ts";
-import { type NodeType, stringify, parse, is_reflect,type ConstraintType,type StructType } from "../node_data/node_type.ts";
+import type { NodeDef, ResourceClass, ServerClient, TypedValue } from "../node_data/types.ts";
+import { type NodeType, stringify, parse, is_reflect, type ConstraintType, type StructType, type_equal } from "../node_data/node_type.ts";
 import { Counter, get_system, randomInt, randomName } from "./utils.ts";
-import { type TypedNodeDef } from "../node_data/core.ts";
+import { type TypedPinDef, type TypedNodeDef } from "../node_data/core.ts";
 
 
 // Helper to determine system from common inputs if needed,
@@ -95,28 +95,28 @@ export class Graph {
     return newNode;
   }
 
-  flow(from: Node, to: Node, fromArg?:  string, toArg?: string, insert_pos?: number): Connection | null {
-    let from_pin: PinDef|undefined;
-    let to_pin: PinDef|undefined;
-    if(fromArg!==undefined){
+  flow(from: Node, to: Node, fromArg?: string, toArg?: string, insert_pos?: number): Connection | null {
+    let from_pin: TypedPinDef | undefined;
+    let to_pin: TypedPinDef | undefined;
+    if (fromArg !== undefined) {
       const f = from.findPin(fromArg);
-      if(!f.success || f.kind !== "Flow"){
+      if (!f.success || f.kind !== "Flow") {
         console.error(`Source flow pin not found on node ${from.def.Identifier}: ${fromArg}`);
         return null;
       }
       from_pin = f.pin;
-    }else{
-       from_pin = from.def.FlowPins.find(p => p.Direction === "Out" && p.Visibility !== "Hidden");
+    } else {
+      from_pin = from.def.FlowPins.find(p => p.Direction === "Out" && p.Visibility !== "Hidden");
     }
-    if(toArg!==undefined){
+    if (toArg !== undefined) {
       const t = to.findPin(toArg);
-      if(!t.success || t.kind !== "Flow"){
+      if (!t.success || t.kind !== "Flow") {
         console.error(`Target flow pin not found on node ${to.def.Identifier}: ${toArg}`);
         return null;
       }
       to_pin = t.pin;
-    }else{
-       to_pin = to.def.FlowPins.find(p => p.Direction === "In" && p.Visibility !== "Hidden");
+    } else {
+      to_pin = to.def.FlowPins.find(p => p.Direction === "In" && p.Visibility !== "Hidden");
     }
     if (!from_pin) {
       console.error(`Source flow pin not found on node ${from.def.Identifier}: ${fromArg ?? "(default)"}`);
@@ -199,7 +199,7 @@ export class Graph {
 export class Node {
   public readonly system: ResourceClass;
   public readonly node_index: number;
-  public readonly def: NodeDef;
+  public readonly def: TypedNodeDef;
   public variant_def: TypedNodeDef | null = null;
 
   // for variant nodes
@@ -218,7 +218,7 @@ export class Node {
   public comment: Comment | null = null;
 
   constructor(system: ResourceClass, def: NodeDef, index: number) {
-    this.def = def;
+    this.def = NodeLib.toTypedNodeDef(def);
     this.node_index = index;
     this.system = system;
     this.pin_values = new Map();
@@ -232,7 +232,7 @@ export class Node {
   findPin(identifier: string): {
     success: boolean;
     kind?: "Flow" | "Data" | "Meta"
-    pin?: PinDef;
+    pin?: TypedPinDef;
   } {
     const pin = this.findDataPin(identifier);
     if (pin) {
@@ -255,7 +255,7 @@ export class Node {
     };
   }
 
-  getVisibleDataPin(index: number): PinDef | null {
+  getVisibleDataPin(index: number): TypedPinDef | null {
     for (let i = 0, count = 0; i < this.def.DataPins.length; i++, count++) {
       const pin = this.def.DataPins[i];
       if (pin.Visibility === "Hidden") continue;
@@ -287,12 +287,12 @@ export class Node {
     }
   }
 
-  findDataPin(identifier: string): PinDef | null {
-    const pin = this.def.DataPins.find(p => p.Identifier === identifier);
+  findDataPin(identifier: string): TypedPinDef | null {
+    const pin = (this.variant_def ?? this.def).DataPins.find(p => p.Identifier === identifier);
     return pin ?? null;
   }
 
-  findFlowPin(identifier: string): PinDef | null {
+  findFlowPin(identifier: string): TypedPinDef | null {
     const pin = this.def.FlowPins.find(p => p.Identifier === identifier);
     return pin ?? null;
   }
@@ -339,8 +339,8 @@ export class Node {
       console.warn(`Cannot connect pins with same direction: ${thisPin.pin!.Direction}`);
       return null;
     }
-    if (thatPin.kind === "Data" && thisPin.pin!.Type !== thatPin.pin!.Type) {
-      console.info(`Data pin types do not match (Force Connect): ${thisPin.pin!.Type} vs ${thatPin.pin!.Type}`);
+    if (thatPin.kind === "Data" && !type_equal(thisPin.pin!.Type!, thatPin.pin!.Type!)) {
+      console.info(`Data pin types do not match (Force Connect): ${stringify(thisPin.pin!.Type!)} vs ${stringify(thatPin.pin!.Type!)}`);
     }
     if (thatPin.pin!.Direction === "In" && thatPin.kind === "Data" && with_node.data_from.has(with_pin)) {
       // disconnect old connection if any
@@ -492,8 +492,8 @@ export class Node {
 export interface Connection {
   from: Node;
   to: Node;
-  from_pin: PinDef;
-  to_pin: PinDef;
+  from_pin: TypedPinDef;
+  to_pin: TypedPinDef;
 }
 
 /** **Warning**: No verify for consistency of kind and connection */
