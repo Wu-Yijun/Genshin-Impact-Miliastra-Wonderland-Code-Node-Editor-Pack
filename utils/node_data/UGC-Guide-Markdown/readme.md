@@ -2,6 +2,11 @@
 
 见 Google Chrome 扩展程序: [MarkSnip](https://chromewebstore.google.com/detail/kcbaglhfgbkjdnpeokaamjjkddempipm)
 
+可利用 Batch Processing 功能一次下载全部内容(链接见文档末尾)
+扩展程序的配置可以导入导出到 [此JSON文件](./MarkSnipOption.json) 中
+
+通过 [extract.ts](./extract.ts) 自动分析文档结构并构建数据(需要手动调整少量错误数据).
+
 ## 文件清单
 
 *存档构建日期: 2026-01-01*
@@ -27,6 +32,9 @@
 | [Client Other Nodes](./Client%20Other%20Nodes.md) | 客户端其他辅助节点 |
 
 ### 链接地址:
+
+英文版:
+
 [ServerExecution](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhw66orrrfkm)
 [ServerEvent](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhn7ko01v3yw)
 [ServerFlowControl](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhe8yn9bysd6)
@@ -37,3 +45,16 @@
 [ClientExecution](https://act.mihoyo.com/ys/ugc/tutorial/detail/mh6obvipqv1g)
 [ClientFlowControl](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhxppurzujfq)
 [ClientOther](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhor3u09y7u0)
+
+中文版
+
+[ServerExecution.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhw66orrrfkm)
+[ServerEvent.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhn7ko01v3yw)
+[ServerFlowControl.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhe8yn9bysd6)
+[ServerQuery.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhwbqlrw655q)
+[ServerOperation.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhnd4l069tk0)
+[ClientQuery.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mholjx05ji8w)
+[ClientOperation.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhfmxw9fn6n6)
+[ClientExecution.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mh6obvipqv1g)
+[ClientFlowControl.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhxppurzujfq)
+[ClientOther.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhor3u09y7u0)
