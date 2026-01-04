@@ -12,8 +12,9 @@ import {
 import { Doc, Node as NodeLib } from "../node_data/instances.ts";
 import type { NodeDef, ResourceClass, ServerClient, TypedValue } from "../node_data/types.ts";
 import { type NodeType, stringify, parse, is_reflect, type ConstraintType, type StructType, type_equal } from "../node_data/node_type.ts";
-import { Counter, get_system, randomInt, randomName } from "./utils.ts";
+import { Counter, get_system, is_empty, randomInt, randomName } from "./utils.ts";
 import { type TypedPinDef, type TypedNodeDef } from "../node_data/core.ts";
+import Fuse from "fuse.js";
 
 
 // Helper to determine system from common inputs if needed,
@@ -60,7 +61,7 @@ export class Graph {
     }
     if (node instanceof Node) {
       if (this.nodes.has(node)) {
-        console.error("Node already already in graph!");
+        console.error("[Error] Node already already in graph!");
         return node;
       }
       this.nodes.add(node);
@@ -72,22 +73,29 @@ export class Graph {
     if (typeof node === "string") {
       // TODO: support <Domain>.<Category>.<Action>.<Constraints> format
       def = NodeLib.getByIdentifier(node);
+      if(def === undefined){
+        // Print suggestions
+        console.error(`[Error] Node not found by Identifier: ${node}`);
+        const similars = NodeLib.findSimilar(node);
+        if(similars.length > 0){
+          console.info(`  -> Did you mean: '${similars.slice(0,5).map(n=>n.Identifier).join("' or '")}' ?`);
+        }
+        return null;
+      }
     } else if (typeof node === "number") {
       def = NodeLib.getByID(node);
     } else {
-      console.error(`Invalid argument for add_node: ${node}`);
+      console.error(`[Error] Invalid argument for add_node: ${node}`);
       return null;
     }
     if (def === undefined) {
-      // Try precise lookup failed, check if it's a "Generic ID + Concrete ID" string from old code? 
-      // User said "Identifier (string) (New Feature)", so we assume standard Node Identifier.
-      console.error(`Node not found by Identifier: ${node}`);
+      console.error(`[Error] Node not found by Identifier: ${node}`);
       return null;
     }
     // Check system compatibility
     if (def.System !== get_system(this.system)) {
       // Warning but maybe allow if user knows what they are doing (e.g. specialized Universal nodes)
-      console.warn(`Node ${def.Identifier} system (${def.System}) does not match Graph system (${this.system})`);
+      console.warn(`[Warning] Node ${def.Identifier} system (${def.System}) does not match Graph system (${this.system})`);
     }
 
     const newNode = new Node(this.system, def, this.counter_idx.value);
@@ -96,12 +104,16 @@ export class Graph {
   }
 
   flow(from: Node, to: Node, fromArg?: string, toArg?: string, insert_pos?: number): Connection | null {
+    if(is_empty(from)|| is_empty(to)){
+      console.error("[Error] Source or Target node is empty.");
+      return null;
+    }
     let from_pin: TypedPinDef | undefined;
     let to_pin: TypedPinDef | undefined;
     if (fromArg !== undefined) {
       const f = from.findPin(fromArg);
       if (!f.success || f.kind !== "Flow") {
-        console.error(`Source flow pin not found on node ${from.def.Identifier}: ${fromArg}`);
+        console.error(`[Error] Source flow pin not found on node ${from.def.Identifier}: ${fromArg}`);
         return null;
       }
       from_pin = f.pin;
@@ -111,7 +123,7 @@ export class Graph {
     if (toArg !== undefined) {
       const t = to.findPin(toArg);
       if (!t.success || t.kind !== "Flow") {
-        console.error(`Target flow pin not found on node ${to.def.Identifier}: ${toArg}`);
+        console.error(`[Error] Target flow pin not found on node ${to.def.Identifier}: ${toArg}`);
         return null;
       }
       to_pin = t.pin;
@@ -119,15 +131,15 @@ export class Graph {
       to_pin = to.def.FlowPins.find(p => p.Direction === "In" && p.Visibility !== "Hidden");
     }
     if (!from_pin) {
-      console.error(`Source flow pin not found on node ${from.def.Identifier}: ${fromArg ?? "(default)"}`);
+      console.error(`[Error] Source flow pin not found on node ${from.def.Identifier}: ${fromArg ?? "(default)"}`);
       return null;
     }
     if (!to_pin) {
-      console.error(`Target flow pin not found on node ${to.def.Identifier}: ${toArg ?? "(default)"}`);
+      console.error(`[Error] Target flow pin not found on node ${to.def.Identifier}: ${toArg ?? "(default)"}`);
       return null;
     }
     if (from_pin.Direction === "In" || to_pin.Direction === "Out") {
-      console.error(`Invalid flow connection direction: from ${from_pin.Direction} to ${to_pin.Direction}`);
+      console.error(`[Error] Invalid flow connection direction: from ${from_pin.Direction} to ${to_pin.Direction}`);
       return null;
     }
     return from.connectWith(from_pin.Identifier, to, to_pin.Identifier, insert_pos);
@@ -141,18 +153,22 @@ export class Graph {
    * @param toArg Target Pin: Index (number) or Identifier (string)
    */
   connect(from: Node, to: Node, fromArg: number | string, toArg: number | string): Connection | null {
+    if(is_empty(from)|| is_empty(to)|| is_empty(fromArg)|| is_empty(toArg)){
+      console.error("[Error] Source or Target node/pin is empty.");
+      return null;
+    }
     const fromPin = typeof fromArg === "number" ? from.getVisibleDataPin(fromArg) : from.findPin(fromArg).pin;
     const toPin = typeof toArg === "number" ? to.getVisibleDataPin(toArg) : to.findPin(toArg).pin;
     if (!fromPin) {
-      console.error(`Source pin not found on node ${from.def.Identifier}: ${fromArg}`);
+      console.error(`[Error] Source pin not found on node ${from.def.Identifier}: ${fromArg}`);
       return null;
     }
     if (!toPin) {
-      console.error(`Target pin not found on node ${to.def.Identifier}: ${toArg}`);
+      console.error(`[Error] Target pin not found on node ${to.def.Identifier}: ${toArg}`);
       return null;
     }
     if (fromPin.Direction === "In" || toPin.Direction === "Out") {
-      console.error(`Invalid connection direction: from ${fromPin.Direction} to ${toPin.Direction}`);
+      console.error(`[Error] Invalid connection direction: from ${fromPin.Direction} to ${toPin.Direction}`);
       return null;
     }
     return from.connectWith(fromPin.Identifier, to, toPin.Identifier);
@@ -320,23 +336,23 @@ export class Node {
     const thisPin = this.findPin(pin);
     const thatPin = with_node.findPin(with_pin);
     if (!thisPin.success) {
-      console.warn(`Pin ${pin} not found on node ${this.def.Identifier}`);
+      console.warn(`[Warning] Pin ${pin} not found on node ${this.def.Identifier}`);
       return null;
     }
     if (!thatPin.success) {
-      console.warn(`With Pin ${with_pin} not found on node ${with_node.def.Identifier}`);
+      console.warn(`[Warning] With Pin ${with_pin} not found on node ${with_node.def.Identifier}`);
       return null;
     }
     if (thisPin.kind !== thatPin.kind || thisPin.kind === "Meta") {
-      console.warn(`Pin kinds do not match: ${thisPin.kind} vs ${thatPin.kind}`);
+      console.warn(`[Warning] Pin kinds do not match: ${thisPin.kind} vs ${thatPin.kind}`);
       return null;
     }
     if (thatPin.pin!.Connectability === false || thisPin.pin!.Connectability === false) {
-      console.warn(`One of the pins is not connectable: ${thisPin.pin!.Identifier} or ${thatPin.pin!.Identifier}`);
+      console.warn(`[Warning] One of the pins is not connectable: ${thisPin.pin!.Identifier} or ${thatPin.pin!.Identifier}`);
       return null;
     }
     if (thisPin.pin!.Direction === thatPin.pin!.Direction) {
-      console.warn(`Cannot connect pins with same direction: ${thisPin.pin!.Direction}`);
+      console.warn(`[Warning] Cannot connect pins with same direction: ${thisPin.pin!.Direction}`);
       return null;
     }
     if (thatPin.kind === "Data" && !type_equal(thisPin.pin!.Type!, thatPin.pin!.Type!)) {
@@ -376,7 +392,7 @@ export class Node {
   disconnectDataInAt(pinIdentifier: string): boolean {
     const con = this.data_from.get(pinIdentifier);
     if (con === undefined) {
-      console.warn(`No data connection found at pin ${pinIdentifier}.`);
+      console.warn(`[Warning] No data connection found at pin ${pinIdentifier}.`);
       return false;
     }
     this.data_from.delete(pinIdentifier);
@@ -387,12 +403,12 @@ export class Node {
   disconnectFlowOutAt(pinIdentifier: string, index: number): boolean {
     const conns = this.flow_to.get(pinIdentifier);
     if (conns === undefined || index < 0 || index >= conns.length) {
-      console.warn(`No flow connections found at pin ${pinIdentifier}.`);
+      console.warn(`[Warning] No flow connections found at pin ${pinIdentifier}.`);
       return false;
     }
     const con = conns[index];
     if (con === undefined) {
-      console.warn(`No flow connection found at index ${index} for pin ${pinIdentifier}.`);
+      console.warn(`[Warning] No flow connection found at index ${index} for pin ${pinIdentifier}.`);
       return false;
     }
     conns.splice(index, 1);
@@ -404,9 +420,9 @@ export class Node {
    * Set constraints for Variant nodes.
    * @param type The type constraint (e.g. C<T:Bool>, C<K:L<Int>>), set to null to reset
    */
-  setConstraints(constraint: ConstraintType | null) {
+  setConstraints(constraint: NodeType | string | null) {
     if (this.def.Type !== "Variant") {
-      console.error(`Node ${this.def.Identifier} is not a Variant node.`);
+      console.error(`[Error] Node ${this.def.Identifier} is not a Variant node.`);
       return;
     }
     if (constraint === null) {
@@ -415,15 +431,23 @@ export class Node {
       this.constraint = undefined;
       return;
     }
+    if (typeof constraint === "string") {
+      constraint = parse(constraint);
+    }
     if (constraint?.t !== "c") {
-      console.error(`Node ${this.def.Identifier}: current constraint is not of ConstraintType.`);
+      console.error(`[Error] Node ${this.def.Identifier}: current constraint is not of ConstraintType.`);
       return;
     }
     const newDef = NodeLib.getVariant(this.def.Identifier, constraint);
     if (!newDef) {
-      // Try fallback: Sometimes constraint is just "T" or "T=..."
-      // But NodeLib.getVariant expects exact constraint string match from Variants list.
-      console.error(`Constraint ${stringify(constraint)} not found for node ${this.def.Identifier}`);
+      console.error(`[Error] Constraint ${stringify(constraint)} not found for node ${this.def.Identifier}`);
+      const fuse = new Fuse(this.def.Variants!.map(x => x.Constraints), { includeScore: true });
+      const results = fuse.search(stringify(constraint));
+      if (results.length > 0) {
+        const trimmed = results.filter(r => r.score! < 0.5).slice(0, 5);
+        if (trimmed.length === 0) trimmed.push(results[0]);
+        console.info(`  -> Did you mean: '${trimmed.map(r => r.item).join("' or '")}' ?`);
+      }
       return;
     }
 
@@ -446,14 +470,14 @@ export class Node {
       const pin = def.DataPins[i];
       const pin0 = this.def.DataPins[i];
       assert(pin.Identifier === pin0.Identifier, "Data pin mismatch in variant encoding");
-      const is_ref = def.Type === "Variant" && pin0.Type !== undefined && is_reflect(pin0.Type);
+      const is_ref = def.Type === "Variant" && is_reflect(pin0.Type);
       const v = this.pin_values.get(pin.Identifier);
       let value: Gia.TypedValue | undefined;
       if (v !== undefined) {
         if (is_ref) {
-          value = make_variant_value(parse(pin.Type ?? "Unk"), is_server, this.variant_def?.DataPins[i].TypeSelectorIndex ?? 0, v);
+          value = make_variant_value(pin.Type, is_server, this.variant_def?.DataPins[i].TypeSelectorIndex ?? 0, v);
         } else {
-          value = make_typed_value(parse(pin.Type ?? "Unk"), is_server, v);
+          value = make_typed_value(pin.Type, is_server, v);
         }
       }
 
@@ -499,7 +523,7 @@ export interface Connection {
 /** **Warning**: No verify for consistency of kind and connection */
 function make_connection_unsafe(con: Connection, kind: "Data" | "Flow", insert_pos?: number): void {
   if (insert_pos !== undefined && kind !== "Data") {
-    console.warn("Insert position is only applicable for Flow pins. Connect will ignore it.");
+    console.warn("[Warning] Insert position is only applicable for Flow pins. Connect will ignore it.");
   }
   if (kind === "Data") {
     con.to.data_from.set(con.to_pin.Identifier, con);
@@ -517,7 +541,7 @@ function make_connection_unsafe(con: Connection, kind: "Data" | "Flow", insert_p
     }
     if (insert_pos !== undefined) {
       if (insert_pos < 0 || insert_pos > con.from.flow_to.get(con.to_pin.Identifier)!.length) {
-        console.warn(`Insert position ${insert_pos} is out of bounds for flow connections at pin ${con.to_pin.Identifier}. Appending instead.`);
+        console.warn(`[Warning] Insert position ${insert_pos} is out of bounds for flow connections at pin ${con.to_pin.Identifier}. Appending instead.`);
         con.from.flow_to.get(con.to_pin.Identifier)!.push(con);
       } else {
         con.from.flow_to.get(con.to_pin.Identifier)!.splice(insert_pos, 0, con);

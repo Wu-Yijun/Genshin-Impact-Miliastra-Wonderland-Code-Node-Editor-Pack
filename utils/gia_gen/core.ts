@@ -3,9 +3,9 @@ import { assert, assertEq, todo } from "../utils.ts";
 
 import * as Gia from "../protobuf/gia.proto.ts";
 
-import type { NodeDef, PinDef, ResourceClass, TypedValue } from "../node_data/types.ts";
-import { type DictType,type ListType, type NodeType, stringify,type StructType } from "../node_data/node_type.ts";
-import { Doc, Node, ServerType, ClientType } from "../node_data/instances.ts";
+import type { ResourceClass, TypedValue } from "../node_data/types.ts";
+import { type DictType, type ListType, type NodeType, stringify, type StructType } from "../node_data/node_type.ts";
+import { Doc, ServerType, ClientType } from "../node_data/instances.ts";
 import type { TypedNodeDef, TypedPinDef } from "../node_data/core.ts";
 
 
@@ -84,7 +84,7 @@ export function graph_body(body: GraphBody_): Gia.AssetBundle {
 
 export interface NodeBody_ {
   system: ResourceClass;
-  def: TypedNodeDef | NodeDef; 
+  def: TypedNodeDef;
   x: number;
   y: number;
   comment?: Gia.Annotation;
@@ -130,7 +130,7 @@ export function node_body(body: NodeBody_): Gia.NodeInstance {
 
 export interface PinBody_ {
   system: ResourceClass;
-  def: TypedPinDef | PinDef; // Definition of the pin from NodeDef
+  def: TypedPinDef; // Definition of the pin from NodeDef
   is_flow?: boolean; // Is a control flow pin, otherwise use data pin.
   /** Pin Value (if input) */
   value?: Gia.TypedValue;
@@ -155,9 +155,9 @@ export function pin_body(body: PinBody_): Gia.PinInstance {
   } else {
     let type = 0;
     if (get_system(body.system) === "Server") {
-      type = ServerType.get_type_id(body.def.Type ?? ServerType.DEFAULT_TYPE.Identifier) ?? 0;
+      type = ServerType.get_type_id(body.def.Type) ?? 0;
     } else {
-      type = ClientType.get_type_id(body.def.Type ?? ClientType.DEFAULT_ENUM.Identifier) ?? 0;
+      type = ClientType.get_type_id(body.def.Type) ?? 0;
     }
     return {
       shell_sig,
@@ -601,7 +601,7 @@ export function make_pin_sig(index = 0, is_out = false, is_flow = false): Gia.Pi
   }
 }
 
-export function make_connection(target_index: number, target_pin: PinDef | TypedPinDef, is_flow: boolean = false): Gia.NodeConnection {
+export function make_connection(target_index: number, target_pin: TypedPinDef, is_flow: boolean = false): Gia.NodeConnection {
   const shell = make_pin_sig(target_pin.ShellIndex, target_pin.Direction === "Out", is_flow);
   const kernel = make_pin_sig(target_pin.KernelIndex, target_pin.Direction === "Out", is_flow);
   return {
@@ -650,4 +650,4 @@ export type ItemId =
    */
   | "shield_wood";
 
-const x :ItemId = "potion_heal_s";
+const x: ItemId = "potion_heal_s";

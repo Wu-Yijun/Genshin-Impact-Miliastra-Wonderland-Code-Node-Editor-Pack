@@ -31,6 +31,7 @@
   "dependencies": {
     "@dagrejs/dagre": "^2.0.0",
     "@types/dagre": "^0.7.53",
+    "fuse.js": "^7.1.0",
     "protobufjs": "^7.5.4",
     "yaml": "^2.8.1"
   }

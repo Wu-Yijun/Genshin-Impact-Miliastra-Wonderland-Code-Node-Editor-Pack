@@ -18307,3 +18307,1122 @@ export const NODES = {
 } as const;
 
 export type NodeIdentifier = typeof NODES[keyof typeof NODES];
+
+export const NODE_NAMES = {
+  /**  See `NODES.Execution_CommonNode_Print` for detailed documentation. */
+  Print_String: "Execution.Common_Node.Print",
+  /**  See `NODES.Control_General_Branch` for detailed documentation. */
+  Double_Branch: "Control.General.Branch",
+  /**  See `NODES.Control_General_Switch` for detailed documentation. */
+  Multiple_Branches: "Control.General.Switch",
+  /**  See `NODES.Execution_CommonNode_ForLoop` for detailed documentation. */
+  Finite_Loop: "Execution.Common_Node.For_Loop",
+  /**  See `NODES.Execution_CommonNode_Break` for detailed documentation. */
+  Break_Loop: "Execution.Common_Node.Break",
+  /**  See `NODES.Query_Math_RandomFloat` for detailed documentation. */
+  Get_Random_Floating_Point_Number: "Query.Math.Random_Float",
+  /**  See `NODES.Query_Math_WeightedRandom` for detailed documentation. */
+  Weighted_Random: "Query.Math.Weighted_Random",
+  /**  See `NODES.Arithmetic_Math_SplitVector` for detailed documentation. */
+  Split_3D_Vector: "Arithmetic.Math.Split_Vector",
+  /**  See `NODES.Arithmetic_Math_VectorAdd` for detailed documentation. */
+  _3D_Vector_Addition: "Arithmetic.Math.Vector_Add",
+  /**  See `NODES.Arithmetic_Math_VectorSubtract` for detailed documentation. */
+  _3D_Vector_Subtraction: "Arithmetic.Math.Vector_Subtract",
+  /**  See `NODES.Arithmetic_Math_VectorScale` for detailed documentation. */
+  _3D_Vector_Zoom: "Arithmetic.Math.Vector_Scale",
+  /**  See `NODES.Arithmetic_Math_VectorAngle` for detailed documentation. */
+  _3D_Vector_Angle: "Arithmetic.Math.Vector_Angle",
+  /**  See `NODES.Arithmetic_General_Equal` for detailed documentation. */
+  Equal: "Arithmetic.General.Equal",
+  /**  See `NODES.Query_General_GetLocal` for detailed documentation. */
+  Get_Local_Variable: "Query.General.Get_Local",
+  /**  See `NODES.Execution_CommonNode_SetLocal` for detailed documentation. */
+  Set_Local_Variable: "Execution.Common_Node.Set_Local",
+  /**  See `NODES.Execution_CustomVariable_SetVariable` for detailed documentation. */
+  Set_Custom_Variable: "Execution.Custom_Variable.Set_Variable",
+  /**  See `NODES.Trigger_CustomVariable_OnVariableChange` for detailed documentation. */
+  When_Custom_Variable_Changes: "Trigger.Custom_Variable.On_Variable_Change",
+  /**  See `NODES.Query_CustomVariable_GetVariable` for detailed documentation. */
+  Get_Custom_Variable: "Query.Custom_Variable.Get_Variable",
+  /**  See `NODES.Execution_PresetStatus_SetStatus` for detailed documentation. */
+  Set_Preset_Status: "Execution.Preset_Status.Set_Status",
+  /**  See `NODES.Trigger_PresetStatus_OnStatusChange` for detailed documentation. */
+  When_Preset_Status_Changes: "Trigger.Preset_Status.On_Status_Change",
+  /**  See `NODES.Query_PresetStatus_GetStatus` for detailed documentation. */
+  Get_Preset_Status: "Query.Preset_Status.Get_Status",
+  /**  See `NODES.Execution_EntityRelated_DestroyEntity` for detailed documentation. */
+  Destroy_Entity: "Execution.Entity_Related.Destroy_Entity",
+  /**  See `NODES.Execution_EntityRelated_CreateEntity` for detailed documentation. */
+  Create_Entity: "Execution.Entity_Related.Create_Entity",
+  /**  See `NODES.Trigger_EntityRelated_OnCreated` for detailed documentation. */
+  When_Entity_Is_Created: "Trigger.Entity_Related.On_Created",
+  /**  See `NODES.Trigger_EntityRelated_OnRemoved` for detailed documentation. */
+  When_Entity_Is_Removed_Destroyed: "Trigger.Entity_Related.On_Removed",
+  /**  See `NODES.Query_EntityRelated_GetSelf` for detailed documentation. */
+  Get_Self_Entity: "Query.Entity_Related.Get_Self",
+  /**  See `NODES.Arithmetic_Math_VectorNormalize` for detailed documentation. */
+  _3D_Vector_Normalization: "Arithmetic.Math.Vector_Normalize",
+  /**  See `NODES.Query_EntityRelated_GetByGUID` for detailed documentation. */
+  Query_Entity_by_GUID: "Query.Entity_Related.Get_By_GUID",
+  /**  See `NODES.Query_EntityRelated_GetGUID` for detailed documentation. */
+  Query_GUID_by_Entity: "Query.Entity_Related.Get_GUID",
+  /**  See `NODES.Execution_StageRelated_Settle` for detailed documentation. */
+  Settle_Stage: "Execution.Stage_Related.Settle",
+  /**  See `NODES.Execution_Timer_Start` for detailed documentation. */
+  Start_Timer: "Execution.Timer.Start",
+  /**  See `NODES.Execution_Timer_Pause` for detailed documentation. */
+  Pause_Timer: "Execution.Timer.Pause",
+  /**  See `NODES.Execution_Timer_Resume` for detailed documentation. */
+  Resume_Timer: "Execution.Timer.Resume",
+  /**  See `NODES.Execution_Timer_Stop` for detailed documentation. */
+  Stop_Timer: "Execution.Timer.Stop",
+  /**  See `NODES.Trigger_Timer_OnTimerTrigger` for detailed documentation. */
+  When_Timer_Is_Triggered: "Trigger.Timer.On_Timer_Trigger",
+  /**  See `NODES.Execution_MotionDevice_AddLinearMotion` for detailed documentation. */
+  Add_Uniform_Basic_Linear_Motion_Device: "Execution.Motion_Device.Add_Linear_Motion",
+  /**  See `NODES.Execution_MotionDevice_AddRotationMotion` for detailed documentation. */
+  Add_Uniform_Basic_Rotation_Based_Motion_Device: "Execution.Motion_Device.Add_Rotation_Motion",
+  /**  See `NODES.Execution_MotionDevice_StopDelete` for detailed documentation. */
+  Stop_and_Delete_Basic_Motion_Device: "Execution.Motion_Device.Stop_Delete",
+  /**  See `NODES.Execution_MotionDevice_Pause` for detailed documentation. */
+  Pause_Basic_Motion_Device: "Execution.Motion_Device.Pause",
+  /**  See `NODES.Execution_MotionDevice_Resume` for detailed documentation. */
+  Recover_Basic_Motion_Device: "Execution.Motion_Device.Resume",
+  /**  See `NODES.Trigger_MotionDevice_OnMotionStop` for detailed documentation. */
+  When_Basic_Motion_Device_Stops: "Trigger.Motion_Device.On_Motion_Stop",
+  /**  See `NODES.Execution_CollisionTrigger_SetTriggerState` for detailed documentation. */
+  Activate_Disable_Collision_Trigger: "Execution.Collision_Trigger.Set_Trigger_State",
+  /**  See `NODES.Trigger_CollisionTrigger_OnExit` for detailed documentation. */
+  When_Exiting_Collision_Trigger: "Trigger.Collision_Trigger.On_Exit",
+  /**  See `NODES.Trigger_CollisionTrigger_OnEnter` for detailed documentation. */
+  When_Entering_Collision_Trigger: "Trigger.Collision_Trigger.On_Enter",
+  /**  See `NODES.Execution_SpecialEffect_PlayTimed` for detailed documentation. */
+  Play_Timed_Effects: "Execution.Special_Effect.Play_Timed",
+  /**  See `NODES.Execution_SpecialEffect_PlayLoop` for detailed documentation. */
+  Mount_Looping_Special_Effect: "Execution.Special_Effect.Play_Loop",
+  /**  See `NODES.Execution_SpecialEffect_StopLoop` for detailed documentation. */
+  Clear_Looping_Special_Effect: "Execution.Special_Effect.Stop_Loop",
+  /**  See `NODES.Query_EntityRelated_GetTransform` for detailed documentation. */
+  Get_Entity_Location_and_Rotation: "Query.Entity_Related.Get_Transform",
+  /**  See `NODES.Execution_ListOperation_Concatenate` for detailed documentation. */
+  Concatenate_List: "Execution.List_Operation.Concatenate",
+  /**  See `NODES.Execution_ListOperation_Clear` for detailed documentation. */
+  Clear_List: "Execution.List_Operation.Clear",
+  /**  See `NODES.Query_ListRelated_Contains` for detailed documentation. */
+  List_Includes_This_Value: "Query.List_Related.Contains",
+  /**  See `NODES.Query_ListRelated_FindIndex` for detailed documentation. */
+  Search_List_and_Return_Value_ID: "Query.List_Related.Find_Index",
+  /**  See `NODES.Query_ListRelated_GetAtIndex` for detailed documentation. */
+  Get_Corresponding_Value_From_List: "Query.List_Related.Get_At_Index",
+  /**  See `NODES.Execution_ListOperation_Insert` for detailed documentation. */
+  Insert_Value_Into_List: "Execution.List_Operation.Insert",
+  /**  See `NODES.Query_ListRelated_GetLength` for detailed documentation. */
+  Get_List_Length: "Query.List_Related.Get_Length",
+  /**  See `NODES.Query_ListRelated_GetMax` for detailed documentation. */
+  Get_Maximum_Value_from_List: "Query.List_Related.Get_Max",
+  /**  See `NODES.Query_ListRelated_GetMin` for detailed documentation. */
+  Get_Minimum_Value_From_List: "Query.List_Related.Get_Min",
+  /**  See `NODES.Execution_ListOperation_Remove` for detailed documentation. */
+  Remove_Value_From_List: "Execution.List_Operation.Remove",
+  /**  See `NODES.Execution_ListOperation_ModifyIndex` for detailed documentation. */
+  Modify_Value_in_List: "Execution.List_Operation.Modify_Index",
+  /**  See `NODES.Execution_ListOperation_Sort` for detailed documentation. */
+  List_Sorting: "Execution.List_Operation.Sort",
+  /**  See `NODES.Arithmetic_General_AssembleList` for detailed documentation. */
+  Assembly_List: "Arithmetic.General.Assemble_List",
+  /**  See `NODES.Trigger_MotionDevice_OnReachWaypoint` for detailed documentation. */
+  When_Path_Reaches_Waypoint: "Trigger.Motion_Device.On_Reach_Waypoint",
+  /**  See `NODES.Execution_EntityDeployment_SetGroupState` for detailed documentation. */
+  Activate_Disable_Entity_Deployment_Group: "Execution.Entity_Deployment.Set_Group_State",
+  /**  See `NODES.Query_EntityLayout_GetActiveGroups` for detailed documentation. */
+  Get_Currently_Active_Entity_Deployment_Groups: "Query.Entity_Layout.Get_Active_Groups",
+  /**  See `NODES.Arithmetic_General_ConvertType` for detailed documentation. */
+  Data_Type_Conversion: "Arithmetic.General.Convert_Type",
+  /**  See `NODES.Execution_CommonNode_ForwardEvent` for detailed documentation. */
+  Forwarding_Event: "Execution.Common_Node.Forward_Event",
+  /**  See `NODES.Query_Math_Pi` for detailed documentation. */
+  Pi: "Query.Math.Pi",
+  /**  See `NODES.Query_Math_VectorZero` for detailed documentation. */
+  _3D_Vector_Zero_Vector: "Query.Math.Vector_Zero",
+  /**  See `NODES.Query_Math_VectorUp` for detailed documentation. */
+  _3D_Vector_Up: "Query.Math.Vector_Up",
+  /**  See `NODES.Query_Math_VectorDown` for detailed documentation. */
+  _3D_Vector_Down: "Query.Math.Vector_Down",
+  /**  See `NODES.Query_Math_VectorLeft` for detailed documentation. */
+  _3D_Vector_Left: "Query.Math.Vector_Left",
+  /**  See `NODES.Query_Math_VectorRight` for detailed documentation. */
+  _3D_Vector_Right: "Query.Math.Vector_Right",
+  /**  See `NODES.Query_Math_VectorForward` for detailed documentation. */
+  _3D_Vector_Forward: "Query.Math.Vector_Forward",
+  /**  See `NODES.Query_Math_VectorBackward` for detailed documentation. */
+  _3D_Vector_Backward: "Query.Math.Vector_Backward",
+  /**  See `NODES.Arithmetic_Math_Add` for detailed documentation. */
+  Addition: "Arithmetic.Math.Add",
+  /**  See `NODES.Arithmetic_Math_Subtract` for detailed documentation. */
+  Subtraction: "Arithmetic.Math.Subtract",
+  /**  See `NODES.Arithmetic_Math_Multiply` for detailed documentation. */
+  Multiplication: "Arithmetic.Math.Multiply",
+  /**  See `NODES.Arithmetic_Math_Divide` for detailed documentation. */
+  Division: "Arithmetic.Math.Divide",
+  /**  See `NODES.Arithmetic_Math_Modulo` for detailed documentation. */
+  Modulo_Operation: "Arithmetic.Math.Modulo",
+  /**  See `NODES.Arithmetic_Math_Power` for detailed documentation. */
+  Exponentiation: "Arithmetic.Math.Power",
+  /**  See `NODES.Arithmetic_Math_Max` for detailed documentation. */
+  Take_Larger_Value: "Arithmetic.Math.Max",
+  /**  See `NODES.Arithmetic_Math_Min` for detailed documentation. */
+  Take_Smaller_Value: "Arithmetic.Math.Min",
+  /**  See `NODES.Arithmetic_Math_Log` for detailed documentation. */
+  Logarithm_Operation: "Arithmetic.Math.Log",
+  /**  See `NODES.Arithmetic_Math_Abs` for detailed documentation. */
+  Absolute_Value_Operation: "Arithmetic.Math.Abs",
+  /**  See `NODES.Arithmetic_Math_Sign` for detailed documentation. */
+  Sign_Operation: "Arithmetic.Math.Sign",
+  /**  See `NODES.Arithmetic_Math_VectorLength` for detailed documentation. */
+  _3D_Vector_Modulo_Operation: "Arithmetic.Math.Vector_Length",
+  /**  See `NODES.Arithmetic_Math_Sqrt` for detailed documentation. */
+  Arithmetic_Square_Root_Operation: "Arithmetic.Math.Sqrt",
+  /**  See `NODES.Arithmetic_Math_Clamp` for detailed documentation. */
+  Range_Limiting_Operation: "Arithmetic.Math.Clamp",
+  /**  See `NODES.Arithmetic_Math_Round` for detailed documentation. */
+  Round_to_Integer_Operation: "Arithmetic.Math.Round",
+  /**  See `NODES.Arithmetic_Math_CreateVector` for detailed documentation. */
+  Create_3D_Vector: "Arithmetic.Math.Create_Vector",
+  /**  See `NODES.Arithmetic_Math_And` for detailed documentation. */
+  Logical_AND_Operation: "Arithmetic.Math.And",
+  /**  See `NODES.Arithmetic_Math_Or` for detailed documentation. */
+  Logical_OR_Operation: "Arithmetic.Math.Or",
+  /**  See `NODES.Arithmetic_Math_Xor` for detailed documentation. */
+  Logical_XOR_Operation: "Arithmetic.Math.Xor",
+  /**  See `NODES.Arithmetic_Math_Not` for detailed documentation. */
+  Logical_NOT_Operation: "Arithmetic.Math.Not",
+  /**  See `NODES.Arithmetic_Math_LessThan` for detailed documentation. */
+  Less_Than: "Arithmetic.Math.Less_Than",
+  /**  See `NODES.Arithmetic_Math_LessEqual` for detailed documentation. */
+  Less_Than_or_Equal_To: "Arithmetic.Math.Less_Equal",
+  /**  See `NODES.Arithmetic_Math_GreaterThan` for detailed documentation. */
+  Greater_Than: "Arithmetic.Math.Greater_Than",
+  /**  See `NODES.Arithmetic_Math_GreaterEqual` for detailed documentation. */
+  Greater_Than_or_Equal_To: "Arithmetic.Math.Greater_Equal",
+  /**  See `NODES.Execution_Collision_SetNativeCollision` for detailed documentation. */
+  Activate_Disable_Native_Collision: "Execution.Collision.Set_Native_Collision",
+  /**  See `NODES.Execution_Collision_SetNativeClimb` for detailed documentation. */
+  Activate_Disable_Native_Collision_Climbability: "Execution.Collision.Set_Native_Climb",
+  /**  See `NODES.Execution_Collision_SetExtraCollision` for detailed documentation. */
+  Activate_Disable_Extra_Collision: "Execution.Collision.Set_Extra_Collision",
+  /**  See `NODES.Execution_Collision_SetExtraClimb` for detailed documentation. */
+  Activate_Disable_Extra_Collision_Climbability: "Execution.Collision.Set_Extra_Climb",
+  /**  See `NODES.Arithmetic_Math_Distance` for detailed documentation. */
+  Distance_Between_Two_Coordinate_Points: "Arithmetic.Math.Distance",
+  /**  See `NODES.Execution_FollowMotion_SetTargetGUID` for detailed documentation. */
+  Switch_Follow_Motion_Device_Target_by_GUID: "Execution.Follow_Motion.Set_Target_GUID",
+  /**  See `NODES.Query_FollowMotion_GetTarget` for detailed documentation. */
+  Get_Follow_Motion_Device_Target: "Query.Follow_Motion.Get_Target",
+  /**  See `NODES.Query_CharacterRelated_GetAllPlayers` for detailed documentation. */
+  Get_List_of_Player_Entities_on_the_Field: "Query.Character_Related.Get_All_Players",
+  /**  See `NODES.Query_FactionRelated_GetFaction` for detailed documentation. */
+  Query_Entity_Faction: "Query.Faction_Related.Get_Faction",
+  /**  See `NODES.Execution_FactionRelated_SetFaction` for detailed documentation. */
+  Modify_Entity_Faction: "Execution.Faction_Related.Set_Faction",
+  /**  See `NODES.Trigger_FactionRelated_OnFactionChange` for detailed documentation. */
+  When_Entity_Faction_Changes: "Trigger.Faction_Related.On_Faction_Change",
+  /**  See `NODES.Execution_EntityRelated_CreatePrefab` for detailed documentation. */
+  Create_Prefab: "Execution.Entity_Related.Create_Prefab",
+  /**  See `NODES.Trigger_HitDetection_OnHitDetected` for detailed documentation. */
+  When_On_Hit_Detection_Is_Triggered: "Trigger.Hit_Detection.On_Hit_Detected",
+  /**  See `NODES.Execution_Projectile_Create` for detailed documentation. */
+  Create_Projectile: "Execution.Projectile.Create",
+  /**  See `NODES.Query_Math_RandomInt` for detailed documentation. */
+  Get_Random_Integer: "Query.Math.Random_Int",
+  /**  See `NODES.Query_CharacterRelated_GetPlayerCharacters` for detailed documentation. */
+  Get_All_Character_Entities_of_Specified_Player: "Query.Character_Related.Get_Player_Characters",
+  /**  See `NODES.Query_CharacterRelated_GetOwnerPlayer` for detailed documentation. */
+  Get_Player_Entity_to_Which_the_Character_Belongs: "Query.Character_Related.Get_Owner_Player",
+  /**  See `NODES.Query_EntityRelated_GetType` for detailed documentation. */
+  Get_Entity_Type: "Query.Entity_Related.Get_Type",
+  /**  See `NODES.Execution_Camera_SwitchTemplate` for detailed documentation. */
+  Switch_Main_Camera_Template: "Execution.Camera.Switch_Template",
+  /**  See `NODES.Hidden_Execution_ActivateEntityCamera` for detailed documentation. */
+  Activate_Entity_Camera: "Hidden.Execution.Activate_Entity_Camera",
+  /**  See `NODES.Hidden_Execution_DisableEntityCamera` for detailed documentation. */
+  Disable_Entity_Camera: "Hidden.Execution.Disable_Entity_Camera",
+  /**  See `NODES.Hidden_Execution_ActivateFocusCamera` for detailed documentation. */
+  Activate_Focus_Camera: "Hidden.Execution.Activate_Focus_Camera",
+  /**  See `NODES.Hidden_Execution_DisableFocusCamera` for detailed documentation. */
+  Disable_Focus_Camera: "Hidden.Execution.Disable_Focus_Camera",
+  /**  See `NODES.Hidden_Execution_PlayScreenShake` for detailed documentation. */
+  Activate_Screen_Shake: "Hidden.Execution.Play_Screen_Shake",
+  /**  See `NODES.Execution_MotionDevice_Activate` for detailed documentation. */
+  Activate_Basic_Motion_Device: "Execution.Motion_Device.Activate",
+  /**  See `NODES.Query_PresetPoint_GetTransform` for detailed documentation. */
+  Query_Preset_Point_Position_Rotation: "Query.Preset_Point.Get_Transform",
+  /**  See `NODES.Query_PresetPoint_GetByTag` for detailed documentation. */
+  Get_Preset_Point_List_by_Unit_Tag: "Query.Preset_Point.Get_By_Tag",
+  /**  See `NODES.Execution_CharacterRelated_ActivateRevivePoint` for detailed documentation. */
+  Activate_Revive_Point: "Execution.Character_Related.Activate_Revive_Point",
+  /**  See `NODES.Execution_CharacterRelated_DeactivateRevivePoint` for detailed documentation. */
+  Deactivate_Revive_Point: "Execution.Character_Related.Deactivate_Revive_Point",
+  /**  See `NODES.Execution_CharacterRelated_SetReviveAllowed` for detailed documentation. */
+  Allow_Forbid_Player_to_Revive: "Execution.Character_Related.Set_Revive_Allowed",
+  /**  See `NODES.Query_CharacterRelated_GetRevives` for detailed documentation. */
+  Get_Player_Remaining_Revives: "Query.Character_Related.Get_Revives",
+  /**  See `NODES.Execution_CharacterRelated_SetReviveCount` for detailed documentation. */
+  Set_Player_Remaining_Revives: "Execution.Character_Related.Set_Revive_Count",
+  /**  See `NODES.Query_CharacterRelated_GetReviveTime` for detailed documentation. */
+  Get_Player_Revive_Time: "Query.Character_Related.Get_Revive_Time",
+  /**  See `NODES.Execution_CharacterRelated_SetReviveTime` for detailed documentation. */
+  Set_Player_Revive_Time: "Execution.Character_Related.Set_Revive_Time",
+  /**  See `NODES.Execution_CharacterRelated_ReviveSingle` for detailed documentation. */
+  Revive_Character: "Execution.Character_Related.Revive_Single",
+  /**  See `NODES.Trigger_CharacterRelated_OnCharacterDown` for detailed documentation. */
+  When_the_Character_Is_Down: "Trigger.Character_Related.On_Character_Down",
+  /**  See `NODES.Trigger_CharacterRelated_OnCharacterRevive` for detailed documentation. */
+  When_Character_Revives: "Trigger.Character_Related.On_Character_Revive",
+  /**  See `NODES.Execution_CharacterRelated_DefeatAll` for detailed documentation. */
+  Defeat_All_Player_s_Characters: "Execution.Character_Related.Defeat_All",
+  /**  See `NODES.Execution_CharacterRelated_ReviveAll` for detailed documentation. */
+  Revive_All_Player_s_Characters: "Execution.Character_Related.Revive_All",
+  /**  See `NODES.Trigger_CharacterRelated_OnAllDown` for detailed documentation. */
+  When_All_Player_s_Characters_Are_Down: "Trigger.Character_Related.On_All_Down",
+  /**  See `NODES.Trigger_CharacterRelated_OnAbnormalRevive` for detailed documentation. */
+  When_Player_Is_Abnormally_Downed_and_Revives: "Trigger.Character_Related.On_Abnormal_Revive",
+  /**  See `NODES.Trigger_CharacterRelated_OnAllRevived` for detailed documentation. */
+  When_All_Player_s_Characters_Are_Revived: "Trigger.Character_Related.On_All_Revived",
+  /**  See `NODES.Query_CharacterRelated_IsAllDown` for detailed documentation. */
+  Query_If_All_Player_Characters_Are_Down: "Query.Character_Related.Is_All_Down",
+  /**  See `NODES.Execution_CharacterRelated_Teleport` for detailed documentation. */
+  Teleport_Player: "Execution.Character_Related.Teleport",
+  /**  See `NODES.Trigger_CharacterRelated_OnTeleportComplete` for detailed documentation. */
+  When_Player_Teleport_Completes: "Trigger.Character_Related.On_Teleport_Complete",
+  /**  See `NODES.Query_StageRelated_GetElapsedTime` for detailed documentation. */
+  Query_Game_Time_Elapsed: "Query.Stage_Related.Get_Elapsed_Time",
+  /**  See `NODES.Arithmetic_Math_Sin` for detailed documentation. */
+  Sine_Function: "Arithmetic.Math.Sin",
+  /**  See `NODES.Arithmetic_Math_Cos` for detailed documentation. */
+  Cosine_Function: "Arithmetic.Math.Cos",
+  /**  See `NODES.Arithmetic_Math_Tan` for detailed documentation. */
+  Tangent_Function: "Arithmetic.Math.Tan",
+  /**  See `NODES.Arithmetic_Math_Asin` for detailed documentation. */
+  Arcsine_Function: "Arithmetic.Math.Asin",
+  /**  See `NODES.Arithmetic_Math_Acos` for detailed documentation. */
+  Arccosine_Function: "Arithmetic.Math.Acos",
+  /**  See `NODES.Arithmetic_Math_Atan` for detailed documentation. */
+  Arctangent_Function: "Arithmetic.Math.Atan",
+  /**  See `NODES.Execution_UnitStatus_AddStatus` for detailed documentation. */
+  Add_Unit_Status: "Execution.Unit_Status.Add_Status",
+  /**  See `NODES.Trigger_UnitStatus_OnStatusEnd` for detailed documentation. */
+  When_Unit_Status_Ends: "Trigger.Unit_Status.On_Status_End",
+  /**  See `NODES.Trigger_UnitStatus_OnStatusChange` for detailed documentation. */
+  When_Unit_Status_Changes: "Trigger.Unit_Status.On_Status_Change",
+  /**  See `NODES.Execution_UnitStatus_RemoveStatus` for detailed documentation. */
+  Remove_Unit_Status: "Execution.Unit_Status.Remove_Status",
+  /**  See `NODES.Execution_CharacterDisruptor_ModifyDevice` for detailed documentation. */
+  Modifying_Character_Disruptor_Device: "Execution.Character_Disruptor.Modify_Device",
+  /**  See `NODES.Execution_Combat_Attack` for detailed documentation. */
+  Initiate_Attack: "Execution.Combat.Attack",
+  /**  See `NODES.Trigger_Combat_OnBeAttacked` for detailed documentation. */
+  When_Attacked: "Trigger.Combat.On_Be_Attacked",
+  /**  See `NODES.Trigger_Combat_OnHitTarget` for detailed documentation. */
+  When_Attack_Hits: "Trigger.Combat.On_Hit_Target",
+  /**  See `NODES.Execution_Tab_SetState` for detailed documentation. */
+  Activate_Disable_Tab: "Execution.Tab.Set_State",
+  /**  See `NODES.Trigger_Tab_OnTabSelect` for detailed documentation. */
+  When_Tab_Is_Selected: "Trigger.Tab.On_Tab_Select",
+  /**  See `NODES.Execution_EntityRelated_SetModelVisible` for detailed documentation. */
+  Activate_Disable_Model_Display: "Execution.Entity_Related.Set_Model_Visible",
+  /**  See `NODES.Execution_GlobalTimer_Pause` for detailed documentation. */
+  Pause_Global_Timer: "Execution.Global_Timer.Pause",
+  /**  See `NODES.Query_GlobalTimer_GetTime` for detailed documentation. */
+  Get_Current_Global_Timer_Time: "Query.Global_Timer.Get_Time",
+  /**  See `NODES.Execution_GlobalTimer_Start` for detailed documentation. */
+  Start_Global_Timer: "Execution.Global_Timer.Start",
+  /**  See `NODES.Execution_GlobalTimer_Resume` for detailed documentation. */
+  Recover_Global_Timer: "Execution.Global_Timer.Resume",
+  /**  See `NODES.Execution_GlobalTimer_Stop` for detailed documentation. */
+  Stop_Global_Timer: "Execution.Global_Timer.Stop",
+  /**  See `NODES.Execution_GlobalTimer_Modify` for detailed documentation. */
+  Modify_Global_Timer: "Execution.Global_Timer.Modify",
+  /**  See `NODES.Trigger_GlobalTimer_OnTimerTrigger` for detailed documentation. */
+  When_Global_Timer_Is_Triggered: "Trigger.Global_Timer.On_Timer_Trigger",
+  /**  See `NODES.Trigger_UIControlGroup_OnGroupTrigger` for detailed documentation. */
+  When_UI_Control_Group_Is_Triggered: "Trigger.UI_Control_Group.On_Group_Trigger",
+  /**  See `NODES.Query_UIControlGroup_GetCurrentLayout` for detailed documentation. */
+  Get_Player_s_Current_UI_Layout: "Query.UI_Control_Group.Get_Current_Layout",
+  /**  See `NODES.Query_EntityRelated_GetAllEntities` for detailed documentation. */
+  Get_All_Entities_on_the_Field: "Query.Entity_Related.Get_All_Entities",
+  /**  See `NODES.Query_EntityRelated_GetEntityByType` for detailed documentation. */
+  Get_Specified_Type_of_Entity_on_the_Field: "Query.Entity_Related.Get_Entity_By_Type",
+  /**  See `NODES.Query_EntityRelated_GetWithPrefab` for detailed documentation. */
+  Get_Entities_With_Specified_Prefab_on_the_Field: "Query.Entity_Related.Get_With_Prefab",
+  /**  See `NODES.Arithmetic_Math_RadToDeg` for detailed documentation. */
+  Radians_to_Degrees: "Arithmetic.Math.Rad_To_Deg",
+  /**  See `NODES.Arithmetic_Math_DegToRad` for detailed documentation. */
+  Degrees_to_Radians: "Arithmetic.Math.Deg_To_Rad",
+  /**  See `NODES.Execution_CustomVariable_SetGraphVariable` for detailed documentation. */
+  Set_Node_Graph_Variable: "Execution.Custom_Variable.Set_Graph_Variable",
+  /**  See `NODES.Query_CustomVariable_GetGraphVariable` for detailed documentation. */
+  Get_Node_Graph_Variable: "Query.Custom_Variable.Get_Graph_Variable",
+  /**  See `NODES.Trigger_CustomVariable_OnGraphVariableChange` for detailed documentation. */
+  When_Node_Graph_Variable_Changes: "Trigger.Custom_Variable.On_Graph_Variable_Change",
+  /**  See `NODES.Execution_FollowMotion_SetDeviceState` for detailed documentation. */
+  Activate_Disable_Follow_Motion_Device: "Execution.Follow_Motion.Set_Device_State",
+  /**  See `NODES.Hidden_Execution_SetDisruptorState` for detailed documentation. */
+  Activate_Disable_Character_Disruptor_Device: "Hidden.Execution.Set_Disruptor_State",
+  /**  See `NODES.Execution_CollisionTriggerSource_SetSourceState` for detailed documentation. */
+  Activate_Disable_Collision_Trigger_Source: "Execution.Collision_Trigger_Source.Set_Source_State",
+  /**  See `NODES.Execution_EntityRelated_RemoveEntity` for detailed documentation. */
+  Remove_Entity: "Execution.Entity_Related.Remove_Entity",
+  /**  See `NODES.Trigger_EntityRelated_OnDestroyed` for detailed documentation. */
+  When_Entity_Is_Destroyed: "Trigger.Entity_Related.On_Destroyed",
+  /**  See `NODES.Trigger_Creation_OnEnterCombat` for detailed documentation. */
+  When_Creation_Enters_Combat: "Trigger.Creation.On_Enter_Combat",
+  /**  See `NODES.Trigger_Creation_OnLeaveCombat` for detailed documentation. */
+  When_Creation_Leaves_Combat: "Trigger.Creation.On_Leave_Combat",
+  /**  See `NODES.Query_Creation_GetTarget` for detailed documentation. */
+  Get_Creation_s_Current_Target: "Query.Creation.Get_Target",
+  /**  See `NODES.Query_EntityRelated_GetByType` for detailed documentation. */
+  Get_Entity_List_by_Specified_Type: "Query.Entity_Related.Get_By_Type",
+  /**  See `NODES.Query_EntityRelated_GetByPrefab` for detailed documentation. */
+  Get_Entity_List_by_Specified_Prefab: "Query.Entity_Related.Get_By_Prefab",
+  /**  See `NODES.Query_EntityRelated_GetByFaction` for detailed documentation. */
+  Get_Entity_List_by_Specified_Faction: "Query.Entity_Related.Get_By_Faction",
+  /**  See `NODES.Query_EntityRelated_GetByRange` for detailed documentation. */
+  Get_Entity_List_by_Specified_Range: "Query.Entity_Related.Get_By_Range",
+  /**  See `NODES.Query_Creation_GetAttribute` for detailed documentation. */
+  Get_Creation_Attribute: "Query.Creation.Get_Attribute",
+  /**  See `NODES.Execution_UIControlGroup_SwitchLayout` for detailed documentation. */
+  Switch_Current_Interface_Layout: "Execution.UI_Control_Group.Switch_Layout",
+  /**  See `NODES.Execution_UIControlGroup_ActivateGroup` for detailed documentation. */
+  Activate_UI_Control_Group_in_Control_Group_Library: "Execution.UI_Control_Group.Activate_Group",
+  /**  See `NODES.Execution_UIControlGroup_ModifyStatus` for detailed documentation. */
+  Modify_UI_Control_Status_Within_the_Interface_Layout: "Execution.UI_Control_Group.Modify_Status",
+  /**  See `NODES.Trigger_Class_OnClassChange` for detailed documentation. */
+  When_Player_Class_Changes: "Trigger.Class.On_Class_Change",
+  /**  See `NODES.Trigger_Class_OnLevelChange` for detailed documentation. */
+  When_Player_Class_Level_Changes: "Trigger.Class.On_Level_Change",
+  /**  See `NODES.Query_Class_GetClass` for detailed documentation. */
+  Query_Player_Class: "Query.Class.Get_Class",
+  /**  See `NODES.Query_Class_GetLevel` for detailed documentation. */
+  Query_Player_Class_Level: "Query.Class.Get_Level",
+  /**  See `NODES.Execution_Class_ChangeClass` for detailed documentation. */
+  Change_Player_Class: "Execution.Class.Change_Class",
+  /**  See `NODES.Execution_Class_AddExp` for detailed documentation. */
+  Increase_Player_s_Current_Class_EXP: "Execution.Class.Add_Exp",
+  /**  See `NODES.Execution_Class_SetLevel` for detailed documentation. */
+  Change_Player_s_Current_Class_Level: "Execution.Class.Set_Level",
+  /**  See `NODES.Trigger_Skill_OnSkillCall` for detailed documentation. */
+  When_Skill_Node_Is_Called: "Trigger.Skill.On_Skill_Call",
+  /**  See `NODES.Execution_Skill_ModifyResource` for detailed documentation. */
+  Modify_Skill_Resource_Amount: "Execution.Skill.Modify_Resource",
+  /**  See `NODES.Execution_Skill_SetResource` for detailed documentation. */
+  Set_Skill_Resource_Amount: "Execution.Skill.Set_Resource",
+  /**  See `NODES.Execution_Skill_AddSkill` for detailed documentation. */
+  Add_Character_Skill: "Execution.Skill.Add_Skill",
+  /**  See `NODES.Execution_Skill_RemoveByID` for detailed documentation. */
+  Delete_Character_Skill_by_ID: "Execution.Skill.Remove_By_ID",
+  /**  See `NODES.Execution_Skill_InitSkill` for detailed documentation. */
+  Initialize_Character_Skill: "Execution.Skill.Init_Skill",
+  /**  See `NODES.Query_Skill_GetSkillInfo` for detailed documentation. */
+  Query_Character_Skill: "Query.Skill.Get_Skill_Info",
+  /**  See `NODES.Execution_Skill_RemoveBySlot` for detailed documentation. */
+  Delete_Character_Skill_by_Slot: "Execution.Skill.Remove_By_Slot",
+  /**  See `NODES.Hidden_Trigger_OnNativeValueChange` for detailed documentation. */
+  When_Native_Custom_Value_Changes: "Hidden.Trigger.On_Native_Value_Change",
+  /**  See `NODES.Hidden_Execution_SetNativeValue` for detailed documentation. */
+  Native_Setting_Custom_Value: "Hidden.Execution.Set_Native_Value",
+  /**  See `NODES.Hidden_Query_GetNativeValue` for detailed documentation. */
+  Native_Query_Custom_Value: "Hidden.Query.Get_Native_Value",
+  /**  See `NODES.Execution_SpecialEffect_StopByAsset` for detailed documentation. */
+  Clear_Special_Effects_Based_on_Special_Effect_Assets: "Execution.Special_Effect.Stop_By_Asset",
+  /**  See `NODES.Arithmetic_Math_VectorRotate` for detailed documentation. */
+  _3D_Vector_Rotation: "Arithmetic.Math.Vector_Rotate",
+  /**  See `NODES.Arithmetic_General_EnumEqual` for detailed documentation. */
+  Enumerations_Equal: "Arithmetic.General.Enum_Equal",
+  /**  See `NODES.Arithmetic_Math_VectorDot` for detailed documentation. */
+  _3D_Vector_Dot_Product: "Arithmetic.Math.Vector_Dot",
+  /**  See `NODES.Arithmetic_Math_VectorCross` for detailed documentation. */
+  _3D_Vector_Cross_Product: "Arithmetic.Math.Vector_Cross",
+  /**  See `NODES.Query_EntityRelated_IsActive` for detailed documentation. */
+  Query_If_Entity_Is_on_the_Field: "Query.Entity_Related.Is_Active",
+  /**  See `NODES.Query_UnitStatus_HasStatus` for detailed documentation. */
+  Query_If_Entity_Has_Unit_Status: "Query.Unit_Status.Has_Status",
+  /**  See `NODES.Execution_ListOperation_ForEach` for detailed documentation. */
+  List_Iteration_Loop: "Execution.List_Operation.For_Each",
+  /**  See `NODES.Query_EntityRelated_GetForward` for detailed documentation. */
+  Get_Entity_Forward_Vector: "Query.Entity_Related.Get_Forward",
+  /**  See `NODES.Query_EntityRelated_GetRight` for detailed documentation. */
+  Get_Entity_Right_Vector: "Query.Entity_Related.Get_Right",
+  /**  See `NODES.Query_EntityRelated_GetUp` for detailed documentation. */
+  Get_Entity_Upward_Vector: "Query.Entity_Related.Get_Up",
+  /**  See `NODES.Arithmetic_Math_VectorToRotation` for detailed documentation. */
+  Direction_Vector_to_Rotation: "Arithmetic.Math.Vector_To_Rotation",
+  /**  See `NODES.Execution_MotionDevice_AddTargetRotation` for detailed documentation. */
+  Add_Target_Oriented_Rotation_Based_Motion_Device: "Execution.Motion_Device.Add_Target_Rotation",
+  /**  See `NODES.Execution_UIControlGroup_RemoveGroup` for detailed documentation. */
+  Remove_Interface_Control_Group_From_Control_Group_Library: "Execution.UI_Control_Group.Remove_Group",
+  /**  See `NODES.Query_EntityRelated_GetObjAttr` for detailed documentation. */
+  Get_Object_Attribute: "Query.Entity_Related.Get_Obj_Attr",
+  /**  See `NODES.Execution_Combat_RecoverHP` for detailed documentation. */
+  Recover_HP: "Execution.Combat.Recover_HP",
+  /**  See `NODES.Trigger_Combat_OnHPRecover` for detailed documentation. */
+  When_HP_Is_Recovered: "Trigger.Combat.On_HP_Recover",
+  /**  See `NODES.Trigger_Combat_OnHPRecoveryStart` for detailed documentation. */
+  When_Initiating_HP_Recovery: "Trigger.Combat.On_HP_Recovery_Start",
+  /**  See `NODES.Execution_UnitTag_AddTag` for detailed documentation. */
+  Add_Unit_Tag_to_Entity: "Execution.Unit_Tag.Add_Tag",
+  /**  See `NODES.Execution_UnitTag_RemoveTag` for detailed documentation. */
+  Remove_Unit_Tag_from_Entity: "Execution.Unit_Tag.Remove_Tag",
+  /**  See `NODES.Execution_UnitTag_ClearTags` for detailed documentation. */
+  Clear_Unit_Tags_from_Entity: "Execution.Unit_Tag.Clear_Tags",
+  /**  See `NODES.Query_UnitTag_GetTags` for detailed documentation. */
+  Get_Entity_Unit_Tag_List: "Query.Unit_Tag.Get_Tags",
+  /**  See `NODES.Query_UnitTag_GetByTag` for detailed documentation. */
+  Get_Entity_List_by_Unit_Tag: "Query.Unit_Tag.Get_By_Tag",
+  /**  See `NODES.Execution_SoundEffect_ClosePlayer` for detailed documentation. */
+  Close_Specified_Sound_Effect_Player: "Execution.Sound_Effect.Close_Player",
+  /**  See `NODES.Execution_SoundEffect_TogglePlayer` for detailed documentation. */
+  Start_Pause_Specified_Sound_Effect_Player: "Execution.Sound_Effect.Toggle_Player",
+  /**  See `NODES.Execution_SoundEffect_AdjustPlayer` for detailed documentation. */
+  Adjust_Specified_Sound_Effect_Player: "Execution.Sound_Effect.Adjust_Player",
+  /**  See `NODES.Execution_SoundEffect_AddPlayer` for detailed documentation. */
+  Add_Sound_Effect_Player: "Execution.Sound_Effect.Add_Player",
+  /**  See `NODES.Execution_SoundEffect_ToggleBGM` for detailed documentation. */
+  Start_Pause_Player_Background_Music: "Execution.Sound_Effect.Toggle_BGM",
+  /**  See `NODES.Execution_SoundEffect_SetBGMVolume` for detailed documentation. */
+  Adjust_Player_Background_Music_Volume: "Execution.Sound_Effect.Set_BGM_Volume",
+  /**  See `NODES.Execution_SoundEffect_SetBGM` for detailed documentation. */
+  Modify_Player_Background_Music: "Execution.Sound_Effect.Set_BGM",
+  /**  See `NODES.Execution_SoundEffect_Play2DOneShot` for detailed documentation. */
+  Player_Plays_One_Shot_2D_Sound_Effect: "Execution.Sound_Effect.Play_2D_One_Shot",
+  /**  See `NODES.Execution_CustomAggro_SetAggro` for detailed documentation. */
+  Set_the_Aggro_Value_of_Specified_Entity: "Execution.Custom_Aggro.Set_Aggro",
+  /**  See `NODES.Execution_CustomAggro_RemoveAggro` for detailed documentation. */
+  Remove_Target_Entity_From_Aggro_List: "Execution.Custom_Aggro.Remove_Aggro",
+  /**  See `NODES.Execution_CustomAggro_ClearAggro` for detailed documentation. */
+  Clear_Specified_Target_s_Aggro_List: "Execution.Custom_Aggro.Clear_Aggro",
+  /**  See `NODES.Execution_CustomAggro_Taunt` for detailed documentation. */
+  Taunt_Target: "Execution.Custom_Aggro.Taunt",
+  /**  See `NODES.Query_CustomAggro_GetAggroValue` for detailed documentation. */
+  Query_the_Aggro_Value_of_the_Specified_Entity: "Query.Custom_Aggro.Get_Aggro_Value",
+  /**  See `NODES.Query_CustomAggro_GetMultiplier` for detailed documentation. */
+  Query_the_Aggro_Multiplier_of_the_Specified_Entity: "Query.Custom_Aggro.Get_Multiplier",
+  /**  See `NODES.Query_CustomAggro_GetGlobalMultiplier` for detailed documentation. */
+  Query_Global_Aggro_Transfer_Multiplier: "Query.Custom_Aggro.Get_Global_Multiplier",
+  /**  See `NODES.Query_CustomAggro_GetAggroTarget` for detailed documentation. */
+  Get_the_Aggro_Target_of_the_Specified_Entity: "Query.Custom_Aggro.Get_Aggro_Target",
+  /**  See `NODES.Query_CustomAggro_GetAggroOwners` for detailed documentation. */
+  Get_List_of_Owners_Who_Have_the_Target_in_Their_Aggro_List: "Query.Custom_Aggro.Get_Aggro_Owners",
+  /**  See `NODES.Query_CustomAggro_GetTargetingOwners` for detailed documentation. */
+  Get_List_of_Owners_That_Have_the_Target_As_Their_Aggro_Target: "Query.Custom_Aggro.Get_Targeting_Owners",
+  /**  See `NODES.Query_CustomAggro_GetAggroList` for detailed documentation. */
+  Get_the_Aggro_List_of_the_Specified_Entity: "Query.Custom_Aggro.Get_Aggro_List",
+  /**  See `NODES.Query_CustomAggro_IsInCombat` for detailed documentation. */
+  Query_if_Specified_Entity_Is_in_Combat: "Query.Custom_Aggro.Is_In_Combat",
+  /**  See `NODES.Trigger_CustomAggro_OnTargetChange` for detailed documentation. */
+  When_Aggro_Target_Changes: "Trigger.Custom_Aggro.On_Target_Change",
+  /**  See `NODES.Trigger_CustomAggro_OnEnterCombat` for detailed documentation. */
+  When_Self_Enters_Combat: "Trigger.Custom_Aggro.On_Enter_Combat",
+  /**  See `NODES.Trigger_CustomAggro_OnLeaveCombat` for detailed documentation. */
+  When_Self_Leaves_Combat: "Trigger.Custom_Aggro.On_Leave_Combat",
+  /**  See `NODES.Query_FactionRelated_IsHostile` for detailed documentation. */
+  Query_If_Faction_Is_Hostile: "Query.Faction_Related.Is_Hostile",
+  /**  See `NODES.Hidden_Execution_AddNameplate` for detailed documentation. */
+  Add_Entity_Active_Nameplate: "Hidden.Execution.Add_Nameplate",
+  /**  See `NODES.Hidden_Execution_RemoveNameplate` for detailed documentation. */
+  Delete_Entity_Active_Nameplate: "Hidden.Execution.Remove_Nameplate",
+  /**  See `NODES.Execution_Nameplate_SetNameplate` for detailed documentation. */
+  Set_Entity_Active_Nameplate: "Execution.Nameplate.Set_Nameplate",
+  /**  See `NODES.Execution_CreationPatrol_SwitchTemplate` for detailed documentation. */
+  Switch_Creation_Patrol_Template: "Execution.Creation_Patrol.Switch_Template",
+  /**  See `NODES.Query_CreaturePatrol_GetPatrolTemplate` for detailed documentation. */
+  Get_Current_Creation_s_Patrol_Template: "Query.Creature_Patrol.Get_Patrol_Template",
+  /**  See `NODES.Trigger_CreationPatrol_OnReachWaypoint` for detailed documentation. */
+  When_Creation_Reaches_Patrol_Waypoint: "Trigger.Creation_Patrol.On_Reach_Waypoint",
+  /**  See `NODES.Query_GlobalPath_GetWaypoint` for detailed documentation. */
+  Get_Specified_Waypoint_Info: "Query.Global_Path.Get_Waypoint",
+  /**  See `NODES.Execution_TextBubble_SetBubble` for detailed documentation. */
+  Switch_Active_Text_Bubble: "Execution.Text_Bubble.Set_Bubble",
+  /**  See `NODES.Execution_DeckSelector_Open` for detailed documentation. */
+  Invoke_Deck_Selector: "Execution.Deck_Selector.Open",
+  /**  See `NODES.Trigger_DeckSelector_OnDeckSelected` for detailed documentation. */
+  When_Deck_Selector_Is_Complete: "Trigger.Deck_Selector.On_Deck_Selected",
+  /**  See `NODES.Execution_MinimapMarker_SetZoom` for detailed documentation. */
+  Modify_Mini_Map_Zoom: "Execution.Minimap_Marker.Set_Zoom",
+  /**  See `NODES.Execution_MinimapMarker_SetMarkerState` for detailed documentation. */
+  Modify_Mini_Map_Marker_Activation_Status: "Execution.Minimap_Marker.Set_Marker_State",
+  /**  See `NODES.Execution_MinimapMarker_SetVisibleList` for detailed documentation. */
+  Modify_Player_List_for_Visible_Mini_Map_Markers: "Execution.Minimap_Marker.Set_Visible_List",
+  /**  See `NODES.Execution_MinimapMarker_SetTrackList` for detailed documentation. */
+  Modify_Player_List_for_Tracking_Mini_Map_Markers: "Execution.Minimap_Marker.Set_Track_List",
+  /**  See `NODES.Query_MinimapMarker_GetMarkerInfo` for detailed documentation. */
+  Query_Specified_Mini_Map_Marker_Information: "Query.Minimap_Marker.Get_Marker_Info",
+  /**  See `NODES.Query_MinimapMarker_GetMarkerStatus` for detailed documentation. */
+  Get_Entity_s_Mini_Map_Marker_Status: "Query.Minimap_Marker.Get_Marker_Status",
+  /**  See `NODES.Execution_MinimapMarker_UpdateMarkers` for detailed documentation. */
+  Modify_Player_Markers_on_the_Mini_Map: "Execution.Minimap_Marker.Update_Markers",
+  /**  See `NODES.Execution_DeckSelector_Close` for detailed documentation. */
+  Close_Deck_Selector: "Execution.Deck_Selector.Close",
+  /**  See `NODES.Trigger_UnitStatus_OnElementReaction` for detailed documentation. */
+  When_Elemental_Reaction_Event_Occurs: "Trigger.Unit_Status.On_Element_Reaction",
+  /**  See `NODES.Trigger_UnitStatus_OnShieldHit` for detailed documentation. */
+  When_Shield_Is_Attacked: "Trigger.Unit_Status.On_Shield_Hit",
+  /**  See `NODES.Query_Achievement_IsCompleted` for detailed documentation. */
+  Query_If_Achievement_Is_Completed: "Query.Achievement.Is_Completed",
+  /**  See `NODES.Execution_Achievement_SetProgress` for detailed documentation. */
+  Set_Achievement_Progress_Tally: "Execution.Achievement.Set_Progress",
+  /**  See `NODES.Execution_Achievement_AddProgress` for detailed documentation. */
+  Change_Achievement_Progress_Tally: "Execution.Achievement.Add_Progress",
+  /**  See `NODES.Execution_StageSettlement_SetScoreboard` for detailed documentation. */
+  Set_Player_Settlement_Scoreboard_Data_Display: "Execution.Stage_Settlement.Set_Scoreboard",
+  /**  See `NODES.Execution_StageSettlement_SetPlayerRank` for detailed documentation. */
+  Set_Player_Settlement_Ranking_Value: "Execution.Stage_Settlement.Set_Player_Rank",
+  /**  See `NODES.Query_StageSettlement_GetPlayerRank` for detailed documentation. */
+  Get_Player_Settlement_Ranking_Value: "Query.Stage_Settlement.Get_Player_Rank",
+  /**  See `NODES.Execution_StageSettlement_SetPlayerResult` for detailed documentation. */
+  Set_Player_Settlement_Success_Status: "Execution.Stage_Settlement.Set_Player_Result",
+  /**  See `NODES.Query_StageSettlement_GetPlayerResult` for detailed documentation. */
+  Get_Player_Settlement_Success_Status: "Query.Stage_Settlement.Get_Player_Result",
+  /**  See `NODES.Execution_StageSettlement_SetFactionRank` for detailed documentation. */
+  Set_Faction_Settlement_Ranking_Value: "Execution.Stage_Settlement.Set_Faction_Rank",
+  /**  See `NODES.Query_StageSettlement_GetFactionRank` for detailed documentation. */
+  Get_Faction_Settlement_Ranking_Value: "Query.Stage_Settlement.Get_Faction_Rank",
+  /**  See `NODES.Execution_StageSettlement_SetFactionResult` for detailed documentation. */
+  Set_Faction_Settlement_Success_Status: "Execution.Stage_Settlement.Set_Faction_Result",
+  /**  See `NODES.Query_StageSettlement_GetFactionResult` for detailed documentation. */
+  Get_Faction_Settlement_Success_Status: "Query.Stage_Settlement.Get_Faction_Result",
+  /**  See `NODES.Query_RankTier_GetRankInfo` for detailed documentation. */
+  Get_Player_Ranking_Info: "Query.Rank_Tier.Get_Rank_Info",
+  /**  See `NODES.Execution_Rank_ModifyScore` for detailed documentation. */
+  Set_Player_Rank_Score_Change: "Execution.Rank.Modify_Score",
+  /**  See `NODES.Query_RankTier_GetScoreChange` for detailed documentation. */
+  Get_Player_Rank_Score_Change: "Query.Rank_Tier.Get_Score_Change",
+  /**  See `NODES.Execution_Rank_SetEscapeValid` for detailed documentation. */
+  Set_Player_Escape_Validity: "Execution.Rank.Set_Escape_Valid",
+  /**  See `NODES.Query_RankTier_GetEscapeStatus` for detailed documentation. */
+  Get_Player_Escape_Validity: "Query.Rank_Tier.Get_Escape_Status",
+  /**  See `NODES.Execution_Rank_SwitchScoreGroup` for detailed documentation. */
+  Switch_the_scoring_group_that_affects_player_s_competitive_rank: "Execution.Rank.Switch_Score_Group",
+  /**  See `NODES.Query_StageRelated_GetEnvTime` for detailed documentation. */
+  Query_Current_Environment_Time: "Query.Stage_Related.Get_Env_Time",
+  /**  See `NODES.Execution_StageRelated_SetTime` for detailed documentation. */
+  Set_Current_Environment_Time: "Execution.Stage_Related.Set_Time",
+  /**  See `NODES.Execution_StageRelated_SetTimeSpeed` for detailed documentation. */
+  Set_Environment_Time_Passage_Speed: "Execution.Stage_Related.Set_Time_Speed",
+  /**  See `NODES.Execution_LightComponent_ToggleLight` for detailed documentation. */
+  Toggle_Entity_Light_Source: "Execution.Light_Component.Toggle_Light",
+  /**  See `NODES.Execution_FollowMotion_SetTargetEntity` for detailed documentation. */
+  Switch_Follow_Motion_Device_Target_by_Entity: "Execution.Follow_Motion.Set_Target_Entity",
+  /**  See `NODES.Query_CollisionTrigger_GetOverlappingEntities` for detailed documentation. */
+  Get_All_Entities_Within_the_Collision_Trigger: "Query.Collision_Trigger.Get_Overlapping_Entities",
+  /**  See `NODES.Query_EntityRelated_GetAdvAttr` for detailed documentation. */
+  Get_Entity_Advanced_Attribute: "Query.Entity_Related.Get_Adv_Attr",
+  /**  See `NODES.Query_EntityRelated_GetElemAttr` for detailed documentation. */
+  Get_Entity_Elemental_Attribute: "Query.Entity_Related.Get_Elem_Attr",
+  /**  See `NODES.Execution_Equipment_AddAffix` for detailed documentation. */
+  Add_Affix_to_Equipment: "Execution.Equipment.Add_Affix",
+  /**  See `NODES.Execution_Equipment_RemoveAffix` for detailed documentation. */
+  Remove_Equipment_Affix: "Execution.Equipment.Remove_Affix",
+  /**  See `NODES.Execution_Equipment_ModifyAffix` for detailed documentation. */
+  Modify_Equipment_Affix_Value: "Execution.Equipment.Modify_Affix",
+  /**  See `NODES.Query_Equipment_GetAffixes` for detailed documentation. */
+  Get_Equipment_Affix_List: "Query.Equipment.Get_Affixes",
+  /**  See `NODES.Query_Equipment_GetAffixConfig` for detailed documentation. */
+  Get_Equipment_Affix_Config_ID: "Query.Equipment.Get_Affix_Config",
+  /**  See `NODES.Query_Equipment_GetAffixValue` for detailed documentation. */
+  Get_Equipment_Affix_Value: "Query.Equipment.Get_Affix_Value",
+  /**  See `NODES.Hidden_Execution_UpdateLeaderboard` for detailed documentation. */
+  Update_Player_Leaderboard_Score: "Hidden.Execution.Update_Leaderboard",
+  /**  See `NODES.Trigger_TextBubble_OnBubbleComplete` for detailed documentation. */
+  When_Text_Bubble_Is_Completed: "Trigger.Text_Bubble.On_Bubble_Complete",
+  /**  See `NODES.Trigger_Equipment_OnAffixChange` for detailed documentation. */
+  When_Equipment_Affix_Value_Changes: "Trigger.Equipment.On_Affix_Change",
+  /**  See `NODES.Trigger_Item_OnItemAdd` for detailed documentation. */
+  When_Item_Is_Added_to_Inventory: "Trigger.Item.On_Item_Add",
+  /**  See `NODES.Trigger_Item_OnItemLose` for detailed documentation. */
+  When_Item_Is_Lost_From_Inventory: "Trigger.Item.On_Item_Lose",
+  /**  See `NODES.Trigger_Item_OnItemQuantityChange` for detailed documentation. */
+  When_the_Quantity_of_Inventory_Item_Changes: "Trigger.Item.On_Item_Quantity_Change",
+  /**  See `NODES.Trigger_Item_OnCurrencyChange` for detailed documentation. */
+  When_the_Quantity_of_Inventory_Currency_Changes: "Trigger.Item.On_Currency_Change",
+  /**  See `NODES.Execution_Inventory_ExpandCapacity` for detailed documentation. */
+  Increase_Maximum_Inventory_Capacity: "Execution.Inventory.Expand_Capacity",
+  /**  See `NODES.Execution_Inventory_ModifyItem` for detailed documentation. */
+  Modify_Inventory_Item_Quantity: "Execution.Inventory.Modify_Item",
+  /**  See `NODES.Execution_Inventory_SetDropAmount` for detailed documentation. */
+  Set_Inventory_Loot_Item_Currency_Quantity: "Execution.Inventory.Set_Drop_Amount",
+  /**  See `NODES.Execution_Inventory_ModifyCurrency` for detailed documentation. */
+  Modify_Inventory_Currency_Quantity: "Execution.Inventory.Modify_Currency",
+  /**  See `NODES.Query_Item_GetCapacity` for detailed documentation. */
+  Get_Inventory_Capacity: "Query.Item.Get_Capacity",
+  /**  See `NODES.Query_Item_GetItemAmount` for detailed documentation. */
+  Get_Inventory_Item_Quantity: "Query.Item.Get_Item_Amount",
+  /**  See `NODES.Query_Item_GetCurrencyAmount` for detailed documentation. */
+  Get_Inventory_Currency_Quantity: "Query.Item.Get_Currency_Amount",
+  /**  See `NODES.Trigger_Equipment_OnInit` for detailed documentation. */
+  When_Equipment_Is_Initialized: "Trigger.Equipment.On_Init",
+  /**  See `NODES.Trigger_Equipment_OnEquip` for detailed documentation. */
+  When_Equipment_Is_Equipped: "Trigger.Equipment.On_Equip",
+  /**  See `NODES.Trigger_Equipment_OnUnequip` for detailed documentation. */
+  When_Equipment_Is_Unequipped: "Trigger.Equipment.On_Unequip",
+  /**  See `NODES.Execution_Combat_LossHP` for detailed documentation. */
+  Loss_HP: "Execution.Combat.Loss_HP",
+  /**  See `NODES.Execution_Combat_RecoverHPInstant` for detailed documentation. */
+  Recover_HP_Directly: "Execution.Combat.Recover_HP_Instant",
+  /**  See `NODES.Trigger_Shop_OnCustomItemSold` for detailed documentation. */
+  When_Custom_Shop_Item_Is_Sold: "Trigger.Shop.On_Custom_Item_Sold",
+  /**  See `NODES.Trigger_Shop_OnInvItemSold` for detailed documentation. */
+  When_Selling_Inventory_Items_in_the_Shop: "Trigger.Shop.On_Inv_Item_Sold",
+  /**  See `NODES.Execution_Shop_Open` for detailed documentation. */
+  Open_Shop: "Execution.Shop.Open",
+  /**  See `NODES.Execution_Shop_Close` for detailed documentation. */
+  Close_Shop: "Execution.Shop.Close",
+  /**  See `NODES.Execution_Shop_ModifyCustomSale` for detailed documentation. */
+  Modify_Custom_Shop_Item_Sales_Info: "Execution.Shop.Modify_Custom_Sale",
+  /**  See `NODES.Trigger_Shop_OnSellItem` for detailed documentation. */
+  When_selling_items_to_the_shop: "Trigger.Shop.On_Sell_Item",
+  /**  See `NODES.Execution_Shop_ModifyInventorySale` for detailed documentation. */
+  Modify_Inventory_Shop_Item_Sales_Info: "Execution.Shop.Modify_Inventory_Sale",
+  /**  See `NODES.Execution_Shop_ModifyCartItem` for detailed documentation. */
+  Modify_Item_Purchase_Info_in_the_Purchase_List: "Execution.Shop.Modify_Cart_Item",
+  /**  See `NODES.Execution_Shop_AddCustomSale` for detailed documentation. */
+  Add_New_Item_to_Custom_Shop_Sales_List: "Execution.Shop.Add_Custom_Sale",
+  /**  See `NODES.Execution_Shop_AddInventorySale` for detailed documentation. */
+  Add_New_Item_to_Inventory_Shop_Sales_List: "Execution.Shop.Add_Inventory_Sale",
+  /**  See `NODES.Execution_Shop_AddToCart` for detailed documentation. */
+  Add_Items_to_the_Purchase_List: "Execution.Shop.Add_To_Cart",
+  /**  See `NODES.Execution_Shop_RemoveCustomSale` for detailed documentation. */
+  Remove_Item_From_Custom_Shop_Sales_List: "Execution.Shop.Remove_Custom_Sale",
+  /**  See `NODES.Execution_Shop_RemoveInventorySale` for detailed documentation. */
+  Remove_Item_From_Inventory_Shop_Sales_List: "Execution.Shop.Remove_Inventory_Sale",
+  /**  See `NODES.Execution_Shop_RemoveFromCart` for detailed documentation. */
+  Remove_item_from_purchase_list: "Execution.Shop.Remove_From_Cart",
+  /**  See `NODES.Query_Shop_GetCustomSales` for detailed documentation. */
+  Query_Custom_Shop_Item_Sales_List: "Query.Shop.Get_Custom_Sales",
+  /**  See `NODES.Query_Shop_GetInvSales` for detailed documentation. */
+  Query_Inventory_Shop_Item_Sales_List: "Query.Shop.Get_Inv_Sales",
+  /**  See `NODES.Query_Shop_GetCartItems` for detailed documentation. */
+  Query_Shop_Purchase_Item_List: "Query.Shop.Get_Cart_Items",
+  /**  See `NODES.Query_Shop_GetCustomItemInfo` for detailed documentation. */
+  Query_Custom_Shop_Item_Sales_Info: "Query.Shop.Get_Custom_Item_Info",
+  /**  See `NODES.Query_Shop_GetInvItemInfo` for detailed documentation. */
+  Query_Inventory_Shop_Item_Sales_Info: "Query.Shop.Get_Inv_Item_Info",
+  /**  See `NODES.Query_Shop_GetPurchaseInfo` for detailed documentation. */
+  Query_Shop_Item_Purchase_Info: "Query.Shop.Get_Purchase_Info",
+  /**  See `NODES.Execution_Inventory_SetDropItems` for detailed documentation. */
+  Set_Inventory_Item_Drop_Content: "Execution.Inventory.Set_Drop_Items",
+  /**  See `NODES.Query_Item_GetBasicItems` for detailed documentation. */
+  Get_all_basic_items_from_Inventory: "Query.Item.Get_Basic_Items",
+  /**  See `NODES.Query_Item_GetCurrencyAll` for detailed documentation. */
+  Get_All_Currency_From_Inventory: "Query.Item.Get_Currency_All",
+  /**  See `NODES.Query_Item_GetEquipmentAll` for detailed documentation. */
+  Get_all_equipment_from_Inventory: "Query.Item.Get_Equipment_All",
+  /**  See `NODES.Execution_Inventory_TriggerDrop` for detailed documentation. */
+  Trigger_Loot_Drop: "Execution.Inventory.Trigger_Drop",
+  /**  See `NODES.Execution_Inventory_SetLootContent` for detailed documentation. */
+  Set_Loot_Drop_Content: "Execution.Inventory.Set_Loot_Content",
+  /**  See `NODES.Execution_Inventory_ModifyLootItem` for detailed documentation. */
+  Modify_Loot_Item_Component_Quantity: "Execution.Inventory.Modify_Loot_Item",
+  /**  See `NODES.Execution_Inventory_ModifyLootCurrency` for detailed documentation. */
+  Modify_Loot_Component_Currency_Amount: "Execution.Inventory.Modify_Loot_Currency",
+  /**  See `NODES.Query_Item_GetLootItemAmount` for detailed documentation. */
+  Get_Loot_Component_Item_Quantity: "Query.Item.Get_Loot_Item_Amount",
+  /**  See `NODES.Query_Item_GetLootCurrencyAmount` for detailed documentation. */
+  Get_Loot_Component_Currency_Quantity: "Query.Item.Get_Loot_Currency_Amount",
+  /**  See `NODES.Query_Item_GetLootItems` for detailed documentation. */
+  Get_All_Items_from_Loot_Component: "Query.Item.Get_Loot_Items",
+  /**  See `NODES.Query_Item_GetLootCurrency` for detailed documentation. */
+  Get_All_Currency_from_Loot_Component: "Query.Item.Get_Loot_Currency",
+  /**  See `NODES.Query_Item_GetLootEquipment` for detailed documentation. */
+  Get_All_Equipment_from_Loot_Component: "Query.Item.Get_Loot_Equipment",
+  /**  See `NODES.Trigger_Item_OnItemUse` for detailed documentation. */
+  When_Items_in_the_Inventory_Are_Used: "Trigger.Item.On_Item_Use",
+  /**  See `NODES.Query_Equipment_GetTags` for detailed documentation. */
+  Query_Equipment_Tag_List: "Query.Equipment.Get_Tags",
+  /**  See `NODES.Execution_ScanTag_SetRules` for detailed documentation. */
+  Set_Scan_Tag_Rules: "Execution.Scan_Tag.Set_Rules",
+  /**  See `NODES.Execution_ScanTag_SetActiveTag` for detailed documentation. */
+  Set_Scan_Component_s_Active_Scan_Tag_ID: "Execution.Scan_Tag.Set_Active_Tag",
+  /**  See `NODES.Query_ScanTag_GetActiveTag` for detailed documentation. */
+  Get_the_Currently_Active_Scan_Tag_Config_ID: "Query.Scan_Tag.Get_Active_Tag",
+  /**  See `NODES.Query_EntityRelated_GetCharacterAttr` for detailed documentation. */
+  Get_Character_Attribute: "Query.Entity_Related.Get_Character_Attr",
+  /**  See `NODES.Execution_Skill_SetCD` for detailed documentation. */
+  Set_Character_Skill_CD: "Execution.Skill.Set_CD",
+  /**  See `NODES.Execution_Skill_ModifyCD` for detailed documentation. */
+  Modify_Character_Skill_CD: "Execution.Skill.Modify_CD",
+  /**  See `NODES.Execution_Skill_ModifyCDRatio` for detailed documentation. */
+  Modify_Skill_CD_Percentage_Based_on_Max_CD: "Execution.Skill.Modify_CD_Ratio",
+  /**  See `NODES.Execution_Equipment_AddAffixByID` for detailed documentation. */
+  Add_Affix_to_Equipment_at_Specified_ID: "Execution.Equipment.Add_Affix_By_ID",
+  /**  See `NODES.Execution_DeckSelector_GetRandomList` for detailed documentation. */
+  Random_Deck_Selector_Selection_List: "Execution.Deck_Selector.Get_Random_List",
+  /**  See `NODES.Query_EntityRelated_GetOwner` for detailed documentation. */
+  Get_Owner_Entity: "Query.Entity_Related.Get_Owner",
+  /**  See `NODES.Query_EntityRelated_GetOwnedEntities` for detailed documentation. */
+  Get_List_of_Entities_Owned_by_the_Entity: "Query.Entity_Related.Get_Owned_Entities",
+  /**  See `NODES.Query_UnitStatus_GetStatusStacks` for detailed documentation. */
+  Execution_UI_Control_Group_Modify_Status: "Query.Unit_Status.Get_Status_Stacks",
+  /**  See `NODES.Query_UnitStatus_GetStatusApplier` for detailed documentation. */
+  Query_Unit_Status_Applier_by_Slot_ID: "Query.Unit_Status.Get_Status_Applier",
+  /**  See `NODES.Query_UnitStatus_GetStatusSlots` for detailed documentation. */
+  List_of_Slot_IDs_Querying_Unit_Status: "Query.Unit_Status.Get_Status_Slots",
+  /**  See `NODES.Query_Equipment_GetConfigID` for detailed documentation. */
+  Query_Equipment_Config_ID_by_Equipment_ID: "Query.Equipment.Get_Config_ID",
+  /**  See `NODES.Query_CharacterRelated_GetGUIDByID` for detailed documentation. */
+  Get_Player_GUID_by_Player_ID: "Query.Character_Related.Get_GUID_By_ID",
+  /**  See `NODES.Query_CharacterRelated_GetIDByGUID` for detailed documentation. */
+  Get_Player_ID_by_Player_GUID: "Query.Character_Related.Get_ID_By_GUID",
+  /**  See `NODES.Arithmetic_Math_TimestampToTime` for detailed documentation. */
+  Calculate_formatted_time_from_timestamp: "Arithmetic.Math.Timestamp_To_Time",
+  /**  See `NODES.Arithmetic_Math_TimeToTimestamp` for detailed documentation. */
+  Calculate_Timestamp_From_Formatted_Time: "Arithmetic.Math.Time_To_Timestamp",
+  /**  See `NODES.Arithmetic_Math_TimestampToWeekday` for detailed documentation. */
+  Calculate_day_of_the_week_from_timestamp: "Arithmetic.Math.Timestamp_To_Weekday",
+  /**  See `NODES.Query_Math_GetTimestamp` for detailed documentation. */
+  Query_Timestamp_UTC_0: "Query.Math.Get_Timestamp",
+  /**  See `NODES.Query_Math_GetTimezone` for detailed documentation. */
+  Query_Server_Time_Zone: "Query.Math.Get_Timezone",
+  /**  See `NODES.Execution_EntityRelated_CreatePrefabGroup` for detailed documentation. */
+  Create_Prefab_Group: "Execution.Entity_Related.Create_Prefab_Group",
+  /**  See `NODES.Query_Creation_GetAggroList` for detailed documentation. */
+  Get_Aggro_List_of_Creation_in_Default_Mode: "Query.Creation.Get_Aggro_List",
+  /**  See `NODES.Execution_Leaderboard_SetScoreInt` for detailed documentation. */
+  Set_Player_Leaderboard_Score_as_an_Integer: "Execution.Leaderboard.Set_Score_Int",
+  /**  See `NODES.Execution_Leaderboard_SetScoreFloat` for detailed documentation. */
+  Set_Player_Leaderboard_Score_as_a_Float: "Execution.Leaderboard.Set_Score_Float",
+  /**  See `NODES.Execution_CharacterRelated_ModifyEnvironment` for detailed documentation. */
+  Modify_environment_settings: "Execution.Character_Related.Modify_Environment",
+  /**  See `NODES.Trigger_Class_OnClassRemove` for detailed documentation. */
+  When_Player_Class_Is_Removed: "Trigger.Class.On_Class_Remove",
+  /**  See `NODES.Trigger_Combat_OnInterruptible` for detailed documentation. */
+  When_Entering_an_Interruptible_State: "Trigger.Combat.On_Interruptible",
+  /**  See `NODES.Query_General_GetGameInfo` for detailed documentation. */
+  Query_Game_Mode_and_Player_Number: "Query.General.Get_Game_Info",
+  /**  See `NODES.Query_CharacterRelated_GetNickname` for detailed documentation. */
+  Get_Player_Nickname: "Query.Character_Related.Get_Nickname",
+  /**  See `NODES.Query_CharacterRelated_GetInputType` for detailed documentation. */
+  Get_Player_Client_Input_Device_Type: "Query.Character_Related.Get_Input_Type",
+  /**  See `NODES.Execution_ChatChannel_SetSwitch` for detailed documentation. */
+  Set_Chat_Channel_Switch: "Execution.Chat_Channel.Set_Switch",
+  /**  See `NODES.Execution_ChatChannel_ModifyPermission` for detailed documentation. */
+  Modify_Player_Channel_Permission: "Execution.Chat_Channel.Modify_Permission",
+  /**  See `NODES.Execution_ChatChannel_SetCurrentChannel` for detailed documentation. */
+  Set_Player_s_Current_Channel: "Execution.Chat_Channel.Set_Current_Channel",
+  /**  See `NODES.Execution_WonderlandBox_ConsumeBox` for detailed documentation. */
+  Consume_Gift_Box: "Execution.Wonderland_Box.Consume_Box",
+  /**  See `NODES.Query_WonderlandBoxRelated_GetBoxQuantity` for detailed documentation. */
+  Query_Corresponding_Gift_Box_Quantity: "Query.Wonderland_Box_Related.Get_Box_Quantity",
+  /**  See `NODES.Query_WonderlandBoxRelated_GetBoxConsumption` for detailed documentation. */
+  Query_Corresponding_Gift_Box_Consumption: "Query.Wonderland_Box_Related.Get_Box_Consumption",
+  /**  See `NODES.Execution_MotionDevice_ActivateFixedPoint` for detailed documentation. */
+  Activate_Fixed_Point_Motion_Device: "Execution.Motion_Device.Activate_Fixed_Point",
+  /**  See `NODES.Arithmetic_Math_LeftShift` for detailed documentation. */
+  Left_Shift_Operation: "Arithmetic.Math.Left_Shift",
+  /**  See `NODES.Arithmetic_Math_RightShift` for detailed documentation. */
+  Right_Shift_Operation: "Arithmetic.Math.Right_Shift",
+  /**  See `NODES.Arithmetic_Math_BitwiseAnd` for detailed documentation. */
+  Bitwise_AND: "Arithmetic.Math.Bitwise_And",
+  /**  See `NODES.Arithmetic_Math_BitwiseOr` for detailed documentation. */
+  Bitwise_OR: "Arithmetic.Math.Bitwise_Or",
+  /**  See `NODES.Arithmetic_Math_BitwiseXor` for detailed documentation. */
+  XOR_Exclusive_OR: "Arithmetic.Math.Bitwise_Xor",
+  /**  See `NODES.Arithmetic_Math_BitwiseNot` for detailed documentation. */
+  Bitwise_Complement: "Arithmetic.Math.Bitwise_Not",
+  /**  See `NODES.Arithmetic_Math_WriteBit` for detailed documentation. */
+  Write_by_bit: "Arithmetic.Math.Write_Bit",
+  /**  See `NODES.Arithmetic_Math_ReadBit` for detailed documentation. */
+  Read_by_bit: "Arithmetic.Math.Read_Bit",
+  /**  See `NODES.Trigger_EntityRelated_OnSpeedCondition` for detailed documentation. */
+  When_Character_Movement_SPD_Meets_Condition: "Trigger.Entity_Related.On_Speed_Condition",
+  /**  See `NODES.Query_EntityRelated_GetMoveSpeed` for detailed documentation. */
+  Query_Character_s_Current_Movement_SPD: "Query.Entity_Related.Get_Move_Speed",
+  /**  See `NODES.Execution_Dictionary_SetValue` for detailed documentation. */
+  Set_or_Add_Key_Value_Pairs_to_Dictionary: "Execution.Dictionary.Set_Value",
+  /**  See `NODES.Arithmetic_Dictionary_CreateDictionary` for detailed documentation. */
+  Create_Dictionary: "Arithmetic.Dictionary.Create_Dictionary",
+  /**  See `NODES.Query_Dictionary_GetValue` for detailed documentation. */
+  Query_Dictionary_Value_by_Key: "Query.Dictionary.Get_Value",
+  /**  See `NODES.Execution_Dictionary_RemoveByKey` for detailed documentation. */
+  Remove_Key_Value_Pairs_from_Dictionary_by_Key: "Execution.Dictionary.Remove_By_Key",
+  /**  See `NODES.Query_Dictionary_HasKey` for detailed documentation. */
+  Query_If_Dictionary_Contains_Specific_Key: "Query.Dictionary.Has_Key",
+  /**  See `NODES.Query_Dictionary_HasValue` for detailed documentation. */
+  Query_If_Dictionary_Contains_Specific_Value: "Query.Dictionary.Has_Value",
+  /**  See `NODES.Query_Dictionary_GetKeys` for detailed documentation. */
+  Get_List_of_Keys_from_Dictionary: "Query.Dictionary.Get_Keys",
+  /**  See `NODES.Query_Dictionary_GetValues` for detailed documentation. */
+  Get_List_of_Values_from_Dictionary: "Query.Dictionary.Get_Values",
+  /**  See `NODES.Query_Dictionary_GetLength` for detailed documentation. */
+  Query_Dictionary_s_Length: "Query.Dictionary.Get_Length",
+  /**  See `NODES.Execution_Dictionary_Clear` for detailed documentation. */
+  Clear_Dictionary: "Execution.Dictionary.Clear",
+  /**  See `NODES.Arithmetic_Dictionary_AssembleDictionary` for detailed documentation. */
+  Assembly_Dictionary: "Arithmetic.Dictionary.Assemble_Dictionary",
+  /**  See `NODES.Execution_Dictionary_SortByKey` for detailed documentation. */
+  Sort_Dictionary_by_Key: "Execution.Dictionary.Sort_By_Key",
+  /**  See `NODES.Execution_Dictionary_SortByValue` for detailed documentation. */
+  Sort_Dictionary_by_Value: "Execution.Dictionary.Sort_By_Value",
+  /**  See `NODES.Query_CustomVariable_GetSnapshot` for detailed documentation. */
+  Query_Custom_Variable_Snapshot: "Query.Custom_Variable.Get_Snapshot",
+  /**  See `NODES.Hidden_Trigger_OnGMCall` for detailed documentation. */
+  When_Calling_GM_This_Node_is_Hidden_Externally: "Hidden.Trigger.On_GM_Call",
+  /**  See `NODES.Others_PortClient_GraphEndBool` for detailed documentation. */
+  Node_Graph_End_Boolean_Client: "Others.Port_Client.Graph_End_Bool",
+  /**  See `NODES.Arithmetic_MathClient_And` for detailed documentation. */
+  Logical_AND_Operation_Client: "Arithmetic.Math_Client.And",
+  /**  See `NODES.Arithmetic_MathClient_Or` for detailed documentation. */
+  Logical_OR_Operation_Client: "Arithmetic.Math_Client.Or",
+  /**  See `NODES.Arithmetic_MathClient_Not` for detailed documentation. */
+  Logical_NOT_Operation_Client: "Arithmetic.Math_Client.Not",
+  /**  See `NODES.Arithmetic_MathClient_Xor` for detailed documentation. */
+  Logical_XOR_Operation_Client: "Arithmetic.Math_Client.Xor",
+  /**  See `NODES.Arithmetic_GeneralClient_EnumMatch` for detailed documentation. */
+  Enumeration_Match_Client: "Arithmetic.General_Client.Enum_Match",
+  /**  See `NODES.Arithmetic_GeneralClient_Equal` for detailed documentation. */
+  Equal_Client: "Arithmetic.General_Client.Equal",
+  /**  See `NODES.Arithmetic_MathClient_GreaterThan` for detailed documentation. */
+  Greater_Than_Client: "Arithmetic.Math_Client.Greater_Than",
+  /**  See `NODES.Arithmetic_MathClient_LessThan` for detailed documentation. */
+  Less_Than_Client: "Arithmetic.Math_Client.Less_Than",
+  /**  See `NODES.Arithmetic_MathClient_LessEqual` for detailed documentation. */
+  Less_Than_or_Equal_To_Client: "Arithmetic.Math_Client.Less_Equal",
+  /**  See `NODES.Arithmetic_MathClient_GreaterEqual` for detailed documentation. */
+  Greater_Than_or_Equal_To_Client: "Arithmetic.Math_Client.Greater_Equal",
+  /**  See `NODES.Arithmetic_MathClient_Add` for detailed documentation. */
+  Addition_Client: "Arithmetic.Math_Client.Add",
+  /**  See `NODES.Arithmetic_MathClient_Subtract` for detailed documentation. */
+  Subtraction_Client: "Arithmetic.Math_Client.Subtract",
+  /**  See `NODES.Arithmetic_MathClient_Multiply` for detailed documentation. */
+  Multiplication_Client: "Arithmetic.Math_Client.Multiply",
+  /**  See `NODES.Arithmetic_MathClient_Divide` for detailed documentation. */
+  Division_Client: "Arithmetic.Math_Client.Divide",
+  /**  See `NODES.Arithmetic_MathClient_Abs` for detailed documentation. */
+  Absolute_Value_Operation_Client: "Arithmetic.Math_Client.Abs",
+  /**  See `NODES.Query_CustomVariableClient_GetVariable` for detailed documentation. */
+  Get_Custom_Variable_Client: "Query.Custom_Variable_Client.Get_Variable",
+  /**  See `NODES.Query_ListRelatedClient_GetAtIndex` for detailed documentation. */
+  Get_Corresponding_Value_From_List_Client: "Query.List_Related_Client.Get_At_Index",
+  /**  See `NODES.Query_ListRelatedClient_GetLength` for detailed documentation. */
+  Get_List_Length_Client: "Query.List_Related_Client.Get_Length",
+  /**  See `NODES.Query_ListRelatedClient_Contains` for detailed documentation. */
+  List_Includes_This_Value_Client: "Query.List_Related_Client.Contains",
+  /**  See `NODES.Query_ListRelatedClient_GetMax` for detailed documentation. */
+  Get_Maximum_Value_From_List_Client: "Query.List_Related_Client.Get_Max",
+  /**  See `NODES.Query_ListRelatedClient_GetMin` for detailed documentation. */
+  Get_Minimum_Value_From_List_Client: "Query.List_Related_Client.Get_Min",
+  /**  See `NODES.Arithmetic_GeneralClient_ConvertType` for detailed documentation. */
+  Data_Type_Conversion_Client: "Arithmetic.General_Client.Convert_Type",
+  /**  See `NODES.Query_EntityRelatedClient_GetByGUID` for detailed documentation. */
+  Query_Entity_by_GUID_Client: "Query.Entity_Related_Client.Get_By_GUID",
+  /**  See `NODES.Query_CharacterRelatedClient_GetPlayerCharacter` for detailed documentation. */
+  Get_Character_Entity_of_Specified_Player_Client: "Query.Character_Related_Client.Get_Player_Character",
+  /**  See `NODES.Query_CharacterRelatedClient_GetOwnerPlayer` for detailed documentation. */
+  Get_Player_Entity_to_Which_the_Character_Belongs_Client: "Query.Character_Related_Client.Get_Owner_Player",
+  /**  See `NODES.Query_CharacterRelatedClient_GetAllPlayers` for detailed documentation. */
+  Get_List_of_Player_Entities_on_the_Field_Client: "Query.Character_Related_Client.Get_All_Players",
+  /**  See `NODES.Query_CharacterRelatedClient_GetGUID` for detailed documentation. */
+  Query_GUID_by_Entity_Client: "Query.Character_Related_Client.Get_GUID",
+  /**  See `NODES.Query_PresetStatusClient_GetStatus` for detailed documentation. */
+  Get_Preset_Status_Client: "Query.Preset_Status_Client.Get_Status",
+  /**  See `NODES.Query_FactionRelatedClient_GetFaction` for detailed documentation. */
+  Query_Entity_Faction_Client: "Query.Faction_Related_Client.Get_Faction",
+  /**  See `NODES.Query_EntityRelatedClient_GetLocation` for detailed documentation. */
+  Get_Entity_Location_Client: "Query.Entity_Related_Client.Get_Location",
+  /**  See `NODES.Query_EntityRelatedClient_GetRotation` for detailed documentation. */
+  Get_Entity_Rotation_Client: "Query.Entity_Related_Client.Get_Rotation",
+  /**  See `NODES.Arithmetic_MathClient_Random` for detailed documentation. */
+  Get_Random_Number_Client: "Arithmetic.Math_Client.Random",
+  /**  See `NODES.Query_EntityRelatedClient_GetSelf` for detailed documentation. */
+  Get_Self_Entity_Client: "Query.Entity_Related_Client.Get_Self",
+  /**  See `NODES.Query_EntityRelatedClient_GetTarget` for detailed documentation. */
+  Get_Target_Entity_Client: "Query.Entity_Related_Client.Get_Target",
+  /**  See `NODES.Query_EntityRelatedClient_GetAttackTarget` for detailed documentation. */
+  Get_Unit_Attack_Target_Client: "Query.Entity_Related_Client.Get_Attack_Target",
+  /**  See `NODES.Hidden_QueryClient_GetCameraTemplate` for detailed documentation. */
+  Get_Current_Camera_Template_Client: "Hidden.Query_Client.Get_Camera_Template",
+  /**  See `NODES.Query_CharacterRelatedClient_IsInCombat` for detailed documentation. */
+  Query_If_Self_Is_in_Combat_Client: "Query.Character_Related_Client.Is_In_Combat",
+  /**  See `NODES.Execution_CharacterSkillClient_PlayTimedFX` for detailed documentation. */
+  Play_Timed_Effects_Client: "Execution.Character_Skill_Client.Play_Timed_FX",
+  /**  See `NODES.Execution_CharacterSkillClient_NotifyServer` for detailed documentation. */
+  Notify_Server_Node_Graph_Client: "Execution.Character_Skill_Client.Notify_Server",
+  /**  See `NODES.Execution_CharacterSkillClient_TurnPlayer` for detailed documentation. */
+  Player_Turning_Client: "Execution.Character_Skill_Client.Turn_Player",
+  /**  See `NODES.Execution_CharacterSkillClient_SetTarget` for detailed documentation. */
+  Set_Own_Attack_Target_Client: "Execution.Character_Skill_Client.Set_Target",
+  /**  See `NODES.Others_PortClient_GraphStart` for detailed documentation. */
+  Node_Graph_Begins_Client: "Others.Port_Client.Graph_Start",
+  /**  See `NODES.Query_EntityRelatedClient_FilterSphere` for detailed documentation. */
+  Filter_Entity_List_Within_Spherical_Range_Client: "Query.Entity_Related_Client.Filter_Sphere",
+  /**  See `NODES.Query_EntityRelatedClient_FilterSquare` for detailed documentation. */
+  Filter_Entity_List_Within_Square_Range_Client: "Query.Entity_Related_Client.Filter_Square",
+  /**  See `NODES.Query_EntityRelatedClient_GetType` for detailed documentation. */
+  Get_Entity_s_Type_Client: "Query.Entity_Related_Client.Get_Type",
+  /**  See `NODES.Hidden_QueryClient_GetCameraRotation` for detailed documentation. */
+  Get_Camera_Orientation_Client: "Hidden.Query_Client.Get_Camera_Rotation",
+  /**  See `NODES.Query_EntityRelatedClient_GetSocketLoc` for detailed documentation. */
+  Get_Target_Attachment_Point_Location_Client: "Query.Entity_Related_Client.Get_Socket_Loc",
+  /**  See `NODES.Query_EntityRelatedClient_GetSocketRot` for detailed documentation. */
+  Get_Target_Attachment_Point_Rotation_Client: "Query.Entity_Related_Client.Get_Socket_Rot",
+  /**  See `NODES.Arithmetic_ListClient_AssembleList` for detailed documentation. */
+  Assembly_List_Client: "Arithmetic.List_Client.Assemble_List",
+  /**  See `NODES.Query_ListRelatedClient_GetEntityTypes` for detailed documentation. */
+  Get_Entity_Type_List_Client: "Query.List_Related_Client.Get_Entity_Types",
+  /**  See `NODES.Execution_CharacterSkillClient_TriggerHitboxLoc` for detailed documentation. */
+  Trigger_Hitbox_at_Specific_Location_Client: "Execution.Character_Skill_Client.Trigger_Hitbox_Loc",
+  /**  See `NODES.Execution_CharacterSkillClient_LaunchProjectile` for detailed documentation. */
+  Fixed_Point_Projectile_Launch_Client: "Execution.Character_Skill_Client.Launch_Projectile",
+  /**  See `NODES.Execution_CharacterSkillClient_MoveToPoint` for detailed documentation. */
+  Fixed_Point_Displacement_Client: "Execution.Character_Skill_Client.Move_To_Point",
+  /**  See `NODES.Execution_CharacterSkillClient_ForEachEntity` for detailed documentation. */
+  Traverse_Entity_List_Client: "Execution.Character_Skill_Client.For_Each_Entity",
+  /**  See `NODES.Control_GeneralClient_Branch` for detailed documentation. */
+  Double_Branch_Client: "Control.General_Client.Branch",
+  /**  See `NODES.Execution_CharacterSkillClient_AddStatus` for detailed documentation. */
+  Add_Unit_Status_Client: "Execution.Character_Skill_Client.Add_Status",
+  /**  See `NODES.Execution_CharacterSkillClient_RemoveStatus` for detailed documentation. */
+  Remove_Unit_Status_Client: "Execution.Character_Skill_Client.Remove_Status",
+  /**  See `NODES.Execution_CharacterSkillClient_TriggerHitboxSocket` for detailed documentation. */
+  Trigger_Hitbox_at_Specified_Attachment_Point_Client: "Execution.Character_Skill_Client.Trigger_Hitbox_Socket",
+  /**  See `NODES.Execution_CharacterSkillClient_RemoveDevice` for detailed documentation. */
+  Remove_Specified_Character_Disruptor_Device_Client: "Execution.Character_Skill_Client.Remove_Device",
+  /**  See `NODES.Execution_CharacterSkillClient_ModifyWeight` for detailed documentation. */
+  Modify_Attack_Weight_Client: "Execution.Character_Skill_Client.Modify_Weight",
+  /**  See `NODES.Execution_CharacterSkillClient_GetCameraData` for detailed documentation. */
+  Camera_Orientation_Detection_Data_Client: "Execution.Character_Skill_Client.Get_Camera_Data",
+  /**  See `NODES.Arithmetic_MathClient_VectorDot` for detailed documentation. */
+  _3D_Vector_Dot_Product_Client: "Arithmetic.Math_Client.Vector_Dot",
+  /**  See `NODES.Arithmetic_MathClient_VectorCross` for detailed documentation. */
+  _3D_Vector_Cross_Product_Client: "Arithmetic.Math_Client.Vector_Cross",
+  /**  See `NODES.Arithmetic_MathClient_SplitVector` for detailed documentation. */
+  Split_3D_Vector_Client: "Arithmetic.Math_Client.Split_Vector",
+  /**  See `NODES.Arithmetic_MathClient_VectorScale` for detailed documentation. */
+  _3D_Vector_Zoom_Client: "Arithmetic.Math_Client.Vector_Scale",
+  /**  See `NODES.Arithmetic_MathClient_VectorAngle` for detailed documentation. */
+  _3D_Vector_Angle_Client: "Arithmetic.Math_Client.Vector_Angle",
+  /**  See `NODES.Arithmetic_MathClient_VectorRotate` for detailed documentation. */
+  _3D_Vector_Rotation_Client: "Arithmetic.Math_Client.Vector_Rotate",
+  /**  See `NODES.Arithmetic_MathClient_VectorLength` for detailed documentation. */
+  _3D_Vector_Modulo_Operation_Client: "Arithmetic.Math_Client.Vector_Length",
+  /**  See `NODES.Arithmetic_MathClient_CreateVector` for detailed documentation. */
+  Create_3D_Vector_Client: "Arithmetic.Math_Client.Create_Vector",
+  /**  See `NODES.Arithmetic_MathClient_VectorAdd` for detailed documentation. */
+  _3D_Vector_Addition_Client: "Arithmetic.Math_Client.Vector_Add",
+  /**  See `NODES.Arithmetic_MathClient_VectorSubtract` for detailed documentation. */
+  _3D_Vector_Subtraction_Client: "Arithmetic.Math_Client.Vector_Subtract",
+  /**  See `NODES.Arithmetic_MathClient_VectorToRotation` for detailed documentation. */
+  Direction_Vector_to_Rotation_Client: "Arithmetic.Math_Client.Vector_To_Rotation",
+  /**  See `NODES.Arithmetic_MathClient_OrientationToRotation` for detailed documentation. */
+  Orientation_to_Rotation_Client: "Arithmetic.Math_Client.Orientation_To_Rotation",
+  /**  See `NODES.Execution_CharacterSkillClient_RecoverHP` for detailed documentation. */
+  Recover_HP_Client: "Execution.Character_Skill_Client.Recover_HP",
+  /**  See `NODES.Query_CharacterRelatedClient_GetCurrentCharacter` for detailed documentation. */
+  Get_Current_Character_Client: "Query.Character_Related_Client.Get_Current_Character",
+  /**  See `NODES.Query_UnitTagClient_GetTags` for detailed documentation. */
+  Get_Entity_s_Unit_Tag_List_Client: "Query.Unit_Tag_Client.Get_Tags",
+  /**  See `NODES.Query_UnitTagClient_GetByTag` for detailed documentation. */
+  Get_Entity_List_by_Unit_Tag_Client: "Query.Unit_Tag_Client.Get_By_Tag",
+  /**  See `NODES.Execution_GeneralClient_ForLoop` for detailed documentation. */
+  Finite_Loop_Client: "Execution.General_Client.For_Loop",
+  /**  See `NODES.Execution_GeneralClient_Break` for detailed documentation. */
+  Break_Loop_Client: "Execution.General_Client.Break",
+  /**  See `NODES.Execution_GeneralClient_SetLocal` for detailed documentation. */
+  Set_Local_Variable_Client: "Execution.General_Client.Set_Local",
+  /**  See `NODES.Query_GeneralClient_GetLocal` for detailed documentation. */
+  Get_Local_Variable_Client: "Query.General_Client.Get_Local",
+  /**  See `NODES.Execution_CustomAggroClient_SetAggro` for detailed documentation. */
+  Set_the_Aggro_Value_of_the_Specified_Entity_Client: "Execution.Custom_Aggro_Client.Set_Aggro",
+  /**  See `NODES.Execution_CustomAggroClient_ModifyAggro` for detailed documentation. */
+  Modify_the_Aggro_Value_of_the_Specified_Entity_Client: "Execution.Custom_Aggro_Client.Modify_Aggro",
+  /**  See `NODES.Execution_CustomAggroClient_ModifyAggroRatio` for detailed documentation. */
+  Modify_the_Aggro_Value_of_the_Specified_Entity_Proportionally_Client: "Execution.Custom_Aggro_Client.Modify_Aggro_Ratio",
+  /**  See `NODES.Execution_CustomAggroClient_TransferAggro` for detailed documentation. */
+  Transfer_the_Aggro_Value_of_the_Specified_Entity_Proportionally_Client: "Execution.Custom_Aggro_Client.Transfer_Aggro",
+  /**  See `NODES.Execution_CustomAggroClient_ClearAggro` for detailed documentation. */
+  Clear_the_Aggro_List_of_the_Specified_Entity_Client: "Execution.Custom_Aggro_Client.Clear_Aggro",
+  /**  See `NODES.Execution_CustomAggroClient_RemoveAggro` for detailed documentation. */
+  Remove_Target_Entity_From_Aggro_List_Client: "Execution.Custom_Aggro_Client.Remove_Aggro",
+  /**  See `NODES.Execution_CustomAggroClient_Taunt` for detailed documentation. */
+  Taunt_Target_Client: "Execution.Custom_Aggro_Client.Taunt",
+  /**  See `NODES.Query_CustomAggroClient_GetAggroTarget` for detailed documentation. */
+  Get_the_Aggro_Target_of_the_Specified_Entity_Client: "Query.Custom_Aggro_Client.Get_Aggro_Target",
+  /**  See `NODES.Query_CustomAggroClient_GetAggroList` for detailed documentation. */
+  Get_the_Aggro_List_of_the_Specified_Entity_Client: "Query.Custom_Aggro_Client.Get_Aggro_List",
+  /**  See `NODES.Query_CustomAggroClient_IsInCombat` for detailed documentation. */
+  Query_if_Specified_Entity_is_in_Combat_Client: "Query.Custom_Aggro_Client.Is_In_Combat",
+  /**  See `NODES.Query_FactionRelatedClient_IsHostile` for detailed documentation. */
+  Query_If_Faction_Is_Hostile_Client: "Query.Faction_Related_Client.Is_Hostile",
+  /**  See `NODES.Arithmetic_MathClient_Sin` for detailed documentation. */
+  Sine_Function_Client: "Arithmetic.Math_Client.Sin",
+  /**  See `NODES.Arithmetic_MathClient_Cos` for detailed documentation. */
+  Cosine_Function_Client: "Arithmetic.Math_Client.Cos",
+  /**  See `NODES.Arithmetic_MathClient_Tan` for detailed documentation. */
+  Tangent_Function_Client: "Arithmetic.Math_Client.Tan",
+  /**  See `NODES.Arithmetic_MathClient_Asin` for detailed documentation. */
+  Arcsine_Function_Client: "Arithmetic.Math_Client.Asin",
+  /**  See `NODES.Arithmetic_MathClient_Acos` for detailed documentation. */
+  Arccosine_Function_Client: "Arithmetic.Math_Client.Acos",
+  /**  See `NODES.Arithmetic_MathClient_Atan` for detailed documentation. */
+  Arctangent_Function_Client: "Arithmetic.Math_Client.Atan",
+  /**  See `NODES.Arithmetic_MathClient_VectorNormalize` for detailed documentation. */
+  _3D_Vector_Normalization_Client: "Arithmetic.Math_Client.Vector_Normalize",
+  /**  See `NODES.Arithmetic_MathClient_RadToDeg` for detailed documentation. */
+  Radians_to_Degrees_Client: "Arithmetic.Math_Client.Rad_To_Deg",
+  /**  See `NODES.Arithmetic_MathClient_DegToRad` for detailed documentation. */
+  Degrees_to_Radians_Client: "Arithmetic.Math_Client.Deg_To_Rad",
+  /**  See `NODES.Query_EntityRelatedClient_IsActive` for detailed documentation. */
+  Query_If_Entity_Is_on_the_Field_Client: "Query.Entity_Related_Client.Is_Active",
+  /**  See `NODES.Hidden_OtherClient_GraphEnd` for detailed documentation. */
+  Node_Graph_Ends_Client: "Hidden.Other_Client.Graph_End",
+  /**  See `NODES.Execution_CharacterSkillClient_TurnToFace` for detailed documentation. */
+  Player_Turns_to_Face_Set_Direction_Client: "Execution.Character_Skill_Client.Turn_To_Face",
+  /**  See `NODES.Execution_CharacterSkillClient_ResetTarget` for detailed documentation. */
+  Reset_Skill_Target_Client: "Execution.Character_Skill_Client.Reset_Target",
+  /**  See `NODES.Query_TriggerClient_GetOverlappingEntities` for detailed documentation. */
+  Get_All_Entities_Within_the_Collision_Trigger_Client: "Query.Trigger_Client.Get_Overlapping_Entities",
+  /**  See `NODES.Execution_CharacterSkillClient_ExitAiming` for detailed documentation. */
+  Force_Exit_Aiming_State_Client: "Execution.Character_Skill_Client.Exit_Aiming",
+  /**  See `NODES.Query_RayClient_GetRayResult` for detailed documentation. */
+  Get_Ray_Detection_Result_Client: "Query.Ray_Client.Get_Ray_Result",
+  /**  See `NODES.Query_ListRelatedClient_GetRayFilters` for detailed documentation. */
+  Get_Ray_Filter_Type_List_Client: "Query.List_Related_Client.Get_Ray_Filters",
+  /**  See `NODES.Execution_CharacterSkillClient_TriggerSphereHitboxLoc` for detailed documentation. */
+  Trigger_Spherical_Hitbox_at_Specific_Location_Client: "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc",
+  /**  See `NODES.Execution_CharacterSkillClient_TriggerRectHitboxLoc` for detailed documentation. */
+  Trigger_Rectangular_Hitbox_at_Specific_Location_Client: "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc",
+  /**  See `NODES.Execution_CharacterSkillClient_TriggerSectorHitboxLoc` for detailed documentation. */
+  Trigger_Sector_Hitbox_at_Specific_Location_Client: "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Loc",
+  /**  See `NODES.Execution_CharacterSkillClient_TriggerSphereHitboxSocket` for detailed documentation. */
+  Trigger_Spherical_Hitbox_at_Specified_Attachment_Point_Client: "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Socket",
+  /**  See `NODES.Execution_CharacterSkillClient_TriggerRectHitboxSocket` for detailed documentation. */
+  Trigger_Rectangular_Hitbox_at_Specified_Attachment_Point_Client: "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Socket",
+  /**  See `NODES.Execution_CharacterSkillClient_TriggerSectorHitboxSocket` for detailed documentation. */
+  Trigger_Sector_Hitbox_at_Specified_Attachment_Point_Client: "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Socket",
+  /**  See `NODES.Hidden_ExecutionClient_TestSendSignal` for detailed documentation. */
+  _Test_Send_Client_Signal_Client: "Hidden.Execution_Client.Test_Send_Signal",
+  /**  See `NODES.Query_ScanningClient_GetScannedEntity` for detailed documentation. */
+  Get_Entity_Currently_Scanned_by_Scan_Component_Client: "Query.Scanning_Client.Get_Scanned_Entity",
+  /**  See `NODES.Query_ScanningClient_GetScannableEntities` for detailed documentation. */
+  Get_All_Valid_Entities_That_Are_Scannable_by_Scan_Component_Client: "Query.Scanning_Client.Get_Scannable_Entities",
+  /**  See `NODES.Query_ScanningClient_GetScanStatus` for detailed documentation. */
+  Get_Entity_s_Scan_Status_Client: "Query.Scanning_Client.Get_Scan_Status",
+  /**  See `NODES.Query_ScanningClient_GetActiveTags` for detailed documentation. */
+  Get_Entity_s_Current_Active_Scan_Tags_Client: "Query.Scanning_Client.Get_Active_Tags",
+  /**  See `NODES.Others_PortClient_GraphEndInt` for detailed documentation. */
+  Node_Graph_End_Integer_Client: "Others.Port_Client.Graph_End_Int",
+  /**  See `NODES.Query_CharacterRelatedClient_GetInputType` for detailed documentation. */
+  Get_Player_Client_Input_Device_Type_Client: "Query.Character_Related_Client.Get_Input_Type",
+  /**  See `NODES.Execution_SignalClient_SendToServer` for detailed documentation. */
+  Send_Signal_to_Server_Node_Graph_Client: "Execution.Signal_Client.Send_To_Server",
+  /**  See `NODES.Execution_Signal_Send` for detailed documentation. */
+  Send_Signal: "Execution.Signal.Send",
+  /**  See `NODES.Trigger_Signal_OnSignal` for detailed documentation. */
+  Monitor_Signal: "Trigger.Signal.On_Signal",
+  /**  See `NODES.Arithmetic_Structure_AssembleStruct` for detailed documentation. */
+  Assemble_Structure: "Arithmetic.Structure.Assemble_Struct",
+  /**  See `NODES.Arithmetic_Structure_SplitStruct` for detailed documentation. */
+  Split_Structure: "Arithmetic.Structure.Split_Struct",
+  /**  See `NODES.Execution_Structure_Modify` for detailed documentation. */
+  Modify_Structure: "Execution.Structure.Modify",
+} as const;

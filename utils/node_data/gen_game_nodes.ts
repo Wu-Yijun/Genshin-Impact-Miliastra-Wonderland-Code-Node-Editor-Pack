@@ -9,12 +9,12 @@ import { is_reflect } from './node_type.ts';
 // =================================================================
 
 const INPUT_FILE = 'data.json'; // 你的 json 文件名
-const OUTPUT_FILE = 'game_nodes.ts';
+const OUTPUT_FILE = 'game_nodes';
 const DEFAULT_LANG = 'en';
 
 const ICONS = {
   System: { Server: "🖥️", Client: "📱" },
-  Domain: { Execution: "⚙️", Trigger: "⚡", Query: "🔍", Arithmetic: "🔢", Control: "🔀", Others: "🔗" , Hidden: "🚫" },
+  Domain: { Execution: "⚙️", Trigger: "⚡", Query: "🔍", Arithmetic: "🔢", Control: "🔀", Others: "🔗", Hidden: "🚫" },
   Flow: { In: "▶️", Out: "⏩" },
   Data: { In: "🔹", Out: "🔸" },
   Variant: { In: "🔷", Out: "🔶" }, // 更显眼的实心方块用于变体
@@ -33,7 +33,7 @@ const ICONS = {
  */
 function formatKey(identifier: string): string {
   // 排除点号，防止点号被正则吞掉导致无法转换为下划线
-  let key = identifier.replace(/[^A-Za-z0-9.]+[A-Za-z0-9]/g, (match) => 
+  let key = identifier.replace(/[^A-Za-z0-9.]+[A-Za-z0-9]/g, (match) =>
     match.slice(-1).toUpperCase()
   );
   // 首字母大写 (可选，根据个人喜好，这里保持原逻辑的大驼峰倾向)
@@ -45,7 +45,7 @@ function formatKey(identifier: string): string {
  * 获取多语言文本
  */
 function getLoc(t: Translations, lang: keyof Translations): string {
-  return t===null ? "" : t[lang] || t['en'] || Object.values(t)[0] || "";
+  return t === null ? "" : t[lang] || t['en'] || Object.values(t)[0] || "";
 }
 
 /**
@@ -53,7 +53,7 @@ function getLoc(t: Translations, lang: keyof Translations): string {
  */
 function generatePinSection(node: NodeDef, direction: "In" | "Out", lang: keyof Translations): string[] {
   const lines: string[] = [];
-  
+
   // 合并 Flow 和 Data
   const flowPins = node.FlowPins.filter(p => p.Direction === direction && p.Visibility !== 'Hidden');
   const dataPins = node.DataPins.filter(p => p.Direction === direction && p.Visibility !== 'Hidden');
@@ -75,35 +75,31 @@ function generatePinSection(node: NodeDef, direction: "In" | "Out", lang: keyof 
   for (const p of flowPins) {
     const dirIcon = direction === "In" ? ICONS.Flow.In : ICONS.Flow.Out;
     const nameStr = `\`${p.Identifier}\``;
-    const label = getLoc(p.Label, lang);
-    const desc = p.Remarks ? ` : ${p.Remarks}` : ""; // 假设 Description 在 Remarks 或其他字段
-    
-    lines.push(` * | - || ${dirIcon} || - || ${nameStr} || ${label}${desc} |`);
+    const desc = [getLoc(p.Label, lang), getLoc(p.Description, lang)].filter(s => s.length > 0).join(": ");
+
+    lines.push(` * | - || ${dirIcon} || - || ${nameStr} || ${desc} |`);
   }
 
   // 2. 渲染 Data Pins
   dataPins.forEach((p, index) => {
     const isVar = is_reflect(p.Type); // 使用你的 is_reflect 函数
-    
+
     // 图标区分
-    const dirIcon = isVar 
+    const dirIcon = isVar
       ? (direction === "In" ? ICONS.Variant.In : ICONS.Variant.Out)
       : (direction === "In" ? ICONS.Data.In : ICONS.Data.Out);
-    
+
     // 类型样式区分
-    const typeStr = isVar 
+    const typeStr = isVar
       ? `**\`${p.Type ?? 'Unknown'}\`**` // 变体加粗
       : `\`${p.Type ?? 'Unknown'}\``; // 普通代码块
 
     // 索引显示 (可见索引)
     const nameStr = `\`${p.Identifier}\``;
-    
-    const label = getLoc(p.Label, lang);
-    // 你的 Schema 中 Description 暂未定义在 PinDef，这里预留
-    // const desc = p.Description ? ` : ${p.Description}` : "";
-    const desc = ""; 
 
-    lines.push(` * | ${index} || ${dirIcon} || ${typeStr} || ${nameStr} || ${label}${desc} |`);
+    const desc = [getLoc(p.Label, lang), getLoc(p.Description, lang)].filter(s => s.length > 0).join(": ");
+
+    lines.push(` * | ${index} || ${dirIcon} || ${typeStr} || ${nameStr} || ${desc} |`);
   });
 
   return lines;
@@ -112,14 +108,14 @@ function generatePinSection(node: NodeDef, direction: "In" | "Out", lang: keyof 
 /**
  * 生成单个节点的完整 Markdown 文档
  */
-function generateDoc(node: NodeDef, lang:  keyof Translations): string {
+function generateDoc(node: NodeDef, lang: keyof Translations): string {
   const lines: string[] = [];
 
   // --- Header ---
   const title = getLoc(node.InGameName, lang);
   lines.push(`/**`);
   lines.push(` * **${title}** \`(${node.Identifier})\``);
-  
+
   if (node.Description) {
     lines.push(` * - ${getLoc(node.Description, lang)}`);
   }
@@ -128,8 +124,8 @@ function generateDoc(node: NodeDef, lang:  keyof Translations): string {
   // --- Metadata ---
   const sysIcon = node.System === 'Server' ? ICONS.System.Server : ICONS.System.Client;
   const domainIcon = ICONS.Domain[node.Domain as keyof typeof ICONS.Domain] || "";
-  const typeDisplay = ICONS.Type[node.Type] +  node.Type;
-  
+  const typeDisplay = ICONS.Type[node.Type] + node.Type;
+
   lines.push(` * -----------`);
   lines.push(` *`);
 
@@ -166,29 +162,49 @@ function generateDoc(node: NodeDef, lang:  keyof Translations): string {
 // Main Entry
 // =================================================================
 
-function main() {
-  const lang = process.argv[2] as keyof Translations || DEFAULT_LANG;
+function main(lang?: keyof Translations) {
+  lang = lang || (process.argv[2] as keyof Translations) || DEFAULT_LANG;
   const inputPath = join(import.meta.dirname, INPUT_FILE);
-  const outputPath = join(import.meta.dirname, OUTPUT_FILE);
+  const outputPath = join(import.meta.dirname, OUTPUT_FILE + (lang === 'en' ? '.ts' : `.${lang}.ts`));
 
   console.log(`Reading ${inputPath}...`);
   const raw = readFileSync(inputPath, 'utf-8');
   const doc: Document = JSON.parse(raw);
 
   const entries: string[] = [];
+  const name_entries: string[] = [];
 
   // for (const node of doc.Nodes.slice(0,10)) {
   for (const node of doc.Nodes) {
     // 1. 生成文档块
     const docBlock = generateDoc(node, lang);
-    
+
     // 2. 生成键值对
     const key = formatKey(node.Identifier);
     const value = node.Identifier;
 
     // 3. 组合
     entries.push(`${docBlock}\n  ${key}: "${value}",`);
+
+    // 生成名称映射
+    let nodeName = getLoc(node.InGameName, lang);
+    if(node.System==="Client"){
+      nodeName += "_Client";
+    }
+    if (lang === "en") {
+      nodeName = nodeName
+        .replace(/[^0-9A-Za-z]+/g, '_')
+        .replace(/^(?=\d)/, '_')
+        .replace(/_$/g, "");
+    }else{
+      nodeName = JSON.stringify(nodeName);
+    }
+    const comment = `See \`NODES.${key}\` for detailed documentation.`;
+    name_entries.push(`/**  ${comment} */`);
+    name_entries.push(`${nodeName}: "${node.Identifier}",`);
   }
+
+
 
   // 4. 构建最终文件内容
   const fileContent = `
@@ -201,10 +217,15 @@ export const NODES = {
 } as const;
 
 export type NodeIdentifier = typeof NODES[keyof typeof NODES];
+
+export const NODE_NAMES = {
+  ${name_entries.join('\n  ')}
+} as const;
 `;
 
   writeFileSync(outputPath, fileContent.trim());
   console.log(`✅ Generated ${entries.length} nodes to ${outputPath} (Lang: ${lang})`);
 }
 
-main();
+main("en");
+// main("zh-Hans");

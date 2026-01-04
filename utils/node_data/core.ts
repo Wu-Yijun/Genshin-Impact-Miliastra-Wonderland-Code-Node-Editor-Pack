@@ -2,6 +2,7 @@ import { readFileSync, statSync } from "fs";
 import type * as D from "./types.ts";
 import path from "path";
 import * as NT from "./node_type.ts";
+import Fuse from "fuse.js";
 
 
 export interface TypedNodeDef extends Omit<D.NodeDef, "DataPins" | "FlowPins"> {
@@ -9,7 +10,7 @@ export interface TypedNodeDef extends Omit<D.NodeDef, "DataPins" | "FlowPins"> {
   FlowPins: TypedPinDef[];
 }
 export interface TypedPinDef extends Omit<D.PinDef, "Type"> {
-  Type?: NT.NodeType;
+  Type: NT.NodeType;
   TypeSelectorIndex?: number;
 }
 
@@ -92,6 +93,7 @@ export class Nodes {
   // Lazy-loaded lookup maps for O(1) access
   private byIdentifier: Map<string, D.NodeDef> | null = null;
   private byID: Map<number, D.NodeDef> | null = null;
+  private fuse: Fuse<D.NodeDef> | null = null;
 
   constructor(nodes?: Document | Nodes | D.Document | D.NodeDef[] | string) {
     if (nodes === undefined) nodes = path.join(import.meta.dirname, "data.json");
@@ -140,6 +142,19 @@ export class Nodes {
     return this.ensureIdentifierMap().get(identifier);
   }
 
+  findSimilar(identifier: string): D.NodeDef[] {
+    if (!this.fuse) {
+      this.fuse = new Fuse(this.nodes, {
+        includeScore: true,
+        keys: ["Identifier", "Alias"],
+      });
+    }
+    const results = this.fuse.search(identifier);
+    const trimmed = results.filter(r => r.score !== undefined && r.score < 0.5);
+    if(trimmed.length === 0 ) trimmed.push(results[0]);
+    return trimmed.map(r => r.item);
+  }
+
   /**
    * Get a NodeDef by its ID
    * @param id - Node ID
@@ -154,11 +169,11 @@ export class Nodes {
       ...node, 
       DataPins: node.DataPins.map(dp => ({
         ...dp,
-        Type: NT.parse(dp.Type ?? "Unk")
+        Type: dp.Type ? NT.parse(dp.Type) : NT.UNK_TYPE
       })),
       FlowPins: node.FlowPins.map(fp => ({
         ...fp,
-        Type: NT.parse(fp.Type ?? "Unk")
+        Type: fp.Type ? NT.parse(fp.Type) : NT.UNK_TYPE
       }))
     };
   }
@@ -184,15 +199,12 @@ export class Nodes {
     const ij = new Map<string, D.InjectedDef>(variant.InjectedContents.map(ic => [ic.Identifier, ic]));
 
     // Clone the node and apply injections
-    const injectedNode: TypedNodeDef = structuredClone(node) as TypedNodeDef;
+    const injectedNode = this.toTypedNodeDef(node);
     injectedNode.KernelID = variant.KernelID;
 
-    injectedNode.FlowPins?.forEach(pin => {
+    injectedNode.FlowPins.forEach(pin => {
       const injection = ij.get(pin.Identifier);
-      if (injection === undefined) {
-        // pin.Type = NT.parse(pin.Type ?? "Unk");
-        return;
-      }
+      if (injection === undefined) return;
       // Apply injections
       if (injection.TypeSelectorIndex !== undefined) {
         console.warn("Warning: TypeSelectorIndex injection on FlowPin is ignored.");
@@ -206,15 +218,12 @@ export class Nodes {
       if (injection.Connectability !== undefined) pin.Connectability = injection.Connectability;
     });
 
-    injectedNode.DataPins?.forEach(pin => {
+    injectedNode.DataPins.forEach(pin => {
       const injection = ij.get(pin.Identifier);
-      if (injection === undefined) {
-        pin.Type = NT.parse(pin.Type ?? "Unk");
-        return;
-      }
+      if (injection === undefined) return;
 
       // Apply injections
-      pin.Type = NT.reflects(pin.Type ?? "Unk", constraints);
+      pin.Type = NT.reflects(pin.Type, constraints);
       if (injection.TypeSelectorIndex !== undefined) pin.TypeSelectorIndex = injection.TypeSelectorIndex;
       if (injection.ShellIndex !== undefined) pin.ShellIndex = injection.ShellIndex;
       if (injection.KernelIndex !== undefined) pin.KernelIndex = injection.KernelIndex;
