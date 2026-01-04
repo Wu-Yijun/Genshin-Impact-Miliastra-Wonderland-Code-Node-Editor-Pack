@@ -28,7 +28,7 @@ data.Nodes.forEach((node) => {
   });
 })
 
-// save("data.json", data);
+save("data.json", data);
 
 
 // IMPORTANT 提取 ENUM id 信息的很新颖的方法: 导入composite节点时是不检查内外一致性的, 因此可以手动生成接口而不用找到内部实际对应的节点......
