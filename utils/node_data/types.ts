@@ -90,7 +90,7 @@ export interface PinDef {
   ShellIndex: number;                                 // Outer index of the pin
   KernelIndex: number;                                // Inner index of the pin
   Type?: string;                                      // Type of the pin, could be generic type for reflective nodes
-  DefaultValue?: TypedValue;                            // Fixed value of the pin (For part of the hidden pin)
+  DefaultValue?: TypedValue;                          // Fixed value of the pin (For part of the hidden pin)
   Visibility?: "Display" | "Hidden" | "Conditional";  // Whether the pin is displayed, hidden or conditional
   Connectability?: boolean;                           // Whether the pin can be connected by another one
   Editability?: boolean;                              // Whether the pin can be edited by user manually

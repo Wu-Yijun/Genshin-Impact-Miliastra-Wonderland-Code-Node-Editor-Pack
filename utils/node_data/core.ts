@@ -1,6 +1,16 @@
 import { readFileSync, statSync } from "fs";
 import type * as D from "./types.ts";
 import path from "path";
+import * as NT from "./node_type.ts";
+
+
+export interface TypedNodeDef extends Omit<D.NodeDef, "DataPins"> {
+  DataPins: TypedPinDef[];
+}
+export interface TypedPinDef extends Omit<D.PinDef, "Type"> {
+  Type?: NT.NodeType;
+  TypeSelectorIndex?: number;
+}
 
 /**
  * Document class - Main entry point for accessing node data
@@ -144,42 +154,59 @@ export class Nodes {
    * @param constraints - Variant constraints string (e.g., "T=Int32")
    * @returns A new NodeDef with injected contents applied, or undefined if not found
    */
-  getVariant(identifier: string, constraints: string): D.NodeDef | undefined {
+  getVariant(identifier: string, constraints: NT.ConstraintType): TypedNodeDef | undefined {
     const node = this.getByIdentifier(identifier);
     if (!node || node.Type !== "Variant" || !node.Variants) {
       return undefined;
     }
+    const cons_str = NT.stringify(constraints, { empty_struct: true });
 
     // Find matching variant
-    const variant = node.Variants.find(v => v.Constraints === constraints);
+    const variant = node.Variants.find(v => v.Constraints === cons_str);
     if (!variant) {
       return undefined;
     }
+    const ij = new Map<string, D.InjectedDef>(variant.InjectedContents.map(ic => [ic.Identifier, ic]));
 
     // Clone the node and apply injections
-    const injectedNode: D.NodeDef = JSON.parse(JSON.stringify(node));
+    const injectedNode: TypedNodeDef = structuredClone(node) as TypedNodeDef;
     injectedNode.KernelID = variant.KernelID;
 
-    // Apply injected contents to pins
-    for (const injection of variant.InjectedContents) {
-      // Find the pin in DataPins or FlowPins
-      const pin = [...injectedNode.DataPins, ...injectedNode.FlowPins].find(
-        p => p.Identifier === injection.Identifier
-      );
-
-      if (pin) {
-        // Apply injections
-        if (injection.TypeSelectorIndex !== undefined) {
-          // This is for UI purposes, store in Remarks or custom field
-          pin.Remarks = (pin.Remarks || "") + ` [TypeSelector:${injection.TypeSelectorIndex}]`;
-        }
-        if (injection.ShellIndex !== undefined) pin.ShellIndex = injection.ShellIndex;
-        if (injection.KernelIndex !== undefined) pin.KernelIndex = injection.KernelIndex;
-        if (injection.DefaultValue !== undefined) pin.DefaultValue = injection.DefaultValue;
-        if (injection.Visibility !== undefined) pin.Visibility = injection.Visibility;
-        if (injection.Connectability !== undefined) pin.Connectability = injection.Connectability;
+    injectedNode.FlowPins?.forEach(pin => {
+      const injection = ij.get(pin.Identifier);
+      if (injection === undefined) {
+        // pin.Type = NT.parse(pin.Type ?? "Unk");
+        return;
       }
-    }
+      // Apply injections
+      if (injection.TypeSelectorIndex !== undefined) {
+        console.warn("Warning: TypeSelectorIndex injection on FlowPin is ignored.");
+      }
+      if (injection.DefaultValue !== undefined) {
+        console.warn("Warning: DefaultValue injection on FlowPin is ignored.");
+      }
+      if (injection.ShellIndex !== undefined) pin.ShellIndex = injection.ShellIndex;
+      if (injection.KernelIndex !== undefined) pin.KernelIndex = injection.KernelIndex;
+      if (injection.Visibility !== undefined) pin.Visibility = injection.Visibility;
+      if (injection.Connectability !== undefined) pin.Connectability = injection.Connectability;
+    });
+
+    injectedNode.DataPins?.forEach(pin => {
+      const injection = ij.get(pin.Identifier);
+      if (injection === undefined) {
+        pin.Type = NT.parse(pin.Type ?? "Unk");
+        return;
+      }
+
+      // Apply injections
+      pin.Type = NT.reflects(pin.Type ?? "Unk", constraints);
+      if (injection.TypeSelectorIndex !== undefined) pin.TypeSelectorIndex = injection.TypeSelectorIndex;
+      if (injection.ShellIndex !== undefined) pin.ShellIndex = injection.ShellIndex;
+      if (injection.KernelIndex !== undefined) pin.KernelIndex = injection.KernelIndex;
+      if (injection.DefaultValue !== undefined) pin.DefaultValue = injection.DefaultValue;
+      if (injection.Visibility !== undefined) pin.Visibility = injection.Visibility;
+      if (injection.Connectability !== undefined) pin.Connectability = injection.Connectability;
+    });
 
     return injectedNode;
   }
@@ -569,8 +596,6 @@ export class Enums {
   }
 }
 
-import * as NT from "./node_type.ts";
-
 export interface TypeDefFull extends D.TypeDef {
   /** list item's type */
   list_type?: D.TypeDef;
@@ -741,7 +766,7 @@ export class TypeEngine {
         // List: Try to find L<SpecificItem>
         // Item is guaranteed to be atomic or specialized list itself (recursively)
         // But for toTypeDef we just look up the string structure
-        const structure = NT.stringify(nodeType);
+        const structure = NT.stringify(nodeType, { empty_struct: true });
         const type = this._typeByStructure!.get(structure);
         if (!type) {
           console.warn(`[TypeEngine] Missing specialized list type: ${structure}`);

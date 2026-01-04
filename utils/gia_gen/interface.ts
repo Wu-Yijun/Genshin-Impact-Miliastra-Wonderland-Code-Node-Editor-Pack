@@ -6,12 +6,14 @@ import {
   pin_body,
   make_typed_value,
   make_connection,
-  make_annotation
+  make_annotation,
+  make_variant_value
 } from "./core.ts";
 import { Doc, Node as NodeLib } from "../node_data/instances.ts";
-import type { NodeDef, PinDef, ResourceClass, ServerClient, TypedValue } from "../node_data/types.ts";
-import { type NodeType, stringify, parse } from "../node_data/node_type.ts";
+import type { InjectedDef, NodeDef, PinDef, ResourceClass, ServerClient, TypedValue } from "../node_data/types.ts";
+import { type NodeType, stringify, parse, is_reflect, ConstraintType, StructType } from "../node_data/node_type.ts";
 import { Counter, get_system, randomInt, randomName } from "./utils.ts";
+import { TypedNodeDef } from "../node_data/core.ts";
 
 
 // Helper to determine system from common inputs if needed,
@@ -177,10 +179,10 @@ export class Node {
   public readonly system: ResourceClass;
   public readonly node_index: number;
   public readonly def: NodeDef;
-  public variant_def: NodeDef | null = null;
+  public variant_def: TypedNodeDef | null = null;
 
   // for variant nodes
-  public constraint: NodeType | undefined;
+  public constraint: ConstraintType | undefined;
 
   // only for param-In pins
   public readonly pin_values: Map<string, TypedValue>;
@@ -370,53 +372,70 @@ export class Node {
    * Set constraints for Variant nodes.
    * @param type The type constraint (e.g. C<T:Bool>, C<K:L<Int>>), set to null to reset
    */
-  setConstraints(type: NodeType | null) {
+  setConstraints(constraint: ConstraintType | null) {
     if (this.def.Type !== "Variant") {
       console.error(`Node ${this.def.Identifier} is not a Variant node.`);
       return;
     }
-    if (type === null) {
+    if (constraint === null) {
       // Reset to base definition
       this.variant_def = null;
       this.constraint = undefined;
       return;
     }
-    const constraintStr = stringify(type);
-    const newDef = NodeLib.getVariant(this.def.Identifier, constraintStr);
-
+    if (constraint?.t !== "c") {
+      console.error(`Node ${this.def.Identifier}: current constraint is not of ConstraintType.`);
+      return;
+    }
+    const newDef = NodeLib.getVariant(this.def.Identifier, constraint);
     if (!newDef) {
       // Try fallback: Sometimes constraint is just "T" or "T=..."
       // But NodeLib.getVariant expects exact constraint string match from Variants list.
-      console.error(`Constraint ${constraintStr} not found for node ${this.def.Identifier}`);
+      console.error(`Constraint ${stringify(constraint)} not found for node ${this.def.Identifier}`);
       return;
     }
 
     // Update definition and re-init pins
     this.variant_def = newDef;
+    this.constraint = constraint;
   }
 
-  setPosition(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-  }
-
-  getVariant(): NodeDef | undefined {
-    if (this.constraint === undefined || this.def.Type === "Fixed") {
-      // not a variant node
-      return undefined;
-    }
-    const def = NodeLib.getVariant(this.def.Identifier, stringify(this.constraint));
-    if (!def) {
-      console.error(`Constraint ${stringify(this.constraint)} not found for node ${this.def.Identifier}`);
-      return undefined;
-    }
-    return def;
+  setPosition(x: number, y: number, scale_x = 300, scale_y = 200) {
+    this.x = x * scale_x;
+    this.y = y * scale_y;
   }
 
   encode_pins(): Gia.PinInstance[] {
     const ret: Gia.PinInstance[] = [];
-    const def = this.getVariant() ?? this.def;
-    const is_variant = def !== this.def;
+    const def = this.variant_def ?? this.def;
+    const is_server = get_system(this.system) === "Server";
+
+    for (let i = 0; i < def.DataPins.length; i++) {
+      const pin = def.DataPins[i];
+      const pin0 = this.def.DataPins[i];
+      assert(pin.Identifier === pin0.Identifier, "Data pin mismatch in variant encoding");
+      const is_ref = def.Type === "Variant" && pin0.Type !== undefined && is_reflect(pin0.Type);
+      const v = this.pin_values.get(pin.Identifier);
+      let value: Gia.TypedValue | undefined;
+      if(v!==undefined){
+        if(is_ref){
+          value = make_variant_value(parse(pin.Type ?? "Unk"), is_server, v);
+        }else{
+          value = make_typed_value(parse(pin.Type ?? "Unk"), is_server, v);
+        }
+      }
+      
+      const con = this.data_from.get(pin.Identifier);
+      const connections = con === undefined ? undefined : [make_connection(con.to.node_index, con.to_pin, false)];
+
+      ret.push(pin_body({
+        system: this.system,
+        def: pin,
+        is_flow: false,
+        value: value,
+        connections: connections
+      }));
+    }
 
     return ret;
   }

@@ -30,29 +30,50 @@ export type NodeType = BasicType | EnumType | ListType | StructType | DictType |
 
 export const UNK_TYPE: NodeType = { t: "b", b: "Unk" };
 
+interface StringifyOptions {
+  unknown_list?: boolean; // Whether to output L<Unk> for unknown list
+  unknown_enum?: boolean; // Whether to output E<Unk> for unknown enum
+  unknown_dict_key?: boolean; // Whether to output D<Unk,val> for unknown dict key
+  unknown_dict_val?: boolean; // Whether to output D<key,Unk> for unknown dict value
+  unknown_dict?: boolean; // Whether to output D<Unk,Unk> for unknown dict
+  empty_struct?: boolean; // Whether to output S<> for empty struct
+}
+
 /**
  * 将 NodeType（或字符串形式的类型表达式）转为可读字符串。
  * 更新：支持 ConstraintTypes (C<...>) 和 String EnumId
  */
-export function stringify(node: NodeType | string): string {
+export function stringify(node: NodeType | string, options: StringifyOptions = {}): string {
   if (typeof node === "string") return node;
   switch (node.t) {
     case "b":
       return node.b;
     case "e":
+      if (node.e === "Unk" && options.unknown_enum) {
+        return "E<Unk>";
+      }
       return `E<${node.e}>`;
     case "l":
-      return `L<${stringify(node.i)}>`;
+      if (node.i.t === "b" && node.i.b === "Unk" && options.unknown_list) {
+        return "L<Unk>";
+      }
+      return `L<${stringify(node.i, options)}>`;
     case "s": {
-      const f = node.f.map(([name, t]) => (`${name}:${stringify(t)}`));
+      if (node.f.length === 0 && options.empty_struct) {
+        return "S<>";
+      }
+      const f = node.f.map(([name, t]) => (`${name}:${stringify(t, options)}`));
       return `S<${f.join(",")}>`;
     }
-    case "d":
-      return `D<${stringify(node.k)},${stringify(node.v)}>`;
+    case "d":{
+      const key = (options.unknown_dict || options.unknown_dict_key) ? "Unk" : stringify(node.k, options);
+      const val = (options.unknown_dict || options.unknown_dict_val) ? "Unk" : stringify(node.v, options);
+      return `D<${key},${val}>`;
+    }
     case "r":
       return `R<${node.r}>`;
     case "c": { // [Added] Support for ConstraintTypes
-      const c = node.c.map(([name, t]) => (`${name}:${stringify(t)}`));
+      const c = node.c.map(([name, t]) => (`${name}:${stringify(t, options)}`));
       return `C<${c.join(",")}>`;
     }
   }
@@ -161,6 +182,7 @@ export function reflect(src_type: NodeType | string, injected_name: string, inje
       return {
         t: "s",
         f: src_type_.f.map(([name, node]) => [name, reflect(node, injected_name, injected_type)]),
+        _: src_type_._,
       };
     case "c": // [Added] ConstraintTypes handling
       return {

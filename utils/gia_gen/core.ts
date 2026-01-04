@@ -3,9 +3,10 @@ import { assert, assertEq, todo } from "../utils.ts";
 
 import * as Gia from "../protobuf/gia.proto.ts";
 
-import type { NodeDef, PinDef, GraphCategoryConstsDef, ResourceClass, TypedValue } from "../node_data/types.ts";
+import type { NodeDef, PinDef, ResourceClass, TypedValue } from "../node_data/types.ts";
 import { DictType, ListType, type NodeType, stringify, StructType } from "../node_data/node_type.ts";
 import { Doc, Node, ServerType, ClientType } from "../node_data/instances.ts";
+import type { TypedPinDef } from "../node_data/core.ts";
 
 
 export interface GraphBody_ {
@@ -129,7 +130,7 @@ export function node_body(body: NodeBody_): Gia.NodeInstance {
 
 export interface PinBody_ {
   system: ResourceClass;
-  def: PinDef; // Definition of the pin from NodeDef
+  def: TypedPinDef | PinDef; // Definition of the pin from NodeDef
   is_flow?: boolean; // Is a control flow pin, otherwise use data pin.
   /** Pin Value (if input) */
   value?: Gia.TypedValue;
@@ -247,6 +248,55 @@ function make_type_definition(type: NodeType, is_server: boolean, is_pair = fals
   }
 }
 
+
+export function make_dynamic_type_metadata(type: NodeType): Gia.DynamicTypeMetadata {
+  let ret: Gia.DynamicTypeMetadata_Config_Inner;
+  if (type.t === "l" && type.i.t === "s") {
+    // Special Struct List
+    let id = type.i._;
+    if (id === undefined) {
+      id = 0;
+      console.warn("Struct ID is not set.");
+    }
+    ret = {
+      container_style: Gia.TypedValue_WidgetType.LIST_GROUP,
+      item_style: Gia.TypedValue_WidgetType.STRUCT_BLOCK,
+      list_item_struct_id: { schema_id: id }
+    };
+  } else if (type.t === "d") {
+    let id = type.v.t === "s" ? type.v._ : undefined;
+    ret = {
+      container_style: Gia.TypedValue_WidgetType.MAP_GROUP,
+      map_config: {
+        key_type: get_type_s(type.k),
+        value_type: get_type_s(type.v),
+        value_struct_id: id
+      }
+    };
+  } else if (type.t == "s") {
+    let id = type._;
+    if (id === undefined) {
+      console.warn("Struct ID is not set.");
+      id = 0;
+    }
+    ret = {
+      container_style: Gia.TypedValue_WidgetType.STRUCT_BLOCK,
+      target_struct_id: { schema_id: id }
+    };
+  } else {
+    console.warn("Should not make dynamic type metadata for type: " + stringify(type));
+    ret = {
+      container_style: Gia.TypedValue_WidgetType.UNKNOWN,
+    };
+  }
+  return {
+    version: 1,
+    config: {
+      inner: ret
+    }
+  };
+}
+
 function make_tracker(): Gia.TypedValue_InstanceTracker {
   return {
     version_tag: 1,
@@ -296,6 +346,24 @@ export function make_typed_value(type: NodeType, is_server: boolean, val?: Typed
     console.warn("Invalid type: " + type.t);
     return { widget: Gia.TypedValue_WidgetType.UNKNOWN, is_value_set: 0 };
   }
+}
+
+
+export function make_variant_value(type: NodeType, is_server: boolean, type_index: number, val?: TypedValue): Gia.TypedValue {
+  const ret: Gia.TypedValue = {
+    widget: Gia.TypedValue_WidgetType.TYPE_SELECTOR,
+    is_value_set: 1,
+    type_def: make_type_definition(type, is_server),
+    val_poly: {
+      chosen_type_index: type_index,
+      actual_value: make_typed_value(type, is_server, val),
+    }
+  };
+  if (type.t === "s" || type.t === "l" && type.i.t === "s" || type.t === "d") {
+    // any struct involved, or map type involved
+    ret.val_poly!.extra_meta = make_dynamic_type_metadata(type);
+  }
+  return ret;
 }
 
 export function make_int_value(val: TypedValue, type_def: Gia.TypeDefinition): Gia.TypedValue {
@@ -450,8 +518,6 @@ export function make_pair_value(type: DictType, is_server: boolean, val: TypedVa
 }
 
 
-// 
-
 export function make_list_value(type: ListType, is_server: boolean, val: TypedValue): Gia.TypedValue {
   const ret: Gia.TypedValue = {
     widget: Gia.TypedValue_WidgetType.LIST_GROUP,
@@ -535,7 +601,7 @@ export function make_pin_sig(index = 0, is_out = false, is_flow = false): Gia.Pi
   }
 }
 
-export function make_connection(target_index: number, target_pin: PinDef, is_flow: boolean = false): Gia.NodeConnection {
+export function make_connection(target_index: number, target_pin: PinDef | TypedPinDef, is_flow: boolean = false): Gia.NodeConnection {
   const shell = make_pin_sig(target_pin.ShellIndex, target_pin.Direction === "Out", is_flow);
   const kernel = make_pin_sig(target_pin.KernelIndex, target_pin.Direction === "Out", is_flow);
   return {
