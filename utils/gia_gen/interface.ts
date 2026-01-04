@@ -113,7 +113,7 @@ export class Graph {
       console.error(`Target pin not found on node ${to.def.Identifier}: ${toArg}`);
       return null;
     }
-    if(fromPin.Direction === "In" || toPin.Direction === "Out") {
+    if (fromPin.Direction === "In" || toPin.Direction === "Out") {
       console.error(`Invalid connection direction: from ${fromPin.Direction} to ${toPin.Direction}`);
       return null;
     }
@@ -121,33 +121,29 @@ export class Graph {
   }
 
   disconnect(conn: Connection) {
-    if(conn.from.findPin(conn.from_pin.Identifier).kind === "Data") {
+    if (conn.from.findPin(conn.from_pin.Identifier).kind === "Data") {
       conn.from.disconnectDataInAt(conn.from_pin.Identifier);
     } else {
       const conns = conn.from.flow_to.get(conn.from_pin.Identifier);
-      if(conns) {
+      if (conns) {
         const index = conns.indexOf(conn);
-        if(index >= 0) {
+        if (index >= 0) {
           conn.from.disconnectFlowOutAt(conn.from_pin.Identifier, index);
         }
       }
     }
   }
 
-  get_connection_to(node: Node, pinIndex: number): Connection | undefined {
-    // This could be slow O(N), better to ask the Node/Pin itself
-    const pin = node.pins.find(p => p.index === pinIndex && (p.kind === Gia.PinSignature_Kind.IN_PARAM || p.kind === Gia.PinSignature_Kind.IN_FLOW));
-    if (pin && pin.connections.length > 0) return pin.connections[0];
-    return undefined;
+  get connects(): Connection[] {
+    return Array.from(this.nodes).map(n => Array.from(n.data_from.values())).flat();
+  }
+  get flows(): Connection[] {
+    return Array.from(this.nodes).map(n => Array.from(n.flow_to.values())).flat(2);
   }
 
   encode(opt?: any): Gia.AssetBundle {
-    const nodesEncoded = Array.from(this.nodes).map(n => n.encode());
-    const commentsEncoded = Array.from(this.comments).map(c => c.encode());
-
-    // Helper to get graph const logic
-    // We can use a simpler approach or reuse existing map 
-    // For now we pass "Server" or "Client" as string key to graph_body which handles lookup
+    const nodes = Array.from(this.nodes).map(n => n.encode());
+    const comments = Array.from(this.comments).map(c => make_annotation(c.content, c.x, c.y));
 
     return graph_body({
       system: this.system,
@@ -155,8 +151,8 @@ export class Graph {
       graph_id: this.graph_id,
       file_id: this.file_id,
       graph_name: this.graph_name,
-      nodes: nodesEncoded,
-      comments: commentsEncoded,
+      nodes: nodes,
+      comments: comments,
       graphValues: [] // TODO: Implement variables if needed
     });
   }
@@ -254,7 +250,7 @@ export class Node {
   }
 
   findDataPin(identifier: string): PinDef | null {
-    const pin = (this.variant_def ?? this.def).DataPins.find(p => p.Identifier === identifier);
+    const pin = this.def.DataPins.find(p => p.Identifier === identifier);
     return pin ?? null;
   }
 
@@ -417,7 +413,7 @@ export class Node {
       let value: Gia.TypedValue | undefined;
       if (v !== undefined) {
         if (is_ref) {
-          value = make_variant_value(parse(pin.Type ?? "Unk"), is_server, v);
+          value = make_variant_value(parse(pin.Type ?? "Unk"), is_server, this.variant_def?.DataPins[i].TypeSelectorIndex ?? 0, v);
         } else {
           value = make_typed_value(parse(pin.Type ?? "Unk"), is_server, v);
         }
