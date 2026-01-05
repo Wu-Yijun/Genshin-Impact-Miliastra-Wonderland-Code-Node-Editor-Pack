@@ -1,5 +1,5 @@
 import { TypedPinDef } from "../../node_data/core";
-import { NodeType, stringify } from "../../node_data/node_type";
+import { is_reflect, NodeType, stringify, type_equal } from "../../node_data/node_type";
 import type { Graph, Node, Connection, Comment } from "../interface";
 
 // ==========================================
@@ -71,6 +71,9 @@ export class GraphRenderer {
     private svgLayer: SVGSVGElement;
     private commentsLayer: HTMLElement; // 用于 Graph.comments
 
+    // Tooltip 元素引用
+    private tooltip: HTMLDivElement;
+
     // Panning State
     private translateX = 0;
     private translateY = 0;
@@ -101,6 +104,11 @@ export class GraphRenderer {
         // Node 将直接 append 到 this.world (z-index 10)
 
         this.viewport.appendChild(this.world);
+
+        // 初始化 Tooltip (挂载在 viewport 下，与 world 平级)
+        this.tooltip = document.createElement("div");
+        this.tooltip.classList.add("graph-tooltip");
+        this.viewport.appendChild(this.tooltip);
 
         // 绑定拖拽事件
         this.setupInteraction();
@@ -137,6 +145,93 @@ export class GraphRenderer {
         this.world.style.transform = `translate3d(${this.translateX}px, ${this.translateY}px, 0)`;
     }
 
+    // [新增 4] Tooltip 控制逻辑
+    private showTooltip(node: Node, e: MouseEvent) {
+        const escape_html = (raw: string): string => {
+            return raw.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+        }
+        // 格式化要显示的数据
+        // 这里可以自定义你想看的任何深层数据
+        const info: [any, any][] = Object.entries({
+            Index: node.node_index,
+            System: node.system,
+            DefID: node.def.Identifier,
+            Domain: node.def.Domain,
+            Pos: `(${node.x}, ${node.y})`,
+        });
+        if (node.constraint) {
+            info.push(['Constraints', undefined]);
+            node.constraint.c.forEach(([k, v]) => {
+                info.push(["   " + k, `${k} -> ${stringify(v)}`]);
+            });
+        }
+        if (node.def.DataPins.find((p) => p.Direction === "In")) {
+            info.push(['Inputs', undefined]);
+            node.def.DataPins.filter((p) => p.Direction === "In").forEach((p) => {
+                let label = p.Label?.en ?? p.Label?.["zh-Hans"];
+                label = label === undefined ? "" : `(${label})`;
+                let val = node.pin_values.get(p.Identifier) ?? "(unset)";
+                let type = p.Type;
+                let typename = stringify(type);
+                let vp = node.variant_def?.DataPins.find((vp) => vp.Identifier === p.Identifier)?.Type;
+                if (vp !== undefined && !type_equal(vp, type)) {
+                    typename += " as " + stringify(vp);
+                }
+                info.push([
+                    "   " + p.Identifier + label,
+                    val + " as " + escape_html(typename)
+                ]);
+            });
+        }
+        if (node.def.DataPins.find((p) => p.Direction === "Out")) {
+            info.push(['Outputs', undefined]);
+            node.def.DataPins.filter((p) => p.Direction === "Out").forEach((p) => {
+                let label = p.Label?.en ?? p.Label?.["zh-Hans"];
+                label = label === undefined ? "" : `(${label})`;
+                let val = node.pin_values.get(p.Identifier) ?? "(unset)";
+                let type = p.Type;
+                let typename = stringify(type);
+                let vp = node.variant_def?.DataPins.find((vp) => vp.Identifier === p.Identifier)?.Type;
+                if (vp !== undefined && !type_equal(vp, type)) {
+                    typename += "(" + stringify(vp) + ")";
+                }
+                info.push([
+                    "   " + p.Identifier + label,
+                    val + " as " + escape_html(typename)
+                ]);
+            });
+        }
+
+
+        // 生成 HTML (简单的 JSON 高亮)
+        const contentHtml = info.map(([k, v]) =>
+            `<div><span class="key">${k}:</span> <span class="val">${v === undefined ? "" : JSON.stringify(v)}</span></div>`
+        ).join("");
+
+        this.tooltip.innerHTML = `<span class="title">${node.def.InGameName?.en || "Node"}</span>${contentHtml}`;
+
+        this.tooltip.style.display = "block";
+        this.moveTooltip(e); // 立即更新一次位置
+    }
+
+    private moveTooltip(e: MouseEvent) {
+        // 让 Tooltip 跟随鼠标，并稍微偏移一点以免遮挡光标
+        const offset = 15;
+        let left = e.clientX + offset;
+        let top = e.clientY + offset;
+
+        // 简单的边界检测 (防止超出屏幕右边/底边)
+        if (left + 200 > window.innerWidth) left = e.clientX - 210;
+        if (top + 100 > window.innerHeight) top = e.clientY - 110;
+
+        this.tooltip.style.left = `${left}px`;
+        this.tooltip.style.top = `${top}px`;
+    }
+
+    private hideTooltip() {
+        this.tooltip.style.display = "none";
+    }
+
     public render(graph: Graph) {
         // 清理旧内容 (保留 SVG 和 Comments 容器本身，清理内部)
         this.svgLayer.innerHTML = "";
@@ -169,6 +264,11 @@ export class GraphRenderer {
         el.style.left = `${node.x}px`;
         el.style.top = `${node.y}px`;
         el.dataset.nodeIndex = node.node_index.toString();
+
+        // 绑定鼠标悬浮事件
+        el.addEventListener("mouseenter", (e) => this.showTooltip(node, e));
+        el.addEventListener("mousemove", (e) => this.moveTooltip(e));
+        el.addEventListener("mouseleave", () => this.hideTooltip());
 
         // --- Attached Comment (Node 上方的气泡) ---
         if (node.comment) {
@@ -318,12 +418,23 @@ export class GraphRenderer {
 
             const d = `M ${p1.x} ${p1.y} C ${p1.x + controlDist} ${p1.y}, ${p2.x - controlDist} ${p2.y}, ${p2.x} ${p2.y}`;
 
+
+
             path.setAttribute("d", d);
             path.setAttribute("stroke", color);
-            path.setAttribute("stroke-width", isFlow ? "3" : "2");
+            path.setAttribute("stroke-width", isFlow ? "5" : "2");
             path.setAttribute("fill", "none");
-
             this.svgLayer.appendChild(path);
+
+
+            if (isFlow) {
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", d);
+                path.setAttribute("stroke", "#aaaaaa");
+                path.setAttribute("stroke-width", "3.5");
+                path.setAttribute("fill", "none");
+                this.svgLayer.appendChild(path);
+            }
         };
 
         // 遍历绘制
