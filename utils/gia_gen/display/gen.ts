@@ -18,4 +18,11 @@ get_val.connectPinWith("target_entity", Trig, "Output0");
 
 Branch1.setVal("cases", [1, 2, 3]);
 
+Trig.setPosition(1, 1);
+Branch1.setPosition(2, 2);
+get_val.setPosition(3, 5);
+
+Branch1.comment = { content: "Branch1", attached_node: Branch1 };
+graph.comments.add(Branch1.comment);
+
 export default graph;

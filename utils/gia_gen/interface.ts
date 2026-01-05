@@ -261,12 +261,12 @@ export class Graph {
     return graph;
   }
 
-  debugPrint({indent = 0, log = console.log}): void {
+  debugPrint({ indent = 0, log = console.log }): void {
     log(`${" ".repeat(indent)}Graph: ${this.graph_name} (ID: ${this.graph_id}, System: ${this.system})`);
     log(`${" ".repeat(indent)}UID: ${this.uid}, File ID: ${this.file_id}`);
     log(`${" ".repeat(indent)}Nodes:`);
     this.nodes.forEach(node => {
-      node.debugPrint({indent: indent + 2, log});
+      node.debugPrint({ indent: indent + 2, log });
     });
   }
 }
@@ -723,8 +723,8 @@ export class Node {
           continue;
         }
         const that_pin = conn.kind === "Data" ?
-          that_node.def.DataPins.find(p => p.Direction==="Out"&& p.ShellIndex === conn.shell_index) :
-          that_node.def.FlowPins.find(p => p.Direction==="In"&&p.ShellIndex === conn.shell_index);
+          that_node.def.DataPins.find(p => p.Direction === "Out" && p.ShellIndex === conn.shell_index) :
+          that_node.def.FlowPins.find(p => p.Direction === "In" && p.ShellIndex === conn.shell_index);
         if (!that_pin) {
           console.warn(`[Warning] Connected ${conn.kind} pin ${conn.shell_index} not found in node ${that_node.def.Identifier} for pin at index ${pin.shell_sig.index} in node ${this_node.def.Identifier}`);
           continue;
@@ -734,13 +734,13 @@ export class Node {
     }
   }
 
-  debugPrint({indent = 0, log = console.log}): void {
+  debugPrint({ indent = 0, log = console.log }): void {
     log(`${" ".repeat(indent)}Node: ${this.def.Identifier} (Index: ${this.node_index})`);
     if (this.variant_def) {
       log(`${" ".repeat(indent + 2)}Variant Constraints: ${stringify(this.constraint!)}`);
     }
     log(`${" ".repeat(indent + 2)}Pins:`);
-    this.debugPrintPins({indent: indent + 4, log});
+    this.debugPrintPins({ indent: indent + 4, log });
     log(`${" ".repeat(indent + 2)}Connections:`);
     const conns = this.getAllConnections();
     if (conns.length === 0) {
@@ -754,7 +754,7 @@ export class Node {
     }
   }
 
-  debugPrintPins({indent = 0, log = console.log}): void {
+  debugPrintPins({ indent = 0, log = console.log }): void {
     const flowIn = (this.variant_def ?? this.def).FlowPins.filter(x => x.Direction === "In" && x.Visibility !== "Hidden").sort((a, b) => a.ShellIndex - b.ShellIndex);
     const flowOut = (this.variant_def ?? this.def).FlowPins.filter(x => x.Direction === "Out" && x.Visibility !== "Hidden").sort((a, b) => a.ShellIndex - b.ShellIndex);
     const dataIn = (this.variant_def ?? this.def).DataPins.filter(x => x.Direction === "In" && x.Visibility !== "Hidden").sort((a, b) => a.ShellIndex - b.ShellIndex);
@@ -814,10 +814,10 @@ function make_connection_unsafe(con: Connection, kind: "Data" | "Flow", insert_p
   }
   if (kind === "Data") {
     con.to.data_from.set(con.to_pin.Identifier, con);
-    if (!con.from.data_to.has(con.to_pin.Identifier)) {
-      con.from.data_to.set(con.to_pin.Identifier, new Set());
+    if (!con.from.data_to.has(con.from_pin.Identifier)) {
+      con.from.data_to.set(con.from_pin.Identifier, new Set());
     }
-    con.from.data_to.get(con.to_pin.Identifier)!.add(con);
+    con.from.data_to.get(con.from_pin.Identifier)!.add(con);
   } else {
     if (!con.to.flow_from.has(con.to_pin.Identifier)) {
       con.to.flow_from.set(con.to_pin.Identifier, new Set());

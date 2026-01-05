@@ -1,5 +1,5 @@
 import { TypedPinDef } from "../../node_data/core";
-import { stringify } from "../../node_data/node_type";
+import { NodeType, stringify } from "../../node_data/node_type";
 import type { Graph, Node, Connection, Comment } from "../interface";
 
 // ==========================================
@@ -9,46 +9,58 @@ import type { Graph, Node, Connection, Comment } from "../interface";
 // 节点 Domain 对应的标题栏颜色 (6种)
 const DomainColors: Record<string, string> = {
     "Combat": "rgba(180, 50, 50, 0.8)",  // 红
-    "Logic":  "rgba(255, 255, 255, 0.8)", // 白/灰
-    "Math":   "rgba(50, 180, 150, 0.8)",  // 青绿
+    "Logic": "rgba(255, 255, 255, 0.8)", // 白/灰
+    "Math": "rgba(50, 180, 150, 0.8)",  // 青绿
     "Variable": "rgba(150, 50, 180, 0.8)",// 紫
-    "Event":  "rgba(180, 50, 50, 0.8)",   // 红 (事件)
+    "Event": "rgba(180, 50, 50, 0.8)",   // 红 (事件)
     "Default": "rgba(50, 100, 200, 0.8)", // 蓝
 };
 
 // 基础颜色表 (14种基础色)
 const BaseColors = {
-    Bool:    "#920101", // 深红
-    Int:     "#22cc99", // 青色
-    Float:   "#33ff33", // 绿色
-    String:  "#ff00ff", // 洋红
-    Vector:  "#ffcc00", // 黄色
-    Rotator: "#9999ff", // 浅蓝
-    Transform:"#ff6600",// 橙色
-    Object:  "#0099ff", // 蓝色
-    Class:   "#5500ff", // 深紫
-    Exec:    "#ffffff", // 执行流 (白)
-    Wildcard:"#7f7f7f", // 灰色
-    Struct:  "#004488", // 深蓝结构体
-    Interface:"#ccaa00",// 金色
-    Delegate:"#ff3333", // 红色代理
+    Bol: "#920101", // 深红
+    Int: "#22cc99", // 青色
+    Flt: "#33ff33", // 绿色
+    Str: "#ff00ff", // 洋红
+    Vec: "#ffcc00", // 黄色
+    Ety: "#ffffff",// 白
+    Fct: "#0099ff", // 蓝色
+    Cfg: "#0099ff", // 蓝色
+    Pfb: "#5500ff", // 深紫
+    Gid: "#5500ff", // 深紫
+    Loc: "#000000", // 黑色
+    Vss: "#7f7f7f", // 灰色
+    Enum: "#9999ff", // 浅蓝
+    Struct: "#004488", // 深蓝结构体
+    List: "#ff6600",// 橙色
+    Dict: "#ccaa00", // 金色
+    Unk: "#ff3333", // 红色
 };
 
 /**
  * 根据 NodeType 获取颜色
  * 这里简单实现了一个映射，实际可根据 type 字符串匹配
  */
-function getPinColor(typeStr: string): string {
-    // 简单做大小写不敏感匹配
-    const t = typeStr.toLowerCase();
-    if (t.includes("bool")) return BaseColors.Bool;
-    if (t.includes("int")) return BaseColors.Int;
-    if (t.includes("float")) return BaseColors.Float;
-    if (t.includes("string")) return BaseColors.String;
-    if (t.includes("vector")) return BaseColors.Vector;
-    if (t.includes("flow") || t.includes("exec")) return BaseColors.Exec;
-    // ... 添加更多逻辑
-    return BaseColors.Wildcard; // 默认
+function getPinColor(t: NodeType): string {
+    function Lighter(color: string): string {
+        const r = parseInt(color.slice(1, 3), 16);
+        const g = parseInt(color.slice(3, 5), 16);
+        const b = parseInt(color.slice(5, 7), 16);
+        return `rgba(${r},${g},${b},0.6)`;
+    }
+    switch (t.t) {
+        case "b":
+            return BaseColors[t.b]
+        case "e":
+            return BaseColors.Enum;
+        case "l":
+            return Lighter(BaseColors[((t.i as any).b ?? "") as "List"] ?? BaseColors.List);
+        case "s":
+            return BaseColors.Struct;
+        case "d":
+            return BaseColors.Dict;
+    }
+    return BaseColors.Unk;
 }
 
 // ==========================================
@@ -69,9 +81,9 @@ export class GraphRenderer {
         // 初始化层级
         this.svgLayer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         this.svgLayer.classList.add("graph-connections");
-        
+
         this.commentLayer = document.createElement("div");
-        
+
         this.nodeLayer = document.createElement("div");
 
         this.container.appendChild(this.svgLayer);
@@ -115,7 +127,7 @@ export class GraphRenderer {
         header.classList.add("ue-node-header");
         const domainColor = DomainColors[node.def.Domain] || DomainColors["Default"];
         header.style.backgroundColor = domainColor;
-        
+
         const title = document.createElement("span");
         title.classList.add("ue-node-title");
         // 优先显示 InGameName，否则 fallback
@@ -129,28 +141,28 @@ export class GraphRenderer {
 
         const leftCol = document.createElement("div");
         leftCol.classList.add("ue-column", "inputs");
-        
+
         const rightCol = document.createElement("div");
         rightCol.classList.add("ue-column", "outputs");
 
         // Pins Generation
         // Order: Flow Inputs -> Data Inputs -> Flow Outputs -> Data Outputs
-        
+
         // 1. Flow In
-        node.def.FlowPins.filter(p => p.Direction === "In").forEach(p => 
+        node.def.FlowPins.filter(p => p.Direction === "In").forEach(p =>
             leftCol.appendChild(this.createPinElement(node, p, true))
         );
         // 2. Data In
-        node.def.DataPins.filter(p => p.Direction === "In").forEach(p => 
+        node.def.DataPins.filter(p => p.Direction === "In").forEach(p =>
             leftCol.appendChild(this.createPinElement(node, p, false))
         );
 
         // 3. Flow Out
-        node.def.FlowPins.filter(p => p.Direction === "Out").forEach(p => 
+        node.def.FlowPins.filter(p => p.Direction === "Out").forEach(p =>
             rightCol.appendChild(this.createPinElement(node, p, true))
         );
         // 4. Data Out
-        node.def.DataPins.filter(p => p.Direction === "Out").forEach(p => 
+        node.def.DataPins.filter(p => p.Direction === "Out").forEach(p =>
             rightCol.appendChild(this.createPinElement(node, p, false))
         );
 
@@ -167,16 +179,15 @@ export class GraphRenderer {
         // 标记 Socket 元素 ID 用于连线坐标计算
         // 格式: socket-{nodeIndex}-{pinName}
         const socketId = `socket-${node.node_index}-${pinDef.Identifier}`;
-        
+
         const socket = document.createElement("div");
         socket.id = socketId;
         socket.classList.add("pin-socket");
         socket.classList.add(isFlow ? "flow" : "data");
-        
+
         // 颜色处理
         if (!isFlow) {
-            const typeStr = stringify(pinDef.Type);
-            socket.style.setProperty("--pin-color", getPinColor(typeStr));
+            socket.style.setProperty("--pin-color", getPinColor(pinDef.Type));
         }
 
         const label = document.createElement("span");
@@ -194,7 +205,7 @@ export class GraphRenderer {
                 valueDisplay = document.createElement("span");
                 valueDisplay.classList.add("pin-value-static");
                 // 简单转字符串展示
-                valueDisplay.innerText = String(val); 
+                valueDisplay.innerText = String(val);
             }
         }
 
@@ -271,32 +282,32 @@ export class GraphRenderer {
                 // 查找 output pin 的类型定义来决定颜色
                 const pinDef = fromNode.def.DataPins.find(p => p.Identifier === fromPin);
                 if (pinDef) {
-                    color = getPinColor(stringify(pinDef.Type));
+                    color = getPinColor(pinDef.Type);
                 }
             }
 
             // 创建 SVG Path
             const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            
+
             // 贝塞尔曲线逻辑 (Unreal 风格)
             // 控制点通常水平延伸
             const curvature = 0.5; // 弯曲力度
             const dist = Math.abs(p2.x - p1.x);
             // 最小控制点距离，避免太近时线扭曲
-            const controlDist = Math.max(dist * curvature, 30); 
+            const controlDist = Math.max(dist * curvature, 30);
 
             const cp1 = { x: p1.x + controlDist, y: p1.y };
             const cp2 = { x: p2.x - controlDist, y: p2.y };
 
             const d = `M ${p1.x} ${p1.y} C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${p2.x} ${p2.y}`;
-            
+
             path.setAttribute("d", d);
             path.setAttribute("stroke", color);
             path.setAttribute("stroke-width", isFlow ? "3" : "2"); // Flow 线粗一点
             path.setAttribute("fill", "none");
-            
+
             // 如果是 Flow 线，可能需要虚线效果或者特定的样式，这里保持实线
-            
+
             this.svgLayer.appendChild(path);
         };
 
