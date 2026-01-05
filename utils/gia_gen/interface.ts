@@ -22,10 +22,29 @@ import { type TypedPinDef, type TypedNodeDef } from "../node_data/core.ts";
 import { auto_layout, type LayoutOption } from "./auto_layout.ts";
 
 
-// Helper to determine system from common inputs if needed,
-// but usually we strictly use the system provided in constructor.
-
-
+/**
+ * Graph class - 节点图编辑器的核心类
+ * 
+ * 用于创建、编辑和管理节点图(Node Graph)。支持实体节点图(ENTITY_NODE_GRAPH)、
+ * 技能节点图(SKILL_NODE_GRAPH)等不同系统类型。
+ * 
+ * @example
+ * ```typescript
+ * // 创建实体节点图
+ * const graph = new Graph("ENTITY_NODE_GRAPH");
+ * 
+ * // 添加节点
+ * const trigger = graph.add_node("Trigger.Tab.OnTabSelect");
+ * const branch = graph.add_node(NODES.Control_General_Branch);
+ * 
+ * // 连接节点
+ * graph.flow(trigger, branch); // 控制流连接
+ * graph.connect(trigger, branch, "Output0", "cond"); // 数据流连接
+ * 
+ * // 编码为 protobuf 格式
+ * const encoded = graph.encode();
+ * ```
+ */
 export class Graph {
   public readonly system: ResourceClass;
 
@@ -42,6 +61,18 @@ export class Graph {
   public readonly comments: Set<Comment>;
   public readonly graph_var: Map<string, GraphVar>;
 
+  /**
+   * 创建一个新的节点图
+   * 
+   * @param system_class - 节点图系统类型,可选值:
+   *   - "ENTITY_NODE_GRAPH": 实体节点图(默认)
+   *   - "SKILL_NODE_GRAPH": 技能节点图
+   *   - "LEVEL_NODE_GRAPH": 关卡节点图
+   *   - 其他 ResourceClass 类型
+   * @param uid - 用户ID,未指定时随机生成
+   * @param name - 节点图名称,未指定时随机生成
+   * @param graph_id - 节点图ID,未指定时根据系统类型自动分配
+   */
   constructor(system_class: ResourceClass = "ENTITY_NODE_GRAPH", uid?: number, name?: string, graph_id?: number) {
     this.system = system_class;
     this.uid = uid ?? randomInt(9, "201");
@@ -129,7 +160,32 @@ export class Graph {
     return newNode;
   }
 
+  /**
+   * 添加注释到节点图
+   * 
+   * @param content - 注释内容
+   * @param target_node - 目标节点,注释将附加到该节点
+   * @returns 创建的注释对象,失败时返回 null
+   * 
+   * @example
+   * ```typescript
+   * graph.add_comment("这是一个重要的分支节点", branchNode);
+   * ```
+   */
   add_comment(content: string, target_node: Node): Comment | null;
+  /**
+   * 添加独立注释到节点图
+   * 
+   * @param content - 注释内容
+   * @param x - 注释的 X 坐标
+   * @param y - 注释的 Y 坐标
+   * @returns 创建的注释对象
+   * 
+   * @example
+   * ```typescript
+   * graph.add_comment("这是一个独立注释", 600, 100);
+   * ```
+   */
   add_comment(content: string, x: number, y: number): Comment;
   add_comment(content: string, x?: number | Node, y?: number): Comment | null {
     if (typeof x === "number") {
@@ -147,6 +203,23 @@ export class Graph {
     return null;
   }
 
+  /**
+   * 添加图变量(Graph Variable)
+   * 
+   * 图变量是节点图级别的全局变量,可以在多个节点间共享数据。
+   * 
+   * @param name - 变量名称
+   * @param type - 变量类型,可以是 NodeType 对象或类型字符串(如 "Int", "L<Int>", "Bool" 等)
+   * @param val - 变量的初始值(可选)
+   * @param exposed - 是否暴露给外部访问(默认 false)
+   * @returns 创建的图变量对象,如果已存在同名变量则返回 null
+   * 
+   * @example
+   * ```typescript
+   * graph.add_graph_var("playerLevel", "Int", 10, true);
+   * graph.add_graph_var("itemList", "L<Int>", [1, 2, 3], false);
+   * ```
+   */
   add_graph_var(name: string, type: NodeType | string, val?: TypedValue, exposed?: boolean): GraphVar | null {
     if (this.graph_var.has(name)) {
       console.warn("[Warning] Already has a graph var of the same name!");
@@ -157,6 +230,30 @@ export class Graph {
     return v;
   }
 
+  /**
+   * 创建控制流连接(Flow Connection)
+   * 
+   * 控制流连接决定节点的执行顺序,从一个节点的输出流引脚连接到另一个节点的输入流引脚。
+   * 
+   * @param from - 源节点
+   * @param to - 目标节点
+   * @param fromArg - 源节点的流引脚标识符(可选,默认使用第一个可见的输出流引脚)
+   * @param toArg - 目标节点的流引脚标识符(可选,默认使用第一个可见的输入流引脚)
+   * @param insert_pos - 插入位置(可选,用于控制多个连接的顺序)
+   * @returns 创建的连接对象,失败时返回 null
+   * 
+   * @example
+   * ```typescript
+   * // 使用默认引脚连接
+   * graph.flow(triggerNode, branchNode);
+   * 
+   * // 指定引脚连接
+   * graph.flow(branchNode, actionNode, "Case1", "FlowIn");
+   * 
+   * // 指定插入位置
+   * graph.flow(triggerNode, branchNode, "FlowOut", "FlowIn", 0);
+   * ```
+   */
   flow(from: Node, to: Node, fromArg?: string, toArg?: string, insert_pos?: number): Connection | null {
     if (is_empty(from) || is_empty(to)) {
       console.error("[Error] Source or Target node is empty.");
@@ -230,6 +327,17 @@ export class Graph {
     return from.connectPinWith(fromPin.Identifier, to, toPin.Identifier);
   }
 
+  /**
+   * 断开一个连接
+   * 
+   * @param conn - 要断开的连接对象
+   * 
+   * @example
+   * ```typescript
+   * const conn = graph.connect(nodeA, nodeB, 0, 0);
+   * graph.disconnect(conn);
+   * ```
+   */
   disconnect(conn: Connection) {
     if (conn.from.findPin(conn.from_pin.Identifier).kind === "Data") {
       conn.from.disconnectDataInAt(conn.from_pin.Identifier);
@@ -244,13 +352,33 @@ export class Graph {
     }
   }
 
+  /**
+   * 获取所有数据流连接
+   * @returns 节点图中所有数据流连接的数组
+   */
   get connects(): Connection[] {
     return Array.from(this.nodes.values()).map(n => Array.from(n.data_from.values())).flat();
   }
+  /**
+   * 获取所有控制流连接
+   * @returns 节点图中所有控制流连接的数组
+   */
   get flows(): Connection[] {
     return Array.from(this.nodes.values()).map(n => Array.from(n.flow_to.values())).flat(2);
   }
 
+  /**
+   * 将节点图编码为 Protobuf 格式
+   * 
+   * @param opt - 编码选项(可选,当前未使用)
+   * @returns 编码后的 AssetBundle 对象
+   * 
+   * @example
+   * ```typescript
+   * const encoded = graph.encode();
+   * encode_gia_file("output.gia", encoded);
+   * ```
+   */
   encode(opt?: any): Gia.AssetBundle {
     const nodes = Array.from(this.nodes.values()).map(n => n.encode());
     const comments = Array.from(this.comments).map(c => make_annotation(c.content, c.x, c.y));
@@ -268,9 +396,27 @@ export class Graph {
     });
   }
 
+  /**
+   * 从 Protobuf 数据创建节点图(decode 的别名)
+   * 
+   * @param data - AssetBundle 格式的 Protobuf 数据
+   * @returns 解码后的节点图对象
+   */
   static from(data: Gia.AssetBundle): Graph {
     return this.decode(data);
   }
+  /**
+   * 从 Protobuf 数据解码节点图
+   * 
+   * @param proto - AssetBundle 格式的 Protobuf 数据
+   * @returns 解码后的节点图对象
+   * 
+   * @example
+   * ```typescript
+   * const proto = decode_gia_file("input.gia");
+   * const graph = Graph.decode(proto);
+   * ```
+   */
   static decode(proto: Gia.AssetBundle): Graph {
     const system = get_resource_class(proto.primary_resource.resource_class);
     if (system === null) {
@@ -315,6 +461,23 @@ export class Graph {
     return graph;
   }
 
+  /**
+   * 打印节点图的调试信息
+   * 
+   * @param options - 调试选项
+   * @param options.indent - 缩进级别(默认 0)
+   * @param options.log - 日志输出函数(默认 console.log)
+   * 
+   * @example
+   * ```typescript
+   * // 输出到控制台
+   * graph.debugPrint({});
+   * 
+   * // 输出到自定义日志函数
+   * const logs: string[] = [];
+   * graph.debugPrint({ log: (msg) => logs.push(msg) });
+   * ```
+   */
   debugPrint({ indent = 0, log = console.log }): void {
     log(`${" ".repeat(indent)}Graph: ${this.graph_name} (ID: ${this.graph_id}, System: ${this.system})`);
     log(`${" ".repeat(indent)}UID: ${this.uid}, File ID: ${this.file_id}`);
@@ -331,32 +494,100 @@ export class Graph {
     });
   }
 
+  /**
+   * 自动布局节点图
+   * 
+   * 根据节点间的连接关系自动计算并设置节点的位置,使节点图更易于阅读。
+   * 
+   * @param options - 布局选项(可选),详见 LayoutOption 类型定义
+   * 
+   * @example
+   * ```typescript
+   * graph.autoLayout();
+   * ```
+   */
   autoLayout(options?: Partial<LayoutOption>) {
     auto_layout(this, options ?? {});
   }
 }
 
+/**
+ * Node class - 节点图中的单个节点
+ * 
+ * 表示节点图中的一个节点实例，包含节点定义、引脚值、连接关系等信息。
+ * 支持普通节点和可变类型(Variant)节点。
+ * 
+ * @example
+ * ```typescript
+ * // 创建节点（通过 Graph.add_node）
+ * const branch = graph.add_node(NODES.Control_General_Branch);
+ * 
+ * // 设置引脚值
+ * branch.setVal("cond", true);
+ * branch.setVal(0, [1, 2, 3]); // 使用索引
+ * 
+ * // 可变类型节点设置约束
+ * const equal = graph.add_node(NODES.Arithmetic_General_Equal);
+ * equal.setConstraints("C<T:Int>");
+ * 
+ * // 连接节点
+ * branch.connectPinWith("FlowOut", actionNode, "FlowIn");
+ * 
+ * // 添加注释
+ * branch.add_comment("这是一个分支节点");
+ * 
+ * // 设置位置
+ * branch.setPosition(2, 3);
+ * ```
+ */
 export class Node {
+
+  /** 节点所属的系统类型（如 ENTITY_NODE_GRAPH） */
   public readonly system: ResourceClass;
+
+  /** 节点在图中的唯一索引 */
   public readonly node_index: number;
+
+  /** 节点的类型定义（包含引脚、参数等信息） */
   public readonly def: TypedNodeDef;
+
+  /** 可变类型节点的具体类型定义（仅用于 Variant 节点） */
   public variant_def: TypedNodeDef | null = null;
 
-  // for variant nodes
+  /** 可变类型节点的约束条件（仅用于 Variant 节点） */
   public constraint: ConstraintType | undefined;
 
-  // only for param-In pins
+  /** 输入引脚的值存储（PinIdentifier -> TypedValue） */
   public readonly pin_values: Map<string, TypedValue>;
-  // connections: PinIdentifier -> Connections
-  public readonly data_from: Map<string, Connection>;
-  public readonly data_to: Map<string, Set<Connection>>;
-  public readonly flow_from: Map<string, Set<Connection>>;
-  public readonly flow_to: Map<string, Connection[]>; // with order
 
+  /** 数据流输入连接（PinIdentifier -> Connection） */
+  public readonly data_from: Map<string, Connection>;
+
+  /** 数据流输出连接（PinIdentifier -> Set<Connection>） */
+  public readonly data_to: Map<string, Set<Connection>>;
+
+  /** 控制流输入连接（PinIdentifier -> Set<Connection>） */
+  public readonly flow_from: Map<string, Set<Connection>>;
+
+  /** 控制流输出连接（PinIdentifier -> Connection[]），保持顺序 */
+  public readonly flow_to: Map<string, Connection[]>;
+
+  /** 节点的 X 坐标 */
   public x: number = 0;
+
+  /** 节点的 Y 坐标 */
   public y: number = 0;
+
+  /** 附加到节点的注释 */
   public comment: Comment | null = null;
 
+  /**
+ * 构造函数（通常不直接调用，而是通过 Graph.add_node 创建）
+ * 
+ * @param system - 节点所属系统类型
+ * @param def - 节点定义
+ * @param index - 节点索引
+ */
   constructor(system: ResourceClass, def: NodeDef, index: number) {
     this.def = NodeLib.toTypedNodeDef(def);
     this.node_index = index;
@@ -368,12 +599,37 @@ export class Node {
     this.flow_to = new Map();
   }
 
+  /**
+ * 为节点添加注释
+ * 
+ * @param content - 注释内容
+ * @returns 创建的注释对象
+ * 
+ * @example
+ * ```typescript
+ * node.add_comment("这是一个重要的分支节点");
+ * ```
+ */
   add_comment(content: string): Comment {
     const cmt = { content };
     this.comment = cmt;
     return cmt;
   }
 
+  /**
+ * 查找节点的引脚
+ * 
+ * @param identifier - 引脚标识符
+ * @returns 包含查找结果的对象，包括是否成功、引脚类型和引脚定义
+ * 
+ * @example
+ * ```typescript
+ * const result = node.findPin("FlowIn");
+ * if (result.success && result.kind === "Flow") {
+ *   console.log("找到控制流引脚:", result.pin.Identifier);
+ * }
+ * ```
+ */
   findPin(identifier: string): {
     success: boolean;
     kind?: "Flow" | "Data" | "Meta"
@@ -399,7 +655,19 @@ export class Node {
       success: false
     };
   }
-
+  /**
+   * 根据可见索引获取输入数据引脚
+   * 
+   * 仅计算可见的输入数据引脚（Visibility !== "Hidden"）
+   * 
+   * @param index - 可见引脚的索引（从 0 开始）
+   * @returns 引脚定义，未找到时返回 null
+   * 
+   * @example
+   * ```typescript
+   * const firstInPin = node.getVisibleDataInPin(0);
+   * ```
+   */
   getVisibleDataInPin(index: number): TypedPinDef | null {
     for (let i = 0, count = 0; i < this.def.DataPins.length; i++) {
       const pin = this.def.DataPins[i];
@@ -412,6 +680,19 @@ export class Node {
     }
     return null;
   }
+  /**
+ * 根据可见索引获取输出数据引脚
+ * 
+ * 仅计算可见的输出数据引脚（Visibility !== "Hidden"）
+ * 
+ * @param index - 可见引脚的索引（从 0 开始）
+ * @returns 引脚定义，未找到时返回 null
+ * 
+ * @example
+ * ```typescript
+ * const firstOutPin = node.getVisibleDataOutPin(0);
+ * ```
+ */
   getVisibleDataOutPin(index: number): TypedPinDef | null {
     for (let i = 0, count = 0; i < this.def.DataPins.length; i++) {
       const pin = this.def.DataPins[i];
@@ -425,16 +706,35 @@ export class Node {
     return null;
   }
 
+  /**
+ * 根据标识符查找数据引脚
+ * 
+ * 如果是可变类型节点，会优先从 variant_def 中查找
+ * 
+ * @param identifier - 引脚标识符
+ * @returns 引脚定义，未找到时返回 null
+ */
   findDataPin(identifier: string): TypedPinDef | null {
     const pin = (this.variant_def ?? this.def).DataPins.find(p => p.Identifier === identifier);
     return pin ?? null;
   }
 
+  /**
+ * 根据标识符查找控制流引脚
+ * 
+ * @param identifier - 引脚标识符
+ * @returns 引脚定义，未找到时返回 null
+ */
   findFlowPin(identifier: string): TypedPinDef | null {
     const pin = this.def.FlowPins.find(p => p.Identifier === identifier);
     return pin ?? null;
   }
 
+  /**
+ * 获取节点的所有连接
+ * 
+ * @returns 包含所有数据流和控制流连接的数组
+ */
   getAllConnections(): Connection[] {
     return [
       ...this.data_from.values(),
@@ -445,14 +745,24 @@ export class Node {
   }
 
   /**
-   * Connect this node's pin to another node's pin.
-   * Automatically handles direction and type checks.
+   * 将当前节点的引脚连接到另一个节点的引脚
    * 
-   * @param pin identifier of pin in this node
-   * @param with_node pin in another side of connection
-   * @param with_pin identifier of pin in that node
-   * @param insert_pos (optional) position to insert the connection
-   * @returns Connection object if successful, null otherwise
+   * 自动处理方向检查、类型检查和旧连接的断开。支持数据流和控制流连接。
+   * 
+   * @param pin - 当前节点的引脚标识符
+   * @param with_node - 要连接的目标节点
+   * @param with_pin - 目标节点的引脚标识符
+   * @param insert_pos - 插入位置（可选，仅用于控制流连接）
+   * @returns 创建的连接对象，失败时返回 null
+   * 
+   * @example
+   * ```typescript
+   * // 数据流连接
+   * nodeA.connectPinWith("result", nodeB, "input");
+   * 
+   * // 控制流连接，指定插入位置
+   * nodeA.connectPinWith("FlowOut", nodeB, "FlowIn", 0);
+   * ```
    */
   connectPinWith(pin: string, with_node: Node, with_pin: string, insert_pos?: number): Connection | null {
     const thisPin = this.findPin(pin);
@@ -538,6 +848,17 @@ export class Node {
     return con;
   }
 
+  /**
+   * 断开指定输入数据引脚的连接
+   * 
+   * @param pinIdentifier - 引脚标识符
+   * @returns 是否成功断开连接
+   * 
+   * @example
+   * ```typescript
+   * node.disconnectDataInAt("input");
+   * ```
+   */
   disconnectDataInAt(pinIdentifier: string): boolean {
     const con = this.data_from.get(pinIdentifier);
     if (con === undefined) {
@@ -549,6 +870,18 @@ export class Node {
     return true;
   }
 
+  /**
+ * 断开指定输出控制流引脚的连接
+ * 
+ * @param pinIdentifier - 引脚标识符
+ * @param index - 连接在数组中的索引
+ * @returns 是否成功断开连接
+ * 
+ * @example
+ * ```typescript
+ * node.disconnectFlowOutAt("FlowOut", 0);
+ * ```
+ */
   disconnectFlowOutAt(pinIdentifier: string, index: number): boolean {
     const conns = this.flow_to.get(pinIdentifier);
     if (conns === undefined || index < 0 || index >= conns.length) {
@@ -566,9 +899,26 @@ export class Node {
   }
 
   /**
-   * Set constraints for Variant nodes.
-   * @param type The type constraint (e.g. C<T:Bool>, C<K:L<Int>>), set to null to reset
-   * @returns The node itself for method chaining
+   * 为可变类型节点设置类型约束
+   * 
+   * 仅适用于 Type 为 "Variant" 的节点。设置约束后，节点的引脚类型会根据约束更新。
+   * 
+   * @param constraint - 类型约束（如 "C<T:Int>", "C<K:L<Int>>"），设置为 null 可重置为基础定义
+   * @returns 节点本身，支持链式调用
+   * 
+   * @example
+   * ```typescript
+   * // 设置约束
+   * const equal = graph.add_node(NODES.Arithmetic_General_Equal);
+   * equal.setConstraints("C<T:Int>");
+   * 
+   * // 链式调用
+   * graph.add_node(NODES.Arithmetic_General_Equal)
+   *   .setConstraints("C<T:Bool>");
+   * 
+   * // 重置约束
+   * equal.setConstraints(null);
+   * ```
    */
   setConstraints(constraint: NodeType | string | null): Node {
     if (this.def.Type !== "Variant") {
@@ -601,6 +951,21 @@ export class Node {
     return this;
   }
 
+  /**
+ * 根据约束条件数组自动解析并设置节点的类型约束
+ * 
+ * 用于从连接的引脚类型推断可变节点的具体类型。
+ * 
+ * @param constraints - 约束条件数组，格式为 [引脚标识符, 类型]
+ * 
+ * @example
+ * ```typescript
+ * node.solveConstraints([
+ *   ["input1", { t: "p", v: "Int" }],
+ *   ["input2", { t: "p", v: "Int" }]
+ * ]);
+ * ```
+ */
   solveConstraints(constraints: [string, NodeType][]): void {
     if (constraints.length === 0) {
       console.info(`[Info] No constraints provided to solve for node ${this.def.Identifier}, use generic variant.`);
@@ -617,12 +982,45 @@ export class Node {
     }
     this.setConstraints(c[0]);
   }
-
+  /**
+   * 设置节点的位置
+   * 
+   * @param x - X 坐标（会乘以 scale_x）
+   * @param y - Y 坐标（会乘以 scale_y）
+   * @param scale_x - X 轴缩放因子（默认 300）
+   * @param scale_y - Y 轴缩放因子（默认 200）
+   * 
+   * @example
+   * ```typescript
+   * // 设置位置为 (600, 400)
+   * node.setPosition(2, 2);
+   * 
+   * // 使用自定义缩放
+   * node.setPosition(1, 1, 100, 100); // 实际位置为 (100, 100)
+   * ```
+   */
   setPosition(x: number, y: number, scale_x = 300, scale_y = 200) {
     this.x = x * scale_x;
     this.y = y * scale_y;
   }
 
+  /**
+   * 设置节点输入引脚的值
+   * 
+   * @param pin - 引脚标识符（字符串）或可见引脚索引（数字）
+   * @param value - 要设置的值，类型必须与引脚类型匹配
+   * 
+   * @example
+   * ```typescript
+   * // 使用标识符设置
+   * node.setVal("var_name", "Player Level");
+   * node.setVal("enabled", true);
+   * 
+   * // 使用索引设置
+   * node.setVal(0, 42);
+   * node.setVal(1, [1, 2, 3]);
+   * ```
+   */
   setVal(pin: number | string, value: TypedValue) {
     let pinDef: TypedPinDef | null;
     if (typeof pin === "number") {
@@ -646,6 +1044,13 @@ export class Node {
     this.pin_values.set(pinDef.Identifier, value);
   }
 
+  /**
+   * 编码节点的引脚数据为 Protobuf 格式
+   * 
+   * 内部方法，用于序列化节点的引脚值和连接信息。
+   * 
+   * @returns Protobuf 格式的引脚实例数组
+   */
   encode_pins(): Gia.PinInstance[] {
     const ret: Gia.PinInstance[] = [];
     const def = this.variant_def ?? this.def;
@@ -699,6 +1104,16 @@ export class Node {
     return ret;
   }
 
+  /**
+ * 将节点编码为 Protobuf 格式
+ * 
+ * @returns Protobuf 格式的节点实例
+ * 
+ * @example
+ * ```typescript
+ * const encoded = node.encode();
+ * ```
+ */
   encode(): Gia.NodeInstance {
     const comment = this.comment ? make_annotation(this.comment.content) : undefined;
 
@@ -715,6 +1130,18 @@ export class Node {
     });
   }
 
+  /**
+ * 从 Protobuf 数据解码节点
+ * 
+ * @param system - 节点所属系统类型
+ * @param proto - Protobuf 格式的节点实例
+ * @returns 解码后的节点对象，失败时返回 null
+ * 
+ * @example
+ * ```typescript
+ * const node = Node.decode(system, protoNode);
+ * ```
+ */
   static decode(system: ResourceClass, proto: Gia.NodeInstance): Node | null {
     const def = NodeLib.getByID(proto.shell_ref.runtime_id);
     if (def === undefined) {
@@ -765,6 +1192,15 @@ export class Node {
     return node;
   }
 
+  /**
+ * 解码引脚数据
+ * 
+ * 内部静态方法，用于从 Protobuf 数据中解析引脚信息。
+ * 
+ * @param proto - Protobuf 格式的引脚实例
+ * @param is_server - 是否为服务器端数据
+ * @returns 解码后的引脚信息对象
+ */
   static decode_pin(proto: Gia.PinInstance, is_server: boolean): {
     success: boolean;
     kind?: "Flow" | "Data" | "Meta";
@@ -806,6 +1242,14 @@ export class Node {
     };
   }
 
+  /**
+ * 解码节点的连接关系
+ * 
+ * 内部静态方法，用于从 Protobuf 数据中恢复节点间的连接。
+ * 
+ * @param proto - Protobuf 格式的节点实例
+ * @param graph - 目标节点图对象
+ */
   static decode_connections(proto: Gia.NodeInstance, graph: Graph) {
     const this_node = graph.nodes.get(proto.index);
     if (!this_node) {
@@ -855,6 +1299,23 @@ export class Node {
     }
   }
 
+  /**
+ * 打印节点的调试信息
+ * 
+ * @param options - 调试选项
+ * @param options.indent - 缩进级别（默认 0）
+ * @param options.log - 日志输出函数（默认 console.log）
+ * 
+ * @example
+ * ```typescript
+ * // 输出到控制台
+ * node.debugPrint({});
+ * 
+ * // 输出到自定义日志
+ * const logs: string[] = [];
+ * node.debugPrint({ indent: 2, log: (msg) => logs.push(msg) });
+ * ```
+ */
   debugPrint({ indent = 0, log = console.log }): void {
     log(`${" ".repeat(indent)}Node: ${this.def.Identifier} (Index: ${this.node_index})`);
     if (this.variant_def) {
@@ -875,6 +1336,18 @@ export class Node {
     }
   }
 
+  /**
+ * 打印节点引脚的详细信息
+ * 
+ * @param options - 调试选项
+ * @param options.indent - 缩进级别（默认 0）
+ * @param options.log - 日志输出函数（默认 console.log）
+ * 
+ * @example
+ * ```typescript
+ * node.debugPrintPins({ indent: 4 });
+ * ```
+ */
   debugPrintPins({ indent = 0, log = console.log }): void {
     const flowIn = (this.variant_def ?? this.def).FlowPins.filter(x => x.Direction === "In" && x.Visibility !== "Hidden").sort((a, b) => a.ShellIndex - b.ShellIndex);
     const flowOut = (this.variant_def ?? this.def).FlowPins.filter(x => x.Direction === "Out" && x.Visibility !== "Hidden").sort((a, b) => a.ShellIndex - b.ShellIndex);
@@ -921,14 +1394,44 @@ export class Node {
 
 }
 
+/**
+ * Connection interface - 节点间的连接
+ * 
+ * 表示两个节点之间的一条连接，可以是数据流连接或控制流连接。
+ * 
+ * @example
+ * ```typescript
+ * const conn: Connection = {
+ *   from: nodeA,
+ *   to: nodeB,
+ *   from_pin: nodeA.findDataPin("result")!,
+ *   to_pin: nodeB.findDataPin("input")!
+ * };
+ * ```
+ */
 export interface Connection {
+  /** 连接的源节点 */
   from: Node;
+
+  /** 连接的目标节点 */
   to: Node;
+
+  /** 源节点的引脚定义 */
   from_pin: TypedPinDef;
+
+  /** 目标节点的引脚定义 */
   to_pin: TypedPinDef;
 }
 
-/** **Warning**: No verify for consistency of kind and connection */
+/**
+ * 创建连接（内部方法，不进行一致性验证）
+ * 
+ * **警告**: 此函数不验证连接类型和方向的一致性，仅供内部使用。
+ * 
+ * @param con - 连接对象
+ * @param kind - 连接类型（"Data" 或 "Flow"）
+ * @param insert_pos - 插入位置（可选，仅用于控制流）
+ */
 function make_connection_unsafe(con: Connection, kind: "Data" | "Flow", insert_pos?: number): void {
   if (insert_pos !== undefined && kind !== "Data") {
     console.warn("[Warning] Insert position is only applicable for Flow pins. Connect will ignore it.");
@@ -960,7 +1463,14 @@ function make_connection_unsafe(con: Connection, kind: "Data" | "Flow", insert_p
   }
 }
 
-/** **Warning**: No verify for consistency of kind and connection */
+/**
+ * 断开连接（内部方法，不进行一致性验证）
+ * 
+ * **警告**: 此函数不验证连接类型和方向的一致性，仅供内部使用。
+ * 
+ * @param con - 要断开的连接对象
+ * @param kind - 连接类型（"Data" 或 "Flow"）
+ */
 function make_disconnection_unsafe(con: Connection, kind: "Data" | "Flow"): void {
   if (kind === "Data") {
     con.to.data_from.delete(con.to_pin.Identifier);
@@ -977,16 +1487,62 @@ function make_disconnection_unsafe(con: Connection, kind: "Data" | "Flow"): void
   }
 }
 
-
+/**
+ * Comment interface - 注释
+ * 
+ * 表示节点图中的注释，可以附加到节点或独立存在。
+ * 
+ * @example
+ * ```typescript
+ * // 附加到节点的注释
+ * const nodeComment: Comment = {
+ *   content: "这是一个重要的分支节点"
+ * };
+ * 
+ * // 独立注释
+ * const standaloneComment: Comment = {
+ *   content: "这是一个独立注释",
+ *   x: 600,
+ *   y: 100
+ * };
+ * ```
+ */
 export interface Comment {
+  /** 注释内容 */
   content: string;
+
+  /** X 坐标（仅用于独立注释） */
   x?: number;
+
+  /** Y 坐标（仅用于独立注释） */
   y?: number;
 }
 
+/**
+ * GraphVar interface - 图变量
+ * 
+ * 表示节点图级别的全局变量，可以在多个节点间共享数据。
+ * 
+ * @example
+ * ```typescript
+ * const graphVar: GraphVar = {
+ *   name: "playerLevel",
+ *   type: { t: "p", v: "Int" },
+ *   val: 10,
+ *   exposed: true
+ * };
+ * ```
+ */
 export interface GraphVar {
+  /** 变量名称 */
   name: string;
+
+  /** 是否暴露给外部访问 */
   exposed: boolean;
+
+  /** 变量类型 */
   type: NodeType;
+
+  /** 变量值 */
   val: TypedValue;
 };

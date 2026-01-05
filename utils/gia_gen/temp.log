@@ -1,0 +1,118 @@
+Graph: following use led (ID: 1073741987, System: ENTITY_NODE_GRAPH)
+UID: 201273322, File ID: 1073741988
+Graph Variables:
+  var1: L<Int> (Exposed: true)
+    Value: [1,24,5]
+  var2: Int (Exposed: false)
+    Value: 3
+Nodes:
+  Node: Trigger.Tab.On_Tab_Select (Index: 1)
+    Pins:
+      Pins for Node Trigger.Tab.On_Tab_Select (Index: 1):
+        [Flow-Out-0] (Index: 0) FlowOut
+        [Data-Out-0] (Index: 0) Output0: (unset) as Ety
+        [Data-Out-1] (Index: 1) Output1: (unset) as Gid
+        [Data-Out-2] (Index: 2) Output2: (unset) as Int
+        [Data-Out-3] (Index: 3) Output3: (unset) as Ety
+        [Data-Out-4] (Index: 4) Output4: (unset) as Gid
+    Connections:
+      [*this::Output2] --> [Control.General.Switch(2)::key]
+      [*this::Output0] --> [Query.Custom_Variable.Get_Variable(3)::target_entity]
+      [*this::FlowOut] --> [Control.General.Switch(2)::FlowIn]
+      [*this::FlowOut] --> [Control.General.Switch(2)::FlowIn]
+  Node: Control.General.Switch (Index: 2)
+    Variant Constraints: C<T:Int>
+    Pins:
+      Pins for Node Control.General.Switch (Index: 2):
+        [Flow-In-0] (Index: 0) FlowIn
+        [Flow-Out-0] (Index: 0) DefaultBranch
+        [Flow-Out-1] (Index: 1) Case1
+        [Flow-Out-2] (Index: 2) Case2
+        [Flow-Out-3] (Index: 3) Case3
+        [Flow-Out-4] (Index: 4) Case4
+        [Flow-Out-5] (Index: 5) Case5
+        [Flow-Out-6] (Index: 6) Case6
+        [Flow-Out-7] (Index: 7) Case7
+        [Flow-Out-8] (Index: 8) Case8
+        [Flow-Out-9] (Index: 9) Case9
+        [Data-In-0] (Index: 0) key: (unset) as Int
+        [Data-In-1] (Index: 1) cases: [1,2,3] as L<Int>
+    Connections:
+      [Trigger.Tab.On_Tab_Select(1)::Output2] --> [*this::key]
+      [Trigger.Tab.On_Tab_Select(1)::FlowOut] --> [*this::FlowIn]
+      [Trigger.Tab.On_Tab_Select(1)::FlowOut] --> [*this::FlowIn]
+      [*this::Case1] --> [Control.General.Branch(4)::FlowIn]
+      [*this::Case2] --> [Control.General.Branch(5)::FlowIn]
+      [*this::Case3] --> [Control.General.Branch(6)::FlowIn]
+  Node: Query.Custom_Variable.Get_Variable (Index: 3)
+    Variant Constraints: C<T:Int>
+    Pins:
+      Pins for Node Query.Custom_Variable.Get_Variable (Index: 3):
+        [Data-In-0] (Index: 0) target_entity: (unset) as Ety
+        [Data-In-1] (Index: 1) var_name: "Plant Level" as Str
+        [Data-Out-0] (Index: 0) value: (unset) as Int
+    Connections:
+      [Trigger.Tab.On_Tab_Select(1)::Output0] --> [*this::target_entity]
+      [*this::value] --> [Arithmetic.General.Equal(7)::input1]
+      [*this::value] --> [Arithmetic.General.Equal(8)::input1]
+      [*this::value] --> [Arithmetic.General.Equal(9)::input1]
+  Node: Control.General.Branch (Index: 4)
+    Pins:
+      Pins for Node Control.General.Branch (Index: 4):
+        [Flow-In-0] (Index: 0) FlowIn
+        [Flow-Out-0] (Index: 0) True
+        [Flow-Out-1] (Index: 1) False
+        [Data-In-0] (Index: 0) cond: (unset) as Bol
+    Connections:
+      [Arithmetic.General.Equal(7)::result] --> [*this::cond]
+      [Control.General.Switch(2)::Case1] --> [*this::FlowIn]
+  Node: Control.General.Branch (Index: 5)
+    Pins:
+      Pins for Node Control.General.Branch (Index: 5):
+        [Flow-In-0] (Index: 0) FlowIn
+        [Flow-Out-0] (Index: 0) True
+        [Flow-Out-1] (Index: 1) False
+        [Data-In-0] (Index: 0) cond: (unset) as Bol
+    Connections:
+      [Arithmetic.General.Equal(8)::result] --> [*this::cond]
+      [Control.General.Switch(2)::Case2] --> [*this::FlowIn]
+  Node: Control.General.Branch (Index: 6)
+    Pins:
+      Pins for Node Control.General.Branch (Index: 6):
+        [Flow-In-0] (Index: 0) FlowIn
+        [Flow-Out-0] (Index: 0) True
+        [Flow-Out-1] (Index: 1) False
+        [Data-In-0] (Index: 0) cond: (unset) as Bol
+    Connections:
+      [Arithmetic.General.Equal(9)::result] --> [*this::cond]
+      [Control.General.Switch(2)::Case3] --> [*this::FlowIn]
+  Node: Arithmetic.General.Equal (Index: 7)
+    Variant Constraints: C<T:Int>
+    Pins:
+      Pins for Node Arithmetic.General.Equal (Index: 7):
+        [Data-In-0] (Index: 0) input1: (unset) as Int
+        [Data-In-1] (Index: 1) input2: 0 as Int
+        [Data-Out-0] (Index: 0) result: (unset) as Bol
+    Connections:
+      [Query.Custom_Variable.Get_Variable(3)::value] --> [*this::input1]
+      [*this::result] --> [Control.General.Branch(4)::cond]
+  Node: Arithmetic.General.Equal (Index: 8)
+    Variant Constraints: C<T:Int>
+    Pins:
+      Pins for Node Arithmetic.General.Equal (Index: 8):
+        [Data-In-0] (Index: 0) input1: (unset) as Int
+        [Data-In-1] (Index: 1) input2: 1 as Int
+        [Data-Out-0] (Index: 0) result: (unset) as Bol
+    Connections:
+      [Query.Custom_Variable.Get_Variable(3)::value] --> [*this::input1]
+      [*this::result] --> [Control.General.Branch(5)::cond]
+  Node: Arithmetic.General.Equal (Index: 9)
+    Variant Constraints: C<T:Int>
+    Pins:
+      Pins for Node Arithmetic.General.Equal (Index: 9):
+        [Data-In-0] (Index: 0) input1: (unset) as Int
+        [Data-In-1] (Index: 1) input2: 2 as Int
+        [Data-Out-0] (Index: 0) result: (unset) as Bol
+    Connections:
+      [Query.Custom_Variable.Get_Variable(3)::value] --> [*this::input1]
+      [*this::result] --> [Control.General.Branch(6)::cond]
