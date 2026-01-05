@@ -31,6 +31,10 @@ Branch1.add_comment("Comment Attached to Node");
 graph.add_comment("Comment Not Attached to Node", 600, 100);
 graph.add_comment("Comment2 Also Attached to Node", Trig);
 
+graph.add_graph_var("var1", "L<Int>", [1, 24, 5], true);
+graph.add_graph_var("var1", "Int", 3, false); // skip redefine
+graph.add_graph_var("var2", "Int", 3, false);
+
 const g = graph.encode();
 
 let str = "";

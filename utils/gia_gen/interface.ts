@@ -10,7 +10,9 @@ import {
   make_variant_value,
   get_resource_class,
   read_typed_value,
-  read_connections
+  read_connections,
+  make_graph_variable,
+  read_graph_variable
 } from "./core.ts";
 import { ClientType, Doc, Node as NodeLib, ServerType } from "../node_data/instances.ts";
 import type { NodeDef, ResourceClass, ServerClient, TypedValue } from "../node_data/types.ts";
@@ -37,6 +39,7 @@ export class Graph {
   /** node_index --> Node */
   public readonly nodes: Map<number, Node>;
   public readonly comments: Set<Comment>;
+  public readonly graph_var: Map<string, GraphVar>;
 
   constructor(system_class: ResourceClass = "ENTITY_NODE_GRAPH", uid?: number, name?: string, graph_id?: number) {
     this.system = system_class;
@@ -51,6 +54,7 @@ export class Graph {
 
     this.nodes = new Map<number, Node>();
     this.comments = new Set();
+    this.graph_var = new Map<string, GraphVar>();
   }
 
   /**
@@ -126,6 +130,16 @@ export class Graph {
       return n.add_comment(content);
     }
     return null;
+  }
+
+  add_graph_var(name: string, type: NodeType | string, val?: TypedValue, exposed?: boolean): GraphVar | null {
+    if (this.graph_var.has(name)) {
+      console.warn("[Warning] Already has a graph var of the same name!");
+      return null;
+    }
+    const v: GraphVar = { name, type: parse(type), exposed: exposed ?? false, val: val ?? null };
+    this.graph_var.set(name, v);
+    return v;
   }
 
   flow(from: Node, to: Node, fromArg?: string, toArg?: string, insert_pos?: number): Connection | null {
@@ -225,6 +239,7 @@ export class Graph {
   encode(opt?: any): Gia.AssetBundle {
     const nodes = Array.from(this.nodes.values()).map(n => n.encode());
     const comments = Array.from(this.comments).map(c => make_annotation(c.content, c.x, c.y));
+    const graphValues = Array.from(this.graph_var.values()).map(v => make_graph_variable(v.type, v.name, v.val, v.exposed));
 
     return graph_body({
       system: this.system,
@@ -234,7 +249,7 @@ export class Graph {
       graph_name: this.graph_name,
       nodes: nodes,
       comments: comments,
-      graphValues: [] // TODO: Implement variables if needed
+      graphValues: graphValues,
     });
   }
 
@@ -277,12 +292,24 @@ export class Graph {
     proto.primary_resource.graph_data?.inner.graph.comments?.forEach(c => {
       graph.add_comment(c.text, c.x_pos ?? 0, c.y_pos ?? 0);
     });
+    // graph variables
+    proto.primary_resource.graph_data?.inner.graph.blackboard?.forEach(v => {
+      const val = read_graph_variable(v);
+      graph.add_graph_var(val.name, val.type, val.val, val.exposed);
+    });
     return graph;
   }
 
   debugPrint({ indent = 0, log = console.log }): void {
     log(`${" ".repeat(indent)}Graph: ${this.graph_name} (ID: ${this.graph_id}, System: ${this.system})`);
     log(`${" ".repeat(indent)}UID: ${this.uid}, File ID: ${this.file_id}`);
+    log(`${" ".repeat(indent)}Graph Variables:`);
+    this.graph_var.forEach(v => {
+      log(`${" ".repeat(indent + 2)}${v.name}: ${stringify(v.type)} (Exposed: ${v.exposed})`);
+      if (v.val !== null) {
+        log(`${" ".repeat(indent + 4)}Value: ${JSON.stringify(v.val)}`);
+      }
+    });
     log(`${" ".repeat(indent)}Nodes:`);
     this.nodes.forEach(node => {
       node.debugPrint({ indent: indent + 2, log });
@@ -921,3 +948,10 @@ export interface Comment {
   x?: number;
   y?: number;
 }
+
+export interface GraphVar {
+  name: string;
+  exposed: boolean;
+  type: NodeType;
+  val: TypedValue;
+};

@@ -4,7 +4,7 @@ import { assert, assertEq, todo } from "../utils.ts";
 import * as Gia from "../protobuf/gia.proto.ts";
 
 import type { ResourceClass, TypedValue } from "../node_data/types.ts";
-import { type DictType, type ListType, type NodeType, stringify, type StructType } from "../node_data/node_type.ts";
+import { type DictType, type ListType, type NodeType, parse, stringify, type StructType } from "../node_data/node_type.ts";
 import { Doc, ServerType, ClientType } from "../node_data/instances.ts";
 import type { TypedNodeDef, TypedPinDef } from "../node_data/core.ts";
 
@@ -190,6 +190,13 @@ function get_type_c(type: NodeType): Gia.ClientTypeId {
   return ClientType.get_type_id(type) ?? ClientType.DEFAULT_TYPE.ID as any;
 }
 
+function to_type_s(id: number): NodeType {
+  return parse(ServerType.getTypeByID(id)?.Identifier ?? ServerType.DEFAULT_TYPE.Identifier);
+}
+function to_type_c(id: number): NodeType {
+  return parse(ClientType.getTypeByID(id)?.Identifier ?? ClientType.DEFAULT_TYPE.Identifier);
+}
+
 function make_type_definition(type: NodeType, is_server: boolean, is_pair = false): Gia.TypeDefinition {
   if (is_server) {
     const ret: Gia.TypeDefinition = {
@@ -364,6 +371,87 @@ export function make_variant_value(type: NodeType, is_server: boolean, type_inde
     ret.val_poly!.extra_meta = make_dynamic_type_metadata(type);
   }
   return ret;
+}
+
+/** must be **Server** */
+export function make_graph_variable(type: NodeType, var_name: string, val: TypedValue, exposed: boolean): Gia.GraphVariable {
+  /**
+message GraphVariable {
+  string var_name = 2;
+
+  // 变量的数据类型定义
+  ServerTypeId base_type = 3;
+
+  // 变量的初始值/当前值
+  TypedValue storage_value = 4;
+
+  // 是否暴露为外部可配置参数
+  bool is_public = 5;
+
+  // 如果是结构体变量，指向其定义的 ID
+  optional int64 schema_ref_id = 6;
+
+  // 容器类型的子类型定义 (残留字段, 仅对 Map 有效)
+  ServerTypeId container_key_type   = 7;
+  ServerTypeId container_value_type = 8;
+}
+   */
+
+  let ret: Gia.GraphVariable = {
+    var_name: var_name,
+    base_type: get_type_s(type),
+    storage_value: make_typed_value(type, true, val),
+    is_public: exposed,
+    container_key_type: 6,
+    container_value_type: 6,
+  };
+  if (type.t === "s") {
+    ret.schema_ref_id = type._;
+  } else if (type.t === "l" && type.i.t === "s") {
+    ret.schema_ref_id = type.i._;
+  } else if (type.t === "d") {
+    ret.container_key_type = get_type_s(type.k);
+    ret.container_value_type = get_type_s(type.v);
+    if (type.k.t === "s") {
+      ret.schema_ref_id = type.k._;
+    } else if (type.k.t === "l" && type.k.i.t === "s") {
+      ret.schema_ref_id = type.k.i._;
+    }
+  }
+  return ret;
+}
+
+
+export function read_graph_variable(proto: Gia.GraphVariable): {
+  type: NodeType;
+  name: string;
+  val: TypedValue;
+  exposed: boolean;
+} {
+
+  const val = read_typed_value(proto.storage_value);
+  const exposed = proto.is_public;
+  const name = proto.var_name;
+  const type = to_type_s(proto.base_type);
+  if (type.t === "d") {
+    type.k = to_type_s(proto.container_key_type);
+    type.v = to_type_s(proto.container_value_type);
+    if (type.k.t === "s") {
+      type.k._ = proto.schema_ref_id;
+    } else if (type.k.t === "l" && type.k.i.t === "s") {
+      type.k.i._ = proto.schema_ref_id;
+    }
+  } else if (type.t === "l" && type.i.t === "s") {
+    type.i._ = proto.schema_ref_id;
+  } else if (type.t === "s") {
+    type._ = proto.schema_ref_id;
+  }
+  return {
+    type: type,
+    name: name,
+    val: val,
+    exposed: exposed,
+  };
 }
 
 export function make_int_value(val: TypedValue, type_def: Gia.TypeDefinition): Gia.TypedValue {
