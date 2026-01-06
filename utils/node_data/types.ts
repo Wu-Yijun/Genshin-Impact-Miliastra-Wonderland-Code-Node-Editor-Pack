@@ -6,8 +6,18 @@
  * Document interface - 节点数据文档的根容器
  * 
  * 包含所有节点、类型、枚举的完整定义数据。这是整个节点数据系统的核心数据结构，
- * 通常从 `data.json` 或 `index.yaml` 加载。
+ * 通常从 `data.json` 或 `instances.ts` 加载。
  * 
+ * @example
+ * ```typescript
+ * import doc from "./data.json" with { type: "json" };
+ * 
+ * // 访问文档数据
+ * console.log(doc.Version);        // 数据版本
+ * console.log(doc.GameVersion);    // 游戏版本
+ * console.log(doc.Nodes.length);   // 节点总数
+ * console.log(doc.Types.length);   // 类型总数
+ * ```
  * @example
  * ```typescript
  * import { Doc } from "./instances.ts";

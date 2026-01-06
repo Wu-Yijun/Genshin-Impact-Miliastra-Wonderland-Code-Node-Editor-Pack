@@ -64,7 +64,7 @@ newGraph.autoLayout();
 encode_gia_file("output.gia", newGraph.encode());
 ```
 
-📖 详情：[GIA 生成器](./utils/gia_gen/readme.md) | [Protobuf 工具](./utils/protobuf/README.md) | [节点数据](./utils/node_data/readme.md)
+📖 详情：[GIA 生成器](./utils/gia_gen/readme.md) | [Protobuf 工具](./utils/protobuf/readme.md) | [节点数据](./utils/node_data/readme.md)
 
 ### 2. DSL 代码编写
 
@@ -312,7 +312,7 @@ nodeDef.DataPins.forEach(pin => {
 | :--- | :--- | :--- |
 | **GIA 生成器** | 编程式构建和操作节点图 | [gia_gen/readme.md](./utils/gia_gen/readme.md) |
 | **节点数据系统** | 集中式数据管理，完整类型系统 | [node_data/readme.md](./utils/node_data/readme.md) |
-| **Protobuf 工具集** | 双路径编解码，逆向工程工具链 | [protobuf/README.md](./utils/protobuf/README.md) |
+| **Protobuf 工具集** | 双路径编解码，逆向工程工具链 | [protobuf/readme.md](./utils/protobuf/readme.md) |
 | **DSL 函数** | Math/Query 节点定义（低优先级） | [functions/readme.md](./utils/functions/readme.md) |
 
 ### 源代码模块
@@ -408,7 +408,7 @@ GIA 文件 → decode() → Graph → giaIrConvertor() → IR → decompile() �
 | Protobuf | 0x14 | ... | 序列化的节点图数据 |
 | 尾部标记 | 末尾 | `0x0679` | **严格校验** |
 
-📖 Protobuf 详细结构：[gia.proto](./utils/protobuf/gia.proto) | [逆向工具文档](./utils/protobuf/README.md)
+📖 Protobuf 详细结构：[gia.proto](./utils/protobuf/gia.proto) | [逆向工具文档](./utils/protobuf/readme.md)
 
 ---
 

@@ -18,7 +18,10 @@ if (!apiKey) {
 }
 
 // Initialize the new GenAI client
-const ai = new GoogleGenAI({ apiKey: apiKey });
+const ai = new GoogleGenAI({
+  apiKey: apiKey,
+  apiVersion: 'v1'
+});
 
 const DEV_PATH = path.join(process.cwd(), "dev");
 const MAIN_PATH = path.join(process.cwd(), "main");

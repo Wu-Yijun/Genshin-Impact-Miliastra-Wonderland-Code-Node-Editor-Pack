@@ -6,6 +6,7 @@ import { nodeDefinitions as REF } from "../../ref/Columbina-Dev/WebMiliastraNode
 import { parse, stringify } from "yaml";
 import * as NT from "./node_type.ts";
 import { decode_gia_file, encode_gia_file } from "../protobuf/decode.ts";
+import { type Document } from "./types.ts";
 const read = (path: string) => readFileSync(import.meta.dirname + "/" + path).toString();
 const save = (path: string, data: {} | string) =>
   writeFileSync(
@@ -17,11 +18,7 @@ const save = (path: string, data: {} | string) =>
 
 // TODO: VisiblePin8(10) of Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc's type conflicts with others
 
-data.Nodes.forEach((node) => {
-  node.FlowPins.forEach((pin) => {
-    pin.ShellIndex ??= 0
-  });
-});
-
-save("data.json", data);
+const nodes = (data as any as Document).Nodes.filter(x => Object.keys(x).find(x => x.startsWith("__todo")) !== undefined);
+console.log(nodes.length);
+save("nodes.json", nodes);
 

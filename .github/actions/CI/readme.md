@@ -171,4 +171,4 @@ mkdir dist
 
 - [工作流配置](../workflows/sync.yml) — GitHub Actions 工作流
 - [同步配置](../../sync-list.json) — 文件同步规则
-- [主 README](../../Readme.md) — 项目概述
+- [主 Readme](../../Readme.md) — 项目概述
