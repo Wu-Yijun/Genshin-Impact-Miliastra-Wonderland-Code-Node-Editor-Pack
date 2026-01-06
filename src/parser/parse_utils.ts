@@ -6,7 +6,7 @@ import { TOKEN_GROUPS, TOKENS } from "../types/consts.ts";
 import { extractBalancedTokens, splitBalancedTokens, try_capture_type } from "./balanced_extract.ts";
 import { expect, next, peek, peekIs } from "./utils.ts";
 import { NodeVar } from "../types/class.ts";
-import { parse as parse_node_type, type_equal } from "../../utils/gia_gen/nodes.ts";
+import { parse as parse_node_type, type_equal } from "../../utils/node_data/node_type.ts";
 import { tokenEqual } from "./tokenizer.ts";
 import { assert, assertEq, assertEqs } from "../../utils/utils.ts";
 

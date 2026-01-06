@@ -284,7 +284,7 @@ debugPrintPins({ indent?: number, log?: Function }): void
 
 ### 辅助接口
 
-#### [Connection](cci:2://file:///d:/Program/GenshinImpact/projs/Convertor/utils/gia_gen/interface.ts:1411:0-1423:1) - 连接
+#### [Connection](./interface.ts) - 连接
 
 ```typescript
 interface Connection {
@@ -295,7 +295,7 @@ interface Connection {
 }
 ```
 
-#### [Comment](cci:2://file:///d:/Program/GenshinImpact/projs/Convertor/utils/gia_gen/interface.ts:1509:0-1518:1) - 注释
+#### [Comment](./interface.ts) - 注释
 
 ```typescript
 interface Comment {
@@ -305,7 +305,7 @@ interface Comment {
 }
 ```
 
-#### [GraphVar](cci:2://file:///d:/Program/GenshinImpact/projs/Convertor/utils/gia_gen/interface.ts:1535:0-1547:1) - 图变量
+#### [GraphVar](./interface.ts) - 图变量
 
 ```typescript
 interface GraphVar {

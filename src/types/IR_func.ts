@@ -1,4 +1,4 @@
-import { NodeType } from "../../utils/gia_gen/nodes.ts";
+import { NodeType } from "../../utils/node_data/node_type.ts";
 import { LocalVarDecl } from "./IR_decl.ts";
 import { IR_ExecutionBlock } from "./IR_node.ts";
 import { Token } from "./types.ts";

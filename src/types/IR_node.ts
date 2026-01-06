@@ -1,4 +1,4 @@
-import type { NodeType } from "../../utils/gia_gen/nodes.ts";
+import type { NodeType } from "../../utils/node_data/node_type.ts";
 import { BUILD_IN_SYS_NODE } from "./consts.ts";
 import type { Token } from "./types.ts";
 import type { BranchId, IRBase } from "./types.ts";

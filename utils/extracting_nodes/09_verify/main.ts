@@ -2,7 +2,7 @@ import type { ClientVarType, NodeConnection, GraphNode, NodePin } from "../../pr
 import { VarBase_Class, VarBase_ItemType_ClassBase } from "../../protobuf/gia.proto.ts";
 import { collection, dir, gia, save } from "../util.ts";
 import { assert, assertDeepEq, assertEq, exclude_keys } from "../../utils.ts";
-import { is_reflect, reflects } from "../../gia_gen/nodes.ts";
+import { is_reflect, reflects } from "../../node_data/node_type.ts";
 
 import RECORDS from "../dist/node_records.json" with {type: "json"};
 import type_name from "../dist/type_ids.json" with { type: 'json' };

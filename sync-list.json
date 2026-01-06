@@ -1,6 +1,6 @@
 {
-  "commitMessage": "Refract Static Data and Now All functions relies on the universal data.json.\n完成了对数据的重构, 现在可以正常使用接口了. 更新了文档.",
-  "notSync": true,
+  "commitMessage": "更新文档, 更新数据, 修复了测试用例",
+  "notSync": false,
   "include": [
     "*",
     "docs/**",

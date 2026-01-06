@@ -1,4 +1,5 @@
 import { writeFile, rm, readFile } from "fs/promises";
+import DATA from "../../utils/node_data/data.json" with {type: "json"};
 
 async function Import(url: string) {
   const path = import.meta.dirname + '/' + url.replaceAll(/[^A-Za-z0-9]+/g, "_") + ".ts";
@@ -38,17 +39,15 @@ function arrangeColors(colors: [number, number, number][], width: number, grid_s
   };
 }
 
-async function main() {
-  const data = JSON.parse((await readFile("./utils/node_data/index.json")).toString());
-  const nodes = data.NodesList.filter((node: any) => node.ID < 10000);
+async function main(system: "Server" | "Client") {
+  const nodes = DATA.Nodes.filter((node) => node.System === system);
   const class_array: string[] = [];
   for (const node of nodes) {
-    class_array[node.ID] = node.Class;
-    if (node["TypeMappings"]) {
-      for (const type_mapping of node["TypeMappings"]) {
-        class_array[type_mapping.ConcreteId] = node.Class + "/Type";
-      }
-    }
+    class_array[node.ID % 10000] = node.Domain;
+    if (node.KernelID !== undefined) class_array[node.KernelID % 10000] = node.Domain;
+    node.Variants?.forEach(v => {
+      class_array[v.KernelID % 10000] = node.Domain + "/Type";
+    });
   }
   for (let i = 0; i < class_array.length; i++) {
     if (class_array[i] === undefined) {
@@ -73,6 +72,7 @@ async function main() {
     "Arithmetic": color("#89DFFA"),
     "Trigger": color("#E080D8"),
     "Hidden": color("#6FE07D"),
+    "Others": color("#6FE07D"),
 
     "Control/Type": color("#FAB98A"),
     "Execution/Type": color("#FAF5AC"),
@@ -80,14 +80,16 @@ async function main() {
     "Arithmetic/Type": color("#BDFAF8"),
     "Trigger/Type": color("#E09ACE"),
     "Hidden/Type": color("#ABE0BC"),
+    "Others/Type": color("#ABE0BC"),
   }
 
   const colors = class_array.map(x => COLORS[x as keyof typeof COLORS]);
   const img_data = arrangeColors(colors, 100, 16);
   const img = encode(img_data, 95);
   console.log("Image Size:", img_data.width, img_data.height);
-  await writeFile('./dist/heat_map.jpg', img.data);
-  console.log("Heat map saved to `./dist/heat_map.jpg`!");
+  await writeFile(`./dist/heat_map_${system}.jpg`, img.data);
+  console.log(`Heat map saved to "./dist/heat_map_${system}.jpg"!`);
 }
 
-await main();
+await main("Server");
+await main("Client");

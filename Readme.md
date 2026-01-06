@@ -3,8 +3,6 @@
 > [!IMPORTANT]  
 > 注意:当前的底层数据与接口框架经过了重构v2, 主要接口基本没变, 但是内部结构几乎全部被调整了, 如果你使用了 2025 年的代码, 请尽早升级, 后续的接口与数据可能无法稳定支持过去的用法.
 
-*测试用例的升级在同步中*
-
 <div align="center">
 
 [中文文档](Readme.md) | [English Documentation](Readme.en.md)
@@ -114,18 +112,31 @@ const code = decompile(ir);
 const irModule = giaIrConvertor(giaGraph, true);
 ```
 
-```
-┌─────────┐      parse       ┌──────┐     giaIrConvertor    ┌─────────┐
-│   DSL   │ ───────────────► │  IR  │ ◄──────────────────── │   GIA   │
-│  Code   │ ◄─────────────── │  AST │ ────────────────────► │  Graph  │
-└─────────┘     decompile    └──────┘     (工作中)          └─────────┘
+```mermaid
+graph LR
+    Raw[二进制<br/>原始文件]
+    GIA[Graph<br/>接口]
+    IR[IR<br/>AST]
+    DSL[DSL<br/>代码]
+
+    Raw -- "decode/gia_gen" --> GIA
+    GIA -- "gia_gen/encode" --> Raw
+
+    %% IR 与 GIA 的转换
+    IR -- "正在实现" --> GIA
+    GIA -- "gia Ir Convertor(工作中)" --> IR
+
+    %% DSL 与 IR 的转换
+    DSL -- "parse" --> IR
+    IR -- "decompile" --> DSL
+
 ```
 
 📖 详情：[解析器](./src/parser/readme.md) | [转换器](./src/convertor/readme.md) | [IR 类型](./src/types/readme.md)
 
 ### 4. 完备的节点数据
 
-经过彻底重构的集中式数据系统，所有节点定义、类型系统、枚举值统一管理在 [data.json](cci:7://file:///d:/Program/GenshinImpact/projs/Convertor/utils/node_data/data.json:0:0-0:0) 中。
+经过彻底重构的集中式数据系统，所有节点定义、类型系统、枚举值统一管理在 [data.json](./utils/node_data/data.json) 中。
 
 ```typescript
 import { NodeLib, NODES } from "./utils/node_data/index.ts";
@@ -147,8 +158,8 @@ console.log(intEqual.DataPins[0].Type); // "Int" (已具体化)
 ```
 
 **核心数据：**
-- [data.json](cci:7://file:///d:/Program/GenshinImpact/projs/Convertor/utils/node_data/data.json:0:0-0:0) - 完整节点数据（~3.8MB，500+ 节点定义）
-- [game_nodes.ts](cci:7://file:///d:/Program/GenshinImpact/projs/Convertor/utils/node_data/game_nodes.ts:0:0-0:0) - 自动生成的节点常量（带完整文档注释）
+- [data.json](./utils/node_data/data.json) - 完整节点数据（~3.8MB，500+ 节点定义）
+- [game_nodes.ts](./utils/node_data/game_nodes.ts) - 自动生成的节点常量（带完整文档注释）
 - 完整的类型系统（类型解析、转换、反射）
 - 多语言支持（14 种语言本地化）
 
@@ -337,57 +348,162 @@ nodeDef.DataPins.forEach(pin => {
 
 ### 完整数据流
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        工具库 (utils)                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                               │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐  │
-│  │  node_data   │───►│   gia_gen    │───►│  protobuf    │  │
-│  │  (数据核心)   │    │  (图构建器)   │    │  (编解码)     │  │
-│  └──────────────┘    └──────────────┘    └──────────────┘  │
-│        │                    │                    │           │
-│        │ 节点定义            │ Graph API         │ GIA 文件  │
-│        ▼                    ▼                    ▼           │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                        源代码 (src)                          │
-├─────────────────────────────────────────────────────────────┤
-│                                                               │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐  │
-│  │    types     │───►│   parser     │───►│  convertor   │  │
-│  │  (IR 定义)    │    │  (DSL 解析)   │    │ (GIA⇔IR)     │  │
-│  └──────────────┘    └──────────────┘    └──────────────┘  │
-│                            │                    │           │
-│                            │ IR AST            │ IR Module │
-│                            ▼                    ▼           │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph LR
+    %% === 顶层：文件输入/输出 ===
+    subgraph Files ["📂 文件接口"]
+        direction LR
+        BinFile([GIA Binary])
+        TextFile([DSL Code])
+    end
+
+    %% === 核心处理层 ===
+    subgraph Process ["⚙️ 核心处理流程"]
+        direction TB
+        
+        %% 左侧：二进制处理流
+        subgraph BinaryFlow ["二进制/运行时处理"]
+            direction TB
+            Codec[Protobuf <br/>编解码器]
+            GraphBuild[图构建<br/>与布局]
+            
+            Codec --Graph数据--> GraphBuild
+            GraphBuild --Graph对象--> Codec
+        end
+        
+        %% 中间：转换桥梁
+        subgraph Bridge ["🔄 转换核心"]
+            direction TB
+            Converter[GIA-IR <br/>转换器]
+            Splitter[链路分析]
+            
+            Splitter -.辅助.-> Converter
+        end
+
+        %% 右侧：文本处理流
+        subgraph TextFlow ["编译/文本处理"]
+            direction TB
+            Parser[解析器 <br/>Parser]
+            Decompiler[反编译器]
+            IR_Def[IR <br/>类型定义]
+            
+            Parser --AST--> IR_Def
+            IR_Def --IR--> Decompiler
+        end
+    end
+
+    %% === 底层：公共依赖 ===
+    subgraph Base ["📚 基础架构层"]
+        direction LR
+        DataCore[数据定义<br/>Core]
+        TypeSys[类型系统<br/>TypeEngine]
+    end
+
+    %% === 连线关系 ===
+
+    %% 1. 文件 I/O
+    TextFile ==> Parser
+    Decompiler ==> TextFile
+    BinFile <==> Codec   
+
+    %% 2. 内部数据流 (关键路径)
+    GraphBuild <== Graph对象/IR ==> Converter
+    Converter <== IR结构 ==> IR_Def
+
+    %% 3. 基础层支撑 (虚线)
+    Base -.-> BinaryFlow
+    Base -.-> TextFlow
+    Base -.-> Bridge
+
+    %% === 样式调整 ===
+    classDef file fill:#37474f,stroke:#fff,stroke-width:2px,color:#fff
+    classDef flow fill:#e3f2fd,stroke:#1565c0,stroke-width:0px
+    classDef core fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    classDef base fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,stroke-dasharray: 5 5
+
+    class BinFile,TextFile file
+    class Codec,GraphBuild,Parser,Decompiler,Converter,Splitter,IR_Def flow
+    class Converter,IR_Def core
+    class DataCore,TypeSys base
 ```
 
 ### 典型使用场景
 
 **场景 1：读取并修改 GIA 文件**
-```
-GIA 文件 → decode_gia_file() → Graph.decode() → 修改节点 
-→ graph.encode() → encode_gia_file() → GIA 文件
+```mermaid
+sequenceDiagram
+    participant GIA as GIA 文件
+    participant Decode as decode.ts
+    participant Graph as Graph 类
+    participant NodeLib as NodeLib
+    participant Encode as encode.ts
+    
+    GIA->>Decode: 读取二进制文件
+    Decode->>Decode: unwrap_gia()<br/>解析文件头
+    Decode->>Decode: protobuf.decode()<br/>解析 Protobuf
+    Decode->>Graph: AssetBundle 对象
+    Graph->>Graph: Graph.decode()<br/>构建节点图对象
+    Graph->>NodeLib: 查询节点定义
+    NodeLib-->>Graph: NodeDef
+    Note over Graph: 修改节点<br/>add_node()<br/>connect()<br/>setVal()
+    Graph->>Graph: autoLayout()<br/>自动布局
+    Graph->>Encode: graph.encode()<br/>生成 AssetBundle
+    Encode->>Encode: protobuf.encode()<br/>序列化
+    Encode->>Encode: wrap_gia()<br/>添加文件头
+    Encode->>GIA: 写入文件
 ```
 
 **场景 2：从零创建节点图**
-```
-new Graph() → add_node(NODES.xxx) → connect() → setVal() 
-→ autoLayout() → encode() → encode_gia_file() → GIA 文件
+```mermaid
+sequenceDiagram
+    participant User as 用户代码
+    participant NODES as game_nodes.ts
+    participant Graph as Graph 类
+    participant Node as Node 实例
+    participant Layout as auto_layout.ts
+    participant File as GIA 文件
+    
+    User->>Graph: new Graph("ENTITY_NODE_GRAPH")
+    User->>NODES: 获取节点常量<br/>NODES.Control_General_Branch
+    User->>Graph: add_node(NODES.xxx)
+    Graph->>Node: 创建 Node 实例
+    User->>Graph: flow(nodeA, nodeB)
+    Graph->>Graph: 创建控制流连接
+    User->>Graph: connect(nodeA, nodeB, "out", "in")
+    Graph->>Graph: 创建数据流连接
+    User->>Node: setVal("pin", value)
+    Node->>Node: 设置引脚值
+    User->>Graph: autoLayout()
+    Graph->>Layout: 计算节点位置
+    Layout-->>Graph: 布局结果
+    User->>Graph: encode()
+    Graph-->>User: AssetBundle
+    User->>File: encode_gia_file()
 ```
 
 **场景 3：DSL 代码编译（工作中）**
-```
-DSL 代码 → parse() → IR AST → (转换器) → Graph → encode() → GIA 文件
+```mermaid
+flowchart LR
+    A[DSL 代码] -->|createParserState| B[Token 流]
+    B -->|parse| C[IR AST]
+    C -->|IR → Graph<br/>未完成| D[Graph 对象]
+    D -->|encode| E[AssetBundle]
+    E -->|encode_gia_file| F[GIA 文件]
+    
+    style C fill:#fff3e0
+    style D fill:#ffccbc
 ```
 
 **场景 4：GIA 反编译为 DSL（工作中）**
-```
-GIA 文件 → decode() → Graph → giaIrConvertor() → IR → decompile() → DSL 代码
+```mermaid
+flowchart LR
+    A[GIA 文件] -->|decode_gia_file| B[AssetBundle]
+    B -->|Graph.decode| C[Graph 对象]
+    C -->|giaIrConvertor<br/>工作中| D[IR Module]
+    D -->|decompile| E[DSL 代码]
+    
+    style D fill:#fff3e0
+    style E fill:#c8e6c9
 ```
 
 ---
@@ -396,7 +512,98 @@ GIA 文件 → decode() → Graph → giaIrConvertor() → IR → decompile() �
 
 `.gia` 文件是原神千星奇域节点图的二进制存储格式，使用 Protobuf 序列化。
 
-![GIA 文件结构](./static/image.png)
+```mermaid
+classDiagram
+    %% === 1. 文件容器层 ===
+    class AssetBundle {
+        +ResourceEntry primary_resource
+        +ResourceEntry[] dependencies
+        +string export_tag
+    }
+    class ResourceEntry {
+        +ResourceLocator identity
+        +ResourceClass class
+        +OneOf payload
+    }
+    
+    %% === 2. 逻辑图层 ===
+    class NodeGraph {
+        +ResourceLocator identity
+        +NodeInstance[] nodes
+        +GraphVariable[] blackboard
+        +InterfaceMapping[] port_mappings
+    }
+    
+    %% === 3. 节点实例层 ===
+    class NodeInstance {
+        +int32 index
+        +ResourceLocator shell_ref (UI定义)
+        +ResourceLocator kernel_ref (逻辑实现)
+        +PinInstance[] pins
+    }
+    
+    %% === 4. 引脚与连接层 ===
+    class PinInstance {
+        +PinSignature shell_sig
+        +PinSignature kernel_sig
+        +NodeConnection[] connections
+        +TypedValue value
+    }
+    
+    class NodeConnection {
+        +int target_node_index
+        +PinSignature target_pin
+    }
+
+    %% === 5. 数值与类型层 ===
+    class TypedValue {
+        +WidgetType ui_widget
+        +OneOf storage
+    }
+    
+    class ResourceLocator {
+        +Origin source
+        +Category category
+        +AssetKind kind
+        +long asset_guid
+        +long runtime_id
+    }
+
+    %% === 关系连线 ===
+    AssetBundle *-- ResourceEntry : 包含
+    ResourceEntry *-- NodeGraph : Payload
+    ResourceEntry o-- ResourceLocator : 自身ID
+    
+    NodeGraph *-- NodeInstance : 包含节点
+    NodeInstance *-- PinInstance : 包含引脚
+    NodeInstance *-- TypedValue : 存储值
+    NodeInstance *-- ResourceLocator : 引用定义
+    
+    PinInstance *-- NodeConnection : 包含连线
+    PinInstance *-- TypedValue : 存储值
+    
+    NodeGraph o-- ResourceLocator : 自身ID
+    
+    %% === 样式定义 (优化版: 柔和色系) ===
+    
+    %% 文件层 - 淡灰 (冷静的基础色)
+    style AssetBundle fill:#eceff1,stroke:#546e7a,stroke-width:2px,color:#000
+    
+    %% 资源层 - 淡蓝 (清新的逻辑容器)
+    style ResourceEntry fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px,color:#000
+    
+    %% 图结构层 - 淡橙 (温暖的核心区域)
+    style NodeGraph fill:#fff3e0,stroke:#fb8c00,stroke-width:2px,color:#000
+    
+    %% 节点细节层 - 淡绿 (生机勃勃的实例)
+    style NodeInstance fill:#e8f5e9,stroke:#43a047,color:#000
+    style PinInstance fill:#e8f5e9,stroke:#43a047,color:#000
+    style NodeConnection fill:#e8f5e9,stroke:#43a047,color:#000
+    
+    %% 数据层 - 淡紫 (抽象的数据定义)
+    style TypedValue fill:#f3e5f5,stroke:#8e24aa,color:#000
+    style ResourceLocator fill:#f3e5f5,stroke:#8e24aa,color:#000
+```
 
 | 字段 | 偏移 | 值 | 说明 |
 | :--- | :--- | :--- | :--- |
