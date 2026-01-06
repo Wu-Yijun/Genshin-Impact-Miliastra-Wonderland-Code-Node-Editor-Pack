@@ -20,5 +20,8 @@ const save = (path: string, data: {} | string) =>
 
 const nodes = (data as any as Document).Nodes.filter(x => Object.keys(x).find(x => x.startsWith("__todo")) !== undefined);
 console.log(nodes.length);
-save("nodes.json", nodes);
+
+console.log(data.Nodes.filter(n => n.DataPins.find(p => p.Identifier.startsWith('Input')) !== undefined).length);
+
+// save("nodes.json", nodes);
 
