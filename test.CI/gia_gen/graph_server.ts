@@ -1,13 +1,18 @@
 // 节点图接口
-import { Graph } from "../../../utils/gia_gen/interface.ts";
+import { Graph } from "../../utils/gia_gen/interface.ts";
 // 节点定义(调取标识符)(你也可以直接用字符串/id)
-import { NODE_NAMES, NODES } from "../../../utils/node_data/game_nodes.ts";
+import { NODE_NAMES, NODES } from "../../utils/node_data/game_nodes.ts";
+
+import { ResourceClass } from "../../utils/node_data/types.ts";
+
 
 // ========= 示例代码 ========= //
-export function get_graph_server(){
+export function get_graph_server(system: ResourceClass){
   
   // 创建不同类型的节点图
-  const graph = new Graph("ENTITY_NODE_GRAPH");
+  // const graph = new Graph("ENTITY_NODE_GRAPH");
+  // const graph = new Graph("SKILL_NODE_GRAPH");
+  const graph = new Graph(system);
   
   // 光标移动到 `.Trigger_Tab_OnTabSelect` 上方会有节点说明与引脚接口定义
   const Trig = graph.add_node(NODES.Trigger_Tab_OnTabSelect)!;

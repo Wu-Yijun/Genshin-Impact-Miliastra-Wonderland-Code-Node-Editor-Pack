@@ -430,10 +430,6 @@ export class Graph {
     graph.counter_dyn_id.lower_bound = graph.file_id;
     graph.counter_dyn_id.lower_bound = graph_id;
 
-    // // TODO
-    // const graph_vars = get_graph_vars(root.graph.graph?.inner.graph!);
-    // graph_vars.forEach((v) => graph.graph_var.set(v.name, v));
-
     // nodes & values
     proto.primary_resource.graph_data?.inner.graph.nodes.forEach(node => {
       // node itself

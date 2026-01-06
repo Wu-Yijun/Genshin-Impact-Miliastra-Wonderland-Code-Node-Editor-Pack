@@ -84,6 +84,7 @@ export function deepEqual<T>(
     pointers = new Set(),
     assumptions = new Map(),
     max_depth = 100,
+    precision = 1e-10,
   }: {
     breakpoint?: boolean,
     ignore_rules?: (a: any, b: any) => boolean,
@@ -94,6 +95,7 @@ export function deepEqual<T>(
     pointers?: Set<object>,
     assumptions?:Map<object, Set<object>>,
     max_depth?: number,
+    precision?: number,
   } = {}
 ): boolean {
   const add_assumption = (a: object, b: object) => {
@@ -114,6 +116,13 @@ export function deepEqual<T>(
     }
     if (ignore_rules(a, b)) return true;
     if (typeof a === "function" && typeof b === "function") return true;
+    if (typeof a === "number" && typeof b === "number") {
+      if (isNaN(a) && isNaN(b)) return true;
+      if (Math.abs(a - b) < precision) return true;
+      reason.info = `Number mismatch: ${a} !== ${b}`;
+      if (breakpoint) debugger;
+      return false;
+    }
     if (a === b) return true;
     if (a === undefined || a === null || b === undefined || b === null) {
       reason.info = `Null or Undefined: ${a} !== ${b}`;
@@ -145,6 +154,7 @@ export function deepEqual<T>(
           pointers: new_pts,
           assumptions,
           max_depth: depth - 1,
+          precision,
         });
         if (!ret) {
           reason.info = `Self-comparison: ${a} !== ${b}. ${reason.info}`;

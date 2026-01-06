@@ -1,6 +1,6 @@
 import { Graph } from "../interface";
 import { GraphRenderer } from "./GraphRender";
-import { graph, Branch1 } from "./gen";
+import { get_graph_server } from "./gen";
 import "./graph-style.css"; // 引入 CSS
 
 const sleep = async (sec: number) => new Promise(resolve => setTimeout(resolve, sec * 1000));
@@ -11,6 +11,9 @@ const app = document.getElementById("app");
 if (app) {
     // 初始化渲染器
     const renderer = new GraphRenderer(app);
+    const graph = get_graph_server();
+    
+    graph.autoLayout();
 
     // 渲染
     renderer.render(graph);
@@ -21,8 +24,9 @@ if (app) {
 
     console.log("Change Data");
 
-    Branch1.setPosition(7, 2);
-    Branch1.setVal("cases", [112, 2314]);
+    graph.autoLayout({
+        node_sep: 200,
+    })
     graph.comments.keys().next().value!.content = "Graph can be updated and re-rendered."
 
     renderer.render(graph);
