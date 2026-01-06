@@ -618,7 +618,9 @@
           "Identifier": "cond",
           "Direction": "In",
           "Type": "Bol",
-          "Label": null,
+          "Label": {
+            "zh-Hans": "条件"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -628,8 +630,7 @@
         }
       ],
       "Implementation": null,
-      "__ref_id": "flow.branch.ifElse",
-      "__todo_set_in_manually": true
+      "__ref_id": "flow.branch.ifElse"
     },
     {
       "Identifier": "Control.General.Switch",
@@ -789,7 +790,9 @@
           "Identifier": "key",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": null,
+          "Label": {
+            "zh-Hans": "控制表达式"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -801,7 +804,10 @@
           "Identifier": "cases",
           "Direction": "In",
           "Type": "L<R<T>>",
-          "Label": null,
+          "Label": {
+            "zh-Hans": "判断参数",
+            "en": "Judge Parameter"
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
@@ -842,8 +848,7 @@
         }
       ],
       "Implementation": null,
-      "__ref_id": "flow.branch.multi",
-      "__todo_set_in_manually": true
+      "__ref_id": "flow.branch.multi"
     },
     {
       "Identifier": "Execution.Common_Node.For_Loop",
@@ -8784,10 +8789,13 @@
       ],
       "DataPins": [
         {
-          "Identifier": "Output0",
+          "Identifier": "source_entity",
           "Direction": "Out",
           "Type": "Ety",
-          "Label": null,
+          "Label": {
+            "en": "Event Source Entity",
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -8796,10 +8804,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output1",
+          "Identifier": "source_guid",
           "Direction": "Out",
           "Type": "Gid",
-          "Label": null,
+          "Label": {
+            "en": "Event Source GUID"
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
@@ -8808,10 +8818,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output2",
+          "Identifier": "timer_name",
           "Direction": "Out",
           "Type": "Str",
-          "Label": null,
+          "Label": {
+            "en": "Timer Name"
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
@@ -8820,10 +8832,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output3",
+          "Identifier": "timer_sequence",
           "Direction": "Out",
           "Type": "Int",
-          "Label": null,
+          "Label": {
+            "en": "Timer Sequence ID"
+          },
           "Placeholder": null,
           "ShellIndex": 3,
           "KernelIndex": 3,
@@ -8832,10 +8846,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output4",
+          "Identifier": "loop_number",
           "Direction": "Out",
           "Type": "Int",
-          "Label": null,
+          "Label": {
+            "en": "Number of Loops"
+          },
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
@@ -8844,21 +8860,20 @@
           "Description": {}
         },
         {
-          "Identifier": "Output5",
+          "Identifier": "hidden_guid",
           "Direction": "Out",
           "Type": "Gid",
-          "Label": null,
+          "Label": {},
           "Placeholder": null,
           "ShellIndex": 5,
           "KernelIndex": 5,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true,
           "Description": {}
         }
       ],
       "Implementation": null,
-      "__ref_id": "event.timerTriggered",
-      "__todo_set_out_pin": true
+      "__ref_id": "event.timerTriggered"
     },
     {
       "Identifier": "Execution.Motion_Device.Add_Linear_Motion",
@@ -14908,10 +14923,12 @@
       ],
       "DataPins": [
         {
-          "Identifier": "Output0",
+          "Identifier": "source_entity",
           "Direction": "Out",
           "Type": "Ety",
-          "Label": null,
+          "Label": {
+            "en": "Event Source Entity"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -14920,10 +14937,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output1",
+          "Identifier": "source_guid",
           "Direction": "Out",
           "Type": "Gid",
-          "Label": null,
+          "Label": {
+            "en": "Event Source GUID"
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
@@ -14932,10 +14951,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output2",
+          "Identifier": "device_name",
           "Direction": "Out",
           "Type": "Str",
-          "Label": null,
+          "Label": {
+            "en": "Motion Device Name"
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
@@ -14944,22 +14965,24 @@
           "Description": {}
         },
         {
-          "Identifier": "Output3",
+          "Identifier": "hidden_id",
           "Direction": "Out",
           "Type": "Int",
-          "Label": null,
+          "Label": {},
           "Placeholder": null,
           "ShellIndex": 3,
           "KernelIndex": 3,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true,
           "Description": {}
         },
         {
-          "Identifier": "Output4",
+          "Identifier": "path_id",
           "Direction": "Out",
           "Type": "Int",
-          "Label": null,
+          "Label": {
+            "en": "Path Point ID"
+          },
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
@@ -14969,8 +14992,7 @@
         }
       ],
       "Implementation": null,
-      "__ref_id": "event.pathReachedWaypoint",
-      "__todo_set_out_pin": true
+      "__ref_id": "event.pathReachedWaypoint"
     },
     {
       "Identifier": "Execution.Entity_Deployment.Set_Group_State",
@@ -22135,7 +22157,7 @@
           "Description": {}
         },
         {
-          "Identifier": "tab_index",
+          "Identifier": "tab_id",
           "Direction": "In",
           "Type": "Int",
           "Label": {
@@ -22194,10 +22216,12 @@
       ],
       "DataPins": [
         {
-          "Identifier": "Output0",
+          "Identifier": "source_entity",
           "Direction": "Out",
           "Type": "Ety",
-          "Label": null,
+          "Label": {
+            "en": "Event Source Entity"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -22206,10 +22230,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output1",
+          "Identifier": "source_guid",
           "Direction": "Out",
           "Type": "Gid",
-          "Label": null,
+          "Label": {
+            "en": "Event Source GUID"
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
@@ -22218,10 +22244,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output2",
+          "Identifier": "tab_id",
           "Direction": "Out",
           "Type": "Int",
-          "Label": null,
+          "Label": {
+            "en": "Tab ID"
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
@@ -22230,10 +22258,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output3",
+          "Identifier": "selector_entity",
           "Direction": "Out",
           "Type": "Ety",
-          "Label": null,
+          "Label": {
+            "en": "Selector Entity"
+          },
           "Placeholder": null,
           "ShellIndex": 3,
           "KernelIndex": 3,
@@ -22242,10 +22272,10 @@
           "Description": {}
         },
         {
-          "Identifier": "Output4",
+          "Identifier": "hidden_guid",
           "Direction": "Out",
           "Type": "Gid",
-          "Label": null,
+          "Label": {},
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
@@ -22255,8 +22285,7 @@
         }
       ],
       "Implementation": null,
-      "__ref_id": "event.tabSelected",
-      "__todo_set_out_pin": true
+      "__ref_id": "event.tabSelected"
     },
     {
       "Identifier": "Execution.Entity_Related.Set_Model_Visible",
@@ -44062,10 +44091,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output0",
+          "Identifier": "crit_rate",
           "Direction": "Out",
           "Type": "Flt",
-          "Label": null,
+          "Label": {
+            "en": "CRIT Rate"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -44074,10 +44105,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output1",
+          "Identifier": "crit_dmg",
           "Direction": "Out",
           "Type": "Flt",
-          "Label": null,
+          "Label": {
+            "en": "CRIT DMG"
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
@@ -44086,10 +44119,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output2",
+          "Identifier": "heal_bonus",
           "Direction": "Out",
           "Type": "Flt",
-          "Label": null,
+          "Label": {
+            "en": "Healing Bonus"
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
@@ -44098,10 +44133,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output3",
+          "Identifier": "incoming_healing_bonus",
           "Direction": "Out",
           "Type": "Flt",
-          "Label": null,
+          "Label": {
+            "en": "Incoming Healing Bonus"
+          },
           "Placeholder": null,
           "ShellIndex": 3,
           "KernelIndex": 3,
@@ -44110,10 +44147,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output4",
+          "Identifier": "energy_recharge",
           "Direction": "Out",
           "Type": "Flt",
-          "Label": null,
+          "Label": {
+            "en": "Energy Recharge"
+          },
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
@@ -44122,10 +44161,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output5",
+          "Identifier": "cd_reduction",
           "Direction": "Out",
           "Type": "Flt",
-          "Label": null,
+          "Label": {
+            "en": "CD Reduction"
+          },
           "Placeholder": null,
           "ShellIndex": 5,
           "KernelIndex": 5,
@@ -44134,10 +44175,12 @@
           "Description": {}
         },
         {
-          "Identifier": "Output6",
+          "Identifier": "shield_amount",
           "Direction": "Out",
           "Type": "Flt",
-          "Label": null,
+          "Label": {
+            "en": "Shield Strength"
+          },
           "Placeholder": null,
           "ShellIndex": 6,
           "KernelIndex": 6,
@@ -44146,10 +44189,10 @@
           "Description": {}
         },
         {
-          "Identifier": "Output7",
+          "Identifier": "hidden_flt",
           "Direction": "Out",
           "Type": "Flt",
-          "Label": null,
+          "Label": {},
           "Placeholder": null,
           "ShellIndex": 7,
           "KernelIndex": 7,
@@ -44159,8 +44202,7 @@
         }
       ],
       "Implementation": null,
-      "__ref_id": "query.entity.advancedStats",
-      "__todo_set_out_pin": true
+      "__ref_id": "query.entity.advancedStats"
     },
     {
       "Identifier": "Query.Entity_Related.Get_Elem_Attr",
@@ -48347,7 +48389,7 @@
           "Description": {}
         },
         {
-          "Identifier": "tab_index",
+          "Identifier": "tab_id",
           "Direction": "Out",
           "Type": "Int",
           "Label": {
@@ -129186,26 +129228,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -129400,26 +129444,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -129502,26 +129548,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -129604,26 +129652,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -129706,26 +129756,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -129808,26 +129860,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -129918,26 +129972,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -130028,26 +130084,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -130138,26 +130196,28 @@
           "Identifier": "a",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
           "Identifier": "b",
           "Direction": "In",
           "Type": "R<T>",
-          "Label": {},
+          "Label": {
+            "zh-Hans": ""
+          },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "__todo_set_in_label_manually": true,
           "Description": {}
         },
         {
@@ -134658,7 +134718,9 @@
           "Identifier": "cond",
           "Direction": "In",
           "Type": "Bol",
-          "Label": null,
+          "Label": {
+            "zh-Hans": "条件"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -134669,8 +134731,7 @@
         }
       ],
       "Implementation": null,
-      "__ref_id": "client.flow.branch.ifElse",
-      "__todo_set_in_manually": true
+      "__ref_id": "client.flow.branch.ifElse"
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Add_Status",

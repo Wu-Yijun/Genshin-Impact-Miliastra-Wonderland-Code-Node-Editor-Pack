@@ -1,4 +1,4 @@
-import { type_equal, type NodeType } from "../../utils/gia_gen/nodes.ts";
+import { type_equal, type NodeType } from "../../utils/node_data/node_type.ts";
 import type { IR_NodeVarValue, NodeVarValue } from "./types.ts";
 
 export function defaultValue(type: NodeType): NodeVarValue {

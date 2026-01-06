@@ -566,9 +566,7 @@ The Entity Node Graph configured by the Tab Component will receive this event
 |------------------|---------------------|---------|-----------------------------------------------------------------------------|
 | Output Parameter | Event Source Entity | Entity | Entity with the tab component mounted |
 | Output Parameter | Event Source GUID | GUID | GUID of the Entity with the tab component mounted; outputs 0 if none exists |
-| Output Parameter | Tab ID | Integer | The tab ID
-
-![](https://act-webstatic.mihoyo.com/ugc-tutorial/knowledge/cn/en-us/mh9ji0030dzs/b44601b1-56b3-4b0e-993e-719d6777da7d.png) |
+| Output Parameter | Tab ID | Integer | The tab ID |
 | Output Parameter | Selector Entity | Entity | Character Entity that triggers the tab |
 
 ## XV. Creations

@@ -21,7 +21,7 @@
 | **核心模块** |||
 | **[`gia_gen`](./gia_gen/readme.md)** | GIA 节点图编程式构建工具 | ✅ 活跃 |
 | **[`node_data`](./node_data/readme.md)** | 节点静态数据：定义、类型、枚举 | ✅ 活跃 |
-| **[`protobuf`](./protobuf/README.md)** | GIA Protobuf 定义与编解码工具 | ✅ 活跃 |
+| **[`protobuf`](./protobuf/readme.md)** | GIA Protobuf 定义与编解码工具 | ✅ 活跃 |
 | **辅助工具** |||
 | [index.ts](./index.ts) | 统一导出接口 | ✅ 活跃 |
 | [utils.ts](./utils.ts) | 通用工具函数（断言、深度比较等） | ✅ 活跃 |
@@ -166,7 +166,7 @@ console.log(intEqual.DataPins[0].Type); // "Int" (而不是 "R<T>")
 
 ---
 
-### [Protobuf 工具集 (`protobuf`)](./protobuf/README.md)
+### [Protobuf 工具集 (`protobuf`)](./protobuf/readme.md)
 
 完整的 GIA 文件 Protobuf 处理工具链，兼顾生产环境的高效性与测试环境的透明度。
 
@@ -187,7 +187,7 @@ console.log(intEqual.DataPins[0].Type); // "Int" (而不是 "R<T>")
 - [`proto2ts.ts`](./protobuf/proto2ts.ts) - Proto 转 TypeScript 接口生成器
 - [`verify_proto.ts`](./protobuf/verify_proto.ts) - 结构验证器（对比原始数据与定义）
 
-**详细文档：** [protobuf/README.md](./protobuf/README.md)
+**详细文档：** [protobuf/readme.md](./protobuf/readme.md)
 
 ---
 
@@ -327,9 +327,9 @@ exclude_keys(obj, "key1", ["nested", "key"]);
 
 - [GIA 生成器详细文档](./gia_gen/readme.md)
 - [节点数据系统详细文档](./node_data/readme.md)
-- [Protobuf 工具集详细文档](./protobuf/README.md)
+- [Protobuf 工具集详细文档](./protobuf/readme.md)
 - [源代码](../src/readme.md) - 解析器和转换器
-- [主 README](../Readme.md) - 项目概述
+- [主 Readme](../Readme.md) - 项目概述
 
 ---
 

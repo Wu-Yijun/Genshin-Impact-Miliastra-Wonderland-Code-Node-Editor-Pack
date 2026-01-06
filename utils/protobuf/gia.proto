@@ -18,44 +18,48 @@ message AssetBundle {
 message ResourceEntry {
   // 业务类型枚举 (决定了这是个什么"东西")
   enum ResourceClass {
-    UNKNOWN_TYPE            = 0; // 未知类型
-    PREFAB                  = 1; // 预制体（元件）
-    CREATION                = 2; // 造物
-    ENTITY                  = 3; // 实体
-    TERRAIN                 = 5; // 地形
-    PRESET_POINT            = 6; // 预设点
-    UNIT_STATUS             = 7; // 单位状态
-    SKILL                   = 8; // 技能
-    ENTITY_NODE_GRAPH       = 9; // 实体节点图
-    BOOLEAN_FILTER_GRAPH    = 10; // 布尔过滤器 (节点图)
-    SKILL_NODE_GRAPH        = 11; // 技能节点图
-    COMPOSITE_NODE_DECL     = 12; // 复合节点声明 (含监听信号、修改/拆分/拼装结构体)
-    CAMERA                  = 13; // 镜头
-    SIGNAL_NODE_DECL        = 14; // 信号节点声明 (发送信号、向服务器节点图发送信号)
-    UI_CONTROL              = 15; // 交互控件
-    SKILL_RESOURCE          = 16; // 技能资源
-    PLAYER                  = 18; // 玩家模板
-    CHARACTER               = 19; // 角色模板
-    INTERFACE_LAYOUT        = 20; // 界面布局
-    UI_CONTROL_GROUP        = 21; // 界面控件组
-    STATUS_NODE_GRAPH       = 22; // 状态节点图
-    CLASS_NODE_GRAPH        = 23; // 职业节点图
-    GLOBAL_TIMER            = 24; // 全局计时器
-    ITEM                    = 26; // 道具
-    DECORATION              = 28; // 装饰物
-    STRUCTURE               = 29; // 结构体定义
-    SHOP                    = 30; // 商店
-    LEVEL_STRUCTURE         = 37; // 关卡结构体定义
-    PATH                    = 38; // 路径
-    SHIELD                  = 39; // 护盾
-    ENTITY_DEPLOYMENT_GROUP = 43; // 实体布设组
-    UNIT_TAG                = 44; // 单位标签
-    SCAN_TAG                = 45; // 扫描标签
-    ITEM_NODE_GRAPH         = 46; // 道具节点图
-    INTEGER_FILTER_GRAPH    = 47; // 整数过滤器 (节点图)
-    LIGHT_SOURCE            = 48; // 光源
-    ENVIRONMENT             = 49; // 环境配置
-    // reserved 4, 17, 25, 27, 31 to 36, 40 to 42;
+    UNKNOWN_TYPE              = 0; // 未知类型
+    OBJECT                    = 1; // 物件元件、掉落物元件、元件组
+    CREATION                  = 2; // 造物元件
+    OBJECT_ENTITY             = 3; // 物件实体、掉落物实体、实体组
+    CREATION_ENTITY           = 4; // 造物实体
+    TERRAIN_ENTITY            = 5; // 地形实体
+    PRESET_POINT              = 6; // 预设点
+    UNIT_STATUS               = 7; // 单位状态
+    SKILL                     = 8; // 技能
+    ENTITY_NODE_GRAPH         = 9; // 实体节点图
+    BOOLEAN_FILTER_GRAPH      = 10; // 布尔过滤器节点图
+    SKILL_NODE_GRAPH          = 11; // 技能节点图
+    COMPOSITE_NODE_DECL       = 12; // 复合节点声明 (含监听信号、修改/拆分/拼装结构体)
+    CAMERA                    = 13; // 镜头
+    SIGNAL_NODE_DECL          = 14; // 信号节点声明 (发送信号、向服务器节点图发送信号)
+    UI_CONTROL                = 15; // 界面控件
+    SKILL_RESOURCE            = 16; // 技能资源
+    CLASS                     = 17; // 职业
+    PLAYER_TEMPLATE           = 18; // 玩家模板
+    CHARACTER_TEMPLATE        = 19; // 角色模板
+    INTERFACE_LAYOUT          = 20; // 界面布局
+    UI_CONTROL_GROUP          = 21; // 界面控件组（交互控件）
+    STATUS_NODE_GRAPH         = 22; // 状态节点图
+    CLASS_NODE_GRAPH          = 23; // 职业节点图
+    GLOBAL_TIMER              = 24; // 全局计时器
+    PROJECTILE                = 25; // 投射物
+    ITEM                      = 26; // 道具
+    DECORATION                = 28; // 装饰物
+    STRUCTURE                 = 29; // 结构体定义（高级数据结构）
+    SHOP_TEMPLATE             = 30; // 商店模板
+    CURRENCY                  = 35; // 货币
+    LEVEL_STRUCTURE           = 37; // 关卡结构体定义
+    PATH                      = 38; // 关卡路径
+    SHIELD                    = 39; // 护盾
+    ENTITY_DEPLOYMENT_GROUP   = 43; // 实体布设组
+    UNIT_TAG                  = 44; // 单位标签
+    SCAN_TAG                  = 45; // 扫描标签
+    ITEM_NODE_GRAPH           = 46; // 道具节点图
+    INTEGER_FILTER_GRAPH      = 47; // 整数过滤器节点图
+    LIGHT_SOURCE              = 48; // 光源
+    ENVIRONMENT_CONFIGURATION = 49; // 环境配置
+    // reserved 27, 31 to 34, 36, 40 to 42;
   };
 
   ResourceLocator          identity       = 1; // 自身 ID
@@ -65,17 +69,22 @@ message ResourceEntry {
 
   // 实际数据载荷
   oneof payload {
+    // PrefabDefinition      prefab       = 11;
+    // EntityDefinition      entity       = 12;
+
     NodeGraphContainer           graph_data     = 13; // Which is Node Graph
     NodeInterfaceContainer       interface_data = 14; // Which is Interface Definition
-    StructureDefinitionContainer struct_data    = 22; // Which is Structure Definition
 
-    // EntityDefinition      entity       = 11;
     // Configuration         config       = 15;
     // Terrain               terrain      = 16;
     // Camera                camera       = 17;
     // PresetPoint           point        = 18;
     // UiControlGroup        ui           = 19;
     // GlobalTimer           timer        = 20;
+
+    StructureDefinitionContainer struct_data    = 22; // Which is Structure Definition
+
+    // LevelPath             path         = 23;
     // UnitTag               unit_tag     = 26;
     // EntityDeploymentGroup deployment   = 27;
   }
@@ -106,9 +115,11 @@ message ResourceLocator {
     UNKNOWN_CATEGORY = 0;
 
     // 资产类型
-    FILTER_NODE_GRAPH     = 1; // 过滤器逻辑 Such as boolean filter
-    BASIC_NODE_GRAPH      = 5; // 基础逻辑 Such as graph node
-    AFFILIATED_NODE_GRAPH = 23; // 附属逻辑 Assembly/Split for Structure
+    DEFAULT           = 1; // 该类别下的资源使用kind来判定具体结构，否则不会存在kind
+    SERVER_NODE_GRAPH = 5; // 服务器节点图
+    NODE_DECL         = 23; // 节点接口声明
+    GLOBAL_TIMER      = 24; // 全局计时器
+    CAMERA            = 25; // 镜头
 
     // Server Side Node Types
     SERVER_BASIC  = 20000; // 后端: 基础
@@ -127,19 +138,18 @@ message ResourceLocator {
   //   - 它告诉解析器：这个资源是一个 COMPOSITE_GRAPH 结构，还是一个 STRUCTURE 结构。
   enum AssetKind {
     // 资产类型
-    BASIC                   = 0; // 服务器节点图, 等一些列未定义的(默认值)
-    PREFAB                  = 1; // 预制体（元件）、玩家模板或角色模板
-    ENTITY                  = 2; // 实体或造物
-    CLIENT_NODE_GRAPH       = 3; // 客户端节点图
-    CONFIGURATION           = 4; // 配置信息 (可能有误)
-    TERRAIN                 = 5; // 地形
-    UI                      = 8; // 界面布局或交互控件
-    PRESET_POINT            = 9; // 预设点
-    DECORATION              = 14; // 装饰物
-    STRUCTURE               = 15; // 结构体
-    ENTITY_DEPLOYMENT_GROUP = 18; // 实体布设组
-    PATH                    = 19; // 路径
-    UNIT_TAG                = 23; // 单位标签
+    BASIC                                     = 0; // 服务器节点图, 等一些列未定义的(默认值)
+    PREFAB                                    = 1; // 预制体（元件）、玩家模板或角色模板、投射物
+    ENTITY                                    = 2; // 实体或造物
+    SERVER_CONFIGURATION_OR_CLIENT_NODE_GRAPH = 3; // 服务器配置信息 或 客户端节点图
+    TERRAIN                                   = 5; // 地形
+    UI                                        = 8; // 界面布局或交互控件
+    PRESET_POINT                              = 9; // 预设点
+    DECORATION                                = 14; // 装饰物
+    STRUCTURE                                 = 15; // 结构体
+    ENTITY_DEPLOYMENT_GROUP                   = 18; // 实体布设组
+    PATH                                      = 19; // 路径
+    UNIT_TAG                                  = 23; // 单位标签
 
     // 节点图子类型
     CUSTOM_GRAPH    = 21001; // 普通节点图 NodeGraph

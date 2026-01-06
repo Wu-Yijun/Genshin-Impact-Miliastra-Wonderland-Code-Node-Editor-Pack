@@ -1,4 +1,4 @@
-import { stringify, type NodeType } from "../../utils/gia_gen/nodes.ts";
+import { stringify, type NodeType } from "../../utils/node_data/node_type.ts";
 import type { NodeVar } from "../types/class.ts";
 import type { Token } from "../types/types.ts";
 import type {

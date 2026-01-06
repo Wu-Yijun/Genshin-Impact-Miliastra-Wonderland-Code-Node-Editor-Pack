@@ -1,4 +1,4 @@
-import type { NodeType } from "../../utils/gia_gen/nodes.ts";
+import type { NodeType } from "../../utils/node_data/node_type.ts";
 import { NodeVar } from "./class.ts";
 import { IRBase } from "./types.ts";
 
