@@ -44,7 +44,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Bol` || `cond` ||  |
+ * | 0 || 🔹 || `Bol` || `cond` || 条件 |
  *
  * -----------
  *
@@ -71,8 +71,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`R<T>`** || `key` ||  |
- * | 1 || 🔷 || **`L<R<T>>`** || `cases` ||  |
+ * | 0 || 🔷 || **`R<T>`** || `key` || 控制表达式 |
+ * | 1 || 🔷 || **`L<R<T>>`** || `cases` || Judge Parameter |
  *
  * -----------
  *
@@ -1423,12 +1423,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `Output0` ||  |
- * | 1 || 🔸 || `Gid` || `Output1` ||  |
- * | 2 || 🔸 || `Str` || `Output2` ||  |
- * | 3 || 🔸 || `Int` || `Output3` ||  |
- * | 4 || 🔸 || `Int` || `Output4` ||  |
- * | 5 || 🔸 || `Gid` || `Output5` ||  |
+ * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
+ * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 2 || 🔸 || `Str` || `timer_name` || Timer Name |
+ * | 3 || 🔸 || `Int` || `timer_sequence` || Timer Sequence ID |
+ * | 4 || 🔸 || `Int` || `loop_number` || Number of Loops |
  */
   Trigger_Timer_OnTimerTrigger: "Trigger.Timer.On_Timer_Trigger",
 
@@ -2328,11 +2327,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `Output0` ||  |
- * | 1 || 🔸 || `Gid` || `Output1` ||  |
- * | 2 || 🔸 || `Str` || `Output2` ||  |
- * | 3 || 🔸 || `Int` || `Output3` ||  |
- * | 4 || 🔸 || `Int` || `Output4` ||  |
+ * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
+ * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 2 || 🔸 || `Str` || `device_name` || Motion Device Name |
+ * | 3 || 🔸 || `Int` || `path_id` || Path Point ID |
  */
   Trigger_MotionDevice_OnReachWaypoint: "Trigger.Motion_Device.On_Reach_Waypoint",
 
@@ -4828,7 +4826,7 @@ export const NODES = {
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
  * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
- * | 1 || 🔹 || `Int` || `tab_index` || 选项卡序号 |
+ * | 1 || 🔹 || `Int` || `tab_id` || 选项卡序号 |
  * | 2 || 🔹 || `Bol` || `should_activate` || 是否激活 |
  *
  * -----------
@@ -4855,11 +4853,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `Output0` ||  |
- * | 1 || 🔸 || `Gid` || `Output1` ||  |
- * | 2 || 🔸 || `Int` || `Output2` ||  |
- * | 3 || 🔸 || `Ety` || `Output3` ||  |
- * | 4 || 🔸 || `Gid` || `Output4` ||  |
+ * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
+ * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 2 || 🔸 || `Int` || `tab_id` || Tab ID |
+ * | 3 || 🔸 || `Ety` || `selector_entity` || Selector Entity |
+ * | 4 || 🔸 || `Gid` || `hidden_guid` ||  |
  */
   Trigger_Tab_OnTabSelect: "Trigger.Tab.On_Tab_Select",
 
@@ -9625,14 +9623,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `Output0` ||  |
- * | 1 || 🔸 || `Flt` || `Output1` ||  |
- * | 2 || 🔸 || `Flt` || `Output2` ||  |
- * | 3 || 🔸 || `Flt` || `Output3` ||  |
- * | 4 || 🔸 || `Flt` || `Output4` ||  |
- * | 5 || 🔸 || `Flt` || `Output5` ||  |
- * | 6 || 🔸 || `Flt` || `Output6` ||  |
- * | 7 || 🔸 || `Flt` || `Output7` ||  |
+ * | 0 || 🔸 || `Flt` || `crit_rate` || CRIT Rate |
+ * | 1 || 🔸 || `Flt` || `crit_dmg` || CRIT DMG |
+ * | 2 || 🔸 || `Flt` || `heal_bonus` || Healing Bonus |
+ * | 3 || 🔸 || `Flt` || `incoming_healing_bonus` || Incoming Healing Bonus |
+ * | 4 || 🔸 || `Flt` || `energy_recharge` || Energy Recharge |
+ * | 5 || 🔸 || `Flt` || `cd_reduction` || CD Reduction |
+ * | 6 || 🔸 || `Flt` || `shield_amount` || Shield Strength |
+ * | 7 || 🔸 || `Flt` || `hidden_flt` ||  |
  */
   Query_EntityRelated_GetAdvAttr: "Query.Entity_Related.Get_Adv_Attr",
 
@@ -10822,7 +10820,7 @@ export const NODES = {
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | 0 || 🔸 || `Cfg` || `item_config` || 道具配置ID |
  * | 1 || 🔸 || `D<Cfg,Int>` || `sell_currency` || 出售货币字典 |
- * | 2 || 🔸 || `Int` || `tab_index` || 所属页签序号 |
+ * | 2 || 🔸 || `Int` || `tab_id` || 所属页签序号 |
  * | 3 || 🔸 || `Bol` || `limited` || 是否限购 |
  * | 4 || 🔸 || `Int` || `limit_count` || 限购数量 |
  * | 5 || 🔸 || `Int` || `priority` || 排序优先级 |
@@ -16164,7 +16162,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Bol` || `cond` ||  |
+ * | 0 || 🔹 || `Bol` || `cond` || 条件 |
  *
  * -----------
  *

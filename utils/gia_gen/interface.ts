@@ -1021,7 +1021,7 @@ export class Node {
    * node.setVal(1, [1, 2, 3]);
    * ```
    */
-  setVal(pin: number | string, value: TypedValue) {
+  setVal(pin: number | string, value: TypedValue | boolean) {
     let pinDef: TypedPinDef | null;
     if (typeof pin === "number") {
       pinDef = this.getVisibleDataInPin(pin);
@@ -1041,6 +1041,7 @@ export class Node {
       console.error(`[Error] Pin ${pinDef.Identifier} is not an input pin on node ${this.def.Identifier}`);
       return;
     }
+    if (typeof value === "boolean") value = Number(value);
     this.pin_values.set(pinDef.Identifier, value);
   }
 
@@ -1257,16 +1258,20 @@ export class Node {
       return { flows: [], connects: [] };
     }
     for (const pin of proto.pins) {
-      if (is_empty(pin.connections)) continue;
+      if (is_empty(pin.connections) || pin.connections.length === 0) continue;
       let this_pin: TypedPinDef;
       switch (pin.shell_sig.kind) {
         case Gia.PinSignature_Kind.IN_FLOW:
+          this_pin = this_node.def.FlowPins.find(p => p.Direction === "In" && p.ShellIndex === pin.shell_sig.index)!;
+          break;
         case Gia.PinSignature_Kind.OUT_FLOW:
-          this_pin = this_node.def.FlowPins.find(p => p.ShellIndex === pin.shell_sig.index)!;
+          this_pin = this_node.def.FlowPins.find(p => p.Direction === "Out" && p.ShellIndex === pin.shell_sig.index)!;
           break;
         case Gia.PinSignature_Kind.IN_PARAM:
+          this_pin = this_node.def.DataPins.find(p => p.Direction === "In" && p.ShellIndex === pin.shell_sig.index)!;
+          break;
         case Gia.PinSignature_Kind.OUT_PARAM:
-          this_pin = this_node.def.DataPins.find(p => p.ShellIndex === pin.shell_sig.index)!;
+          this_pin = this_node.def.DataPins.find(p => p.Direction === "Out" && p.ShellIndex === pin.shell_sig.index)!;
           break;
         default:
           console.warn(`[Warning] Unknown pin kind for connections: ${pin.shell_sig.kind}`);
