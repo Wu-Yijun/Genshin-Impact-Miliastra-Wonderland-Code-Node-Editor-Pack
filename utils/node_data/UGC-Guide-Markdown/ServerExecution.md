@@ -1,6 +1,6 @@
 ## I. Common Nodes
 
-## 1. Print String
+### 1. Print String
 
 **Node Functions**
 
@@ -14,7 +14,7 @@ In the log, this string prints whenever the logic runs successfully, regardless 
 |-----------------|----------------|--------|--------------------------|
 | Input Parameter | String | String | The string to be printed |
 
-## **2. Set Local Variable**
+### **2. Set Local Variable**
 
 **Node Functions**
 
@@ -27,7 +27,7 @@ When connected to the Query Node [Get Local Variable], this overwrites the value
 | Input Parameter | Local Variable | Local Variable | Container for data storage |
 | Input Parameter | Value | Generic | Value used to overwrite this local variable |
 
-## **3. Break Loop**
+### **3. Break Loop**
 
 **Node Functions**
 
@@ -39,7 +39,7 @@ Break out of a Finite Loop. The output pin must connect to the [Break Loop] inpu
 |----------------|----------------|------|-------------|
 |  |  |  |  |
 
-## **4. Finite Loop**
+### **4. Finite Loop**
 
 **Node Functions**
 
@@ -55,7 +55,7 @@ Use [Break Loop] to end the iteration early. After exiting the loop, the logic c
 | Input Parameter | Loop End Value | Integer | Integer value at which the iteration ends |
 | Output Parameter | Current Loop Value | Integer | Integer value of the current execution logic |
 
-## **5. Forwarding Event**
+### **5. Forwarding Event**
 
 **Node Functions**
 
@@ -69,7 +69,7 @@ Forwards the source event of this Node's Execution Flow to the specified Target 
 
 ## II. List Operations
 
-## **1. Insert Value Into List**
+### **1. Insert Value Into List**
 
 **Node Functions**
 
@@ -85,7 +85,7 @@ For example: Inserting 5 at ID 2 in the List [1, 2, 3, 4] results in [1, 2, 5, 3
 | Input Parameter | Insert ID | Integer | ID of the inserted value (after insertion) |
 | Input Parameter | Insert Value | Generic | Value to be inserted |
 
-## **2. Modify Value in List**
+### **2. Modify Value in List**
 
 **Node Functions**
 
@@ -99,7 +99,7 @@ Edit the value at the specified ID Location in the specified List
 | Input Parameter | ID | Integer | ID of edited value |
 | Input Parameter | Value | Generic | Edited Value |
 
-## **3. Remove Value From List**
+### **3. Remove Value From List**
 
 **Node Functions**
 
@@ -112,7 +112,7 @@ Remove the value at the specified ID Location from the specified List. All subse
 | Input Parameter | List | Generic List | Reference to the list of values to remove |
 | Input Parameter | Remove ID | Integer | ID to remove |
 
-## **4. List Iteration Loop**
+### **4. List Iteration Loop**
 
 **Node Functions**
 
@@ -125,7 +125,7 @@ Iterate through the specified List in sequential order
 | Input Parameter | Iteration List | Generic List | List to iterate through |
 | Output Parameter | Iteration Value | Generic | Each value in the list |
 
-## **5. List Sorting**
+### **5. List Sorting**
 
 **Node Functions**
 
@@ -138,7 +138,7 @@ Sort the specified List according to the chosen sort method
 | Input Parameter | List | Generic List | Integer List or Floating Point Number List |
 | Input Parameter | Sort By | Enumeration | Ascending or Descending |
 
-## **6. Concatenate List**
+### **6. Concatenate List**
 
 **Node Functions**
 
@@ -151,7 +151,7 @@ Append the input List to the end of the Target List. For example, Target List [1
 | Input Parameter | Target List | Generic List | List being input |
 | Input Parameter | Input List | Generic List | The input list will be added to the end of the Target list |
 
-## **7. Clear List**
+### **7. Clear List**
 
 **Node Functions**
 
@@ -165,7 +165,7 @@ Clear the specified List
 
 ## III. Custom Variables
 
-## **1. Set Node Graph Variable**
+### **1. Set Node Graph Variable**
 
 **Node Functions**
 
@@ -179,7 +179,7 @@ Set the value of the specified Node Graph Variable in the current Node Graph
 | Input Parameter | Variable Value | Generic | Value assigned to this variable |
 | Input Parameter | Trigger Event | Boolean | Default: True. If set to False, this Node Graph Variable editing will not trigger the Variable Change Event |
 
-## **2. Set Custom Variable**
+### **2. Set Custom Variable**
 
 **Node Functions**
 
@@ -196,7 +196,7 @@ Set the value of the specified Custom Variable on the Target Entity
 
 ## IV. Preset Status
 
-## **1. Set Preset Status**
+### **1. Set Preset Status**
 
 **Node Functions**
 
@@ -212,7 +212,7 @@ Set the Preset Status of the specified Target Entity
 
 ## V. Entity Related
 
-## **1. Create Entity**
+### **1. Create Entity**
 
 **Node Functions**
 
@@ -225,7 +225,7 @@ Create an Entity by GUID. The Entity must be pre-placed in the Scene
 | Input Parameter | Target GUID | GUID | Identifier for this entity |
 | Input Parameter | Unit Tag Index List | Integer List | Determines the Unit Tags carried when this entity is created |
 
-## **2. Create Prefab**
+### **2. Create Prefab**
 
 **Node Functions**
 
@@ -244,7 +244,7 @@ Create an Entity by Prefab ID
 | Input Parameter | Unit Tag Index List | Integer List | Determines the Unit Tags carried when this entity is created |
 | Output Parameter | Created Entity | Entity | Entities created in this way do not have a GUID |
 
-## 3. Create Prefab Group
+### 3. Create Prefab Group
 
 **Node Functions**
 
@@ -263,7 +263,7 @@ Create the Entities contained in the Prefab Group by Prefab Group ID
 | Input Parameter | Overwrite Level | Boolean | When set to False, the [Level] parameter has no effect |
 | Output Parameter | Created Entity List | Entity List | Entities created in this way do not have a GUID |
 
-## **4. Activate/Disable Model Display**
+### **4. Activate/Disable Model Display**
 
 **Node Functions**
 
@@ -276,7 +276,7 @@ Edit the Entity's Model Visibility attribute to make its Model visible or hidden
 | Input Parameter | Target Entity | Entity | The entity to be edited |
 | Input Parameter | Activate | Boolean | Set to True to make the model visible |
 
-## **5. Destroy Entity**
+### **5. Destroy Entity**
 
 **Node Functions**
 
@@ -290,7 +290,7 @@ The [When Entity Is Destroyed] and [When Entity Is Removed/Destroyed] events can
 |-----------------|----------------|--------|----------------------------|
 | Input Parameter | Target Entity | Entity | The entity to be destroyed |
 
-## **6. Remove Entity**
+### **6. Remove Entity**
 
 **Node Functions**
 
@@ -306,7 +306,7 @@ Removing an Entity does not trigger the [On Entity Destroyed] event, but it can 
 
 ## VI. Stage Related
 
-## **1. Settle Stage**
+### **1. Settle Stage**
 
 **Node Functions**
 
@@ -318,7 +318,7 @@ Triggers the Stage Settlement process, which executes out-of-stage logic as defi
 |----------------|----------------|------|-------------|
 |  |  |  |  |
 
-## **2. Set Current Environment Time**
+### **2. Set Current Environment Time**
 
 **Node Functions**
 
@@ -332,7 +332,7 @@ If the target hour is earlier than the current hour, it is treated as the next d
 |-----------------|------------------|------------------------|----------------------------------------------------------------------------------------------------------------|
 | Input Parameter | Environment Time | Floating Point Numbers | Must be a floating point value between 0–24; this Node will not take effect if the value is outside this range |
 
-## **3. Set Environment Time Passage Speed**
+### **3. Set Environment Time Passage Speed**
 
 **Node Functions**
 
@@ -346,7 +346,7 @@ Minutes elapsed per second, limited to 0 - 60 (Teyvat speed is 1)
 
 ## VII. Faction Related
 
-## **1. Modify Entity Faction**
+### **1. Modify Entity Faction**
 
 **Node Functions**
 
@@ -361,7 +361,7 @@ Edit the Faction of the specified Target Entity
 
 ## VIII. Player and Character Related
 
-## **1. Teleport Player**
+### **1. Teleport Player**
 
 **Node Functions**
 
@@ -375,7 +375,7 @@ Teleport the specified Player Entity. A loading interface may appear depending o
 | Input Parameter | Target Location | 3D Vector | Absolute Location |
 | Input Parameter | Target Rotation | 3D Vector | Absolute Rotation |
 
-## **2. Revive Character**
+### **2. Revive Character**
 
 **Node Functions**
 
@@ -387,7 +387,7 @@ Revive the specified Character Entity
 |-----------------|------------------|--------|------------------------------------|
 | Input Parameter | Character Entity | Entity | The Character Entity to be revived |
 
-## **3. Revive All Player's Characters**
+### **3. Revive All Player's Characters**
 
 **Node Functions**
 
@@ -400,7 +400,7 @@ Revive all Character Entities of the specified player. In Beyond Mode, since eac
 | Input Parameter | Player Entity | Entity | The Player Entity that owns the Character |
 | Input Parameter | Deduct Revives | Boolean | If set to False, the Revive Count will not be deducted |
 
-## **4. Defeat All Player's Characters**
+### **4. Defeat All Player's Characters**
 
 **Node Functions**
 
@@ -412,7 +412,7 @@ Knock down all characters of the specified player, causing the player to enter _
 |-----------------|----------------|--------|-------------------------------------------|
 | Input Parameter | Player Entity | Entity | The Player Entity that owns the Character |
 
-## **5. Activate Revive Point**
+### **5. Activate Revive Point**
 
 **Node Functions**
 
@@ -425,7 +425,7 @@ Activate the specified Revive Point ID for the player. When the player later tri
 | Input Parameter | Player Entity | Entity | Active Player |
 | Input Parameter | Revive Point ID | Integer | Identifier for this Revive Point |
 
-## **6. Set Player Revive Time**
+### **6. Set Player Revive Time**
 
 **Node Functions**
 
@@ -438,7 +438,7 @@ Set the duration for the Player's next revive. If the Player is currently revivi
 | Input Parameter | Player Entity | Entity | Active Player |
 | Input Parameter | Duration | Integer | Unit in seconds |
 
-## **7. Set Player Remaining Revives**
+### **7. Set Player Remaining Revives**
 
 **Node Functions**
 
@@ -451,7 +451,7 @@ Set the remaining number of revives for the specified Player. When set to 0, the
 | Input Parameter | Player Entity | Entity | Active Player |
 | Input Parameter | Remaining Times | Integer | When set to 0, the player will not be revived |
 
-## **8. Modify environment settings**
+### **8. Modify environment settings**
 
 **Node Functions**
 
@@ -466,7 +466,7 @@ Apply the specified Environment Configuration to the designated player. Takes ef
 | Input Parameter | Enable Weather Config | Boolean | Set to True to enable |
 | Input Parameter | Weather Config Index | Integer | The Weather Configuration matching this ID will take effect. If the ID does not exist, nothing happens |
 
-## **9. Allow/Forbid Player to Revive**
+### **9. Allow/Forbid Player to Revive**
 
 **Node Functions**
 
@@ -479,7 +479,7 @@ Set whether the specified player is allowed to revive
 | Input Parameter | Player Entity | Entity | Active Player |
 | Input Parameter | Allow | Boolean | If set to True, reviving is allowed |
 
-## **10. Deactivate Revive Point**
+### **10. Deactivate Revive Point**
 
 **Node Functions**
 
@@ -494,7 +494,7 @@ Unregister the specified Revive Point ID for the player. The layer will not revi
 
 ## IX. Collision
 
-## **1. Activate/Disable Extra Collision**
+### **1. Activate/Disable Extra Collision**
 
 **Node Functions**
 
@@ -508,7 +508,7 @@ Edit data in the Entity's Extra Collision Component to enable/disable Extra Coll
 | Input Parameter | Extra Collision ID | Integer | Identifier for this Extra Collision |
 | Input Parameter | Activate | Boolean | Set to True to activate |
 
-## **2. Activate/Disable Extra Collision Climbability**
+### **2. Activate/Disable Extra Collision Climbability**
 
 **Node Functions**
 
@@ -522,7 +522,7 @@ Edit the Climbability of the Entity's Extra Collision Component
 | Input Parameter | Extra Collision ID | Integer | Identifier for this Extra Collision |
 | Input Parameter | Activate | Boolean | Set to True to activate |
 
-## **3. Activate/Disable Native Collision**
+### **3. Activate/Disable Native Collision**
 
 **Node Functions**
 
@@ -535,7 +535,7 @@ Edit the Entity's Native Collision
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Activate | Boolean | Set to True to activate |
 
-## **4. Activate/Disable Native Collision Climbability**
+### **4. Activate/Disable Native Collision Climbability**
 
 **Node Functions**
 
@@ -550,7 +550,7 @@ Edit the Climbability of the Entity's Native Collision
 
 ## X. Collision Triggers
 
-## **1. Activate/Disable Collision Trigger**
+### **1. Activate/Disable Collision Trigger**
 
 **Node Functions**
 
@@ -566,7 +566,7 @@ Edit the Collision Trigger Component data to Activate/Disable the Trigger at the
 
 ## XI. Combat
 
-## **1. Initiate Attack**
+### **1. Initiate Attack**
 
 **Node Functions**
 
@@ -593,7 +593,7 @@ When using Direct Attack, determines the hit-detection location for the attack a
 | Input Parameter | Overwrite Ability Unit Config | Boolean | When set to True, the four parameters — Damage Coefficient, Damage Increment, Location Offset, and Rotation Offset — overwrite parameters of the same name in the Ability Unit. When set to False, the Ability Unit's original configuration is used |
 | Input Parameter | Initiator Entity | Entity | Determines the Initiator Entity for this attack. Defaults to the Entity associated with this Node Graph. Affects which attacker is identified in events such as On Hit and When Attacked |
 
-## **2. Recover HP**
+### **2. Recover HP**
 
 **Node Functions**
 
@@ -609,7 +609,7 @@ Restore HP to the specified Target Entity via an Ability Unit
 | Input Parameter | Overwrite Ability Unit Config | Boolean | When set to True, the Recovery Amount overwrites the parameter of the same name in the Ability Unit. When set to False, the Ability Unit's original configuration is used |
 | Input Parameter | Recover Initiator Entity | Entity | Determines the Initiator Entity of this healing action. Defaults to the Entity associated with this Node Graph. Affects healer identification in events such as When HP Is Recovered and When Initiating HP Recovery |
 
-## **3. HP Loss**
+### **3. HP Loss**
 
 **Node Functions**
 
@@ -630,7 +630,7 @@ Normal Pop-Up
 
 CRIT Hit Pop-Up |
 
-## **4. Recover HP Directly**
+### **4. Recover HP Directly**
 
 **Node Functions**
 
@@ -650,7 +650,7 @@ Directly restore HP to the specified Target Entity. Unlike [Recover HP], this no
 
 ## XII. Motion Devices
 
-## **1. Recover Basic Motion Device**
+### **1. Recover Basic Motion Device**
 
 **Node Functions**
 
@@ -663,7 +663,7 @@ Resume a paused Basic Motion Device on the Target Entity. The Target Entity must
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Motion Device Name | String | Identifier for this motion device |
 
-## **2. Activate Fixed-Point Motion Device**
+### **2. Activate Fixed-Point Motion Device**
 
 **Node Functions**
 
@@ -683,7 +683,7 @@ Dynamically add a Fixed-Point Basic Motion Device to the Target Entity during St
 | Input Parameter | Parameter Type | Enumeration | Options: Fixed Speed or Fixed Time |
 | Input Parameter | Movement Time | Floating Point Numbers |  |
 
-## **3. Activate Basic Motion Device**
+### **3. Activate Basic Motion Device**
 
 **Node Functions**
 
@@ -696,7 +696,7 @@ Activate a Basic Motion Device configured within the Target Entity's Basic Motio
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Motion Device Name | String | Identifier for this motion device |
 
-## **4. Add Target-Oriented Rotation-Based Motion Device**
+### **4. Add Target-Oriented Rotation-Based Motion Device**
 
 **Node Functions**
 
@@ -711,7 +711,7 @@ Dynamically add a Basic Motion Device with Target-Oriented Rotation to the Targe
 | Input Parameter | Motion Device Duration | Floating Point Numbers | The duration for which this motion device remains active |
 | Input Parameter | Target Angle | 3D Vector | Absolute Angle |
 
-## **5. Add Uniform Basic Linear Motion Device**
+### **5. Add Uniform Basic Linear Motion Device**
 
 **Node Functions**
 
@@ -726,7 +726,7 @@ Dynamically add a Basic Motion Device with Uniform Linear Motion at runtime
 | Input Parameter | Motion Device Duration | Floating Point Numbers | The duration for which this motion device remains active |
 | Input Parameter | Velocity Vector | 3D Vector | Determines the magnitude and direction of the velocity |
 
-## **6. Add Uniform Basic Rotation-Based Motion Device**
+### **6. Add Uniform Basic Rotation-Based Motion Device**
 
 **Node Functions**
 
@@ -742,7 +742,7 @@ Dynamically add a Basic Motion Device with Uniform Rotation at runtime
 | Input Parameter | Angular Velocity (°/s) | Floating Point Numbers | Angular Velocity Magnitude |
 | Input Parameter | Rotation Axis Orientation | 3D Vector | Relative Orientation |
 
-## **7. Stop and Delete Basic Motion Device**
+### **7. Stop and Delete Basic Motion Device**
 
 **Node Functions**
 
@@ -756,7 +756,7 @@ Stop and delete a running Motion Device
 | Input Parameter | Motion Device Name | String | Identifier for this motion device |
 | Input Parameter | Stop All Basic Motion Devices | Boolean | If set to True, stops all Basic Motion Devices on this Entity. If set to False, stops only the Motion Device whose name matches the specified Motion Device |
 
-## **8. Pause Basic Motion Device**
+### **8. Pause Basic Motion Device**
 
 **Node Functions**
 
@@ -771,7 +771,7 @@ Pause a running Motion Device. The Resume Motion Device node can then be used to
 
 ## XIII. Follow Motion Device
 
-## **1. Activate/Disable Follow Motion Device**
+### **1. Activate/Disable Follow Motion Device**
 
 **Node Functions**
 
@@ -784,7 +784,7 @@ Enable/Disable the Follow Motion Device logic on the Target Entity
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Activate | Boolean | Set to True to activate |
 
-## **2. Switch Follow Motion Device Target by GUID**
+### **2. Switch Follow Motion Device Target by GUID**
 
 **Node Functions**
 
@@ -802,7 +802,7 @@ Switch the Follow Target of the Follow Motion Device by GUID
 | Input Parameter | Follow Coordinate System | Enumeration | Options: Relative Coordinate System or World Coordinate System |
 | Input Parameter | Follow Type | Enumeration | Options: Completely Follow, Follow Location, Follow Rotation |
 
-## **3. Switch Follow Motion Device Target by Entity**
+### **3. Switch Follow Motion Device Target by Entity**
 
 **Node Functions**
 
@@ -822,7 +822,7 @@ Switch the Follow Target of the Follow Motion Device by Entity
 
 ## XIV. Projectiles
 
-## **1. Create Projectile**
+### **1. Create Projectile**
 
 **Node Functions**
 
@@ -844,7 +844,7 @@ Create a Projectile Entity using the Prefab ID. This function is similar to [Cre
 
 ## XV. Special Effects
 
-## **1. Play Timed Effects**
+### **1. Play Timed Effects**
 
 **Node Functions**
 
@@ -864,7 +864,7 @@ Play a Timed Effect relative to the Target Entity. A valid Target Entity and Att
 | Input Parameter | Zoom Multiplier | Floating Point Numbers | The Zoom Multiplier of this Effect |
 | Input Parameter | Play Built-In Sound Effect | Boolean | If set to True, plays the built-in Sound Effect as well |
 
-## **2. Clear Special Effects Based on Special Effect Assets**
+### **2. Clear Special Effects Based on Special Effect Assets**
 
 **Node Functions**
 
@@ -877,7 +877,7 @@ Clear all Effects on the specified Target Entity that use the given Effect Asset
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Special Effects Asset | Config ID | Identifier for this Effect |
 
-## **3. Mount Looping Special Effect**
+### **3. Mount Looping Special Effect**
 
 **Node Functions**
 
@@ -899,7 +899,7 @@ This node returns an Effect Instance ID that can be stored. When using the [Clea
 | Input Parameter | Zoom Multiplier | Floating Point Numbers | The Zoom Multiplier of this Effect |
 | Output Parameter | Special Effect Instance ID | Integer | The Instance ID automatically generated when mounting this Effect |
 
-## **4. Clear Looping Special Effect**
+### **4. Clear Looping Special Effect**
 
 **Node Functions**
 
@@ -914,7 +914,7 @@ Clear the specified Looping Effect on the Target Entity by Effect Instance ID. A
 
 ## XVI. Timer
 
-## **1. Resume Timer**
+### **1. Resume Timer**
 
 **Node Functions**
 
@@ -927,7 +927,7 @@ Resume a paused Timer on the Target Entity
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Timer Name | String | Timer Identifier |
 
-## **2. Start Timer**
+### **2. Start Timer**
 
 **Node Functions**
 
@@ -950,7 +950,7 @@ When Loop is set to "Yes," the Timer restarts from 0s after reaching the last ti
 | Input Parameter | Loop | Boolean | If set to True, the Timer Sequence executes in a loop |
 | Input Parameter | Timer Sequence | Floating Point Number List | Provide a list sorted in ascending order. If the list is invalid (not strictly ascending, contains negatives, etc.), the Timer will not run |
 
-## **3. Pause Timer**
+### **3. Pause Timer**
 
 **Node Functions**
 
@@ -963,7 +963,7 @@ Pauses the specified Timer on the Target Entity. The [Resume Timer] node can the
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Timer Name | String | Timer Identifier |
 
-## **4. Stop Timer**
+### **4. Stop Timer**
 
 **Node Functions**
 
@@ -978,7 +978,7 @@ Completely terminate the specified Timer on the Target Entity; it cannot be resu
 
 ## XVII. Global Timer
 
-## **1. Recover Global Timer**
+### **1. Recover Global Timer**
 
 **Node Functions**
 
@@ -991,7 +991,7 @@ Resume a paused Global Timer on the Target Entity
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Timer Name | String | Identifier for the Timer. Only Timer Names configured in Timer Management can be referenced |
 
-## **2. Start Global Timer**
+### **2. Start Global Timer**
 
 **Node Functions**
 
@@ -1008,7 +1008,7 @@ Based on Timer Management settings, Countdown and Stopwatch Timers are created a
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Timer Name | String | Identifier for the Timer. Only Timer Names configured in Timer Management can be referenced |
 
-## **3. Modify Global Timer**
+### **3. Modify Global Timer**
 
 **Node Functions**
 
@@ -1030,7 +1030,7 @@ If the timer is paused first, then modified to 0s, followed by modifying the tim
 
 If the timer is set to Stopwatch, a positive value increases the accumulated time, while a negative value decreases it |
 
-## **4. Pause Global Timer**
+### **4. Pause Global Timer**
 
 **Node Functions**
 
@@ -1045,7 +1045,7 @@ When paused, the UI controls linked to the timer will also pause their display
 | Input Parameter | Target Entity | Entity | Active Entity |
 | Input Parameter | Timer Name | String | Identifier for the Timer. Only Timer Names configured in Timer Management can be referenced |
 
-## **5. Stop Global Timer**
+### **5. Stop Global Timer**
 
 **Node Functions**
 
@@ -1060,7 +1060,7 @@ Use the node graph to stop running a global timer early
 
 ## XVIII. Camera
 
-## **1. Switch Main Camera Template**
+### **1. Switch Main Camera Template**
 
 **Node Functions**
 
@@ -1075,7 +1075,7 @@ Switch the Main Camera Template for the target Player List to the specified Temp
 
 ## XIX. Character Disruptor Device
 
-## **1. Modifying Character Disruptor Device**
+### **1. Modifying Character Disruptor Device**
 
 **Node Functions**
 
@@ -1090,7 +1090,7 @@ Edit the Character Disruptor Device active on the Target Entity by ID; if the ID
 
 ## XX. Unit Status
 
-## **1. Add Unit Status**
+### **1. Add Unit Status**
 
 **Node Functions**
 
@@ -1118,7 +1118,7 @@ Success: New status applied. Successfully applied new Unit Status
 Success: Slot stacking. Target already has this Unit Status, stacking applied |
 | Output Parameter | Slot ID | Integer | If application succeeds, returns the Unit Status Slot ID containing the instance |
 
-## **2. Remove Unit Status**
+### **2. Remove Unit Status**
 
 **Node Functions**
 
@@ -1137,7 +1137,7 @@ Status With Fastest Stack Loss: Removes one stack from the status that loses sta
 
 ## XXI. Tabs
 
-## **1. Activate/Disable Tab**
+### **1. Activate/Disable Tab**
 
 **Node Functions**
 
@@ -1153,7 +1153,7 @@ Edit the Tab state by ID in the Target Entity's Tab Component
 
 ## XXII. Collision Trigger Source
 
-## **1. Activate/Disable Collision Trigger Source**
+### **1. Activate/Disable Collision Trigger Source**
 
 **Node Functions**
 
@@ -1168,7 +1168,7 @@ Edit the state of the Collision Trigger Source Component on the Target Entity
 
 ## XXIII. Class
 
-## **1. Change Player's Current Class Level**
+### **1. Change Player's Current Class Level**
 
 **Node Functions**
 
@@ -1181,7 +1181,7 @@ Set the Player's current Class Level. If it exceeds the defined range, the chang
 | Input Parameter | Target Player | Entity | Active Player Entity |
 | Input Parameter | Level | Integer | Edited Level |
 
-## **2. Change Player Class**
+### **2. Change Player Class**
 
 **Node Functions**
 
@@ -1194,7 +1194,7 @@ Set the Player's current Class to the Class referenced by the Config ID
 | Input Parameter | Target Player | Entity | Active Player Entity |
 | Input Parameter | Class Config ID | Config ID | Class Identifier |
 
-## **3. Increase Player's Current Class EXP**
+### **3. Increase Player's Current Class EXP**
 
 **Node Functions**
 
@@ -1209,7 +1209,7 @@ Increase the Player's current Class EXP. Any excess beyond the maximum Level wil
 
 ## XXIV. UI Control Groups
 
-## **1. Activate UI Control Group in Control Group Library**
+### **1. Activate UI Control Group in Control Group Library**
 
 **Node Functions**
 
@@ -1222,7 +1222,7 @@ Activate the UI Control Groups stored as Custom Templates in the UI Control Grou
 | Input Parameter | Target Player | Entity | Active Player Entity |
 | Input Parameter | UI Control Group Index | Integer | Identifier for the UI Control Group |
 
-## **2. Switch Current Interface Layout**
+### **2. Switch Current Interface Layout**
 
 **Node Functions**
 
@@ -1235,7 +1235,7 @@ Switch the Target Player's current Interface Layout via Layout ID
 | Input Parameter | Target Player | Entity | Active Player Entity |
 | Input Parameter | Layout Index | Integer | Identifier for the UI Layout |
 
-## **3.** Modify UI Control Status Within the Interface Layout
+### **3.** Modify UI Control Status Within the Interface Layout
 
 **Node Functions**
 
@@ -1253,7 +1253,7 @@ On: Visible and logic running normally
 
 Hidden: Invisible and logic running normally |
 
-## **4.** Remove Interface Control Group From Control Group Library
+### **4.** Remove Interface Control Group From Control Group Library
 
 **Node Functions**
 
@@ -1268,7 +1268,7 @@ Remove the UI Control Groups activated via [Activate UI Control Group in Control
 
 ## XXV. Skills
 
-## **1.** Modify Skill CD Percentage Based on Max CD
+### **1.** Modify Skill CD Percentage Based on Max CD
 
 **Node Functions**
 
@@ -1283,7 +1283,7 @@ Edit the cooldown percentage of a skill in a Character's Skill Slot based on its
 | Input Parameter | Cooldown Ratio Modifier | Floating Point Numbers | Actual Cooldown after Editing = Original Cooldown × Cooldown Ratio Edit Value |
 | Input Parameter | Limit Maximum CD Time | Boolean | If set to True, the edited Cooldown cannot be less than the specified minimum value |
 
-## **2. Initialize Character Skill**
+### **2. Initialize Character Skill**
 
 **Node Functions**
 
@@ -1296,7 +1296,7 @@ Reset the Target Character's skills to those defined in the Class Template
 | Input Parameter | Target Entity | Entity | Active Character Entity |
 | Input Parameter | Character Skill Slot | Enumeration | The Skill Slot to initialize: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
 
-## **3. Set Skill Resource Amount**
+### **3. Set Skill Resource Amount**
 
 **Node Functions**
 
@@ -1310,7 +1310,7 @@ Edit the Character's skill resource amount
 | Input Parameter | Skill Resource Config ID | Config ID | Skill Resource Identifier |
 | Input Parameter | Target Value | Floating Point Numbers | Edited value will be set to this input value |
 
-## **4.** Set Character Skill CD
+### **4.** Set Character Skill CD
 
 **Node Functions**
 
@@ -1325,7 +1325,7 @@ Directly set the cooldown of a specific Skill Slot on the Target Character to a 
 | Input Parameter | Remaining CD Time | Floating Point Numbers | Edited Cooldown will be set to this input value |
 | Input Parameter | Limit Maximum CD Time | Boolean | If set to True, the edited Cooldown cannot be less than the specified minimum value |
 
-## **5. Add Character Skill**
+### **5. Add Character Skill**
 
 **Node Functions**
 
@@ -1339,7 +1339,7 @@ Add a skill to the specified Target Character's Skill Slot
 | Input Parameter | Skill Config ID | Config ID | Skill Identifier |
 | Input Parameter | Skill Slot | Enumeration | The Skill Slot to be added: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
 
-## **6. Modify Skill Resource Amount**
+### **6. Modify Skill Resource Amount**
 
 **Node Functions**
 
@@ -1353,7 +1353,7 @@ Edit the skill's resource amount by adding the change value to the current value
 | Input Parameter | Skill Resource Config ID | Config ID | Skill Resource Identifier |
 | Input Parameter | Change Value | Floating Point Numbers | New Value = Original Value + Change Value |
 
-## **7.** Modify Character Skill CD
+### **7.** Modify Character Skill CD
 
 **Node Functions**
 
@@ -1368,7 +1368,7 @@ Edit the cooldown of the specified Skill Slot on the Target Character. The edit 
 | Input Parameter | CD Modifier | Floating Point Numbers | New Value = Original Value + Edit Value |
 | Input Parameter | Limit Maximum CD Time | Boolean | If set to True, the edited Cooldown cannot be less than the specified minimum value |
 
-## **8. Delete Character Skill by Slot**
+### **8. Delete Character Skill by Slot**
 
 **Node Functions**
 
@@ -1381,7 +1381,7 @@ Delete the skill in the specified slot of the Target Character
 | Input Parameter | Target Entity | Entity | Active Character Entity |
 | Input Parameter | Character Skill Slot | Enumeration | The Skill Slot to be deleted: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
 
-## **9. Delete Character Skill by ID**
+### **9. Delete Character Skill by ID**
 
 **Node Functions**
 
@@ -1396,7 +1396,7 @@ Iterate through and delete all skills with the specified Config ID across all of
 
 ## XXVI. Sound Effects
 
-## **1. Adjust Player Background Music Volume**
+### **1. Adjust Player Background Music Volume**
 
 **Node Functions**
 
@@ -1409,7 +1409,7 @@ Adjust Player Background Music Volume
 | Input Parameter | Target Entity | Entity | Active Player Entity |
 | Input Parameter | Volume | Integer |  |
 
-## **2. Adjust Specified Sound Effect Player**
+### **2. Adjust Specified Sound Effect Player**
 
 **Node Functions**
 
@@ -1424,7 +1424,7 @@ Adjust the volume and playback speed of the Sound Effect Player with the specifi
 | Input Parameter | Volume | Integer |  |
 | Input Parameter | Playback Speed | Floating Point Numbers |  |
 
-## **3. Close Specified Sound Effect Player**
+### **3. Close Specified Sound Effect Player**
 
 **Node Functions**
 
@@ -1437,7 +1437,7 @@ Disable the Sound Effect Player with the specified ID in the Sound Effect Player
 | Input Parameter | Target Entity | Entity |  |
 | Input Parameter | SFX Player ID | Integer |  |
 
-## **4. Start/Pause Player Background Music**
+### **4. Start/Pause Player Background Music**
 
 **Node Functions**
 
@@ -1450,7 +1450,7 @@ Edit the background music state for the specified Player
 | Input Parameter | Target Entity | Entity | Active Player Entity |
 | Input Parameter | Recover | Boolean |  |
 
-## **5. Start/Pause Specified Sound Effect Player**
+### **5. Start/Pause Specified Sound Effect Player**
 
 **Node Functions**
 
@@ -1464,7 +1464,7 @@ Edit the state of the Sound Effect Player with the specified ID in the Sound Eff
 | Input Parameter | SFX Player ID | Integer |  |
 | Input Parameter | Recover | Boolean |  |
 
-## **6. Add Sound Effect Player**
+### **6. Add Sound Effect Player**
 
 **Node Functions**
 
@@ -1487,7 +1487,7 @@ Dynamically add a Sound Effect Player. The Unit must have a Sound Effect Player 
 | Input Parameter | Attachment Point Offset | 3D Vector |  |
 | Output Parameter | SFX Player ID | Integer |  |
 
-## **7. Player Plays One-Shot 2D Sound Effect**
+### **7. Player Plays One-Shot 2D Sound Effect**
 
 **Node Functions**
 
@@ -1502,7 +1502,7 @@ Player plays a one-shot 2D Sound Effect
 | Input Parameter | Volume | Integer |  |
 | Input Parameter | Playback Speed | Floating Point Numbers |  |
 
-## **8. Modify Player Background Music**
+### **8. Modify Player Background Music**
 
 **Node Functions**
 
@@ -1524,7 +1524,7 @@ Edit background music parameters for the Player
 
 ## XXVII. Unit Tags
 
-## **1. Clear Unit Tags from Entity**
+### **1. Clear Unit Tags from Entity**
 
 **Node Functions**
 
@@ -1536,7 +1536,7 @@ Clear Unit Tags for the specified Entity
 |-----------------|----------------|--------|-------------|
 | Input Parameter | Target Entity | Entity |  |
 
-## **2. Add Unit Tag to Entity**
+### **2. Add Unit Tag to Entity**
 
 **Node Functions**
 
@@ -1549,7 +1549,7 @@ Add Unit Tags to the specified Entity
 | Input Parameter | Target Entity | Entity |  |
 | Input Parameter | Unit Tag Index | Integer |  |
 
-## **3. Remove Unit Tag from Entity**
+### **3. Remove Unit Tag from Entity**
 
 **Node Functions**
 
@@ -1564,7 +1564,7 @@ Remove Unit Tags from the specified Entity
 
 ## XXVIII. Custom Aggro
 
-## **1. Taunt Target**
+### **1. Taunt Target**
 
 **Node Functions**
 
@@ -1579,7 +1579,7 @@ Make the Taunter Entity taunt the specified Target Entity
 | Input Parameter | Taunter Entity | Entity |  |
 | Input Parameter | Target Entity | Entity |  |
 
-## **2. Remove Target Entity From Aggro List**
+### **2. Remove Target Entity From Aggro List**
 
 **Node Functions**
 
@@ -1594,7 +1594,7 @@ Remove the Target Entity from the Aggro Owner's Aggro List; this may cause the t
 | Input Parameter | Target Entity | Entity |  |
 | Input Parameter | Aggro Owner Entity | Entity |  |
 
-## **3. Clear Specified Target's Aggro List**
+### **3. Clear Specified Target's Aggro List**
 
 **Node Functions**
 
@@ -1608,7 +1608,7 @@ Clear the Aggro Owner's Aggro List. This may cause them to leave battle
 |-----------------|----------------|--------|-------------|
 | Input Parameter | Aggro Owner | Entity |  |
 
-## **4. Set the Aggro Value of Specified Entity**
+### **4. Set the Aggro Value of Specified Entity**
 
 **Node Functions**
 
@@ -1626,7 +1626,7 @@ Set the Aggro Value of the specified Target Entity on the specified Aggro Owner
 
 ## XXIX. Signals
 
-## **1. Send Signal**
+### **1. Send Signal**
 
 **Node Functions**
 
@@ -1640,7 +1640,7 @@ Send a custom Signal to the global Stage. Before use, select the corresponding S
 
 ## XXX. Nameplate
 
-## **1. Set Entity Active Nameplate**
+### **1. Set Entity Active Nameplate**
 
 **Node Functions**
 
@@ -1655,7 +1655,7 @@ Set the active Nameplate list for the specified target. Nameplates included in t
 
 ## XXXI. Text Bubbles
 
-## **1. Switch Active Text Bubble**
+### **1. Switch Active Text Bubble**
 
 **Node Functions**
 
@@ -1670,7 +1670,7 @@ In the Target Entity's Text Bubble Component, replace the current active Text Bu
 
 ## XXXII. Deck Selector
 
-## **1. Close Deck Selector**
+### **1. Close Deck Selector**
 
 **Node Functions**
 
@@ -1683,7 +1683,7 @@ Close the currently active Deck Selector for the specified Player
 | Input Parameter | Target Player | Entity | Active Player Entity |
 | Input Parameter | Deck Selector Index | Integer |  |
 
-## **2. Invoke Deck Selector**
+### **2. Invoke Deck Selector**
 
 **Node Functions**
 
@@ -1719,7 +1719,7 @@ The length of this Result List must match the valid card selection count | If th
 
 The length of this Result List must match the valid card selection count |
 
-## **3. Random Deck Selector Selection List**
+### **3. Random Deck Selector Selection List**
 
 **Node Functions**
 
@@ -1733,7 +1733,7 @@ Randomly sort the input List
 
 ## XXXIII. Stage Settlement
 
-## **1. Set Player Settlement Success Status**
+### **1. Set Player Settlement Success Status**
 
 **Node Functions**
 
@@ -1746,7 +1746,7 @@ Set Player Settlement Success Status
 | Input Parameter | Player Entity | Entity |  |
 | Input Parameter | Settlement Status | Enumeration | Three types: Undefined, Victory, Defeat |
 
-## **2. Set Player Settlement Scoreboard Data Display**
+### **2. Set Player Settlement Scoreboard Data Display**
 
 **Node Functions**
 
@@ -1761,7 +1761,7 @@ Set the Player's Scoreboard display data, which is shown on the Scoreboard after
 | Input Parameter | Data Name | String | The name of this data |
 | Input Parameter | Data Value | Generic | The value of this data. Supports Integer, Floating Point Number, and String |
 
-## **3. Set Player Settlement Ranking Value**
+### **3. Set Player Settlement Ranking Value**
 
 **Node Functions**
 
@@ -1774,7 +1774,7 @@ Set the Player's ranking value after Settlement, then determine the final rankin
 | Input Parameter | Player Entity | Entity |  |
 | Input Parameter | Ranking Value | Integer |  |
 
-## **4. Set Faction Settlement Success Status**
+### **4. Set Faction Settlement Success Status**
 
 **Node Functions**
 
@@ -1787,7 +1787,7 @@ Set Faction Settlement Success Status
 | Input Parameter | Faction | Faction | Active Faction Entity |
 | Input Parameter | Settlement Status | Enumeration | Three types: Undefined, Victory, Defeat |
 
-## **5. Set Faction Settlement Ranking Value**
+### **5. Set Faction Settlement Ranking Value**
 
 **Node Functions**
 
@@ -1802,7 +1802,7 @@ Set the faction's ranking value after Settlement, then determine the final ranki
 
 ## XXXIV. Light Source Components
 
-## **1. Toggle Entity Light Source**
+### **1. Toggle Entity Light Source**
 
 **Node Functions**
 
@@ -1818,7 +1818,7 @@ Adjust the Light Source state at the specified ID in the Light Source Component 
 
 ## XXXV. Dictionary
 
-## **1. Sort Dictionary by Key**
+### **1. Sort Dictionary by Key**
 
 **Node Functions**
 
@@ -1833,7 +1833,7 @@ Sort and output the specified Dictionary by keys in ascending or descending orde
 | Output Parameter | Key List | Generic |  |
 | Output Parameter | Value List | Generic |  |
 
-## **2. Sort Dictionary by Value**
+### **2. Sort Dictionary by Value**
 
 **Node Functions**
 
@@ -1848,7 +1848,7 @@ Sort and output the specified Dictionary by values in ascending or descending or
 | Output Parameter | Key List | Generic |  |
 | Output Parameter | Value List | Generic |  |
 
-## **3. Set or Add Key Value Pairs to Dictionary**
+### **3. Set or Add Key Value Pairs to Dictionary**
 
 **Node Functions**
 
@@ -1862,7 +1862,7 @@ Add a Key-Value Pair to the specified Dictionary
 | Input Parameter | Key | Generic |  |
 | Input Parameter | Value | Generic |  |
 
-## **4. Clear Dictionary**
+### **4. Clear Dictionary**
 
 **Node Functions**
 
@@ -1874,7 +1874,7 @@ Clear all Key-Value Pairs from the specified Dictionary
 |-----------------|----------------|---------|-------------|
 | Input Parameter | Dictionary | Generic |  |
 
-## **5. Remove Key Value Pairs from Dictionary by Key**
+### **5. Remove Key Value Pairs from Dictionary by Key**
 
 **Node Functions**
 
@@ -1889,7 +1889,7 @@ Remove Key-Value Pairs from the specified Dictionary by key
 
 ## XXXVI. Structures
 
-## **1. Modify Structure**
+### **1. Modify Structure**
 
 **Node Functions**
 
@@ -1903,7 +1903,7 @@ After selecting a Structure, you can edit each parameter of that Structure
 
 ## XXXVII. Shop
 
-## **1.** Remove Item From Inventory Shop Sales List
+### **1.** Remove Item From Inventory Shop Sales List
 
 **Node Functions**
 
@@ -1917,7 +1917,7 @@ Remove items from the inventory shop's sales list
 | Input Parameter | Shop ID | Integer | The Shop ID corresponding to the Shop component on the Shop Owner Entity |
 | Input Parameter | Item Config ID | Config ID |  |
 
-## **2. Remove item from purchase list**
+### **2. Remove item from purchase list**
 
 **Node Functions**
 
@@ -1931,7 +1931,7 @@ Remove items from the purchase list
 | Input Parameter | Shop ID | Integer | The Shop ID corresponding to the Shop component on the Shop Owner Entity |
 | Input Parameter | Shop Item Config ID | Config ID |  |
 
-## **3.** Remove Item From Custom Shop Sales List
+### **3.** Remove Item From Custom Shop Sales List
 
 **Node Functions**
 
@@ -1945,7 +1945,7 @@ Remove items from the custom shop's sales list
 | Input Parameter | Shop ID | Integer | The Shop ID corresponding to the Shop component on the Shop Owner Entity |
 | Input Parameter | Shop Item ID | Integer |  |
 
-## **4. Open Shop**
+### **4. Open Shop**
 
 **Node Functions**
 
@@ -1959,7 +1959,7 @@ Open the Shop from the Player Entity's perspective during gameplay
 | Input Parameter | Shop Owner Entity | Entity | The Shop ID corresponding to the Shop component on the Shop Owner Entity |
 | Input Parameter | Shop ID | Integer |  |
 
-## **5. Close Shop**
+### **5. Close Shop**
 
 **Node Functions**
 
@@ -1971,7 +1971,7 @@ Close all open Shops from the Player Entity's perspective during gameplay
 |-----------------|----------------|--------|-------------|
 | Input Parameter | Player Entity | Entity |  |
 
-## **6.** Add New Item to Inventory Shop Sales List
+### **6.** Add New Item to Inventory Shop Sales List
 
 **Node Functions**
 
@@ -1989,7 +1989,7 @@ Add new items to the inventory shop's sales list
 | Input Parameter | Sort Priority | Integer |  |
 | Input Parameter | Can Be Sold | Boolean |  |
 
-## **7. Add Items to the Purchase List**
+### **7. Add Items to the Purchase List**
 
 **Node Functions**
 
@@ -2005,7 +2005,7 @@ Add New Items to the Item Purchase List
 | Input Parameter | Purchase Currency Dictionary | Dictionary |  |
 | Input Parameter | Purchasable | Boolean |  |
 
-## **8.** Add New Item to Custom Shop Sales List
+### **8.** Add New Item to Custom Shop Sales List
 
 **Node Functions**
 
@@ -2026,7 +2026,7 @@ Add items to the Custom Shop Sales List. Upon success, an Integer ID is generate
 | Input Parameter | Can Be Sold | Boolean |  |
 | Output Parameter | Item Index | Integer |  |
 
-## **9.** Modify Inventory Shop Item Sales Info
+### **9.** Modify Inventory Shop Item Sales Info
 
 **Node Functions**
 
@@ -2044,7 +2044,7 @@ Edit sale info for inventory shop items
 | Input Parameter | Sort Priority | Integer |  |
 | Input Parameter | Can Be Sold | Boolean |  |
 
-## **10.** Modify Item Purchase Info in the Purchase List
+### **10.** Modify Item Purchase Info in the Purchase List
 
 **Node Functions**
 
@@ -2060,7 +2060,7 @@ Edit Item Purchase Information in the Item Purchase List
 | Input Parameter | Purchase Currency Dictionary | Dictionary |  |
 | Input Parameter | Purchasable | Boolean |  |
 
-## **11.** Modify Custom Shop Item Sales Info
+### **11.** Modify Custom Shop Item Sales Info
 
 **Node Functions**
 
@@ -2083,7 +2083,7 @@ Edit sale info for custom shop items
 
 ## XXXVIII. Equipment
 
-## **1. Modify Equipment Affix Value**
+### **1. Modify Equipment Affix Value**
 
 **Node Functions**
 
@@ -2097,7 +2097,7 @@ Edit the value of the specified Affix on the Equipment instance
 | Input Parameter | Affix ID | Integer |  |
 | Input Parameter | Affix Value | Floating Point Numbers |  |
 
-## **2. Remove Equipment Affix**
+### **2. Remove Equipment Affix**
 
 **Node Functions**
 
@@ -2110,7 +2110,7 @@ Remove the specified Affix from the Equipment instance
 | Input Parameter | Equipment ID | Integer | Integer ID generated during Equipment Initialization to identify the equipment instance |
 | Input Parameter | Affix ID | Integer |  |
 
-## **3. Add Affix to Equipment**
+### **3. Add Affix to Equipment**
 
 **Node Functions**
 
@@ -2125,7 +2125,7 @@ Add a preconfigured Affix to the specified Equipment instance, with the option t
 | Input Parameter | Overwrite Affix Value | Boolean |  |
 | Input Parameter | Affix Value | Floating Point Numbers | Can overwrite the value on a pre-configured Affix |
 
-## **4. Add Affix to Equipment at Specified ID**
+### **4. Add Affix to Equipment at Specified ID**
 
 **Node Functions**
 
@@ -2143,7 +2143,7 @@ Add a preconfigured Affix at the specified Affix ID on the Equipment instance, w
 
 ## XXXIX. Items and Inventory
 
-## **1. Set Inventory** Item Drop Contents
+### **1. Set Inventory** Item Drop Contents
 
 **Node Functions**
 
@@ -2157,7 +2157,7 @@ Configure the Inventory Item drop data in Dictionary format, and specify the Dro
 | Input Parameter | Item Drop Dictionary | Dictionary |  |
 | Input Parameter | Loot Type | Enumeration | Types: Shared Reward (one share for all), Individualized Reward (one share per person) |
 
-## **2.** Set Inventory Drop Items/Currency Amount
+### **2.** Set Inventory Drop Items/Currency Amount
 
 **Node Functions**
 
@@ -2172,7 +2172,7 @@ Set the type and quantity of Items or Currency for the Inventory drop
 | Input Parameter | Quantity Dropped | Integer |  |
 | Input Parameter | Loot Type | Enumeration | Types: Shared Reward (one share for all), Individualized Reward (one share per person) |
 
-## **3. Trigger Loot Drop**
+### **3. Trigger Loot Drop**
 
 **Node Functions**
 
@@ -2185,7 +2185,7 @@ Triggers a loot drop for the dropper entity, with configurable loot type.
 | Input Parameter | Dropper Entity | Entity |  |
 | Input Parameter | Loot Type | Enumeration | Types: Shared Reward (one share for all), Individualized Reward (one share per person) |
 
-## **4. Set Loot Drop Content**
+### **4. Set Loot Drop Content**
 
 **Node Functions**
 
@@ -2198,7 +2198,7 @@ Configure the Loot drop data in the Loot Component on the Dropper Entity in Dict
 | Input Parameter | Dropper Entity | Entity |  |
 | Input Parameter | Loot Drop Dictionary | Dictionary |  |
 
-## **5. Modify Inventory Item Quantity**
+### **5. Modify Inventory Item Quantity**
 
 **Node Functions**
 
@@ -2212,7 +2212,7 @@ Edit the quantity of the specified Item in the Inventory
 | Input Parameter | Item Config ID | Config ID |  |
 | Input Parameter | Change Value | Integer | New Value = Original Value + Change Value |
 
-## **6. Modify Inventory Currency Quantity**
+### **6. Modify Inventory Currency Quantity**
 
 **Node Functions**
 
@@ -2226,7 +2226,7 @@ Edit the amount of the specified Currency in the Inventory
 | Input Parameter | Currency Config ID | Config ID |  |
 | Input Parameter | Change Value | Integer | New Value = Original Value + Change Value |
 
-## **7. Modify Loot Item Component Quantity**
+### **7. Modify Loot Item Component Quantity**
 
 **Node Functions**
 
@@ -2240,7 +2240,7 @@ Edit the quantity of the specified Item in the Loot Component on the Loot Prefab
 | Input Parameter | Item Config ID | Config ID |  |
 | Input Parameter | Change Value | Integer | New Value = Original Value + Change Value |
 
-## **8. Modify Loot Component Currency Amount**
+### **8. Modify Loot Component Currency Amount**
 
 **Node Functions**
 
@@ -2254,7 +2254,7 @@ Edit the amount of the specified Currency in the Loot Component on the Loot Pref
 | Input Parameter | Currency Config ID | Config ID |  |
 | Input Parameter | Change Value | Integer | New Value = Original Value + Change Value |
 
-## **9. Increase Maximum Inventory Capacity**
+### **9. Increase Maximum Inventory Capacity**
 
 **Node Functions**
 
@@ -2269,7 +2269,7 @@ Increase the maximum Inventory capacity of the specified Inventory Owner
 
 ## XL. Mini-Map Marker Component
 
-## **1.** Modify Player List for Visible Mini-Map Markers
+### **1.** Modify Player List for Visible Mini-Map Markers
 
 **Node Functions**
 
@@ -2283,7 +2283,7 @@ The mini-map marker at the specified ID in the Target Entity's Mini-map Marker C
 | Input Parameter | Mini-Map Marker ID | Integer | ID of the specified Mini-map Marker to be edited |
 | Input Parameter | Player List | Entity List | The specified Mini-map ID on the Target Entity, visible only to the Player providing input |
 
-## **2. Modify Player Markers on the Mini-Map**
+### **2. Modify Player Markers on the Mini-Map**
 
 **Node Functions**
 
@@ -2297,7 +2297,7 @@ When the Player Marker option is selected and a corresponding Player Entity is l
 | Input Parameter | Mini-Map Marker ID | Integer | ID of the specified Mini-map Marker to be edited |
 | Input Parameter | Corresponding Player Entity | Entity | Changes the avatar of the corresponding Player Entity |
 
-## **3.** Modify Mini-Map Marker Activation Status
+### **3.** Modify Mini-Map Marker Activation Status
 
 **Node Functions**
 
@@ -2317,7 +2317,7 @@ the Mini-map Markers corresponding to the specified ID numbers in the input list
 
 For IDs not in the input list, the corresponding Mini-map Markers will be set to Disabled |
 
-## **4. Modify Mini-Map Zoom**
+### **4. Modify Mini-Map Zoom**
 
 **Node Functions**
 
@@ -2330,7 +2330,7 @@ Edit the map scale of the Target Player's mini-map UI control
 | Input Parameter | Target Player | Entity |  |
 | Input Parameter | Zoom Dimensions | Floating Point Numbers |  |
 
-## **5.** Modify Player List for Tracking Mini-Map Markers
+### **5.** Modify Player List for Tracking Mini-Map Markers
 
 **Node Functions**
 
@@ -2346,7 +2346,7 @@ Set the mini-map marker at the specified ID on the Target Entity to Tracking Dis
 
 ## XLI. Creation Patrol
 
-## **1. Switch Creation Patrol Template**
+### **1. Switch Creation Patrol Template**
 
 **Node Functions**
 
@@ -2361,7 +2361,7 @@ Immediately switch the patrol template for the Creation and move according to th
 
 ## XLII. Leaderboard
 
-## **1. Set Player Leaderboard Score as a Float**
+### **1. Set Player Leaderboard Score as a Float**
 
 **Node Functions**
 
@@ -2375,7 +2375,7 @@ Set Player Leaderboard Score (Float)
 | Input Parameter | Leaderboard Score | Floating Point Numbers |  |
 | Input Parameter | Leaderboard ID | Integer | The ID corresponding to the specified Leaderboard in Peripheral System management |
 
-## **2. Set Player Leaderboard Score as an Integer**
+### **2. Set Player Leaderboard Score as an Integer**
 
 **Node Functions**
 
@@ -2391,7 +2391,7 @@ Set Player Leaderboard Score (Integer)
 
 ## XLIII. Achievements
 
-## **1. Change Achievement Progress Tally**
+### **1. Change Achievement Progress Tally**
 
 **Node Functions**
 
@@ -2405,7 +2405,7 @@ Change the progress counter for the specified Achievement ID on the Target Entit
 | Input Parameter | Achievement ID | Integer |  |
 | Input Parameter | Progress Tally Change Value | Integer | New Value = Previous Value + Change Value |
 
-## **2. Set Achievement Progress Tally**
+### **2. Set Achievement Progress Tally**
 
 **Node Functions**
 
@@ -2421,7 +2421,7 @@ Set the progress counter for the specified Achievement ID on the Target Entity
 
 ## XLIV. Scan Tags
 
-## **1. Set Scan Tag Rules**
+### **1. Set Scan Tag Rules**
 
 **Node Functions**
 
@@ -2434,7 +2434,7 @@ Configure rules for Scan Tags. The scanning logic is executed based on the confi
 | Input Parameter | Target Entity | Entity |  |
 | Input Parameter | Rule Type | Enumeration | Options: Prioritize View or Prioritize Distance |
 
-## **2.** Set Scan Component's Active Scan Tag ID
+### **2.** Set Scan Component's Active Scan Tag ID
 
 **Node Functions**
 
@@ -2449,7 +2449,7 @@ Set the Scan Tag with the specified ID in the Target Entity's Scan Tag Component
 
 ## XLV. Rank
 
-## **1.** Switch the scoring group that affects player's competitive rank
+### **1.** Switch the scoring group that affects player's competitive rank
 
 **Node Functions**
 
@@ -2462,7 +2462,7 @@ Switch the active Scoring Group of the specified Player's Ranking by Scoring Gro
 | Input Parameter | Player Entity | Entity |  |
 | Input Parameter | Score Group ID | Integer | The ID corresponding to the specified Score Group in Peripheral System management |
 
-## **2. Set Player Rank Score Change**
+### **2. Set Player Rank Score Change**
 
 **Node Functions**
 
@@ -2476,7 +2476,7 @@ Set the Player's rank score change based on the settlement status
 | Input Parameter | Settlement Status | Enumeration | Includes: Undefined, Victory, Defeat, Escape |
 | Input Parameter | Score Change | Integer |  |
 
-## **3. Set Player Escape Validity**
+### **3. Set Player Escape Validity**
 
 **Node Functions**
 
@@ -2491,7 +2491,7 @@ Set whether escaping is permitted for the specified Player
 
 ## XLVI. Entity Deployment Group
 
-## **1. Activate/Disable Entity Deployment Group**
+### **1. Activate/Disable Entity Deployment Group**
 
 **Node Functions**
 
@@ -2506,7 +2506,7 @@ Edit the Initial Creation Switch state of the Entity Layout Group
 
 ## XLVII. Chat Channel
 
-## **1. Set Chat Channel Switch**
+### **1. Set Chat Channel Switch**
 
 **Node Functions**
 
@@ -2519,7 +2519,7 @@ Set the Chat Channel switch
 | Input Parameter | Channel Index | Integer |  |
 | Input Parameter | Text Switch | Boolean |  |
 
-## **2. Set Player's Current Channel**
+### **2. Set Player's Current Channel**
 
 **Node Functions**
 
@@ -2532,7 +2532,7 @@ Set the Player's currently available channels. Channels in the list are availabl
 | Input Parameter | Player GUID | GUID |  |
 | Input Parameter | Channel Index List | Integer List |  |
 
-## **3. Modify Player Channel Permission**
+### **3. Modify Player Channel Permission**
 
 **Node Functions**
 
@@ -2548,7 +2548,7 @@ Edit Player Channel Permissions
 
 ## XLVIII. Wonderland Gift Boxes
 
-## **1. Consume Gift Box**
+### **1. Consume Gift Box**
 
 **Node Functions**
 

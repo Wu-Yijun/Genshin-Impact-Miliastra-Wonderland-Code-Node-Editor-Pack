@@ -1,6 +1,6 @@
 ## I. Character Skills
 
-## **1. Traverse Entity List**
+### **1. Traverse Entity List**
 
 **Node Functions**
 
@@ -13,7 +13,7 @@ Iterates through each Entity in the input Entity List
 | Input Parameter | Entity List | Entity List |  |
 | Output Parameter | Current Entity | Entity |  |
 
-## **2. Play Timed Effects**
+### **2. Play Timed Effects**
 
 **Node Functions**
 
@@ -29,7 +29,7 @@ Plays Timed Effects at the specified World Location
 | Input Parameter | Zoom Multiplier | Floating Point Numbers |  |
 | Input Parameter | Play Default Sound Effects? | Boolean |  |
 
-## **3. Fixed-Point Projectile Launch**
+### **3. Fixed-Point Projectile Launch**
 
 **Node Functions**
 
@@ -45,7 +45,7 @@ Spawns a Local Projectile at the specified Location in the World Coordinate Syst
 | Input Parameter | Track Target | Entity |  |
 | Input Parameter | Projectile Faction | Faction |  |
 
-## **4. Fixed-Point Displacement**
+### **4. Fixed-Point Displacement**
 
 **Node Functions**
 
@@ -63,7 +63,7 @@ Supports configuring movement duration and speed; if both are small, the movemen
 | Input Parameter | Displacement Target Location | 3D Vector |  |
 | Input Parameter | Terminate Displacement on Collision | Boolean |  |
 
-## **5. Recover HP**
+### **5. Recover HP**
 
 **Node Functions**
 
@@ -79,7 +79,7 @@ Initiates a one-time HP restoration for the Target Entity
 | Input Parameter | Aggro Multiplier for This Healing | Floating Point Numbers |  |
 | Input Parameter | Aggro Increment for This Healing | Integer |  |
 
-## **6. Camera Orientation Detection Data**
+### **6. Camera Orientation Detection Data**
 
 **Node Functions**
 
@@ -96,7 +96,7 @@ Casts a ray from the Camera to the emission Location and returns the Rotation an
 | Output Parameter | Target Rotation | 3D Vector |  |
 | Output Parameter | Target Location | 3D Vector |  |
 
-## **7. Force Exit Aiming State**
+### **7. Force Exit Aiming State**
 
 **Node Functions**
 
@@ -108,7 +108,7 @@ Forces the Character to exit Aiming Status if the Character is currently in it
 |----------------|----------------|------|-------------|
 |  |  |  |  |
 
-## **8. Set Own Attack Target**
+### **8. Set Own Attack Target**
 
 **Node Functions**
 
@@ -121,7 +121,7 @@ Sets the Target Entity as its Attack Target
 | Input Parameter | Target Entity | Entity |  |
 | Input Parameter | Whether to Turn Immediately | Boolean |  |
 
-## **9. Trigger Hitbox at Specific Location**
+### **9. Trigger Hitbox at Specific Location**
 
 **Node Functions**
 
@@ -170,7 +170,7 @@ Initiates a Hitbox Attack at the specified Location in the World Coordinate Syst
 | Input Parameter | On-Hit Horizontal Impulse | Floating Point Numbers |  |
 | Input Parameter | On-Hit Vertical Impulse | Floating Point Numbers |  |
 
-## **10. Add Unit Status**
+### **10. Add Unit Status**
 
 **Node Functions**
 
@@ -184,7 +184,7 @@ Applies the Unit Status defined by the configuration ID to the Target
 | Input Parameter | Stacks | Integer |  |
 | Input Parameter | Unit Status Config ID | Config ID |  |
 
-## **11. Notify Server Node Graph**
+### **11. Notify Server Node Graph**
 
 **Node Functions**
 
@@ -200,7 +200,7 @@ At runtime, forwards logic to the Server Node Graph and triggers the [On Skill N
 | Input Parameter | String 2 | String |  |
 | Input Parameter | String 3 | String |  |
 
-## **12. Player Turning**
+### **12. Player Turning**
 
 **Node Functions**
 
@@ -212,7 +212,7 @@ Turns the Player using the configured turning mode
 |-----------------|----------------|-------------|-------------------------------------------------------------------------------------------------------------------------|
 | Input Parameter | Turning Mode | Enumeration | Includes: Target then Input, Input Direction, Target Direction, Target then Camera, Camera Direction, Input then Target |
 
-## **13. Player Turns to Face Set Direction**
+### **13. Player Turns to Face Set Direction**
 
 **Node Functions**
 
@@ -224,7 +224,7 @@ Turns the Player toward the direction specified by the 3D Vector configuration
 |-----------------|----------------|-----------|-------------|
 | Input Parameter | Orientation | 3D Vector |  |
 
-## **14. Modify Attack Weight**
+### **14. Modify Attack Weight**
 
 **Node Functions**
 
@@ -237,7 +237,7 @@ Edits the weight of the current Attack Target
 | Input Parameter | Current Attack Target Weight | Floating Point Numbers |  |
 | Input Parameter | Forcibly Select a Target Once | Boolean |  |
 
-## **15. Remove Unit Status**
+### **15. Remove Unit Status**
 
 **Node Functions**
 
@@ -250,7 +250,7 @@ Removes the Unit Status corresponding to the specified configuration ID from the
 | Input Parameter | Removal Target | Entity |  |
 | Input Parameter | Unit Status Config ID | Config ID |  |
 
-## **16. Remove Specified Character Disruptor Device**
+### **16. Remove Specified Character Disruptor Device**
 
 **Node Functions**
 
@@ -262,7 +262,7 @@ Removes the specified type of Character Disruptor Device
 |-----------------|-----------------------|-------------|------------------------------------------------------------|
 | Input Parameter | Disruptor Device Type | Enumeration | Includes: Force Field Device, Ejector, and Traction Device |
 
-## **17. Trigger Hitbox at Specific Location**
+### **17. Trigger Sector Hitbox at Specified Attachment Point**
 
 **Node Functions**
 
@@ -312,7 +312,7 @@ Initiates a Hitbox Attack at the specified Attachment Point, with configurable a
 | Input Parameter | On-Hit Vertical Impulse | Floating Point Numbers |  |
 | Input Parameter | Hit Vertical Impulse | Floating Point Numbers |  |
 
-## **18. Reset Skill Target**
+### **18. Reset Skill Target**
 
 **Node Functions**
 
@@ -324,7 +324,9 @@ Resets the Skill Target and reruns the Skill selection logic to choose a new Tar
 |----------------|----------------|------|-------------|
 |  |  |  |  |
 
-## **1. Set Local Variable**
+## II. General
+
+### **1. Set Local Variable**
 
 **Node Functions**
 
@@ -337,7 +339,7 @@ Sets the value of a local variable
 | Input Parameter | Variable Name | String |  |
 | Input Parameter | Variable Value | Generic |  |
 
-## **2. Break Loop**
+### **2. Break Loop**
 
 **Node Functions**
 
@@ -349,7 +351,7 @@ Break out of a Finite Loop. The output pin must connect to the [Break Loop] inpu
 |----------------|----------------|------|-------------|
 |  |  |  |  |
 
-## **3. Finite Loop**
+### **3. Finite Loop**
 
 **Node Functions**
 
@@ -367,7 +369,7 @@ Use [Break Loop] to end the iteration early
 
 ## III. Custom Aggro
 
-## **1. Modify the Aggro Value of the Specified Entity Proportionally**
+### **1. Modify the Aggro Value of the Specified Entity Proportionally**
 
 **Node Functions**
 
@@ -383,7 +385,7 @@ Proportionally edits the Target Entity's Aggro Value on the specified Aggro Owne
 | Input Parameter | Aggro Owner Entity | Entity |  |
 | Input Parameter | Modified Aggro Value Ratio | Floating Point Numbers |  |
 
-## **2. Transfer the Aggro Value of the Specified Entity Proportionally**
+### **2. Transfer the Aggro Value of the Specified Entity Proportionally**
 
 **Node Functions**
 
@@ -400,7 +402,7 @@ Transfers a percentage of Aggro on the Aggro Owner from the Source Entity to the
 | Input Parameter | Aggro Owner Entity | Entity |  |
 | Input Parameter | Transfer Ratio | Floating Point Numbers |  |
 
-## **3. Taunt Target**
+### **3. Taunt Target**
 
 **Node Functions**
 
@@ -415,7 +417,7 @@ The Taunter Entity taunts the specified Target Entity
 | Input Parameter | Taunter Entity | Entity |  |
 | Input Parameter | Target Entity | Entity |  |
 
-## **4. Remove Target Entity From Aggro List**
+### **4. Remove Target Entity From Aggro List**
 
 **Node Functions**
 
@@ -430,7 +432,7 @@ Removes the Target Entity from the Aggro Owner Entity's Aggro List; this may cau
 | Input Parameter | Target Entity | Entity |  |
 | Input Parameter | Aggro Owner Entity | Entity |  |
 
-## **5. Clear the Aggro List of the Specified Entity**
+### **5. Clear the Aggro List of the Specified Entity**
 
 **Node Functions**
 
@@ -444,7 +446,7 @@ Clears the Aggro List of the specified Entity; this usually causes the Target to
 |-----------------|----------------|--------|-------------|
 | Input Parameter | Target Entity | Entity |  |
 
-## **6. Set the Aggro Value of the Specified Entity**
+### **6. Set the Aggro Value of the Specified Entity**
 
 **Node Functions**
 
@@ -460,7 +462,7 @@ Sets the Aggro Value of the specified Entity on the Aggro Owner Entity
 | Input Parameter | Aggro Owner Entity | Entity |  |
 | Input Parameter | Aggro Value | Integer |  |
 
-## **7. Modify the Aggro Value of the Specified Entity**
+### **7. Modify the Aggro Value of the Specified Entity**
 
 **Node Functions**
 
@@ -478,7 +480,7 @@ Edits the Aggro Value of the specified Entity on the Aggro Owner Entity
 
 ## IV. Signal
 
-## 1. **Send Signal to Server Node Graph**
+### 1. **Send Signal to Server Node Graph**
 
 **Node Functions**
 

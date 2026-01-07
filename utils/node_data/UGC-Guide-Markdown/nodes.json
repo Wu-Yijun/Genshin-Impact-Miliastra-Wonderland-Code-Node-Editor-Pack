@@ -613,7 +613,7 @@
     ]
   },
   {
-    "name": "Trigger Hitbox at Specific Location",
+    "name": "Trigger Sector Hitbox at Specified Attachment Point",
     "category": "ClientExecution",
     "subcategory": "I. Character Skills",
     "description": "Initiates a Hitbox Attack at the specified Attachment Point, with configurable attack parameters\n",
@@ -864,7 +864,7 @@
   {
     "name": "Set Local Variable",
     "category": "ClientExecution",
-    "subcategory": "I. Character Skills",
+    "subcategory": "II. General",
     "description": "Sets the value of a local variable\n",
     "parameters": [
       {
@@ -884,14 +884,14 @@
   {
     "name": "Break Loop",
     "category": "ClientExecution",
-    "subcategory": "I. Character Skills",
+    "subcategory": "II. General",
     "description": "Break out of a Finite Loop. The output pin must connect to the [Break Loop] input parameter of the [Finite Loop] Node\n",
     "parameters": []
   },
   {
     "name": "Finite Loop",
     "category": "ClientExecution",
-    "subcategory": "I. Character Skills",
+    "subcategory": "II. General",
     "description": "From the [Loop Start Value] to the [Loop End Value], the loop iterates, incrementing the Integer by 1 each time. On each iteration, it executes the Nodes connected to [Loop Body]. After a full iteration, it executes the Nodes connected to [Loop Complete].\nUse [Break Loop] to end the iteration early\n",
     "parameters": [
       {
@@ -2045,14 +2045,14 @@
   {
     "name": "Node Graph Begins",
     "category": "ClientOther",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Start event of the Skill Node Graph\nUsed to customize the Skill logic after this Node; subsequent Nodes execute in the order defined by the Node Graph\n",
     "parameters": []
   },
   {
     "name": "Node Graph End (Boolean)",
     "category": "ClientOther",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "End Node for Boolean Local Filter\nOutputs True or False as the final result; applies to the referenced logic\n",
     "parameters": [
       {
@@ -2066,7 +2066,7 @@
   {
     "name": "Node Graph End (Integer)",
     "category": "ClientOther",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "End Node for Integer Local Filter\nOutputs an Integer value as the final result; applies to the referenced logic\n",
     "parameters": [
       {
@@ -2376,7 +2376,7 @@
     ]
   },
   {
-    "name": "Get Entity‘s Type",
+    "name": "Get Entity's Type",
     "category": "ClientQuery",
     "subcategory": "IV. Entity Related",
     "description": "Returns the type of the specified Entity\n",
@@ -2506,7 +2506,7 @@
     "description": "Filters Entities within a spherical range according to specific rules and a maximum count, and returns a list of Entities that meet the conditions\n",
     "parameters": [
       {
-        "type": "Parameter",
+        "type": "Input Parameter",
         "name": "Radius",
         "dataType": "Floating Point Numbers",
         "description": ""
@@ -4117,7 +4117,7 @@
         "type": "Output Parameter",
         "name": "Tab ID",
         "dataType": "Integer",
-        "description": "The tab ID\n![](https://act-webstatic.mihoyo.com/ugc-tutorial/knowledge/cn/en-us/mh9ji0030dzs/b44601b1-56b3-4b0e-993e-719d6777da7d.png)"
+        "description": "The tab ID"
       },
       {
         "type": "Output Parameter",
@@ -9414,7 +9414,7 @@
   {
     "name": "Multiple Branches",
     "category": "ServerFlowControl",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Accepts one input parameter as the control expression (supports Integer or String). Branches into multiple paths based on its value\nWhen the value on an Output Pin equals the control expression, execution continues along that Output Pin. If no pin matches, the [Default] pin is taken\n",
     "parameters": [
       {
@@ -9428,7 +9428,7 @@
   {
     "name": "Double Branch",
     "category": "ServerFlowControl",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Branches into True or False based on the evaluated condition\nWhen the Boolean is True, the [True] execution flow runs; when it is False, the [False] execution flow runs\n",
     "parameters": [
       {
@@ -9442,7 +9442,7 @@
   {
     "name": "Enumerations Equal",
     "category": "ServerOperation",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "After confirming the Enumeration type, determines whether the two input values are equal\n",
     "parameters": [
       {
@@ -9468,7 +9468,7 @@
   {
     "name": "Assembly List",
     "category": "ServerOperation",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Assembles multiple Input Parameters of the same type (up to 100) into a single List\n",
     "parameters": [
       {
@@ -9488,18 +9488,18 @@
   {
     "name": "Equal",
     "category": "ServerOperation",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Determines whether two inputs are equal\nSome Parameter Types have special comparison rules:\nFloating Point Numbers: Floating Point Numbers are compared using approximate equality. When the difference between two Floating Point Numbers is less than an extremely small value, the two numbers are considered equal. For example: 2.0000001 and 2.0 are considered equal\n3D Vector: The x, y, and z components of a 3D Vector are compared using Floating Point approximate equality\n",
     "parameters": [
       {
         "type": "Input Parameter",
-        "name": "Enumeration 1",
+        "name": "Input 1",
         "dataType": "Generic",
         "description": ""
       },
       {
         "type": "Input Parameter",
-        "name": "Enumeration 2",
+        "name": "Input 2",
         "dataType": "Generic",
         "description": ""
       },
@@ -9514,7 +9514,7 @@
   {
     "name": "Data Type Conversion",
     "category": "ServerOperation",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Converts input parameter types to another type for output. For specific rules, see [Basic Concepts](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhk23ora1wom) - [Conversion Rules Between Basic Data Types]\n",
     "parameters": [
       {
@@ -10992,7 +10992,7 @@
   {
     "name": "Query Game Mode and Player Number",
     "category": "ServerQuery",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Searches the theoretical number of players entering the match, including players via Matchmaking or Room creation, and the method of entry\n",
     "parameters": [
       {
@@ -11012,7 +11012,7 @@
   {
     "name": "Get Local Variable",
     "category": "ServerQuery",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Retrieves a Local Variable and optionally sets its [Initial Value]\nAfter setting the [Initial Value], the [Value] output parameter will be equal to the input [Initial Value]\nWhen the output [Local Variable] is connected to the [Set Local Variable] Execution Node's input [Local Variable], the input [Value] of [Set Local Variable] overwrites this Search Node's output [Value]. The next time you use [Get Local Variable], the output [Value] is the overwritten value\n",
     "parameters": [
       {
@@ -12894,7 +12894,7 @@
       {
         "type": "Output Parameter",
         "name": "Aggro Multiplier",
-        "dataType": "Float",
+        "dataType": "Floating Point Numbers",
         "description": ""
       }
     ]
@@ -12940,7 +12940,7 @@
       {
         "type": "Output Parameter",
         "name": "In Combat",
-        "dataType": "Boolean Value",
+        "dataType": "Boolean",
         "description": ""
       }
     ]

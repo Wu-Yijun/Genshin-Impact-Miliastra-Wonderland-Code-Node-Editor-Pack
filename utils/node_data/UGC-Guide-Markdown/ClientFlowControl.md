@@ -1,6 +1,6 @@
 ## I. General
 
-## **1. Double Branch**
+### **1. Double Branch**
 
 **Node Functions**
 

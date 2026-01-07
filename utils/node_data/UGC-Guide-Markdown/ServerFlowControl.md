@@ -1,4 +1,6 @@
-## **1. Multiple Branches**
+## I. General
+
+### **1. Multiple Branches**
 
 **Node Functions**
 
@@ -12,7 +14,7 @@ When the value on an Output Pin equals the control expression, execution continu
 |-----------------|--------------------|---------|-----------------------------------|
 | Input Parameter | Control Expression | Generic | Only supports Integers or Strings |
 
-## **2. Double Branch**
+### **2. Double Branch**
 
 **Node Functions**
 

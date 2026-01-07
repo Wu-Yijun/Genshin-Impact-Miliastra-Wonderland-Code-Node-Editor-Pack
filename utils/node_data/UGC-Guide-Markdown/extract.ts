@@ -18,30 +18,36 @@ interface NodeEntry {
 }
 
 const EN = {
+  id: "en",
+  suffix: "",
+  markdown: /(?<!\.zh)\.md$/,
   "**Node Functions**": "**Node Functions**",
   "**Node Parameters**": "**Node Parameters**",
   "| Parameter Type | Parameter Name | Type | Description |": "| Parameter Type | Parameter Name | Type | Description |",
   "| Parameter Type | Parameter Name | Type | Description | Description |": "| Parameter Type | Parameter Name | Type | Description | Description |",
   'General': 'General',
-  "/^## \d+\.(\s+.+)$/": /^## \d+\.(\s+.+)$/,
+  "/^## \d+\.(\s+.+)$/": /^### \d+\.(\s+.+)$/,
   "/^[IVXLC]+\./": /^[IVXLC]+\./,
   "/^[0-9A-Z]/": /^[0-9A-Z]/
 };
 const ZH = {
+  id: "zh",
+  suffix: ".zh",
+  markdown: /\.zh\.md$/,
   "**Node Functions**": "**节点功能**",
   "**Node Parameters**": "**节点参数**",
   "| Parameter Type | Parameter Name | Type | Description |": "| 参数类型 | 参数名 | 类型 | 说明 |",
   "| Parameter Type | Parameter Name | Type | Description | Description |": "| 参数类型 | 参数名 | 类型 | 说明 | 说明 |",
   'General': '通用',
-  "/^## \d+\.(\s+.+)$/": /^## \d+\.(\p{Script=Han}.+)$/u,
+  "/^## \d+\.(\s+.+)$/": /^### \d+\.(\p{Script=Han}.+)$/u,
   "/^[IVXLC]+\./": /^[一二三四五六七八九十]+、/,
   "/^[0-9A-Z]/": /^\p{Script=Han}/u
 };
 
-const t = ZH;
+let t = ZH;
+// const t = EN;
 
-const workingDir = 'd:/Program/GenshinImpact/projs/Convertor/utils/node_data/UGC-Guide-Markdown';
-const outputFile = path.join(workingDir, 'nodes.zh.json');
+const workingDir = import.meta.dirname;
 
 type S = "ready" | "header" | "desc" | "params" | "th" | "ts" | "tb";
 
@@ -52,7 +58,14 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
   for (let i = 0; i < old_lines.length; i++) {
     if (old_lines[i].startsWith("|") && !old_lines[i].endsWith("|")) {
       let l = old_lines[i];
-      while (!old_lines[i].endsWith("|")) l += '\n' + old_lines[++i];
+      while (!old_lines[i].endsWith("|")) {
+        i++;
+        l += '\n' + old_lines[i];
+        if (!t["/^[0-9A-Z]/"].test(old_lines[i]) && !/^[a-z]/.test(old_lines[i])) {
+          console.log("[WARN]: Unexpected Line In Table:", JSON.stringify(old_lines[i]));
+          debugger;
+        }
+      }
       lines.push(l);
       // console.log(JSON.stringify(l));
       if (l.split("").filter(x => x === "|").length !== 5) {
@@ -67,30 +80,36 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
   let l_len = 0;
   let param = 0;
 
+  let index = 1;
+
   // format checker
   lines.forEach((l, ii) => {
     if (l.startsWith("## ")) {
       let a = l.slice(3).replace(/\*\*/g, "").trim();
-      if (/^\d+\./.test(a)) {
-        // ## 1.
-        if (s !== "ready" && s !== "tb" && s !== "header") {
-          if (s === "th") {
-            console.warn(l.slice(ii - 3, ii));// 允许空表
-          } else {
-            debugger;
-          }
-        }
-        s = "desc";
-      } else if (t["/^[IVXLC]+\./"].test(a)) {
+      if (t["/^[IVXLC]+\./"].test(a)) {
         // ## I.
         if (s !== "ready" && s !== "tb") {
-          if (s === "th") {
-            console.warn(l.slice(ii - 3, ii));// 允许空表
-          } else {
-            debugger;
-          }
+          debugger;
         }
         s = "header";
+        index = 1;
+      } else {
+        console.log(filePath, lines.slice(ii - 1, ii + 1));
+        debugger;
+      }
+    } else if (l.startsWith("### ")) {
+      let a = l.slice(3).replace(/\*\*/g, "").trim();
+      if (/^\d+\./.test(a)) {
+        // ## 1.
+        if (s !== "tb" && s !== "header") {
+          debugger;
+        }
+        s = "desc";
+        if (parseInt(a) !== index) {
+          console.log(a, parseInt(a), index);
+          debugger;
+        }
+        index++;
       } else {
         console.log(filePath, lines.slice(ii - 1, ii + 1));
         debugger;
@@ -193,6 +212,8 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
     line = lines[++i];
     if (line === undefined || line.startsWith("## ")) {
       // 跳过表格
+      debugger;
+      nodes.push(currentNode);
       continue;
     }
     assert(line === t["| Parameter Type | Parameter Name | Type | Description |"] ||
@@ -218,7 +239,7 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
 
 function main() {
   // const files = fs.readdirSync(workingDir).filter(f => f.endsWith('.md') && !f.endsWith(".zh.md") && f !== 'readme.md');
-  const files = fs.readdirSync(workingDir).filter(f => f.endsWith(".zh.md") && f !== 'readme.md');
+  const files = fs.readdirSync(workingDir).filter(f => t.markdown.test(f) && f !== 'readme.md');
   const allNodes: NodeEntry[] = [];
 
   for (const file of files) {
@@ -228,9 +249,21 @@ function main() {
     allNodes.push(...nodes);
   }
 
+  const serverSet = new Set<string>();
+  const clientSet = new Set<string>();
+  for (const n of allNodes) {
+    const set = n.category.startsWith("Server") ? serverSet : n.category.startsWith("Client") ? clientSet : null;
+    if (set!.has(n.name)) console.warn(`Duplicate node name: ${n.name}`);
+    set!.add(n.name);
+  }
 
+
+  const outputFile = path.join(workingDir, `nodes${t.suffix}.json`);
   fs.writeFileSync(outputFile, JSON.stringify(allNodes, null, 2));
   console.log(`Done! Saved to ${outputFile}`);
 }
 
+t = ZH;
+main();
+t = EN;
 main();

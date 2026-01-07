@@ -216,6 +216,13 @@
     ]
   },
   {
+    "name": "强制退出瞄准状态",
+    "category": "ClientExecution.zh",
+    "subcategory": "一、角色技能",
+    "description": "当角色处于瞄准状态是，会强制退出瞄准状态\n",
+    "parameters": []
+  },
+  {
     "name": "设置自身攻击目标",
     "category": "ClientExecution.zh",
     "subcategory": "一、角色技能",
@@ -538,6 +545,20 @@
     ]
   },
   {
+    "name": "玩家转向指定朝向",
+    "category": "ClientExecution.zh",
+    "subcategory": "一、角色技能",
+    "description": "玩家转向三维向量配置的方向\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "朝向",
+        "dataType": "三维向量",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "修改攻击权重",
     "category": "ClientExecution.zh",
     "subcategory": "一、角色技能",
@@ -834,6 +855,13 @@
     ]
   },
   {
+    "name": "重置技能目标",
+    "category": "ClientExecution.zh",
+    "subcategory": "一、角色技能",
+    "description": "重置技能目标，重新运行一次技能选取逻辑，选择一个新的目标\n",
+    "parameters": []
+  },
+  {
     "name": "设置局部变量",
     "category": "ClientExecution.zh",
     "subcategory": "二、通用",
@@ -852,6 +880,13 @@
         "description": ""
       }
     ]
+  },
+  {
+    "name": "跳出循环",
+    "category": "ClientExecution.zh",
+    "subcategory": "二、通用",
+    "description": "从有限循环中跳出。出引脚需要与节点【有限循环】的【跳出循环】入参相连\n",
+    "parameters": []
   },
   {
     "name": "有限循环",
@@ -978,6 +1013,20 @@
     ]
   },
   {
+    "name": "清空指定实体的仇恨列表",
+    "category": "ClientExecution.zh",
+    "subcategory": "三、自定义仇恨",
+    "description": "仅自定义仇恨模式可用\n清空指定实体的仇恨列表，这通常会导致该目标脱战\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "目标实体",
+        "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "设置指定实体的仇恨值",
     "category": "ClientExecution.zh",
     "subcategory": "三、自定义仇恨",
@@ -1025,6 +1074,20 @@
         "type": "入参",
         "name": "仇恨值增量",
         "dataType": "整数",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "向服务器节点图发送信号",
+    "category": "ClientExecution.zh",
+    "subcategory": "四、信号",
+    "description": "在技能节点图中，可以向服务器节点图发送信号，所有服务器节点图都可以监听到该信号\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "信号名",
+        "dataType": "字符串",
         "description": ""
       }
     ]
@@ -1419,6 +1482,26 @@
         "type": "出参",
         "name": "弧度",
         "dataType": "浮点数",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "绝对值运算",
+    "category": "ClientOperation.zh",
+    "subcategory": "二、数学",
+    "description": "返回输入的绝对值\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "输入",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "结果",
+        "dataType": "泛型",
         "description": ""
       }
     ]
@@ -1975,7 +2058,7 @@
       {
         "type": "入参",
         "name": "输出结果（布尔型）",
-        "dataType": "布尔型",
+        "dataType": "布尔值",
         "description": ""
       }
     ]
@@ -2036,6 +2119,74 @@
         "type": "出参",
         "name": "长度",
         "dataType": "整数",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取列表最大值",
+    "category": "ClientQuery.zh",
+    "subcategory": "一、列表相关",
+    "description": "仅对浮点数列表和整数列表有意义，返回列表中的最大值\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "列表",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "最大值",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取列表最小值",
+    "category": "ClientQuery.zh",
+    "subcategory": "一、列表相关",
+    "description": "仅对浮点数列表和整数列表有意义，返回列表中的最小值\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "列表",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "最小值",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取射线筛选类型列表",
+    "category": "ClientQuery.zh",
+    "subcategory": "一、列表相关",
+    "description": "将所需的射线筛选类型拼装为一个列表。可筛选项有受击盒、场景、物件自身碰撞\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "列表",
+        "dataType": "枚举列表",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取实体类型列表",
+    "category": "ClientQuery.zh",
+    "subcategory": "一、列表相关",
+    "description": "将所需的实体类型拼装为一个列表。类型分为关卡、物件、玩家、角色、造物\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "列表",
+        "dataType": "枚举列表",
         "description": ""
       }
     ]
@@ -2211,6 +2362,20 @@
     ]
   },
   {
+    "name": "获取目标实体",
+    "category": "ClientQuery.zh",
+    "subcategory": "四、实体相关",
+    "description": "获取目标实体，根据过滤器节点图被引用的功能模块不同，其指代含义会有区别\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "目标实体",
+        "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "获取实体的类型",
     "category": "ClientQuery.zh",
     "subcategory": "四、实体相关",
@@ -2266,6 +2431,20 @@
         "type": "出参",
         "name": "旋转",
         "dataType": "三维向量",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取自身实体",
+    "category": "ClientQuery.zh",
+    "subcategory": "四、实体相关",
+    "description": "返回该节点图所关联的实体\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "自身实体",
+        "dataType": "实体",
         "description": ""
       }
     ]
@@ -2327,7 +2506,7 @@
     "description": "以特定的规则和数量上限筛选在球形范围内的实体，满足条件的实体会组成实体列表输出\n",
     "parameters": [
       {
-        "type": "参",
+        "type": "入参",
         "name": "半径",
         "dataType": "浮点数",
         "description": ""
@@ -2425,6 +2604,34 @@
     ]
   },
   {
+    "name": "查询自身是否已入战",
+    "category": "ClientQuery.zh",
+    "subcategory": "六、玩家与角色相关",
+    "description": "查询该节点图关联的实体是否入战\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "是否入战",
+        "dataType": "布尔值",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取当前角色",
+    "category": "ClientQuery.zh",
+    "subcategory": "六、玩家与角色相关",
+    "description": "获取该玩家客户端当前控制的角色实体\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "角色实体",
+        "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "获取角色归属的玩家实体",
     "category": "ClientQuery.zh",
     "subcategory": "六、玩家与角色相关",
@@ -2440,6 +2647,20 @@
         "type": "出参",
         "name": "所属玩家实体",
         "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取在场玩家实体列表",
+    "category": "ClientQuery.zh",
+    "subcategory": "六、玩家与角色相关",
+    "description": "获取在场所有玩家实体组成的列表\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "玩家实体列表",
+        "dataType": "实体列表",
         "description": ""
       }
     ]
@@ -2702,6 +2923,20 @@
         "type": "出参",
         "name": "命中实体",
         "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取扫描组件可扫描的所有合法对象",
+    "category": "ClientQuery.zh",
+    "subcategory": "十二、扫描",
+    "description": "获取扫描组件可扫描的所有合法对象，此处的合法对象指代所有携带扫描组件且过滤器返回为“是”的单位，与单位的可扫描状态无关\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "对象列表",
+        "dataType": "实体列表",
         "description": ""
       }
     ]
@@ -3007,6 +3242,20 @@
     ]
   },
   {
+    "name": "实体移除/销毁时",
+    "category": "ServerEvent.zh",
+    "subcategory": "三、实体相关",
+    "description": "关卡内任意实体被移除或销毁时触发该事件，该事件仅在关卡实体上可以触发\n实体被销毁或被移除均会触发该事件。因此实体被销毁时，会依次触发【实体销毁时】以及【实体移除/销毁时】事件\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "事件源GUID",
+        "dataType": "GUID",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "实体阵营变化时",
     "category": "ServerEvent.zh",
     "subcategory": "四、阵营相关",
@@ -3065,6 +3314,20 @@
     ]
   },
   {
+    "name": "角色复苏时",
+    "category": "ServerEvent.zh",
+    "subcategory": "五、玩家与角色相关",
+    "description": "角色复苏时，角色实体上的的节点图可以触发该事件\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "角色实体",
+        "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "玩家传送完成时",
     "category": "ServerEvent.zh",
     "subcategory": "五、玩家与角色相关",
@@ -3101,6 +3364,34 @@
         "name": "原因",
         "dataType": "枚举",
         "description": "节点图导致：因节点图的【销毁实体】节点导致的角色倒下\n正常倒下：因生命值变为0导致的角色倒下\n非正常倒下：因溺水、坠入深渊等导致的角色倒下"
+      }
+    ]
+  },
+  {
+    "name": "玩家所有角色复苏时",
+    "category": "ServerEvent.zh",
+    "subcategory": "五、玩家与角色相关",
+    "description": "玩家的所有角色均复苏时，玩家实体的节点图触发该事件\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "玩家实体",
+        "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "玩家异常倒下并复苏时",
+    "category": "ServerEvent.zh",
+    "subcategory": "五、玩家与角色相关",
+    "description": "角色因溺水、坠入深渊等原因倒下并复苏时，玩家实体上触发该事件\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "玩家实体",
+        "dataType": "实体",
+        "description": ""
       }
     ]
   },
@@ -3826,7 +4117,7 @@
         "type": "出参",
         "name": "选项卡序号",
         "dataType": "整数",
-        "description": "选项卡的序号\n![](https://act-webstatic.mihoyo.com/ugc-tutorial/knowledge/cn/zh-cn/mhn7ko01v3yw/5544e59c-49ec-496c-9eaa-1b8440504351.png)"
+        "description": "选项卡的序号"
       },
       {
         "type": "出参",
@@ -4671,6 +4962,13 @@
     ]
   },
   {
+    "name": "跳出循环",
+    "category": "ServerExecution.zh",
+    "subcategory": "一、通用节点",
+    "description": "从有限循环中跳出。出引脚需要与节点【有限循环】的【跳出循环】入参相连\n",
+    "parameters": []
+  },
+  {
     "name": "有限循环",
     "category": "ServerExecution.zh",
     "subcategory": "一、通用节点",
@@ -5119,6 +5417,13 @@
         "description": "所要移除的实体"
       }
     ]
+  },
+  {
+    "name": "结算关卡",
+    "category": "ServerExecution.zh",
+    "subcategory": "六、关卡相关",
+    "description": "触发关卡结算流程，会按照[关卡结算](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhx1du08nhwo)内的逻辑进行局外的逻辑结算\n",
+    "parameters": []
   },
   {
     "name": "设置当前环境时间",
@@ -7315,6 +7620,20 @@
     ]
   },
   {
+    "name": "实体清空单位标签",
+    "category": "ServerExecution.zh",
+    "subcategory": "二十七、单位标签",
+    "description": "对指定实体清空单位标签\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "目标实体",
+        "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "实体添加单位标签",
     "category": "ServerExecution.zh",
     "subcategory": "二十七、单位标签",
@@ -7395,6 +7714,20 @@
     ]
   },
   {
+    "name": "清空指定目标的仇恨列表",
+    "category": "ServerExecution.zh",
+    "subcategory": "二十八、自定义仇恨",
+    "description": "仅自定义仇恨模式可用\n清空仇恨拥有者的仇恨列表。可能会导致其脱战\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "仇恨拥有者",
+        "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "设置指定实体的仇恨值",
     "category": "ServerExecution.zh",
     "subcategory": "二十八、自定义仇恨",
@@ -7419,6 +7752,13 @@
         "description": ""
       }
     ]
+  },
+  {
+    "name": "发送信号",
+    "category": "ServerExecution.zh",
+    "subcategory": "二十九、信号",
+    "description": "向关卡全局发送一个自定义信号，使用前需要先选择对应的信号名，然后才能正确的使用该信号的参数\n",
+    "parameters": []
   },
   {
     "name": "设置实体生效铭牌",
@@ -7551,6 +7891,20 @@
         "name": "默认返回选择",
         "dataType": "整数列表",
         "description": "如果卡牌选择器超时/未交互/卡牌选择器异常关闭等情况，支持强制赋予配置的该结果\n该结果的列表长度，需要和合法选择卡牌数量一致"
+      }
+    ]
+  },
+  {
+    "name": "随机卡牌选择器选择列表",
+    "category": "ServerExecution.zh",
+    "subcategory": "三十二、卡牌选择器",
+    "description": "将输入的列表进行随机排序\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "列表",
+        "dataType": "整数列表",
+        "description": ""
       }
     ]
   },
@@ -7783,6 +8137,47 @@
     ]
   },
   {
+    "name": "清空字典",
+    "category": "ServerExecution.zh",
+    "subcategory": "三十五、字典",
+    "description": "清空指定字典的键值对\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "字典",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "以键对字典移除键值对",
+    "category": "ServerExecution.zh",
+    "subcategory": "三十五、字典",
+    "description": "以键移除指定字典中的键值对\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "字典",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "入参",
+        "name": "键",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "修改结构体",
+    "category": "ServerExecution.zh",
+    "subcategory": "三十六、结构体",
+    "description": "在选定结构体后，可以修改该结构体的每个参数\n",
+    "parameters": []
+  },
+  {
     "name": "从背包商店出售表中移除商品",
     "category": "ServerExecution.zh",
     "subcategory": "三十七、商店",
@@ -7882,6 +8277,20 @@
         "type": "入参",
         "name": "商店序号",
         "dataType": "整数",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "关闭商店",
+    "category": "ServerExecution.zh",
+    "subcategory": "三十七、商店",
+    "description": "在游戏运行过程中以玩家实体的视角关闭所有已打开的商店\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "玩家实体",
+        "dataType": "实体",
         "description": ""
       }
     ]
@@ -9084,13 +9493,13 @@
     "parameters": [
       {
         "type": "入参",
-        "name": "枚举1",
+        "name": "输入1",
         "dataType": "泛型",
         "description": ""
       },
       {
         "type": "入参",
-        "name": "枚举2",
+        "name": "输入2",
         "dataType": "泛型",
         "description": ""
       },
@@ -9099,6 +9508,26 @@
         "name": "结果",
         "dataType": "布尔值",
         "description": "相等输出“是”，不相等输出“否”"
+      }
+    ]
+  },
+  {
+    "name": "数据类型转换",
+    "category": "ServerOperation.zh",
+    "subcategory": "一、通用",
+    "description": "将输入的参数类型转换为另一种类型输出。具体规则见[基础概念](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhk23ora1wom)-【基础数据类型之间的转换规则】\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "输入",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "输出",
+        "dataType": "泛型",
+        "description": ""
       }
     ]
   },
@@ -9463,6 +9892,26 @@
     ]
   },
   {
+    "name": "根据时间戳计算星期几",
+    "category": "ServerOperation.zh",
+    "subcategory": "二、数学",
+    "description": "根据输入的时间戳将其转化为星期几\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "时间戳",
+        "dataType": "整数",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "星期",
+        "dataType": "整数",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "弧度转角度",
     "category": "ServerOperation.zh",
     "subcategory": "二、数学",
@@ -9601,6 +10050,26 @@
       {
         "type": "出参",
         "name": "较小值",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "绝对值运算",
+    "category": "ServerOperation.zh",
+    "subcategory": "二、数学",
+    "description": "返回输入的绝对值\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "输入",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "结果",
         "dataType": "泛型",
         "description": ""
       }
@@ -9798,6 +10267,26 @@
         "type": "出参",
         "name": "结果",
         "dataType": "浮点数",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "取符号运算",
+    "category": "ServerOperation.zh",
+    "subcategory": "二、数学",
+    "description": "输入为正数时，返回1\n输入为负数时，返回-1\n输入为0时，返回0\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "输入",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "结果",
+        "dataType": "泛型",
         "description": ""
       }
     ]
@@ -10345,6 +10834,26 @@
     ]
   },
   {
+    "name": "按位取补",
+    "category": "ServerOperation.zh",
+    "subcategory": "二、数学",
+    "description": "将输入值作为二进制进行按位取补运算后返回结果\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "值",
+        "dataType": "整数",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "结果",
+        "dataType": "整数",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "按位写入",
     "category": "ServerOperation.zh",
     "subcategory": "二、数学",
@@ -10467,6 +10976,20 @@
     ]
   },
   {
+    "name": "拆分结构体",
+    "category": "ServerOperation.zh",
+    "subcategory": "四、结构体",
+    "description": "获取指定结构体的所有参数\n",
+    "parameters": []
+  },
+  {
+    "name": "拼装结构体",
+    "category": "ServerOperation.zh",
+    "subcategory": "四、结构体",
+    "description": "将多个参数拼合为一个结构体类型的值\n",
+    "parameters": []
+  },
+  {
     "name": "查询对局游玩方式及人数",
     "category": "ServerQuery.zh",
     "subcategory": "一、通用",
@@ -10509,6 +11032,34 @@
         "name": "值",
         "dataType": "泛型",
         "description": "未被覆写时，该值等于初始值，被覆写后，该值等于被覆写后的值"
+      }
+    ]
+  },
+  {
+    "name": "查询服务器时区",
+    "category": "ServerQuery.zh",
+    "subcategory": "二、数学",
+    "description": "可以查询服务器的时区\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "时区",
+        "dataType": "整数",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "查询时间戳（UTC+0时区）",
+    "category": "ServerQuery.zh",
+    "subcategory": "二、数学",
+    "description": "可以查询当前的时间戳\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "时间戳",
+        "dataType": "整数",
+        "description": ""
       }
     ]
   },
@@ -10599,6 +11150,48 @@
     ]
   },
   {
+    "name": "三维向量：零向量",
+    "category": "ServerQuery.zh",
+    "subcategory": "二、数学",
+    "description": "返回(0,0,0)\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "(0,0,0)",
+        "dataType": "三维向量",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "三维向量：前方",
+    "category": "ServerQuery.zh",
+    "subcategory": "二、数学",
+    "description": "返回(0,0,1)\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "(0,0,1)",
+        "dataType": "三维向量",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "三维向量：上方",
+    "category": "ServerQuery.zh",
+    "subcategory": "二、数学",
+    "description": "返回(0,1,0)\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "(0,1,0)",
+        "dataType": "三维向量",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "三维向量：下方",
     "category": "ServerQuery.zh",
     "subcategory": "二、数学",
@@ -10607,6 +11200,20 @@
       {
         "type": "出参",
         "name": "(0,-1,0)",
+        "dataType": "三维向量",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "三维向量：右侧",
+    "category": "ServerQuery.zh",
+    "subcategory": "二、数学",
+    "description": "返回(1,0,0)\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "(1,0,0)",
         "dataType": "三维向量",
         "description": ""
       }
@@ -10622,6 +11229,20 @@
         "type": "出参",
         "name": "(-1,0,0)",
         "dataType": "三维向量",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "圆周率",
+    "category": "ServerQuery.zh",
+    "subcategory": "二、数学",
+    "description": "返回圆周率π的近似值，约为3.142\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "圆周率（π）",
+        "dataType": "浮点数",
         "description": ""
       }
     ]
@@ -10673,6 +11294,66 @@
       {
         "type": "出参",
         "name": "值",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取列表长度",
+    "category": "ServerQuery.zh",
+    "subcategory": "三、列表相关",
+    "description": "获取列表长度（列表中的元素个数）\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "列表",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "长度",
+        "dataType": "整数",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取列表最大值",
+    "category": "ServerQuery.zh",
+    "subcategory": "三、列表相关",
+    "description": "仅对浮点数列表和整数列表有意义，返回列表中的最大值\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "列表",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "最大值",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取列表最小值",
+    "category": "ServerQuery.zh",
+    "subcategory": "三、列表相关",
+    "description": "仅对浮点数列表和整数列表有意义，返回列表中的最小值\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "列表",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "最小值",
         "dataType": "泛型",
         "description": ""
       }
@@ -10844,6 +11525,20 @@
         "type": "出参",
         "name": "是否在场",
         "dataType": "布尔值",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取场上所有实体",
+    "category": "ServerQuery.zh",
+    "subcategory": "六、实体相关",
+    "description": "获取当前场上所有在场的实体，该实体列表的数量可能会较大\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "实体列表",
+        "dataType": "实体列表",
         "description": ""
       }
     ]
@@ -11441,6 +12136,20 @@
     ]
   },
   {
+    "name": "获取自身实体",
+    "category": "ServerQuery.zh",
+    "subcategory": "六、实体相关",
+    "description": "返回该节点图所关联的实体\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "自身实体",
+        "dataType": "实体",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "以实体查询GUID",
     "category": "ServerQuery.zh",
     "subcategory": "六、实体相关",
@@ -11497,6 +12206,20 @@
         "name": "当前循环天数",
         "dataType": "整数",
         "description": "当前已经循环了多少天"
+      }
+    ]
+  },
+  {
+    "name": "查询游戏已进行时间",
+    "category": "ServerQuery.zh",
+    "subcategory": "七、关卡相关",
+    "description": "查询游戏已进行了多长时间，单位秒\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "游戏已进行时间",
+        "dataType": "整数",
+        "description": ""
       }
     ]
   },
@@ -11707,6 +12430,20 @@
     ]
   },
   {
+    "name": "获取在场玩家实体列表",
+    "category": "ServerQuery.zh",
+    "subcategory": "九、玩家与角色相关",
+    "description": "获取在场所有玩家实体组成的列表\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "玩家实体列表",
+        "dataType": "实体列表",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "获取指定玩家所有角色实体",
     "category": "ServerQuery.zh",
     "subcategory": "九、玩家与角色相关",
@@ -11819,7 +12556,7 @@
     ]
   },
   {
-    "name": "获取造物的经典模式仇恨列表",
+    "name": "获取默认模式的造物仇恨列表",
     "category": "ServerQuery.zh",
     "subcategory": "十三、造物",
     "description": "获取造物的经典仇恨模式的仇恨列表，即仅仇恨配置为【默认类型】时，该节点才会有正确的输出列表\n",
@@ -12124,6 +12861,20 @@
         "type": "出参",
         "name": "单位标签列表",
         "dataType": "整数列表",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "查询全局仇恨转移倍率",
+    "category": "ServerQuery.zh",
+    "subcategory": "十八、自定义仇恨",
+    "description": "查询全局仇恨转移倍率，在【关卡设置】中可以配置\n",
+    "parameters": [
+      {
+        "type": "出参",
+        "name": "全局仇恨转移倍率",
+        "dataType": "浮点数",
         "description": ""
       }
     ]
@@ -12485,6 +13236,26 @@
     ]
   },
   {
+    "name": "查询字典长度",
+    "category": "ServerQuery.zh",
+    "subcategory": "二十二、字典",
+    "description": "查询字典中键值对的数量\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "字典",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "长度",
+        "dataType": "整数",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "以键查询字典值",
     "category": "ServerQuery.zh",
     "subcategory": "二十二、字典",
@@ -12505,6 +13276,46 @@
       {
         "type": "出参",
         "name": "值",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取字典中键组成的列表",
+    "category": "ServerQuery.zh",
+    "subcategory": "二十二、字典",
+    "description": "获取字典中所有键组成的列表。由于字典中键值对是无序排列的，所以取出的键列表也不一定按照其插入顺序排列\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "字典",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "键列表",
+        "dataType": "泛型",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "获取字典中值组成的列表",
+    "category": "ServerQuery.zh",
+    "subcategory": "二十二、字典",
+    "description": "获取字典中所有值组成的列表。由于字典中键值对是无序排列的，所以取出的值列表也不一定按照其插入顺序排列\n",
+    "parameters": [
+      {
+        "type": "入参",
+        "name": "字典",
+        "dataType": "泛型",
+        "description": ""
+      },
+      {
+        "type": "出参",
+        "name": "值列表",
         "dataType": "泛型",
         "description": ""
       }

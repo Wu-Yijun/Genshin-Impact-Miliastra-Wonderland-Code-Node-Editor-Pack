@@ -1,6 +1,6 @@
 ## I. Custom Variables
 
-## **1. When Node Graph Variable Changes**
+### **1. When Node Graph Variable Changes**
 
 **Node Functions**
 
@@ -20,7 +20,7 @@ Vessel-type Node Graph Variables do not provide before-value and after-value Out
 | Output Parameter | Pre-Change Value | Generic | The Variable's value before the change |
 | Output Parameter | Post-Change Value | Generic | The Variable's value after the change |
 
-## **2. When Custom Variable Changes**
+### **2. When Custom Variable Changes**
 
 **Node Functions**
 
@@ -42,7 +42,7 @@ Vessel-type Custom Variables do not provide before-value and after-value Output 
 
 ## II. Preset Status
 
-## **1. When Preset Status Changes**
+### **1. When Preset Status Changes**
 
 **Node Functions**
 
@@ -60,7 +60,7 @@ This event is triggered when the Preset Status of the Entity associated with the
 
 ## III. Entity Related
 
-## **1.** When Character Movement SPD Meets Condition
+### **1.** When Character Movement SPD Meets Condition
 
 **Node Functions**
 
@@ -77,7 +77,7 @@ Adds the Unit Status effect [Monitor Movement Speed] to the Character Entity. Th
 | Output Parameter | Condition: Comparison Value | Floating Point Numbers |  |
 | Output Parameter | Current Movement SPD | Floating Point Numbers |  |
 
-## **2. When Entity Is Created**
+### **2. When Entity Is Created**
 
 **Node Functions**
 
@@ -92,7 +92,7 @@ All types of Entities can trigger this event. Stage Entities, Character Entities
 | Output Parameter | Event Source Entity | Entity |  |
 | Output Parameter | Event Source GUID | GUID |  |
 
-## **3. When Entity Is Destroyed**
+### **3. When Entity Is Destroyed**
 
 **Node Functions**
 
@@ -112,7 +112,7 @@ This event triggers when objects and creations within the stage are destroyed. T
 | Output Parameter | Owner Entity | Entity |  |
 | Output Parameter | Custom Variable Component Snapshot | Custom Variable Snapshot | On destroy, captures a snapshot of the Custom Variable component on this Entity. Use the Search Custom Variable Snapshot node to retrieve its Custom Variable values |
 
-## **4. When Entity Is Removed/Destroyed**
+### **4. When Entity Is Removed/Destroyed**
 
 **Node Functions**
 
@@ -128,7 +128,7 @@ This event is triggered upon Entity destruction or removal. Therefore, when an E
 
 ## IV. Faction Related
 
-## **1. When Entity Faction Changes**
+### **1. When Entity Faction Changes**
 
 **Node Functions**
 
@@ -145,7 +145,7 @@ This event is triggered when an Entity's Faction changes
 
 ## V. Player and Character Related
 
-## **1. When the Character Is Down**
+### **1. When the Character Is Down**
 
 **Node Functions**
 
@@ -163,7 +163,7 @@ Normal Down: the Character was Downed because HP reached 0
 Abnormal Down: the character was downed due to drowning, falling into an abyss, etc. |
 | Output Parameter | Knockdown Entity | Entity |  |
 
-## **2. When Character Revives**
+### **2. When Character Revives**
 
 **Node Functions**
 
@@ -175,7 +175,7 @@ When a Character is Revived, the Node Graph on the Character Entity can trigger 
 |------------------|------------------|--------|-------------|
 | Output Parameter | Character Entity | Entity |  |
 
-## **3. When Player Teleport Completes**
+### **3. When Player Teleport Completes**
 
 **Node Functions**
 
@@ -190,7 +190,7 @@ This event is also triggered when a Player enters a Stage for the first time
 | Output Parameter | Player Entity | Entity |  |
 | Output Parameter | Player GUID | GUID |  |
 
-## **4. When All Player's Characters Are Down**
+### **4. When All Player's Characters Are Down**
 
 **Node Functions**
 
@@ -207,7 +207,7 @@ Normal Down: the Character was Downed because HP reached 0
 
 Abnormal Down: the character was downed due to drowning, falling into an abyss, etc. |
 
-## **5. When All Player's Characters Are Revived**
+### **5. When All Player's Characters Are Revived**
 
 **Node Functions**
 
@@ -219,7 +219,7 @@ This event is triggered on the Player Entity's Node Graph when all of the Player
 |------------------|----------------|--------|-------------|
 | Output Parameter | Player Entity | Entity |  |
 
-## **6. When Player Is Abnormally Downed and Revives**
+### **6. When Player Is Abnormally Downed and Revives**
 
 **Node Functions**
 
@@ -233,7 +233,7 @@ This event is triggered on the Player Entity when a Character is Downed and then
 
 ## VI. Collision Triggers
 
-## **1. When Entering Collision Trigger**
+### **1. When Entering Collision Trigger**
 
 **Node Functions**
 
@@ -251,7 +251,7 @@ Node graph events will be sent to the entity B configured with "Collision Trigge
 | Output Parameter | Trigger Entity GUID | GUID |  |
 | Output Parameter | Trigger ID | Integer | The trigger with the corresponding ID in Entity B's Collision Trigger Component |
 
-## **2. When Exiting Collision Trigger**
+### **2. When Exiting Collision Trigger**
 
 **Node Functions**
 
@@ -271,7 +271,7 @@ Node graph events will be sent to the entity B configured with "Collision Trigge
 
 ## VII. Combat
 
-## **1. When HP Is Recovered**
+### **1. When HP Is Recovered**
 
 **Node Functions**
 
@@ -287,7 +287,7 @@ This event is triggered when an Entity's HP is restored
 | Output Parameter | Recovery Amount | Floating Point Numbers | Actual healing amount. If the Entity had not lost any HP prior to healing, the amount is 0 |
 | Output Parameter | Recover Tag List | String List |  |
 
-## **2. When Initiating HP Recovery**
+### **2. When Initiating HP Recovery**
 
 **Node Functions**
 
@@ -303,7 +303,7 @@ This event is triggered on the initiating Entity when an Entity restores HP to o
 | Output Parameter | Recovery Amount | Floating Point Numbers | Actual healing amount. If the Target Entity had not lost any HP prior to healing, the amount is 0 |
 | Output Parameter | Recover Tag List | String List |  |
 
-## **3. When Attack Hits**
+### **3. When Attack Hits**
 
 **Node Functions**
 
@@ -321,7 +321,7 @@ This event is triggered when an Entity's attack hits other Entities
 | Output Parameter | Elemental Type | Enumeration |  |
 | Output Parameter | Elemental Attack Potency | Floating Point Numbers | Elemental Gauge in the Attack |
 
-## **4. When Attacked**
+### **4. When Attacked**
 
 **Node Functions**
 
@@ -339,7 +339,7 @@ This event is triggered when the Entity is attacked
 | Output Parameter | Elemental Type | Enumeration |  |
 | Output Parameter | Elemental Attack Potency | Floating Point Numbers | Elemental Gauge in the Attack |
 
-## **5. When Entering an Interruptible State**
+### **5. When Entering an Interruptible State**
 
 **Node Functions**
 
@@ -355,7 +355,7 @@ This event is triggered when an Entity is attacked and enters the Vulnerable Sta
 
 ## VIII. Motion Device
 
-## **1. When Basic Motion Device Stops**
+### **1. When Basic Motion Device Stops**
 
 **Node Functions**
 
@@ -369,7 +369,7 @@ This event is sent to the Component Owner when a Basic Motion Device on the Basi
 | Output Parameter | Event Source GUID | GUID |  |
 | Output Parameter | Motion Device Name | String |  |
 
-## **2. When Path Reaches Waypoint**
+### **2. When Path Reaches Waypoint**
 
 **Node Functions**
 
@@ -386,7 +386,7 @@ When the Pathing Motion Device reaches a Waypoint, it sends this event to the Ow
 
 ## IX. Hit Detection
 
-## **1. When On-Hit Detection Is Triggered**
+### **1. When On-Hit Detection Is Triggered**
 
 **Node Functions**
 
@@ -406,7 +406,7 @@ If set to True: An Entity was hit. Retrieve values from the Hit Entity output pa
 
 ## X. Timer
 
-## **1. When Timer Is Triggered**
+### **1. When Timer Is Triggered**
 
 **Node Functions**
 
@@ -424,7 +424,7 @@ This event is triggered when the Timer reaches the specified time node
 
 ## XI. Global Timer
 
-## **1. When Global Timer Is Triggered**
+### **1. When Global Timer Is Triggered**
 
 **Node Functions**
 
@@ -442,7 +442,7 @@ The Global Stopwatch Timer does not trigger this event
 
 ## XII. UI Control Groups
 
-## **1. When UI Control Group Is Triggered**
+### **1. When UI Control Group Is Triggered**
 
 **Node Functions**
 
@@ -463,7 +463,7 @@ If the triggering UI control is part of a multi-control UI group, this value rep
 
 ## XIII. Unit Status
 
-## **1. When Unit Status Changes**
+### **1. When Unit Status Changes**
 
 **Node Functions**
 
@@ -485,7 +485,7 @@ This event is triggered when Unit Status effects are applied or removed
 | Output Parameter | Original Status Stacks | Integer | Previous Stack Count |
 | Output Parameter | Slot ID | Integer | ID of the Unit Status slot that changed |
 
-## **2. When Unit Status Ends**
+### **2. When Unit Status Ends**
 
 **Node Functions**
 
@@ -514,7 +514,7 @@ Status Expired: The Unit Status became invalid due to other reasons
 Class Changed: The Unit Status was removed due to a class change |
 | Output Parameter | Slot ID | Integer | ID of the Unit Status slot that changed |
 
-## **3. When Elemental Reaction Event Occurs**
+### **3. When Elemental Reaction Event Occurs**
 
 **Node Functions**
 
@@ -530,7 +530,7 @@ Adds the Unit Status effect [Monitor Elemental Reaction] to the Entity. This eve
 | Output Parameter | Triggerer Entity | Entity |  |
 | Output Parameter | Triggerer Entity GUID | GUID |  |
 
-## **4. When Shield Is Attacked**
+### **4. When Shield Is Attacked**
 
 **Node Functions**
 
@@ -552,7 +552,7 @@ Adds the Unit Status effect [Add Shield] to the Entity. This event is triggered 
 
 ## XIV. Tabs
 
-## **1. When Tab Is Selected**
+### **1. When Tab Is Selected**
 
 **Node Functions**
 
@@ -571,7 +571,7 @@ The Entity Node Graph configured by the Tab Component will receive this event
 
 ## XV. Creations
 
-## **1. When Creation Enters Combat**
+### **1. When Creation Enters Combat**
 
 **Node Functions**
 
@@ -586,7 +586,7 @@ This event is triggered when a Creation enters battle
 | Output Parameter | Event Source Entity | Entity |  |
 | Output Parameter | Event Source GUID | GUID |  |
 
-## **2. When Creation Leaves Combat**
+### **2. When Creation Leaves Combat**
 
 **Node Functions**
 
@@ -603,7 +603,7 @@ This event is triggered when a Creation leaves battle
 
 ## XVI. Classes
 
-## **1. When Player Class Level Changes**
+### **1. When Player Class Level Changes**
 
 **Node Functions**
 
@@ -618,7 +618,7 @@ This event is triggered when a Player's Class Level changes and is sent to the c
 | Output Parameter | Pre-Change Level | Integer |  |
 | Output Parameter | Post-Change Level | Integer |  |
 
-## **2. When Player Class Changes**
+### **2. When Player Class Changes**
 
 **Node Functions**
 
@@ -633,7 +633,7 @@ This event is triggered when a Player's Class changes and is sent to the corresp
 | Output Parameter | Pre-Modification Class Config ID | Config ID |  |
 | Output Parameter | Post-Modification Config ID | Config ID |  |
 
-## **3. When Player Class Is Removed**
+### **3. When Player Class Is Removed**
 
 **Node Functions**
 
@@ -650,7 +650,7 @@ This event is triggered when a Player's Class is removed and sent to the corresp
 
 ## XVII. Skills
 
-## **1. When Skill Node Is Called**
+### **1. When Skill Node Is Called**
 
 **Node Functions**
 
@@ -668,7 +668,7 @@ This event is triggered by the [Notify Server Node Graph] Node in the Skill Node
 
 ## XVIII. Custom Aggro
 
-## **1. When Aggro Target Changes**
+### **1. When Aggro Target Changes**
 
 **Node Functions**
 
@@ -687,7 +687,7 @@ This event can also be triggered when entering or leaving battle
 | Output Parameter | Pre-Change Aggro Target | Entity |  |
 | Output Parameter | Post-Change Aggro Target | Entity |  |
 
-## **2. When Self Enters Combat**
+### **2. When Self Enters Combat**
 
 **Node Functions**
 
@@ -702,7 +702,7 @@ This event is triggered when the Entity itself enters battle
 | Output Parameter | Event Source Entity | Entity |  |
 | Output Parameter | Event Source GUID | GUID |  |
 
-## **3. When Self Leaves Combat**
+### **3. When Self Leaves Combat**
 
 **Node Functions**
 
@@ -719,7 +719,7 @@ This event is triggered when the Entity itself leaves battle
 
 ## XIX. Signals
 
-## **1. Monitor Signal**
+### **1. Monitor Signal**
 
 **Node Functions**
 
@@ -737,7 +737,7 @@ The Signal name to monitor must be selected first
 
 ## XX. Deck Selector
 
-## **1. When Deck Selector Is Complete**
+### **1. When Deck Selector Is Complete**
 
 **Node Functions**
 
@@ -768,7 +768,7 @@ Completed by Player, Refresh All, Fixed-Quantity Refresh, Timeout, Closed Manual
 
 ## XXI. Text Bubbles
 
-## **1. When Text Bubble Is Completed**
+### **1. When Text Bubble Is Completed**
 
 **Node Functions**
 
@@ -787,7 +787,7 @@ Completion refers to when the final line of dialogue has finished playing
 
 ## XXII. Shop
 
-## **1. When Selling Inventory Items in the Shop**
+### **1. When Selling Inventory Items in the Shop**
 
 **Node Functions**
 
@@ -804,7 +804,7 @@ This event is triggered when Inventory items are sold in the Shop. The Owner of 
 | Output Parameter | Item Config ID | Config ID |  |
 | Output Parameter | Purchase Quantity | Integer |  |
 
-## **2. When Custom Shop Item Is Sold**
+### **2. When Custom Shop Item Is Sold**
 
 **Node Functions**
 
@@ -821,7 +821,7 @@ This event is triggered when Custom items are sold in the Shop. The Owner of the
 | Output Parameter | Shop Item ID | Integer |  |
 | Output Parameter | Purchase Quantity | Integer |  |
 
-## **3. When selling items to the shop**
+### **3. When selling items to the shop**
 
 **Node Functions**
 
@@ -839,7 +839,7 @@ This event is triggered when items are purchased by the Shop. The Owner of the S
 
 ## XXIII. Equipment
 
-## **1. When Equipment Is Equipped**
+### **1. When Equipment Is Equipped**
 
 **Node Functions**
 
@@ -853,7 +853,7 @@ This event is triggered when Equipment is equipped. The Owner of the Equipment w
 | Output Parameter | Equipment Holder GUID | GUID |  |
 | Output Parameter | Equipment Index | Integer |  |
 
-## **2. When Equipment Is Unequipped**
+### **2. When Equipment Is Unequipped**
 
 **Node Functions**
 
@@ -867,7 +867,7 @@ This event is triggered when Equipment is unequipped. The Owner of the Equipment
 | Output Parameter | Equipment Owner GUID | GUID |  |
 | Output Parameter | Equipment Index | Integer |  |
 
-## **3. When Equipment Is Initialized**
+### **3. When Equipment Is Initialized**
 
 **Node Functions**
 
@@ -881,7 +881,7 @@ When Equipment is first obtained and enters the Inventory, it is initialized. Th
 | Output Parameter | Equipment Owner GUID | GUID |  |
 | Output Parameter | Equipment Index | Integer |  |
 
-## **4. When Equipment Affix Value Changes**
+### **4. When Equipment Affix Value Changes**
 
 **Node Functions**
 
@@ -900,7 +900,7 @@ This event is triggered when Equipment Affix values change. The Owner of the Equ
 
 ## XXIV. Items
 
-## **1. When Item Is Lost From Inventory**
+### **1. When Item Is Lost From Inventory**
 
 **Node Functions**
 
@@ -915,7 +915,7 @@ This event is triggered when an Item is removed from the Inventory (its quantity
 | Output Parameter | Item Config ID | Config ID |  |
 | Output Parameter | Quantity Lost | Integer |  |
 
-## **2. When the Quantity of Inventory Item Changes**
+### **2. When the Quantity of Inventory Item Changes**
 
 **Node Functions**
 
@@ -932,7 +932,7 @@ This event is triggered when the quantity of Items in the Inventory changes. The
 | Output Parameter | Post-Change Quantity | Integer |  |
 | Output Parameter | Reason for Change | Enumeration |  |
 
-## **3. When Item Is Added to Inventory**
+### **3. When Item Is Added to Inventory**
 
 **Node Functions**
 
@@ -947,7 +947,7 @@ This event is triggered when a new Item is added to the Inventory. The Owner of 
 | Output Parameter | Item Config ID | Config ID |  |
 | Output Parameter | Quantity Obtained | Integer |  |
 
-## **4. When the Quantity of Inventory Currency Changes**
+### **4. When the Quantity of Inventory Currency Changes**
 
 **Node Functions**
 
@@ -962,7 +962,7 @@ This event is triggered when the amount of Inventory Currency changes. The Owner
 | Output Parameter | Currency Config ID | Config ID |  |
 | Output Parameter | Currency Change Value | Integer |  |
 
-## **5. When Items in the Inventory Are Used**
+### **5. When Items in the Inventory Are Used**
 
 **Node Functions**
 
@@ -979,7 +979,7 @@ This event is triggered when an Item in the Inventory is used. The Owner of the 
 
 ## XXV. Creation Patrol
 
-## **1. When Creation Reaches Patrol Waypoint**
+### **1. When Creation Reaches Patrol Waypoint**
 
 **Node Functions**
 

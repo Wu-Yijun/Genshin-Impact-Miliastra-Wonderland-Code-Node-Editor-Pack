@@ -42,7 +42,7 @@ export interface IR_Trigger extends IRBase {
 
 /** 通过`.`连接起节点链, 通过 `<<` `>>` 间隔不同节点链的执行先后. 
  * ```ts
- * << IR_Node.IR_Node.IR_Node 
+ * << IR_Node.IR_Node.IR_Node
  * >> IR_Node.IR_Node...
  * ```
  */

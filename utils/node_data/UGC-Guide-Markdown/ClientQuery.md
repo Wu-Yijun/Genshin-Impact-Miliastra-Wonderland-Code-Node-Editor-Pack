@@ -1,6 +1,6 @@
 ## I. List Related
 
-## **1. Get Corresponding Value From List**
+### **1. Get Corresponding Value From List**
 
 **Node Functions**
 
@@ -14,7 +14,7 @@ Returns the value at the specified ID in the List. IDs start at 0
 | Input Parameter | Data List | Generic |  |
 | Output Parameter | Result | Generic |  |
 
-## **2. Get List Length**
+### **2. Get List Length**
 
 **Node Functions**
 
@@ -27,7 +27,7 @@ Returns the length of the list (number of elements)
 | Input Parameter | Input List | Generic |  |
 | Output Parameter | Length | Integer |  |
 
-## **3. Get Maximum Value From List**
+### **3. Get Maximum Value From List**
 
 **Node Functions**
 
@@ -40,7 +40,7 @@ Applies only to Floating Point Number or Integer lists; returns the maximum valu
 | Input Parameter | List | Generic |  |
 | Output Parameter | Maximum Value | Generic |  |
 
-## **4. Get Minimum Value From List**
+### **4. Get Minimum Value From List**
 
 **Node Functions**
 
@@ -53,7 +53,7 @@ Applies only to Floating Point Number or Integer lists; returns the minimum valu
 | Input Parameter | List | Generic |  |
 | Output Parameter | Minimum Value | Generic |  |
 
-## **5. Get Ray Filter Type List**
+### **5. Get Ray Filter Type List**
 
 **Node Functions**
 
@@ -65,7 +65,7 @@ Assembles the required Ray Filter types into a List. Available filters include H
 |------------------|----------------|---------------|-------------|
 | Output Parameter | List | Complete list |  |
 
-## **6. Get Entity Type List**
+### **6. Get Entity Type List**
 
 **Node Functions**
 
@@ -77,7 +77,7 @@ Assembles the required Entity types into a List. Types include Stages, Objects, 
 |------------------|----------------|---------------|-------------|
 | Output Parameter | List | Complete list |  |
 
-## **7. List Includes This Value**
+### **7. List Includes This Value**
 
 **Node Functions**
 
@@ -93,7 +93,7 @@ Returns whether the list contains the specified value
 
 ## II. Custom Variables
 
-## **1. Get Custom Variable**
+### **1. Get Custom Variable**
 
 **Node Functions**
 
@@ -111,7 +111,7 @@ If the variable does not exist, returns the type's default value
 
 ## III. Preset Status
 
-## **1. Get Preset Status**
+### **1. Get Preset Status**
 
 **Node Functions**
 
@@ -127,7 +127,7 @@ Returns the Preset Status value of the specified Entity. Returns 0 if the Entity
 
 ## IV. Entity Related
 
-## **1. Query If Entity Is on the Field**
+### **1. Query If Entity Is on the Field**
 
 **Node Functions**
 
@@ -142,7 +142,7 @@ Note that Character Entities are still considered present even when Downed
 | Input Parameter | Target Entity | Entity |  |
 | Output Parameter | On the Field | Boolean |  |
 
-## **2. Get Unit Attack Target**
+### **2. Get Unit Attack Target**
 
 **Node Functions**
 
@@ -155,7 +155,7 @@ Returns the Target Entity that the Unit Entity is currently attacking
 | Input Parameter | Unit Entity | Entity |  |
 | Output Parameter | Attack Target Entity | Entity |  |
 
-## **3. Get Target Attachment Point Location**
+### **3. Get Target Attachment Point Location**
 
 **Node Functions**
 
@@ -169,7 +169,7 @@ Returns the Attachment Point Location corresponding to the specified Attachment 
 | Input Parameter | Attachment Point Name | String |  |
 | Output Parameter | Attachment Point Location | 3D Vector |  |
 
-## **4. Get Target Attachment Point Rotation**
+### **4. Get Target Attachment Point Rotation**
 
 **Node Functions**
 
@@ -183,7 +183,7 @@ Returns the Attachment Point Rotation corresponding to the specified Attachment 
 | Input Parameter | Attachment Point Name | String |  |
 | Output Parameter | Attachment Point Rotation | 3D Vector |  |
 
-## **5. Get Target Entity**
+### **5. Get Target Entity**
 
 **Node Functions**
 
@@ -195,7 +195,7 @@ Returns the Target Entity. The meaning of this output varies depending on the fu
 |------------------|----------------|--------|-------------|
 | Output Parameter | Target Entity | Entity |  |
 
-## **6. Get Entity‘s Type**
+### **6. Get Entity's Type**
 
 **Node Functions**
 
@@ -208,7 +208,7 @@ Returns the type of the specified Entity
 | Input Parameter | Target Entity | Entity |  |
 | Output Parameter | Entity Type | Enumeration |  |
 
-## **7. Get Entity Location**
+### **7. Get Entity Location**
 
 **Node Functions**
 
@@ -221,7 +221,7 @@ Returns the Location of the specified Entity
 | Input Parameter | Entity | Entity |  |
 | Output Parameter | Location | 3D Vector |  |
 
-## **8. Get Entity Rotation**
+### **8. Get Entity Rotation**
 
 **Node Functions**
 
@@ -234,7 +234,7 @@ Returns the Rotation of the specified Entity in Euler Angles
 | Input Parameter | Entity | Entity |  |
 | Output Parameter | Rotate | 3D Vector |  |
 
-## **9. Get Self Entity**
+### **9. Get Self Entity**
 
 **Node Functions**
 
@@ -246,7 +246,7 @@ Returns the Entity associated with this Node Graph
 |------------------|----------------|--------|-------------|
 | Output Parameter | Self Entity | Entity |  |
 
-## **10. Filter Entity List Within Square Range**
+### **10. Filter Entity List Within Square Range**
 
 **Node Functions**
 
@@ -264,7 +264,7 @@ Filters Entities within a square range according to specified rules and a maximu
 | Input Parameter | Filter Rules | Enumeration | Options: Default, Random, or Nearest-to-Farthest order |
 | Output Parameter | Filter Results | Entity List |  |
 
-## **11. Filter Entity List Within Spherical Range**
+### **11. Filter Entity List Within Spherical Range**
 
 **Node Functions**
 
@@ -274,13 +274,13 @@ Filters Entities within a spherical range according to specific rules and a maxi
 
 | Parameter Type | Parameter Name | Type | Description |
 |------------------|-------------------------|------------------------|--------------------------------------------------------|
-| Parameter | Radius | Floating Point Numbers |  |
+| Input Parameter | Radius | Floating Point Numbers |  |
 | Input Parameter | Central Location | 3D Vector |  |
 | Input Parameter | Maximum Filter Quantity | Integer |  |
 | Input Parameter | Filter Rules | Enumeration | Options: Default, Random, or Nearest-to-Farthest order |
 | Output Parameter | Filter Results | Entity List |  |
 
-## **12. Query Entity by GUID**
+### **12. Query Entity by GUID**
 
 **Node Functions**
 
@@ -295,7 +295,7 @@ Searches for an Entity by GUID
 
 ## V. Faction Related
 
-## **1. Query Entity Faction**
+### **1. Query Entity Faction**
 
 **Node Functions**
 
@@ -308,7 +308,7 @@ Searches Target Entity's Faction
 | Input Parameter | Target Entity | Entity |  |
 | Output Parameter | Faction | Faction |  |
 
-## **2. Query If Faction Is Hostile**
+### **2. Query If Faction Is Hostile**
 
 **Node Functions**
 
@@ -324,7 +324,7 @@ Searches whether Faction 1 and Faction 2 are hostile
 
 ## VI. Player and Character Related
 
-## **1. Query If Self Is in Combat**
+### **1. Query If Self Is in Combat**
 
 **Node Functions**
 
@@ -336,7 +336,7 @@ Searches whether the Entity associated with this Node Graph has entered battle
 |------------------|----------------|---------|-------------|
 | Output Parameter | In Combat | Boolean |  |
 
-## **2. Get Current Character**
+### **2. Get Current Character**
 
 **Node Functions**
 
@@ -348,7 +348,7 @@ Returns the Character Entity currently controlled by this Player's client
 |------------------|------------------|--------|-------------|
 | Output Parameter | Character Entity | Entity |  |
 
-## **3. Get Player Entity to Which the Character Belongs**
+### **3. Get Player Entity to Which the Character Belongs**
 
 **Node Functions**
 
@@ -361,7 +361,7 @@ Returns the Player Entity that owns the Character Entity
 | Input Parameter | Character Entity | Entity |  |
 | Output Parameter | Affiliated Player Entity | Entity |  |
 
-## **4. Get List of Player Entities on the Field**
+### **4. Get List of Player Entities on the Field**
 
 **Node Functions**
 
@@ -373,7 +373,7 @@ Returns a list of all Player Entities present in the scene
 |------------------|--------------------|-------------|-------------|
 | Output Parameter | Player Entity List | Entity List |  |
 
-## **5. Get Character Entity of Specified Player**
+### **5. Get Character Entity of Specified Player**
 
 **Node Functions**
 
@@ -386,7 +386,7 @@ Returns the Character Entity of the specified Player Entity
 | Input Parameter | Player Entity | Entity |  |
 | Output Parameter | Character Entity | Entity |  |
 
-## **6. Query GUID by Entity**
+### **6. Query GUID by Entity**
 
 **Node Functions**
 
@@ -399,7 +399,7 @@ Searches for the GUID of the specified Entity
 | Input Parameter | Entity | Entity |  |
 | Output Parameter | GUID | GUID |  |
 
-## **7. Get Player Client Input Device Type**
+### **7. Get Player Client Input Device Type**
 
 **Node Functions**
 
@@ -413,7 +413,7 @@ Returns the Player's local input device type, as determined by the Interface map
 
 ## VII. Unit Tags
 
-## **1. Get Entity List by Unit Tag**
+### **1. Get Entity List by Unit Tag**
 
 **Node Functions**
 
@@ -426,7 +426,7 @@ Returns a list of all Entities in the scene that carry this Unit Tag
 | Input Parameter | Unit Tag Index | Integer |  |
 | Output Parameter | Entity List | Entity List |  |
 
-## **2. Get Entity's Unit Tag List**
+### **2. Get Entity's Unit Tag List**
 
 **Node Functions**
 
@@ -441,7 +441,7 @@ Returns a list of all Unit Tags carried by the Target Entity
 
 ## VIII. General
 
-## **1. Get Local Variable**
+### **1. Get Local Variable**
 
 **Node Functions**
 
@@ -456,7 +456,7 @@ Returns the value of a specific local variable
 
 ## IX. Custom Aggro
 
-## **1. Query if Specified Entity is in Combat**
+### **1. Query if Specified Entity is in Combat**
 
 **Node Functions**
 
@@ -469,7 +469,7 @@ Searches whether the specified Entity has entered battle
 | Input Parameter | Target Entity | Entity |  |
 | Output Parameter | In Combat | Boolean |  |
 
-## **2. Get the Aggro List of the Specified Entity**
+### **2. Get the Aggro List of the Specified Entity**
 
 **Node Functions**
 
@@ -482,7 +482,7 @@ Get Specific Entity's Aggro List
 | Input Parameter | Specified Entity | Entity |  |
 | Output Parameter | Aggro List | Entity List |  |
 
-## **3. Get the Aggro Target of the Specified Entity**
+### **3. Get the Aggro Target of the Specified Entity**
 
 **Node Functions**
 
@@ -497,7 +497,7 @@ Get Aggro Target of Specific Entity
 
 ## X. Triggers
 
-## **1. Get All Entities Within the Collision Trigger**
+### **1. Get All Entities Within the Collision Trigger**
 
 **Node Functions**
 
@@ -513,7 +513,7 @@ Returns all Entities within the Collision Trigger corresponding to a specific ID
 
 ## XI. Ray
 
-## **1. Get Ray Detection Result**
+### **1. Get Ray Detection Result**
 
 **Node Functions**
 
@@ -535,7 +535,7 @@ Returns the first Target or On-Hit Location that meets the Filter criteria, orde
 
 ## XII. Scanning
 
-## **1.** Get All Valid Entities That Are Scannable by Scan Component
+### **1.** Get All Valid Entities That Are Scannable by Scan Component
 
 **Node Functions**
 
@@ -547,7 +547,7 @@ Returns all Units carrying a Scan Component whose Filter returns True, regardles
 |------------------|----------------|-------------|-------------|
 | Output Parameter | Object List | Entity List |  |
 
-## **2.** Get Entity Currently Scanned by Scan Component
+### **2.** Get Entity Currently Scanned by Scan Component
 
 **Node Functions**
 
@@ -560,7 +560,7 @@ Returns Entities currently detected by the Scan Component; these are Entities in
 | Output Parameter | Corresponding Entity | Entity |  |
 | Output Parameter | Scan Tag Config ID | Config ID |  |
 
-## **3.** Get Entity's Current Active Scan Tags
+### **3.** Get Entity's Current Active Scan Tags
 
 **Node Functions**
 
@@ -573,7 +573,7 @@ Returns the Target Entity's Current Active Scan Tags
 | Input Parameter | Target Entity | Entity |  |
 | Output Parameter | Scan Tag Config ID | Config ID |  |
 
-## **4. Get Entity's Scan Status**
+### **4. Get Entity's Scan Status**
 
 **Node Functions**
 

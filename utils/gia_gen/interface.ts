@@ -14,13 +14,12 @@ import {
   make_graph_variable,
   read_graph_variable
 } from "./core.ts";
-import { ClientType, Doc, Node as NodeLib, ServerType } from "../node_data/instances.ts";
+import { ClientTypeHelper, DocHelper, EnumHelper, NodeHelper as NodeLib, ServerTypeHelper } from "../node_data/instances.ts";
 import type { NodeDef, ResourceClass, ServerClient, TypedValue } from "../node_data/types.ts";
-import { type NodeType, stringify, parse, is_reflect, type ConstraintType, type StructType, type_equal } from "../node_data/node_type.ts";
+import { type NodeType, stringify, parse, is_reflect, type ConstraintType, type StructType, type_equal, reflects } from "../node_data/node_type.ts";
 import { Counter, fuseSuggest, get_system, is_empty, randomInt, randomName } from "./utils.ts";
 import { type TypedPinDef, type TypedNodeDef } from "../node_data/core.ts";
 import { auto_layout, type LayoutOption } from "./auto_layout.ts";
-import { EnumHelper } from "../node_data/index.ts";
 
 
 /**
@@ -77,7 +76,7 @@ export class Graph {
   constructor(system_class: ResourceClass = "ENTITY_NODE_GRAPH", uid?: number, name?: string, graph_id?: number) {
     this.system = system_class;
     this.uid = uid ?? randomInt(9, "201");
-    const ID_RANGE = Doc.systemConstants.GRAPH_ID_RANGE[get_system(system_class)];
+    const ID_RANGE = DocHelper.systemConstants.GRAPH_ID_RANGE[get_system(system_class)];
     this.graph_id = graph_id ?? randomInt(3) + ID_RANGE;
 
     this.graph_name = name ?? randomName(3);
@@ -475,7 +474,7 @@ export class Graph {
    * graph.debugPrint({ log: (msg) => logs.push(msg) });
    * ```
    */
-  debugPrint({ indent = 0, log = console.log }): void {
+  debugPrint({ indent = 0, log = console.log }: { indent?: number, log?: (...args: string[]) => void } = {}): void {
     log(`${" ".repeat(indent)}Graph: ${this.graph_name} (ID: ${this.graph_id}, System: ${this.system})`);
     log(`${" ".repeat(indent)}UID: ${this.uid}, File ID: ${this.file_id}`);
     log(`${" ".repeat(indent)}Graph Variables:`);
@@ -505,6 +504,17 @@ export class Graph {
    */
   autoLayout(options?: Partial<LayoutOption>) {
     auto_layout(this, options ?? {});
+  }
+
+  debugClearEmptyVars() {
+    this.nodes.forEach(n => {
+      const to_del: string[] = [];
+      n.pin_values.forEach((v, k) => {
+        if (v === null || v instanceof Array && v.length === 0)
+          to_del.push(k);
+      });
+      to_del.forEach(k => n.pin_values.delete(k));
+    });
   }
 }
 
@@ -1141,18 +1151,18 @@ export class Node {
  * ```
  */
   static decode(system: ResourceClass, proto: Gia.NodeInstance): Node | null {
-    const def = NodeLib.getByID(proto.shell_ref.runtime_id);
-    if (def === undefined) {
+    const node_def = NodeLib.getByID(proto.shell_ref.runtime_id);
+    if (node_def === undefined) {
       console.error(`[Error] Node definition not found for ID: ${proto.shell_ref.runtime_id}`);
       return null;
     }
     const is_server = get_system(system) === "Server";
-    const node = new Node(system, def, proto.index);
+    const node = new Node(system, node_def, proto.index);
     const constraints: [string, NodeType][] = [];
     for (const pin of proto.pins) {
       const pin_info = Node.decode_pin(pin, is_server);
       if (!pin_info.success) {
-        console.warn(`[Warning] Failed to decode pin at index ${pin.shell_sig.index} for node ${def.Identifier}`);
+        console.warn(`[Warning] Failed to decode pin at index ${pin.shell_sig.index} for node ${node_def.Identifier}`);
         continue;
       }
       if (pin_info.kind === "Data") {
@@ -1167,10 +1177,19 @@ export class Node {
         if (!is_empty(pin_info.value)) {
           node.pin_values.set(def.Identifier, pin_info.value);
         }
-        if (pin_info.poly_value) {
+        if (pin_info.poly_value !== undefined) {
           if (!is_reflect(def.Type)) {
             console.warn(`[Warning] Pin ${def.Identifier} in node ${node.def.Identifier} is marked as polymorphic value but its type is not reflective.`);
           } else if (pin_info.type) {
+            if (pin_info.type.t === "e") {
+              // use poly:
+              const c = node.def.Variants?.find(x => x.InjectedContents.find(p => p.Identifier === def.Identifier && p.TypeSelectorIndex === pin_info.poly_value))?.Constraints;
+              if (c === undefined) {
+                console.error("[Enum Type] type not found!");
+              } else {
+                pin_info.type = reflects(node.def.DataPins.find(p => p.Identifier === def.Identifier)!.Type, c);
+              }
+            }
             constraints.push([def.Identifier, pin_info.type]);
           }
         }
@@ -1207,7 +1226,7 @@ export class Node {
     op_code?: number;
     type?: NodeType;
     value?: TypedValue;
-    poly_value?: boolean;
+    poly_value?: number;
   } {
     let direction: "In" | "Out";
     switch (proto.shell_sig.kind) {
@@ -1227,19 +1246,23 @@ export class Node {
         console.warn(`[Warning] Unknown pin kind: ${proto.shell_sig.kind}`);
         return { success: false };
     }
-    const type = is_server ? ServerType.toNodeType(proto.type) : ClientType.toNodeType(proto.type);
-    const value = read_typed_value(proto.value);
+    const type = is_server ? ServerTypeHelper.toNodeType(proto.type) : ClientTypeHelper.toNodeType(proto.type);
+    const { value, type: value_type, poly } = read_typed_value(proto.value);
     if (type?.t === "e" && value !== undefined && value !== null) {
       if (typeof value !== "number") {
         console.warn(`[Warning] Enum pin value is not a number: ${JSON.stringify(value)}`);
       } else {
-        const cat = EnumHelper.getEnumByID(value)?.Category;
+        const cat = EnumHelper.getEnumByID(value)?.Identifier.split(".")[0];
         if (cat === undefined) {
           console.warn(`[Warning] Enum category not found for enum ID: ${value}`);
-        } else{
+        } else {
           type.e = cat;
         }
       }
+    } else if (type?.t === "d" && value_type?.t === "d") {
+      // get from 
+      type.k = value_type.k;
+      type.v = value_type.v;
     }
     return {
       success: true,
@@ -1248,7 +1271,7 @@ export class Node {
       direction,
       type,
       value,
-      poly_value: proto.value?.val_poly !== undefined
+      poly_value: poly,
     };
   }
 

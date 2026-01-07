@@ -4,8 +4,8 @@ import { assert, assertEq, todo } from "../utils.ts";
 import * as Gia from "../protobuf/gia.proto.ts";
 
 import type { ResourceClass, TypedValue } from "../node_data/types.ts";
-import { type DictType, type ListType, type NodeType, parse, stringify, type StructType } from "../node_data/node_type.ts";
-import { Doc, ServerType, ClientType } from "../node_data/instances.ts";
+import { type DictType, type ListType, type NodeType, parse, stringify, type StructType, type_equal, UNK_TYPE } from "../node_data/node_type.ts";
+import { DocHelper, ServerTypeHelper, ClientTypeHelper } from "../node_data/instances.ts";
 import type { TypedNodeDef, TypedPinDef } from "../node_data/core.ts";
 
 
@@ -34,7 +34,7 @@ export function graph_body(body: GraphBody_): Gia.AssetBundle {
   const timestamp = Math.floor(Date.now() / 1000);
   const file_id = body.file_id ?? body.graph_id + counter_dynamic_id.value;
 
-  const Identifier = Doc.systemConstants.GRAPH_CATEGORY_CONSTS[body.system];
+  const Identifier = DocHelper.systemConstants.GRAPH_CATEGORY_CONSTS[body.system];
   const asset_locator = make_resource_locator({
     origin: Identifier.AssetsOrigin,
     category: Identifier.AssetsCategory,
@@ -76,7 +76,7 @@ export function graph_body(body: GraphBody_): Gia.AssetBundle {
     },
     dependencies: [],
     export_tag: `${body.uid}-${timestamp}-${file_id}-\\${file_name}`,
-    engine_version: Doc.doc.GameVersion,
+    engine_version: DocHelper.doc.GameVersion,
   };
 
   return assetBundle;
@@ -99,7 +99,7 @@ export interface NodeBody_ {
 export function node_body(body: NodeBody_): Gia.NodeInstance {
   const nodeIndex = body.unique_index ?? counter_index.value;
 
-  const Identifier = Doc.systemConstants.GRAPH_CATEGORY_CONSTS[body.system];
+  const Identifier = DocHelper.systemConstants.GRAPH_CATEGORY_CONSTS[body.system];
 
   // Construct Shell Ref (UI Definition)
   const shell_ref = make_resource_locator({
@@ -155,9 +155,9 @@ export function pin_body(body: PinBody_): Gia.PinInstance {
   } else {
     let type = 0;
     if (get_system(body.system) === "Server") {
-      type = ServerType.get_type_id(body.def.Type) ?? 0;
+      type = ServerTypeHelper.get_type_id(body.def.Type) ?? 0;
     } else {
-      type = ClientType.get_type_id(body.def.Type) ?? 0;
+      type = ClientTypeHelper.get_type_id(body.def.Type) ?? 0;
     }
     return {
       shell_sig,
@@ -184,17 +184,17 @@ function make_resource_locator(args: { origin: number, category: number, kind: n
 }
 
 function get_type_s(type: NodeType): Gia.ServerTypeId {
-  return ServerType.get_type_id(type) ?? ServerType.DEFAULT_TYPE.ID as any;
+  return ServerTypeHelper.get_type_id(type) ?? ServerTypeHelper.DEFAULT_TYPE.ID as any;
 }
 function get_type_c(type: NodeType): Gia.ClientTypeId {
-  return ClientType.get_type_id(type) ?? ClientType.DEFAULT_TYPE.ID as any;
+  return ClientTypeHelper.get_type_id(type) ?? ClientTypeHelper.DEFAULT_TYPE.ID as any;
 }
 
 function to_type_s(id: number): NodeType {
-  return parse(ServerType.getTypeByID(id)?.Identifier ?? ServerType.DEFAULT_TYPE.Identifier);
+  return parse(ServerTypeHelper.getTypeByID(id)?.Identifier ?? ServerTypeHelper.DEFAULT_TYPE.Identifier);
 }
 function to_type_c(id: number): NodeType {
-  return parse(ClientType.getTypeByID(id)?.Identifier ?? ClientType.DEFAULT_TYPE.Identifier);
+  return parse(ClientTypeHelper.getTypeByID(id)?.Identifier ?? ClientTypeHelper.DEFAULT_TYPE.Identifier);
 }
 
 function make_type_definition(type: NodeType, is_server: boolean, is_pair = false): Gia.TypeDefinition {
@@ -449,7 +449,7 @@ export function read_graph_variable(proto: Gia.GraphVariable): {
   return {
     type: type,
     name: name,
-    val: val,
+    val: val.value,
     exposed: exposed,
   };
 }
@@ -734,38 +734,58 @@ export function get_resource_class(rc: Gia.ResourceEntry_ResourceClass): Resourc
   }
 }
 
-export function read_typed_value(tv: Gia.TypedValue): TypedValue {
-  if (!tv) return null;
+export function read_typed_value(tv: Gia.TypedValue): { value: TypedValue, type: NodeType, poly?: number } {
+  if (!tv) return { value: null, type: UNK_TYPE };
   const atomic = tv.val_id?.id ?? tv.val_int?.int ?? tv.val_float?.float ?? tv.val_string?.str ?? tv.val_enum?.enum;
   if (atomic !== undefined) {
-    return atomic;
+    return { value: atomic, type: UNK_TYPE };
   }
   if (tv.val_vector) {
     const vec = tv.val_vector.vec;
-    return [vec.x, vec.y, vec.z];
+    return { value: [vec.x, vec.y, vec.z], type: { t: "b", b: "Vec" } };
   }
   if (tv.val_list) {
-    return tv.val_list.elements.map(e => read_typed_value(e));
+    const v = tv.val_list.elements.map(e => read_typed_value(e));
+    if (!v.every(i => type_equal(i.type, v[0].type, { omit_unknown: true }))) {
+      console.warn("Invalid list type", v.map(i => stringify(i.type)));
+    }
+    return { value: v.map(i => i.value), type: { t: "l", i: v[0]?.type ?? UNK_TYPE } };
   }
   if (tv.val_map) {
-    return tv.val_map.pairs.map(p => [
-      read_typed_value(p.val_pair!.key),
-      read_typed_value(p.val_pair!.value)
-    ]);
+    return {
+      value: tv.val_map.pairs.map(p => [
+        read_typed_value(p.val_pair!.key).value,
+        read_typed_value(p.val_pair!.value).value
+      ]),
+      type: {
+        t: "d",
+        k: to_type_s(tv.type_def?.server_side?.map_binding?.key_type ?? 0),
+        v: to_type_s(tv.type_def?.server_side?.map_binding?.value_type ?? 0)
+      }
+    };
   }
   if (tv.val_struct) {
-    return tv.val_struct.fields.map(f => read_typed_value(f));
+    return {
+      value: tv.val_struct.fields.map(f => read_typed_value(f).value),
+      type: { t: "s", f: [], _: tv.type_def?.server_side?.struct_ref?.schema_id }
+    };
   }
   if (tv.val_pair) {
-    return [
-      read_typed_value(tv.val_pair.key),
-      read_typed_value(tv.val_pair.value)
-    ];
+    const k = read_typed_value(tv.val_pair.key);
+    const v = read_typed_value(tv.val_pair.value);
+    return {
+      value: [k.value, v.value],
+      type: {
+        t: "d",
+        k: k.type,
+        v: v.type
+      }
+    };
   }
   if (tv.val_poly) {
-    return read_typed_value(tv.val_poly.actual_value);
+    return { ...read_typed_value(tv.val_poly.actual_value), poly: tv.val_poly.chosen_type_index ?? 0 };
   }
-  return null;
+  return { value: null, type: UNK_TYPE };
 }
 
 export function read_connections(nc: Gia.NodeConnection): { node_index: number, kind: "Flow" | "Data", shell_index: number } | null {

@@ -99,7 +99,7 @@ function generatePinSection(node: NodeDef, direction: "In" | "Out", lang: keyof 
 
     const desc = [getLoc(p.Label, lang), getLoc(p.Description, lang)].filter(s => s.length > 0).join(": ");
 
-    lines.push(` * | ${index} || ${dirIcon} || ${typeStr} || ${nameStr} || ${desc} |`);
+    lines.push(` * | ${index} || ${dirIcon} || ${typeStr} || ${nameStr} || ${desc} |`.replaceAll("\n", "<br>"));
   });
 
   return lines;
@@ -117,7 +117,13 @@ function generateDoc(node: NodeDef, lang: keyof Translations): string {
   lines.push(` * **${title}** \`(${node.Identifier})\``);
 
   if (node.Description) {
-    lines.push(` * - ${getLoc(node.Description, lang)}`);
+    const d = getLoc(node.Description, lang)?.trim().split('\n');
+    if (d && d.length > 0) {
+      lines.push(` *`);
+      d.forEach(line => {
+        lines.push(` * - ${line.trim()}`);
+      });
+    }
   }
   lines.push(` *`);
 
@@ -188,7 +194,7 @@ function main(lang?: keyof Translations) {
 
     // 生成名称映射
     let nodeName = getLoc(node.InGameName, lang);
-    if(node.System==="Client"){
+    if (node.System === "Client") {
       nodeName += "_Client";
     }
     if (lang === "en") {
@@ -196,7 +202,7 @@ function main(lang?: keyof Translations) {
         .replace(/[^0-9A-Za-z]+/g, '_')
         .replace(/^(?=\d)/, '_')
         .replace(/_$/g, "");
-    }else{
+    } else {
       nodeName = JSON.stringify(nodeName);
     }
     const comment = `See \`NODES.${key}\` for detailed documentation.`;
@@ -228,4 +234,4 @@ export const NODE_NAMES = {
 }
 
 main("en");
-// main("zh-Hans");
+main("zh-Hans");
