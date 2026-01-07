@@ -99,7 +99,7 @@ function generatePinSection(node: NodeDef, direction: "In" | "Out", lang: keyof 
 
     const desc = [getLoc(p.Label, lang), getLoc(p.Description, lang)].filter(s => s.length > 0).join(": ");
 
-    lines.push(` * | ${index} || ${dirIcon} || ${typeStr} || ${nameStr} || ${desc} |`);
+    lines.push(` * | ${index} || ${dirIcon} || ${typeStr} || ${nameStr} || ${desc} |`.replaceAll("\n", "<br>"));
   });
 
   return lines;
@@ -117,7 +117,13 @@ function generateDoc(node: NodeDef, lang: keyof Translations): string {
   lines.push(` * **${title}** \`(${node.Identifier})\``);
 
   if (node.Description) {
-    lines.push(` * - ${getLoc(node.Description, lang)}`);
+    const d = getLoc(node.Description, lang)?.trim().split('\n');
+    if (d && d.length > 0){
+      lines.push(` *`);
+      d.forEach(line => {
+        lines.push(` * - ${line.trim()}`);
+      });
+    }
   }
   lines.push(` *`);
 
@@ -228,4 +234,4 @@ export const NODE_NAMES = {
 }
 
 main("en");
-// main("zh-Hans");
+main("zh-Hans");

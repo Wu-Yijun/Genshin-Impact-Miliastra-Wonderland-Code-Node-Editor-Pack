@@ -4,10 +4,10 @@
 
 export const NODES = {
   /**
- * **Print String** `(Execution.Common_Node.Print)`
+ * **打印字符串** `(Execution.Common_Node.Print)`
  *
- * - Outputs a string to the log, generally used for logic checks and debugging
- * - In the log, this string prints whenever the logic runs successfully, regardless of whether this Node Graph is toggled
+ * - 可以在日志中输出一条字符串，一般用于逻辑检测和调试
+ * - 在日志中，无论是否勾选了该节点图，逻辑成功运行时该字符串都会打印
  *
  * -----------
  *
@@ -21,7 +21,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Str` || `text` || String: The string to be printed |
+ * | 0 || 🔹 || `Str` || `text` || 字符串: 所要打印的字符串 |
  *
  * -----------
  *
@@ -33,10 +33,10 @@ export const NODES = {
   Execution_CommonNode_Print: "Execution.Common_Node.Print",
 
   /**
- * **Double Branch** `(Control.General.Branch)`
+ * **双分支** `(Control.General.Branch)`
  *
- * - Branches into True or False based on the evaluated condition
- * - When the Boolean is True, the [True] execution flow runs; when it is False, the [False] execution flow runs
+ * - 根据输入条件的判断结果可以分出“是”与“否”两个不同的分支
+ * - 当布尔值为“是”时，后续会执行【是】对应的执行流；布尔值为“否”时，会执行【否】对应的执行流
  *
  * -----------
  *
@@ -50,20 +50,20 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Bol` || `cond` || Condition |
+ * | 0 || 🔹 || `Bol` || `cond` || 条件 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | - || ⏩ || - || `True` || Yes |
- * | - || ⏩ || - || `False` || No |
+ * | - || ⏩ || - || `True` || 是 |
+ * | - || ⏩ || - || `False` || 否 |
  */
   Control_General_Branch: "Control.General.Branch",
 
   /**
- * **Multiple Branches** `(Control.General.Switch)`
+ * **多分支** `(Control.General.Switch)`
  *
  * -----------
  *
@@ -78,14 +78,14 @@ export const NODES = {
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
  * | 0 || 🔷 || **`R<T>`** || `key` || 控制表达式 |
- * | 1 || 🔷 || **`L<R<T>>`** || `cases` || Judge Parameter |
+ * | 1 || 🔷 || **`L<R<T>>`** || `cases` || 判断参数 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | - || ⏩ || - || `DefaultBranch` || Default |
+ * | - || ⏩ || - || `DefaultBranch` || 默认 |
  * | - || ⏩ || - || `Case1` ||  |
  * | - || ⏩ || - || `Case2` ||  |
  * | - || ⏩ || - || `Case3` ||  |
@@ -103,10 +103,10 @@ export const NODES = {
   Control_General_Switch: "Control.General.Switch",
 
   /**
- * **Finite Loop** `(Execution.Common_Node.For_Loop)`
+ * **有限循环** `(Execution.Common_Node.For_Loop)`
  *
- * - From the [Loop Start Value] to the [Loop End Value], the loop iterates, incrementing the Integer by 1 each time. On each iteration, it executes the Nodes connected to [Loop Body]. After a full iteration, it executes the Nodes connected to [Loop Complete].
- * - Use [Break Loop] to end the iteration early. After exiting the loop, the logic connected to the [Loop Complete] node will also be executed.
+ * - 从【循环起始值】开始到【循环终止值】结束，会遍历其中的循环值，每次整数加一。每次循环会执行一次【循环体】后连接的节点逻辑。完成一次完整遍历后，会执行【循环完成】后连接的节点逻辑
+ * - 可以使用【跳出循环】来提前结束该循环值遍历，跳出循环后也会执行【循环完成】后连接的节点逻辑
  *
  * -----------
  *
@@ -120,25 +120,25 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `Start` ||  |
- * | - || ▶️ || - || `Break` || Break Loop |
- * | 0 || 🔹 || `Int` || `start_index` || Loop Start Value: Starting integer value for iteration |
- * | 1 || 🔹 || `Int` || `end_index` || Loop End Value: Integer value at which the iteration ends |
+ * | - || ▶️ || - || `Break` || 跳出循环 |
+ * | 0 || 🔹 || `Int` || `start_index` || 循环起始值: 遍历开始的整数值 |
+ * | 1 || 🔹 || `Int` || `end_index` || 循环终止值: 遍历结束的整数值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | - || ⏩ || - || `Iteration` || Loop Body |
- * | - || ⏩ || - || `End` || Loop Complete |
- * | 0 || 🔸 || `Int` || `current_index` || Current Loop Value: Integer value of the current execution logic |
+ * | - || ⏩ || - || `Iteration` || 循环体 |
+ * | - || ⏩ || - || `End` || 循环完成 |
+ * | 0 || 🔸 || `Int` || `current_index` || 当前循环值: 当次执行逻辑的整数值 |
  */
   Execution_CommonNode_ForLoop: "Execution.Common_Node.For_Loop",
 
   /**
- * **Break Loop** `(Execution.Common_Node.Break)`
+ * **跳出循环** `(Execution.Common_Node.Break)`
  *
- * - Break out of a Finite Loop. The output pin must connect to the [Break Loop] input parameter of the [Finite Loop] Node
+ * - 从有限循环中跳出。出引脚需要与节点【有限循环】的【跳出循环】入参相连
  *
  * -----------
  *
@@ -163,9 +163,9 @@ export const NODES = {
   Execution_CommonNode_Break: "Execution.Common_Node.Break",
 
   /**
- * **Get Random Floating Point Number** `(Query.Math.Random_Float)`
+ * **获取随机浮点数** `(Query.Math.Random_Float)`
  *
- * - Returns a random Floating Point Number that is ≥ the lower limit and ≤ the upper limit. The range is inclusive
+ * - 获取一个大于等于下限，小于等于上限的随机浮点数。注意该节点生成的随机数包含上下限
  *
  * -----------
  *
@@ -178,23 +178,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `lower` || Lower Limit |
- * | 1 || 🔹 || `Flt` || `upper` || Upper Limit |
+ * | 0 || 🔹 || `Flt` || `lower` || 下限 |
+ * | 1 || 🔹 || `Flt` || `upper` || 上限 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Query_Math_RandomFloat: "Query.Math.Random_Float",
 
   /**
- * **Weighted Random** `(Query.Math.Weighted_Random)`
+ * **权重随机** `(Query.Math.Weighted_Random)`
  *
- * - Takes a list of weights and randomly selects an ID based on the weight distribution
- * - For example, with a weight list {10, 20, 66, 4}, this node outputs 0, 1, 2, or 3 with probabilities 10%, 20%, 66%, and 4% respectively
+ * - 输入一组权重组成的权重列表，按照权重随机选择其中的一个序号
+ * - 例如：权重列表为{10，20，66，4}，那么此节点分别由10%、20%、66%、4%的概率输出0、1、2、3
  *
  * -----------
  *
@@ -207,21 +207,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `L<Int>` || `weights` || Weight List |
+ * | 0 || 🔹 || `L<Int>` || `weights` || 权重列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `index` || Weight ID |
+ * | 0 || 🔸 || `Int` || `index` || 权重序号 |
  */
   Query_Math_WeightedRandom: "Query.Math.Weighted_Random",
 
   /**
- * **Split 3D Vector** `(Arithmetic.Math.Split_Vector)`
+ * **拆分三维向量** `(Arithmetic.Math.Split_Vector)`
  *
- * - Outputs the x, y, and z components of a 3D Vector as three Floating Point Numbers
+ * - 将三维向量的x、y、z分量输出为三个浮点数
  *
  * -----------
  *
@@ -234,23 +234,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector` || 3D Vector |
+ * | 0 || 🔹 || `Vec` || `vector` || 三维向量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `x` || X-Component |
- * | 1 || 🔸 || `Flt` || `y` || Y-Component |
- * | 2 || 🔸 || `Flt` || `z` || Z-Component |
+ * | 0 || 🔸 || `Flt` || `x` || X分量 |
+ * | 1 || 🔸 || `Flt` || `y` || Y分量 |
+ * | 2 || 🔸 || `Flt` || `z` || Z分量 |
  */
   Arithmetic_Math_SplitVector: "Arithmetic.Math.Split_Vector",
 
   /**
- * **3D Vector Addition** `(Arithmetic.Math.Vector_Add)`
+ * **三维向量加法** `(Arithmetic.Math.Vector_Add)`
  *
- * - Calculates the sum of two 3D Vectors
+ * - 计算两个三维向量的加法
  *
  * -----------
  *
@@ -263,22 +263,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `a` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `b` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `a` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `b` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_Math_VectorAdd: "Arithmetic.Math.Vector_Add",
 
   /**
- * **3D Vector Subtraction** `(Arithmetic.Math.Vector_Subtract)`
+ * **三维向量减法** `(Arithmetic.Math.Vector_Subtract)`
  *
- * - Calculates the difference of two 3D Vectors
+ * - 计算两个三维向量的减法
  *
  * -----------
  *
@@ -291,22 +291,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `a` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `b` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `a` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `b` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_Math_VectorSubtract: "Arithmetic.Math.Vector_Subtract",
 
   /**
- * **3D Vector Zoom** `(Arithmetic.Math.Vector_Scale)`
+ * **三维向量缩放** `(Arithmetic.Math.Vector_Scale)`
  *
- * - Scales the input 3D Vector (scalar multiplication) and outputs the result
+ * - 将输入的三维向量缩放后输出（三维向量数乘）
  *
  * -----------
  *
@@ -319,22 +319,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `v` || 3D Vector |
- * | 1 || 🔹 || `Flt` || `scale` || Zoom Multiplier |
+ * | 0 || 🔹 || `Vec` || `v` || 三维向量 |
+ * | 1 || 🔹 || `Flt` || `scale` || 缩放倍率 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_Math_VectorScale: "Arithmetic.Math.Vector_Scale",
 
   /**
- * **3D Vector Angle** `(Arithmetic.Math.Vector_Angle)`
+ * **三维向量夹角** `(Arithmetic.Math.Vector_Angle)`
  *
- * - Calculates the angle between two 3D Vectors and outputs it in radians
+ * - 计算两个三维向量之间的夹角，以弧度输出
  *
  * -----------
  *
@@ -347,25 +347,25 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `a` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `b` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `a` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `b` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radians` || Angle (Radians) |
+ * | 0 || 🔸 || `Flt` || `radians` || 夹角(弧度) |
  */
   Arithmetic_Math_VectorAngle: "Arithmetic.Math.Vector_Angle",
 
   /**
- * **Equal** `(Arithmetic.General.Equal)`
+ * **是否相等** `(Arithmetic.General.Equal)`
  *
- * - Determines whether two inputs are equal
- * - Some Parameter Types have special comparison rules:
- * - Floating Point Numbers: Floating Point Numbers are compared using approximate equality. When the difference between two Floating Point Numbers is less than an extremely small value, the two numbers are considered equal. For example: 2.0000001 and 2.0 are considered equal
- * - 3D Vector: The x, y, and z components of a 3D Vector are compared using Floating Point approximate equality
+ * - 判断两个输入是否相等
+ * - 部分参数类型有较为特殊的判定规则：
+ * - 浮点数：浮点数采用近似相等进行比较，当两个浮点数小于一个极小值时，这两个浮点数认为相等。例如：2.0000001与2.0认为相等
+ * - 三维向量：三维向量的x、y、z分别采用浮点数近似相等比较
  *
  * -----------
  *
@@ -378,15 +378,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `input1` || Input 1 |
- * | 1 || 🔷 || **`R<T>`** || `input2` || Input 2 |
+ * | 0 || 🔷 || **`R<T>`** || `input1` || 输入1 |
+ * | 1 || 🔷 || **`R<T>`** || `input2` || 输入2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result: Output True if equal, False if not equal |
+ * | 0 || 🔸 || `Bol` || `result` || 结果: 相等输出“是”，不相等输出“否” |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Str>`
@@ -403,11 +403,11 @@ export const NODES = {
   Arithmetic_General_Equal: "Arithmetic.General.Equal",
 
   /**
- * **Get Local Variable** `(Query.General.Get_Local)`
+ * **获取局部变量** `(Query.General.Get_Local)`
  *
- * - Retrieves a Local Variable and optionally sets its [Initial Value]
- * - After setting the [Initial Value], the [Value] output parameter will be equal to the input [Initial Value]
- * - When the output [Local Variable] is connected to the [Set Local Variable] Execution Node's input [Local Variable], the input [Value] of [Set Local Variable] overwrites this Search Node's output [Value]. The next time you use [Get Local Variable], the output [Value] is the overwritten value
+ * - 可以获取局部变量，也可以设置该局部变量的【初始值】
+ * - 设置【初始值】以后，出参的【值】输出即为输入的【初始值】
+ * - 当出参【局部变量】与执行节点【设置局部变量】的入参【局部变量】连接后，执行节点【设置局部变量】的入参【值】会覆写该查询节点的出参【值】，再次使用【获取局部变量】节点时，出参【值】为覆写后的值
  *
  * -----------
  *
@@ -420,15 +420,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `initial_value` || Initial Value: Allows you to set the default initial value for local variables |
+ * | 0 || 🔷 || **`R<T>`** || `initial_value` || 初始值: 可以设置局部变量的初始默认值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Loc` || `local_variable` || Local Variable: Container for data storage |
- * | 1 || 🔶 || **`R<T>`** || `value` || Value: When not Overwritten, this value equals the Initial Value; after it is Overwritten, it equals the new value |
+ * | 0 || 🔸 || `Loc` || `local_variable` || 局部变量: 存储数据的载体 |
+ * | 1 || 🔶 || **`R<T>`** || `value` || 值: 未被覆写时，该值等于初始值，被覆写后，该值等于被覆写后的值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Bol>`
@@ -455,9 +455,9 @@ export const NODES = {
   Query_General_GetLocal: "Query.General.Get_Local",
 
   /**
- * **Set Local Variable** `(Execution.Common_Node.Set_Local)`
+ * **设置局部变量** `(Execution.Common_Node.Set_Local)`
  *
- * - When connected to the Query Node [Get Local Variable], this overwrites the value of that Local Variable
+ * - 与查询节点【获取局部变量】连接后可以覆写该局部变量的值
  *
  * -----------
  *
@@ -471,8 +471,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Loc` || `variable` || Local Variable: Container for data storage |
- * | 1 || 🔷 || **`R<T>`** || `value` || Value: Value used to overwrite this local variable |
+ * | 0 || 🔹 || `Loc` || `variable` || 局部变量: 存储数据的载体 |
+ * | 1 || 🔷 || **`R<T>`** || `value` || 值: 所要覆写该局部变量的值 |
  *
  * -----------
  *
@@ -506,9 +506,9 @@ export const NODES = {
   Execution_CommonNode_SetLocal: "Execution.Common_Node.Set_Local",
 
   /**
- * **Set Custom Variable** `(Execution.Custom_Variable.Set_Variable)`
+ * **设置自定义变量** `(Execution.Custom_Variable.Set_Variable)`
  *
- * - Set the value of the specified Custom Variable on the Target Entity
+ * - 为目标实体上的指定自定义变量设置值
  *
  * -----------
  *
@@ -522,10 +522,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: The variable is mounted on this entity |
- * | 1 || 🔹 || `Str` || `variable_name` || Variable Name: Custom variable name. Must be unique |
- * | 2 || 🔷 || **`R<T>`** || `value` || Variable Value: Value assigned to this variable |
- * | 3 || 🔹 || `Bol` || `should_trigger_event` || Trigger Event: Default: True. When set to False, this custom variable editing will not trigger the On Custom Variable Change event |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 该变量挂载在该实体上 |
+ * | 1 || 🔹 || `Str` || `variable_name` || 变量名: 自定义变量的命名，不可重复 |
+ * | 2 || 🔷 || **`R<T>`** || `value` || 变量值: 赋予该变量的值 |
+ * | 3 || 🔹 || `Bol` || `should_trigger_event` || 是否触发事件: 默认为是。选为否时，这次自定义变量修改不会触发自定义变量变化时事件 |
  *
  * -----------
  *
@@ -692,11 +692,11 @@ export const NODES = {
   Execution_CustomVariable_SetVariable: "Execution.Custom_Variable.Set_Variable",
 
   /**
- * **When Custom Variable Changes** `(Trigger.Custom_Variable.On_Variable_Change)`
+ * **自定义变量变化时** `(Trigger.Custom_Variable.On_Variable_Change)`
  *
- * - This event is triggered when the Custom Variable of the Entity associated with the current Node Graph changes
- * - The previous and current values are Generic. Determine the Generic type before you can correctly receive events for Custom Variables of the corresponding type
- * - Vessel-type Custom Variables do not provide before-value and after-value Output Parameters
+ * - 当前节点图所关联实体的自定义变量发生变化时，触发该事件
+ * - 注意变化前值和变化后值为泛型，需确定其泛型类型后，才能正确接收到对应类型自定义变量的事件
+ * - 容器类型的自定义变量没有变化前值和变化后值出参
  *
  * -----------
  *
@@ -710,11 +710,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity: The Entity associated with this Node Graph |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID: GUID of the Entity associated with this Node Graph |
- * | 2 || 🔸 || `Str` || `variable_name` || Variable Name: Name of the Variable that was changed |
- * | 3 || 🔶 || **`R<T>`** || `old_value` || Pre-Change Value: The Variable's value before the change |
- * | 4 || 🔶 || **`R<T>`** || `new_value` || Post-Change Value: The Variable's value after the change |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体: 与节点图关联的实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID: 与节点图关联的实体的GUID |
+ * | 2 || 🔸 || `Str` || `variable_name` || 变量名: 发生变化的变量的名称 |
+ * | 3 || 🔶 || **`R<T>`** || `old_value` || 变化前值: 变量变化前的值 |
+ * | 4 || 🔶 || **`R<T>`** || `new_value` || 变化后值: 变量变化后的值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -874,10 +874,10 @@ export const NODES = {
   Trigger_CustomVariable_OnVariableChange: "Trigger.Custom_Variable.On_Variable_Change",
 
   /**
- * **Get Custom Variable** `(Query.Custom_Variable.Get_Variable)`
+ * **获取自定义变量** `(Query.Custom_Variable.Get_Variable)`
  *
- * - Returns the value of the specified Custom Variable from the Target Entity
- * - If the variable does not exist, returns the type's default value
+ * - 获取目标实体的指定自定义变量的值
+ * - 如果变量不存在，则返回类型的默认值
  *
  * -----------
  *
@@ -890,15 +890,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Str` || `var_name` || Variable Name |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Str` || `var_name` || 变量名 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `value` || Variable Value |
+ * | 0 || 🔶 || **`R<T>`** || `value` || 变量值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -1058,9 +1058,9 @@ export const NODES = {
   Query_CustomVariable_GetVariable: "Query.Custom_Variable.Get_Variable",
 
   /**
- * **Set Preset Status** `(Execution.Preset_Status.Set_Status)`
+ * **设置预设状态** `(Execution.Preset_Status.Set_Status)`
  *
- * - Set the Preset Status of the specified Target Entity
+ * - 设置指定目标实体的预设状态
  *
  * -----------
  *
@@ -1074,9 +1074,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Preset Status set for the entity |
- * | 1 || 🔹 || `Int` || `preset_index` || Preset Status Index: The unique identifier for the Preset Status |
- * | 2 || 🔹 || `Int` || `preset_value` || Preset Status Value: Generally "0" for off, "1" for on |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 所要设置预设状态的实体 |
+ * | 1 || 🔹 || `Int` || `preset_index` || 预设状态索引: 预设状态的唯一标识 |
+ * | 2 || 🔹 || `Int` || `preset_value` || 预设状态值: 一般“0”为关闭，“1”为开启 |
  *
  * -----------
  *
@@ -1088,9 +1088,9 @@ export const NODES = {
   Execution_PresetStatus_SetStatus: "Execution.Preset_Status.Set_Status",
 
   /**
- * **When Preset Status Changes** `(Trigger.Preset_Status.On_Status_Change)`
+ * **预设状态变化时** `(Trigger.Preset_Status.On_Status_Change)`
  *
- * - This event is triggered when the Preset Status of the Entity associated with the Node Graph changes
+ * - 节点图所关联的实体的预设状态发生变化时，触发该事件
  *
  * -----------
  *
@@ -1104,18 +1104,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Int` || `preset_index` || Preset Status ID |
- * | 3 || 🔸 || `Int` || `old_value` || Pre-Change Value |
- * | 4 || 🔸 || `Int` || `new_value` || Post-Change Value |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Int` || `preset_index` || 预设状态索引 |
+ * | 3 || 🔸 || `Int` || `old_value` || 变化前值 |
+ * | 4 || 🔸 || `Int` || `new_value` || 变化后值 |
  */
   Trigger_PresetStatus_OnStatusChange: "Trigger.Preset_Status.On_Status_Change",
 
   /**
- * **Get Preset Status** `(Query.Preset_Status.Get_Status)`
+ * **获取预设状态** `(Query.Preset_Status.Get_Status)`
  *
- * - Returns the value of the specified Preset Status for the Target Entity. Returns 0 if the Entity does not have that Preset Status
+ * - 获取目标实体的指定预设状态的预设状态值。如果该实体没有指定的预设状态，则返回0
  *
  * -----------
  *
@@ -1128,23 +1128,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `preset_index` || Preset Status Index |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `preset_index` || 预设状态索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `preset_value` || Preset Status Value |
+ * | 0 || 🔸 || `Int` || `preset_value` || 预设状态值 |
  */
   Query_PresetStatus_GetStatus: "Query.Preset_Status.Get_Status",
 
   /**
- * **Destroy Entity** `(Execution.Entity_Related.Destroy_Entity)`
+ * **销毁实体** `(Execution.Entity_Related.Destroy_Entity)`
  *
- * - Destroy the specified Entity with a destruction effect. This can trigger logic that runs only after destruction, such as end-of-lifecycle behaviors for Local Projectiles
- * - The [When Entity Is Destroyed] and [When Entity Is Removed/Destroyed] events can be monitored on Stage Entities
+ * - 销毁指定实体，会有销毁表现，也可以触发一些销毁后才会触发的逻辑，比如本地投射物中的生命周期结束时行为
+ * - 在关卡实体上可以监听到【实体销毁时】以及【实体移除/销毁时】事件
  *
  * -----------
  *
@@ -1158,7 +1158,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: The entity to be destroyed |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 所要销毁的实体 |
  *
  * -----------
  *
@@ -1170,9 +1170,9 @@ export const NODES = {
   Execution_EntityRelated_DestroyEntity: "Execution.Entity_Related.Destroy_Entity",
 
   /**
- * **Create Entity** `(Execution.Entity_Related.Create_Entity)`
+ * **创建实体** `(Execution.Entity_Related.Create_Entity)`
  *
- * - Create an Entity by GUID. The Entity must be pre-placed in the Scene
+ * - 根据GUID创建实体。要求预先将其布设在场景内
  *
  * -----------
  *
@@ -1186,8 +1186,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Gid` || `guid` || Target GUID: Identifier for this entity |
- * | 1 || 🔹 || `L<Int>` || `unit_tag_indexes` || Unit Tag Index List: Determines the Unit Tags carried when this entity is created |
+ * | 0 || 🔹 || `Gid` || `guid` || 目标GUID: 该实体的标识 |
+ * | 1 || 🔹 || `L<Int>` || `unit_tag_indexes` || 单位标签索引列表: 可决定该实体创建时携带的单位标签 |
  *
  * -----------
  *
@@ -1199,10 +1199,10 @@ export const NODES = {
   Execution_EntityRelated_CreateEntity: "Execution.Entity_Related.Create_Entity",
 
   /**
- * **When Entity Is Created** `(Trigger.Entity_Related.On_Created)`
+ * **实体创建时** `(Trigger.Entity_Related.On_Created)`
  *
- * - This event is triggered when an Entity is created
- * - All types of Entities can trigger this event. Stage Entities, Character Entities, and Player Entities trigger this event when entering a Stage
+ * - 实体被创建时，触发该事件
+ * - 所有类型的实体均可以触发该事件。关卡实体、角色实体和玩家实体会在进入关卡时触发该事件
  *
  * -----------
  *
@@ -1216,16 +1216,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
  */
   Trigger_EntityRelated_OnCreated: "Trigger.Entity_Related.On_Created",
 
   /**
- * **When Entity Is Removed/Destroyed** `(Trigger.Entity_Related.On_Removed)`
+ * **实体移除/销毁时** `(Trigger.Entity_Related.On_Removed)`
  *
- * - This event is triggered when any Entity in the Stage is removed or destroyed, and it can only be triggered on Stage Entities
- * - This event is triggered upon Entity destruction or removal. Therefore, when an Entity is destroyed, it triggers both the [On Entity Destroyed] and [On Entity Removed/Destroyed] events in sequence
+ * - 关卡内任意实体被移除或销毁时触发该事件，该事件仅在关卡实体上可以触发
+ * - 实体被销毁或被移除均会触发该事件。因此实体被销毁时，会依次触发【实体销毁时】以及【实体移除/销毁时】事件
  *
  * -----------
  *
@@ -1239,14 +1239,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 0 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
  */
   Trigger_EntityRelated_OnRemoved: "Trigger.Entity_Related.On_Removed",
 
   /**
- * **Get Self Entity** `(Query.Entity_Related.Get_Self)`
+ * **获取自身实体** `(Query.Entity_Related.Get_Self)`
  *
- * - Returns the Entity associated with this Node Graph
+ * - 返回该节点图所关联的实体
  *
  * -----------
  *
@@ -1259,14 +1259,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `self` || Self Entity |
+ * | 0 || 🔸 || `Ety` || `self` || 自身实体 |
  */
   Query_EntityRelated_GetSelf: "Query.Entity_Related.Get_Self",
 
   /**
- * **3D Vector Normalization** `(Arithmetic.Math.Vector_Normalize)`
+ * **三维向量归一化** `(Arithmetic.Math.Vector_Normalize)`
  *
- * - Normalizes the length of a 3D Vector and outputs the result
+ * - 将三维向量的长度归一化后输出
  *
  * -----------
  *
@@ -1279,21 +1279,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `v` || 3D Vector |
+ * | 0 || 🔹 || `Vec` || `v` || 三维向量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_Math_VectorNormalize: "Arithmetic.Math.Vector_Normalize",
 
   /**
- * **Query Entity by GUID** `(Query.Entity_Related.Get_By_GUID)`
+ * **以GUID查询实体** `(Query.Entity_Related.Get_By_GUID)`
  *
- * - Searches for an Entity by GUID
+ * - 根据GUID查询实体
  *
  * -----------
  *
@@ -1313,14 +1313,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `entity` || Entity |
+ * | 0 || 🔸 || `Ety` || `entity` || 实体 |
  */
   Query_EntityRelated_GetByGUID: "Query.Entity_Related.Get_By_GUID",
 
   /**
- * **Query GUID by Entity** `(Query.Entity_Related.Get_GUID)`
+ * **以实体查询GUID** `(Query.Entity_Related.Get_GUID)`
  *
- * - Searches for the GUID of the specified Entity
+ * - 查询指定实体的GUID
  *
  * -----------
  *
@@ -1333,7 +1333,7 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `entity` || Entity |
+ * | 0 || 🔹 || `Ety` || `entity` || 实体 |
  *
  * -----------
  *
@@ -1345,9 +1345,9 @@ export const NODES = {
   Query_EntityRelated_GetGUID: "Query.Entity_Related.Get_GUID",
 
   /**
- * **Settle Stage** `(Execution.Stage_Related.Settle)`
+ * **结算关卡** `(Execution.Stage_Related.Settle)`
  *
- * - Triggers the Stage Settlement process, which executes out-of-stage logic as defined in [Stage Settlement](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhx1du08nhwo)
+ * - 触发关卡结算流程，会按照[关卡结算](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhx1du08nhwo)内的逻辑进行局外的逻辑结算
  *
  * -----------
  *
@@ -1372,13 +1372,13 @@ export const NODES = {
   Execution_StageRelated_Settle: "Execution.Stage_Related.Settle",
 
   /**
- * **Start Timer** `(Execution.Timer.Start)`
+ * **启动定时器** `(Execution.Timer.Start)`
  *
- * - Start a Timer on the Target Entity
- * - The Timer is uniquely identified by its name
- * - A Timer consists of a looping or non-looping Timer Sequence. The Timer Sequence is a set of time points in seconds arranged in ascending order; when the Timer reaches these points, it triggers the [On Timer Triggered] event. The maximum length of a Timer Sequence is 100
- * - For example, if you input the Timer Sequence [1, 3, 5, 7], the [On Timer Triggered] event fires at 1s, 3s, 5s, and 7s
- * - When Loop is set to "Yes," the Timer restarts from 0s after reaching the last time point. For [1, 3, 5, 7], it restarts from 0s after reaching 7s
+ * - 在目标实体上启动一个定时器
+ * - 定时器通过定时器名称进行唯一标识
+ * - 定时器由一个循环或不循环的定时器序列组成。定时器序列应是一组从小到大排列的，以秒为单位的时间点，在定时器运行到这些时间点时，会触发【定时器触发时】事件。该定时器序列最大限制为100
+ * - 例如：[1,3,5,7]，如果传入这样的定时器序列，那么分别在第1、3、5、7秒，会触发【定时器触发时】事件
+ * - 当是否循环为“是”时，在定时器到达最后一个时间点后，会从0秒开始进行循环计时。以[1,3,5,7]这样的定时器为例，则在运行到7秒后，再从0秒开始计时
  *
  * -----------
  *
@@ -1392,10 +1392,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Timer Identifier |
- * | 2 || 🔹 || `Bol` || `loop` || Loop: If set to True, the Timer Sequence executes in a loop |
- * | 3 || 🔹 || `L<Flt>` || `timer_sequence` || Timer Sequence: Provide a list sorted in ascending order. If the list is invalid (not strictly ascending, contains negatives, etc.), the Timer will not run |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 定时器名称: 该定时器的标识 |
+ * | 2 || 🔹 || `Bol` || `loop` || 是否循环: “是”则会循环执行定时器序列 |
+ * | 3 || 🔹 || `L<Flt>` || `timer_sequence` || 定时器序列: 需要传入一个从小到大排列的列表。如果传入的列表不合法（不是严格按照从小到大排列、存在负数等），定时器不会运行 |
  *
  * -----------
  *
@@ -1407,9 +1407,9 @@ export const NODES = {
   Execution_Timer_Start: "Execution.Timer.Start",
 
   /**
- * **Pause Timer** `(Execution.Timer.Pause)`
+ * **暂停定时器** `(Execution.Timer.Pause)`
  *
- * - Pauses the specified Timer on the Target Entity. The [Resume Timer] node can then be used to resume its countdown
+ * - 暂停指定目标实体上的指定定时器。之后可以使用【恢复定时器】节点恢复该定时器的计时
  *
  * -----------
  *
@@ -1423,8 +1423,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Timer Identifier |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 定时器名称: 该定时器的标识 |
  *
  * -----------
  *
@@ -1436,9 +1436,9 @@ export const NODES = {
   Execution_Timer_Pause: "Execution.Timer.Pause",
 
   /**
- * **Resume Timer** `(Execution.Timer.Resume)`
+ * **恢复定时器** `(Execution.Timer.Resume)`
  *
- * - Resume a paused Timer on the Target Entity
+ * - 使目标实体上一个处于暂停状态的定时器恢复运行
  *
  * -----------
  *
@@ -1452,8 +1452,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Timer Identifier |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 定时器名称: 该定时器的标识 |
  *
  * -----------
  *
@@ -1465,9 +1465,9 @@ export const NODES = {
   Execution_Timer_Resume: "Execution.Timer.Resume",
 
   /**
- * **Stop Timer** `(Execution.Timer.Stop)`
+ * **终止定时器** `(Execution.Timer.Stop)`
  *
- * - Completely terminate the specified Timer on the Target Entity; it cannot be resumed
+ * - 完全终止目标实体上的指定定时器，不可恢复
  *
  * -----------
  *
@@ -1481,8 +1481,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Timer Identifier |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 定时器名称: 该定时器的标识 |
  *
  * -----------
  *
@@ -1494,9 +1494,9 @@ export const NODES = {
   Execution_Timer_Stop: "Execution.Timer.Stop",
 
   /**
- * **When Timer Is Triggered** `(Trigger.Timer.On_Timer_Trigger)`
+ * **定时器触发时** `(Trigger.Timer.On_Timer_Trigger)`
  *
- * - This event is triggered when the Timer reaches the specified time node
+ * - 定时器运行到指定时间节点时，触发该事件
  *
  * -----------
  *
@@ -1510,18 +1510,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Str` || `timer_name` || Timer Name |
- * | 3 || 🔸 || `Int` || `timer_sequence` || Timer Sequence ID |
- * | 4 || 🔸 || `Int` || `loop_number` || Number of Loops |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Str` || `timer_name` || 定时器名称 |
+ * | 3 || 🔸 || `Int` || `timer_sequence` || 定时器序列序号 |
+ * | 4 || 🔸 || `Int` || `loop_number` || 循环次数 |
  */
   Trigger_Timer_OnTimerTrigger: "Trigger.Timer.On_Timer_Trigger",
 
   /**
- * **Add Uniform Basic Linear Motion Device** `(Execution.Motion_Device.Add_Linear_Motion)`
+ * **添加匀速直线型基础运动器** `(Execution.Motion_Device.Add_Linear_Motion)`
  *
- * - Dynamically add a Basic Motion Device with Uniform Linear Motion at runtime
+ * - 在运行时动态添加一个匀速直线型基础运动器
  *
  * -----------
  *
@@ -1535,10 +1535,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `mover_name` || Motion Device Name: Identifier for this motion device |
- * | 2 || 🔹 || `Flt` || `duration` || Motion Device Duration: The duration for which this motion device remains active |
- * | 3 || 🔹 || `Vec` || `velocity` || Velocity Vector: Determines the magnitude and direction of the velocity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `mover_name` || 运动器名称: 该运动器的标识 |
+ * | 2 || 🔹 || `Flt` || `duration` || 运动器时长: 该运动器生效的时长 |
+ * | 3 || 🔹 || `Vec` || `velocity` || 速度向量: 决定了速度大小和方向 |
  *
  * -----------
  *
@@ -1550,9 +1550,9 @@ export const NODES = {
   Execution_MotionDevice_AddLinearMotion: "Execution.Motion_Device.Add_Linear_Motion",
 
   /**
- * **Add Uniform Basic Rotation-Based Motion Device** `(Execution.Motion_Device.Add_Rotation_Motion)`
+ * **添加匀速旋转型基础运动器** `(Execution.Motion_Device.Add_Rotation_Motion)`
  *
- * - Dynamically add a Basic Motion Device with Uniform Rotation at runtime
+ * - 在运行时动态添加一个匀速旋转型基础运动器
  *
  * -----------
  *
@@ -1566,11 +1566,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `mover_name` || Motion Device Name: Identifier for this motion device |
- * | 2 || 🔹 || `Flt` || `duration` || Motion Device Duration: The duration for which this motion device remains active |
- * | 3 || 🔹 || `Flt` || `angular_velocity` || Angular Velocity (°/s): Angular Velocity Magnitude |
- * | 4 || 🔹 || `Vec` || `axis` || Rotation Axis Orientation: Relative Orientation |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `mover_name` || 运动器名称: 该运动器的标识 |
+ * | 2 || 🔹 || `Flt` || `duration` || 运动器时长: 该运动器生效的时长 |
+ * | 3 || 🔹 || `Flt` || `angular_velocity` || 角速度(角度/秒): 角速度大小 |
+ * | 4 || 🔹 || `Vec` || `axis` || 旋转轴朝向: 相对朝向 |
  *
  * -----------
  *
@@ -1582,9 +1582,9 @@ export const NODES = {
   Execution_MotionDevice_AddRotationMotion: "Execution.Motion_Device.Add_Rotation_Motion",
 
   /**
- * **Stop and Delete Basic Motion Device** `(Execution.Motion_Device.Stop_Delete)`
+ * **停止并删除基础运动器** `(Execution.Motion_Device.Stop_Delete)`
  *
- * - Stop and delete a running Motion Device
+ * - 停止并删除一个运行中的运动器
  *
  * -----------
  *
@@ -1598,9 +1598,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `mover_name` || Motion Device Name: Identifier for this motion device |
- * | 2 || 🔹 || `Bol` || `stop_all` || Stop All Basic Motion Devices: If set to True, stops all Basic Motion Devices on this Entity. If set to False, stops only the Motion Device whose name matches the specified Motion Device |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `mover_name` || 运动器名称: 该运动器的标识 |
+ * | 2 || 🔹 || `Bol` || `stop_all` || 是否停止所有基础运动器: “是”则停止该实体上的所有基础运动器，“否”则只停止与运动器名称对应的运动器 |
  *
  * -----------
  *
@@ -1612,9 +1612,9 @@ export const NODES = {
   Execution_MotionDevice_StopDelete: "Execution.Motion_Device.Stop_Delete",
 
   /**
- * **Pause Basic Motion Device** `(Execution.Motion_Device.Pause)`
+ * **暂停基础运动器** `(Execution.Motion_Device.Pause)`
  *
- * - Pause a running Motion Device. The Resume Motion Device node can then be used to resume it
+ * - 暂停一个运行中的运动器，之后可使用恢复运动器节点使其恢复运动
  *
  * -----------
  *
@@ -1628,8 +1628,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `mover_name` || Motion Device Name: Identifier for this motion device |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `mover_name` || 运动器名称: 该运动器的标识 |
  *
  * -----------
  *
@@ -1641,9 +1641,9 @@ export const NODES = {
   Execution_MotionDevice_Pause: "Execution.Motion_Device.Pause",
 
   /**
- * **Recover Basic Motion Device** `(Execution.Motion_Device.Resume)`
+ * **恢复基础运动器** `(Execution.Motion_Device.Resume)`
  *
- * - Resume a paused Basic Motion Device on the Target Entity. The Target Entity must have the Basic Motion Device Component
+ * - 使目标实体上一个处于暂停状态的基础运动器恢复运动，需要目标实体持有基础运动器组件
  *
  * -----------
  *
@@ -1657,8 +1657,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `mover_name` || Motion Device Name: Identifier for this motion device |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `mover_name` || 运动器名称: 该运动器的标识 |
  *
  * -----------
  *
@@ -1670,9 +1670,9 @@ export const NODES = {
   Execution_MotionDevice_Resume: "Execution.Motion_Device.Resume",
 
   /**
- * **When Basic Motion Device Stops** `(Trigger.Motion_Device.On_Motion_Stop)`
+ * **基础运动器停止时** `(Trigger.Motion_Device.On_Motion_Stop)`
  *
- * - This event is sent to the Component Owner when a Basic Motion Device on the Basic Motion Device Component completes its movement or is disabled
+ * - 基础运动器组件上的某个基础运动器完成运动时或被关闭时向组件持有者发送该事件
  *
  * -----------
  *
@@ -1686,16 +1686,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity: Component Owner |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Str` || `mover_name` || Motion Device Name |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体: 组件持有者 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Str` || `mover_name` || 运动器名称 |
  */
   Trigger_MotionDevice_OnMotionStop: "Trigger.Motion_Device.On_Motion_Stop",
 
   /**
- * **Activate/Disable Collision Trigger** `(Execution.Collision_Trigger.Set_Trigger_State)`
+ * **注册/关闭碰撞触发器** `(Execution.Collision_Trigger.Set_Trigger_State)`
  *
- * - Edit the Collision Trigger Component data to Activate/Disable the Trigger at the specified ID
+ * - 修改碰撞触发器组件的数据，使某一个序号的触发器激活/关闭
  *
  * -----------
  *
@@ -1709,9 +1709,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `collision_trigger_guid` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Int` || `collision_unit_index` || Trigger ID: Identifier for this Collision Trigger |
- * | 2 || 🔹 || `Bol` || `should_register` || Activate: Set to True to activate |
+ * | 0 || 🔹 || `Ety` || `collision_trigger_guid` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Int` || `collision_unit_index` || 触发器序号: 该碰撞触发器的标识 |
+ * | 2 || 🔹 || `Bol` || `should_register` || 是否激活: “是”为激活 |
  *
  * -----------
  *
@@ -1723,10 +1723,10 @@ export const NODES = {
   Execution_CollisionTrigger_SetTriggerState: "Execution.Collision_Trigger.Set_Trigger_State",
 
   /**
- * **When Exiting Collision Trigger** `(Trigger.Collision_Trigger.On_Exit)`
+ * **离开碰撞触发器时** `(Trigger.Collision_Trigger.On_Exit)`
  *
- * - When the "Collision Trigger Source" range of active Entity A leaves the "Collision Trigger" range of active Entity B
- * - Node graph events will be sent to the entity B configured with "Collision Trigger"
+ * - 运行中实体A的“碰撞触发源”范围，离开其他运行中实体B的“碰撞触发器”范围
+ * - 会发送节点图事件给配置“碰撞触发器”的实体B
  *
  * -----------
  *
@@ -1740,19 +1740,19 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `leaver_entity` || Exiting Entity: Entity A (referenced above) |
- * | 1 || 🔸 || `Gid` || `leaver_guid` || Exiting Entity GUID |
- * | 2 || 🔸 || `Ety` || `trigger_entity` || Trigger Entity: Entity B (mentioned above) |
- * | 3 || 🔸 || `Gid` || `trigger_guid` || Trigger Entity GUID |
- * | 4 || 🔸 || `Int` || `trigger_index` || Trigger ID |
+ * | 0 || 🔸 || `Ety` || `leaver_entity` || 离开者实体: 上述中的实体A |
+ * | 1 || 🔸 || `Gid` || `leaver_guid` || 离开者实体GUID |
+ * | 2 || 🔸 || `Ety` || `trigger_entity` || 触发器实体: 上述中的实体B |
+ * | 3 || 🔸 || `Gid` || `trigger_guid` || 触发器实体GUID |
+ * | 4 || 🔸 || `Int` || `trigger_index` || 触发器序号 |
  */
   Trigger_CollisionTrigger_OnExit: "Trigger.Collision_Trigger.On_Exit",
 
   /**
- * **When Entering Collision Trigger** `(Trigger.Collision_Trigger.On_Enter)`
+ * **进入碰撞触发器时** `(Trigger.Collision_Trigger.On_Enter)`
  *
- * - The "Collision Trigger Source" range of a runtime entity A enters the "Collision Trigger" range of another runtime entity B
- * - Node graph events will be sent to the entity B configured with "Collision Trigger"
+ * - 运行中实体A的”碰撞触发源“范围，进入其他运行中实体B的“碰撞触发器”范围。
+ * - 会发送节点图事件给配置“碰撞触发器”的实体B
  *
  * -----------
  *
@@ -1766,18 +1766,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `enterer_entity` || Entering Entity: Entity A (referenced above) |
- * | 1 || 🔸 || `Gid` || `enterer_guid` || Entering Entity GUID |
- * | 2 || 🔸 || `Ety` || `trigger_entity` || Trigger Entity: Entity B (mentioned above) |
- * | 3 || 🔸 || `Gid` || `trigger_guid` || Trigger Entity GUID |
- * | 4 || 🔸 || `Int` || `trigger_index` || Trigger ID: The trigger with the corresponding ID in Entity B's Collision Trigger Component |
+ * | 0 || 🔸 || `Ety` || `enterer_entity` || 进入者实体: 上述中的实体A |
+ * | 1 || 🔸 || `Gid` || `enterer_guid` || 进入者实体GUID |
+ * | 2 || 🔸 || `Ety` || `trigger_entity` || 触发器实体: 上述中的实体B |
+ * | 3 || 🔸 || `Gid` || `trigger_guid` || 触发器实体GUID |
+ * | 4 || 🔸 || `Int` || `trigger_index` || 触发器序号: 实体B碰撞触发器组件中的对应序号的触发器 |
  */
   Trigger_CollisionTrigger_OnEnter: "Trigger.Collision_Trigger.On_Enter",
 
   /**
- * **Play Timed Effects** `(Execution.Special_Effect.Play_Timed)`
+ * **播放限时特效** `(Execution.Special_Effect.Play_Timed)`
  *
- * - Play a Timed Effect relative to the Target Entity. A valid Target Entity and Attachment Point are required
+ * - 以目标实体为基准，播放一个限时特效。需要有合法的目标实体以及挂接点
  *
  * -----------
  *
@@ -1791,15 +1791,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Cfg` || `effect_asset` || Special Effects Asset: Identifier for this Effect |
- * | 1 || 🔹 || `Ety` || `target_entity` || Target Entity: If the Entity does not exist, the Effect will not play |
- * | 2 || 🔹 || `Str` || `socket_name` || Attachment Point Name: If the Attachment Point Name does not exist, the Special Effect will not play |
- * | 3 || 🔹 || `Bol` || `follow_move` || Move With the Target: If set to True, follows the Target Entity's Motion |
- * | 4 || 🔹 || `Bol` || `follow_rotate` || Rotate With the Target: If set to True, follows the Target Entity's Rotation |
- * | 5 || 🔹 || `Vec` || `pos_offset` || Location Offset: Location Offset relative to the Target Entity's specified Attachment Point |
- * | 6 || 🔹 || `Vec` || `rot_offset` || Rotation Offset: Rotation offset relative to the Target Entity's specified Attachment Point |
- * | 7 || 🔹 || `Flt` || `scale` || Zoom Multiplier: The Zoom Multiplier of this Effect |
- * | 8 || 🔹 || `Bol` || `play_built_in_sfx` || Play Built-In Sound Effect: If set to True, plays the built-in Sound Effect as well |
+ * | 0 || 🔹 || `Cfg` || `effect_asset` || 特效资产: 该特效的标识 |
+ * | 1 || 🔹 || `Ety` || `target_entity` || 目标实体: 实体不存在会导致特效无法播放 |
+ * | 2 || 🔹 || `Str` || `socket_name` || 挂接点名称: 挂接点名称不存在会导致特效无法播放 |
+ * | 3 || 🔹 || `Bol` || `follow_move` || 是否跟随目标运动: “是”会跟随目标实体运动 |
+ * | 4 || 🔹 || `Bol` || `follow_rotate` || 是否跟随目标旋转: “是”会跟随目标实体旋转 |
+ * | 5 || 🔹 || `Vec` || `pos_offset` || 位置偏移: 相对于目标实体指定挂接点的位置偏移 |
+ * | 6 || 🔹 || `Vec` || `rot_offset` || 旋转偏移: 相对于目标实体指定挂接点的旋转偏移 |
+ * | 7 || 🔹 || `Flt` || `scale` || 缩放倍率: 该特效的缩放倍率 |
+ * | 8 || 🔹 || `Bol` || `play_built_in_sfx` || 是否播放自带的音效: “是”则会同时播放自带的音效 |
  *
  * -----------
  *
@@ -1811,7 +1811,7 @@ export const NODES = {
   Execution_SpecialEffect_PlayTimed: "Execution.Special_Effect.Play_Timed",
 
   /**
- * **Mount Looping Special Effect** `(Execution.Special_Effect.Play_Loop)`
+ * **挂载循环特效** `(Execution.Special_Effect.Play_Loop)`
  *
  * -----------
  *
@@ -1846,9 +1846,9 @@ export const NODES = {
   Execution_SpecialEffect_PlayLoop: "Execution.Special_Effect.Play_Loop",
 
   /**
- * **Clear Looping Special Effect** `(Execution.Special_Effect.Stop_Loop)`
+ * **清除循环特效** `(Execution.Special_Effect.Stop_Loop)`
  *
- * - Clear the specified Looping Effect on the Target Entity by Effect Instance ID. After a successful mount, the [Mount Looping Effect] node generates an Effect Instance ID
+ * - 根据特效实例ID清除目标实体上的指定循环特效。【挂载循环特效】节点在成功挂载后，会生成一个特效实例ID
  *
  * -----------
  *
@@ -1862,8 +1862,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `effect_instance_id` || Special Effect Instance ID: Instance ID automatically generated by the Mount Looping Special Effect node |
- * | 1 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
+ * | 0 || 🔹 || `Int` || `effect_instance_id` || 特效实例ID: 【挂载循环特效】节点中自动生成的实例ID |
+ * | 1 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
  *
  * -----------
  *
@@ -1875,10 +1875,10 @@ export const NODES = {
   Execution_SpecialEffect_StopLoop: "Execution.Special_Effect.Stop_Loop",
 
   /**
- * **Get Entity Location and Rotation** `(Query.Entity_Related.Get_Transform)`
+ * **获取实体位置与旋转** `(Query.Entity_Related.Get_Transform)`
  *
- * - Returns the Location and Rotation of the Target Entity
- * - Not applicable to Player Entities or Stage Entities
+ * - 获取目标实体的位置和旋转
+ * - 对玩家实体和关卡实体无意义
  *
  * -----------
  *
@@ -1891,22 +1891,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `position` || Location |
- * | 1 || 🔸 || `Vec` || `rotation` || Rotate |
+ * | 0 || 🔸 || `Vec` || `position` || 位置 |
+ * | 1 || 🔸 || `Vec` || `rotation` || 旋转 |
  */
   Query_EntityRelated_GetTransform: "Query.Entity_Related.Get_Transform",
 
   /**
- * **Concatenate List** `(Execution.List_Operation.Concatenate)`
+ * **拼接列表** `(Execution.List_Operation.Concatenate)`
  *
- * - Append the input List to the end of the Target List. For example, Target List [1, 2, 3] with input [4, 5] becomes [1, 2, 3, 4, 5] after execution
+ * - 将接入列表拼接在目标列表后。例如：目标列表为[1,2,3]，接入的列表为[4,5]，在执行该节点后，目标列表会变为[1，2，3，4，5]
  *
  * -----------
  *
@@ -1920,8 +1920,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`L<R<T>>`** || `target_list` || Target List: List being input |
- * | 1 || 🔷 || **`L<R<T>>`** || `incoming_list` || Input List: The input list will be added to the end of the Target list |
+ * | 0 || 🔷 || **`L<R<T>>`** || `target_list` || 目标列表: 被接入的列表 |
+ * | 1 || 🔷 || **`L<R<T>>`** || `incoming_list` || 接入的列表: 接入的列表会接在目标列表的尾部 |
  *
  * -----------
  *
@@ -1945,9 +1945,9 @@ export const NODES = {
   Execution_ListOperation_Concatenate: "Execution.List_Operation.Concatenate",
 
   /**
- * **Clear List** `(Execution.List_Operation.Clear)`
+ * **清除列表** `(Execution.List_Operation.Clear)`
  *
- * - Clear the specified List
+ * - 清空指定列表
  *
  * -----------
  *
@@ -1961,7 +1961,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List: List to be cleared |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表: 所要清除的列表 |
  *
  * -----------
  *
@@ -1985,9 +1985,9 @@ export const NODES = {
   Execution_ListOperation_Clear: "Execution.List_Operation.Clear",
 
   /**
- * **List Includes This Value** `(Query.List_Related.Contains)`
+ * **列表是否包含该值** `(Query.List_Related.Contains)`
  *
- * - Returns whether the list contains the specified value
+ * - 返回列表中是否包含指定值
  *
  * -----------
  *
@@ -2000,15 +2000,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List |
- * | 1 || 🔷 || **`R<T>`** || `value` || Value |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表 |
+ * | 1 || 🔷 || **`R<T>`** || `value` || 值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Include |
+ * | 0 || 🔸 || `Bol` || `result` || 是否包含 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2025,10 +2025,10 @@ export const NODES = {
   Query_ListRelated_Contains: "Query.List_Related.Contains",
 
   /**
- * **Search List and Return Value ID** `(Query.List_Related.Find_Index)`
+ * **查找列表并返回值的序号** `(Query.List_Related.Find_Index)`
  *
- * - Find the specified value in the list and return a list of IDs where it appears
- * - For example, if the target list is {1,2,3,2,1} and the value is 1, the returned ID list is {0,4}, meaning 1 appears at IDs 0 and 4 in the target list
+ * - 从列表中查找指定值，并返回列表中该值出现的序号列表
+ * - 例如：目标列表为{1,2,3,2,1}，值为1，返回的序号列表为{0，4}，即1出现在目标列表的序号0和4
  *
  * -----------
  *
@@ -2041,15 +2041,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<T>>`** || `target_list` || Target List |
- * | 1 || 🔷 || **`R<T>`** || `value` || Value |
+ * | 0 || 🔷 || **`L<R<T>>`** || `target_list` || 目标列表 |
+ * | 1 || 🔷 || **`R<T>`** || `value` || 值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `index_list` || ID List: Returns an empty list if not found |
+ * | 0 || 🔸 || `L<Int>` || `index_list` || 序号列表: 未找到则返回空列表 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2066,9 +2066,9 @@ export const NODES = {
   Query_ListRelated_FindIndex: "Query.List_Related.Find_Index",
 
   /**
- * **Get Corresponding Value From List** `(Query.List_Related.Get_At_Index)`
+ * **获取列表对应值** `(Query.List_Related.Get_At_Index)`
  *
- * - Returns the value at the specified ID in the list (0-based)
+ * - 返回列表中指定序号对应的值，序号从0开始
  *
  * -----------
  *
@@ -2081,15 +2081,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List |
- * | 1 || 🔹 || `Int` || `index` || ID |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表 |
+ * | 1 || 🔹 || `Int` || `index` || 序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `value` || Value |
+ * | 0 || 🔶 || **`R<T>`** || `value` || 值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2106,10 +2106,10 @@ export const NODES = {
   Query_ListRelated_GetAtIndex: "Query.List_Related.Get_At_Index",
 
   /**
- * **Insert Value Into List** `(Execution.List_Operation.Insert)`
+ * **对列表插入值** `(Execution.List_Operation.Insert)`
  *
- * - Insert a value at the specified ID Location in the specified List. The inserted value appears at that ID after insertion
- * - For example: Inserting 5 at ID 2 in the List [1, 2, 3, 4] results in [1, 2, 5, 3, 4] (5 appears at ID 2)
+ * - 向指定列表的指定序号位置插入值。被插入的值在插入后会出现在列表的插入序号位置
+ * - 例如：向列表[1，2，3，4]的序号2插入值5，插入后的列表为[1，2，5，3，4]（5出现在序号2的位置）
  *
  * -----------
  *
@@ -2123,9 +2123,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List: Reference to the list being inserted |
- * | 1 || 🔹 || `Int` || `index` || Insert ID: ID of the inserted value (after insertion) |
- * | 2 || 🔷 || **`R<T>`** || `value` || Insert Value: Value to be inserted |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表: 被插入的列表引用 |
+ * | 1 || 🔹 || `Int` || `index` || 插入序号: 插入值在插入后所在的序号 |
+ * | 2 || 🔷 || **`R<T>`** || `value` || 插入值: 被插入的值 |
  *
  * -----------
  *
@@ -2149,9 +2149,9 @@ export const NODES = {
   Execution_ListOperation_Insert: "Execution.List_Operation.Insert",
 
   /**
- * **Get List Length** `(Query.List_Related.Get_Length)`
+ * **获取列表长度** `(Query.List_Related.Get_Length)`
  *
- * - Returns the length of the list (number of elements)
+ * - 获取列表长度（列表中的元素个数）
  *
  * -----------
  *
@@ -2164,14 +2164,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `length` || Length |
+ * | 0 || 🔸 || `Int` || `length` || 长度 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2188,9 +2188,9 @@ export const NODES = {
   Query_ListRelated_GetLength: "Query.List_Related.Get_Length",
 
   /**
- * **Get Maximum Value from List** `(Query.List_Related.Get_Max)`
+ * **获取列表最大值** `(Query.List_Related.Get_Max)`
  *
- * - Applies only to Floating Point Number or Integer lists; returns the maximum value
+ * - 仅对浮点数列表和整数列表有意义，返回列表中的最大值
  *
  * -----------
  *
@@ -2203,14 +2203,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `max` || Maximum Value |
+ * | 0 || 🔶 || **`R<T>`** || `max` || 最大值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2219,9 +2219,9 @@ export const NODES = {
   Query_ListRelated_GetMax: "Query.List_Related.Get_Max",
 
   /**
- * **Get Minimum Value From List** `(Query.List_Related.Get_Min)`
+ * **获取列表最小值** `(Query.List_Related.Get_Min)`
  *
- * - Applies only to Floating Point Number or Integer lists; returns the minimum value
+ * - 仅对浮点数列表和整数列表有意义，返回列表中的最小值
  *
  * -----------
  *
@@ -2234,14 +2234,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `min` || Minimum Value |
+ * | 0 || 🔶 || **`R<T>`** || `min` || 最小值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2250,9 +2250,9 @@ export const NODES = {
   Query_ListRelated_GetMin: "Query.List_Related.Get_Min",
 
   /**
- * **Remove Value From List** `(Execution.List_Operation.Remove)`
+ * **对列表移除值** `(Execution.List_Operation.Remove)`
  *
- * - Remove the value at the specified ID Location from the specified List. All subsequent values shift forward by one position
+ * - 移除指定列表的指定序号位置的值。这会导致该序号后的所有值向前移动一位
  *
  * -----------
  *
@@ -2266,8 +2266,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List: Reference to the list of values to remove |
- * | 1 || 🔹 || `Int` || `index` || Remove ID: ID to remove |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表: 被移除值的列表引用 |
+ * | 1 || 🔹 || `Int` || `index` || 移除序号: 需要移除的序号 |
  *
  * -----------
  *
@@ -2291,9 +2291,9 @@ export const NODES = {
   Execution_ListOperation_Remove: "Execution.List_Operation.Remove",
 
   /**
- * **Modify Value in List** `(Execution.List_Operation.Modify_Index)`
+ * **对列表修改值** `(Execution.List_Operation.Modify_Index)`
  *
- * - Edit the value at the specified ID Location in the specified List
+ * - 修改指定列表的指定序号位置的值
  *
  * -----------
  *
@@ -2307,9 +2307,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List: Edited list reference |
- * | 1 || 🔹 || `Int` || `index` || ID: ID of edited value |
- * | 2 || 🔷 || **`R<T>`** || `value` || Value: Edited Value |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表: 被修改的列表引用 |
+ * | 1 || 🔹 || `Int` || `index` || 序号: 修改的值的序号 |
+ * | 2 || 🔷 || **`R<T>`** || `value` || 值: 修改的值 |
  *
  * -----------
  *
@@ -2333,9 +2333,9 @@ export const NODES = {
   Execution_ListOperation_ModifyIndex: "Execution.List_Operation.Modify_Index",
 
   /**
- * **List Sorting** `(Execution.List_Operation.Sort)`
+ * **列表排序** `(Execution.List_Operation.Sort)`
  *
- * - Sort the specified List according to the chosen sort method
+ * - 将指定列表按照排序方式进行排序
  *
  * -----------
  *
@@ -2349,8 +2349,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List: Integer List or Floating Point Number List |
- * | 1 || 🔹 || `E<SORT>` || `mode` || Sort By: Ascending or Descending |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表: 整数列表或浮点数列表 |
+ * | 1 || 🔹 || `E<SORT>` || `mode` || 排序方式: 顺序（从小到大）或逆序（从大到小）排序 |
  *
  * -----------
  *
@@ -2366,7 +2366,7 @@ export const NODES = {
   Execution_ListOperation_Sort: "Execution.List_Operation.Sort",
 
   /**
- * **Assembly List** `(Arithmetic.General.Assemble_List)`
+ * **拼装列表** `(Arithmetic.General.Assemble_List)`
  *
  * -----------
  *
@@ -2453,9 +2453,9 @@ export const NODES = {
   Arithmetic_General_AssembleList: "Arithmetic.General.Assemble_List",
 
   /**
- * **When Path Reaches Waypoint** `(Trigger.Motion_Device.On_Reach_Waypoint)`
+ * **路径到达路点时** `(Trigger.Motion_Device.On_Reach_Waypoint)`
  *
- * - When the Pathing Motion Device reaches a Waypoint, it sends this event to the Owner of the Basic Motion Device Component. This event is triggered only if "Send Event on Waypoint Arrival" is enabled in the Waypoint settings
+ * - 路径运动器到达路点时发送给基础运动器组件的持有者，需要在路点配置中配置“到达路点发送事件”才会触发该事件
  *
  * -----------
  *
@@ -2469,17 +2469,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity: Component Owner |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Str` || `device_name` || Motion Device Name |
- * | 3 || 🔸 || `Int` || `path_id` || Path Point ID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体: 组件持有者 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Str` || `device_name` || 运动器名称 |
+ * | 3 || 🔸 || `Int` || `path_id` || 路径点序号 |
  */
   Trigger_MotionDevice_OnReachWaypoint: "Trigger.Motion_Device.On_Reach_Waypoint",
 
   /**
- * **Activate/Disable Entity Deployment Group** `(Execution.Entity_Deployment.Set_Group_State)`
+ * **激活/关闭实体布设组** `(Execution.Entity_Deployment.Set_Group_State)`
  *
- * - Edit the Initial Creation Switch state of the Entity Layout Group
+ * - 修改实体布设组初始创建开关的状态
  *
  * -----------
  *
@@ -2493,8 +2493,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `group_index` || Entity Deployment Group Index |
- * | 1 || 🔹 || `Bol` || `should_activate` || Activate: If set to True, the Entity Layout Group's Initial Creation switch is enabled |
+ * | 0 || 🔹 || `Int` || `group_index` || 实体布设组索引 |
+ * | 1 || 🔹 || `Bol` || `should_activate` || 是否激活: “是”则该实体布设组初始创建开关状态为开启 |
  *
  * -----------
  *
@@ -2506,9 +2506,9 @@ export const NODES = {
   Execution_EntityDeployment_SetGroupState: "Execution.Entity_Deployment.Set_Group_State",
 
   /**
- * **Get Currently Active Entity Deployment Groups** `(Query.Entity_Layout.Get_Active_Groups)`
+ * **查询当前激活的实体布设组列表** `(Query.Entity_Layout.Get_Active_Groups)`
  *
- * - Searches the list of Entity Layout Groups currently active in the Stage
+ * - 查询当前关卡激活的实体布设组组成的列表
  *
  * -----------
  *
@@ -2521,14 +2521,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `group_index_list` || Entity Deployment Group Index List |
+ * | 0 || 🔸 || `L<Int>` || `group_index_list` || 实体布设组索引列表 |
  */
   Query_EntityLayout_GetActiveGroups: "Query.Entity_Layout.Get_Active_Groups",
 
   /**
- * **Data Type Conversion** `(Arithmetic.General.Convert_Type)`
+ * **数据类型转换** `(Arithmetic.General.Convert_Type)`
  *
- * - Converts input parameter types to another type for output. For specific rules, see [Basic Concepts](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhk23ora1wom) - [Conversion Rules Between Basic Data Types]
+ * - 将输入的参数类型转换为另一种类型输出。具体规则见[基础概念](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhk23ora1wom)-【基础数据类型之间的转换规则】
  *
  * -----------
  *
@@ -2541,14 +2541,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<K>`** || `input` || Input |
+ * | 0 || 🔷 || **`R<K>`** || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<V>`** || `output` || Output |
+ * | 0 || 🔶 || **`R<V>`** || `output` || 输出 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Int,V:Bol>`
@@ -2566,9 +2566,9 @@ export const NODES = {
   Arithmetic_General_ConvertType: "Arithmetic.General.Convert_Type",
 
   /**
- * **Forwarding Event** `(Execution.Common_Node.Forward_Event)`
+ * **转发事件** `(Execution.Common_Node.Forward_Event)`
  *
- * - Forwards the source event of this Node's Execution Flow to the specified Target Entity. The event with the same name on the Target Entity's Node Graph will be triggered
+ * - 向指定目标实体转发此节点所在的执行流的源头事件。被转发的目标实体上的节点图上的同名事件会被触发
  *
  * -----------
  *
@@ -2582,7 +2582,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Target entity being forwarded |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 被转发的目标实体 |
  *
  * -----------
  *
@@ -2594,9 +2594,9 @@ export const NODES = {
   Execution_CommonNode_ForwardEvent: "Execution.Common_Node.Forward_Event",
 
   /**
- * **Pi (π)** `(Query.Math.Pi)`
+ * **圆周率** `(Query.Math.Pi)`
  *
- * - Returns the approximate value of π (≈ 3.142)
+ * - 返回圆周率π的近似值，约为3.142
  *
  * -----------
  *
@@ -2609,14 +2609,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `pi` || Pi (π) |
+ * | 0 || 🔸 || `Flt` || `pi` || 圆周率（π） |
  */
   Query_Math_Pi: "Query.Math.Pi",
 
   /**
- * **3D Vector: Zero Vector** `(Query.Math.Vector_Zero)`
+ * **三维向量：零向量** `(Query.Math.Vector_Zero)`
  *
- * - Return (0,0,0)
+ * - 返回(0,0,0)
  *
  * -----------
  *
@@ -2634,9 +2634,9 @@ export const NODES = {
   Query_Math_VectorZero: "Query.Math.Vector_Zero",
 
   /**
- * **3D Vector: Up** `(Query.Math.Vector_Up)`
+ * **三维向量：上方** `(Query.Math.Vector_Up)`
  *
- * - Return (0,1,0)
+ * - 返回(0,1,0)
  *
  * -----------
  *
@@ -2654,9 +2654,9 @@ export const NODES = {
   Query_Math_VectorUp: "Query.Math.Vector_Up",
 
   /**
- * **3D Vector: Down** `(Query.Math.Vector_Down)`
+ * **三维向量：下方** `(Query.Math.Vector_Down)`
  *
- * - Return (0,-1,0)
+ * - 返回(0,-1,0)
  *
  * -----------
  *
@@ -2674,9 +2674,9 @@ export const NODES = {
   Query_Math_VectorDown: "Query.Math.Vector_Down",
 
   /**
- * **3D Vector: Left** `(Query.Math.Vector_Left)`
+ * **三维向量：左侧** `(Query.Math.Vector_Left)`
  *
- * - Return (-1,0,0)
+ * - 返回(-1,0,0)
  *
  * -----------
  *
@@ -2694,9 +2694,9 @@ export const NODES = {
   Query_Math_VectorLeft: "Query.Math.Vector_Left",
 
   /**
- * **3D Vector: Right** `(Query.Math.Vector_Right)`
+ * **三维向量：右侧** `(Query.Math.Vector_Right)`
  *
- * - Return (1,0,0)
+ * - 返回(1,0,0)
  *
  * -----------
  *
@@ -2714,9 +2714,9 @@ export const NODES = {
   Query_Math_VectorRight: "Query.Math.Vector_Right",
 
   /**
- * **3D Vector: Forward** `(Query.Math.Vector_Forward)`
+ * **三维向量：前方** `(Query.Math.Vector_Forward)`
  *
- * - Return (0,0,1)
+ * - 返回(0,0,1)
  *
  * -----------
  *
@@ -2734,9 +2734,9 @@ export const NODES = {
   Query_Math_VectorForward: "Query.Math.Vector_Forward",
 
   /**
- * **3D Vector: Backward** `(Query.Math.Vector_Backward)`
+ * **三维向量：后方** `(Query.Math.Vector_Backward)`
  *
- * - Return (0,0,-1)
+ * - 返回(0,0,-1)
  *
  * -----------
  *
@@ -2754,9 +2754,9 @@ export const NODES = {
   Query_Math_VectorBackward: "Query.Math.Vector_Backward",
 
   /**
- * **Addition** `(Arithmetic.Math.Add)`
+ * **加法运算** `(Arithmetic.Math.Add)`
  *
- * - Adds two Floating Point Numbers or Integers
+ * - 计算两个浮点数或整数的加法
  *
  * -----------
  *
@@ -2777,7 +2777,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2786,9 +2786,9 @@ export const NODES = {
   Arithmetic_Math_Add: "Arithmetic.Math.Add",
 
   /**
- * **Subtraction** `(Arithmetic.Math.Subtract)`
+ * **减法运算** `(Arithmetic.Math.Subtract)`
  *
- * - Subtracts two Floating Point Numbers or Integers
+ * - 计算两个浮点数或整数的减法
  *
  * -----------
  *
@@ -2809,7 +2809,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2818,9 +2818,9 @@ export const NODES = {
   Arithmetic_Math_Subtract: "Arithmetic.Math.Subtract",
 
   /**
- * **Multiplication** `(Arithmetic.Math.Multiply)`
+ * **乘法运算** `(Arithmetic.Math.Multiply)`
  *
- * - Performs multiplication, supporting Floating Point and Integer multiplication
+ * - 乘法运算，支持浮点数乘法和整数乘法
  *
  * -----------
  *
@@ -2841,7 +2841,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2850,10 +2850,10 @@ export const NODES = {
   Arithmetic_Math_Multiply: "Arithmetic.Math.Multiply",
 
   /**
- * **Division** `(Arithmetic.Math.Divide)`
+ * **除法运算** `(Arithmetic.Math.Divide)`
  *
- * - Performs division, supporting Floating Point division and Integer division. Integer division returns the quotient result
- * - The divisor should not be 0, otherwise it may return an illegal value
+ * - 除法运算，支持浮点数除法和整数除法。整数除法返回整除结果
+ * - 除数不应为0，否则可能返回非法值
  *
  * -----------
  *
@@ -2874,7 +2874,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2883,9 +2883,9 @@ export const NODES = {
   Arithmetic_Math_Divide: "Arithmetic.Math.Divide",
 
   /**
- * **Modulo Operation** `(Arithmetic.Math.Modulo)`
+ * **模运算** `(Arithmetic.Math.Modulo)`
  *
- * - Returns the modulus of Input 2 and Input 1
+ * - 返回输入2对输入1的取模运算
  *
  * -----------
  *
@@ -2906,14 +2906,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_Modulo: "Arithmetic.Math.Modulo",
 
   /**
- * **Exponentiation** `(Arithmetic.Math.Power)`
+ * **幂运算** `(Arithmetic.Math.Power)`
  *
- * - Raises the base to the given exponent and returns the result
+ * - 计算底数的指数次幂
  *
  * -----------
  *
@@ -2926,15 +2926,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `base` || Base |
- * | 1 || 🔷 || **`R<T>`** || `exp` || Exponent |
+ * | 0 || 🔷 || **`R<T>`** || `base` || 底数 |
+ * | 1 || 🔷 || **`R<T>`** || `exp` || 指数 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2943,9 +2943,9 @@ export const NODES = {
   Arithmetic_Math_Power: "Arithmetic.Math.Power",
 
   /**
- * **Take Larger Value** `(Arithmetic.Math.Max)`
+ * **取较大值** `(Arithmetic.Math.Max)`
  *
- * - Returns the larger of two inputs
+ * - 取出两个输入中较大的一个
  *
  * -----------
  *
@@ -2958,15 +2958,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `a` || Input 1 |
- * | 1 || 🔷 || **`R<T>`** || `b` || Input 2 |
+ * | 0 || 🔷 || **`R<T>`** || `a` || 输入1 |
+ * | 1 || 🔷 || **`R<T>`** || `b` || 输入2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `max` || Larger Value |
+ * | 0 || 🔶 || **`R<T>`** || `max` || 较大值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -2975,9 +2975,9 @@ export const NODES = {
   Arithmetic_Math_Max: "Arithmetic.Math.Max",
 
   /**
- * **Take Smaller Value** `(Arithmetic.Math.Min)`
+ * **取较小值** `(Arithmetic.Math.Min)`
  *
- * - Returns the smaller of two inputs
+ * - 取出两个输入中较小的一个
  *
  * -----------
  *
@@ -2990,15 +2990,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `a` || Input 1 |
- * | 1 || 🔷 || **`R<T>`** || `b` || Input 2 |
+ * | 0 || 🔷 || **`R<T>`** || `a` || 输入1 |
+ * | 1 || 🔷 || **`R<T>`** || `b` || 输入2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `min` || Smaller Value |
+ * | 0 || 🔶 || **`R<T>`** || `min` || 较小值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -3007,10 +3007,10 @@ export const NODES = {
   Arithmetic_Math_Min: "Arithmetic.Math.Min",
 
   /**
- * **Logarithm Operation** `(Arithmetic.Math.Log)`
+ * **对数运算** `(Arithmetic.Math.Log)`
  *
- * - Calculates the logarithm of the argument with the specified base
- * - The base should not be negative or equal to 1, and the argument should not be negative, otherwise illegal values may be generated
+ * - 计算以底数为底真数的对数
+ * - 底数不应为负数或等于1、真数不应为负数，否则可能产生非法值
  *
  * -----------
  *
@@ -3023,22 +3023,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `Input0` || Real Number |
- * | 1 || 🔹 || `Flt` || `Input1` || Base |
+ * | 0 || 🔹 || `Flt` || `Input0` || 真数 |
+ * | 1 || 🔹 || `Flt` || `Input1` || 底数 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_Math_Log: "Arithmetic.Math.Log",
 
   /**
- * **Absolute Value Operation** `(Arithmetic.Math.Abs)`
+ * **绝对值运算** `(Arithmetic.Math.Abs)`
  *
- * - Returns the absolute value of the input
+ * - 返回输入的绝对值
  *
  * -----------
  *
@@ -3051,14 +3051,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `input` || Input |
+ * | 0 || 🔷 || **`R<T>`** || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -3067,11 +3067,11 @@ export const NODES = {
   Arithmetic_Math_Abs: "Arithmetic.Math.Abs",
 
   /**
- * **Sign Operation** `(Arithmetic.Math.Sign)`
+ * **取符号运算** `(Arithmetic.Math.Sign)`
  *
- * - When the input is positive, returns 1
- * - When the input is negative, returns -1
- * - When the input is 0, returns 0
+ * - 输入为正数时，返回1
+ * - 输入为负数时，返回-1
+ * - 输入为0时，返回0
  *
  * -----------
  *
@@ -3084,14 +3084,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `input` || Input |
+ * | 0 || 🔷 || **`R<T>`** || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -3100,9 +3100,9 @@ export const NODES = {
   Arithmetic_Math_Sign: "Arithmetic.Math.Sign",
 
   /**
- * **3D Vector Modulo Operation** `(Arithmetic.Math.Vector_Length)`
+ * **三维向量模运算** `(Arithmetic.Math.Vector_Length)`
  *
- * - Calculates the magnitude of the input 3D Vector
+ * - 计算输入的三维向量的模
  *
  * -----------
  *
@@ -3115,21 +3115,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `v` || 3D Vector |
+ * | 0 || 🔹 || `Vec` || `v` || 三维向量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_Math_VectorLength: "Arithmetic.Math.Vector_Length",
 
   /**
- * **Arithmetic Square Root Operation** `(Arithmetic.Math.Sqrt)`
+ * **算术平方根运算** `(Arithmetic.Math.Sqrt)`
  *
- * - Returns the arithmetic square root of the input value
+ * - 返回输入值的算术平方根
  *
  * -----------
  *
@@ -3142,24 +3142,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `input` || Input |
+ * | 0 || 🔹 || `Flt` || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_Math_Sqrt: "Arithmetic.Math.Sqrt",
 
   /**
- * **Range Limiting Operation** `(Arithmetic.Math.Clamp)`
+ * **范围限制运算** `(Arithmetic.Math.Clamp)`
  *
- * - Clamps the input value to the range [lower limit, upper limit] (both bounds inclusive) and outputs the result
- * - If the input falls within [lower limit, upper limit], returns the original value
- * - If the input is below the lower limit, returns the lower limit; if it exceeds the upper limit, returns the upper limit
- * - If the lower limit is greater than the upper limit, treats the input as invalid and returns an illegal value
+ * - 将输入值限制在[下限,上限]（上下限均包含）后输出。
+ * - 输入值如果小于下限，则返回下限值；如果输入值大于上限，则返回上限值
  *
  * -----------
  *
@@ -3172,16 +3170,16 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `input` || Input |
- * | 1 || 🔷 || **`R<T>`** || `min` || Lower Limit |
- * | 2 || 🔷 || **`R<T>`** || `max` || Upper Limit |
+ * | 0 || 🔷 || **`R<T>`** || `input` || 输入 |
+ * | 1 || 🔷 || **`R<T>`** || `min` || 下限 |
+ * | 2 || 🔷 || **`R<T>`** || `max` || 上限 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -3190,9 +3188,9 @@ export const NODES = {
   Arithmetic_Math_Clamp: "Arithmetic.Math.Clamp",
 
   /**
- * **Round to Integer Operation** `(Arithmetic.Math.Round)`
+ * **取整数运算** `(Arithmetic.Math.Round)`
  *
- * - Performs a rounding operation based on the rounding method and returns the rounded positive number
+ * - 根据取整方式进行一次取整运算，返回取整后的正数
  *
  * -----------
  *
@@ -3205,22 +3203,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `input` || Input |
- * | 1 || 🔹 || `E<ROND>` || `mode` || Rounding Mode: Round: Rounds to the nearest integer according to standard rules<br>Round Up: Returns the smallest integer greater than the input value. For example: input 1.2 → 2; input −2.3 → −2<br>Round Down: Returns the largest integer smaller than the input value. For example: input 1.2 → 1; input −2.3 → −3<br>Truncate: Removes the decimal part of the floating point number (rounds toward zero). For example: input 1.2 → 1; input −2.3 → −2 |
+ * | 0 || 🔹 || `Flt` || `input` || 输入 |
+ * | 1 || 🔹 || `E<ROND>` || `mode` || 取整方式: 四舍五入：按照四舍五入规则进行取整<br>向上取整：返回大于输入且离输入值最近的一个整数，例如：输入为1.2时，返回2；输入为-2.3时，返回-2<br>向下取整：返回小于输入且离输入值最近的一个整数。例如：输入为1.2时，返回1；输入为-2.3时，返回-3<br>截尾取整：截去浮点数尾部的小数部分，也相当于向0方向取整。例如：输入为1.2时，返回1；输入为-2.3时，返回-2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_Round: "Arithmetic.Math.Round",
 
   /**
- * **Create 3D Vector** `(Arithmetic.Math.Create_Vector)`
+ * **创建三维向量** `(Arithmetic.Math.Create_Vector)`
  *
- * - Creates a 3D Vector from x, y, and z components
+ * - 根据x、y、z分量创建一个三维向量
  *
  * -----------
  *
@@ -3233,23 +3231,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `x` || X-Component |
- * | 1 || 🔹 || `Flt` || `y` || Y-Component |
- * | 2 || 🔹 || `Flt` || `z` || Z-Component |
+ * | 0 || 🔹 || `Flt` || `x` || X分量 |
+ * | 1 || 🔹 || `Flt` || `y` || Y分量 |
+ * | 2 || 🔹 || `Flt` || `z` || Z分量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `vector` || 3D Vector |
+ * | 0 || 🔸 || `Vec` || `vector` || 三维向量 |
  */
   Arithmetic_Math_CreateVector: "Arithmetic.Math.Create_Vector",
 
   /**
- * **Logical AND Operation** `(Arithmetic.Math.And)`
+ * **逻辑与运算** `(Arithmetic.Math.And)`
  *
- * - Performs a logical AND operation on the two input Boolean values and returns the result
+ * - 对输入的两个布尔值进行与运算后输出
  *
  * -----------
  *
@@ -3262,22 +3260,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `a` || Input 1 |
- * | 1 || 🔹 || `Bol` || `b` || Input 2 |
+ * | 0 || 🔹 || `Bol` || `a` || 输入1 |
+ * | 1 || 🔹 || `Bol` || `b` || 输入2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Arithmetic_Math_And: "Arithmetic.Math.And",
 
   /**
- * **Logical OR Operation** `(Arithmetic.Math.Or)`
+ * **逻辑或运算** `(Arithmetic.Math.Or)`
  *
- * - Performs a logical OR operation on the two input Boolean values and returns the result
+ * - 对输入的两个布尔值进行或运算后输出
  *
  * -----------
  *
@@ -3290,22 +3288,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `a` || Input 1 |
- * | 1 || 🔹 || `Bol` || `b` || Input 2 |
+ * | 0 || 🔹 || `Bol` || `a` || 输入1 |
+ * | 1 || 🔹 || `Bol` || `b` || 输入2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Arithmetic_Math_Or: "Arithmetic.Math.Or",
 
   /**
- * **Logical XOR Operation** `(Arithmetic.Math.Xor)`
+ * **逻辑异或运算** `(Arithmetic.Math.Xor)`
  *
- * - Performs a logical XOR operation on the two input Boolean values and returns the result
+ * - 对输入的两个布尔值进行异或运算后输出
  *
  * -----------
  *
@@ -3318,22 +3316,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `a` || Input 1 |
- * | 1 || 🔹 || `Bol` || `b` || Input 2 |
+ * | 0 || 🔹 || `Bol` || `a` || 输入1 |
+ * | 1 || 🔹 || `Bol` || `b` || 输入2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Arithmetic_Math_Xor: "Arithmetic.Math.Xor",
 
   /**
- * **Logical NOT Operation** `(Arithmetic.Math.Not)`
+ * **逻辑非运算** `(Arithmetic.Math.Not)`
  *
- * - Performs a logical NOT operation on the input Boolean value and returns the result
+ * - 对输入的布尔值进行非运算后输出
  *
  * -----------
  *
@@ -3346,21 +3344,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `input` || Input |
+ * | 0 || 🔹 || `Bol` || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Arithmetic_Math_Not: "Arithmetic.Math.Not",
 
   /**
- * **Less Than** `(Arithmetic.Math.Less_Than)`
+ * **数值小于** `(Arithmetic.Math.Less_Than)`
  *
- * - Returns whether the left value is less than the right value
+ * - 返回左值是否小于右值
  *
  * -----------
  *
@@ -3373,15 +3371,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `a` || Left Value |
- * | 1 || 🔷 || **`R<T>`** || `b` || Right Value |
+ * | 0 || 🔷 || **`R<T>`** || `a` || 左值 |
+ * | 1 || 🔷 || **`R<T>`** || `b` || 右值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `ok` || Result |
+ * | 0 || 🔸 || `Bol` || `ok` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -3390,9 +3388,9 @@ export const NODES = {
   Arithmetic_Math_LessThan: "Arithmetic.Math.Less_Than",
 
   /**
- * **Less Than or Equal To** `(Arithmetic.Math.Less_Equal)`
+ * **数值小于等于** `(Arithmetic.Math.Less_Equal)`
  *
- * - Returns whether the left value is less than or equal to the right value
+ * - 返回左值是否小于等于右值
  *
  * -----------
  *
@@ -3405,15 +3403,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `a` || Left Value |
- * | 1 || 🔷 || **`R<T>`** || `b` || Right Value |
+ * | 0 || 🔷 || **`R<T>`** || `a` || 左值 |
+ * | 1 || 🔷 || **`R<T>`** || `b` || 右值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `ok` || Result |
+ * | 0 || 🔸 || `Bol` || `ok` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -3422,9 +3420,9 @@ export const NODES = {
   Arithmetic_Math_LessEqual: "Arithmetic.Math.Less_Equal",
 
   /**
- * **Greater Than** `(Arithmetic.Math.Greater_Than)`
+ * **数值大于** `(Arithmetic.Math.Greater_Than)`
  *
- * - Returns whether the left value is greater than the right value
+ * - 返回左值是否大于右值
  *
  * -----------
  *
@@ -3437,15 +3435,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `a` || Left Value |
- * | 1 || 🔷 || **`R<T>`** || `b` || Right Value |
+ * | 0 || 🔷 || **`R<T>`** || `a` || 左值 |
+ * | 1 || 🔷 || **`R<T>`** || `b` || 右值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `ok` || Result |
+ * | 0 || 🔸 || `Bol` || `ok` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -3454,9 +3452,9 @@ export const NODES = {
   Arithmetic_Math_GreaterThan: "Arithmetic.Math.Greater_Than",
 
   /**
- * **Greater Than or Equal To** `(Arithmetic.Math.Greater_Equal)`
+ * **数值大于等于** `(Arithmetic.Math.Greater_Equal)`
  *
- * - Returns whether the left value is greater than or equal to the right value
+ * - 返回左值是否大于等于右值
  *
  * -----------
  *
@@ -3469,15 +3467,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `a` || Left Value |
- * | 1 || 🔷 || **`R<T>`** || `b` || Right Value |
+ * | 0 || 🔷 || **`R<T>`** || `a` || 左值 |
+ * | 1 || 🔷 || **`R<T>`** || `b` || 右值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `ok` || Result |
+ * | 0 || 🔸 || `Bol` || `ok` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -3486,9 +3484,9 @@ export const NODES = {
   Arithmetic_Math_GreaterEqual: "Arithmetic.Math.Greater_Equal",
 
   /**
- * **Activate/Disable Native Collision** `(Execution.Collision.Set_Native_Collision)`
+ * **激活/关闭原生碰撞** `(Execution.Collision.Set_Native_Collision)`
  *
- * - Edit the Entity's Native Collision
+ * - 修改实体自带的碰撞
  *
  * -----------
  *
@@ -3502,8 +3500,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Bol` || `should_activate` || Activate: Set to True to activate |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Bol` || `should_activate` || 是否激活: “是”为激活 |
  *
  * -----------
  *
@@ -3515,9 +3513,9 @@ export const NODES = {
   Execution_Collision_SetNativeCollision: "Execution.Collision.Set_Native_Collision",
 
   /**
- * **Activate/Disable Native Collision Climbability** `(Execution.Collision.Set_Native_Climb)`
+ * **激活/关闭原生碰撞可攀爬性** `(Execution.Collision.Set_Native_Climb)`
  *
- * - Edit the Climbability of the Entity's Native Collision
+ * - 修改实体自带的碰撞的可攀爬性
  *
  * -----------
  *
@@ -3531,8 +3529,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Bol` || `should_activate` || Activate: Set to True to activate |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Bol` || `should_activate` || 是否激活: “是”为激活 |
  *
  * -----------
  *
@@ -3544,9 +3542,9 @@ export const NODES = {
   Execution_Collision_SetNativeClimb: "Execution.Collision.Set_Native_Climb",
 
   /**
- * **Activate/Disable Extra Collision** `(Execution.Collision.Set_Extra_Collision)`
+ * **激活/关闭额外碰撞** `(Execution.Collision.Set_Extra_Collision)`
  *
- * - Edit data in the Entity's Extra Collision Component to enable/disable Extra Collision
+ * - 修改实体额外碰撞组件内的数据，使额外碰撞开启/关闭
  *
  * -----------
  *
@@ -3560,9 +3558,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Int` || `extra_collision_index` || Extra Collision ID: Identifier for this Extra Collision |
- * | 2 || 🔹 || `Bol` || `should_activate` || Activate: Set to True to activate |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Int` || `extra_collision_index` || 额外碰撞序号: 该额外碰撞的标识 |
+ * | 2 || 🔹 || `Bol` || `should_activate` || 是否激活: “是”为激活 |
  *
  * -----------
  *
@@ -3574,9 +3572,9 @@ export const NODES = {
   Execution_Collision_SetExtraCollision: "Execution.Collision.Set_Extra_Collision",
 
   /**
- * **Activate/Disable Extra Collision Climbability** `(Execution.Collision.Set_Extra_Climb)`
+ * **激活/关闭额外碰撞可攀爬性** `(Execution.Collision.Set_Extra_Climb)`
  *
- * - Edit the Climbability of the Entity's Extra Collision Component
+ * - 修改实体额外碰撞组件的碰撞的可攀爬性
  *
  * -----------
  *
@@ -3590,9 +3588,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Int` || `extra_collision_index` || Extra Collision ID: Identifier for this Extra Collision |
- * | 2 || 🔹 || `Bol` || `should_activate` || Activate: Set to True to activate |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Int` || `extra_collision_index` || 额外碰撞序号: 该额外碰撞的标识 |
+ * | 2 || 🔹 || `Bol` || `should_activate` || 是否激活: “是”为激活 |
  *
  * -----------
  *
@@ -3604,9 +3602,9 @@ export const NODES = {
   Execution_Collision_SetExtraClimb: "Execution.Collision.Set_Extra_Climb",
 
   /**
- * **Distance Between Two Coordinate Points** `(Arithmetic.Math.Distance)`
+ * **两坐标点距离** `(Arithmetic.Math.Distance)`
  *
- * - Calculates the Euclidean distance between two coordinates
+ * - 计算两个坐标点之间的欧式距离
  *
  * -----------
  *
@@ -3619,22 +3617,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `p1` || Coordinate Point 1 |
- * | 1 || 🔹 || `Vec` || `p2` || Coordinate Point 2 |
+ * | 0 || 🔹 || `Vec` || `p1` || 坐标点1 |
+ * | 1 || 🔹 || `Vec` || `p2` || 坐标点2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `distance` || Distance |
+ * | 0 || 🔸 || `Flt` || `distance` || 距离 |
  */
   Arithmetic_Math_Distance: "Arithmetic.Math.Distance",
 
   /**
- * **Switch Follow Motion Device Target by GUID** `(Execution.Follow_Motion.Set_Target_GUID)`
+ * **以GUID切换跟随运动器的目标** `(Execution.Follow_Motion.Set_Target_GUID)`
  *
- * - Switch the Follow Target of the Follow Motion Device by GUID
+ * - 以GUID切换跟随运动器的跟随目标
  *
  * -----------
  *
@@ -3648,13 +3646,13 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Gid` || `follow_guid` || Follow Target GUID: Identifier for the Follow Target |
- * | 2 || 🔹 || `Str` || `socket_name` || Follow Target Attachment Point Name: Name of the Attachment Point to follow |
- * | 3 || 🔹 || `Vec` || `pos_offset` || Location Offset: Location Offset based on the Follow Coordinate System |
- * | 4 || 🔹 || `Vec` || `rot_offset` || Rotation Offset: Rotation Offset based on the Follow Coordinate System |
- * | 5 || 🔹 || `E<SYSC>` || `coord_sys` || Follow Coordinate System: Options: Relative Coordinate System or World Coordinate System |
- * | 6 || 🔹 || `E<FOLO>` || `follow_type` || Follow Type: Options: Completely Follow, Follow Location, Follow Rotation |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Gid` || `follow_guid` || 跟随目标GUID: 跟随目标的标识 |
+ * | 2 || 🔹 || `Str` || `socket_name` || 跟随目标挂接点名称: 跟随的挂接点名称 |
+ * | 3 || 🔹 || `Vec` || `pos_offset` || 位置偏移: 以【跟随坐标系】为基准产生的位置偏移 |
+ * | 4 || 🔹 || `Vec` || `rot_offset` || 旋转偏移: 以【跟随坐标系】为基准产生的旋转偏移 |
+ * | 5 || 🔹 || `E<SYSC>` || `coord_sys` || 跟随坐标系: 可选”相对坐标系“、”世界坐标系“ |
+ * | 6 || 🔹 || `E<FOLO>` || `follow_type` || 跟随类型: 可选”完全跟随“、”跟随位置“、”跟随旋转” |
  *
  * -----------
  *
@@ -3666,9 +3664,9 @@ export const NODES = {
   Execution_FollowMotion_SetTargetGUID: "Execution.Follow_Motion.Set_Target_GUID",
 
   /**
- * **Get Follow Motion Device Target** `(Query.Follow_Motion.Get_Target)`
+ * **获取跟随运动器的目标** `(Query.Follow_Motion.Get_Target)`
  *
- * - Returns the Target of the Follow Motion Device, including the Target Entity and its GUID
+ * - 获取跟随运动器的目标，可以获取目标实体和实体的GUID
  *
  * -----------
  *
@@ -3681,22 +3679,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `follower` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `follower` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `target_entity` || Follow Target Entity |
- * | 1 || 🔸 || `Gid` || `target_guid` || Follow Target GUID |
+ * | 0 || 🔸 || `Ety` || `target_entity` || 跟随目标实体 |
+ * | 1 || 🔸 || `Gid` || `target_guid` || 跟随目标GUID |
  */
   Query_FollowMotion_GetTarget: "Query.Follow_Motion.Get_Target",
 
   /**
- * **Get List of Player Entities on the Field** `(Query.Character_Related.Get_All_Players)`
+ * **获取在场玩家实体列表** `(Query.Character_Related.Get_All_Players)`
  *
- * - Returns a list of all Player Entities present in the scene
+ * - 获取在场所有玩家实体组成的列表
  *
  * -----------
  *
@@ -3709,14 +3707,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `players` || Player Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `players` || 玩家实体列表 |
  */
   Query_CharacterRelated_GetAllPlayers: "Query.Character_Related.Get_All_Players",
 
   /**
- * **Query Entity Faction** `(Query.Faction_Related.Get_Faction)`
+ * **查询实体阵营** `(Query.Faction_Related.Get_Faction)`
  *
- * - Searches the Faction of the specified Entity
+ * - 查询指定实体的阵营
  *
  * -----------
  *
@@ -3729,21 +3727,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Fct` || `camp` || Faction |
+ * | 0 || 🔸 || `Fct` || `camp` || 阵营 |
  */
   Query_FactionRelated_GetFaction: "Query.Faction_Related.Get_Faction",
 
   /**
- * **Modify Entity Faction** `(Execution.Faction_Related.Set_Faction)`
+ * **修改实体阵营** `(Execution.Faction_Related.Set_Faction)`
  *
- * - Edit the Faction of the specified Target Entity
+ * - 修改指定目标实体的阵营
  *
  * -----------
  *
@@ -3757,8 +3755,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Entity whose faction is to be edited |
- * | 1 || 🔹 || `Fct` || `faction` || Faction: Edited Faction |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 所要修改阵营的实体 |
+ * | 1 || 🔹 || `Fct` || `faction` || 阵营: 修改后的阵营 |
  *
  * -----------
  *
@@ -3770,9 +3768,9 @@ export const NODES = {
   Execution_FactionRelated_SetFaction: "Execution.Faction_Related.Set_Faction",
 
   /**
- * **When Entity Faction Changes** `(Trigger.Faction_Related.On_Faction_Change)`
+ * **实体阵营变化时** `(Trigger.Faction_Related.On_Faction_Change)`
  *
- * - This event is triggered when an Entity's Faction changes
+ * - 实体的阵营变化时，触发该事件
  *
  * -----------
  *
@@ -3786,17 +3784,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Fct` || `old_camp` || Pre-Change Faction |
- * | 3 || 🔸 || `Fct` || `new_camp` || Post-Change Faction |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Fct` || `old_camp` || 变化前阵营 |
+ * | 3 || 🔸 || `Fct` || `new_camp` || 变化后阵营 |
  */
   Trigger_FactionRelated_OnFactionChange: "Trigger.Faction_Related.On_Faction_Change",
 
   /**
- * **Create Prefab** `(Execution.Entity_Related.Create_Prefab)`
+ * **创建元件** `(Execution.Entity_Related.Create_Prefab)`
  *
- * - Create an Entity by Prefab ID
+ * - 根据元件ID创建一个实体
  *
  * -----------
  *
@@ -3810,13 +3808,13 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Pfb` || `component_id` || Prefab ID: Identifier for this Prefab |
- * | 1 || 🔹 || `Vec` || `position` || Location: Absolute Location |
- * | 2 || 🔹 || `Vec` || `rotation` || Rotate: Absolute Rotation |
- * | 3 || 🔹 || `Ety` || `owner_entity` || Owner Entity: Determines whether the created entity belongs to another entity |
- * | 4 || 🔹 || `Bol` || `override_level` || Overwrite Level: When set to False, the [Level] parameter has no effect |
- * | 5 || 🔹 || `Int` || `level` || Level: Determines the Level when the entity is created |
- * | 6 || 🔹 || `L<Int>` || `unit_tag_indexes` || Unit Tag Index List: Determines the Unit Tags carried when this entity is created |
+ * | 0 || 🔹 || `Pfb` || `component_id` || 元件ID: 该元件的标识 |
+ * | 1 || 🔹 || `Vec` || `position` || 位置: 绝对位置 |
+ * | 2 || 🔹 || `Vec` || `rotation` || 旋转: 绝对旋转 |
+ * | 3 || 🔹 || `Ety` || `owner_entity` || 拥有者实体: 可决定该创建后实体是否归属于某个实体 |
+ * | 4 || 🔹 || `Bol` || `override_level` || 是否覆写等级: 为否时，【等级】参数不生效 |
+ * | 5 || 🔹 || `Int` || `level` || 等级: 决定该实体创建时的等级 |
+ * | 6 || 🔹 || `L<Int>` || `unit_tag_indexes` || 单位标签索引列表: 可决定该实体创建时携带的单位标签 |
  *
  * -----------
  *
@@ -3824,14 +3822,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `created_entity` || Created Entity: Entities created in this way do not have a GUID |
+ * | 0 || 🔸 || `Ety` || `created_entity` || 创建后实体: 以该方式创建的实体没有GUID |
  */
   Execution_EntityRelated_CreatePrefab: "Execution.Entity_Related.Create_Prefab",
 
   /**
- * **When On-Hit Detection Is Triggered** `(Trigger.Hit_Detection.On_Hit_Detected)`
+ * **命中检测触发时** `(Trigger.Hit_Detection.On_Hit_Detected)`
  *
- * - This event is triggered when the On-Hit Detection Component's Owner hits other Entities or the Scene
+ * - 命中检测组件命中其他实体或场景时组件的持有者触发该事件
  *
  * -----------
  *
@@ -3845,18 +3843,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Bol` || `hit_hurtbox` || On-Hit Hurtbox: If set to False: The environment was hit<br>If set to True: An Entity was hit. Retrieve values from the Hit Entity output parameter |
- * | 3 || 🔸 || `Ety` || `hit_entity` || On-Hit Entity: Hit Entity is only valid when a Hurtbox is hit |
- * | 4 || 🔸 || `Vec` || `hit_position` || On-Hit Location |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Bol` || `hit_hurtbox` || 是否命中受击盒: 为否时，命中的是场景<br>为是时，命中实体，此时可以从【命中实体】出参中取出值 |
+ * | 3 || 🔸 || `Ety` || `hit_entity` || 命中实体: 仅当命中受击盒时，命中实体才有意义 |
+ * | 4 || 🔸 || `Vec` || `hit_position` || 命中位置 |
  */
   Trigger_HitDetection_OnHitDetected: "Trigger.Hit_Detection.On_Hit_Detected",
 
   /**
- * **Create Projectile** `(Execution.Projectile.Create)`
+ * **创建投射物** `(Execution.Projectile.Create)`
  *
- * - Create a Projectile Entity using the Prefab ID. This function is similar to [Create Prefab], but includes an additional [Track Target] parameter, which sets the tracking target for projectiles of the Tracking type in the Projectile Motion Device Component of the created Entity
+ * - 根据元件ID创建一个投射物实体。与【创建元件】功能类似，但多一个【追踪目标】参数，可以为创建的投射物实体的投射运动器组件中追踪投射类型设置追踪目标
  *
  * -----------
  *
@@ -3870,14 +3868,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Pfb` || `component_id` || Prefab ID: Identifier for this Projectile Prefab |
- * | 1 || 🔹 || `Vec` || `position` || Location: Absolute Location |
- * | 2 || 🔹 || `Vec` || `rotation` || Rotate: Absolute Rotation |
- * | 3 || 🔹 || `Ety` || `owner_entity` || Owner Entity: Determines whether the created entity belongs to another entity |
- * | 4 || 🔹 || `Ety` || `track_target` || Track Target: The Tracking Target set by the Tracking Projectile type in the Projectile Motion Device component |
- * | 5 || 🔹 || `Bol` || `override_level` || Overwrite Level: When set to False, the [Level] parameter has no effect |
- * | 6 || 🔹 || `Int` || `level` || Level: Determines the Level when the entity is created |
- * | 7 || 🔹 || `L<Int>` || `unit_tag_indexes` || Unit Tag Index List: Determines the Unit Tags carried when this entity is created |
+ * | 0 || 🔹 || `Pfb` || `component_id` || 元件ID: 该投射物元件的标识 |
+ * | 1 || 🔹 || `Vec` || `position` || 位置: 绝对位置 |
+ * | 2 || 🔹 || `Vec` || `rotation` || 旋转: 绝对旋转 |
+ * | 3 || 🔹 || `Ety` || `owner_entity` || 拥有者实体: 可决定该创建后实体是否归属于某个实体 |
+ * | 4 || 🔹 || `Ety` || `track_target` || 追踪目标: 投射运动器组件中追踪投射类型设置的追踪目标 |
+ * | 5 || 🔹 || `Bol` || `override_level` || 是否覆写等级: 为否时，【等级】参数不生效 |
+ * | 6 || 🔹 || `Int` || `level` || 等级: 决定该实体创建时的等级 |
+ * | 7 || 🔹 || `L<Int>` || `unit_tag_indexes` || 单位标签索引列表: 可决定该实体创建时携带的单位标签 |
  *
  * -----------
  *
@@ -3885,14 +3883,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `created_entity` || Created Entity: This Entity inherits the attributes of the Projectile Prefab |
+ * | 0 || 🔸 || `Ety` || `created_entity` || 创建出的实体: 该实体继承该投射物元件的属性 |
  */
   Execution_Projectile_Create: "Execution.Projectile.Create",
 
   /**
- * **Get Random Integer** `(Query.Math.Random_Int)`
+ * **获取随机整数** `(Query.Math.Random_Int)`
  *
- * - Returns a random Integer that is ≥ the lower limit and ≤ the upper limit. The range is inclusive
+ * - 获取一个大于等于下限，小于等于上限的随机整数。注意该节点生成的随机数包含上下限
  *
  * -----------
  *
@@ -3905,22 +3903,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `lower` || Lower Limit |
- * | 1 || 🔹 || `Int` || `upper` || Upper Limit |
+ * | 0 || 🔹 || `Int` || `lower` || 下限 |
+ * | 1 || 🔹 || `Int` || `upper` || 上限 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Query_Math_RandomInt: "Query.Math.Random_Int",
 
   /**
- * **Get All Character Entities of Specified Player** `(Query.Character_Related.Get_Player_Characters)`
+ * **获取指定玩家所有角色实体** `(Query.Character_Related.Get_Player_Characters)`
  *
- * - Returns a list of all Character Entities for the specified Player Entity
+ * - 获取指定玩家实体的所有角色实体列表
  *
  * -----------
  *
@@ -3933,21 +3931,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `characters` || Character Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `characters` || 角色实体列表 |
  */
   Query_CharacterRelated_GetPlayerCharacters: "Query.Character_Related.Get_Player_Characters",
 
   /**
- * **Get Player Entity to Which the Character Belongs** `(Query.Character_Related.Get_Owner_Player)`
+ * **获取角色归属的玩家实体** `(Query.Character_Related.Get_Owner_Player)`
  *
- * - Returns the Player Entity that owns the Character Entity
+ * - 获取角色实体所归属的玩家实体
  *
  * -----------
  *
@@ -3960,21 +3958,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `character` || Character Entity |
+ * | 0 || 🔹 || `Ety` || `character` || 角色实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `owner` || Affiliated Player Entity |
+ * | 0 || 🔸 || `Ety` || `owner` || 所属玩家实体 |
  */
   Query_CharacterRelated_GetOwnerPlayer: "Query.Character_Related.Get_Owner_Player",
 
   /**
- * **Get Entity Type** `(Query.Entity_Related.Get_Type)`
+ * **获取实体类型** `(Query.Entity_Related.Get_Type)`
  *
- * - Returns the Entity Type of the Target Entity
+ * - 获取目标实体的实体类型
  *
  * -----------
  *
@@ -3987,21 +3985,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `E<ENTY>` || `entity_type` || Entity Type: Includes Player, Character, Stage, Object, Creation. |
+ * | 0 || 🔸 || `E<ENTY>` || `entity_type` || 实体类型: 分为玩家、角色、关卡、物件、造物 |
  */
   Query_EntityRelated_GetType: "Query.Entity_Related.Get_Type",
 
   /**
- * **Switch Main Camera Template** `(Execution.Camera.Switch_Template)`
+ * **切换主镜头模板** `(Execution.Camera.Switch_Template)`
  *
- * - Switch the Main Camera Template for the target Player List to the specified Template
+ * - 使目标玩家列表的镜头模板切换至指定模板
  *
  * -----------
  *
@@ -4015,8 +4013,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `L<Ety>` || `target_players` || Target Player List: Active Player List |
- * | 1 || 🔹 || `Str` || `template_name` || Camera Template Name: Camera Template Identifier |
+ * | 0 || 🔹 || `L<Ety>` || `target_players` || 目标玩家列表: 生效的玩家列表 |
+ * | 1 || 🔹 || `Str` || `template_name` || 镜头模板名称: 镜头模板的标识 |
  *
  * -----------
  *
@@ -4163,9 +4161,9 @@ export const NODES = {
   Hidden_Execution_PlayScreenShake: "Hidden.Execution.Play_Screen_Shake",
 
   /**
- * **Activate Basic Motion Device** `(Execution.Motion_Device.Activate)`
+ * **激活基础运动器** `(Execution.Motion_Device.Activate)`
  *
- * - Activate a Basic Motion Device configured within the Target Entity's Basic Motion Device Component
+ * - 激活一个配置在目标实体基础运动器组件上的运动器
  *
  * -----------
  *
@@ -4179,8 +4177,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `mover_name` || Motion Device Name: Identifier for this motion device |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `mover_name` || 运动器名称: 该运动器的标识 |
  *
  * -----------
  *
@@ -4192,9 +4190,9 @@ export const NODES = {
   Execution_MotionDevice_Activate: "Execution.Motion_Device.Activate",
 
   /**
- * **Query Preset Point Position Rotation** `(Query.Preset_Point.Get_Transform)`
+ * **查询预设点位置旋转** `(Query.Preset_Point.Get_Transform)`
  *
- * - Searches the Location and Rotation of the specified Preset Point
+ * - 查询指定预设点的位置和旋转
  *
  * -----------
  *
@@ -4207,22 +4205,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `point_index` || Point Index |
+ * | 0 || 🔹 || `Int` || `point_index` || 点位索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `position` || Location |
- * | 1 || 🔸 || `Vec` || `rotation` || Rotate |
+ * | 0 || 🔸 || `Vec` || `position` || 位置 |
+ * | 1 || 🔸 || `Vec` || `rotation` || 旋转 |
  */
   Query_PresetPoint_GetTransform: "Query.Preset_Point.Get_Transform",
 
   /**
- * **Get Preset Point List by Unit Tag** `(Query.Preset_Point.Get_By_Tag)`
+ * **以单位标签获取预设点位列表** `(Query.Preset_Point.Get_By_Tag)`
  *
- * - Searches all Preset Points that carry the Unit Tag by its ID; outputs each Preset Point's ID
+ * - 根据单位标签索引查询所有携带该单位标签的预设点位列表，输出值为该预设点位的索引
  *
  * -----------
  *
@@ -4235,21 +4233,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `unit_tag_index` || Unit Tag ID |
+ * | 0 || 🔹 || `Int` || `unit_tag_index` || 单位标签索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `index_list` || Point Index List |
+ * | 0 || 🔸 || `L<Int>` || `index_list` || 点位索引列表 |
  */
   Query_PresetPoint_GetByTag: "Query.Preset_Point.Get_By_Tag",
 
   /**
- * **Activate Revive Point** `(Execution.Character_Related.Activate_Revive_Point)`
+ * **激活复苏点** `(Execution.Character_Related.Activate_Revive_Point)`
  *
- * - Activate the specified Revive Point ID for the player. When the player later triggers Revive logic, they can revive at this Revive Point
+ * - 为该玩家激活指定序号的复苏点，此玩家后续触发复苏逻辑时，可以从该复苏点复苏
  *
  * -----------
  *
@@ -4263,8 +4261,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity: Active Player |
- * | 1 || 🔹 || `Int` || `revive_point_index` || Revive Point ID: Identifier for this Revive Point |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体: 生效的玩家 |
+ * | 1 || 🔹 || `Int` || `revive_point_index` || 复苏点序号: 该复苏点的标识 |
  *
  * -----------
  *
@@ -4276,9 +4274,9 @@ export const NODES = {
   Execution_CharacterRelated_ActivateRevivePoint: "Execution.Character_Related.Activate_Revive_Point",
 
   /**
- * **Deactivate Revive Point** `(Execution.Character_Related.Deactivate_Revive_Point)`
+ * **注销复苏点** `(Execution.Character_Related.Deactivate_Revive_Point)`
  *
- * - Unregister the specified Revive Point ID for the player. The layer will not revive at this Revive Point next time
+ * - 为该玩家注销指定序号的复苏点。该玩家下次复苏时不会从该复苏点复苏
  *
  * -----------
  *
@@ -4292,8 +4290,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity: Active Player |
- * | 1 || 🔹 || `Int` || `revive_point_index` || Revive Point ID: Identifier for this Revive Point |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体: 生效的玩家 |
+ * | 1 || 🔹 || `Int` || `revive_point_index` || 复苏点序号: 该复苏点的标识 |
  *
  * -----------
  *
@@ -4305,9 +4303,9 @@ export const NODES = {
   Execution_CharacterRelated_DeactivateRevivePoint: "Execution.Character_Related.Deactivate_Revive_Point",
 
   /**
- * **Allow/Forbid Player to Revive** `(Execution.Character_Related.Set_Revive_Allowed)`
+ * **允许/禁止玩家复苏** `(Execution.Character_Related.Set_Revive_Allowed)`
  *
- * - Set whether the specified player is allowed to revive
+ * - 设置指定玩家是否允许复苏
  *
  * -----------
  *
@@ -4321,8 +4319,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity: Active Player |
- * | 1 || 🔹 || `Bol` || `allow_revive` || Allow: If set to True, reviving is allowed |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体: 生效的玩家 |
+ * | 1 || 🔹 || `Bol` || `allow_revive` || 是否允许: “是”则允许复苏 |
  *
  * -----------
  *
@@ -4334,9 +4332,9 @@ export const NODES = {
   Execution_CharacterRelated_SetReviveAllowed: "Execution.Character_Related.Set_Revive_Allowed",
 
   /**
- * **Get Player Remaining Revives** `(Query.Character_Related.Get_Revives)`
+ * **获取玩家剩余复苏次数** `(Query.Character_Related.Get_Revives)`
  *
- * - Returns the remaining number of revives for the specified Player Entity
+ * - 获取指定玩家实体的剩余复苏次数
  *
  * -----------
  *
@@ -4349,21 +4347,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `count` || Remaining Times |
+ * | 0 || 🔸 || `Int` || `count` || 剩余次数 |
  */
   Query_CharacterRelated_GetRevives: "Query.Character_Related.Get_Revives",
 
   /**
- * **Set Player Remaining Revives** `(Execution.Character_Related.Set_Revive_Count)`
+ * **设置玩家剩余复苏次数** `(Execution.Character_Related.Set_Revive_Count)`
  *
- * - Set the remaining number of revives for the specified Player. When set to 0, the Player cannot revive
+ * - 设置指定玩家剩余复苏次数。设置为0时，该玩家无法复苏
  *
  * -----------
  *
@@ -4377,8 +4375,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity: Active Player |
- * | 1 || 🔹 || `Int` || `remaining_count` || Remaining Times: When set to 0, the player will not be revived |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体: 生效的玩家 |
+ * | 1 || 🔹 || `Int` || `remaining_count` || 剩余次数: 设置为0时，该玩家无法复苏 |
  *
  * -----------
  *
@@ -4390,9 +4388,9 @@ export const NODES = {
   Execution_CharacterRelated_SetReviveCount: "Execution.Character_Related.Set_Revive_Count",
 
   /**
- * **Get Player Revive Time** `(Query.Character_Related.Get_Revive_Time)`
+ * **获取玩家复苏耗时** `(Query.Character_Related.Get_Revive_Time)`
  *
- * - Returns the revive duration of the specified Player Entity, in seconds
+ * - 获取指定玩家实体的复苏耗时，单位秒
  *
  * -----------
  *
@@ -4405,21 +4403,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `duration` || Duration |
+ * | 0 || 🔸 || `Int` || `duration` || 时长 |
  */
   Query_CharacterRelated_GetReviveTime: "Query.Character_Related.Get_Revive_Time",
 
   /**
- * **Set Player Revive Time** `(Execution.Character_Related.Set_Revive_Time)`
+ * **设置玩家复苏耗时** `(Execution.Character_Related.Set_Revive_Time)`
  *
- * - Set the duration for the Player's next revive. If the Player is currently reviving, this does not affect the ongoing revive process
+ * - 设置指定玩家的下一次复苏的时长。如果玩家当前正处于复苏中，不会影响该次复苏的耗时
  *
  * -----------
  *
@@ -4433,8 +4431,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity: Active Player |
- * | 1 || 🔹 || `Int` || `duration` || Duration: Unit in seconds |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体: 生效的玩家 |
+ * | 1 || 🔹 || `Int` || `duration` || 时长: 单位为秒 |
  *
  * -----------
  *
@@ -4446,9 +4444,9 @@ export const NODES = {
   Execution_CharacterRelated_SetReviveTime: "Execution.Character_Related.Set_Revive_Time",
 
   /**
- * **Revive Character** `(Execution.Character_Related.Revive_Single)`
+ * **复苏角色** `(Execution.Character_Related.Revive_Single)`
  *
- * - Revive the specified Character Entity
+ * - 复苏指定的角色实体
  *
  * -----------
  *
@@ -4462,7 +4460,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `character_entity` || Character Entity: The Character Entity to be revived |
+ * | 0 || 🔹 || `Ety` || `character_entity` || 角色实体: 会被复苏的角色实体 |
  *
  * -----------
  *
@@ -4474,9 +4472,9 @@ export const NODES = {
   Execution_CharacterRelated_ReviveSingle: "Execution.Character_Related.Revive_Single",
 
   /**
- * **When the Character Is Down** `(Trigger.Character_Related.On_Character_Down)`
+ * **角色倒下时** `(Trigger.Character_Related.On_Character_Down)`
  *
- * - When a Character is Downed, the Node Graph on the Character Entity can trigger this event
+ * - 角色倒下时，角色实体上的节点图可以触发该事件
  *
  * -----------
  *
@@ -4490,16 +4488,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `character_entity` || Character Entity |
- * | 1 || 🔸 || `E<DWNR>` || `reason` || Reason: Node Graph caused: the Character was Downed by the Destroy Entity node in the Node Graph<br>Normal Down: the Character was Downed because HP reached 0<br>Abnormal Down: the character was downed due to drowning, falling into an abyss, etc. |
- * | 2 || 🔸 || `Ety` || `attacker_entity` || Knockdown Entity |
+ * | 0 || 🔸 || `Ety` || `character_entity` || 角色实体 |
+ * | 1 || 🔸 || `E<DWNR>` || `reason` || 原因: 节点图导致：因节点图的【销毁实体】节点导致的角色倒下<br>正常倒下：因生命值变为0导致的角色倒下<br>非正常倒下：因溺水、坠入深渊等导致的角色倒下 |
+ * | 2 || 🔸 || `Ety` || `attacker_entity` || 击倒者实体 |
  */
   Trigger_CharacterRelated_OnCharacterDown: "Trigger.Character_Related.On_Character_Down",
 
   /**
- * **When Character Revives** `(Trigger.Character_Related.On_Character_Revive)`
+ * **角色复苏时** `(Trigger.Character_Related.On_Character_Revive)`
  *
- * - When a Character is Revived, the Node Graph on the Character Entity can trigger this event
+ * - 角色复苏时，角色实体上的的节点图可以触发该事件
  *
  * -----------
  *
@@ -4513,14 +4511,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `character_entity` || Character Entity |
+ * | 0 || 🔸 || `Ety` || `character_entity` || 角色实体 |
  */
   Trigger_CharacterRelated_OnCharacterRevive: "Trigger.Character_Related.On_Character_Revive",
 
   /**
- * **Defeat All Player's Characters** `(Execution.Character_Related.Defeat_All)`
+ * **击倒玩家所有角色** `(Execution.Character_Related.Defeat_All)`
  *
- * - Knock down all characters of the specified player, causing the player to enter _When All Player's Characters Are Down_ _state_.
+ * - 击倒指定玩家的所有角色，会导致该玩家进入_玩家所有角色倒下状态_
  *
  * -----------
  *
@@ -4534,7 +4532,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity: The Player Entity that owns the Character |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体: 角色归属的玩家实体 |
  *
  * -----------
  *
@@ -4546,9 +4544,9 @@ export const NODES = {
   Execution_CharacterRelated_DefeatAll: "Execution.Character_Related.Defeat_All",
 
   /**
- * **Revive All Player's Characters** `(Execution.Character_Related.Revive_All)`
+ * **复苏玩家所有角色** `(Execution.Character_Related.Revive_All)`
  *
- * - Revive all Character Entities of the specified player. In Beyond Mode, since each player has only one character, this is equivalent to [Revive Character]
+ * - 复苏指定玩家的所有角色实体。在超限模式中，由于每个玩家只有一个角色，与【复苏角色】的效果相同
  *
  * -----------
  *
@@ -4562,8 +4560,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `Input0` || Player Entity: The Player Entity that owns the Character |
- * | 1 || 🔹 || `Bol` || `Input1` || Deduct Revives: If set to False, the Revive Count will not be deducted |
+ * | 0 || 🔹 || `Ety` || `Input0` || 玩家实体: 角色归属的玩家实体 |
+ * | 1 || 🔹 || `Bol` || `Input1` || 是否扣除复苏次数: 为否时，不会扣除复苏次数 |
  *
  * -----------
  *
@@ -4575,9 +4573,9 @@ export const NODES = {
   Execution_CharacterRelated_ReviveAll: "Execution.Character_Related.Revive_All",
 
   /**
- * **When All Player's Characters Are Down** `(Trigger.Character_Related.On_All_Down)`
+ * **玩家所有角色倒下时** `(Trigger.Character_Related.On_All_Down)`
  *
- * - This event is triggered on the Player Entity's Node Graph when all of the Player's Character Entities are Downed
+ * - 玩家的所有角色实体均倒下时，玩家实体的节点图上触发该事件
  *
  * -----------
  *
@@ -4591,15 +4589,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔸 || `E<DWNR>` || `reason` || Reason: Node Graph caused: the Character was Downed by the Destroy Entity node in the Node Graph<br>Normal Down: the Character was Downed because HP reached 0<br>Abnormal Down: the character was downed due to drowning, falling into an abyss, etc. |
+ * | 0 || 🔸 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔸 || `E<DWNR>` || `reason` || 原因: 节点图导致：因节点图的【销毁实体】节点导致的角色倒下<br>正常倒下：因生命值变为0导致的角色倒下<br>非正常倒下：因溺水、坠入深渊等导致的角色倒下 |
  */
   Trigger_CharacterRelated_OnAllDown: "Trigger.Character_Related.On_All_Down",
 
   /**
- * **When Player Is Abnormally Downed and Revives** `(Trigger.Character_Related.On_Abnormal_Revive)`
+ * **玩家异常倒下并复苏时** `(Trigger.Character_Related.On_Abnormal_Revive)`
  *
- * - This event is triggered on the Player Entity when a Character is Downed and then Revived due to drowning, falling into an abyss, or similar reasons
+ * - 角色因溺水、坠入深渊等原因倒下并复苏时，玩家实体上触发该事件
  *
  * -----------
  *
@@ -4613,14 +4611,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `player_entity` || Player Entity |
+ * | 0 || 🔸 || `Ety` || `player_entity` || 玩家实体 |
  */
   Trigger_CharacterRelated_OnAbnormalRevive: "Trigger.Character_Related.On_Abnormal_Revive",
 
   /**
- * **When All Player's Characters Are Revived** `(Trigger.Character_Related.On_All_Revived)`
+ * **玩家所有角色复苏时** `(Trigger.Character_Related.On_All_Revived)`
  *
- * - This event is triggered on the Player Entity's Node Graph when all of the Player's Characters are Revived
+ * - 玩家的所有角色均复苏时，玩家实体的节点图触发该事件
  *
  * -----------
  *
@@ -4634,14 +4632,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `player_entity` || Player Entity |
+ * | 0 || 🔸 || `Ety` || `player_entity` || 玩家实体 |
  */
   Trigger_CharacterRelated_OnAllRevived: "Trigger.Character_Related.On_All_Revived",
 
   /**
- * **Query If All Player Characters Are Down** `(Query.Character_Related.Is_All_Down)`
+ * **查询玩家角色是否全部倒下** `(Query.Character_Related.Is_All_Down)`
  *
- * - Check if all of the player's characters are downed
+ * - 查询玩家的所有角色是否已全部倒下
  *
  * -----------
  *
@@ -4654,21 +4652,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Query_CharacterRelated_IsAllDown: "Query.Character_Related.Is_All_Down",
 
   /**
- * **Teleport Player** `(Execution.Character_Related.Teleport)`
+ * **传送玩家** `(Execution.Character_Related.Teleport)`
  *
- * - Teleport the specified Player Entity. A loading interface may appear depending on teleport distance
+ * - 传送指定玩家实体。会根据传送距离的远近决定是否有加载界面
  *
  * -----------
  *
@@ -4682,9 +4680,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity: Active Player |
- * | 1 || 🔹 || `Vec` || `target_position` || Target Location: Absolute Location |
- * | 2 || 🔹 || `Vec` || `target_rotation` || Target Rotation: Absolute Rotation |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体: 生效的玩家 |
+ * | 1 || 🔹 || `Vec` || `target_position` || 目标位置: 绝对位置 |
+ * | 2 || 🔹 || `Vec` || `target_rotation` || 目标旋转: 绝对旋转 |
  *
  * -----------
  *
@@ -4696,10 +4694,9 @@ export const NODES = {
   Execution_CharacterRelated_Teleport: "Execution.Character_Related.Teleport",
 
   /**
- * **When Player Teleport Completes** `(Trigger.Character_Related.On_Teleport_Complete)`
+ * **玩家传送完成时** `(Trigger.Character_Related.On_Teleport_Complete)`
  *
- * - This event is triggered on the Player Entity's Node Graph when the Player completes teleportation
- * - This event is also triggered when a Player enters a Stage for the first time
+ * - 玩家传送完成时，在玩家实体的节点图上可以触发该事件
  *
  * -----------
  *
@@ -4713,15 +4710,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔸 || `Gid` || `player_guid` || Player GUID |
+ * | 0 || 🔸 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔸 || `Gid` || `player_guid` || 玩家GUID |
  */
   Trigger_CharacterRelated_OnTeleportComplete: "Trigger.Character_Related.On_Teleport_Complete",
 
   /**
- * **Query Game Time Elapsed** `(Query.Stage_Related.Get_Elapsed_Time)`
+ * **获取游戏已进行时间** `(Query.Stage_Related.Get_Elapsed_Time)`
  *
- * - Searches how long the game has been running, in seconds
+ * - 查询游戏已进行了多长时间，单位秒
  *
  * -----------
  *
@@ -4734,14 +4731,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `elapsed` || Game Time Elapsed |
+ * | 0 || 🔸 || `Int` || `elapsed` || 游戏已进行时间 |
  */
   Query_StageRelated_GetElapsedTime: "Query.Stage_Related.Get_Elapsed_Time",
 
   /**
- * **Sine Function** `(Arithmetic.Math.Sin)`
+ * **正弦函数** `(Arithmetic.Math.Sin)`
  *
- * - Calculates the sine of the input in radians
+ * - 计算输入弧度的正弦
  *
  * -----------
  *
@@ -4754,21 +4751,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `radians` || Radian |
+ * | 0 || 🔹 || `Flt` || `radians` || 弧度 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_Math_Sin: "Arithmetic.Math.Sin",
 
   /**
- * **Cosine Function** `(Arithmetic.Math.Cos)`
+ * **余弦函数** `(Arithmetic.Math.Cos)`
  *
- * - Calculates the cosine of the input in radians
+ * - 计算输入弧度的余弦
  *
  * -----------
  *
@@ -4781,21 +4778,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `radians` || Radian |
+ * | 0 || 🔹 || `Flt` || `radians` || 弧度 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_Math_Cos: "Arithmetic.Math.Cos",
 
   /**
- * **Tangent Function** `(Arithmetic.Math.Tan)`
+ * **正切函数** `(Arithmetic.Math.Tan)`
  *
- * - Calculates the tangent of the input in radians
+ * - 计算输入弧度的正切
  *
  * -----------
  *
@@ -4808,21 +4805,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `radians` || Radian |
+ * | 0 || 🔹 || `Flt` || `radians` || 弧度 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_Math_Tan: "Arithmetic.Math.Tan",
 
   /**
- * **Arcsine Function** `(Arithmetic.Math.Asin)`
+ * **反正弦函数** `(Arithmetic.Math.Asin)`
  *
- * - Calculates the arcsine of the input and returns the value in radians
+ * - 计算输入的反正弦值，返回为弧度值
  *
  * -----------
  *
@@ -4835,21 +4832,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `input` || Input |
+ * | 0 || 🔹 || `Flt` || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radians` || Radian |
+ * | 0 || 🔸 || `Flt` || `radians` || 弧度 |
  */
   Arithmetic_Math_Asin: "Arithmetic.Math.Asin",
 
   /**
- * **Arccosine Function** `(Arithmetic.Math.Acos)`
+ * **反余弦函数** `(Arithmetic.Math.Acos)`
  *
- * - Calculates the arccosine of the input and returns the value in radians
+ * - 计算输入的反余弦值，返回为弧度值
  *
  * -----------
  *
@@ -4862,21 +4859,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `input` || Input |
+ * | 0 || 🔹 || `Flt` || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radians` || Radian |
+ * | 0 || 🔸 || `Flt` || `radians` || 弧度 |
  */
   Arithmetic_Math_Acos: "Arithmetic.Math.Acos",
 
   /**
- * **Arctangent Function** `(Arithmetic.Math.Atan)`
+ * **反正切函数** `(Arithmetic.Math.Atan)`
  *
- * - Calculates the arctangent of the input and returns the value in radians
+ * - 计算输入的反正切值，返回为弧度值
  *
  * -----------
  *
@@ -4889,21 +4886,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `input` || Input |
+ * | 0 || 🔹 || `Flt` || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radians` || Radian |
+ * | 0 || 🔸 || `Flt` || `radians` || 弧度 |
  */
   Arithmetic_Math_Atan: "Arithmetic.Math.Atan",
 
   /**
- * **Add Unit Status** `(Execution.Unit_Status.Add_Status)`
+ * **添加单位状态** `(Execution.Unit_Status.Add_Status)`
  *
- * - Add a specified Stack Count of Unit Status to the Target Entity
+ * - 向指定目标实体添加一定层数的单位状态
  *
  * -----------
  *
@@ -4917,11 +4914,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `applier` || Applier Entity: Determines the Applier Entity for this action. Defaults to the Entity associated with this Node Graph |
- * | 1 || 🔹 || `Ety` || `target` || Application Target Entity: The Entity that actually receives this Unit Status |
- * | 2 || 🔹 || `Cfg` || `state_config_id` || Unit Status Config ID: Identifier for this Unit Status |
- * | 3 || 🔹 || `Int` || `stacks` || Applied Stacks: The Stack Count for this Unit Status |
- * | 4 || 🔹 || `D<Str,Flt>` || `params_dict` || Unit Status Parameter Dictionary: Can carry a set of parameters to overwrite parameters defined in the Unit Status. Currently, only parameters within shield templates can be overwritten. |
+ * | 0 || 🔹 || `Ety` || `applier` || 施加者实体: 决定了该次行为的施加者实体，默认为该节点图所关联的实体 |
+ * | 1 || 🔹 || `Ety` || `target` || 施加目标实体: 实际被添加该单位状态的实体 |
+ * | 2 || 🔹 || `Cfg` || `state_config_id` || 单位状态配置ID: 该单位状态的标识 |
+ * | 3 || 🔹 || `Int` || `stacks` || 施加层数: 该单位状态的层数 |
+ * | 4 || 🔹 || `D<Str,Flt>` || `params_dict` || 单位状态参数字典: 可以携带一组参数，用于覆写单位状态中的参数，目前仅支持对护盾中护盾模板的参数覆写 |
  *
  * -----------
  *
@@ -4929,15 +4926,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `E<STAD>` || `apply_result` || Application Result: Failed, other exceptions<br>Failed: Yielded to another status. A yielding relationship exists between the Target's current Unit Status and the one being applied<br>Failed: Maximum coexistence limit reached. The specified Unit Status on the Target Entity has reached its Coexistence Limit<br>Failed: Unable to add additional stack. Stack addition failed<br>Success: New status applied. Successfully applied new Unit Status<br>Success: Slot stacking. Target already has this Unit Status, stacking applied |
- * | 1 || 🔸 || `Int` || `slot_index` || Slot ID: If application succeeds, returns the Unit Status Slot ID containing the instance |
+ * | 0 || 🔸 || `E<STAD>` || `apply_result` || 施加结果: 失败，其他异常<br>失败，让位于其他状态：目标上已有的单位状态与尝试施加的状态之间有让位关系<br>失败，超出并存上限：超出目标实体上的指定单位状态的并存上限<br>失败，附加叠层未成功：叠层失败<br>成功，施加新状态：成功附加新状态<br>成功，槽位叠层：目标上已有该单位状态，叠层 |
+ * | 1 || 🔸 || `Int` || `slot_index` || 槽位序号: 如果施加成功，则返回一个该单位状态实例所在的单位状态槽位序号 |
  */
   Execution_UnitStatus_AddStatus: "Execution.Unit_Status.Add_Status",
 
   /**
- * **When Unit Status Ends** `(Trigger.Unit_Status.On_Status_End)`
+ * **单位状态结束时** `(Trigger.Unit_Status.On_Status_End)`
  *
- * - This event is triggered when a Unit Status is removed for any reason or when its Runtime Duration expires
+ * - 单位状态因为各种原因被移除或因时长结束时触发该事件
  *
  * -----------
  *
@@ -4951,24 +4948,24 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Cfg` || `state_config_id` || Unit Status Config ID |
- * | 3 || 🔸 || `Ety` || `applier_entity` || Applier Entity |
- * | 4 || 🔸 || `Bol` || `is_infinite` || Infinite Duration |
- * | 5 || 🔸 || `Flt` || `time_remain` || Remaining Status Duration |
- * | 6 || 🔸 || `Int` || `layer_remain` || Remaining Status Stacks |
- * | 7 || 🔸 || `Ety` || `remover_entity` || Remover Entity |
- * | 8 || 🔸 || `E<STRE>` || `remove_reason` || Removal Reason: Status Replacement: The Unit Status was removed because it was replaced by another status<br>Duration Exceeded: The Unit Status exceeded its runtime duration<br>Dispelled: The Unit Status was removed directly<br>Status Expired: The Unit Status became invalid due to other reasons<br>Class Changed: The Unit Status was removed due to a class change |
- * | 9 || 🔸 || `Int` || `slot_index` || Slot ID: ID of the Unit Status slot that changed |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Cfg` || `state_config_id` || 单位状态配置ID |
+ * | 3 || 🔸 || `Ety` || `applier_entity` || 施加者实体 |
+ * | 4 || 🔸 || `Bol` || `is_infinite` || 持续时间是否无限 |
+ * | 5 || 🔸 || `Flt` || `time_remain` || 状态剩余时长 |
+ * | 6 || 🔸 || `Int` || `layer_remain` || 状态剩余层数 |
+ * | 7 || 🔸 || `Ety` || `remover_entity` || 移除者实体 |
+ * | 8 || 🔸 || `E<STRE>` || `remove_reason` || 移除原因: 其他单位状态顶替：因被施加了顶替状态导致单位状态被移除<br>超出持续时间：超出单位状态持续事件<br>被驱散：单位状态被直接移除<br>状态失效：因其他原因导致的状态失效<br>职业变更：因职业变更导致的状态被移除 |
+ * | 9 || 🔸 || `Int` || `slot_index` || 槽位序号: 发生变化的单位状态槽位的序号 |
  */
   Trigger_UnitStatus_OnStatusEnd: "Trigger.Unit_Status.On_Status_End",
 
   /**
- * **When Unit Status Changes** `(Trigger.Unit_Status.On_Status_Change)`
+ * **单位状态变更时** `(Trigger.Unit_Status.On_Status_Change)`
  *
- * - This event is triggered when the Stack Count of a Unit Status changes
- * - This event is triggered when Unit Status effects are applied or removed
+ * - 单位状态的层数发生变化时，触发该事件
+ * - 单位状态的施加以及移除都会触发该事件
  *
  * -----------
  *
@@ -4982,22 +4979,22 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Cfg` || `state_config_id` || Unit Status Config ID |
- * | 3 || 🔸 || `Ety` || `applier_entity` || Applier Entity |
- * | 4 || 🔸 || `Bol` || `is_infinite` || Infinite Duration |
- * | 5 || 🔸 || `Flt` || `time_remain` || Remaining Status Duration |
- * | 6 || 🔸 || `Int` || `layer_remain` || Remaining Status Stacks: Edited Stack Count |
- * | 7 || 🔸 || `Int` || `layer_original` || Original Status Stacks: Previous Stack Count |
- * | 8 || 🔸 || `Int` || `slot_index` || Slot ID: ID of the Unit Status slot that changed |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Cfg` || `state_config_id` || 单位状态配置ID |
+ * | 3 || 🔸 || `Ety` || `applier_entity` || 施加者实体 |
+ * | 4 || 🔸 || `Bol` || `is_infinite` || 持续时间是否无限 |
+ * | 5 || 🔸 || `Flt` || `time_remain` || 状态剩余时长 |
+ * | 6 || 🔸 || `Int` || `layer_remain` || 状态剩余层数: 变化后的层数 |
+ * | 7 || 🔸 || `Int` || `layer_original` || 状态原始层数: 变化前的层数 |
+ * | 8 || 🔸 || `Int` || `slot_index` || 槽位序号: 发生变化的单位状态槽位的序号 |
  */
   Trigger_UnitStatus_OnStatusChange: "Trigger.Unit_Status.On_Status_Change",
 
   /**
- * **Remove Unit Status** `(Execution.Unit_Status.Remove_Status)`
+ * **移除单位状态** `(Execution.Unit_Status.Remove_Status)`
  *
- * - Remove a specified Unit Status from the Target Entity. Either all stacks or a single stack can be removed
+ * - 从目标实体上移除指定单位状态。可以选择全部移除，或移除其中一层
  *
  * -----------
  *
@@ -5011,10 +5008,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `remove_target` || Remove Target Entity: The Entity from which the Unit Status will be removed |
- * | 1 || 🔹 || `Cfg` || `state_config_id` || Unit Status Config ID: Identifier for this Unit Status |
- * | 2 || 🔹 || `E<STRS>` || `remove_mode` || Removal Method: All Coexisting Statuses with the Same Name: Removes all statuses applied with this Config ID that share the same name<br>Status With Fastest Stack Loss: Removes one stack from the status that loses stacks the fastest |
- * | 3 || 🔹 || `Ety` || `remover` || Remover Entity: Determines the Remover Entity for this action. Defaults to the Entity associated with this Node Graph |
+ * | 0 || 🔹 || `Ety` || `remove_target` || 移除目标实体: 被移除该单位状态的实体 |
+ * | 1 || 🔹 || `Cfg` || `state_config_id` || 单位状态配置ID: 该单位状态的标识 |
+ * | 2 || 🔹 || `E<STRS>` || `remove_mode` || 移除方式: 所有同名并存状态：移除以该配置ID施加的所有同名状态<br>最快丢失叠加层数的状态：移除最快丢失叠加层数的一层状态 |
+ * | 3 || 🔹 || `Ety` || `remover` || 移除者实体: 决定了该次行为的移除者实体，默认为该节点图所关联的实体 |
  *
  * -----------
  *
@@ -5026,9 +5023,9 @@ export const NODES = {
   Execution_UnitStatus_RemoveStatus: "Execution.Unit_Status.Remove_Status",
 
   /**
- * **Modifying Character Disruptor Device** `(Execution.Character_Disruptor.Modify_Device)`
+ * **修改角色扰动装置** `(Execution.Character_Disruptor.Modify_Device)`
  *
- * - Edit the Character Disruptor Device active on the Target Entity by ID; if the ID does not exist, the change has no effect
+ * - 通过序号修改目标实体上生效的角色扰动装置，若序号不存在则此次修改不生效
  *
  * -----------
  *
@@ -5042,8 +5039,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Int` || `device_index` || Device ID: Identifier for the Character Disruptor Device |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Int` || `device_index` || 装置序号: 角色扰动装置的标识 |
  *
  * -----------
  *
@@ -5055,12 +5052,12 @@ export const NODES = {
   Execution_CharacterDisruptor_ModifyDevice: "Execution.Character_Disruptor.Modify_Device",
 
   /**
- * **Initiate Attack** `(Execution.Combat.Attack)`
+ * **发起攻击** `(Execution.Combat.Attack)`
  *
- * - Make the specified Entity initiate an attack. The Entity that uses this node must have the corresponding Ability Unit configured.
- * - There are two usage modes:
- * - When the Ability Unit is [Hitbox Attack], it executes a hitbox attack centered on the Target Entity's Location
- * - When the Ability Unit is [Direct Attack], it directly attacks the Target Entity
+ * - 使指定实体发起攻击。使用该节点的实体上需要有对应的能力单元配置。
+ * - 分为两种使用方式：
+ * - 当能力单元为【攻击盒攻击】时，会以目标实体的位置为基准，打出一次攻击盒攻击
+ * - 当能力单元为【直接攻击】时，会直接攻击目标实体
  *
  * -----------
  *
@@ -5074,14 +5071,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Depending on the Ability Unit, this can be treated either as the reference target for the Hitbox Location or as the attack target |
- * | 1 || 🔹 || `Flt` || `damage_coeff` || Damage Coefficient: The coefficient applied to the damage dealt by this attack |
- * | 2 || 🔹 || `Flt` || `damage_delta` || Damage Increment: The incremental damage applied by this attack |
- * | 3 || 🔹 || `Vec` || `pos_offset` || Location Offset: When using Hitbox Attack, determines the Hitbox offset<br>When using Direct Attack, determines the hit-detection location for the attack and thus where on-hit special effects are created |
- * | 4 || 🔹 || `Vec` || `rot_offset` || Rotation Offset: When using Hitbox Attack, determines the Hitbox rotation<br>When using Direct Attack, determines the hit-detection location for the attack and thus the rotation used for on-hit effects |
- * | 5 || 🔹 || `Str` || `ability_unit` || Ability Unit: Referenced Ability Unit. Must be configured on the entity associated with this Node Graph |
- * | 6 || 🔹 || `Bol` || `override_ability_unit` || Overwrite Ability Unit Config: When set to True, the four parameters — Damage Coefficient, Damage Increment, Location Offset, and Rotation Offset — overwrite parameters of the same name in the Ability Unit. When set to False, the Ability Unit's original configuration is used |
- * | 7 || 🔹 || `Ety` || `attacker_entity` || Initiator Entity: Determines the Initiator Entity for this attack. Defaults to the Entity associated with this Node Graph. Affects which attacker is identified in events such as On Hit and When Attacked |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 根据能力单元不同，可以视为攻击盒位置的基准目标或攻击对象 |
+ * | 1 || 🔹 || `Flt` || `damage_coeff` || 伤害系数: 该次攻击造成伤害的系数 |
+ * | 2 || 🔹 || `Flt` || `damage_delta` || 伤害增量: 该次攻击造成伤害的增量 |
+ * | 3 || 🔹 || `Vec` || `pos_offset` || 位置偏移: 使用【攻击盒攻击】时，决定了攻击盒的偏移<br>使用【直接攻击】时，决定了该次攻击的判定位置，影响受击特效等的创建位置 |
+ * | 4 || 🔹 || `Vec` || `rot_offset` || 旋转偏移: 使用【攻击盒攻击】时，决定了攻击盒的旋转<br>使用【直接攻击】时，决定了该次攻击的判定位置，影响受击特效等的旋转 |
+ * | 5 || 🔹 || `Str` || `ability_unit` || 能力单元: 引用的能力单元，需要配置在此节点图所关联的实体上 |
+ * | 6 || 🔹 || `Bol` || `override_ability_unit` || 是否覆写能力单元配置: 为“是”时，伤害系数、伤害增量、位置偏移、旋转偏移这四个系数会覆写能力单元中的同名配置。为“否”时，则使用能力单元中的配置 |
+ * | 7 || 🔹 || `Ety` || `attacker_entity` || 发起者实体: 决定了该次攻击的发起者实体，默认为该节点图所关联的实体。影响【攻击命中时】、【受到攻击时】等事件中判定的攻击者 |
  *
  * -----------
  *
@@ -5093,9 +5090,9 @@ export const NODES = {
   Execution_Combat_Attack: "Execution.Combat.Attack",
 
   /**
- * **When Attacked** `(Trigger.Combat.On_Be_Attacked)`
+ * **受到攻击时** `(Trigger.Combat.On_Be_Attacked)`
  *
- * - This event is triggered when the Entity is attacked
+ * - 实体受到攻击时触发该事件
  *
  * -----------
  *
@@ -5109,20 +5106,20 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Ety` || `attacker` || Attacker Entity |
- * | 3 || 🔸 || `Flt` || `damage` || Damage: Actual damage dealt. If no damage is dealt due to Invincible or other reasons, the amount is 0 |
- * | 4 || 🔸 || `L<Str>` || `attack_tags` || Attack Tag List |
- * | 5 || 🔸 || `E<ELMT>` || `element_type` || Elemental Type |
- * | 6 || 🔸 || `Flt` || `element_adv` || Elemental Attack Potency: Elemental Gauge in the Attack |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Ety` || `attacker` || 攻击者实体 |
+ * | 3 || 🔸 || `Flt` || `damage` || 伤害量: 实际造成的伤害量。因无敌等原因未造成伤害时，伤害量为0 |
+ * | 4 || 🔸 || `L<Str>` || `attack_tags` || 攻击标签列表 |
+ * | 5 || 🔸 || `E<ELMT>` || `element_type` || 元素类型 |
+ * | 6 || 🔸 || `Flt` || `element_adv` || 元素攻击强效: 攻击包含的元素含量 |
  */
   Trigger_Combat_OnBeAttacked: "Trigger.Combat.On_Be_Attacked",
 
   /**
- * **When Attack Hits** `(Trigger.Combat.On_Hit_Target)`
+ * **攻击命中时** `(Trigger.Combat.On_Hit_Target)`
  *
- * - This event is triggered when an Entity's attack hits other Entities
+ * - 实体的攻击命中其他实体时，触发该事件
  *
  * -----------
  *
@@ -5136,20 +5133,20 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Ety` || `victim` || Hit Target Entity |
- * | 3 || 🔸 || `Flt` || `damage` || Damage: Actual damage dealt. If no damage is dealt due to Invincible or other reasons, the amount is 0 |
- * | 4 || 🔸 || `L<Str>` || `attack_tags` || Attack Tag List |
- * | 5 || 🔸 || `E<ELMT>` || `element_type` || Elemental Type |
- * | 6 || 🔸 || `Flt` || `element_adv` || Elemental Attack Potency: Elemental Gauge in the Attack |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Ety` || `victim` || 受击者实体 |
+ * | 3 || 🔸 || `Flt` || `damage` || 伤害量: 实际造成的伤害量。因无敌等原因未造成伤害时，伤害量为0 |
+ * | 4 || 🔸 || `L<Str>` || `attack_tags` || 攻击标签列表 |
+ * | 5 || 🔸 || `E<ELMT>` || `element_type` || 元素类型 |
+ * | 6 || 🔸 || `Flt` || `element_adv` || 元素攻击强效: 攻击包含的元素含量 |
  */
   Trigger_Combat_OnHitTarget: "Trigger.Combat.On_Hit_Target",
 
   /**
- * **Activate/Disable Tab** `(Execution.Tab.Set_State)`
+ * **激活/关闭选项卡** `(Execution.Tab.Set_State)`
  *
- * - Edit the Tab state by ID in the Target Entity's Tab Component
+ * - 可以修改目标实体的选项卡组件中对应序号的选项卡状态
  *
  * -----------
  *
@@ -5163,9 +5160,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Int` || `tab_id` || Tab ID: Identifier for the Tab |
- * | 2 || 🔹 || `Bol` || `should_activate` || Activate: If set to True, it is active and can be selected |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Int` || `tab_id` || 选项卡序号: 选项卡的标识 |
+ * | 2 || 🔹 || `Bol` || `should_activate` || 是否激活: 为“是”则激活，可以被选取 |
  *
  * -----------
  *
@@ -5177,7 +5174,7 @@ export const NODES = {
   Execution_Tab_SetState: "Execution.Tab.Set_State",
 
   /**
- * **When Tab Is Selected** `(Trigger.Tab.On_Tab_Select)`
+ * **选项卡选中时** `(Trigger.Tab.On_Tab_Select)`
  *
  * -----------
  *
@@ -5200,9 +5197,9 @@ export const NODES = {
   Trigger_Tab_OnTabSelect: "Trigger.Tab.On_Tab_Select",
 
   /**
- * **Activate/Disable Model Display** `(Execution.Entity_Related.Set_Model_Visible)`
+ * **激活/关闭模型显示** `(Execution.Entity_Related.Set_Model_Visible)`
  *
- * - Edit the Entity's Model Visibility attribute to make its Model visible or hidden
+ * - 更改实体的模型可见性属性设置，从而使实体的模型可见/不可见
  *
  * -----------
  *
@@ -5216,8 +5213,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: The entity to be edited |
- * | 1 || 🔹 || `Bol` || `should_activate` || Activate: Set to True to make the model visible |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 所要修改的实体 |
+ * | 1 || 🔹 || `Bol` || `should_activate` || 是否激活: “是”为使模型可见 |
  *
  * -----------
  *
@@ -5229,10 +5226,10 @@ export const NODES = {
   Execution_EntityRelated_SetModelVisible: "Execution.Entity_Related.Set_Model_Visible",
 
   /**
- * **Pause Global Timer** `(Execution.Global_Timer.Pause)`
+ * **暂停全局计时器** `(Execution.Global_Timer.Pause)`
  *
- * - Pause a running Global Timer via the Node Graph
- * - When paused, the UI controls linked to the timer will also pause their display
+ * - 通过节点图，可以暂停运行中的全局计时器
+ * - 暂停时，若有界面控件引用对应计时器，则其显示时间也会暂停
  *
  * -----------
  *
@@ -5246,8 +5243,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Identifier for the Timer. Only Timer Names configured in Timer Management can be referenced |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 计时器名称: 该计时器的标识，只能引用在计时器管理中已经配置好的计时器名称 |
  *
  * -----------
  *
@@ -5259,9 +5256,9 @@ export const NODES = {
   Execution_GlobalTimer_Pause: "Execution.Global_Timer.Pause",
 
   /**
- * **Get Current Global Timer Time** `(Query.Global_Timer.Get_Time)`
+ * **获取全局计时器当前时间** `(Query.Global_Timer.Get_Time)`
  *
- * - Returns the current time of the specified Global Timer on the Target Entity
+ * - 获取目标实体上指定全局计时器的当前时间
  *
  * -----------
  *
@@ -5274,24 +5271,24 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 计时器名称 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `current_time` || Current Time |
+ * | 0 || 🔸 || `Flt` || `current_time` || 当前时间 |
  */
   Query_GlobalTimer_GetTime: "Query.Global_Timer.Get_Time",
 
   /**
- * **Start Global Timer** `(Execution.Global_Timer.Start)`
+ * **启动全局计时器** `(Execution.Global_Timer.Start)`
  *
- * - Start a Global Timer on the Target Entity
- * - The Timer on the Target Entity is uniquely identified by its name
- * - Based on Timer Management settings, Countdown and Stopwatch Timers are created accordingly
+ * - 在目标实体上启动一个全局计时器
+ * - 目标实体上的计时器，通过计时器名称进行唯一标识
+ * - 计时器根据计时器管理中的配置，会对应创生倒计时、正计时的计时器
  *
  * -----------
  *
@@ -5305,8 +5302,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Identifier for the Timer. Only Timer Names configured in Timer Management can be referenced |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 计时器名称: 该计时器的标识，只能引用在计时器管理中已经配置好的计时器名称 |
  *
  * -----------
  *
@@ -5318,9 +5315,9 @@ export const NODES = {
   Execution_GlobalTimer_Start: "Execution.Global_Timer.Start",
 
   /**
- * **Recover Global Timer** `(Execution.Global_Timer.Resume)`
+ * **恢复全局计时器** `(Execution.Global_Timer.Resume)`
  *
- * - Resume a paused Global Timer on the Target Entity
+ * - 使目标实体上一个处于暂停状态的计时器恢复运行
  *
  * -----------
  *
@@ -5334,8 +5331,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Identifier for the Timer. Only Timer Names configured in Timer Management can be referenced |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 计时器名称: 该计时器的标识，只能引用在计时器管理中已经配置好的计时器名称 |
  *
  * -----------
  *
@@ -5347,9 +5344,9 @@ export const NODES = {
   Execution_GlobalTimer_Resume: "Execution.Global_Timer.Resume",
 
   /**
- * **Stop Global Timer** `(Execution.Global_Timer.Stop)`
+ * **终止全局计时器** `(Execution.Global_Timer.Stop)`
  *
- * - Use the node graph to stop running a global timer early
+ * - 通过节点图，提前结束运行中的全局计时器
  *
  * -----------
  *
@@ -5363,8 +5360,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Identifier for the Timer. Only Timer Names configured in Timer Management can be referenced |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 计时器名称: 该计时器的标识，只能引用在计时器管理中已经配置好的计时器名称 |
  *
  * -----------
  *
@@ -5376,12 +5373,13 @@ export const NODES = {
   Execution_GlobalTimer_Stop: "Execution.Global_Timer.Stop",
 
   /**
- * **Modify Global Timer** `(Execution.Global_Timer.Modify)`
+ * **修改全局计时器** `(Execution.Global_Timer.Modify)`
  *
- * - Adjust the time of a running Global Timer via the Node Graph
- * - If the timer is paused first and then modified to reduce the time, the modified time will be at least 0 seconds.
- * - For countdown timers, pausing followed by modifying the time to 0s will trigger the [When the Global Timer Is Triggered] event upon resuming the timer.
- * - If the timer is paused first, then modified to 0s, followed by modifying the time to increase it, and finally resumed, the [When the Global Timer Is Triggered] event will not be triggered.
+ * - 通过节点图，可以将运行中的全局计时器时间进行调整
+ * - 若计时器先暂停，后修改减少时间，则修改后时间最少为0s
+ * - 若为倒计时，则暂停后修改时间为0s且恢复计时器后，会触发【全局计时器触发时】事件
+ * - 若计时器先暂停，后修改时间到0s，再修改增加时间，再恢复计时器，则不会触发【全局计时器触发时】事件
+ * - 若有界面控件引用对应计时器，则界面控件的计时表现会同步修改
  *
  * -----------
  *
@@ -5395,9 +5393,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `timer_name` || Timer Name: Identifier for the Timer. Only Timer Names configured in Timer Management can be referenced |
- * | 2 || 🔹 || `Flt` || `delta` || Change Value: For a Countdown Timer, a positive value increases the remaining time; a negative value decreases the remaining time<br>If the timer is set to Stopwatch, a positive value increases the accumulated time, while a negative value decreases it |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `timer_name` || 计时器名称: 该计时器的标识，只能引用在计时器管理中已经配置好的计时器名称 |
+ * | 2 || 🔹 || `Flt` || `delta` || 变化值: 若计时器为倒计时，则正数为增加倒计时剩余时间，负数为减少剩余时间<br>若计时器为正计时，则正数为增加正计时累计时间，负数为减少累计时间 |
  *
  * -----------
  *
@@ -5409,10 +5407,10 @@ export const NODES = {
   Execution_GlobalTimer_Modify: "Execution.Global_Timer.Modify",
 
   /**
- * **When Global Timer Is Triggered** `(Trigger.Global_Timer.On_Timer_Trigger)`
+ * **全局计时器触发时** `(Trigger.Global_Timer.On_Timer_Trigger)`
  *
- * - This event is triggered when the Global Countdown Timer reaches zero
- * - The Global Stopwatch Timer does not trigger this event
+ * - 当倒计时的全局计时器计时结束时，会触发该事件
+ * - 正计时的全局计时器不会触发该事件
  *
  * -----------
  *
@@ -5426,17 +5424,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Str` || `timer_name` || Timer Name |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Str` || `timer_name` || 计时器名称 |
  */
   Trigger_GlobalTimer_OnTimerTrigger: "Trigger.Global_Timer.On_Timer_Trigger",
 
   /**
- * **When UI Control Group Is Triggered** `(Trigger.UI_Control_Group.On_Group_Trigger)`
+ * **界面控件组触发时** `(Trigger.UI_Control_Group.On_Group_Trigger)`
  *
- * - Only UI Controls of the Interactive Button and Item Display types trigger this event
- * - The Node Graph event "UI Control Group Triggered" is sent during Stage runtime when a UI Control Group created through an Interactive Button or an Item Display UI Control is interacted with. This event can only be received by the Node Graph of the _Player_ who triggered the interaction
+ * - 只有交互按钮和道具展示类型的界面控件，才会触发本事件
+ * - 在关卡运行中，通过交互按钮或道具展示界面控件制作的界面控件组，被执行交互操作会发送节点图事件”界面控件组触发时“，此事件只有触发交互的_玩家_节点图可以获取
  *
  * -----------
  *
@@ -5450,17 +5448,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Int` || `group_combo_index` || UI Control Group Composite Index: If the UI control that triggered this event forms a multi-control UI group with other controls, this output parameter returns the corresponding group value |
- * | 3 || 🔸 || `Int` || `group_index` || UI Control Group Index: If the triggering UI control is a single-control UI group, this value represents the ID of that UI control group<br>If the triggering UI control is part of a multi-control UI group, this value represents the ID of the control within that group |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Int` || `group_combo_index` || 界面控件组组合索引: 如果触发该事件的界面控件和其他界面控件组成了多控件界面控件组(即界面控件组组合)，此出参会有对应的值 |
+ * | 3 || 🔸 || `Int` || `group_index` || 界面控件组索引: 触发该事件的界面控件为单控件界面控件组，则此处为该界面控件组的索引。<br>触发该事件的界面控件为多控件界面控件组，则此处为组合内对应该界面控件的索引 |
  */
   Trigger_UIControlGroup_OnGroupTrigger: "Trigger.UI_Control_Group.On_Group_Trigger",
 
   /**
- * **Get Player's Current UI Layout** `(Query.UI_Control_Group.Get_Current_Layout)`
+ * **获取玩家当前界面布局** `(Query.UI_Control_Group.Get_Current_Layout)`
  *
- * - Returns the ID of the currently active Interface Layout on the specified Player Entity
+ * - 获取指定玩家实体上当前生效的界面布局的索引
  *
  * -----------
  *
@@ -5473,21 +5471,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `layout_idx` || Layout Index |
+ * | 0 || 🔸 || `Int` || `layout_idx` || 布局索引 |
  */
   Query_UIControlGroup_GetCurrentLayout: "Query.UI_Control_Group.Get_Current_Layout",
 
   /**
- * **Get All Entities on the Field** `(Query.Entity_Related.Get_All_Entities)`
+ * **获取场上所有实体** `(Query.Entity_Related.Get_All_Entities)`
  *
- * - Returns all Entities currently present in the scene. The number of Entities in this List may be large
+ * - 获取当前场上所有在场的实体，该实体列表的数量可能会较大
  *
  * -----------
  *
@@ -5500,14 +5498,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `entities` || Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `entities` || 实体列表 |
  */
   Query_EntityRelated_GetAllEntities: "Query.Entity_Related.Get_All_Entities",
 
   /**
- * **Get Specified Type of Entity on the Field** `(Query.Entity_Related.Get_Entity_By_Type)`
+ * **获取场上指定类型实体** `(Query.Entity_Related.Get_Entity_By_Type)`
  *
- * - Returns all Entities of the specified type currently in the scene. The number of Entities in this list may be large
+ * - 获取当前场上指定类型的所有实体，该实体列表的数量可能会较大
  *
  * -----------
  *
@@ -5520,21 +5518,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `E<ENTY>` || `entity_type` || Entity Type: Includes Stage, Object, Player, Character, Creation |
+ * | 0 || 🔹 || `E<ENTY>` || `entity_type` || 实体类型: 分为关卡、物件、玩家、角色、造物 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `entities` || Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `entities` || 实体列表 |
  */
   Query_EntityRelated_GetEntityByType: "Query.Entity_Related.Get_Entity_By_Type",
 
   /**
- * **Get Entities With Specified Prefab on the Field** `(Query.Entity_Related.Get_With_Prefab)`
+ * **获取场上指定元件ID的实体** `(Query.Entity_Related.Get_With_Prefab)`
  *
- * - Returns all Entities currently in the scene that were created by the specified Prefab ID
+ * - 获取当前场上通过指定元件ID创建的所有实体
  *
  * -----------
  *
@@ -5547,21 +5545,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Pfb` || `component_id` || Prefab ID |
+ * | 0 || 🔹 || `Pfb` || `component_id` || 元件ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `entities` || Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `entities` || 实体列表 |
  */
   Query_EntityRelated_GetWithPrefab: "Query.Entity_Related.Get_With_Prefab",
 
   /**
- * **Radians to Degrees** `(Arithmetic.Math.Rad_To_Deg)`
+ * **弧度转角度** `(Arithmetic.Math.Rad_To_Deg)`
  *
- * - Converts radians to degrees
+ * - 将弧度值转为角度值
  *
  * -----------
  *
@@ -5574,21 +5572,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `radians` || Radian Value |
+ * | 0 || 🔹 || `Flt` || `radians` || 弧度值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `degrees` || Angle Value |
+ * | 0 || 🔸 || `Flt` || `degrees` || 角度值 |
  */
   Arithmetic_Math_RadToDeg: "Arithmetic.Math.Rad_To_Deg",
 
   /**
- * **Degrees to Radians** `(Arithmetic.Math.Deg_To_Rad)`
+ * **角度转弧度** `(Arithmetic.Math.Deg_To_Rad)`
  *
- * - Converts degrees to radians
+ * - 将角度值转为弧度值
  *
  * -----------
  *
@@ -5601,21 +5599,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `degrees` || Angle Value |
+ * | 0 || 🔹 || `Flt` || `degrees` || 角度值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radians` || Radian Value |
+ * | 0 || 🔸 || `Flt` || `radians` || 弧度值 |
  */
   Arithmetic_Math_DegToRad: "Arithmetic.Math.Deg_To_Rad",
 
   /**
- * **Set Node Graph Variable** `(Execution.Custom_Variable.Set_Graph_Variable)`
+ * **设置节点图变量** `(Execution.Custom_Variable.Set_Graph_Variable)`
  *
- * - Set the value of the specified Node Graph Variable in the current Node Graph
+ * - 为当前节点图内的指定节点图变量设置值
  *
  * -----------
  *
@@ -5629,9 +5627,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Str` || `variable_name` || Variable Name: Name of the Node Graph Variable. Must be unique within the same Node Graph |
- * | 1 || 🔷 || **`R<T>`** || `value` || Variable Value: Value assigned to this variable |
- * | 2 || 🔹 || `Bol` || `should_trigger_event` || Trigger Event: Default: True. If set to False, this Node Graph Variable editing will not trigger the Variable Change Event |
+ * | 0 || 🔹 || `Str` || `variable_name` || 变量名: 节点图变量的命名，同节点图内不可重复 |
+ * | 1 || 🔷 || **`R<T>`** || `value` || 变量值: 赋予该变量的值 |
+ * | 2 || 🔹 || `Bol` || `should_trigger_event` || 是否触发事件: 默认为是。选为否时，这次节点图变量修改不会触发节点图变量变化时事件 |
  *
  * -----------
  *
@@ -5798,10 +5796,10 @@ export const NODES = {
   Execution_CustomVariable_SetGraphVariable: "Execution.Custom_Variable.Set_Graph_Variable",
 
   /**
- * **Get Node Graph Variable** `(Query.Custom_Variable.Get_Graph_Variable)`
+ * **获取节点图变量** `(Query.Custom_Variable.Get_Graph_Variable)`
  *
- * - Returns the value of the specified Node Graph Variable from the current Node Graph
- * - If the variable does not exist, returns the type's default value
+ * - 获取当前节点图的指定节点图变量的值
+ * - 如果变量不存在，则返回类型的默认值
  *
  * -----------
  *
@@ -5814,14 +5812,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Str` || `var_name` || Variable Name |
+ * | 0 || 🔹 || `Str` || `var_name` || 变量名 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `value` || Variable Value |
+ * | 0 || 🔶 || **`R<T>`** || `value` || 变量值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Ety>`
@@ -5981,11 +5979,11 @@ export const NODES = {
   Query_CustomVariable_GetGraphVariable: "Query.Custom_Variable.Get_Graph_Variable",
 
   /**
- * **When Node Graph Variable Changes** `(Trigger.Custom_Variable.On_Graph_Variable_Change)`
+ * **节点图变量变化时** `(Trigger.Custom_Variable.On_Graph_Variable_Change)`
  *
- * - This event is triggered when a Node Graph Variable in the current Node Graph changes
- * - The previous and current values are Generic. Determine the Generic type to correctly receive events for Node Graph Variables of the corresponding type
- * - Vessel-type Node Graph Variables do not provide before-value and after-value Output Parameters
+ * - 当前节点图的节点图变量发生变化时，触发该事件
+ * - 注意变化前值和变化后值为泛型，需确定其泛型类型后，才能正确接收到对应类型节点图变量的事件
+ * - 容器类型的节点图变量没有变化前值和变化后值出参
  *
  * -----------
  *
@@ -5999,11 +5997,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity: The Entity associated with this Node Graph |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID: GUID of the Entity associated with this Node Graph |
- * | 2 || 🔸 || `Str` || `variable_name` || Variable Name: Name of the Variable that was changed |
- * | 3 || 🔶 || **`R<T>`** || `old_value` || Pre-Change Value: The Variable's value before the change |
- * | 4 || 🔶 || **`R<T>`** || `new_value` || Post-Change Value: The Variable's value after the change |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体: 与节点图关联的实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID: 与节点图关联的实体的GUID |
+ * | 2 || 🔸 || `Str` || `variable_name` || 变量名: 发生变化的变量的名称 |
+ * | 3 || 🔶 || **`R<T>`** || `old_value` || 变化前值: 变量变化前的值 |
+ * | 4 || 🔶 || **`R<T>`** || `new_value` || 变化后值: 变量变化后的值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Ety>`
@@ -6163,9 +6161,9 @@ export const NODES = {
   Trigger_CustomVariable_OnGraphVariableChange: "Trigger.Custom_Variable.On_Graph_Variable_Change",
 
   /**
- * **Activate/Disable Follow Motion Device** `(Execution.Follow_Motion.Set_Device_State)`
+ * **激活/关闭跟随运动器** `(Execution.Follow_Motion.Set_Device_State)`
  *
- * - Enable/Disable the Follow Motion Device logic on the Target Entity
+ * - 使目标实体上的跟随运动器组件逻辑激活/关闭
  *
  * -----------
  *
@@ -6179,8 +6177,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Bol` || `should_activate` || Activate: Set to True to activate |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Bol` || `should_activate` || 是否激活: “是”为激活 |
  *
  * -----------
  *
@@ -6220,9 +6218,9 @@ export const NODES = {
   Hidden_Execution_SetDisruptorState: "Hidden.Execution.Set_Disruptor_State",
 
   /**
- * **Activate/Disable Collision Trigger Source** `(Execution.Collision_Trigger_Source.Set_Source_State)`
+ * **激活/关闭碰撞触发发源** `(Execution.Collision_Trigger_Source.Set_Source_State)`
  *
- * - Edit the state of the Collision Trigger Source Component on the Target Entity
+ * - 可以修改目标实体的碰撞触发源组件状态
  *
  * -----------
  *
@@ -6236,8 +6234,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Bol` || `should_activate` || Activate: If set to True, activates collision with Entities that carry Collision Trigger Components |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Bol` || `should_activate` || 是否激活: 为“是”则激活，可以与携带碰撞触发器组件的实体产生碰撞 |
  *
  * -----------
  *
@@ -6249,10 +6247,10 @@ export const NODES = {
   Execution_CollisionTriggerSource_SetSourceState: "Execution.Collision_Trigger_Source.Set_Source_State",
 
   /**
- * **Remove Entity** `(Execution.Entity_Related.Remove_Entity)`
+ * **移除实体** `(Execution.Entity_Related.Remove_Entity)`
  *
- * - Remove the specified Entity. Unlike destroying an Entity, this has no destruction effect and does not trigger logic that runs only after destruction
- * - Removing an Entity does not trigger the [On Entity Destroyed] event, but it can trigger the [On Entity Removed/Destroyed] event
+ * - 移除指定实体，与销毁实体不同的是，不会有销毁表现，也不会触发销毁后才会触发的逻辑
+ * - 移除实体不会触发【实体销毁时】事件，但可以触发【实体移除/销毁时】事件
  *
  * -----------
  *
@@ -6266,7 +6264,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: The entity to be removed |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 所要移除的实体 |
  *
  * -----------
  *
@@ -6278,9 +6276,9 @@ export const NODES = {
   Execution_EntityRelated_RemoveEntity: "Execution.Entity_Related.Remove_Entity",
 
   /**
- * **When Entity Is Destroyed** `(Trigger.Entity_Related.On_Destroyed)`
+ * **实体销毁时** `(Trigger.Entity_Related.On_Destroyed)`
  *
- * - This event triggers when objects and creations within the stage are destroyed. This event can only trigger on stage entities.
+ * - 关卡内物件和造物被销毁时触发该事件，该事件仅在关卡实体上可以触发
  *
  * -----------
  *
@@ -6294,23 +6292,23 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity: Destroyed Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Vec` || `position` || Location |
- * | 3 || 🔸 || `Vec` || `rotation` || Orientation |
- * | 4 || 🔸 || `E<ENTY>` || `entity_type` || Entity Type |
- * | 5 || 🔸 || `Fct` || `camp` || Faction |
- * | 6 || 🔸 || `Ety` || `damage_source` || Damage Source |
- * | 7 || 🔸 || `Ety` || `owner_entity` || Owner Entity |
- * | 8 || 🔸 || `Vss` || `custom_vars_snap` || Custom Variable Component Snapshot: On destroy, captures a snapshot of the Custom Variable component on this Entity. Use the Search Custom Variable Snapshot node to retrieve its Custom Variable values |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体: 被销毁的实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Vec` || `position` || 位置 |
+ * | 3 || 🔸 || `Vec` || `rotation` || 朝向 |
+ * | 4 || 🔸 || `E<ENTY>` || `entity_type` || 实体类型 |
+ * | 5 || 🔸 || `Fct` || `camp` || 阵营 |
+ * | 6 || 🔸 || `Ety` || `damage_source` || 伤害来源 |
+ * | 7 || 🔸 || `Ety` || `owner_entity` || 归属者实体 |
+ * | 8 || 🔸 || `Vss` || `custom_vars_snap` || 自定义变量组件快照: 销毁时，该实体上的自定义变量组件的快照。可以使用【查询自定义变量快照】节点获取其中的自定义变量值 |
  */
   Trigger_EntityRelated_OnDestroyed: "Trigger.Entity_Related.On_Destroyed",
 
   /**
- * **When Creation Enters Combat** `(Trigger.Creation.On_Enter_Combat)`
+ * **造物入战时** `(Trigger.Creation.On_Enter_Combat)`
  *
- * - Only effective in Classic Aggro Mode
- * - This event is triggered when a Creation enters battle
+ * - 仅在经典仇恨模式生效
+ * - 造物入战时触发该事件
  *
  * -----------
  *
@@ -6324,16 +6322,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
  */
   Trigger_Creation_OnEnterCombat: "Trigger.Creation.On_Enter_Combat",
 
   /**
- * **When Creation Leaves Combat** `(Trigger.Creation.On_Leave_Combat)`
+ * **造物脱战时** `(Trigger.Creation.On_Leave_Combat)`
  *
- * - Only effective in Classic Aggro Mode
- * - This event is triggered when a Creation leaves battle
+ * - 仅在经典仇恨模式生效
+ * - 造物脱战时触发该事件
  *
  * -----------
  *
@@ -6347,17 +6345,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
  */
   Trigger_Creation_OnLeaveCombat: "Trigger.Creation.On_Leave_Combat",
 
   /**
- * **Get Creation's Current Target** `(Query.Creation.Get_Target)`
+ * **获取造物当前目标** `(Query.Creation.Get_Target)`
  *
- * - The Target Entity varies with the Creation's current behavior
- * - For example, when a Creation is attacking, its Target is the specified enemy Entity
- * - For example, when a Creation is healing allies, its Target is the specified allied Entity
+ * - 根据造物当前行为的不同，目标实体也不尽相同。
+ * - 例如当造物在攻击敌方时，造物的目标为敌方指定实体。
+ * - 例如当造物在对友方进行治疗时，造物的目标为友方指定实体。
  *
  * -----------
  *
@@ -6370,21 +6368,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `creation` || Creation Entity: Runtime Creation Entity |
+ * | 0 || 🔹 || `Ety` || `creation` || 造物实体: 运行时的造物实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `target` || Target Entity: Current intelligently selected Target Entity of the Creation |
+ * | 0 || 🔸 || `Ety` || `target` || 目标实体: 造物当前的智能选取目标实体 |
  */
   Query_Creation_GetTarget: "Query.Creation.Get_Target",
 
   /**
- * **Get Entity List by Specified Type** `(Query.Entity_Related.Get_By_Type)`
+ * **获取指定类型的实体列表** `(Query.Entity_Related.Get_By_Type)`
  *
- * - Returns a list of specified Entity types from the Target Entity List
+ * - 在目标实体列表中获取指定类型的实体列表
  *
  * -----------
  *
@@ -6397,22 +6395,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `L<Ety>` || `source_list` || Target Entity List |
- * | 1 || 🔹 || `E<ENTY>` || `entity_type` || Entity Type: Includes Player, Character, Stage, Object, Creation. |
+ * | 0 || 🔹 || `L<Ety>` || `source_list` || 目标实体列表 |
+ * | 1 || 🔹 || `E<ENTY>` || `entity_type` || 实体类型: 分为玩家、角色、关卡、物件、造物 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `result_list` || Result List |
+ * | 0 || 🔸 || `L<Ety>` || `result_list` || 结果列表 |
  */
   Query_EntityRelated_GetByType: "Query.Entity_Related.Get_By_Type",
 
   /**
- * **Get Entity List by Specified Prefab ID** `(Query.Entity_Related.Get_By_Prefab)`
+ * **获取指定元件ID的实体列表** `(Query.Entity_Related.Get_By_Prefab)`
  *
- * - Returns a list of Entities created with the specified Prefab ID from the Target Entity List
+ * - 在目标实体列表中获取以指定元件ID创建的实体列表
  *
  * -----------
  *
@@ -6425,22 +6423,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `L<Ety>` || `source_list` || Target Entity List |
- * | 1 || 🔹 || `Pfb` || `component_id` || Prefab ID |
+ * | 0 || 🔹 || `L<Ety>` || `source_list` || 目标实体列表 |
+ * | 1 || 🔹 || `Pfb` || `component_id` || 元件ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `result_list` || Result List |
+ * | 0 || 🔸 || `L<Ety>` || `result_list` || 结果列表 |
  */
   Query_EntityRelated_GetByPrefab: "Query.Entity_Related.Get_By_Prefab",
 
   /**
- * **Get Entity List by Specified Faction** `(Query.Entity_Related.Get_By_Faction)`
+ * **获取指定阵营的实体列表** `(Query.Entity_Related.Get_By_Faction)`
  *
- * - Returns the list of Entities belonging to a specific Faction from the Target Entity List
+ * - 在目标实体列表中获取归属于某个阵营的实体列表
  *
  * -----------
  *
@@ -6453,22 +6451,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `L<Ety>` || `source_list` || Target Entity List |
- * | 1 || 🔹 || `Fct` || `camp` || Faction |
+ * | 0 || 🔹 || `L<Ety>` || `source_list` || 目标实体列表 |
+ * | 1 || 🔹 || `Fct` || `camp` || 阵营 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `result_list` || Result List |
+ * | 0 || 🔸 || `L<Ety>` || `result_list` || 结果列表 |
  */
   Query_EntityRelated_GetByFaction: "Query.Entity_Related.Get_By_Faction",
 
   /**
- * **Get Entity List by Specified Range** `(Query.Entity_Related.Get_By_Range)`
+ * **获取指定范围的实体列表** `(Query.Entity_Related.Get_By_Range)`
  *
- * - Returns a list of Entities within a specified spherical range from the Target Entity List
+ * - 在目标实体列表中获取指定球形范围内的实体列表
  *
  * -----------
  *
@@ -6481,23 +6479,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `L<Ety>` || `source_list` || Target Entity List |
- * | 1 || 🔹 || `Vec` || `center` || Center Point |
- * | 2 || 🔹 || `Flt` || `radius` || Radius |
+ * | 0 || 🔹 || `L<Ety>` || `source_list` || 目标实体列表 |
+ * | 1 || 🔹 || `Vec` || `center` || 中心点 |
+ * | 2 || 🔹 || `Flt` || `radius` || 半径 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `result_list` || Result List |
+ * | 0 || 🔸 || `L<Ety>` || `result_list` || 结果列表 |
  */
   Query_EntityRelated_GetByRange: "Query.Entity_Related.Get_By_Range",
 
   /**
- * **Get Creation Attribute** `(Query.Creation.Get_Attribute)`
+ * **获取造物属性** `(Query.Creation.Get_Attribute)`
  *
- * - Returns the Attributes of the specified Creation
+ * - 获取指定造物的属性
  *
  * -----------
  *
@@ -6510,28 +6508,28 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `creation` || Creation Entity |
+ * | 0 || 🔹 || `Ety` || `creation` || 造物实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `level` || Level |
- * | 1 || 🔸 || `Flt` || `hp_cur` || Current HP |
- * | 2 || 🔸 || `Flt` || `hp_max` || Max HP |
- * | 3 || 🔸 || `Flt` || `atk_cur` || Current ATK |
- * | 4 || 🔸 || `Flt` || `atk_base` || Base ATK |
- * | 5 || 🔸 || `Flt` || `poise_max` || Interrupt Value Threshold |
- * | 6 || 🔸 || `Flt` || `poise_cur` || Current Interrupt Value |
- * | 7 || 🔸 || `E<CIRS>` || `poise_state` || Current Interrupt Status |
+ * | 0 || 🔸 || `Int` || `level` || 等级 |
+ * | 1 || 🔸 || `Flt` || `hp_cur` || 当前生命值 |
+ * | 2 || 🔸 || `Flt` || `hp_max` || 上限生命值 |
+ * | 3 || 🔸 || `Flt` || `atk_cur` || 当前攻击力 |
+ * | 4 || 🔸 || `Flt` || `atk_base` || 基础攻击力 |
+ * | 5 || 🔸 || `Flt` || `poise_max` || 受打断值上限 |
+ * | 6 || 🔸 || `Flt` || `poise_cur` || 当前受打断值 |
+ * | 7 || 🔸 || `E<CIRS>` || `poise_state` || 当前受打断状态 |
  */
   Query_Creation_GetAttribute: "Query.Creation.Get_Attribute",
 
   /**
- * **Switch Current Interface Layout** `(Execution.UI_Control_Group.Switch_Layout)`
+ * **切换当前界面布局** `(Execution.UI_Control_Group.Switch_Layout)`
  *
- * - Switch the Target Player's current Interface Layout via Layout ID
+ * - 可以通过布局索引来切换目标玩家当前的界面布局
  *
  * -----------
  *
@@ -6545,8 +6543,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player` || Target Player: Active Player Entity |
- * | 1 || 🔹 || `Int` || `layout_index` || Layout Index: Identifier for the UI Layout |
+ * | 0 || 🔹 || `Ety` || `player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `layout_index` || 布局索引: 界面布局的标识 |
  *
  * -----------
  *
@@ -6558,9 +6556,9 @@ export const NODES = {
   Execution_UIControlGroup_SwitchLayout: "Execution.UI_Control_Group.Switch_Layout",
 
   /**
- * **Activate UI Control Group in Control Group Library** `(Execution.UI_Control_Group.Activate_Group)`
+ * **激活控件组库内界面控件组** `(Execution.UI_Control_Group.Activate_Group)`
  *
- * - Activate the UI Control Groups stored as Custom Templates in the UI Control Group Library within the Target Player's Interface Layout
+ * - 可以在目标玩家的界面布局上激活处于界面控件组库内的以自定义模板形式存在的界面控件组
  *
  * -----------
  *
@@ -6574,8 +6572,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player` || Target Player: Active Player Entity |
- * | 1 || 🔹 || `Int` || `group_index` || UI Control Group Index: Identifier for the UI Control Group |
+ * | 0 || 🔹 || `Ety` || `player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `group_index` || 界面控件组索引: 界面控件组的标识 |
  *
  * -----------
  *
@@ -6587,9 +6585,9 @@ export const NODES = {
   Execution_UIControlGroup_ActivateGroup: "Execution.UI_Control_Group.Activate_Group",
 
   /**
- * **Modify UI Control Status Within the Interface Layout** `(Execution.UI_Control_Group.Modify_Status)`
+ * **修改界面布局内界面控件状态** `(Execution.UI_Control_Group.Modify_Status)`
  *
- * - Edit the state of the UI Control in the Target Player's Interface Layout by its UI Control ID
+ * - 通过界面控件索引来修改目标玩家界面布局内对应界面控件的状态
  *
  * -----------
  *
@@ -6603,9 +6601,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player` || Target Player: Active Player Entity |
- * | 1 || 🔹 || `Int` || `control_index` || UI Control Index: Identifier for the UI Control |
- * | 2 || 🔹 || `E<UICG>` || `display_state` || Display Status: Off: Invisible and logic not running<br>On: Visible and logic running normally<br>Hidden: Invisible and logic running normally |
+ * | 0 || 🔹 || `Ety` || `player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `control_index` || 界面控件索引: 界面控件的标识 |
+ * | 2 || 🔹 || `E<UICG>` || `display_state` || 显示状态: 关闭：不可见且逻辑不运行<br>开启：可见+逻辑正常运行<br>隐藏：不可见+逻辑正常运行 |
  *
  * -----------
  *
@@ -6617,9 +6615,9 @@ export const NODES = {
   Execution_UIControlGroup_ModifyStatus: "Execution.UI_Control_Group.Modify_Status",
 
   /**
- * **When Player Class Changes** `(Trigger.Class.On_Class_Change)`
+ * **玩家职业更改时** `(Trigger.Class.On_Class_Change)`
  *
- * - This event is triggered when a Player's Class changes and is sent to the corresponding Player. It can be received in the Node Graph of the new Class
+ * - 玩家职业更改时触发该事件发送给对应玩家，可以在更改后职业的职业节点图里收到
  *
  * -----------
  *
@@ -6633,17 +6631,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Cfg` || `career_config_id_old` || Pre-Modification Class Config ID |
- * | 3 || 🔸 || `Cfg` || `career_config_id_new` || Post-Modification Config ID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Cfg` || `career_config_id_old` || 更改前职业配置ID |
+ * | 3 || 🔸 || `Cfg` || `career_config_id_new` || 更改后职业配置ID |
  */
   Trigger_Class_OnClassChange: "Trigger.Class.On_Class_Change",
 
   /**
- * **When Player Class Level Changes** `(Trigger.Class.On_Level_Change)`
+ * **玩家职业等级变化时** `(Trigger.Class.On_Level_Change)`
  *
- * - This event is triggered when a Player's Class Level changes and is sent to the corresponding Player. It can be received in that Class's Node Graph
+ * - 玩家职业等级变化时触发该事件发送给对应玩家，可以在该职业的职业节点图里收到
  *
  * -----------
  *
@@ -6657,17 +6655,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity: Active Player Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Int` || `level_old` || Pre-Change Level |
- * | 3 || 🔸 || `Int` || `level_new` || Post-Change Level |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体: 生效的玩家实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Int` || `level_old` || 变化前等级 |
+ * | 3 || 🔸 || `Int` || `level_new` || 变化后等级 |
  */
   Trigger_Class_OnLevelChange: "Trigger.Class.On_Level_Change",
 
   /**
- * **Query Player Class** `(Query.Class.Get_Class)`
+ * **查询玩家职业** `(Query.Class.Get_Class)`
  *
- * - Searches the Player's current Class; outputs the Config ID of that Class
+ * - 查询玩家当前的职业，会输出该职业的配置ID
  *
  * -----------
  *
@@ -6680,21 +6678,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Cfg` || `career_id` || Class Config ID |
+ * | 0 || 🔸 || `Cfg` || `career_id` || 职业配置ID |
  */
   Query_Class_GetClass: "Query.Class.Get_Class",
 
   /**
- * **Query Player Class Level** `(Query.Class.Get_Level)`
+ * **查询玩家职业的等级** `(Query.Class.Get_Level)`
  *
- * - Searches the Player's Level of the specified Class
+ * - 查询玩家指定职业的等级
  *
  * -----------
  *
@@ -6707,22 +6705,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
- * | 1 || 🔹 || `Cfg` || `career_id` || Class Config ID |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
+ * | 1 || 🔹 || `Cfg` || `career_id` || 职业配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `level` || Level |
+ * | 0 || 🔸 || `Int` || `level` || 等级 |
  */
   Query_Class_GetLevel: "Query.Class.Get_Level",
 
   /**
- * **Change Player Class** `(Execution.Class.Change_Class)`
+ * **更改玩家职业** `(Execution.Class.Change_Class)`
  *
- * - Set the Player's current Class to the Class referenced by the Config ID
+ * - 修改玩家的当前职业为配置ID对应的职业
  *
  * -----------
  *
@@ -6736,8 +6734,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player` || Target Player: Active Player Entity |
- * | 1 || 🔹 || `Cfg` || `class_id` || Class Config ID: Class Identifier |
+ * | 0 || 🔹 || `Ety` || `player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔹 || `Cfg` || `class_id` || 职业配置ID: 该职业的标识 |
  *
  * -----------
  *
@@ -6749,9 +6747,9 @@ export const NODES = {
   Execution_Class_ChangeClass: "Execution.Class.Change_Class",
 
   /**
- * **Increase Player's Current Class EXP** `(Execution.Class.Add_Exp)`
+ * **提升玩家当前职业经验** `(Execution.Class.Add_Exp)`
  *
- * - Increase the Player's current Class EXP. Any excess beyond the maximum Level will not take effect
+ * - 提升玩家当前职业经验，超出最大等级的部分会无效
  *
  * -----------
  *
@@ -6765,8 +6763,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player` || Target Player: Active Player Entity |
- * | 1 || 🔹 || `Int` || `exp` || EXP: Amount of EXP to be increased |
+ * | 0 || 🔹 || `Ety` || `player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `exp` || 经验值: 所要提升的经验值 |
  *
  * -----------
  *
@@ -6778,9 +6776,9 @@ export const NODES = {
   Execution_Class_AddExp: "Execution.Class.Add_Exp",
 
   /**
- * **Change Player's Current Class Level** `(Execution.Class.Set_Level)`
+ * **更改玩家当前职业等级** `(Execution.Class.Set_Level)`
  *
- * - Set the Player's current Class Level. If it exceeds the defined range, the change will not take effect
+ * - 修改玩家当前职业等级，若超出定义的等级范围则会失效
  *
  * -----------
  *
@@ -6794,8 +6792,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player` || Target Player: Active Player Entity |
- * | 1 || 🔹 || `Int` || `level` || Level: Edited Level |
+ * | 0 || 🔹 || `Ety` || `player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `level` || 等级: 修改后的等级 |
  *
  * -----------
  *
@@ -6807,9 +6805,9 @@ export const NODES = {
   Execution_Class_SetLevel: "Execution.Class.Set_Level",
 
   /**
- * **When Skill Node Is Called** `(Trigger.Skill.On_Skill_Call)`
+ * **技能节点调用时** `(Trigger.Skill.On_Skill_Call)`
  *
- * - This event is triggered by the [Notify Server Node Graph] Node in the Skill Node Graph. Up to three strings can be passed in
+ * - 通过技能节点图的【通知服务器节点图】节点触发，可以传入三个字符串类型的值
  *
  * -----------
  *
@@ -6823,18 +6821,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `invoker_entity` || Caller Entity |
- * | 1 || 🔸 || `Gid` || `invoker_guid` || Caller GUID |
- * | 2 || 🔸 || `Str` || `param1` || Parameter 1 |
- * | 3 || 🔸 || `Str` || `param2` || Parameter 2 |
- * | 4 || 🔸 || `Str` || `param3` || Parameter 3 |
+ * | 0 || 🔸 || `Ety` || `invoker_entity` || 调用者实体 |
+ * | 1 || 🔸 || `Gid` || `invoker_guid` || 调用者GUID |
+ * | 2 || 🔸 || `Str` || `param1` || 参数1 |
+ * | 3 || 🔸 || `Str` || `param2` || 参数2 |
+ * | 4 || 🔸 || `Str` || `param3` || 参数3 |
  */
   Trigger_Skill_OnSkillCall: "Trigger.Skill.On_Skill_Call",
 
   /**
- * **Modify Skill Resource Amount** `(Execution.Skill.Modify_Resource)`
+ * **修改技能资源量** `(Execution.Skill.Modify_Resource)`
  *
- * - Edit the skill's resource amount by adding the change value to the current value. The change value can be negative
+ * - 修改技能的资源量，会在当前值上加上变更值，变更值可以为负数
  *
  * -----------
  *
@@ -6848,9 +6846,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `Cfg` || `resource_config_id` || Skill Resource Config ID: Skill Resource Identifier |
- * | 2 || 🔹 || `Flt` || `delta_value` || Change Value: New Value = Original Value + Change Value |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `Cfg` || `resource_config_id` || 技能资源配置ID: 技能资源的标识 |
+ * | 2 || 🔹 || `Flt` || `delta_value` || 变更值: 修改后的值为：原值+变更值 |
  *
  * -----------
  *
@@ -6862,9 +6860,9 @@ export const NODES = {
   Execution_Skill_ModifyResource: "Execution.Skill.Modify_Resource",
 
   /**
- * **Set Skill Resource Amount** `(Execution.Skill.Set_Resource)`
+ * **设置技能资源量** `(Execution.Skill.Set_Resource)`
  *
- * - Edit the Character's skill resource amount
+ * - 修改角色的技能资源量
  *
  * -----------
  *
@@ -6878,9 +6876,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `Cfg` || `resource_config_id` || Skill Resource Config ID: Skill Resource Identifier |
- * | 2 || 🔹 || `Flt` || `target_value` || Target Value: Edited value will be set to this input value |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `Cfg` || `resource_config_id` || 技能资源配置ID: 技能资源的标识 |
+ * | 2 || 🔹 || `Flt` || `target_value` || 目标值: 修改后的值为该输入值 |
  *
  * -----------
  *
@@ -6892,9 +6890,9 @@ export const NODES = {
   Execution_Skill_SetResource: "Execution.Skill.Set_Resource",
 
   /**
- * **Add Character Skill** `(Execution.Skill.Add_Skill)`
+ * **添加角色技能** `(Execution.Skill.Add_Skill)`
  *
- * - Add a skill to the specified Target Character's Skill Slot
+ * - 为指定目标角色的某个技能槽位添加技能
  *
  * -----------
  *
@@ -6908,9 +6906,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `Cfg` || `skill_config_id` || Skill Config ID: Skill Identifier |
- * | 2 || 🔹 || `E<SLOT>` || `skill_slot` || Skill Slot: The Skill Slot to be added: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `Cfg` || `skill_config_id` || 技能配置ID: 技能的标识 |
+ * | 2 || 🔹 || `E<SLOT>` || `skill_slot` || 技能槽位: 要添加的技能所在的槽位，分为普通攻击、技能1-E、技能2-Q、技能3-R、技能4-T和自定义技能 |
  *
  * -----------
  *
@@ -6922,9 +6920,9 @@ export const NODES = {
   Execution_Skill_AddSkill: "Execution.Skill.Add_Skill",
 
   /**
- * **Delete Character Skill by ID** `(Execution.Skill.Remove_By_ID)`
+ * **以ID删除角色技能** `(Execution.Skill.Remove_By_ID)`
  *
- * - Iterate through and delete all skills with the specified Config ID across all of the Character's slots
+ * - 遍历角色的所有槽位，删除所有指定配置ID的技能
  *
  * -----------
  *
@@ -6938,8 +6936,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `Cfg` || `skill_config_id` || Skill Config ID: Skill Identifier |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `Cfg` || `skill_config_id` || 技能配置ID: 技能的标识 |
  *
  * -----------
  *
@@ -6951,9 +6949,9 @@ export const NODES = {
   Execution_Skill_RemoveByID: "Execution.Skill.Remove_By_ID",
 
   /**
- * **Initialize Character Skill** `(Execution.Skill.Init_Skill)`
+ * **初始化角色技能** `(Execution.Skill.Init_Skill)`
  *
- * - Reset the Target Character's skills to those defined in the Class Template
+ * - 使目标角色的技能重置为职业模板上配置的技能
  *
  * -----------
  *
@@ -6967,8 +6965,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || Character Skill Slot: The Skill Slot to initialize: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || 角色技能槽位: 要初始化的技能所在的槽位，分为普通攻击、技能1-E、技能2-Q、技能3-R、技能4-T和自定义技能 |
  *
  * -----------
  *
@@ -6980,9 +6978,9 @@ export const NODES = {
   Execution_Skill_InitSkill: "Execution.Skill.Init_Skill",
 
   /**
- * **Query Character Skill** `(Query.Skill.Get_Skill_Info)`
+ * **查询角色技能** `(Query.Skill.Get_Skill_Info)`
  *
- * - Searches the Skill in the specified slot of a Character; outputs that Skill's Config ID
+ * - 查询角色指定槽位的技能，会输出该技能的配置ID
  *
  * -----------
  *
@@ -6995,22 +6993,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `character` || Character Entity |
- * | 1 || 🔹 || `E<SLOT>` || `slot` || Character Skill Slot |
+ * | 0 || 🔹 || `Ety` || `character` || 角色实体 |
+ * | 1 || 🔹 || `E<SLOT>` || `slot` || 角色技能槽位 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Cfg` || `skill_config` || Skill Config ID |
+ * | 0 || 🔸 || `Cfg` || `skill_config` || 技能配置ID |
  */
   Query_Skill_GetSkillInfo: "Query.Skill.Get_Skill_Info",
 
   /**
- * **Delete Character Skill by Slot** `(Execution.Skill.Remove_By_Slot)`
+ * **以槽位删除角色技能** `(Execution.Skill.Remove_By_Slot)`
  *
- * - Delete the skill in the specified slot of the Target Character
+ * - 删除目标角色指定槽位的技能
  *
  * -----------
  *
@@ -7024,8 +7022,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || Character Skill Slot: The Skill Slot to be deleted: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || 角色技能槽位: 要删除的技能所在的槽位，分为普通攻击、技能1-E、技能2-Q、技能3-R、技能4-T和自定义技能 |
  *
  * -----------
  *
@@ -7583,9 +7581,9 @@ export const NODES = {
   Hidden_Query_GetNativeValue: "Hidden.Query.Get_Native_Value",
 
   /**
- * **Clear Special Effects Based on Special Effect Assets** `(Execution.Special_Effect.Stop_By_Asset)`
+ * **根据特效资产清除特效** `(Execution.Special_Effect.Stop_By_Asset)`
  *
- * - Clear all Effects on the specified Target Entity that use the given Effect Asset. Applies to Looping Effects only
+ * - 清除指定目标实体上所有使用该特效资产的特效。仅限循环特效
  *
  * -----------
  *
@@ -7599,8 +7597,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Cfg` || `effect_asset` || Special Effects Asset: Identifier for this Effect |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Cfg` || `effect_asset` || 特效资产: 该特效的标识 |
  *
  * -----------
  *
@@ -7612,9 +7610,9 @@ export const NODES = {
   Execution_SpecialEffect_StopByAsset: "Execution.Special_Effect.Stop_By_Asset",
 
   /**
- * **3D Vector Rotation** `(Arithmetic.Math.Vector_Rotate)`
+ * **三维向量旋转** `(Arithmetic.Math.Vector_Rotate)`
  *
- * - Rotates the input 3D Vector by the Euler Angles specified by the rotation and returns the result
+ * - 将被旋转的三维向量，按照旋转所表示的欧拉角进行旋转后返回结果
  *
  * -----------
  *
@@ -7627,22 +7625,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `rotation` || Rotate: This 3D input vector represents a specific rotation in Euler angles |
- * | 1 || 🔹 || `Vec` || `vector` || Rotated 3D Vector |
+ * | 0 || 🔹 || `Vec` || `rotation` || 旋转: 该输入的三维向量指代一个特定的旋转欧拉角 |
+ * | 1 || 🔹 || `Vec` || `vector` || 被旋转的三维向量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_Math_VectorRotate: "Arithmetic.Math.Vector_Rotate",
 
   /**
- * **Enumerations Equal** `(Arithmetic.General.Enum_Equal)`
+ * **枚举是否相等** `(Arithmetic.General.Enum_Equal)`
  *
- * - After confirming the Enumeration type, determines whether the two input values are equal
+ * - 确认枚举的类型后，判断两个输入的值是否相等
  *
  * -----------
  *
@@ -7655,15 +7653,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `enum1` || Enumeration 1 |
- * | 1 || 🔷 || **`R<T>`** || `enum2` || Enumeration 2 |
+ * | 0 || 🔷 || **`R<T>`** || `enum1` || 枚举1 |
+ * | 1 || 🔷 || **`R<T>`** || `enum2` || 枚举2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result: Output True if equal, False if not equal |
+ * | 0 || 🔸 || `Bol` || `result` || 结果: 相等输出“是”，不相等输出“否” |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:E<OCMP>>`
@@ -7709,9 +7707,9 @@ export const NODES = {
   Arithmetic_General_EnumEqual: "Arithmetic.General.Enum_Equal",
 
   /**
- * **3D Vector Dot Product** `(Arithmetic.Math.Vector_Dot)`
+ * **三维向量内积** `(Arithmetic.Math.Vector_Dot)`
  *
- * - Calculates the dot product of two input 3D Vectors
+ * - 计算两个输入三维向量的内积（点乘）
  *
  * -----------
  *
@@ -7724,22 +7722,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `a` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `b` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `a` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `b` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_Math_VectorDot: "Arithmetic.Math.Vector_Dot",
 
   /**
- * **3D Vector Cross Product** `(Arithmetic.Math.Vector_Cross)`
+ * **三维向量外积** `(Arithmetic.Math.Vector_Cross)`
  *
- * - Calculates the cross product of two 3D Vectors
+ * - 计算两个三维向量的外积（叉乘）
  *
  * -----------
  *
@@ -7752,23 +7750,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `a` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `b` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `a` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `b` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_Math_VectorCross: "Arithmetic.Math.Vector_Cross",
 
   /**
- * **Query If Entity Is on the Field** `(Query.Entity_Related.Is_Active)`
+ * **查询实体是否在场** `(Query.Entity_Related.Is_Active)`
  *
- * - Searches whether the specified Entity is present
- * - Note that Character Entities are still considered present even when Downed
+ * - 查询指定实体是否在场
+ * - 注意角色实体即使处于倒下状态，仍然认为在场
  *
  * -----------
  *
@@ -7781,21 +7779,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `is_alive` || On the Field |
+ * | 0 || 🔸 || `Bol` || `is_alive` || 是否在场 |
  */
   Query_EntityRelated_IsActive: "Query.Entity_Related.Is_Active",
 
   /**
- * **Query If Entity Has Unit Status** `(Query.Unit_Status.Has_Status)`
+ * **查询实体是否具有单位状态** `(Query.Unit_Status.Has_Status)`
  *
- * - Searches whether the specified Entity has a Unit Status with the given Config ID
+ * - 查询指定实体是否具有特定配置ID的单位状态
  *
  * -----------
  *
@@ -7808,22 +7806,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Cfg` || `config_id` || Unit Status Config ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Cfg` || `config_id` || 单位状态配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `exists` || Has |
+ * | 0 || 🔸 || `Bol` || `exists` || 是否具有 |
  */
   Query_UnitStatus_HasStatus: "Query.Unit_Status.Has_Status",
 
   /**
- * **List Iteration Loop** `(Execution.List_Operation.For_Each)`
+ * **列表迭代循环** `(Execution.List_Operation.For_Each)`
  *
- * - Iterate through the specified List in sequential order
+ * - 按照列表顺序遍历循环指定列表
  *
  * -----------
  *
@@ -7838,7 +7836,7 @@ export const NODES = {
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `Start` ||  |
  * | - || ▶️ || - || `Break` ||  |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || Iteration List: List to iterate through |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 迭代列表: 被遍历循环的列表 |
  *
  * -----------
  *
@@ -7847,7 +7845,7 @@ export const NODES = {
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `Iteration` ||  |
  * | - || ⏩ || - || `End` ||  |
- * | 0 || 🔶 || **`R<T>`** || `item` || Iteration Value: Each value in the list |
+ * | 0 || 🔶 || **`R<T>`** || `item` || 迭代值: 列表中的每个值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Bol>`
@@ -7864,9 +7862,9 @@ export const NODES = {
   Execution_ListOperation_ForEach: "Execution.List_Operation.For_Each",
 
   /**
- * **Get Entity Forward Vector** `(Query.Entity_Related.Get_Forward)`
+ * **获取实体向前向量** `(Query.Entity_Related.Get_Forward)`
  *
- * - Returns the Forward Vector of the specified Entity (the positive Z-axis direction in the Entity's relative coordinate system)
+ * - 获取指定实体的向前向量（即该实体本地坐标系下的z轴正方向朝向）
  *
  * -----------
  *
@@ -7879,21 +7877,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `forward` || Forward Vector |
+ * | 0 || 🔸 || `Vec` || `forward` || 向前向量 |
  */
   Query_EntityRelated_GetForward: "Query.Entity_Related.Get_Forward",
 
   /**
- * **Get Entity Right Vector** `(Query.Entity_Related.Get_Right)`
+ * **获取实体向右向量** `(Query.Entity_Related.Get_Right)`
  *
- * - Returns the Right Vector of the specified Entity (the positive X-axis direction in the Entity's relative coordinate system)
+ * - 获取指定实体的向右向量（即该实体本地坐标系下的x轴正方向朝向）
  *
  * -----------
  *
@@ -7906,21 +7904,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `right` || Right Vector |
+ * | 0 || 🔸 || `Vec` || `right` || 向右向量 |
  */
   Query_EntityRelated_GetRight: "Query.Entity_Related.Get_Right",
 
   /**
- * **Get Entity Upward Vector** `(Query.Entity_Related.Get_Up)`
+ * **获取实体向上向量** `(Query.Entity_Related.Get_Up)`
  *
- * - Returns the Upward Vector of the specified Entity (the positive Y-axis direction in the Entity's relative coordinate system)
+ * - 获取指定实体的向上向量（即该实体本地坐标系下的y轴正方向朝向）
  *
  * -----------
  *
@@ -7933,21 +7931,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `up` || Upward Vector |
+ * | 0 || 🔸 || `Vec` || `up` || 向上向量 |
  */
   Query_EntityRelated_GetUp: "Query.Entity_Related.Get_Up",
 
   /**
- * **Direction Vector to Rotation** `(Arithmetic.Math.Vector_To_Rotation)`
+ * **方向向量旋转** `(Arithmetic.Math.Vector_To_Rotation)`
  *
- * - Converts the Forward Vector and Upward Vector to Euler Angles
+ * - 给定向前向量和向上向量，转化为欧拉角
  *
  * -----------
  *
@@ -7960,22 +7958,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `rotation` || Forward Vector: Represents the desired Orientation of the Unit |
- * | 1 || 🔹 || `Vec` || `dir` || Upward Vector: Defines the Unit's Up direction (used to determine the rotation angle). Default is the positive Y-axis of the World Coordinate System |
+ * | 0 || 🔹 || `Vec` || `rotation` || 向前向量: 表示单位期望的朝向 |
+ * | 1 || 🔹 || `Vec` || `dir` || 向上向量: 定义单位的上方向（用于确定旋转的旋转角度），默认值为世界坐标系Y轴正方向 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Rotate |
+ * | 0 || 🔸 || `Vec` || `result` || 旋转 |
  */
   Arithmetic_Math_VectorToRotation: "Arithmetic.Math.Vector_To_Rotation",
 
   /**
- * **Add Target-Oriented Rotation-Based Motion Device** `(Execution.Motion_Device.Add_Target_Rotation)`
+ * **添加朝向目标旋转型基础运动器** `(Execution.Motion_Device.Add_Target_Rotation)`
  *
- * - Dynamically add a Basic Motion Device with Target-Oriented Rotation to the Target Entity during Stage runtime
+ * - 在关卡运行时为目标实体动态添加一个朝向目标旋转型基础运动器
  *
  * -----------
  *
@@ -7989,10 +7987,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `mover_name` || Motion Device Name: Identifier for this motion device |
- * | 2 || 🔹 || `Flt` || `duration` || Motion Device Duration: The duration for which this motion device remains active |
- * | 3 || 🔹 || `Vec` || `target_euler` || Target Angle: Absolute Angle |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `mover_name` || 运动器名称: 该运动器的标识 |
+ * | 2 || 🔹 || `Flt` || `duration` || 运动器时长: 该运动器生效的时长 |
+ * | 3 || 🔹 || `Vec` || `target_euler` || 目标角度: 绝对角度 |
  *
  * -----------
  *
@@ -8004,9 +8002,9 @@ export const NODES = {
   Execution_MotionDevice_AddTargetRotation: "Execution.Motion_Device.Add_Target_Rotation",
 
   /**
- * **Remove Interface Control Group From Control Group Library** `(Execution.UI_Control_Group.Remove_Group)`
+ * **移除控件组库内界面控件组** `(Execution.UI_Control_Group.Remove_Group)`
  *
- * - Remove the UI Control Groups activated via [Activate UI Control Group in Control Group Library] from the Target Player's Interface Layout
+ * - 可以在目标玩家的界面布局上移除已通过节点【激活控件组库内界面控件组】激活的界面控件组
  *
  * -----------
  *
@@ -8020,8 +8018,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player` || Target Player: Active Player Entity |
- * | 1 || 🔹 || `Int` || `group_index` || UI Control Group Index: Identifier for the UI Control Group |
+ * | 0 || 🔹 || `Ety` || `player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `group_index` || 界面控件组索引: 界面控件组的标识 |
  *
  * -----------
  *
@@ -8033,9 +8031,9 @@ export const NODES = {
   Execution_UIControlGroup_RemoveGroup: "Execution.UI_Control_Group.Remove_Group",
 
   /**
- * **Get Object Attribute** `(Query.Entity_Related.Get_Obj_Attr)`
+ * **获取物件属性** `(Query.Entity_Related.Get_Obj_Attr)`
  *
- * - Returns the Base Attributes of the Object
+ * - 获取物件的相关基础属性
  *
  * -----------
  *
@@ -8048,27 +8046,27 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `object_entity` || Object Entity |
+ * | 0 || 🔹 || `Ety` || `object_entity` || 物件实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `level` || Level |
- * | 1 || 🔸 || `Flt` || `hp_cur` || Current HP |
- * | 2 || 🔸 || `Flt` || `hp_max` || Max HP |
- * | 3 || 🔸 || `Flt` || `atk_cur` || Current ATK |
- * | 4 || 🔸 || `Flt` || `atk_base` || Base ATK |
- * | 5 || 🔸 || `Flt` || `def_cur` || Current DEF |
- * | 6 || 🔸 || `Flt` || `def_base` || Base DEF |
+ * | 0 || 🔸 || `Int` || `level` || 等级 |
+ * | 1 || 🔸 || `Flt` || `hp_cur` || 当前生命值 |
+ * | 2 || 🔸 || `Flt` || `hp_max` || 上限生命值 |
+ * | 3 || 🔸 || `Flt` || `atk_cur` || 当前攻击力 |
+ * | 4 || 🔸 || `Flt` || `atk_base` || 基础攻击力 |
+ * | 5 || 🔸 || `Flt` || `def_cur` || 当前防御力 |
+ * | 6 || 🔸 || `Flt` || `def_base` || 基础防御力 |
  */
   Query_EntityRelated_GetObjAttr: "Query.Entity_Related.Get_Obj_Attr",
 
   /**
- * **Recover HP** `(Execution.Combat.Recover_HP)`
+ * **恢复生命** `(Execution.Combat.Recover_HP)`
  *
- * - Restore HP to the specified Target Entity via an Ability Unit
+ * - 通过能力单元为指定目标实体恢复生命
  *
  * -----------
  *
@@ -8082,11 +8080,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Target of HP restoration |
- * | 1 || 🔹 || `Flt` || `heal_amount` || Recovery Amount: The amount of HP restored in this healing instance |
- * | 2 || 🔹 || `Str` || `ability_unit` || Ability Unit: Referenced Ability Unit. Must be configured on the entity associated with this Node Graph |
- * | 3 || 🔹 || `Bol` || `override_ability_unit` || Overwrite Ability Unit Config: When set to True, the Recovery Amount overwrites the parameter of the same name in the Ability Unit. When set to False, the Ability Unit's original configuration is used |
- * | 4 || 🔹 || `Ety` || `heal_source` || Recover Initiator Entity: Determines the Initiator Entity of this healing action. Defaults to the Entity associated with this Node Graph. Affects healer identification in events such as When HP Is Recovered and When Initiating HP Recovery |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 恢复生命的目标 |
+ * | 1 || 🔹 || `Flt` || `heal_amount` || 恢复量: 该次恢复生命的恢复量 |
+ * | 2 || 🔹 || `Str` || `ability_unit` || 能力单元: 引用的能力单元。需要配置在此节点图所关联的实体上 |
+ * | 3 || 🔹 || `Bol` || `override_ability_unit` || 是否覆写能力单元配置: 为“是”时，恢复量会覆盖能力单元中的同名配置。为“否”时，使用能力单元中的配置 |
+ * | 4 || 🔹 || `Ety` || `heal_source` || 恢复发起者实体: 决定了该次恢复行为的发起者实体，默认为该节点图所关联的实体。影响【被恢复生命值时】、【发起恢复生命值时】等事件中判定的恢复者 |
  *
  * -----------
  *
@@ -8098,9 +8096,9 @@ export const NODES = {
   Execution_Combat_RecoverHP: "Execution.Combat.Recover_HP",
 
   /**
- * **When HP Is Recovered** `(Trigger.Combat.On_HP_Recover)`
+ * **被恢复生命值时** `(Trigger.Combat.On_HP_Recover)`
  *
- * - This event is triggered when an Entity's HP is restored
+ * - 实体被恢复生命值时，触发该事件
  *
  * -----------
  *
@@ -8114,18 +8112,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Ety` || `healer` || Healer Entity |
- * | 3 || 🔸 || `Flt` || `heal_amount` || Recovery Amount: Actual healing amount. If the Entity had not lost any HP prior to healing, the amount is 0 |
- * | 4 || 🔸 || `L<Str>` || `heal_tags` || Recover Tag List |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Ety` || `healer` || 治疗者实体 |
+ * | 3 || 🔸 || `Flt` || `heal_amount` || 恢复量: 实际的恢复量。如果实体恢复前并未损失生命值，则恢复量为0 |
+ * | 4 || 🔸 || `L<Str>` || `heal_tags` || 恢复标签列表 |
  */
   Trigger_Combat_OnHPRecover: "Trigger.Combat.On_HP_Recover",
 
   /**
- * **When Initiating HP Recovery** `(Trigger.Combat.On_HP_Recovery_Start)`
+ * **发起恢复生命值时** `(Trigger.Combat.On_HP_Recovery_Start)`
  *
- * - This event is triggered on the initiating Entity when an Entity restores HP to other Entities
+ * - 实体向其他实体恢复生命值时，发起者实体上触发该事件
  *
  * -----------
  *
@@ -8139,18 +8137,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Ety` || `heal_target` || Recover Target Entity |
- * | 3 || 🔸 || `Flt` || `heal_amount` || Recovery Amount: Actual healing amount. If the Target Entity had not lost any HP prior to healing, the amount is 0 |
- * | 4 || 🔸 || `L<Str>` || `heal_tags` || Recover Tag List |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Ety` || `heal_target` || 恢复目标实体 |
+ * | 3 || 🔸 || `Flt` || `heal_amount` || 恢复量: 实际的恢复量。如果目标实体恢复前并未损失生命值，则恢复量为0 |
+ * | 4 || 🔸 || `L<Str>` || `heal_tags` || 恢复标签列表 |
  */
   Trigger_Combat_OnHPRecoveryStart: "Trigger.Combat.On_HP_Recovery_Start",
 
   /**
- * **Add Unit Tag to Entity** `(Execution.Unit_Tag.Add_Tag)`
+ * **实体添加单位标签** `(Execution.Unit_Tag.Add_Tag)`
  *
- * - Add Unit Tags to the specified Entity
+ * - 对指定实体添加单位标签
  *
  * -----------
  *
@@ -8164,8 +8162,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `tag_index` || Unit Tag Index |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `tag_index` || 单位标签索引 |
  *
  * -----------
  *
@@ -8177,9 +8175,9 @@ export const NODES = {
   Execution_UnitTag_AddTag: "Execution.Unit_Tag.Add_Tag",
 
   /**
- * **Remove Unit Tag from Entity** `(Execution.Unit_Tag.Remove_Tag)`
+ * **实体移除单位标签** `(Execution.Unit_Tag.Remove_Tag)`
  *
- * - Remove Unit Tags from the specified Entity
+ * - 对指定实体移除单位标签
  *
  * -----------
  *
@@ -8193,8 +8191,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `tag_index` || Unit Tag Index |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `tag_index` || 单位标签索引 |
  *
  * -----------
  *
@@ -8206,9 +8204,9 @@ export const NODES = {
   Execution_UnitTag_RemoveTag: "Execution.Unit_Tag.Remove_Tag",
 
   /**
- * **Clear Unit Tags from Entity** `(Execution.Unit_Tag.Clear_Tags)`
+ * **实体清空单位标签** `(Execution.Unit_Tag.Clear_Tags)`
  *
- * - Clear Unit Tags for the specified Entity
+ * - 对指定实体清空单位标签
  *
  * -----------
  *
@@ -8222,7 +8220,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
@@ -8234,9 +8232,9 @@ export const NODES = {
   Execution_UnitTag_ClearTags: "Execution.Unit_Tag.Clear_Tags",
 
   /**
- * **Get Entity Unit Tag List** `(Query.Unit_Tag.Get_Tags)`
+ * **获取实体单位标签列表** `(Query.Unit_Tag.Get_Tags)`
  *
- * - Returns a list of all Unit Tags carried by the Target Entity
+ * - 获取目标实体上携带的所有单位标签组成的列表
  *
  * -----------
  *
@@ -8249,21 +8247,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `unit_tags` || Unit Tag List |
+ * | 0 || 🔸 || `L<Int>` || `unit_tags` || 单位标签列表 |
  */
   Query_UnitTag_GetTags: "Query.Unit_Tag.Get_Tags",
 
   /**
- * **Get Entity List by Unit Tag** `(Query.Unit_Tag.Get_By_Tag)`
+ * **获取单位标签的实体列表** `(Query.Unit_Tag.Get_By_Tag)`
  *
- * - Returns a list of all Entities in the scene that carry this Unit Tag
+ * - 获取在场所有携带该单位标签的实体列表
  *
  * -----------
  *
@@ -8276,21 +8274,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `unit_tag_index` || Unit Tag Index |
+ * | 0 || 🔹 || `Int` || `unit_tag_index` || 单位标签索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `entities` || Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `entities` || 实体列表 |
  */
   Query_UnitTag_GetByTag: "Query.Unit_Tag.Get_By_Tag",
 
   /**
- * **Close Specified Sound Effect Player** `(Execution.Sound_Effect.Close_Player)`
+ * **关闭指定音效播放器** `(Execution.Sound_Effect.Close_Player)`
  *
- * - Disable the Sound Effect Player with the specified ID in the Sound Effect Player Component on the specified Target Entity
+ * - 关闭指定目标实体上的音效播放器组件对应序号的音效播放器
  *
  * -----------
  *
@@ -8304,8 +8302,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `player_index` || SFX Player ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `player_index` || 音效播放器序号 |
  *
  * -----------
  *
@@ -8317,9 +8315,9 @@ export const NODES = {
   Execution_SoundEffect_ClosePlayer: "Execution.Sound_Effect.Close_Player",
 
   /**
- * **Start/Pause Specified Sound Effect Player** `(Execution.Sound_Effect.Toggle_Player)`
+ * **启动/暂停指定音效播放器** `(Execution.Sound_Effect.Toggle_Player)`
  *
- * - Edit the state of the Sound Effect Player with the specified ID in the Sound Effect Player Component on the Target Entity. This node is only active when the sound effect is set to loop playback. It does not take effect for sound effects configured for single-playback.
+ * - 可以修改指定目标实体上的音效播放器组件对应序号的音效播放器状态，仅当该音效被设置为循环播放时有效，单次播放的音效该节点不生效
  *
  * -----------
  *
@@ -8333,9 +8331,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `player_index` || SFX Player ID |
- * | 2 || 🔹 || `Bol` || `should_resume` || Recover |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `player_index` || 音效播放器序号 |
+ * | 2 || 🔹 || `Bol` || `should_resume` || 是否恢复 |
  *
  * -----------
  *
@@ -8347,9 +8345,9 @@ export const NODES = {
   Execution_SoundEffect_TogglePlayer: "Execution.Sound_Effect.Toggle_Player",
 
   /**
- * **Adjust Specified Sound Effect Player** `(Execution.Sound_Effect.Adjust_Player)`
+ * **调整指定音效播放器** `(Execution.Sound_Effect.Adjust_Player)`
  *
- * - Adjust the volume and playback speed of the Sound Effect Player with the specified ID in the Sound Effect Player Component on the Target Entity
+ * - 可以调整指定目标实体上的音效播放器组件对应序号的音效播放器的音量和播放速度
  *
  * -----------
  *
@@ -8363,10 +8361,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `player_index` || SFX Player ID |
- * | 2 || 🔹 || `Int` || `volume` || Volume |
- * | 3 || 🔹 || `Flt` || `playback_rate` || Playback Speed |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `player_index` || 音效播放器序号 |
+ * | 2 || 🔹 || `Int` || `volume` || 音量 |
+ * | 3 || 🔹 || `Flt` || `playback_rate` || 播放速度 |
  *
  * -----------
  *
@@ -8378,9 +8376,9 @@ export const NODES = {
   Execution_SoundEffect_AdjustPlayer: "Execution.Sound_Effect.Adjust_Player",
 
   /**
- * **Add Sound Effect Player** `(Execution.Sound_Effect.Add_Player)`
+ * **添加音效播放器** `(Execution.Sound_Effect.Add_Player)`
  *
- * - Dynamically add a Sound Effect Player. The Unit must have a Sound Effect Player Component
+ * - 动态添加一个音效播放器，需要单位持有音效播放器组件
  *
  * -----------
  *
@@ -8394,17 +8392,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `audio_asset_index` || Sound Effect Asset Index |
- * | 2 || 🔹 || `Int` || `volume` || Volume |
- * | 3 || 🔹 || `Flt` || `playback_rate` || Playback Speed |
- * | 4 || 🔹 || `Bol` || `loop` || Loop Playback |
- * | 5 || 🔹 || `Flt` || `loop_interval` || Loop Interval Time |
- * | 6 || 🔹 || `Bol` || `is3_d` || 3D Sound Effect |
- * | 7 || 🔹 || `Flt` || `radius` || Range Radius |
- * | 8 || 🔹 || `E<SNDM>` || `attenuation` || Attenuation Mode |
- * | 9 || 🔹 || `Str` || `socket_name` || Attachment Point Name |
- * | 10 || 🔹 || `Vec` || `socket_offset` || Attachment Point Offset |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `audio_asset_index` || 音效资产索引 |
+ * | 2 || 🔹 || `Int` || `volume` || 音量 |
+ * | 3 || 🔹 || `Flt` || `playback_rate` || 播放速度 |
+ * | 4 || 🔹 || `Bol` || `loop` || 是否循环播放 |
+ * | 5 || 🔹 || `Flt` || `loop_interval` || 循环间隔时间 |
+ * | 6 || 🔹 || `Bol` || `is3_d` || 是否为3D音效 |
+ * | 7 || 🔹 || `Flt` || `radius` || 范围半径 |
+ * | 8 || 🔹 || `E<SNDM>` || `attenuation` || 衰减方式 |
+ * | 9 || 🔹 || `Str` || `socket_name` || 挂接点名称 |
+ * | 10 || 🔹 || `Vec` || `socket_offset` || 挂接点偏移 |
  *
  * -----------
  *
@@ -8412,14 +8410,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Int` || `created_player_index` || SFX Player ID |
+ * | 0 || 🔸 || `Int` || `created_player_index` || 音效播放器序号 |
  */
   Execution_SoundEffect_AddPlayer: "Execution.Sound_Effect.Add_Player",
 
   /**
- * **Start/Pause Player Background Music** `(Execution.Sound_Effect.Toggle_BGM)`
+ * **启动/暂停玩家背景音乐** `(Execution.Sound_Effect.Toggle_BGM)`
  *
- * - Edit the background music state for the specified Player
+ * - 修改对应玩家的背景音乐状态
  *
  * -----------
  *
@@ -8433,8 +8431,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Player Entity |
- * | 1 || 🔹 || `Bol` || `should_resume` || Recover |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的玩家实体 |
+ * | 1 || 🔹 || `Bol` || `should_resume` || 是否恢复 |
  *
  * -----------
  *
@@ -8446,9 +8444,9 @@ export const NODES = {
   Execution_SoundEffect_ToggleBGM: "Execution.Sound_Effect.Toggle_BGM",
 
   /**
- * **Adjust Player Background Music Volume** `(Execution.Sound_Effect.Set_BGM_Volume)`
+ * **调整玩家背景音乐音量** `(Execution.Sound_Effect.Set_BGM_Volume)`
  *
- * - Adjust Player Background Music Volume
+ * - 调整玩家背景音乐音量
  *
  * -----------
  *
@@ -8462,8 +8460,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Player Entity |
- * | 1 || 🔹 || `Int` || `volume` || Volume |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `volume` || 音量 |
  *
  * -----------
  *
@@ -8475,9 +8473,9 @@ export const NODES = {
   Execution_SoundEffect_SetBGMVolume: "Execution.Sound_Effect.Set_BGM_Volume",
 
   /**
- * **Modify Player Background Music** `(Execution.Sound_Effect.Set_BGM)`
+ * **修改玩家背景音乐** `(Execution.Sound_Effect.Set_BGM)`
  *
- * - Edit background music parameters for the Player
+ * - 修改玩家背景音乐相关参数
  *
  * -----------
  *
@@ -8491,15 +8489,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Player Entity |
- * | 1 || 🔹 || `Int` || `bgm_index` || Background Music Index |
- * | 2 || 🔹 || `Flt` || `start_time` || Start Time |
- * | 3 || 🔹 || `Flt` || `end_time` || End Time |
- * | 4 || 🔹 || `Int` || `volume` || Volume |
- * | 5 || 🔹 || `Bol` || `loop` || Loop Playback |
- * | 6 || 🔹 || `Flt` || `loop_interval` || Loop Interval |
- * | 7 || 🔹 || `Flt` || `playback_rate` || Playback Speed |
- * | 8 || 🔹 || `Bol` || `allow_join_leave` || Enable Fade In/Out |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `bgm_index` || 背景音乐索引 |
+ * | 2 || 🔹 || `Flt` || `start_time` || 开始时间 |
+ * | 3 || 🔹 || `Flt` || `end_time` || 结束时间 |
+ * | 4 || 🔹 || `Int` || `volume` || 音量 |
+ * | 5 || 🔹 || `Bol` || `loop` || 是否循环播放 |
+ * | 6 || 🔹 || `Flt` || `loop_interval` || 循环播放间隔 |
+ * | 7 || 🔹 || `Flt` || `playback_rate` || 播放速度 |
+ * | 8 || 🔹 || `Bol` || `allow_join_leave` || 是否允许渐入渐出 |
  *
  * -----------
  *
@@ -8511,9 +8509,9 @@ export const NODES = {
   Execution_SoundEffect_SetBGM: "Execution.Sound_Effect.Set_BGM",
 
   /**
- * **Player Plays One-Shot 2D Sound Effect** `(Execution.Sound_Effect.Play_2D_One_Shot)`
+ * **玩家播放单次2D音效** `(Execution.Sound_Effect.Play_2D_One_Shot)`
  *
- * - Player plays a one-shot 2D Sound Effect
+ * - 玩家播放单次2D音效
  *
  * -----------
  *
@@ -8527,10 +8525,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Player Entity |
- * | 1 || 🔹 || `Int` || `audio_asset_index` || Sound Effect Asset Index |
- * | 2 || 🔹 || `Int` || `volume` || Volume |
- * | 3 || 🔹 || `Flt` || `playback_rate` || Playback Speed |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `audio_asset_index` || 音效资产索引 |
+ * | 2 || 🔹 || `Int` || `volume` || 音量 |
+ * | 3 || 🔹 || `Flt` || `playback_rate` || 播放速度 |
  *
  * -----------
  *
@@ -8542,10 +8540,10 @@ export const NODES = {
   Execution_SoundEffect_Play2DOneShot: "Execution.Sound_Effect.Play_2D_One_Shot",
 
   /**
- * **Set the Aggro Value of Specified Entity** `(Execution.Custom_Aggro.Set_Aggro)`
+ * **设置指定实体的仇恨值** `(Execution.Custom_Aggro.Set_Aggro)`
  *
- * - Available only in Custom Aggro Mode
- * - Set the Aggro Value of the specified Target Entity on the specified Aggro Owner
+ * - 仅自定义仇恨模式可用
+ * - 设置指定目标实体在指定仇恨拥有者上的仇恨值
  *
  * -----------
  *
@@ -8559,9 +8557,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Ety` || `owner_entity` || Aggro Owner Entity |
- * | 2 || 🔹 || `Int` || `hatred_value` || Aggro Value |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Ety` || `owner_entity` || 仇恨拥有者实体 |
+ * | 2 || 🔹 || `Int` || `hatred_value` || 仇恨值 |
  *
  * -----------
  *
@@ -8573,10 +8571,10 @@ export const NODES = {
   Execution_CustomAggro_SetAggro: "Execution.Custom_Aggro.Set_Aggro",
 
   /**
- * **Remove Target Entity From Aggro List** `(Execution.Custom_Aggro.Remove_Aggro)`
+ * **将目标实体移除出仇恨列表** `(Execution.Custom_Aggro.Remove_Aggro)`
  *
- * - Available only in Custom Aggro Mode
- * - Remove the Target Entity from the Aggro Owner's Aggro List; this may cause the target to leave battle
+ * - 仅自定义仇恨模式可用
+ * - 将目标实体从仇恨拥有者的仇恨列表中移除，可能会导致目标实体脱战
  *
  * -----------
  *
@@ -8590,8 +8588,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Ety` || `owner_entity` || Aggro Owner Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Ety` || `owner_entity` || 仇恨拥有者实体 |
  *
  * -----------
  *
@@ -8603,10 +8601,10 @@ export const NODES = {
   Execution_CustomAggro_RemoveAggro: "Execution.Custom_Aggro.Remove_Aggro",
 
   /**
- * **Clear Specified Target's Aggro List** `(Execution.Custom_Aggro.Clear_Aggro)`
+ * **清空指定目标的仇恨列表** `(Execution.Custom_Aggro.Clear_Aggro)`
  *
- * - Available only in Custom Aggro Mode
- * - Clear the Aggro Owner's Aggro List. This may cause them to leave battle
+ * - 仅自定义仇恨模式可用
+ * - 清空仇恨拥有者的仇恨列表。可能会导致其脱战
  *
  * -----------
  *
@@ -8620,7 +8618,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Aggro Owner |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 仇恨拥有者 |
  *
  * -----------
  *
@@ -8632,10 +8630,10 @@ export const NODES = {
   Execution_CustomAggro_ClearAggro: "Execution.Custom_Aggro.Clear_Aggro",
 
   /**
- * **Taunt Target** `(Execution.Custom_Aggro.Taunt)`
+ * **嘲讽目标** `(Execution.Custom_Aggro.Taunt)`
  *
- * - Available only in Custom Aggro Mode
- * - Make the Taunter Entity taunt the specified Target Entity
+ * - 仅自定义仇恨模式可用
+ * - 使嘲讽者实体嘲讽指定目标实体
  *
  * -----------
  *
@@ -8649,8 +8647,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `taunter` || Taunter Entity |
- * | 1 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `taunter` || 嘲讽者实体 |
+ * | 1 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
@@ -8662,9 +8660,9 @@ export const NODES = {
   Execution_CustomAggro_Taunt: "Execution.Custom_Aggro.Taunt",
 
   /**
- * **Query the Aggro Value of the Specified Entity** `(Query.Custom_Aggro.Get_Aggro_Value)`
+ * **查询指定实体的仇恨值** `(Query.Custom_Aggro.Get_Aggro_Value)`
  *
- * - Searches the Aggro Value of the Target Entity on its Aggro Owners
+ * - 查询目标实体在仇恨拥有者上的仇恨值
  *
  * -----------
  *
@@ -8677,22 +8675,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Query Target |
- * | 1 || 🔹 || `Ety` || `owner_entity` || Aggro Owner |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 查询目标 |
+ * | 1 || 🔹 || `Ety` || `owner_entity` || 仇恨拥有者 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `hatred` || Aggro Value |
+ * | 0 || 🔸 || `Int` || `hatred` || 仇恨值 |
  */
   Query_CustomAggro_GetAggroValue: "Query.Custom_Aggro.Get_Aggro_Value",
 
   /**
- * **Query the Aggro Multiplier of the Specified Entity** `(Query.Custom_Aggro.Get_Multiplier)`
+ * **查询指定实体的仇恨倍率** `(Query.Custom_Aggro.Get_Multiplier)`
  *
- * - Query Aggro Multiplier of Specific Entity
+ * - 查询指定实体的仇恨倍率
  *
  * -----------
  *
@@ -8705,21 +8703,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Query Target |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 查询目标 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `multiplier` || Aggro Multiplier |
+ * | 0 || 🔸 || `Flt` || `multiplier` || 仇恨倍率 |
  */
   Query_CustomAggro_GetMultiplier: "Query.Custom_Aggro.Get_Multiplier",
 
   /**
- * **Query Global Aggro Transfer Multiplier** `(Query.Custom_Aggro.Get_Global_Multiplier)`
+ * **查询全局仇恨转移倍率** `(Query.Custom_Aggro.Get_Global_Multiplier)`
  *
- * - Searches the Global Aggro Transfer Multiplier; it can be configured in [Stage Settings]
+ * - 查询全局仇恨转移倍率，在【关卡设置】中可以配置
  *
  * -----------
  *
@@ -8732,14 +8730,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `multiplier` || Global Aggro Transfer Multiplier |
+ * | 0 || 🔸 || `Flt` || `multiplier` || 全局仇恨转移倍率 |
  */
   Query_CustomAggro_GetGlobalMultiplier: "Query.Custom_Aggro.Get_Global_Multiplier",
 
   /**
- * **Get the Aggro Target of the Specified Entity** `(Query.Custom_Aggro.Get_Aggro_Target)`
+ * **获取指定实体的仇恨目标** `(Query.Custom_Aggro.Get_Aggro_Target)`
  *
- * - Get Aggro Target of Specific Entity
+ * - 获取指定实体的仇恨目标
  *
  * -----------
  *
@@ -8752,21 +8750,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Aggro Owner |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 仇恨拥有者 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `hatred_target` || Aggro Target |
+ * | 0 || 🔸 || `Ety` || `hatred_target` || 仇恨目标 |
  */
   Query_CustomAggro_GetAggroTarget: "Query.Custom_Aggro.Get_Aggro_Target",
 
   /**
- * **Get List of Owners Who Have the Target in Their Aggro List** `(Query.Custom_Aggro.Get_Aggro_Owners)`
+ * **获取目标所在仇恨列表的拥有者列表** `(Query.Custom_Aggro.Get_Aggro_Owners)`
  *
- * - Searches which Entities' Aggro Lists include the specified Target Entity
+ * - 查询指定目标实体在哪些实体的仇恨列表中
  *
  * -----------
  *
@@ -8779,21 +8777,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Query Target |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 查询目标 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `owners` || Aggro Owner List |
+ * | 0 || 🔸 || `L<Ety>` || `owners` || 仇恨拥有者列表 |
  */
   Query_CustomAggro_GetAggroOwners: "Query.Custom_Aggro.Get_Aggro_Owners",
 
   /**
- * **Get List of Owners That Have the Target As Their Aggro Target** `(Query.Custom_Aggro.Get_Targeting_Owners)`
+ * **获取以目标为仇恨目标的拥有者列表** `(Query.Custom_Aggro.Get_Targeting_Owners)`
  *
- * - Searches which Entities have the Target Entity as their Aggro Target
+ * - 查询哪些实体以目标实体为仇恨目标
  *
  * -----------
  *
@@ -8806,21 +8804,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `owners` || Aggro Owner List |
+ * | 0 || 🔸 || `L<Ety>` || `owners` || 仇恨拥有者列表 |
  */
   Query_CustomAggro_GetTargetingOwners: "Query.Custom_Aggro.Get_Targeting_Owners",
 
   /**
- * **Get the Aggro List of the Specified Entity** `(Query.Custom_Aggro.Get_Aggro_List)`
+ * **获取指定实体的仇恨列表** `(Query.Custom_Aggro.Get_Aggro_List)`
  *
- * - Get Specific Entity's Aggro List
+ * - 获取指定实体的仇恨列表
  *
  * -----------
  *
@@ -8833,21 +8831,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `hatred_list` || Aggro List |
+ * | 0 || 🔸 || `L<Ety>` || `hatred_list` || 仇恨列表 |
  */
   Query_CustomAggro_GetAggroList: "Query.Custom_Aggro.Get_Aggro_List",
 
   /**
- * **Query if Specified Entity Is in Combat** `(Query.Custom_Aggro.Is_In_Combat)`
+ * **查询指定实体是否已入战** `(Query.Custom_Aggro.Is_In_Combat)`
  *
- * - Searches whether the specified Entity has entered battle
+ * - 查询指定实体是否已经入战
  *
  * -----------
  *
@@ -8860,23 +8858,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Query Target |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 查询目标 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `in_combat` || In Combat |
+ * | 0 || 🔸 || `Bol` || `in_combat` || 是否入战 |
  */
   Query_CustomAggro_IsInCombat: "Query.Custom_Aggro.Is_In_Combat",
 
   /**
- * **When Aggro Target Changes** `(Trigger.Custom_Aggro.On_Target_Change)`
+ * **仇恨目标变化时** `(Trigger.Custom_Aggro.On_Target_Change)`
  *
- * - Available only in Custom Aggro Mode
- * - This event is triggered when the Aggro Target changes
- * - This event can also be triggered when entering or leaving battle
+ * - 仅自定义仇恨模式可用
+ * - 仇恨目标发生变化时，触发该事件
+ * - 入战和脱战也可以触发该事件
  *
  * -----------
  *
@@ -8890,18 +8888,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Ety` || `target_old` || Pre-Change Aggro Target |
- * | 3 || 🔸 || `Ety` || `target_new` || Post-Change Aggro Target |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Ety` || `target_old` || 变化前仇恨目标 |
+ * | 3 || 🔸 || `Ety` || `target_new` || 变化后仇恨目标 |
  */
   Trigger_CustomAggro_OnTargetChange: "Trigger.Custom_Aggro.On_Target_Change",
 
   /**
- * **When Self Enters Combat** `(Trigger.Custom_Aggro.On_Enter_Combat)`
+ * **自身入战时** `(Trigger.Custom_Aggro.On_Enter_Combat)`
  *
- * - Available only in Custom Aggro Mode
- * - This event is triggered when the Entity itself enters battle
+ * - 仅自定义仇恨模式可用
+ * - 实体自身入战时，触发该事件
  *
  * -----------
  *
@@ -8915,16 +8913,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
  */
   Trigger_CustomAggro_OnEnterCombat: "Trigger.Custom_Aggro.On_Enter_Combat",
 
   /**
- * **When Self Leaves Combat** `(Trigger.Custom_Aggro.On_Leave_Combat)`
+ * **自身脱战时** `(Trigger.Custom_Aggro.On_Leave_Combat)`
  *
- * - Available only in Custom Aggro Mode
- * - This event is triggered when the Entity itself leaves battle
+ * - 仅自定义仇恨模式可用
+ * - 实体自身脱战时，触发该事件
  *
  * -----------
  *
@@ -8938,15 +8936,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
  */
   Trigger_CustomAggro_OnLeaveCombat: "Trigger.Custom_Aggro.On_Leave_Combat",
 
   /**
- * **Query If Faction Is Hostile** `(Query.Faction_Related.Is_Hostile)`
+ * **获取阵营是否敌对** `(Query.Faction_Related.Is_Hostile)`
  *
- * - Searches whether two Factions are hostile to each other
+ * - 查询两个阵营是否敌对
  *
  * -----------
  *
@@ -8959,15 +8957,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Fct` || `camp_a` || Faction 1 |
- * | 1 || 🔹 || `Fct` || `camp_b` || Faction 2 |
+ * | 0 || 🔹 || `Fct` || `camp_a` || 阵营1 |
+ * | 1 || 🔹 || `Fct` || `camp_b` || 阵营2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `hostile` || Hostile |
+ * | 0 || 🔸 || `Bol` || `hostile` || 是否敌对 |
  */
   Query_FactionRelated_IsHostile: "Query.Faction_Related.Is_Hostile",
 
@@ -9026,9 +9024,9 @@ export const NODES = {
   Hidden_Execution_RemoveNameplate: "Hidden.Execution.Remove_Nameplate",
 
   /**
- * **Set Entity Active Nameplate** `(Execution.Nameplate.Set_Nameplate)`
+ * **设置实体生效铭牌** `(Execution.Nameplate.Set_Nameplate)`
  *
- * - Set the active Nameplate list for the specified target. Nameplates included in the input list are enabled, while those not included are disabled
+ * - 直接设置指定目标的生效铭牌列表，在入参列表中的铭牌配置会生效，不在列表中的会失效
  *
  * -----------
  *
@@ -9042,8 +9040,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `L<Cfg>` || `config_id_list` || Nameplate Config ID List |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `L<Cfg>` || `config_id_list` || 铭牌配置ID列表 |
  *
  * -----------
  *
@@ -9055,9 +9053,9 @@ export const NODES = {
   Execution_Nameplate_SetNameplate: "Execution.Nameplate.Set_Nameplate",
 
   /**
- * **Switch Creation Patrol Template** `(Execution.Creation_Patrol.Switch_Template)`
+ * **切换造物巡逻模板** `(Execution.Creation_Patrol.Switch_Template)`
  *
- * - Immediately switch the patrol template for the Creation and move according to the new template
+ * - 造物切换的巡逻模板即刻切换，并按照新的巡逻模板进行移动
  *
  * -----------
  *
@@ -9071,8 +9069,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `construct_entity` || Creation Entity |
- * | 1 || 🔹 || `Int` || `template_index` || Patrol Template ID |
+ * | 0 || 🔹 || `Ety` || `construct_entity` || 造物实体 |
+ * | 1 || 🔹 || `Int` || `template_index` || 巡逻模板序号 |
  *
  * -----------
  *
@@ -9084,9 +9082,9 @@ export const NODES = {
   Execution_CreationPatrol_SwitchTemplate: "Execution.Creation_Patrol.Switch_Template",
 
   /**
- * **Get Current Creation's Patrol Template** `(Query.Creature_Patrol.Get_Patrol_Template)`
+ * **获取当前造物的巡逻模板** `(Query.Creature_Patrol.Get_Patrol_Template)`
  *
- * - Returns the Patrol Template information of the specified Creation Entity
+ * - 获取指定造物实体的巡逻模板信息
  *
  * -----------
  *
@@ -9099,24 +9097,24 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `creation` || Creation Entity: Runtime Creation Entity |
+ * | 0 || 🔹 || `Ety` || `creation` || 造物实体: 运行时的造物实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `template_idx` || Patrol Template ID: The Patrol Template ID currently active on this Creation |
- * | 1 || 🔸 || `Int` || `path_index` || Path Index: The Path ID referenced by the Creation's currently active Patrol Template |
- * | 2 || 🔸 || `Int` || `target_point` || Target Waypoint Index: The Waypoint ID the Creation will move to next |
+ * | 0 || 🔸 || `Int` || `template_idx` || 巡逻模板序号: 造物当前生效的巡逻模板序号 |
+ * | 1 || 🔸 || `Int` || `path_index` || 路径索引: 造物当前生效的巡逻模板引用的路径索引 |
+ * | 2 || 🔸 || `Int` || `target_point` || 目标路点序号: 造物即将前往的路点序号 |
  */
   Query_CreaturePatrol_GetPatrolTemplate: "Query.Creature_Patrol.Get_Patrol_Template",
 
   /**
- * **When Creation Reaches Patrol Waypoint** `(Trigger.Creation_Patrol.On_Reach_Waypoint)`
+ * **造物抵达巡逻路点时** `(Trigger.Creation_Patrol.On_Reach_Waypoint)`
  *
- * - When the **Send Node Graph Event on Arrival** option is enabled for a waypoint in the Patrol template, a Node Graph Event is triggered once the specified conditions are met
- * - This Node Graph Event can only be received by the creation's node graph
+ * - 若在巡逻模板编辑中，勾选了指定路点的**到达发送节点图事件**选项，则会在满足条件时，收到该节点图事件
+ * - 该节点图事件只能造物的节点图收到
  *
  * -----------
  *
@@ -9130,19 +9128,19 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `construct_entity` || Creation Entity: Runtime Creation Entity |
- * | 1 || 🔸 || `Gid` || `construct_guid` || Creation GUID: The GUID of the Creation. If it was not an initially placed Creation, the output is empty |
- * | 2 || 🔸 || `Int` || `patrol_template_index` || Current Patrol Template ID: The Patrol Template ID currently active on this Creation |
- * | 3 || 🔸 || `Int` || `path_index` || Current Path Index: The Path ID referenced by the Creation's currently active Patrol Template |
- * | 4 || 🔸 || `Int` || `current_waypoint_index` || Current Reached Waypoint ID: The Waypoint ID the Creation has currently reached |
- * | 5 || 🔸 || `Int` || `next_waypoint_index` || Next Waypoint ID: The Waypoint ID the Creation will move to next |
+ * | 0 || 🔸 || `Ety` || `construct_entity` || 造物实体: 运行时的造物实体 |
+ * | 1 || 🔸 || `Gid` || `construct_guid` || 造物GUID: 造物的GUID，若非初始布设的造物，则输出为空 |
+ * | 2 || 🔸 || `Int` || `patrol_template_index` || 当前巡逻模板序号: 造物当前生效的巡逻模板序号 |
+ * | 3 || 🔸 || `Int` || `path_index` || 当前路径索引: 造物当前生效的巡逻模板引用的路径索引 |
+ * | 4 || 🔸 || `Int` || `current_waypoint_index` || 当前抵达路点序号: 造物当前抵达的路点序号 |
+ * | 5 || 🔸 || `Int` || `next_waypoint_index` || 即将前往路点序号: 造物即将前往的路点序号 |
  */
   Trigger_CreationPatrol_OnReachWaypoint: "Trigger.Creation_Patrol.On_Reach_Waypoint",
 
   /**
- * **Get Specified Waypoint Info** `(Query.Global_Path.Get_Waypoint)`
+ * **获取指定路径点信息** `(Query.Global_Path.Get_Waypoint)`
  *
- * - Searches the specified Waypoint information for the given Path
+ * - 查询指定路径的特定路点信息
  *
  * -----------
  *
@@ -9155,23 +9153,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `path_index` || Path Index |
- * | 1 || 🔹 || `Int` || `point_index` || Path Waypoint ID |
+ * | 0 || 🔹 || `Int` || `path_index` || 路径索引 |
+ * | 1 || 🔹 || `Int` || `point_index` || 路径路点序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `position` || Waypoint Location |
- * | 1 || 🔸 || `Vec` || `rotation` || Waypoint Orientation |
+ * | 0 || 🔸 || `Vec` || `position` || 路点位置 |
+ * | 1 || 🔸 || `Vec` || `rotation` || 路点朝向 |
  */
   Query_GlobalPath_GetWaypoint: "Query.Global_Path.Get_Waypoint",
 
   /**
- * **Switch Active Text Bubble** `(Execution.Text_Bubble.Set_Bubble)`
+ * **切换生效的文本气泡** `(Execution.Text_Bubble.Set_Bubble)`
  *
- * - In the Target Entity's Text Bubble Component, replace the current active Text Bubble with the one corresponding to the Config ID
+ * - 目标实体的文本气泡组件中，会以配置ID对应的文本气泡替换当前生效的文本气泡
  *
  * -----------
  *
@@ -9185,8 +9183,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Cfg` || `config_id` || Text Bubble Configuration ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Cfg` || `config_id` || 文本气泡配置ID |
  *
  * -----------
  *
@@ -9198,9 +9196,9 @@ export const NODES = {
   Execution_TextBubble_SetBubble: "Execution.Text_Bubble.Set_Bubble",
 
   /**
- * **Invoke Deck Selector** `(Execution.Deck_Selector.Open)`
+ * **唤起卡牌选择器** `(Execution.Deck_Selector.Open)`
  *
- * - Open the pre-made Deck Selector for the Target Player
+ * - 对目标玩家打开提前制作好的卡牌选择器
  *
  * -----------
  *
@@ -9214,17 +9212,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_player` || Target Player: Specify the runtime Player to invoke the Deck Selector |
- * | 1 || 🔹 || `Int` || `picker_index` || Deck Selector ID: Referenced UI Control Group ID |
- * | 2 || 🔹 || `Flt` || `duration` || Select Duration: If empty, uses the Deck Selector's default configuration; otherwise, this time value is used as the effective duration<br>Unit in seconds |
- * | 3 || 🔹 || `L<Int>` || `result_map_list` || Select Result Corresponding List: One-to-one with display items: the Deck Selector returns the result value corresponding to each display item<br>Recommended configuration: 1 to X |
- * | 4 || 🔹 || `L<Int>` || `display_map_list` || Select Display Corresponding List: Deck Library Configuration Reference |
- * | 5 || 🔹 || `Int` || `select_min` || Select Minimum Quantity: The minimum number of cards that must be selected for a valid interaction |
- * | 6 || 🔹 || `Int` || `select_max` || Select Maximum Quantity: The maximum number of cards that can be selected for a valid interaction |
- * | 7 || 🔹 || `E<DRFM>` || `refresh_mode` || Refresh Mode: No Refresh: The minimum and maximum refresh count parameters are invalid, and the selection interface has no Refresh button<br>Partial Refresh: Both input parameters (minimum and maximum refresh count) take effect, and the selection screen includes a refresh button<br>Full Refresh: Both input parameters (minimum and maximum refresh count) are ignored. All results are returned by default, and the selection screen includes a refresh button |
- * | 8 || 🔹 || `Int` || `refresh_min` || Refresh Minimum Quantity: The minimum number of cards that must be selected for a valid refresh interaction. |
- * | 9 || 🔹 || `Int` || `refresh_max` || Refresh Maximum Quantity: The maximum number of cards that can be selected for a valid refresh interaction |
- * | 10 || 🔹 || `L<Int>` || `default_return` || Default Return Selection: If the Deck Selector times out, has no interaction, or closes abnormally, force-assign this configured result<br>The length of this Result List must match the valid card selection count |
+ * | 0 || 🔹 || `Ety` || `target_player` || 目标玩家: 指定运行时玩家，唤起卡牌选择器 |
+ * | 1 || 🔹 || `Int` || `picker_index` || 卡牌选择器索引: 引用的界面控件组索引 |
+ * | 2 || 🔹 || `Flt` || `duration` || 选择时长: 若为空，则读取卡牌选择器默认配置；若不为空，以此处时间参数为实际生效时长<br>单位为秒 |
+ * | 3 || 🔹 || `L<Int>` || `result_map_list` || 选择结果对应列表: 和显示项一一对应，卡牌选择器返回的实际结果是显示项对应的结果值<br>推荐配置1至X |
+ * | 4 || 🔹 || `L<Int>` || `display_map_list` || 选择显示对应列表: 卡牌库中的配置引用 |
+ * | 5 || 🔹 || `Int` || `select_min` || 选择数量下限: 选择卡牌数量下限，满足数量才可进行合法的选择交互 |
+ * | 6 || 🔹 || `Int` || `select_max` || 选择数量上限: 选择卡牌数量上限，满足数量才可进行合法的选择交互 |
+ * | 7 || 🔹 || `E<DRFM>` || `refresh_mode` || 刷新方式: 不可刷新: 刷新数量下限和刷新数量上限，两入参无效，且选择界面无刷新按键<br>部分刷新: 刷新数量下限和刷新数量上限，两入参有效，且选择界面有刷新按键<br>全量刷新: 刷新数量下限和刷新数量上限，两入参无效，默认返回全量结果，且选择界面有刷新按键 |
+ * | 8 || 🔹 || `Int` || `refresh_min` || 刷新数量下限: 选择卡牌数量下限，满足数量才可进行合法的刷新交互 |
+ * | 9 || 🔹 || `Int` || `refresh_max` || 刷新数量上限: 选择卡牌数量上限，满足数量才可进行合法的刷新交互 |
+ * | 10 || 🔹 || `L<Int>` || `default_return` || 默认返回选择: 如果卡牌选择器超时/未交互/卡牌选择器异常关闭等情况，支持强制赋予配置的该结果<br>该结果的列表长度，需要和合法选择卡牌数量一致 |
  *
  * -----------
  *
@@ -9236,10 +9234,10 @@ export const NODES = {
   Execution_DeckSelector_Open: "Execution.Deck_Selector.Open",
 
   /**
- * **When Deck Selector Is Complete** `(Trigger.Deck_Selector.On_Deck_Selected)`
+ * **卡牌选择器完成时** `(Trigger.Deck_Selector.On_Deck_Selected)`
  *
- * - This event is triggered on the Player's Node Graph when the Player completes the Deck Selector, or when it is forcibly closed due to time constraints
- * - The output parameters report the Deck Selector's result and the corresponding reason
+ * - 玩家操作完成卡牌选择器/或者因为时间原因强制关闭等，都会给玩家节点图触发本事件
+ * - 出参可以通知本次卡牌选择器的结果，和对应原因
  *
  * -----------
  *
@@ -9253,17 +9251,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `target_player` || Target Player: Active Player Entity |
- * | 1 || 🔸 || `L<Int>` || `result_list` || Selection Result List: When a selection interaction is triggered, valid selection results are returned as this output parameter, and the completion reason isCompleted by Player<br>When a Full Refresh pop-up selection is triggered, the complete selection result list is returned as this output parameter, and the completion reason isRefresh All<br>When a Fixed-Quantity Refresh pop-up selection is triggered, valid selection results are returned as this output parameter, and the completion reason is Fixed-Quantity Refresh<br>When the Deck Selector times out with no interaction, the default selection is returned is returned as this output parameter, and the completion reason is Timeout<br>When Allow Discard Selection is enabled and the Deck Selector is closed by the player, the default selection is returned as this output parameter, and the completion reason is Closed Manually<br>When the Deck Selector is closed via the Node Graph, the default selection is returned as this output parameter, and the completion reason isClosed by Node Graph |
- * | 2 || 🔸 || `E<SLCR>` || `complete_reason` || Completion Reason: Six reason enumerations<br>Completed by Player, Refresh All, Fixed-Quantity Refresh, Timeout, Closed Manually, Closed by Node Graph |
- * | 3 || 🔸 || `Int` || `picker_index` || Deck Selector Index: Referenced Deck Selector ID |
+ * | 0 || 🔸 || `Ety` || `target_player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔸 || `L<Int>` || `result_list` || 选择结果列表: 触发选择选择交互时，合法的选择结果会作为该出参提供，并且完成原因为玩家完成<br>唤起弹窗选择全量刷新，触发刷新交互时，全量的选择结果对应列表会作为该出参提供，并且完成原因为全量刷新<br>唤起弹窗选择部分刷新，触发刷新交互时，合法的选择结果会作为该出参提供，并且完成原因为定量刷新<br>卡牌选择器超时未交互时，默认返回选择会作为该出参提供，并且完成原因为超时关闭<br>卡牌选择器的可放弃选择勾选时，触发关闭交互时，默认返回选择会作为该出参提供，并且完成原因为主动关闭<br>通过节点图关闭卡牌选择器节点造成的卡牌选择器关闭，默认返回选择会作为该出参提供，并且完成原因为节点图关闭 |
+ * | 2 || 🔸 || `E<SLCR>` || `complete_reason` || 完成原因: 六种原因枚举<br>玩家完成、全量刷新、定量刷新、超时关闭、主动关闭、节点图关闭 |
+ * | 3 || 🔸 || `Int` || `picker_index` || 卡牌选择器索引: 引用的卡牌选择器索引 |
  */
   Trigger_DeckSelector_OnDeckSelected: "Trigger.Deck_Selector.On_Deck_Selected",
 
   /**
- * **Modify Mini-Map Zoom** `(Execution.Minimap_Marker.Set_Zoom)`
+ * **修改小地图缩放** `(Execution.Minimap_Marker.Set_Zoom)`
  *
- * - Edit the map scale of the Target Player's mini-map UI control
+ * - 修改目标玩家的小地图界面控件的地图比例
  *
  * -----------
  *
@@ -9277,8 +9275,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_player` || Target Player |
- * | 1 || 🔹 || `Flt` || `scale` || Zoom Dimensions |
+ * | 0 || 🔹 || `Ety` || `target_player` || 目标玩家 |
+ * | 1 || 🔹 || `Flt` || `scale` || 缩放尺寸 |
  *
  * -----------
  *
@@ -9290,9 +9288,9 @@ export const NODES = {
   Execution_MinimapMarker_SetZoom: "Execution.Minimap_Marker.Set_Zoom",
 
   /**
- * **Modify Mini-Map Marker Activation Status** `(Execution.Minimap_Marker.Set_Marker_State)`
+ * **修改小地图标识生效状态** `(Execution.Minimap_Marker.Set_Marker_State)`
  *
- * - Edit the active state of mini-map markers on the Target Entity in batches using the input list of Mini-map Marker IDs
+ * - 通过节点输入的小地图标识序号列表，批量修改目标实体的小地图标识生效状态
  *
  * -----------
  *
@@ -9306,9 +9304,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Entity that owns the Mini-map Marker component to be edited |
- * | 1 || 🔹 || `L<Int>` || `marker_index_list` || Mini-Map Marker ID List: List of Mini-map Marker IDs to be set to the specified status<br>Unconfigured Mini-map Markers will be set to the opposite status |
- * | 2 || 🔹 || `Bol` || `enabled` || Active: If input is True,<br>the Mini-map Markers corresponding to the specified ID numbers in the input list will be set to Enabled<br>For IDs not in the input list, the corresponding Mini-map Markers will be set to Disabled |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 要修改的小地图标识组件归属的实体 |
+ * | 1 || 🔹 || `L<Int>` || `marker_index_list` || 小地图标识序号列表: 需要指定状态的小地图标识序号列表<br>未配置的小地图标识会改为相反状态 |
+ * | 2 || 🔹 || `Bol` || `enabled` || 是否生效: 若输入为“是”，<br>输入序号列表指定的序号，对应小地图标识状态改为生效状态<br>不在序号列表中的序号，对应小地图标识状态改为不生效状态 |
  *
  * -----------
  *
@@ -9320,9 +9318,9 @@ export const NODES = {
   Execution_MinimapMarker_SetMarkerState: "Execution.Minimap_Marker.Set_Marker_State",
 
   /**
- * **Modify Player List for Visible Mini-Map Markers** `(Execution.Minimap_Marker.Set_Visible_List)`
+ * **修改可见小地图标识的玩家列表** `(Execution.Minimap_Marker.Set_Visible_List)`
  *
- * - The mini-map marker at the specified ID in the Target Entity's Mini-map Marker Component is visible to all Players in the Player List
+ * - 目标实体的小地图标识组件上对应序号的小地图标识对玩家列表中的玩家可见
  *
  * -----------
  *
@@ -9336,9 +9334,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Entity that owns the Mini-map Marker component to be edited |
- * | 1 || 🔹 || `Int` || `marker_index` || Mini-Map Marker ID: ID of the specified Mini-map Marker to be edited |
- * | 2 || 🔹 || `L<Ety>` || `player_list` || Player List: The specified Mini-map ID on the Target Entity, visible only to the Player providing input |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 要修改的小地图标识组件归属的实体 |
+ * | 1 || 🔹 || `Int` || `marker_index` || 小地图标识序号: 要修改的指定小地图标识的序号 |
+ * | 2 || 🔹 || `L<Ety>` || `player_list` || 玩家列表: 目标实体的指定小地图序号，只有输入玩家可见 |
  *
  * -----------
  *
@@ -9350,9 +9348,9 @@ export const NODES = {
   Execution_MinimapMarker_SetVisibleList: "Execution.Minimap_Marker.Set_Visible_List",
 
   /**
- * **Modify Player List for Tracking Mini-Map Markers** `(Execution.Minimap_Marker.Set_Track_List)`
+ * **修改追踪小地图标识的玩家列表** `(Execution.Minimap_Marker.Set_Track_List)`
  *
- * - Set the mini-map marker at the specified ID on the Target Entity to Tracking Display for the input Player
+ * - 将目标实体的对应序号的小地图标识对入参玩家修改为追踪表现
  *
  * -----------
  *
@@ -9366,9 +9364,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `marker_index` || Mini-Map Marker ID |
- * | 2 || 🔹 || `L<Ety>` || `player_list` || Player List |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `marker_index` || 小地图标识序号 |
+ * | 2 || 🔹 || `L<Ety>` || `player_list` || 玩家列表 |
  *
  * -----------
  *
@@ -9380,9 +9378,9 @@ export const NODES = {
   Execution_MinimapMarker_SetTrackList: "Execution.Minimap_Marker.Set_Track_List",
 
   /**
- * **Query Specified Mini-Map Marker Information** `(Query.Minimap_Marker.Get_Marker_Info)`
+ * **查询指定小地图标识信息** `(Query.Minimap_Marker.Get_Marker_Info)`
  *
- * - Searches the information of the Mini-map Marker with the specified ID in the Mini-map Marker Component on the Target Entity
+ * - 查询目标实体上小地图标识组件中特定序号对应的小地图标识的信息
  *
  * -----------
  *
@@ -9395,24 +9393,24 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Runtime Entity |
- * | 1 || 🔹 || `Int` || `marker_index` || Mini-Map Marker ID: The Mini-map Marker ID to search |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 运行时的实体 |
+ * | 1 || 🔹 || `Int` || `marker_index` || 小地图标识序号: 要查询的指定小地图标识的序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `enabled` || Activation Staet: The active state of the searched Mini-map Marker |
- * | 1 || 🔸 || `L<Ety>` || `visible_players` || List of Players With Visible Markers: Returns the list of Players who can see this Marker |
- * | 2 || 🔸 || `L<Ety>` || `tracking_players` || List of Players Tracking Markers: Returns the list of Players tracking this Marker |
+ * | 0 || 🔸 || `Bol` || `enabled` || 生效状态: 查询的小地图标识的生效状态 |
+ * | 1 || 🔸 || `L<Ety>` || `visible_players` || 可见标识的玩家列表: 返回可见该标识的玩家列表 |
+ * | 2 || 🔸 || `L<Ety>` || `tracking_players` || 追踪标识的玩家列表: 返回追踪该标识的玩家列表 |
  */
   Query_MinimapMarker_GetMarkerInfo: "Query.Minimap_Marker.Get_Marker_Info",
 
   /**
- * **Get Entity's Mini-Map Marker Status** `(Query.Minimap_Marker.Get_Marker_Status)`
+ * **获取实体的小地图标识状态** `(Query.Minimap_Marker.Get_Marker_Status)`
  *
- * - Searches the configuration and activation status of the Entity's current Mini-map Marker
+ * - 查询实体当前小地图标识的配置及生效情况
  *
  * -----------
  *
@@ -9425,23 +9423,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Runtime Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 运行时的实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `all_markers` || Full Mini-Map Marker ID List: Complete list of Mini-map Marker IDs for this Entity |
- * | 1 || 🔸 || `L<Int>` || `enabled_markers` || Active Mini-Map Marker ID List: Complete list of active Mini-map Marker IDs for this Entity |
- * | 2 || 🔸 || `L<Int>` || `disabled_markers` || Inactive Mini-Map Marker ID List: Complete list of inactive Mini-map Marker IDs for this Entity |
+ * | 0 || 🔸 || `L<Int>` || `all_markers` || 全量小地图标识序号列表: 该实体的所有小地图标识枚举列表 |
+ * | 1 || 🔸 || `L<Int>` || `enabled_markers` || 生效的小地图标识序号列表: 该实体的所有生效小地图标识枚举列表 |
+ * | 2 || 🔸 || `L<Int>` || `disabled_markers` || 未生效的小地图标识序号列表: 该实体的所有未生效小地图标识枚举列表 |
  */
   Query_MinimapMarker_GetMarkerStatus: "Query.Minimap_Marker.Get_Marker_Status",
 
   /**
- * **Modify Player Markers on the Mini-Map** `(Execution.Minimap_Marker.Update_Markers)`
+ * **修改小地图标识的玩家标记** `(Execution.Minimap_Marker.Update_Markers)`
  *
- * - When the Player Marker option is selected and a corresponding Player Entity is linked in the Node Graph, the Target Entity's display on the mini-map changes to that Player's avatar
+ * - 若小地图标识选择了玩家标记，在节点图输入对应玩家实体后，目标实体在小地图上的显示会变成输入玩家实体的头像
  *
  * -----------
  *
@@ -9455,9 +9453,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Entity that owns the Mini-map Marker component to be edited |
- * | 1 || 🔹 || `Int` || `marker_index` || Mini-Map Marker ID: ID of the specified Mini-map Marker to be edited |
- * | 2 || 🔹 || `Ety` || `player_entity` || Corresponding Player Entity: Changes the avatar of the corresponding Player Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 要修改的小地图标识组件归属的实体 |
+ * | 1 || 🔹 || `Int` || `marker_index` || 小地图标识序号: 要修改的指定小地图标识的序号 |
+ * | 2 || 🔹 || `Ety` || `player_entity` || 对应玩家实体: 修改后为对应玩家实体的头像 |
  *
  * -----------
  *
@@ -9469,9 +9467,9 @@ export const NODES = {
   Execution_MinimapMarker_UpdateMarkers: "Execution.Minimap_Marker.Update_Markers",
 
   /**
- * **Close Deck Selector** `(Execution.Deck_Selector.Close)`
+ * **关闭卡牌选择器** `(Execution.Deck_Selector.Close)`
  *
- * - Close the currently active Deck Selector for the specified Player
+ * - 关闭指定玩家当前生效的卡牌选择器
  *
  * -----------
  *
@@ -9485,8 +9483,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_player` || Target Player: Active Player Entity |
- * | 1 || 🔹 || `Int` || `picker_index` || Deck Selector Index |
+ * | 0 || 🔹 || `Ety` || `target_player` || 目标玩家: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `picker_index` || 卡牌选择器索引 |
  *
  * -----------
  *
@@ -9498,9 +9496,9 @@ export const NODES = {
   Execution_DeckSelector_Close: "Execution.Deck_Selector.Close",
 
   /**
- * **When Elemental Reaction Event Occurs** `(Trigger.Unit_Status.On_Element_Reaction)`
+ * **发生元素反应事件时** `(Trigger.Unit_Status.On_Element_Reaction)`
  *
- * - Adds the Unit Status effect [Monitor Elemental Reaction] to the Entity. This event is triggered when the conditions are met
+ * - 为实体添加单位状态效果【监听元素反应】，达成条件会触发该事件
  *
  * -----------
  *
@@ -9514,18 +9512,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `E<REAC>` || `reaction_type` || Elemental Reaction Type |
- * | 3 || 🔸 || `Ety` || `trigger_entity` || Triggerer Entity |
- * | 4 || 🔸 || `Gid` || `trigger_guid` || Triggerer Entity GUID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `E<REAC>` || `reaction_type` || 元素反应类型 |
+ * | 3 || 🔸 || `Ety` || `trigger_entity` || 触发者实体 |
+ * | 4 || 🔸 || `Gid` || `trigger_guid` || 触发者GUID |
  */
   Trigger_UnitStatus_OnElementReaction: "Trigger.Unit_Status.On_Element_Reaction",
 
   /**
- * **When Shield Is Attacked** `(Trigger.Unit_Status.On_Shield_Hit)`
+ * **护盾受到攻击时** `(Trigger.Unit_Status.On_Shield_Hit)`
  *
- * - Adds the Unit Status effect [Add Shield] to the Entity. This event is triggered when the Shield takes damage
+ * - 为实体添加单位状态效果【添加护盾】，受到攻击时触发该事件
  *
  * -----------
  *
@@ -9539,22 +9537,22 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Ety` || `attacker_entity` || Attacker Entity |
- * | 3 || 🔸 || `Gid` || `attacker_guid` || Attacker GUID |
- * | 4 || 🔸 || `Cfg` || `state_config_id` || Unit Status Config ID |
- * | 5 || 🔸 || `Int` || `layer_before` || Pre-Attack Layers |
- * | 6 || 🔸 || `Int` || `layer_after` || Post-Attack Layers |
- * | 7 || 🔸 || `Flt` || `shield_amount_before` || Shield Value of this Unit Status Before Attack |
- * | 8 || 🔸 || `Flt` || `shield_amount_after` || Shield Value of this Unit Status After Attack |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Ety` || `attacker_entity` || 攻击者实体 |
+ * | 3 || 🔸 || `Gid` || `attacker_guid` || 攻击者GUID |
+ * | 4 || 🔸 || `Cfg` || `state_config_id` || 单位状态配置ID |
+ * | 5 || 🔸 || `Int` || `layer_before` || 攻击前层数 |
+ * | 6 || 🔸 || `Int` || `layer_after` || 攻击后层数 |
+ * | 7 || 🔸 || `Flt` || `shield_amount_before` || 攻击前该单位状态的护盾含量 |
+ * | 8 || 🔸 || `Flt` || `shield_amount_after` || 攻击后该单位状态的护盾含量 |
  */
   Trigger_UnitStatus_OnShieldHit: "Trigger.Unit_Status.On_Shield_Hit",
 
   /**
- * **Query If Achievement Is Completed** `(Query.Achievement.Is_Completed)`
+ * **查询成就是否完成** `(Query.Achievement.Is_Completed)`
  *
- * - Searches whether the Achievement corresponding to a specific ID on the Target Entity is complete
+ * - 查询目标实体上特定序号对应的成就是否完成
  *
  * -----------
  *
@@ -9567,22 +9565,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `achievement_index` || Achievement ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `achievement_index` || 成就序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `completed` || Completed |
+ * | 0 || 🔸 || `Bol` || `completed` || 是否完成 |
  */
   Query_Achievement_IsCompleted: "Query.Achievement.Is_Completed",
 
   /**
- * **Set Achievement Progress Tally** `(Execution.Achievement.Set_Progress)`
+ * **设置成就进度计数** `(Execution.Achievement.Set_Progress)`
  *
- * - Set the progress counter for the specified Achievement ID on the Target Entity
+ * - 设置指定实体上对应成就序号的成就进度计数
  *
  * -----------
  *
@@ -9596,9 +9594,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Set Entity |
- * | 1 || 🔹 || `Int` || `achievement_index` || Achievement ID |
- * | 2 || 🔹 || `Int` || `progress_count` || Progress Tally: Sets the Progress Count to the input value |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 设置实体 |
+ * | 1 || 🔹 || `Int` || `achievement_index` || 成就序号 |
+ * | 2 || 🔹 || `Int` || `progress_count` || 进度计数: 修改后的进度计数为输入的值 |
  *
  * -----------
  *
@@ -9610,9 +9608,9 @@ export const NODES = {
   Execution_Achievement_SetProgress: "Execution.Achievement.Set_Progress",
 
   /**
- * **Change Achievement Progress Tally** `(Execution.Achievement.Add_Progress)`
+ * **变更成就进度计数** `(Execution.Achievement.Add_Progress)`
  *
- * - Change the progress counter for the specified Achievement ID on the Target Entity
+ * - 变更指定实体上对应成就序号的成就进度计数
  *
  * -----------
  *
@@ -9626,9 +9624,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Change Entity |
- * | 1 || 🔹 || `Int` || `achievement_index` || Achievement ID |
- * | 2 || 🔹 || `Int` || `delta` || Progress Tally Change Value: New Value = Previous Value + Change Value |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 变更实体 |
+ * | 1 || 🔹 || `Int` || `achievement_index` || 成就序号 |
+ * | 2 || 🔹 || `Int` || `delta` || 进度计数变更值: 变更后值=变更前值+变更值 |
  *
  * -----------
  *
@@ -9640,9 +9638,9 @@ export const NODES = {
   Execution_Achievement_AddProgress: "Execution.Achievement.Add_Progress",
 
   /**
- * **Set Player Settlement Scoreboard Data Display** `(Execution.Stage_Settlement.Set_Scoreboard)`
+ * **设置玩家结算计分板展示数据** `(Execution.Stage_Settlement.Set_Scoreboard)`
  *
- * - Set the Player's Scoreboard display data, which is shown on the Scoreboard after Stage Settlement. Since this node involves the display of external functions, [Data Value] and [Data Name] currently support multilingual translation only when manually entering text. If entered via connection input, multilingual translation is not supported.
+ * - 设置玩家结算计分板展示数据，显示在关卡结算后弹出的计分板内。由于该节点涉及了局外功能的显示，故【数据值】和【数据名称】目前仅在手动输入文本的时候支持多语言翻译，若为连线输入，则不支持多语言翻译
  *
  * -----------
  *
@@ -9656,10 +9654,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Set Entity: Active Player Entity |
- * | 1 || 🔹 || `Int` || `order` || Data Order: The sort order of this data |
- * | 2 || 🔹 || `Str` || `name` || Data Name: The name of this data |
- * | 3 || 🔷 || **`R<T>`** || `value` || Data Value: The value of this data. Supports Integer, Floating Point Number, and String |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 设置实体: 生效的玩家实体 |
+ * | 1 || 🔹 || `Int` || `order` || 数据顺序: 该数据的排序 |
+ * | 2 || 🔹 || `Str` || `name` || 数据名称: 该数据的名称 |
+ * | 3 || 🔷 || **`R<T>`** || `value` || 数据值: 该数据的值，支持整数、浮点数、字符串 |
  *
  * -----------
  *
@@ -9676,9 +9674,9 @@ export const NODES = {
   Execution_StageSettlement_SetScoreboard: "Execution.Stage_Settlement.Set_Scoreboard",
 
   /**
- * **Set Player Settlement Ranking Value** `(Execution.Stage_Settlement.Set_Player_Rank)`
+ * **设置玩家结算排名数值** `(Execution.Stage_Settlement.Set_Player_Rank)`
  *
- * - Set the Player's ranking value after Settlement, then determine the final ranking order according to [Ranking Value Comparison Order] in [Stage Settings] – [Settlement]
+ * - 设置玩家结算后的排名数值，再按照【关卡设置】-【结算】中的【排名数值比较顺序】的设置来决定最终的排名顺序
  *
  * -----------
  *
@@ -9692,8 +9690,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔹 || `Int` || `rank_value` || Ranking Value |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔹 || `Int` || `rank_value` || 排名数值 |
  *
  * -----------
  *
@@ -9705,9 +9703,9 @@ export const NODES = {
   Execution_StageSettlement_SetPlayerRank: "Execution.Stage_Settlement.Set_Player_Rank",
 
   /**
- * **Get Player Settlement Ranking Value** `(Query.Stage_Settlement.Get_Player_Rank)`
+ * **获取玩家结算排名数值** `(Query.Stage_Settlement.Get_Player_Rank)`
  *
- * - Returns the Settlement ranking value for the specified Player Entity
+ * - 获取指定玩家实体结算的排名数值
  *
  * -----------
  *
@@ -9720,21 +9718,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `rank_value` || Ranking Value |
+ * | 0 || 🔸 || `Int` || `rank_value` || 排名数值 |
  */
   Query_StageSettlement_GetPlayerRank: "Query.Stage_Settlement.Get_Player_Rank",
 
   /**
- * **Set Player Settlement Success Status** `(Execution.Stage_Settlement.Set_Player_Result)`
+ * **设置玩家结算成功状态** `(Execution.Stage_Settlement.Set_Player_Result)`
  *
- * - Set Player Settlement Success Status
+ * - 设置玩家结算成功状态
  *
  * -----------
  *
@@ -9748,8 +9746,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔹 || `E<SETL>` || `result_state` || Settlement Status: Three types: Undefined, Victory, Defeat |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔹 || `E<SETL>` || `result_state` || 结算状态: 分为未定、胜利、失败三种 |
  *
  * -----------
  *
@@ -9761,9 +9759,9 @@ export const NODES = {
   Execution_StageSettlement_SetPlayerResult: "Execution.Stage_Settlement.Set_Player_Result",
 
   /**
- * **Get Player Settlement Success Status** `(Query.Stage_Settlement.Get_Player_Result)`
+ * **获取玩家结算成功状态** `(Query.Stage_Settlement.Get_Player_Result)`
  *
- * - Get Player Settlement Success Status
+ * - 获取玩家结算成功状态
  *
  * -----------
  *
@@ -9776,21 +9774,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `E<SETL>` || `success` || Settlement Status: Includes: Undetermined, Victory, Defeat |
+ * | 0 || 🔸 || `E<SETL>` || `success` || 结算状态: 分为未定、胜利、失败 |
  */
   Query_StageSettlement_GetPlayerResult: "Query.Stage_Settlement.Get_Player_Result",
 
   /**
- * **Set Faction Settlement Ranking Value** `(Execution.Stage_Settlement.Set_Faction_Rank)`
+ * **设置阵营结算排名数值** `(Execution.Stage_Settlement.Set_Faction_Rank)`
  *
- * - Set the faction's ranking value after Settlement, then determine the final ranking order according to [Ranking Value Comparison Order] in [Stage Settings] – [Settlement]
+ * - 设置阵营结算后的排名数值，再按照【关卡设置】-【结算】中的【排名数值比较顺序】的设置来决定最终的排名顺序
  *
  * -----------
  *
@@ -9804,8 +9802,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Fct` || `camp` || Faction: Active Faction Entity |
- * | 1 || 🔹 || `Int` || `rank_value` || Ranking Value |
+ * | 0 || 🔹 || `Fct` || `camp` || 阵营: 生效的阵营实体 |
+ * | 1 || 🔹 || `Int` || `rank_value` || 排名数值 |
  *
  * -----------
  *
@@ -9817,9 +9815,9 @@ export const NODES = {
   Execution_StageSettlement_SetFactionRank: "Execution.Stage_Settlement.Set_Faction_Rank",
 
   /**
- * **Get Faction Settlement Ranking Value** `(Query.Stage_Settlement.Get_Faction_Rank)`
+ * **获取阵营结算排名数值** `(Query.Stage_Settlement.Get_Faction_Rank)`
  *
- * - Returns the Settlement ranking value for the specified Faction
+ * - 获取指定阵营结算的排名数值
  *
  * -----------
  *
@@ -9832,21 +9830,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Fct` || `camp` || Faction |
+ * | 0 || 🔹 || `Fct` || `camp` || 阵营 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `rank_value` || Ranking Value |
+ * | 0 || 🔸 || `Int` || `rank_value` || 排名数值 |
  */
   Query_StageSettlement_GetFactionRank: "Query.Stage_Settlement.Get_Faction_Rank",
 
   /**
- * **Set Faction Settlement Success Status** `(Execution.Stage_Settlement.Set_Faction_Result)`
+ * **设置阵营结算成功状态** `(Execution.Stage_Settlement.Set_Faction_Result)`
  *
- * - Set Faction Settlement Success Status
+ * - 设置阵营结算成功状态
  *
  * -----------
  *
@@ -9860,8 +9858,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Fct` || `camp` || Faction: Active Faction Entity |
- * | 1 || 🔹 || `E<SETL>` || `result_state` || Settlement Status: Three types: Undefined, Victory, Defeat |
+ * | 0 || 🔹 || `Fct` || `camp` || 阵营: 生效的阵营实体 |
+ * | 1 || 🔹 || `E<SETL>` || `result_state` || 结算状态: 分为未定、胜利、失败三种 |
  *
  * -----------
  *
@@ -9873,9 +9871,9 @@ export const NODES = {
   Execution_StageSettlement_SetFactionResult: "Execution.Stage_Settlement.Set_Faction_Result",
 
   /**
- * **Get Faction Settlement Success Status** `(Query.Stage_Settlement.Get_Faction_Result)`
+ * **获取阵营结算成功状态** `(Query.Stage_Settlement.Get_Faction_Result)`
  *
- * - Get Faction Settlement Success Status
+ * - 获取阵营结算成功状态
  *
  * -----------
  *
@@ -9888,21 +9886,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Fct` || `camp` || Faction |
+ * | 0 || 🔹 || `Fct` || `camp` || 阵营 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `E<SETL>` || `success` || Settlement Status: Includes: Undetermined, Victory, Defeat |
+ * | 0 || 🔸 || `E<SETL>` || `success` || 结算状态: 分为未定、胜利、失败 |
  */
   Query_StageSettlement_GetFactionResult: "Query.Stage_Settlement.Get_Faction_Result",
 
   /**
- * **Get Player Ranking Info** `(Query.Rank_Tier.Get_Rank_Info)`
+ * **获取玩家段位信息** `(Query.Rank_Tier.Get_Rank_Info)`
  *
- * - Returns the Player's Rank-related information
+ * - 获取玩家段位相关信息
  *
  * -----------
  *
@@ -9915,24 +9913,24 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `total` || Player Rank Total Score |
- * | 1 || 🔸 || `Int` || `win_streak` || Player Win Streak |
- * | 2 || 🔸 || `Int` || `lose_streak` || Player Lose Streak |
- * | 3 || 🔸 || `Int` || `run_streak` || Player Consecutive Escapes |
+ * | 0 || 🔸 || `Int` || `total` || 玩家段位总分 |
+ * | 1 || 🔸 || `Int` || `win_streak` || 玩家连胜次数 |
+ * | 2 || 🔸 || `Int` || `lose_streak` || 玩家连败次数 |
+ * | 3 || 🔸 || `Int` || `run_streak` || 玩家连续逃跑次数 |
  */
   Query_RankTier_GetRankInfo: "Query.Rank_Tier.Get_Rank_Info",
 
   /**
- * **Set Player Rank Score Change** `(Execution.Rank.Modify_Score)`
+ * **设置玩家段位变化分数** `(Execution.Rank.Modify_Score)`
  *
- * - Set the Player's rank score change based on the settlement status
+ * - 根据结算状态设置玩家的段位变化分数
  *
  * -----------
  *
@@ -9946,9 +9944,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔹 || `E<SETL>` || `settlement_state` || Settlement Status: Includes: Undefined, Victory, Defeat, Escape |
- * | 2 || 🔹 || `Int` || `delta_score` || Score Change |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔹 || `E<SETL>` || `settlement_state` || 结算状态: 分为未定、胜利、失败、逃跑 |
+ * | 2 || 🔹 || `Int` || `delta_score` || 变化分数 |
  *
  * -----------
  *
@@ -9960,9 +9958,9 @@ export const NODES = {
   Execution_Rank_ModifyScore: "Execution.Rank.Modify_Score",
 
   /**
- * **Get Player Rank Score Change** `(Query.Rank_Tier.Get_Score_Change)`
+ * **获取玩家段位变化分数** `(Query.Rank_Tier.Get_Score_Change)`
  *
- * - Returns the Rank change score for the Player Entity under different Settlement states
+ * - 获取玩家实体在不同结算状态下段位的变化分数
  *
  * -----------
  *
@@ -9975,22 +9973,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
- * | 1 || 🔹 || `E<SETL>` || `result` || Settlement Status |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
+ * | 1 || 🔹 || `E<SETL>` || `result` || 结算状态 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `score` || Score |
+ * | 0 || 🔸 || `Int` || `score` || 分数 |
  */
   Query_RankTier_GetScoreChange: "Query.Rank_Tier.Get_Score_Change",
 
   /**
- * **Set Player Escape Validity** `(Execution.Rank.Set_Escape_Valid)`
+ * **设置玩家逃跑合法性** `(Execution.Rank.Set_Escape_Valid)`
  *
- * - Set whether escaping is permitted for the specified Player
+ * - 设置指定玩家逃跑的合法性
  *
  * -----------
  *
@@ -10004,8 +10002,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔹 || `Bol` || `is_valid` || Valid |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔹 || `Bol` || `is_valid` || 是否合法 |
  *
  * -----------
  *
@@ -10017,9 +10015,9 @@ export const NODES = {
   Execution_Rank_SetEscapeValid: "Execution.Rank.Set_Escape_Valid",
 
   /**
- * **Get Player Escape Validity** `(Query.Rank_Tier.Get_Escape_Status)`
+ * **获取玩家逃跑合法性** `(Query.Rank_Tier.Get_Escape_Status)`
  *
- * - Get Player Escape Permission
+ * - 获取玩家逃跑合法性
  *
  * -----------
  *
@@ -10032,21 +10030,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `legal` || Valid |
+ * | 0 || 🔸 || `Bol` || `legal` || 是否合法 |
  */
   Query_RankTier_GetEscapeStatus: "Query.Rank_Tier.Get_Escape_Status",
 
   /**
- * **Switch the scoring group that affects player's competitive rank** `(Execution.Rank.Switch_Score_Group)`
+ * **切换玩家竞技段位生效的计分组** `(Execution.Rank.Switch_Score_Group)`
  *
- * - Switch the active Scoring Group of the specified Player's Ranking by Scoring Group ID
+ * - 以计分组的序号切换指定玩家竞技段位生效的计分组
  *
  * -----------
  *
@@ -10060,8 +10058,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔹 || `Int` || `group_index` || Score Group ID: The ID corresponding to the specified Score Group in Peripheral System management |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔹 || `Int` || `group_index` || 计分组序号: 外围系统管理中指定计分组对应的序号 |
  *
  * -----------
  *
@@ -10073,9 +10071,9 @@ export const NODES = {
   Execution_Rank_SwitchScoreGroup: "Execution.Rank.Switch_Score_Group",
 
   /**
- * **Query Current Environment Time** `(Query.Stage_Related.Get_Env_Time)`
+ * **查询当前环境时间** `(Query.Stage_Related.Get_Env_Time)`
  *
- * - Searches the current Environment Time, in the range [0, 24)
+ * - 查询当前的环境时间，范围为[0,24)
  *
  * -----------
  *
@@ -10088,16 +10086,16 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `env_time` || Current Environment Time: The value range is [0, 24) |
- * | 1 || 🔸 || `Int` || `day_count` || Current Loop Day: Number of Loop Days elapsed |
+ * | 0 || 🔸 || `Flt` || `env_time` || 当前环境时间: 获取到的值范围为[0,24) |
+ * | 1 || 🔸 || `Int` || `day_count` || 当前循环天数: 当前已经循环了多少天 |
  */
   Query_StageRelated_GetEnvTime: "Query.Stage_Related.Get_Env_Time",
 
   /**
- * **Set Current Environment Time** `(Execution.Stage_Related.Set_Time)`
+ * **设置当前环境时间** `(Execution.Stage_Related.Set_Time)`
  *
- * - Instantly switch Environment Time to the specified hour. The parameter must be a Floating Point Number between 0 and 24
- * - If the target hour is earlier than the current hour, it is treated as the next day (+1 day)
+ * - 立即切换环境时间到指定小时，参数需要是0~24之间的浮点数值
+ * - 若目标小时数小于当前时间，视为天数+1
  *
  * -----------
  *
@@ -10111,7 +10109,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Flt` || `environment_time` || Environment Time: Must be a floating point value between 0–24; this Node will not take effect if the value is outside this range |
+ * | 0 || 🔹 || `Flt` || `environment_time` || 环境时间: 需要是0~24浮点数值，超出范围外时节点不生效 |
  *
  * -----------
  *
@@ -10123,9 +10121,9 @@ export const NODES = {
   Execution_StageRelated_SetTime: "Execution.Stage_Related.Set_Time",
 
   /**
- * **Set Environment Time Passage Speed** `(Execution.Stage_Related.Set_Time_Speed)`
+ * **设置环境时间流逝速度** `(Execution.Stage_Related.Set_Time_Speed)`
  *
- * - Minutes elapsed per second, limited to 0 - 60 (Teyvat speed is 1)
+ * - 每秒流逝分钟数，会被限制在0~60之间（提瓦特速度为1）
  *
  * -----------
  *
@@ -10139,7 +10137,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Flt` || `environment_time_rate` || Environment Time Passage Speed: Clamped to the range 0–60. Values outside this range are automatically set to 0 or 60 |
+ * | 0 || 🔹 || `Flt` || `environment_time_rate` || 环境时间流逝速度: 会被限制在0~60之间，超出范围外时会按0或60生效 |
  *
  * -----------
  *
@@ -10151,9 +10149,9 @@ export const NODES = {
   Execution_StageRelated_SetTimeSpeed: "Execution.Stage_Related.Set_Time_Speed",
 
   /**
- * **Toggle Entity Light Source** `(Execution.Light_Component.Toggle_Light)`
+ * **开关实体光源** `(Execution.Light_Component.Toggle_Light)`
  *
- * - Adjust the Light Source state at the specified ID in the Light Source Component on the Target Entity
+ * - 调整指定目标实体上的光源组件对应序号的光源状态
  *
  * -----------
  *
@@ -10167,9 +10165,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `light_index` || Light Source ID |
- * | 2 || 🔹 || `Bol` || `toggle_mode` || Enable or Disable: If set to True, turns On |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `light_index` || 光源序号 |
+ * | 2 || 🔹 || `Bol` || `toggle_mode` || 打开或关闭: “是”为打开 |
  *
  * -----------
  *
@@ -10181,9 +10179,9 @@ export const NODES = {
   Execution_LightComponent_ToggleLight: "Execution.Light_Component.Toggle_Light",
 
   /**
- * **Switch Follow Motion Device Target by Entity** `(Execution.Follow_Motion.Set_Target_Entity)`
+ * **以实体切换跟随运动器的目标** `(Execution.Follow_Motion.Set_Target_Entity)`
  *
- * - Switch the Follow Target of the Follow Motion Device by Entity
+ * - 以实体切换跟随运动器的跟随目标
  *
  * -----------
  *
@@ -10197,13 +10195,13 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Ety` || `follow_entity` || Follow Target Entity: The Entity that follows the Target |
- * | 2 || 🔹 || `Str` || `socket_name` || Follow Target Attachment Point Name: Name of the Attachment Point to follow |
- * | 3 || 🔹 || `Vec` || `pos_offset` || Location Offset: Location Offset based on the Follow Coordinate System |
- * | 4 || 🔹 || `Vec` || `rot_offset` || Rotation Offset: Rotation Offset based on the Follow Coordinate System |
- * | 5 || 🔹 || `E<SYSC>` || `coord_sys` || Follow Coordinate System: Options: Relative Coordinate System or World Coordinate System |
- * | 6 || 🔹 || `E<FOLO>` || `follow_type` || Follow Type: Options: Completely Follow, Follow Location, Follow Rotation |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Ety` || `follow_entity` || 跟随目标实体: 跟随目标的实体 |
+ * | 2 || 🔹 || `Str` || `socket_name` || 跟随目标挂接点名称: 跟随的挂接点名称 |
+ * | 3 || 🔹 || `Vec` || `pos_offset` || 位置偏移: 以【跟随坐标系】为基准产生的位置偏移 |
+ * | 4 || 🔹 || `Vec` || `rot_offset` || 旋转偏移: 以【跟随坐标系】为基准产生的旋转偏移 |
+ * | 5 || 🔹 || `E<SYSC>` || `coord_sys` || 跟随坐标系: 可选”相对坐标系“、”世界坐标系“ |
+ * | 6 || 🔹 || `E<FOLO>` || `follow_type` || 跟随类型: 可选”完全跟随“、”跟随位置“、”跟随旋转” |
  *
  * -----------
  *
@@ -10215,9 +10213,9 @@ export const NODES = {
   Execution_FollowMotion_SetTargetEntity: "Execution.Follow_Motion.Set_Target_Entity",
 
   /**
- * **Get All Entities Within the Collision Trigger** `(Query.Collision_Trigger.Get_Overlapping_Entities)`
+ * **获取碰撞触发器内所有实体** `(Query.Collision_Trigger.Get_Overlapping_Entities)`
  *
- * - Returns all Entities within the Collision Trigger corresponding to a specific ID in the Collision Trigger Component on the Target Entity
+ * - 获取目标实体上碰撞触发器组件中特定序号对应的碰撞触发器内的所有实体
  *
  * -----------
  *
@@ -10230,20 +10228,20 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `trigger_index` || Trigger ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `trigger_index` || 触发器序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `entities` || Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `entities` || 实体列表 |
  */
   Query_CollisionTrigger_GetOverlappingEntities: "Query.Collision_Trigger.Get_Overlapping_Entities",
 
   /**
- * **Get Entity Advanced Attribute** `(Query.Entity_Related.Get_Adv_Attr)`
+ * **获取实体进阶属性** `(Query.Entity_Related.Get_Adv_Attr)`
  *
  * -----------
  *
@@ -10275,9 +10273,9 @@ export const NODES = {
   Query_EntityRelated_GetAdvAttr: "Query.Entity_Related.Get_Adv_Attr",
 
   /**
- * **Get Entity Elemental Attribute** `(Query.Entity_Related.Get_Elem_Attr)`
+ * **获取实体元素属性** `(Query.Entity_Related.Get_Elem_Attr)`
  *
- * - Returns the Element Attributes of the Target Entity
+ * - 获取目标实体的元素相关属性
  *
  * -----------
  *
@@ -10290,36 +10288,36 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `pyro_bonus` || Pyro DMG Bonus |
- * | 1 || 🔸 || `Flt` || `pyro_res` || Pyro RES |
- * | 2 || 🔸 || `Flt` || `hydro_bonus` || Hydro DMG Bonus |
- * | 3 || 🔸 || `Flt` || `hydro_res` || Hydro RES |
- * | 4 || 🔸 || `Flt` || `dendro_bonus` || Dendro DMG Bonus |
- * | 5 || 🔸 || `Flt` || `dendro_res` || Dendro RES |
- * | 6 || 🔸 || `Flt` || `electro_bonus` || Electro DMG Bonus |
- * | 7 || 🔸 || `Flt` || `electro_res` || Electro RES |
- * | 8 || 🔸 || `Flt` || `anemo_bonus` || Anemo DMG Bonus |
- * | 9 || 🔸 || `Flt` || `anemo_res` || Anemo RES |
- * | 10 || 🔸 || `Flt` || `cryo_bonus` || Cryo DMG Bonus |
- * | 11 || 🔸 || `Flt` || `cryo_res` || Cryo RES |
- * | 12 || 🔸 || `Flt` || `geo_bonus` || Geo DMG Bonus |
- * | 13 || 🔸 || `Flt` || `geo_res` || Geo RES |
- * | 14 || 🔸 || `Flt` || `physical_bonus` || Physical DMG Bonus |
- * | 15 || 🔸 || `Flt` || `physical_res` || Physical RES |
+ * | 0 || 🔸 || `Flt` || `pyro_bonus` || 火元素伤害加成 |
+ * | 1 || 🔸 || `Flt` || `pyro_res` || 火元素抗性 |
+ * | 2 || 🔸 || `Flt` || `hydro_bonus` || 水元素伤害加成 |
+ * | 3 || 🔸 || `Flt` || `hydro_res` || 水元素抗性 |
+ * | 4 || 🔸 || `Flt` || `dendro_bonus` || 草元素伤害加成 |
+ * | 5 || 🔸 || `Flt` || `dendro_res` || 草元素抗性 |
+ * | 6 || 🔸 || `Flt` || `electro_bonus` || 雷元素伤害加成 |
+ * | 7 || 🔸 || `Flt` || `electro_res` || 雷元素抗性 |
+ * | 8 || 🔸 || `Flt` || `anemo_bonus` || 风元素伤害加成 |
+ * | 9 || 🔸 || `Flt` || `anemo_res` || 风元素抗性 |
+ * | 10 || 🔸 || `Flt` || `cryo_bonus` || 冰元素伤害加成 |
+ * | 11 || 🔸 || `Flt` || `cryo_res` || 冰元素抗性 |
+ * | 12 || 🔸 || `Flt` || `geo_bonus` || 岩元素伤害加成 |
+ * | 13 || 🔸 || `Flt` || `geo_res` || 岩元素抗性 |
+ * | 14 || 🔸 || `Flt` || `physical_bonus` || 物理伤害加成 |
+ * | 15 || 🔸 || `Flt` || `physical_res` || 物理抗性 |
  */
   Query_EntityRelated_GetElemAttr: "Query.Entity_Related.Get_Elem_Attr",
 
   /**
- * **Add Affix to Equipment** `(Execution.Equipment.Add_Affix)`
+ * **装备添加词条** `(Execution.Equipment.Add_Affix)`
  *
- * - Add a preconfigured Affix to the specified Equipment instance, with the option to overwrite the Affix value
+ * - 对指定装备实例添加一条预先配置好的词条，可以覆写词条的数值
  *
  * -----------
  *
@@ -10333,10 +10331,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment ID: Integer ID generated during Equipment Initialization to identify the equipment instance |
- * | 1 || 🔹 || `Cfg` || `affix_config_id` || Affix Config ID: The Config ID of the preconfigured Affix defined in Equipment Data Management |
- * | 2 || 🔹 || `Bol` || `overwrite` || Overwrite Affix Value |
- * | 3 || 🔹 || `Flt` || `affix_value` || Affix Value: Can overwrite the value on a pre-configured Affix |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引: 【装备初始化】时生成的整数型索引来标识该装备实例 |
+ * | 1 || 🔹 || `Cfg` || `affix_config_id` || 词条配置ID: 装备数据管理中预先配置好的词条的对应配置ID |
+ * | 2 || 🔹 || `Bol` || `overwrite` || 是否覆写词条值 |
+ * | 3 || 🔹 || `Flt` || `affix_value` || 词条数值: 可以覆写预先配置好的词条上的数值 |
  *
  * -----------
  *
@@ -10348,9 +10346,9 @@ export const NODES = {
   Execution_Equipment_AddAffix: "Execution.Equipment.Add_Affix",
 
   /**
- * **Remove Equipment Affix** `(Execution.Equipment.Remove_Affix)`
+ * **移除装备词条** `(Execution.Equipment.Remove_Affix)`
  *
- * - Remove the specified Affix from the Equipment instance
+ * - 移除指定装备实例的对应词条
  *
  * -----------
  *
@@ -10364,8 +10362,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment ID: Integer ID generated during Equipment Initialization to identify the equipment instance |
- * | 1 || 🔹 || `Int` || `affix_index` || Affix ID |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引: 【装备初始化】时生成的整数型索引来标识该装备实例 |
+ * | 1 || 🔹 || `Int` || `affix_index` || 词条序号 |
  *
  * -----------
  *
@@ -10377,9 +10375,9 @@ export const NODES = {
   Execution_Equipment_RemoveAffix: "Execution.Equipment.Remove_Affix",
 
   /**
- * **Modify Equipment Affix Value** `(Execution.Equipment.Modify_Affix)`
+ * **修改装备词条值** `(Execution.Equipment.Modify_Affix)`
  *
- * - Edit the value of the specified Affix on the Equipment instance
+ * - 修改指定装备实例对应词条上的值
  *
  * -----------
  *
@@ -10393,9 +10391,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment Index: Integer ID generated during Equipment Initialization to identify the equipment instance |
- * | 1 || 🔹 || `Int` || `affix_index` || Affix ID |
- * | 2 || 🔹 || `Flt` || `affix_value` || Affix Value |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引: 【装备初始化】时生成的整数型索引来标识该装备实例 |
+ * | 1 || 🔹 || `Int` || `affix_index` || 词条序号 |
+ * | 2 || 🔹 || `Flt` || `affix_value` || 词条数值 |
  *
  * -----------
  *
@@ -10407,10 +10405,10 @@ export const NODES = {
   Execution_Equipment_ModifyAffix: "Execution.Equipment.Modify_Affix",
 
   /**
- * **Get Equipment Affix List** `(Query.Equipment.Get_Affixes)`
+ * **获取装备词条列表** `(Query.Equipment.Get_Affixes)`
  *
- * - Returns a list of all Affixes on this Equipment instance
- * - When Equipment is initialized, Affix values are randomized, so the Equipment Affixes on the Equipment instance also generate corresponding instances. Therefore, the data type is Integer rather than Config ID
+ * - 获取该装备实例的所有词条组成的列表
+ * - 装备初始化时，词条的数值会发生随机，所以装备实例上的装备词条也会生成对应的实例，故数据类型为整数而不是配置ID
  *
  * -----------
  *
@@ -10423,21 +10421,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment Index |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `entry_list` || Equipment Affix List |
+ * | 0 || 🔸 || `L<Int>` || `entry_list` || 装备词条列表 |
  */
   Query_Equipment_GetAffixes: "Query.Equipment.Get_Affixes",
 
   /**
- * **Get Equipment Affix Config ID** `(Query.Equipment.Get_Affix_Config)`
+ * **获取装备词条配置ID** `(Query.Equipment.Get_Affix_Config)`
  *
- * - Returns the Config ID of an Equipment Affix by its ID on the Equipment instance
+ * - 根据装备实例上装备词条的序号获取该词条的配置ID
  *
  * -----------
  *
@@ -10450,22 +10448,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment Index |
- * | 1 || 🔹 || `Int` || `entry_index` || Affix ID |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引 |
+ * | 1 || 🔹 || `Int` || `entry_index` || 词条序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Cfg` || `entry_config_id` || Affix Config ID |
+ * | 0 || 🔸 || `Cfg` || `entry_config_id` || 词条配置ID |
  */
   Query_Equipment_GetAffixConfig: "Query.Equipment.Get_Affix_Config",
 
   /**
- * **Get Equipment Affix Value** `(Query.Equipment.Get_Affix_Value)`
+ * **获取装备词条数值** `(Query.Equipment.Get_Affix_Value)`
  *
- * - Returns the value of the Affix at the specified ID on the Equipment instance
+ * - 获取装备实例上对应序号词条的数值
  *
  * -----------
  *
@@ -10478,15 +10476,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment Index |
- * | 1 || 🔹 || `Int` || `entry_index` || Affix ID |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引 |
+ * | 1 || 🔹 || `Int` || `entry_index` || 词条序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `entry_value` || Affix Value |
+ * | 0 || 🔸 || `Flt` || `entry_value` || 装备数值 |
  */
   Query_Equipment_GetAffixValue: "Query.Equipment.Get_Affix_Value",
 
@@ -10519,10 +10517,10 @@ export const NODES = {
   Hidden_Execution_UpdateLeaderboard: "Hidden.Execution.Update_Leaderboard",
 
   /**
- * **When Text Bubble Is Completed** `(Trigger.Text_Bubble.On_Bubble_Complete)`
+ * **文本气泡完成时** `(Trigger.Text_Bubble.On_Bubble_Complete)`
  *
- * - This event can only be mounted by Text Bubble Components and is received by the Entity's Node Graph that completed the dialogue
- * - Completion refers to when the final line of dialogue has finished playing
+ * - 该事件仅能被挂载文本气泡组件，且完成对话的实体节点图接收
+ * - 完成的含义是最后一句对话播放完成
  *
  * -----------
  *
@@ -10536,17 +10534,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Bubble Owner Entity: Runtime Entity with the Text Bubble component mounted |
- * | 1 || 🔸 || `Ety` || `character_entity` || Character Entity: Target Character of the current Bubble dialogue |
- * | 2 || 🔸 || `Cfg` || `bubble_config_id` || Text Bubble Configuration ID: Currently active Text Bubble Config ID |
- * | 3 || 🔸 || `Int` || `complete_count` || Text Bubble Completion Count: Number of times the currently active Text Bubble has been fully played for this dialogue Character |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 气泡归属者实体: 挂载文本气泡组件的运行时实体 |
+ * | 1 || 🔸 || `Ety` || `character_entity` || 角色实体: 当前气泡对话的目标角色 |
+ * | 2 || 🔸 || `Cfg` || `bubble_config_id` || 文本气泡配置ID: 当前生效的文本气泡配置ID |
+ * | 3 || 🔸 || `Int` || `complete_count` || 文本气泡完成次数: 当前生效的文本气泡，对该对话角色，完整播放了几次 |
  */
   Trigger_TextBubble_OnBubbleComplete: "Trigger.Text_Bubble.On_Bubble_Complete",
 
   /**
- * **When Equipment Affix Value Changes** `(Trigger.Equipment.On_Affix_Change)`
+ * **装备的词条数值改变时** `(Trigger.Equipment.On_Affix_Change)`
  *
- * - This event is triggered when Equipment Affix values change. The Owner of the Equipment will receive it. Configure this in the Item Node Graph
+ * - 装备词条数值改变时触发该事件，装备的持有者可以收到，需要配置在道具节点图里
  *
  * -----------
  *
@@ -10560,19 +10558,19 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Equipment Owner |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Equipment Owner GUID |
- * | 2 || 🔸 || `Int` || `equip_index` || Equipment Index |
- * | 3 || 🔸 || `Int` || `affix_index` || Affix ID: The corresponding ID of this Entry within the Equipment Affixes |
- * | 4 || 🔸 || `Flt` || `value_old` || Pre-Change Value |
- * | 5 || 🔸 || `Flt` || `value_new` || Post-Change Value |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 装备持有者 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 装备持有者GUID |
+ * | 2 || 🔸 || `Int` || `equip_index` || 装备索引 |
+ * | 3 || 🔸 || `Int` || `affix_index` || 词条序号: 该词条在装备词条上的对应序号 |
+ * | 4 || 🔸 || `Flt` || `value_old` || 改变前数值 |
+ * | 5 || 🔸 || `Flt` || `value_new` || 改变后数值 |
  */
   Trigger_Equipment_OnAffixChange: "Trigger.Equipment.On_Affix_Change",
 
   /**
- * **When Item Is Added to Inventory** `(Trigger.Item.On_Item_Add)`
+ * **背包道具新增时** `(Trigger.Item.On_Item_Add)`
  *
- * - This event is triggered when a new Item is added to the Inventory. The Owner of the Inventory Component will receive it. This event is not triggered by quantity-only changes
+ * - 背包内新增该道具时触发事件，背包组件的持有者可以收到。如果没有新增道具仅有数量变化则不会触发该事件
  *
  * -----------
  *
@@ -10586,17 +10584,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Item Owner Entity |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Item Owner GUID |
- * | 2 || 🔸 || `Cfg` || `item_config_id` || Item Config ID |
- * | 3 || 🔸 || `Int` || `gain_count` || Quantity Obtained |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 道具持有者实体 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 道具持有者GUID |
+ * | 2 || 🔸 || `Cfg` || `item_config_id` || 道具配置ID |
+ * | 3 || 🔸 || `Int` || `gain_count` || 获得数量 |
  */
   Trigger_Item_OnItemAdd: "Trigger.Item.On_Item_Add",
 
   /**
- * **When Item Is Lost From Inventory** `(Trigger.Item.On_Item_Lose)`
+ * **背包道具失去时** `(Trigger.Item.On_Item_Lose)`
  *
- * - This event is triggered when an Item is removed from the Inventory (its quantity becomes 0). The Owner of the Inventory Component will receive it
+ * - 背包内该道具失去，即背包内该道具数量为0时触发该事件，背包组件的持有者可以收到
  *
  * -----------
  *
@@ -10610,17 +10608,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Item Owner Entity |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Item Owner GUID |
- * | 2 || 🔸 || `Cfg` || `item_config_id` || Item Config ID |
- * | 3 || 🔸 || `Int` || `lost_count` || Quantity Lost |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 道具持有者实体 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 道具持有者GUID |
+ * | 2 || 🔸 || `Cfg` || `item_config_id` || 道具配置ID |
+ * | 3 || 🔸 || `Int` || `lost_count` || 失去数量 |
  */
   Trigger_Item_OnItemLose: "Trigger.Item.On_Item_Lose",
 
   /**
- * **When the Quantity of Inventory Item Changes** `(Trigger.Item.On_Item_Quantity_Change)`
+ * **背包道具数量变化时** `(Trigger.Item.On_Item_Quantity_Change)`
  *
- * - This event is triggered when the quantity of Items in the Inventory changes. The Owner of the Inventory Component will receive it
+ * - 背包道具数量发生变化时触发该事件，背包组件的持有者可以收到
  *
  * -----------
  *
@@ -10634,19 +10632,19 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Item Owner Entity |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Item Owner GUID |
- * | 2 || 🔸 || `Cfg` || `item_config_id` || Item Config ID |
- * | 3 || 🔸 || `Int` || `count_before` || Pre-Change Quantity |
- * | 4 || 🔸 || `Int` || `count_after` || Post-Change Quantity |
- * | 5 || 🔸 || `E<ITMC>` || `change_reason` || Reason for Change |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 道具持有者实体 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 道具持有者GUID |
+ * | 2 || 🔸 || `Cfg` || `item_config_id` || 道具配置ID |
+ * | 3 || 🔸 || `Int` || `count_before` || 变化前数量 |
+ * | 4 || 🔸 || `Int` || `count_after` || 变化后数量 |
+ * | 5 || 🔸 || `E<ITMC>` || `change_reason` || 变化原因 |
  */
   Trigger_Item_OnItemQuantityChange: "Trigger.Item.On_Item_Quantity_Change",
 
   /**
- * **When the Quantity of Inventory Currency Changes** `(Trigger.Item.On_Currency_Change)`
+ * **背包货币数量变化时** `(Trigger.Item.On_Currency_Change)`
  *
- * - This event is triggered when the amount of Inventory Currency changes. The Owner of the Inventory Component will receive it
+ * - 背包货币数量变化时触发该事件，背包组件的持有者可以收到
  *
  * -----------
  *
@@ -10660,17 +10658,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Currency Owner Entity |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Currency Owner GUID |
- * | 2 || 🔸 || `Cfg` || `currency_config_id` || Currency Config ID |
- * | 3 || 🔸 || `Int` || `currency_delta` || Currency Change Value |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 货币持有者实体 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 货币持有者GUID |
+ * | 2 || 🔸 || `Cfg` || `currency_config_id` || 货币配置ID |
+ * | 3 || 🔸 || `Int` || `currency_delta` || 货币变化值 |
  */
   Trigger_Item_OnCurrencyChange: "Trigger.Item.On_Currency_Change",
 
   /**
- * **Increase Maximum Inventory Capacity** `(Execution.Inventory.Expand_Capacity)`
+ * **增加背包最大容量** `(Execution.Inventory.Expand_Capacity)`
  *
- * - Increase the maximum Inventory capacity of the specified Inventory Owner
+ * - 增加指定背包持有者的背包最大容量
  *
  * -----------
  *
@@ -10684,8 +10682,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Inventory Owner Entity |
- * | 1 || 🔹 || `Int` || `delta_capacity` || Increase Capacity |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 背包持有者实体 |
+ * | 1 || 🔹 || `Int` || `delta_capacity` || 增加容量 |
  *
  * -----------
  *
@@ -10697,9 +10695,9 @@ export const NODES = {
   Execution_Inventory_ExpandCapacity: "Execution.Inventory.Expand_Capacity",
 
   /**
- * **Modify Inventory Item Quantity** `(Execution.Inventory.Modify_Item)`
+ * **修改背包道具数量** `(Execution.Inventory.Modify_Item)`
  *
- * - Edit the quantity of the specified Item in the Inventory
+ * - 修改背包内指定道具的数量
  *
  * -----------
  *
@@ -10713,9 +10711,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Inventory Owner Entity |
- * | 1 || 🔹 || `Cfg` || `item_config_id` || Item Config ID |
- * | 2 || 🔹 || `Int` || `delta` || Change Value: New Value = Original Value + Change Value |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 背包持有者实体 |
+ * | 1 || 🔹 || `Cfg` || `item_config_id` || 道具配置ID |
+ * | 2 || 🔹 || `Int` || `delta` || 变更值: 变更后的值=变更前的值+变更值 |
  *
  * -----------
  *
@@ -10727,9 +10725,9 @@ export const NODES = {
   Execution_Inventory_ModifyItem: "Execution.Inventory.Modify_Item",
 
   /**
- * **Set Inventory Loot Item/Currency Quantity** `(Execution.Inventory.Set_Drop_Amount)`
+ * **设置背包掉落道具/货币数量** `(Execution.Inventory.Set_Drop_Amount)`
  *
- * - Set the type and quantity of Items or Currency for the Inventory drop
+ * - 设置背包掉落道具/货币的类型和数量
  *
  * -----------
  *
@@ -10743,10 +10741,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Inventory Owner Entity |
- * | 1 || 🔹 || `Cfg` || `config_id` || Item/Currency Config ID |
- * | 2 || 🔹 || `Int` || `drop_count` || Quantity Dropped |
- * | 3 || 🔹 || `E<LOOT>` || `drop_type` || Loot Type: Types: Shared Reward (one share for all), Individualized Reward (one share per person) |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 背包持有者实体 |
+ * | 1 || 🔹 || `Cfg` || `config_id` || 道具/货币配置ID |
+ * | 2 || 🔹 || `Int` || `drop_count` || 掉落数量 |
+ * | 3 || 🔹 || `E<LOOT>` || `drop_type` || 掉落类型: 分为全员一份、每人一份 |
  *
  * -----------
  *
@@ -10758,9 +10756,9 @@ export const NODES = {
   Execution_Inventory_SetDropAmount: "Execution.Inventory.Set_Drop_Amount",
 
   /**
- * **Modify Inventory Currency Quantity** `(Execution.Inventory.Modify_Currency)`
+ * **修改背包货币数量** `(Execution.Inventory.Modify_Currency)`
  *
- * - Edit the amount of the specified Currency in the Inventory
+ * - 修改背包内指定货币的数量
  *
  * -----------
  *
@@ -10774,9 +10772,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Inventory Owner Entity |
- * | 1 || 🔹 || `Cfg` || `currency_config_id` || Currency Config ID |
- * | 2 || 🔹 || `Int` || `delta` || Change Value: New Value = Original Value + Change Value |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 背包持有者实体 |
+ * | 1 || 🔹 || `Cfg` || `currency_config_id` || 货币配置ID |
+ * | 2 || 🔹 || `Int` || `delta` || 变更值: 变更后的值=变更前的值+变更值 |
  *
  * -----------
  *
@@ -10788,9 +10786,9 @@ export const NODES = {
   Execution_Inventory_ModifyCurrency: "Execution.Inventory.Modify_Currency",
 
   /**
- * **Get Inventory Capacity** `(Query.Item.Get_Capacity)`
+ * **获取背包容量** `(Query.Item.Get_Capacity)`
  *
- * - Get Inventory Capacity
+ * - 获取背包容量
  *
  * -----------
  *
@@ -10803,21 +10801,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `owner` || Inventory Owner Entity |
+ * | 0 || 🔹 || `Ety` || `owner` || 背包持有者实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `capacity` || Inventory Capacity |
+ * | 0 || 🔸 || `Int` || `capacity` || 背包容量 |
  */
   Query_Item_GetCapacity: "Query.Item.Get_Capacity",
 
   /**
- * **Get Inventory Item Quantity** `(Query.Item.Get_Item_Amount)`
+ * **获取背包道具数量** `(Query.Item.Get_Item_Amount)`
  *
- * - Returns the quantity of the Item with the specified Config ID in the Inventory
+ * - 获取背包内特定配置ID的道具数量
  *
  * -----------
  *
@@ -10830,22 +10828,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `owner` || Inventory Owner Entity |
- * | 1 || 🔹 || `Cfg` || `item_config_id` || Item Config ID |
+ * | 0 || 🔹 || `Ety` || `owner` || 背包持有者实体 |
+ * | 1 || 🔹 || `Cfg` || `item_config_id` || 道具配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `item_count` || Item Quantity |
+ * | 0 || 🔸 || `Int` || `item_count` || 道具数量 |
  */
   Query_Item_GetItemAmount: "Query.Item.Get_Item_Amount",
 
   /**
- * **Get Inventory Currency Quantity** `(Query.Item.Get_Currency_Amount)`
+ * **获取背包货币数量** `(Query.Item.Get_Currency_Amount)`
  *
- * - Returns the amount of Currency with the specified Config ID in the Inventory
+ * - 获取背包内特定配置ID的货币数量
  *
  * -----------
  *
@@ -10858,22 +10856,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `owner` || Inventory Owner Entity |
- * | 1 || 🔹 || `Cfg` || `currency_id` || Currency Config ID |
+ * | 0 || 🔹 || `Ety` || `owner` || 背包持有者实体 |
+ * | 1 || 🔹 || `Cfg` || `currency_id` || 货币配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `resource_num` || Resource Quantity |
+ * | 0 || 🔸 || `Int` || `resource_num` || 资源数量 |
  */
   Query_Item_GetCurrencyAmount: "Query.Item.Get_Currency_Amount",
 
   /**
- * **When Equipment Is Initialized** `(Trigger.Equipment.On_Init)`
+ * **装备初始化时** `(Trigger.Equipment.On_Init)`
  *
- * - When Equipment is first obtained and enters the Inventory, it is initialized. The event's output parameters return the unique ID of the Equipment instance. Use this ID to edit the Equipment dynamically. The Owner of the Equipment will receive this event. Configure this in the Item Node Graph
+ * - 当装备首次被获取进入背包时，会进行初始化，此时事件出参会返回装备实例的唯一索引，通过此索引即可对装备进行动态修改。装备的持有者可以收到该事件，需要配置在道具节点图里
  *
  * -----------
  *
@@ -10887,16 +10885,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Equipment Owner |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Equipment Owner GUID |
- * | 2 || 🔸 || `Int` || `equip_index` || Equipment Index |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 装备持有者 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 装备持有者GUID |
+ * | 2 || 🔸 || `Int` || `equip_index` || 装备索引 |
  */
   Trigger_Equipment_OnInit: "Trigger.Equipment.On_Init",
 
   /**
- * **When Equipment Is Equipped** `(Trigger.Equipment.On_Equip)`
+ * **装备被穿戴时** `(Trigger.Equipment.On_Equip)`
  *
- * - This event is triggered when Equipment is equipped. The Owner of the Equipment will receive it. Configure this in the Item Node Graph
+ * - 装备被穿戴时触发该事件，装备的持有者可以收到，需要配置在道具节点图里
  *
  * -----------
  *
@@ -10910,16 +10908,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Equipment Holder Entity |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Equipment Holder GUID |
- * | 2 || 🔸 || `Int` || `equip_index` || Equipment Index |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 装备持有者实体 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 装备持有者GUID |
+ * | 2 || 🔸 || `Int` || `equip_index` || 装备索引 |
  */
   Trigger_Equipment_OnEquip: "Trigger.Equipment.On_Equip",
 
   /**
- * **When Equipment Is Unequipped** `(Trigger.Equipment.On_Unequip)`
+ * **装备被卸下时** `(Trigger.Equipment.On_Unequip)`
  *
- * - This event is triggered when Equipment is unequipped. The Owner of the Equipment will receive it. Configure this in the Item Node Graph
+ * - 装备被卸下时触发该事件，装备的持有者可以收到，需要配置在道具节点图里
  *
  * -----------
  *
@@ -10933,16 +10931,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Equipment Owner Entity |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Equipment Owner GUID |
- * | 2 || 🔸 || `Int` || `equip_index` || Equipment Index |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 装备持有者实体 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 装备持有者GUID |
+ * | 2 || 🔸 || `Int` || `equip_index` || 装备索引 |
  */
   Trigger_Equipment_OnUnequip: "Trigger.Equipment.On_Unequip",
 
   /**
- * **Loss HP** `(Execution.Combat.Loss_HP)`
+ * **损失生命** `(Execution.Combat.Loss_HP)`
  *
- * - Directly cause the specified target to lose HP. Losing HP is not an attack, so it does not trigger attack-related events
+ * - 使指定目标直接损失生命。损失生命不是攻击，因此不会触发攻击相关的事件
  *
  * -----------
  *
@@ -10956,12 +10954,12 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Target that loses HP |
- * | 1 || 🔹 || `Flt` || `hp_loss` || HP Loss: The amount of HP lost in this instance |
- * | 2 || 🔹 || `Bol` || `is_fatal` || Lethal: If set to False, this HP loss will leave the Target with at least 1 HP remaining |
- * | 3 || 🔹 || `Bol` || `can_be_blocked_by_invincible` || Can be blocked by invincibility: If set to True, and the Target is set to Invincible via Unit Status, HP loss has no effect |
- * | 4 || 🔹 || `Bol` || `can_be_blocked_by_lock_hp` || Can be Blocked by Locked HP?: If set to True, and the Target's HP is locked via Unit Status, HP loss has no effect |
- * | 5 || 🔹 || `E<CDMG>` || `damage_floating_text_type` || Damage Pop-Up Type: No Pop-Up<br>Normal Pop-Up<br>CRIT Hit Pop-Up |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 损失生命的目标 |
+ * | 1 || 🔹 || `Flt` || `hp_loss` || 生命损失量: 该次损失生命值的损失量 |
+ * | 2 || 🔹 || `Bol` || `is_fatal` || 是否致命: 为“否”时，该次损失生命最多使目标生命扣为1点 |
+ * | 3 || 🔹 || `Bol` || `can_be_blocked_by_invincible` || 是否可被无敌抵挡: 为“是”时，如果目标已经通过单位状态设置为了无敌，则损失生命不生效 |
+ * | 4 || 🔹 || `Bol` || `can_be_blocked_by_lock_hp` || 是否可被锁定生命值抵挡: 为“是”时，如果目标已经通过单位状态设置为了锁定生命值，则损失生命不生效 |
+ * | 5 || 🔹 || `E<CDMG>` || `damage_floating_text_type` || 伤害跳字类型: 无跳字<br>普通跳字<br>暴击跳字 |
  *
  * -----------
  *
@@ -10973,9 +10971,9 @@ export const NODES = {
   Execution_Combat_LossHP: "Execution.Combat.Loss_HP",
 
   /**
- * **Recover HP Directly** `(Execution.Combat.Recover_HP_Instant)`
+ * **直接恢复生命** `(Execution.Combat.Recover_HP_Instant)`
  *
- * - Directly restore HP to the specified Target Entity. Unlike [Recover HP], this node does not require an Ability Unit
+ * - 直接恢复指定实体目标的生命。与【恢复生命】不同的是，此节点不需要使用能力单元
  *
  * -----------
  *
@@ -10989,13 +10987,13 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `heal_source` || Recover Initiator Entity: The Entity that initiates healing |
- * | 1 || 🔹 || `Ety` || `heal_target` || Recover Target Entity: The Target Entity to be healed |
- * | 2 || 🔹 || `Flt` || `heal_amount` || Recovery Amount: The amount of HP restored in this healing instance |
- * | 3 || 🔹 || `Bol` || `ignore_adjust` || Ignore Recovery Amount Adjustment: If set to True, this healing amount is not affected by the Target's Unit Status effects that adjust healing |
- * | 4 || 🔹 || `Flt` || `hatred_rate` || Aggro Generation Multiplier: The Aggro generated by this healing, expressed as a multiplier. Only applicable when using Custom Aggro Mode |
- * | 5 || 🔹 || `Flt` || `hatred_delta` || Aggro Generation Increment: The Aggro generated by this healing, expressed as an incremental value. Only applicable when using Custom Aggro Mode |
- * | 6 || 🔹 || `L<Str>` || `heal_tags` || Healing Tag List: The list of tags associated with this healing action. These can be accessed in the When HP Is Recovered and When Initiating HP Recovery events to identify a specific healing action |
+ * | 0 || 🔹 || `Ety` || `heal_source` || 恢复发起实体: 发起恢复的实体 |
+ * | 1 || 🔹 || `Ety` || `heal_target` || 恢复目标实体: 恢复的目标实体 |
+ * | 2 || 🔹 || `Flt` || `heal_amount` || 恢复量: 该次恢复生命的恢复量 |
+ * | 3 || 🔹 || `Bol` || `ignore_adjust` || 是否忽略恢复量调整: 为“是”时，该次恢复量不受目标的恢复量调整类的单位状态的影响 |
+ * | 4 || 🔹 || `Flt` || `hatred_rate` || 产生仇恨的倍率: 此次恢复产生的仇恨倍率。仅使用自定义仇恨模式时有意义 |
+ * | 5 || 🔹 || `Flt` || `hatred_delta` || 产生仇恨的增量: 此次恢复产生的仇恨增量。仅使用自定义仇恨模式时有意义 |
+ * | 6 || 🔹 || `L<Str>` || `heal_tags` || 治疗标签列表: 此次恢复行为的标签列表。在【发起恢复生命值】时以及【被恢复生命值时】事件中可以取出，用于判定一次特定的恢复行为 |
  *
  * -----------
  *
@@ -11007,9 +11005,9 @@ export const NODES = {
   Execution_Combat_RecoverHPInstant: "Execution.Combat.Recover_HP_Instant",
 
   /**
- * **When Custom Shop Item Is Sold** `(Trigger.Shop.On_Custom_Item_Sold)`
+ * **商店出售自定义商品时** `(Trigger.Shop.On_Custom_Item_Sold)`
  *
- * - This event is triggered when Custom items are sold in the Shop. The Owner of the Shop Component will receive it
+ * - 商店出售自定义物品时触发，商店组件的持有者可收到
  *
  * -----------
  *
@@ -11023,19 +11021,19 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `shop_owner` || Shop Owner |
- * | 1 || 🔸 || `Gid` || `shop_owner_guid` || Shop Owner GUID |
- * | 2 || 🔸 || `Ety` || `buyer_entity` || Buyer Entity |
- * | 3 || 🔸 || `Int` || `shop_index` || Shop ID |
- * | 4 || 🔸 || `Int` || `item_index` || Shop Item ID |
- * | 5 || 🔸 || `Int` || `buy_count` || Purchase Quantity |
+ * | 0 || 🔸 || `Ety` || `shop_owner` || 商店持有者 |
+ * | 1 || 🔸 || `Gid` || `shop_owner_guid` || 商店持有者GUID |
+ * | 2 || 🔸 || `Ety` || `buyer_entity` || 购买者实体 |
+ * | 3 || 🔸 || `Int` || `shop_index` || 商店序号 |
+ * | 4 || 🔸 || `Int` || `item_index` || 商品序号 |
+ * | 5 || 🔸 || `Int` || `buy_count` || 购买数量 |
  */
   Trigger_Shop_OnCustomItemSold: "Trigger.Shop.On_Custom_Item_Sold",
 
   /**
- * **When Selling Inventory Items in the Shop** `(Trigger.Shop.On_Inv_Item_Sold)`
+ * **商店出售背包物品时** `(Trigger.Shop.On_Inv_Item_Sold)`
  *
- * - This event is triggered when Inventory items are sold in the Shop. The Owner of the Shop Component will receive it
+ * - 商店出售背包物品时触发，商店组件的持有者可收到
  *
  * -----------
  *
@@ -11049,19 +11047,19 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `shop_owner` || Shop Owner |
- * | 1 || 🔸 || `Gid` || `shop_owner_guid` || Shop Owner GUID |
- * | 2 || 🔸 || `Ety` || `buyer_entity` || Buyer Entity |
- * | 3 || 🔸 || `Int` || `shop_index` || Shop ID |
- * | 4 || 🔸 || `Cfg` || `item_config_id` || Item Config ID |
- * | 5 || 🔸 || `Int` || `buy_count` || Purchase Quantity |
+ * | 0 || 🔸 || `Ety` || `shop_owner` || 商店持有者 |
+ * | 1 || 🔸 || `Gid` || `shop_owner_guid` || 商店持有者GUID |
+ * | 2 || 🔸 || `Ety` || `buyer_entity` || 购买者实体 |
+ * | 3 || 🔸 || `Int` || `shop_index` || 商店序号 |
+ * | 4 || 🔸 || `Cfg` || `item_config_id` || 道具配置ID |
+ * | 5 || 🔸 || `Int` || `buy_count` || 购买数量 |
  */
   Trigger_Shop_OnInvItemSold: "Trigger.Shop.On_Inv_Item_Sold",
 
   /**
- * **Open Shop** `(Execution.Shop.Open)`
+ * **打开商店** `(Execution.Shop.Open)`
  *
- * - Open the Shop from the Player Entity's perspective during gameplay
+ * - 在游戏运行过程中以玩家实体的视角打开商店
  *
  * -----------
  *
@@ -11075,9 +11073,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Int` || `shop_index` || Shop ID |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Int` || `shop_index` || 商店序号 |
  *
  * -----------
  *
@@ -11089,9 +11087,9 @@ export const NODES = {
   Execution_Shop_Open: "Execution.Shop.Open",
 
   /**
- * **Close Shop** `(Execution.Shop.Close)`
+ * **关闭商店** `(Execution.Shop.Close)`
  *
- * - Close all open Shops from the Player Entity's perspective during gameplay
+ * - 在游戏运行过程中以玩家实体的视角关闭所有已打开的商店
  *
  * -----------
  *
@@ -11105,7 +11103,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
  *
  * -----------
  *
@@ -11117,9 +11115,9 @@ export const NODES = {
   Execution_Shop_Close: "Execution.Shop.Close",
 
   /**
- * **Modify Custom Shop Item Sales Info** `(Execution.Shop.Modify_Custom_Sale)`
+ * **修改自定义商店商品出售信息** `(Execution.Shop.Modify_Custom_Sale)`
  *
- * - Edit sale info for custom shop items
+ * - 修改自定义商店商品出售信息
  *
  * -----------
  *
@@ -11133,16 +11131,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Int` || `item_index` || Shop Item ID |
- * | 3 || 🔹 || `Cfg` || `config_id` || Item Config ID |
- * | 4 || 🔹 || `D<Cfg,Int>` || `sell_currency` || Sell Currency Dictionary |
- * | 5 || 🔹 || `Int` || `page_index` || Affiliated Tab ID: 1 Equipment, 2 Consumables, 3 Materials, 4 Valuables |
- * | 6 || 🔹 || `Bol` || `is_limited` || Limit Purchase |
- * | 7 || 🔹 || `Int` || `limit_count` || Purchase Limit |
- * | 8 || 🔹 || `Int` || `priority` || Sort Priority |
- * | 9 || 🔹 || `Bol` || `is_sellable` || Can Be Sold |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Int` || `item_index` || 商品序号 |
+ * | 3 || 🔹 || `Cfg` || `config_id` || 道具配置ID |
+ * | 4 || 🔹 || `D<Cfg,Int>` || `sell_currency` || 出售货币字典 |
+ * | 5 || 🔹 || `Int` || `page_index` || 所属页签序号: 1装备、2消耗品、3材料、4贵重物品 |
+ * | 6 || 🔹 || `Bol` || `is_limited` || 是否限购 |
+ * | 7 || 🔹 || `Int` || `limit_count` || 限购数量 |
+ * | 8 || 🔹 || `Int` || `priority` || 排序优先级 |
+ * | 9 || 🔹 || `Bol` || `is_sellable` || 是否可出售 |
  *
  * -----------
  *
@@ -11154,9 +11152,9 @@ export const NODES = {
   Execution_Shop_ModifyCustomSale: "Execution.Shop.Modify_Custom_Sale",
 
   /**
- * **When selling items to the shop** `(Trigger.Shop.On_Sell_Item)`
+ * **商店收购道具时** `(Trigger.Shop.On_Sell_Item)`
  *
- * - This event is triggered when items are purchased by the Shop. The Owner of the Shop Component will receive it
+ * - 商店收购道具时触发，商店组件的持有者可收到
  *
  * -----------
  *
@@ -11170,18 +11168,18 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `shop_owner` || Shop Owner |
- * | 1 || 🔸 || `Gid` || `shop_owner_guid` || Shop Owner GUID |
- * | 2 || 🔸 || `Ety` || `seller_entity` || Seller Entity |
- * | 3 || 🔸 || `Int` || `shop_index` || Shop ID |
- * | 4 || 🔸 || `D<Cfg,Int>` || `buy_dict` || Purchase Item Dictionary |
+ * | 0 || 🔸 || `Ety` || `shop_owner` || 商店持有者 |
+ * | 1 || 🔸 || `Gid` || `shop_owner_guid` || 商店持有者GUID |
+ * | 2 || 🔸 || `Ety` || `seller_entity` || 出售者实体 |
+ * | 3 || 🔸 || `Int` || `shop_index` || 商店序号 |
+ * | 4 || 🔸 || `D<Cfg,Int>` || `buy_dict` || 收购物品字典 |
  */
   Trigger_Shop_OnSellItem: "Trigger.Shop.On_Sell_Item",
 
   /**
- * **Modify Inventory Shop Item Sales Info** `(Execution.Shop.Modify_Inventory_Sale)`
+ * **修改背包商店商品出售信息** `(Execution.Shop.Modify_Inventory_Sale)`
  *
- * - Edit sale info for inventory shop items
+ * - 修改背包商店商品出售信息
  *
  * -----------
  *
@@ -11195,13 +11193,13 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Cfg` || `config_id` || Item Config ID |
- * | 3 || 🔹 || `D<Cfg,Int>` || `sell_currency` || Sell Currency Dictionary |
- * | 4 || 🔹 || `Int` || `page_index` || Affiliated Tab ID |
- * | 5 || 🔹 || `Int` || `priority` || Sort Priority |
- * | 6 || 🔹 || `Bol` || `is_sellable` || Can Be Sold |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Cfg` || `config_id` || 道具配置ID |
+ * | 3 || 🔹 || `D<Cfg,Int>` || `sell_currency` || 出售货币字典 |
+ * | 4 || 🔹 || `Int` || `page_index` || 所属页签序号 |
+ * | 5 || 🔹 || `Int` || `priority` || 排序优先级 |
+ * | 6 || 🔹 || `Bol` || `is_sellable` || 是否可出售 |
  *
  * -----------
  *
@@ -11213,9 +11211,9 @@ export const NODES = {
   Execution_Shop_ModifyInventorySale: "Execution.Shop.Modify_Inventory_Sale",
 
   /**
- * **Modify Item Purchase Info in the Purchase List** `(Execution.Shop.Modify_Cart_Item)`
+ * **修改物品收购表中道具收购信息** `(Execution.Shop.Modify_Cart_Item)`
  *
- * - Edit Item Purchase Information in the Item Purchase List
+ * - 修改物品收购表中道具收购信息
  *
  * -----------
  *
@@ -11229,11 +11227,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Cfg` || `item_config_id` || Shop Item Config ID |
- * | 3 || 🔹 || `D<Cfg,Int>` || `buy_currency` || Purchase Currency Dictionary |
- * | 4 || 🔹 || `Bol` || `is_purchasable` || Purchasable |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Cfg` || `item_config_id` || 商品道具配置ID |
+ * | 3 || 🔹 || `D<Cfg,Int>` || `buy_currency` || 收购货币字典 |
+ * | 4 || 🔹 || `Bol` || `is_purchasable` || 是否可收购 |
  *
  * -----------
  *
@@ -11245,9 +11243,9 @@ export const NODES = {
   Execution_Shop_ModifyCartItem: "Execution.Shop.Modify_Cart_Item",
 
   /**
- * **Add New Item to Custom Shop Sales List** `(Execution.Shop.Add_Custom_Sale)`
+ * **向自定义商店出售表中新增商品** `(Execution.Shop.Add_Custom_Sale)`
  *
- * - Add items to the Custom Shop Sales List. Upon success, an Integer ID is generated in the Output Parameter as the item identifier
+ * - 向自定义商店出售表中新增商品，新增成功后出参会生成一个整数型索引作为该商品的标识
  *
  * -----------
  *
@@ -11261,15 +11259,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Cfg` || `item_config_id` || Shop Item Config ID |
- * | 3 || 🔹 || `D<Cfg,Int>` || `sell_currency` || Sell Currency Dictionary |
- * | 4 || 🔹 || `Int` || `page_index` || Affiliated Tab ID: 1 Equipment, 2 Consumables, 3 Materials, 4 Valuables |
- * | 5 || 🔹 || `Bol` || `is_limited` || Limit Purchase |
- * | 6 || 🔹 || `Int` || `limit_count` || Purchase Limit |
- * | 7 || 🔹 || `Int` || `priority` || Sort Priority |
- * | 8 || 🔹 || `Bol` || `is_sellable` || Can Be Sold |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Cfg` || `item_config_id` || 商品道具配置ID |
+ * | 3 || 🔹 || `D<Cfg,Int>` || `sell_currency` || 出售货币字典 |
+ * | 4 || 🔹 || `Int` || `page_index` || 所属页签序号: 1装备、2消耗品、3材料、4贵重物品 |
+ * | 5 || 🔹 || `Bol` || `is_limited` || 是否限购 |
+ * | 6 || 🔹 || `Int` || `limit_count` || 限购数量 |
+ * | 7 || 🔹 || `Int` || `priority` || 排序优先级 |
+ * | 8 || 🔹 || `Bol` || `is_sellable` || 是否可出售 |
  *
  * -----------
  *
@@ -11277,14 +11275,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Int` || `item_index_out` || Item Index |
+ * | 0 || 🔸 || `Int` || `item_index_out` || 商品索引 |
  */
   Execution_Shop_AddCustomSale: "Execution.Shop.Add_Custom_Sale",
 
   /**
- * **Add New Item to Inventory Shop Sales List** `(Execution.Shop.Add_Inventory_Sale)`
+ * **向背包商店出售表中新增商品** `(Execution.Shop.Add_Inventory_Sale)`
  *
- * - Add new items to the inventory shop's sales list
+ * - 向背包商店出售表中新增商品
  *
  * -----------
  *
@@ -11298,13 +11296,13 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Cfg` || `item_config_id` || Shop Item Config ID |
- * | 3 || 🔹 || `D<Cfg,Int>` || `sell_currency` || Sell Currency Dictionary |
- * | 4 || 🔹 || `Int` || `page_index` || Affiliated Tab ID: 1 Equipment, 2 Consumables, 3 Materials, 4 Valuables |
- * | 5 || 🔹 || `Int` || `priority` || Sort Priority |
- * | 6 || 🔹 || `Bol` || `is_sellable` || Can Be Sold |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Cfg` || `item_config_id` || 商品道具配置ID |
+ * | 3 || 🔹 || `D<Cfg,Int>` || `sell_currency` || 出售货币字典 |
+ * | 4 || 🔹 || `Int` || `page_index` || 所属页签序号: 1装备、2消耗品、3材料、4贵重物品 |
+ * | 5 || 🔹 || `Int` || `priority` || 排序优先级 |
+ * | 6 || 🔹 || `Bol` || `is_sellable` || 是否可出售 |
  *
  * -----------
  *
@@ -11316,9 +11314,9 @@ export const NODES = {
   Execution_Shop_AddInventorySale: "Execution.Shop.Add_Inventory_Sale",
 
   /**
- * **Add Items to the Purchase List** `(Execution.Shop.Add_To_Cart)`
+ * **向物品收购表中新增物品** `(Execution.Shop.Add_To_Cart)`
  *
- * - Add New Items to the Item Purchase List
+ * - 向物品收购表中新增物品
  *
  * -----------
  *
@@ -11332,11 +11330,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Cfg` || `item_config_id` || Shop Item Config ID |
- * | 3 || 🔹 || `D<Cfg,Int>` || `buy_currency` || Purchase Currency Dictionary |
- * | 4 || 🔹 || `Bol` || `is_purchasable` || Purchasable |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Cfg` || `item_config_id` || 商品道具配置ID |
+ * | 3 || 🔹 || `D<Cfg,Int>` || `buy_currency` || 收购货币字典 |
+ * | 4 || 🔹 || `Bol` || `is_purchasable` || 是否可收购 |
  *
  * -----------
  *
@@ -11348,9 +11346,9 @@ export const NODES = {
   Execution_Shop_AddToCart: "Execution.Shop.Add_To_Cart",
 
   /**
- * **Remove Item From Custom Shop Sales List** `(Execution.Shop.Remove_Custom_Sale)`
+ * **从自定义商店出售表中移除商品** `(Execution.Shop.Remove_Custom_Sale)`
  *
- * - Remove items from the custom shop's sales list
+ * - 从自定义商店出售表中移除商品
  *
  * -----------
  *
@@ -11364,9 +11362,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Int` || `item_index` || Shop Item ID |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Int` || `item_index` || 商品序号 |
  *
  * -----------
  *
@@ -11378,9 +11376,9 @@ export const NODES = {
   Execution_Shop_RemoveCustomSale: "Execution.Shop.Remove_Custom_Sale",
 
   /**
- * **Remove Item From Inventory Shop Sales List** `(Execution.Shop.Remove_Inventory_Sale)`
+ * **从背包商店出售表中移除商品** `(Execution.Shop.Remove_Inventory_Sale)`
  *
- * - Remove items from the inventory shop's sales list
+ * - 从背包商店出售表中移除商品
  *
  * -----------
  *
@@ -11394,9 +11392,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Cfg` || `config_id` || Item Config ID |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Cfg` || `config_id` || 道具配置ID |
  *
  * -----------
  *
@@ -11408,9 +11406,9 @@ export const NODES = {
   Execution_Shop_RemoveInventorySale: "Execution.Shop.Remove_Inventory_Sale",
 
   /**
- * **Remove item from purchase list** `(Execution.Shop.Remove_From_Cart)`
+ * **从物品收购表中移除物品** `(Execution.Shop.Remove_From_Cart)`
  *
- * - Remove items from the purchase list
+ * - 从物品收购表中移除物品
  *
  * -----------
  *
@@ -11424,9 +11422,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID: The Shop ID corresponding to the Shop component on the Shop Owner Entity |
- * | 2 || 🔹 || `Cfg` || `item_config_id` || Shop Item Config ID |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号: 商店归属者实体的商店组件对应的商店序号 |
+ * | 2 || 🔹 || `Cfg` || `item_config_id` || 商品道具配置ID |
  *
  * -----------
  *
@@ -11438,9 +11436,9 @@ export const NODES = {
   Execution_Shop_RemoveFromCart: "Execution.Shop.Remove_From_Cart",
 
   /**
- * **Query Custom Shop Item Sales List** `(Query.Shop.Get_Custom_Sales)`
+ * **查询自定义商店商品出售列表** `(Query.Shop.Get_Custom_Sales)`
  *
- * - Searches the Custom Shop sale list; the output parameter is a list of Item IDs
+ * - 查询自定义商店商品出售列表，出参为商品序号组成的列表
  *
  * -----------
  *
@@ -11453,22 +11451,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `shop_owner` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID |
+ * | 0 || 🔹 || `Ety` || `shop_owner` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `goods_index_list` || Shop Item ID List |
+ * | 0 || 🔸 || `L<Int>` || `goods_index_list` || 商品序号列表 |
  */
   Query_Shop_GetCustomSales: "Query.Shop.Get_Custom_Sales",
 
   /**
- * **Query Inventory Shop Item Sales List** `(Query.Shop.Get_Inv_Sales)`
+ * **查询背包商店物品出售列表** `(Query.Shop.Get_Inv_Sales)`
  *
- * - Search the inventory shop's sales list
+ * - 查询背包商店物品出售列表
  *
  * -----------
  *
@@ -11481,22 +11479,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `shop_owner` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID |
+ * | 0 || 🔹 || `Ety` || `shop_owner` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Cfg>` || `item_ids` || Item Config ID List |
+ * | 0 || 🔸 || `L<Cfg>` || `item_ids` || 道具配置ID列表 |
  */
   Query_Shop_GetInvSales: "Query.Shop.Get_Inv_Sales",
 
   /**
- * **Query Shop Purchase Item List** `(Query.Shop.Get_Cart_Items)`
+ * **查询商店收购物品列表** `(Query.Shop.Get_Cart_Items)`
  *
- * - Search the shop's purchase list
+ * - 查询商店收购物品列表
  *
  * -----------
  *
@@ -11509,22 +11507,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `shop_owner` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID |
+ * | 0 || 🔹 || `Ety` || `shop_owner` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Cfg>` || `item_ids` || Item Config ID List |
+ * | 0 || 🔸 || `L<Cfg>` || `item_ids` || 道具配置ID列表 |
  */
   Query_Shop_GetCartItems: "Query.Shop.Get_Cart_Items",
 
   /**
- * **Query Custom Shop Item Sales Info** `(Query.Shop.Get_Custom_Item_Info)`
+ * **查询自定义商店商品出售信息** `(Query.Shop.Get_Custom_Item_Info)`
  *
- * - Searches sale information for a specified Item in the Custom Shop
+ * - 查询自定义商店特定商品的出售信息
  *
  * -----------
  *
@@ -11537,29 +11535,29 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `shop_owner` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID |
- * | 2 || 🔹 || `Int` || `goods_index` || Shop Item ID |
+ * | 0 || 🔹 || `Ety` || `shop_owner` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号 |
+ * | 2 || 🔹 || `Int` || `goods_index` || 商品序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Cfg` || `item_config` || Item Config ID |
- * | 1 || 🔸 || `D<Cfg,Int>` || `sell_currency` || Sell Currency Dictionary |
- * | 2 || 🔸 || `Int` || `tab_id` || Affiliated Tab ID |
- * | 3 || 🔸 || `Bol` || `limited` || Limit Purchase |
- * | 4 || 🔸 || `Int` || `limit_count` || Purchase Limit |
- * | 5 || 🔸 || `Int` || `priority` || Sort Priority |
- * | 6 || 🔸 || `Bol` || `can_sell` || Can Be Sold |
+ * | 0 || 🔸 || `Cfg` || `item_config` || 道具配置ID |
+ * | 1 || 🔸 || `D<Cfg,Int>` || `sell_currency` || 出售货币字典 |
+ * | 2 || 🔸 || `Int` || `tab_id` || 所属页签序号 |
+ * | 3 || 🔸 || `Bol` || `limited` || 是否限购 |
+ * | 4 || 🔸 || `Int` || `limit_count` || 限购数量 |
+ * | 5 || 🔸 || `Int` || `priority` || 排序优先级 |
+ * | 6 || 🔸 || `Bol` || `can_sell` || 是否可出售 |
  */
   Query_Shop_GetCustomItemInfo: "Query.Shop.Get_Custom_Item_Info",
 
   /**
- * **Query Inventory Shop Item Sales Info** `(Query.Shop.Get_Inv_Item_Info)`
+ * **查询背包商店商品出售信息** `(Query.Shop.Get_Inv_Item_Info)`
  *
- * - Searches sale information for a specified Item in the Inventory Shop
+ * - 查询背包商店种特定商品的出售信息
  *
  * -----------
  *
@@ -11572,25 +11570,25 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `shop_owner` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID |
- * | 2 || 🔹 || `Cfg` || `item_config_id` || Item Config ID |
+ * | 0 || 🔹 || `Ety` || `shop_owner` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号 |
+ * | 2 || 🔹 || `Cfg` || `item_config_id` || 道具配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `D<Cfg,Int>` || `sell_currency` || Sell Currency Dictionary |
- * | 1 || 🔸 || `Int` || `priority` || Sort Priority |
- * | 2 || 🔸 || `Bol` || `can_sell` || Can Be Sold |
+ * | 0 || 🔸 || `D<Cfg,Int>` || `sell_currency` || 出售货币字典 |
+ * | 1 || 🔸 || `Int` || `priority` || 排序优先级 |
+ * | 2 || 🔸 || `Bol` || `can_sell` || 是否可出售 |
  */
   Query_Shop_GetInvItemInfo: "Query.Shop.Get_Inv_Item_Info",
 
   /**
- * **Query Shop Item Purchase Info** `(Query.Shop.Get_Purchase_Info)`
+ * **查询商店商品收购信息** `(Query.Shop.Get_Purchase_Info)`
  *
- * - Searches purchase information for a specified Item in the Shop
+ * - 查询商店特定物品的收购信息
  *
  * -----------
  *
@@ -11603,24 +11601,24 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `shop_owner` || Shop Owner Entity |
- * | 1 || 🔹 || `Int` || `shop_index` || Shop ID |
- * | 2 || 🔹 || `Cfg` || `item_config_id` || Item Config ID |
+ * | 0 || 🔹 || `Ety` || `shop_owner` || 商店归属者实体 |
+ * | 1 || 🔹 || `Int` || `shop_index` || 商店序号 |
+ * | 2 || 🔹 || `Cfg` || `item_config_id` || 道具配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `D<Cfg,Int>` || `currency_dict` || Purchase Currency Dictionary |
- * | 1 || 🔸 || `Bol` || `can_purchase` || Purchasable |
+ * | 0 || 🔸 || `D<Cfg,Int>` || `currency_dict` || 收购货币字典 |
+ * | 1 || 🔸 || `Bol` || `can_purchase` || 是否可收购 |
  */
   Query_Shop_GetPurchaseInfo: "Query.Shop.Get_Purchase_Info",
 
   /**
- * **Set Inventory Item Drop Content** `(Execution.Inventory.Set_Drop_Items)`
+ * **设置背包道具掉落内容** `(Execution.Inventory.Set_Drop_Items)`
  *
- * - Configure the Inventory Item drop data in Dictionary format, and specify the Drop Type
+ * - 以字典形式设置背包道具掉落内容，并可以设置掉落类型
  *
  * -----------
  *
@@ -11634,9 +11632,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `owner_entity` || Inventory Owner Entity |
- * | 1 || 🔹 || `D<Cfg,Int>` || `item_drop_dict` || Item Drop Dictionary |
- * | 2 || 🔹 || `E<LOOT>` || `drop_type` || Loot Type: Types: Shared Reward (one share for all), Individualized Reward (one share per person) |
+ * | 0 || 🔹 || `Ety` || `owner_entity` || 背包持有者实体 |
+ * | 1 || 🔹 || `D<Cfg,Int>` || `item_drop_dict` || 道具掉落字典 |
+ * | 2 || 🔹 || `E<LOOT>` || `drop_type` || 掉落类型: 分为全员一份、每人一份 |
  *
  * -----------
  *
@@ -11648,9 +11646,9 @@ export const NODES = {
   Execution_Inventory_SetDropItems: "Execution.Inventory.Set_Drop_Items",
 
   /**
- * **Get all basic items from Inventory** `(Query.Item.Get_Basic_Items)`
+ * **获取背包所有基础道具** `(Query.Item.Get_Basic_Items)`
  *
- * - Returns all Basic Items in the Inventory, including Item types and their quantities
+ * - 获取背包所有基础道具，包括道具类型和对应的数量
  *
  * -----------
  *
@@ -11663,21 +11661,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `owner` || Inventory Owner Entity |
+ * | 0 || 🔹 || `Ety` || `owner` || 背包持有者实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `D<Cfg,Int>` || `basic_dict` || Basic Item Dictionary |
+ * | 0 || 🔸 || `D<Cfg,Int>` || `basic_dict` || 基础道具字典 |
  */
   Query_Item_GetBasicItems: "Query.Item.Get_Basic_Items",
 
   /**
- * **Get All Currency From Inventory** `(Query.Item.Get_Currency_All)`
+ * **获取背包所有货币** `(Query.Item.Get_Currency_All)`
  *
- * - Returns all Currencies in the Inventory, including types and corresponding amounts
+ * - 获取背包所有货币，包括货币类型和对应的数量
  *
  * -----------
  *
@@ -11690,21 +11688,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `owner` || Inventory Owner Entity |
+ * | 0 || 🔹 || `Ety` || `owner` || 背包持有者实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `D<Cfg,Int>` || `coins` || Currency Dictionary |
+ * | 0 || 🔸 || `D<Cfg,Int>` || `coins` || 货币字典 |
  */
   Query_Item_GetCurrencyAll: "Query.Item.Get_Currency_All",
 
   /**
- * **Get all equipment from Inventory** `(Query.Item.Get_Equipment_All)`
+ * **获取背包所有装备** `(Query.Item.Get_Equipment_All)`
  *
- * - Returns all Equipment in the Inventory; the output parameter is a list of all Equipment IDs
+ * - 获取背包所有装备，出参为所有装备索引组成的列表
  *
  * -----------
  *
@@ -11717,21 +11715,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `owner` || Inventory Owner Entity |
+ * | 0 || 🔹 || `Ety` || `owner` || 背包持有者实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `equip_index_list` || Equipment Index List |
+ * | 0 || 🔸 || `L<Int>` || `equip_index_list` || 装备索引列表 |
  */
   Query_Item_GetEquipmentAll: "Query.Item.Get_Equipment_All",
 
   /**
- * **Trigger Loot Drop** `(Execution.Inventory.Trigger_Drop)`
+ * **触发战利品掉落** `(Execution.Inventory.Trigger_Drop)`
  *
- * - Triggers a loot drop for the dropper entity, with configurable loot type.
+ * - 对掉落者实体触发一次战利品掉落，可设置其掉落类型
  *
  * -----------
  *
@@ -11745,8 +11743,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `dropper_entity` || Dropper Entity |
- * | 1 || 🔹 || `E<LOOT>` || `drop_type` || Loot Type: Types: Shared Reward (one share for all), Individualized Reward (one share per person) |
+ * | 0 || 🔹 || `Ety` || `dropper_entity` || 掉落者实体 |
+ * | 1 || 🔹 || `E<LOOT>` || `drop_type` || 掉落类型: 分为全员一份、每人一份 |
  *
  * -----------
  *
@@ -11758,9 +11756,9 @@ export const NODES = {
   Execution_Inventory_TriggerDrop: "Execution.Inventory.Trigger_Drop",
 
   /**
- * **Set Loot Drop Content** `(Execution.Inventory.Set_Loot_Content)`
+ * **设置战利品掉落内容** `(Execution.Inventory.Set_Loot_Content)`
  *
- * - Configure the Loot drop data in the Loot Component on the Dropper Entity in Dictionary format
+ * - 以字典形式设置掉落者实体上战利品组件中战利品的掉落内容
  *
  * -----------
  *
@@ -11774,8 +11772,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `dropper_entity` || Dropper Entity |
- * | 1 || 🔹 || `D<Cfg,Int>` || `loot_dict` || Loot Drop Dictionary |
+ * | 0 || 🔹 || `Ety` || `dropper_entity` || 掉落者实体 |
+ * | 1 || 🔹 || `D<Cfg,Int>` || `loot_dict` || 战利品掉落字典 |
  *
  * -----------
  *
@@ -11787,9 +11785,9 @@ export const NODES = {
   Execution_Inventory_SetLootContent: "Execution.Inventory.Set_Loot_Content",
 
   /**
- * **Modify Loot Item Component Quantity** `(Execution.Inventory.Modify_Loot_Item)`
+ * **修改掉落物组件道具数量** `(Execution.Inventory.Modify_Loot_Item)`
  *
- * - Edit the quantity of the specified Item in the Loot Component on the Loot Prefab
+ * - 修改掉落物元件上掉落物组件内指定道具的数量
  *
  * -----------
  *
@@ -11803,9 +11801,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `drop_entity` || Loot Entity |
- * | 1 || 🔹 || `Cfg` || `item_config_id` || Item Config ID |
- * | 2 || 🔹 || `Int` || `item_count` || Change Value: New Value = Original Value + Change Value |
+ * | 0 || 🔹 || `Ety` || `drop_entity` || 掉落物实体 |
+ * | 1 || 🔹 || `Cfg` || `item_config_id` || 道具配置ID |
+ * | 2 || 🔹 || `Int` || `item_count` || 变更值: 变更后的值=变更前的值+变更值 |
  *
  * -----------
  *
@@ -11817,9 +11815,9 @@ export const NODES = {
   Execution_Inventory_ModifyLootItem: "Execution.Inventory.Modify_Loot_Item",
 
   /**
- * **Modify Loot Component Currency Amount** `(Execution.Inventory.Modify_Loot_Currency)`
+ * **修改掉落物组件货币数量** `(Execution.Inventory.Modify_Loot_Currency)`
  *
- * - Edit the amount of the specified Currency in the Loot Component on the Loot Prefab
+ * - 修改掉落物元件上掉落物组件内指定货币的数量
  *
  * -----------
  *
@@ -11833,9 +11831,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `drop_entity` || Loot Entity |
- * | 1 || 🔹 || `Cfg` || `currency_config_id` || Currency Config ID |
- * | 2 || 🔹 || `Int` || `currency_count` || Change Value: New Value = Original Value + Change Value |
+ * | 0 || 🔹 || `Ety` || `drop_entity` || 掉落物实体 |
+ * | 1 || 🔹 || `Cfg` || `currency_config_id` || 货币配置ID |
+ * | 2 || 🔹 || `Int` || `currency_count` || 变更值: 变更后的值=变更前的值+变更值 |
  *
  * -----------
  *
@@ -11847,9 +11845,9 @@ export const NODES = {
   Execution_Inventory_ModifyLootCurrency: "Execution.Inventory.Modify_Loot_Currency",
 
   /**
- * **Get Loot Component Item Quantity** `(Query.Item.Get_Loot_Item_Amount)`
+ * **获取掉落物组件道具数量** `(Query.Item.Get_Loot_Item_Amount)`
  *
- * - Returns the quantity of Items with the specified Config ID from the Loot Component on the Loot Prefab
+ * - 获取掉落物元件上掉落物组件中特定配置ID的道具数量
  *
  * -----------
  *
@@ -11862,22 +11860,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `drop_entity` || Loot Entity |
- * | 1 || 🔹 || `Cfg` || `item_config_id` || Item Config ID |
+ * | 0 || 🔹 || `Ety` || `drop_entity` || 掉落物实体 |
+ * | 1 || 🔹 || `Cfg` || `item_config_id` || 道具配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `item_count` || Item Quantity |
+ * | 0 || 🔸 || `Int` || `item_count` || 道具数量 |
  */
   Query_Item_GetLootItemAmount: "Query.Item.Get_Loot_Item_Amount",
 
   /**
- * **Get Loot Component Currency Quantity** `(Query.Item.Get_Loot_Currency_Amount)`
+ * **获取凋落物组件货币数量** `(Query.Item.Get_Loot_Currency_Amount)`
  *
- * - Returns the amount of Currency with the specified Config ID from the Loot Component on the Loot Prefab
+ * - 获取掉落物元件上掉落物组件中特定配置ID的货币数量
  *
  * -----------
  *
@@ -11890,22 +11888,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `drop_entity` || Loot Entity |
- * | 1 || 🔹 || `Cfg` || `currency_id` || Currency Config ID |
+ * | 0 || 🔹 || `Ety` || `drop_entity` || 掉落物实体 |
+ * | 1 || 🔹 || `Cfg` || `currency_id` || 货币配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `coin_count` || Currency Amount |
+ * | 0 || 🔸 || `Int` || `coin_count` || 货币数量 |
  */
   Query_Item_GetLootCurrencyAmount: "Query.Item.Get_Loot_Currency_Amount",
 
   /**
- * **Get All Items from Loot Component** `(Query.Item.Get_Loot_Items)`
+ * **获取战利品所有道具** `(Query.Item.Get_Loot_Items)`
  *
- * - Returns all Items from the Loot Component on the Loot Prefab
+ * - 获取掉落物元件上掉落物组件中的所有道具
  *
  * -----------
  *
@@ -11918,21 +11916,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `looter` || Dropper Entity |
+ * | 0 || 🔹 || `Ety` || `looter` || 掉落者实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `D<Cfg,Int>` || `items` || Item Dictionary |
+ * | 0 || 🔸 || `D<Cfg,Int>` || `items` || 道具字典 |
  */
   Query_Item_GetLootItems: "Query.Item.Get_Loot_Items",
 
   /**
- * **Get All Currency from Loot Component** `(Query.Item.Get_Loot_Currency)`
+ * **获取战利品所有货币** `(Query.Item.Get_Loot_Currency)`
  *
- * - Returns all Currencies from the Loot Component on the Loot Prefab
+ * - 获取掉落物元件上掉落物组件中的所有货币
  *
  * -----------
  *
@@ -11945,21 +11943,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `looter` || Dropper Entity |
+ * | 0 || 🔹 || `Ety` || `looter` || 掉落者实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `D<Cfg,Int>` || `coins` || Currency Dictionary |
+ * | 0 || 🔸 || `D<Cfg,Int>` || `coins` || 货币字典 |
  */
   Query_Item_GetLootCurrency: "Query.Item.Get_Loot_Currency",
 
   /**
- * **Get All Equipment from Loot Component** `(Query.Item.Get_Loot_Equipment)`
+ * **获取掉落物件所有装备** `(Query.Item.Get_Loot_Equipment)`
  *
- * - Returns all Equipment from the Loot Component on the Loot Prefab
+ * - 获取掉落物元件上掉落物组件中的所有装备
  *
  * -----------
  *
@@ -11972,21 +11970,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `drop_entity` || Loot Entity |
+ * | 0 || 🔹 || `Ety` || `drop_entity` || 掉落物实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `equip_index_list` || Equipment Index List |
+ * | 0 || 🔸 || `L<Int>` || `equip_index_list` || 装备索引列表 |
  */
   Query_Item_GetLootEquipment: "Query.Item.Get_Loot_Equipment",
 
   /**
- * **When Items in the Inventory Are Used** `(Trigger.Item.On_Item_Use)`
+ * **背包内道具被使用时** `(Trigger.Item.On_Item_Use)`
  *
- * - This event is triggered when an Item in the Inventory is used. The Owner of the Inventory Component will receive it
+ * - 背包内道具被使用时触发该事件，背包组件的持有者可以收到
  *
  * -----------
  *
@@ -12000,17 +11998,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Item Owner Entity |
- * | 1 || 🔸 || `Gid` || `owner_guid` || Item Owner GUID |
- * | 2 || 🔸 || `Cfg` || `item_config_id` || Item Config ID |
- * | 3 || 🔸 || `Int` || `use_count` || Amount to Use |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 道具持有者实体 |
+ * | 1 || 🔸 || `Gid` || `owner_guid` || 道具持有者GUID |
+ * | 2 || 🔸 || `Cfg` || `item_config_id` || 道具配置ID |
+ * | 3 || 🔸 || `Int` || `use_count` || 使用数量 |
  */
   Trigger_Item_OnItemUse: "Trigger.Item.On_Item_Use",
 
   /**
- * **Query Equipment Tag List** `(Query.Equipment.Get_Tags)`
+ * **查询装备标签列表** `(Query.Equipment.Get_Tags)`
  *
- * - Searches the list of all Tags on this Equipment instance
+ * - 查询该装备实例的所有标签组成的列表
  *
  * -----------
  *
@@ -12023,21 +12021,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment Index |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Cfg>` || `tags` || Tag List |
+ * | 0 || 🔸 || `L<Cfg>` || `tags` || 标签列表 |
  */
   Query_Equipment_GetTags: "Query.Equipment.Get_Tags",
 
   /**
- * **Set Scan Tag Rules** `(Execution.Scan_Tag.Set_Rules)`
+ * **设置扫描标签的规则** `(Execution.Scan_Tag.Set_Rules)`
  *
- * - Configure rules for Scan Tags. The scanning logic is executed based on the configured rules
+ * - 设置扫描标签的规则，会以设置好的规则执行扫描标签的逻辑
  *
  * -----------
  *
@@ -12051,8 +12049,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `E<STPT>` || `rule_type` || Rule Type: Options: Prioritize View or Prioritize Distance |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `E<STPT>` || `rule_type` || 规则类型: 分为视野优先、距离优先 |
  *
  * -----------
  *
@@ -12064,9 +12062,9 @@ export const NODES = {
   Execution_ScanTag_SetRules: "Execution.Scan_Tag.Set_Rules",
 
   /**
- * **Set Scan Component's Active Scan Tag ID** `(Execution.Scan_Tag.Set_Active_Tag)`
+ * **设置扫描组件的生效扫描标签序号** `(Execution.Scan_Tag.Set_Active_Tag)`
  *
- * - Set the Scan Tag with the specified ID in the Target Entity's Scan Tag Component to the active state
+ * - 将目标实体的扫描标签组件中对应序号的扫描标签设置为生效
  *
  * -----------
  *
@@ -12080,8 +12078,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `tag_index` || Scan Tag ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `tag_index` || 扫描标签序号 |
  *
  * -----------
  *
@@ -12093,9 +12091,9 @@ export const NODES = {
   Execution_ScanTag_SetActiveTag: "Execution.Scan_Tag.Set_Active_Tag",
 
   /**
- * **Get the Currently Active Scan Tag Config ID** `(Query.Scan_Tag.Get_Active_Tag)`
+ * **获取当前生效的扫描标签配置ID** `(Query.Scan_Tag.Get_Active_Tag)`
  *
- * - Returns the Configuration ID of the currently active Scan Tags on the Target Entity
+ * - 获取目标实体上当前生效的扫描标签的配置ID
  *
  * -----------
  *
@@ -12108,21 +12106,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Cfg` || `config_id` || Scan Tag Config ID |
+ * | 0 || 🔸 || `Cfg` || `config_id` || 扫描标签配置ID |
  */
   Query_ScanTag_GetActiveTag: "Query.Scan_Tag.Get_Active_Tag",
 
   /**
- * **Get Character Attribute** `(Query.Entity_Related.Get_Character_Attr)`
+ * **获取角色属性** `(Query.Entity_Related.Get_Character_Attr)`
  *
- * - Returns the Base Attributes of the Character Entity
+ * - 获取角色实体的基础属性
  *
  * -----------
  *
@@ -12135,30 +12133,30 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `level` || Level |
- * | 1 || 🔸 || `Flt` || `hp_cur` || Current HP |
- * | 2 || 🔸 || `Flt` || `hp_max` || Max HP |
- * | 3 || 🔸 || `Flt` || `atk_cur` || Current ATK |
- * | 4 || 🔸 || `Flt` || `atk_base` || Base ATK |
- * | 5 || 🔸 || `Flt` || `def_cur` || Current DEF |
- * | 6 || 🔸 || `Flt` || `def_base` || Base DEF |
- * | 7 || 🔸 || `Flt` || `poise_max` || Interrupt Value Threshold |
- * | 8 || 🔸 || `Flt` || `poise_cur` || Current Interrupt Value |
- * | 9 || 🔸 || `E<CIRS>` || `poise_state` || Current Interrupt Status |
+ * | 0 || 🔸 || `Int` || `level` || 等级 |
+ * | 1 || 🔸 || `Flt` || `hp_cur` || 当前生命值 |
+ * | 2 || 🔸 || `Flt` || `hp_max` || 上限生命值 |
+ * | 3 || 🔸 || `Flt` || `atk_cur` || 当前攻击力 |
+ * | 4 || 🔸 || `Flt` || `atk_base` || 基础攻击力 |
+ * | 5 || 🔸 || `Flt` || `def_cur` || 当前防御力 |
+ * | 6 || 🔸 || `Flt` || `def_base` || 基础防御力 |
+ * | 7 || 🔸 || `Flt` || `poise_max` || 受打断值上限 |
+ * | 8 || 🔸 || `Flt` || `poise_cur` || 当前受打断值 |
+ * | 9 || 🔸 || `E<CIRS>` || `poise_state` || 当前受打断状态 |
  */
   Query_EntityRelated_GetCharacterAttr: "Query.Entity_Related.Get_Character_Attr",
 
   /**
- * **Set Character Skill CD** `(Execution.Skill.Set_CD)`
+ * **设置角色技能冷却** `(Execution.Skill.Set_CD)`
  *
- * - Directly set the cooldown of a specific Skill Slot on the Target Character to a specified value
+ * - 直接设置目标角色某个技能槽位的冷却为指定值
  *
  * -----------
  *
@@ -12172,10 +12170,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || Character Skill Slot: The Skill Slot to edited: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
- * | 2 || 🔹 || `Flt` || `remain_seconds` || Remaining CD Time: Edited Cooldown will be set to this input value |
- * | 3 || 🔹 || `Bol` || `limit_max` || Limit Maximum CD Time: If set to True, the edited Cooldown cannot be less than the specified minimum value |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || 角色技能槽位: 要修改的技能所在的槽位，分为普通攻击、技能1-E、技能2-Q、技能3-R、技能4-T和自定义技能 |
+ * | 2 || 🔹 || `Flt` || `remain_seconds` || 冷却剩余时间: 修改后的冷却时间为该输入值 |
+ * | 3 || 🔹 || `Bol` || `limit_max` || 是否限制最大冷却时间: 为“是”可以限制修改后的冷却时间不小于所限制的值 |
  *
  * -----------
  *
@@ -12187,9 +12185,9 @@ export const NODES = {
   Execution_Skill_SetCD: "Execution.Skill.Set_CD",
 
   /**
- * **Modify Character Skill CD** `(Execution.Skill.Modify_CD)`
+ * **修改角色技能冷却** `(Execution.Skill.Modify_CD)`
  *
- * - Edit the cooldown of the specified Skill Slot on the Target Character. The edit value is added to the current cooldown and can be negative
+ * - 修改目标角色某个技能槽位的冷却，会在当前冷却时间上加修改值，修改值可以为负数
  *
  * -----------
  *
@@ -12203,10 +12201,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || Character Skill Slot: The Skill Slot to edited: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
- * | 2 || 🔹 || `Flt` || `delta_seconds` || CD Modifier: New Value = Original Value + Edit Value |
- * | 3 || 🔹 || `Bol` || `limit_max` || Limit Maximum CD Time: If set to True, the edited Cooldown cannot be less than the specified minimum value |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || 角色技能槽位: 要修改的技能所在的槽位，分为普通攻击、技能1-E、技能2-Q、技能3-R、技能4-T和自定义技能 |
+ * | 2 || 🔹 || `Flt` || `delta_seconds` || 冷却时间修改值: 修改后的值为：原值+修改值 |
+ * | 3 || 🔹 || `Bol` || `limit_max` || 是否限制最大冷却时间: 为“是”可以限制修改后的冷却时间不小于所限制的值 |
  *
  * -----------
  *
@@ -12218,9 +12216,9 @@ export const NODES = {
   Execution_Skill_ModifyCD: "Execution.Skill.Modify_CD",
 
   /**
- * **Modify Skill CD Percentage Based on Max CD** `(Execution.Skill.Modify_CD_Ratio)`
+ * **按最大冷却时间修改技能冷却百分比** `(Execution.Skill.Modify_CD_Ratio)`
  *
- * - Edit the cooldown percentage of a skill in a Character's Skill Slot based on its maximum cooldown
+ * - 通过技能最大冷却时间的百分比来修改角色某个技能槽位内的技能
  *
  * -----------
  *
@@ -12234,10 +12232,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Character Entity |
- * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || Character Skill Slot: The Skill Slot to edited: Normal Attack, Skill 1-E, Skill 2-Q, Skill 3-R, Skill 4-T, or Custom Skill |
- * | 2 || 🔹 || `Flt` || `ratio_delta` || Cooldown Ratio Modifier: Actual Cooldown after Editing = Original Cooldown × Cooldown Ratio Edit Value |
- * | 3 || 🔹 || `Bol` || `limit_max` || Limit Maximum CD Time: If set to True, the edited Cooldown cannot be less than the specified minimum value |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的角色实体 |
+ * | 1 || 🔹 || `E<SLOT>` || `skill_slot` || 角色技能槽位: 要修改的技能所在的槽位，分为普通攻击、技能1-E、技能2-Q、技能3-R、技能4-T和自定义技能 |
+ * | 2 || 🔹 || `Flt` || `ratio_delta` || 冷却比例修改值: 修改后的实际冷却时间为：原冷却时间*冷却比例修改值 |
+ * | 3 || 🔹 || `Bol` || `limit_max` || 是否限制最大冷却时间: 为“是”可以限制修改后的冷却时间不小于所限制的值 |
  *
  * -----------
  *
@@ -12249,9 +12247,9 @@ export const NODES = {
   Execution_Skill_ModifyCDRatio: "Execution.Skill.Modify_CD_Ratio",
 
   /**
- * **Add Affix to Equipment at Specified ID** `(Execution.Equipment.Add_Affix_By_ID)`
+ * **装备指定序号添加词条** `(Execution.Equipment.Add_Affix_By_ID)`
  *
- * - Add a preconfigured Affix at the specified Affix ID on the Equipment instance, with the option to overwrite the Affix value
+ * - 对指定装备实例的指定词条序号位置添加预先配置好的词条，可以覆写词条的数值
  *
  * -----------
  *
@@ -12265,11 +12263,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment ID: Integer ID generated during Equipment Initialization to identify the equipment instance |
- * | 1 || 🔹 || `Cfg` || `affix_config_id` || Affix Config ID: The Config ID of the preconfigured Affix defined in Equipment Data Management |
- * | 2 || 🔹 || `Int` || `insert_index` || Insert ID |
- * | 3 || 🔹 || `Bol` || `overwrite` || Overwrite Affix Value |
- * | 4 || 🔹 || `Flt` || `affix_value` || Affix Value: Can overwrite the value on a pre-configured Affix |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引: 【装备初始化】时生成的整数型索引来标识该装备实例 |
+ * | 1 || 🔹 || `Cfg` || `affix_config_id` || 词条配置ID: 装备数据管理中预先配置好的词条的对应配置ID |
+ * | 2 || 🔹 || `Int` || `insert_index` || 插入序号 |
+ * | 3 || 🔹 || `Bol` || `overwrite` || 是否覆写词条值 |
+ * | 4 || 🔹 || `Flt` || `affix_value` || 词条数值: 可以覆写预先配置好的词条上的数值 |
  *
  * -----------
  *
@@ -12281,9 +12279,9 @@ export const NODES = {
   Execution_Equipment_AddAffixByID: "Execution.Equipment.Add_Affix_By_ID",
 
   /**
- * **Random Deck Selector Selection List** `(Execution.Deck_Selector.Get_Random_List)`
+ * **随机卡牌选择器选择列表** `(Execution.Deck_Selector.Get_Random_List)`
  *
- * - Randomly sort the input List
+ * - 将输入的列表进行随机排序
  *
  * -----------
  *
@@ -12297,7 +12295,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `L<Int>` || `selection_list` || List |
+ * | 0 || 🔹 || `L<Int>` || `selection_list` || 列表 |
  *
  * -----------
  *
@@ -12309,9 +12307,9 @@ export const NODES = {
   Execution_DeckSelector_GetRandomList: "Execution.Deck_Selector.Get_Random_List",
 
   /**
- * **Get Owner Entity** `(Query.Entity_Related.Get_Owner)`
+ * **获取拥有者实体** `(Query.Entity_Related.Get_Owner)`
  *
- * - Returns the Owner Entity of the specified Target Entity
+ * - 获取指定目标实体的拥有者实体
  *
  * -----------
  *
@@ -12324,21 +12322,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `owner_entity` || Owner Entity |
+ * | 0 || 🔸 || `Ety` || `owner_entity` || 拥有者实体 |
  */
   Query_EntityRelated_GetOwner: "Query.Entity_Related.Get_Owner",
 
   /**
- * **Get List of Entities Owned by the Entity** `(Query.Entity_Related.Get_Owned_Entities)`
+ * **获取实体拥有的实体列表** `(Query.Entity_Related.Get_Owned_Entities)`
  *
- * - Returns a list of all Entities owned by the Target Entity
+ * - 获取所有以目标实体为拥有者的实体组成的列表
  *
  * -----------
  *
@@ -12351,21 +12349,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `entities` || Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `entities` || 实体列表 |
  */
   Query_EntityRelated_GetOwnedEntities: "Query.Entity_Related.Get_Owned_Entities",
 
   /**
- * **Query Unit Status Stacks by Slot ID** `(Query.Unit_Status.Get_Status_Stacks)`
+ * **根据槽位序号查询单位状态层数** `(Query.Unit_Status.Get_Status_Stacks)`
  *
- * - Searches the Stack Count of the specified Unit Status on the Target Entity's designated Slot
+ * - 查询目标实体指定槽位上的特定单位状态的层数
  *
  * -----------
  *
@@ -12378,23 +12376,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Query Target Entity |
- * | 1 || 🔹 || `Cfg` || `config_id` || Unit Status Config ID |
- * | 2 || 🔹 || `Int` || `slot_index` || Slot ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 查询目标实体 |
+ * | 1 || 🔹 || `Cfg` || `config_id` || 单位状态配置ID |
+ * | 2 || 🔹 || `Int` || `slot_index` || 槽位序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `layers` || Stacks |
+ * | 0 || 🔸 || `Int` || `layers` || 层数 |
  */
   Query_UnitStatus_GetStatusStacks: "Query.Unit_Status.Get_Status_Stacks",
 
   /**
- * **Query Unit Status Applier by Slot ID** `(Query.Unit_Status.Get_Status_Applier)`
+ * **根据槽位序号查询单位状态施加者** `(Query.Unit_Status.Get_Status_Applier)`
  *
- * - Searches the Applier of the specified Unit Status on the Target Entity's designated Slot
+ * - 查询目标实体指定槽位上的特定单位状态的施加者
  *
  * -----------
  *
@@ -12407,23 +12405,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Query Target Entity |
- * | 1 || 🔹 || `Cfg` || `config_id` || Unit Status Config ID |
- * | 2 || 🔹 || `Int` || `slot_index` || Slot ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 查询目标实体 |
+ * | 1 || 🔹 || `Cfg` || `config_id` || 单位状态配置ID |
+ * | 2 || 🔹 || `Int` || `slot_index` || 槽位序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `applier` || Applier Entity |
+ * | 0 || 🔸 || `Ety` || `applier` || 施加者实体 |
  */
   Query_UnitStatus_GetStatusApplier: "Query.Unit_Status.Get_Status_Applier",
 
   /**
- * **List of Slot IDs Querying Unit Status** `(Query.Unit_Status.Get_Status_Slots)`
+ * **查询单位状态的槽位序号列表** `(Query.Unit_Status.Get_Status_Slots)`
  *
- * - Searches the list of all Slot IDs for the Unit Status with the specified Config ID on the Target Entity
+ * - 查询指定目标实体上特定配置ID的单位状态的所有槽位序号列表
  *
  * -----------
  *
@@ -12436,22 +12434,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Query Target Entity |
- * | 1 || 🔹 || `Cfg` || `config_id` || Unit Status Config ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 查询目标实体 |
+ * | 1 || 🔹 || `Cfg` || `config_id` || 单位状态配置ID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `slot_index_list` || Slot ID List |
+ * | 0 || 🔸 || `L<Int>` || `slot_index_list` || 槽位序号列表 |
  */
   Query_UnitStatus_GetStatusSlots: "Query.Unit_Status.Get_Status_Slots",
 
   /**
- * **Query Equipment Config ID by Equipment ID** `(Query.Equipment.Get_Config_ID)`
+ * **根据装备索引查询装备配置ID** `(Query.Equipment.Get_Config_ID)`
  *
- * - Searches the Equipment Config ID by Equipment ID. The Equipment Instance ID can be obtained in the [Equipment Initialization] event
+ * - 根据装备索引查询装备配置ID，装备实例的索引可以在【装备初始化】事件中获取到
  *
  * -----------
  *
@@ -12464,21 +12462,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `equip_index` || Equipment Index |
+ * | 0 || 🔹 || `Int` || `equip_index` || 装备索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Cfg` || `equip_config_id` || Equipment Config ID |
+ * | 0 || 🔸 || `Cfg` || `equip_config_id` || 装备配置ID |
  */
   Query_Equipment_GetConfigID: "Query.Equipment.Get_Config_ID",
 
   /**
- * **Get Player GUID by Player ID** `(Query.Character_Related.Get_GUID_By_ID)`
+ * **根据玩家序号获取玩家GUID** `(Query.Character_Related.Get_GUID_By_ID)`
  *
- * - Returns the Player GUID based on Player ID, where the ID indicates which Player they are
+ * - 根据玩家序号获取玩家GUID，玩家序号即该玩家为玩家几
  *
  * -----------
  *
@@ -12491,21 +12489,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `player_index` || Player ID |
+ * | 0 || 🔹 || `Int` || `player_index` || 玩家序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Gid` || `player_guid` || Player GUID |
+ * | 0 || 🔸 || `Gid` || `player_guid` || 玩家GUID |
  */
   Query_CharacterRelated_GetGUIDByID: "Query.Character_Related.Get_GUID_By_ID",
 
   /**
- * **Get Player ID by Player GUID** `(Query.Character_Related.Get_ID_By_GUID)`
+ * **根据玩家GUID获取玩家序号** `(Query.Character_Related.Get_ID_By_GUID)`
  *
- * - Returns the Player ID based on Player GUID, where the ID indicates which Player they are
+ * - 根据玩家GUID获取玩家序号，玩家序号即该玩家为玩家几
  *
  * -----------
  *
@@ -12518,21 +12516,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Gid` || `player_guid` || Player GUID |
+ * | 0 || 🔹 || `Gid` || `player_guid` || 玩家GUID |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `player_index` || Player ID |
+ * | 0 || 🔸 || `Int` || `player_index` || 玩家序号 |
  */
   Query_CharacterRelated_GetIDByGUID: "Query.Character_Related.Get_ID_By_GUID",
 
   /**
- * **Calculate formatted time from timestamp** `(Arithmetic.Math.Timestamp_To_Time)`
+ * **根据时间戳计算格式化时间** `(Arithmetic.Math.Timestamp_To_Time)`
  *
- * - Converts a timestamp to formatted time
+ * - 根据输入的时间戳将其转化为格式化时间
  *
  * -----------
  *
@@ -12545,26 +12543,26 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `timestamp` || Timestamp |
+ * | 0 || 🔹 || `Int` || `timestamp` || 时间戳 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `year` || Year |
- * | 1 || 🔸 || `Int` || `month` || Month |
- * | 2 || 🔸 || `Int` || `day` || Day |
- * | 3 || 🔸 || `Int` || `hour` || Hour |
- * | 4 || 🔸 || `Int` || `minute` || Minute |
- * | 5 || 🔸 || `Int` || `second` || Second |
+ * | 0 || 🔸 || `Int` || `year` || 年 |
+ * | 1 || 🔸 || `Int` || `month` || 月 |
+ * | 2 || 🔸 || `Int` || `day` || 日 |
+ * | 3 || 🔸 || `Int` || `hour` || 时 |
+ * | 4 || 🔸 || `Int` || `minute` || 分 |
+ * | 5 || 🔸 || `Int` || `second` || 秒 |
  */
   Arithmetic_Math_TimestampToTime: "Arithmetic.Math.Timestamp_To_Time",
 
   /**
- * **Calculate Timestamp From Formatted Time** `(Arithmetic.Math.Time_To_Timestamp)`
+ * **根据格式化时间计算时间戳** `(Arithmetic.Math.Time_To_Timestamp)`
  *
- * - Converts a formatted time to a timestamp
+ * - 根据输入的格式化时间将其转化为时间戳
  *
  * -----------
  *
@@ -12577,26 +12575,26 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `year` || Year |
- * | 1 || 🔹 || `Int` || `month` || Month |
- * | 2 || 🔹 || `Int` || `day` || Day |
- * | 3 || 🔹 || `Int` || `hour` || Hour |
- * | 4 || 🔹 || `Int` || `minute` || Minute |
- * | 5 || 🔹 || `Int` || `second` || Second |
+ * | 0 || 🔹 || `Int` || `year` || 年 |
+ * | 1 || 🔹 || `Int` || `month` || 月 |
+ * | 2 || 🔹 || `Int` || `day` || 日 |
+ * | 3 || 🔹 || `Int` || `hour` || 时 |
+ * | 4 || 🔹 || `Int` || `minute` || 分 |
+ * | 5 || 🔹 || `Int` || `second` || 秒 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `timestamp` || Timestamp |
+ * | 0 || 🔸 || `Int` || `timestamp` || 时间戳 |
  */
   Arithmetic_Math_TimeToTimestamp: "Arithmetic.Math.Time_To_Timestamp",
 
   /**
- * **Calculate day of the week from timestamp** `(Arithmetic.Math.Timestamp_To_Weekday)`
+ * **根据时间戳计算星期几** `(Arithmetic.Math.Timestamp_To_Weekday)`
  *
- * - Converts a timestamp to the day of the week
+ * - 根据输入的时间戳将其转化为星期几
  *
  * -----------
  *
@@ -12609,21 +12607,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `timestamp` || Timestamp |
+ * | 0 || 🔹 || `Int` || `timestamp` || 时间戳 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `weekday` || Weekday |
+ * | 0 || 🔸 || `Int` || `weekday` || 星期 |
  */
   Arithmetic_Math_TimestampToWeekday: "Arithmetic.Math.Timestamp_To_Weekday",
 
   /**
- * **Query Timestamp (UTC+0)** `(Query.Math.Get_Timestamp)`
+ * **查询时间戳（UTC+0时区）** `(Query.Math.Get_Timestamp)`
  *
- * - Searches the current timestamp
+ * - 可以查询当前的时间戳
  *
  * -----------
  *
@@ -12636,14 +12634,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `timestamp` || Timestamp |
+ * | 0 || 🔸 || `Int` || `timestamp` || 时间戳 |
  */
   Query_Math_GetTimestamp: "Query.Math.Get_Timestamp",
 
   /**
- * **Query Server Time Zone** `(Query.Math.Get_Timezone)`
+ * **查询服务器时区** `(Query.Math.Get_Timezone)`
  *
- * - Searches the Server's timezone
+ * - 可以查询服务器的时区
  *
  * -----------
  *
@@ -12656,14 +12654,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `timezone` || Time Zone |
+ * | 0 || 🔸 || `Int` || `timezone` || 时区 |
  */
   Query_Math_GetTimezone: "Query.Math.Get_Timezone",
 
   /**
- * **Create Prefab Group** `(Execution.Entity_Related.Create_Prefab_Group)`
+ * **创建元件组** `(Execution.Entity_Related.Create_Prefab_Group)`
  *
- * - Create the Entities contained in the Prefab Group by Prefab Group ID
+ * - 根据元件组索引创建该元件组内包含的实体
  *
  * -----------
  *
@@ -12677,13 +12675,13 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `component_group_index` || Prefab Group ID: Identifier for this Prefab Group |
- * | 1 || 🔹 || `Vec` || `position` || Location: Absolute Location of the Prefab Group center |
- * | 2 || 🔹 || `Vec` || `rotation` || Rotate: Absolute Rotation of the Prefab Group center |
- * | 3 || 🔹 || `Ety` || `owner_entity` || Owner Entity: Determines whether the entity belongs to another entity after creation |
- * | 4 || 🔹 || `Int` || `level` || Level: Determines the Level when the entity is created |
- * | 5 || 🔹 || `L<Int>` || `unit_tag_indexes` || Unit Tag Index List: Determines the Unit Tags carried when the entity is created |
- * | 6 || 🔹 || `Bol` || `override_level` || Overwrite Level: When set to False, the [Level] parameter has no effect |
+ * | 0 || 🔹 || `Int` || `component_group_index` || 元件组索引: 该元件组的标识 |
+ * | 1 || 🔹 || `Vec` || `position` || 位置: 元件组中心的绝对位置 |
+ * | 2 || 🔹 || `Vec` || `rotation` || 旋转: 元件组中心的绝对旋转 |
+ * | 3 || 🔹 || `Ety` || `owner_entity` || 归属者实体: 可决定创建后实体是否归属于某个实体 |
+ * | 4 || 🔹 || `Int` || `level` || 等级: 决定实体创建时的等级 |
+ * | 5 || 🔹 || `L<Int>` || `unit_tag_indexes` || 单位标签索引列表: 可决定实体创建时携带的单位标签 |
+ * | 6 || 🔹 || `Bol` || `override_level` || 是否覆写等级: 为否时，【等级】参数不生效 |
  *
  * -----------
  *
@@ -12691,14 +12689,14 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `L<Ety>` || `created_entities` || Created Entity List: Entities created in this way do not have a GUID |
+ * | 0 || 🔸 || `L<Ety>` || `created_entities` || 创建后实体列表: 以该方式创建的实体没有GUID |
  */
   Execution_EntityRelated_CreatePrefabGroup: "Execution.Entity_Related.Create_Prefab_Group",
 
   /**
- * **Get Aggro List of Creation in Default Mode** `(Query.Creation.Get_Aggro_List)`
+ * **获取默认模式的造物仇恨列表** `(Query.Creation.Get_Aggro_List)`
  *
- * - Returns the Aggro List in Classic Mode. This Node only outputs a valid list when the Aggro Configuration is set to [Default Type]
+ * - 获取造物的经典仇恨模式的仇恨列表，即仅仇恨配置为【默认类型】时，该节点才会有正确的输出列表
  *
  * -----------
  *
@@ -12711,21 +12709,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `creation` || Creation Entity: Runtime Creation Entity |
+ * | 0 || 🔹 || `Ety` || `creation` || 造物实体: 运行时的造物实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `aggro` || Aggro List: Unordered list of Entities this Creation currently has Aggro against |
+ * | 0 || 🔸 || `L<Ety>` || `aggro` || 仇恨列表: 造物当前对哪些实体有仇恨，该列表是无序的 |
  */
   Query_Creation_GetAggroList: "Query.Creation.Get_Aggro_List",
 
   /**
- * **Set Player Leaderboard Score as an Integer** `(Execution.Leaderboard.Set_Score_Int)`
+ * **以整数设置玩家排行榜分数** `(Execution.Leaderboard.Set_Score_Int)`
  *
- * - Set Player Leaderboard Score (Integer)
+ * - 以整数设置玩家排行榜分数
  *
  * -----------
  *
@@ -12739,9 +12737,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `L<Int>` || `player_index_list` || Player ID List |
- * | 1 || 🔹 || `Int` || `score` || Leaderboard Score |
- * | 2 || 🔹 || `Int` || `board_index` || Leaderboard ID: The ID corresponding to the specified Leaderboard in Peripheral System management |
+ * | 0 || 🔹 || `L<Int>` || `player_index_list` || 玩家序号列表 |
+ * | 1 || 🔹 || `Int` || `score` || 排行榜分数 |
+ * | 2 || 🔹 || `Int` || `board_index` || 排行榜序号: 外围系统管理中指定排行榜对应的序号 |
  *
  * -----------
  *
@@ -12753,9 +12751,9 @@ export const NODES = {
   Execution_Leaderboard_SetScoreInt: "Execution.Leaderboard.Set_Score_Int",
 
   /**
- * **Set Player Leaderboard Score as a Float** `(Execution.Leaderboard.Set_Score_Float)`
+ * **以浮点数设置玩家排行榜分数** `(Execution.Leaderboard.Set_Score_Float)`
  *
- * - Set Player Leaderboard Score (Float)
+ * - 以浮点数设置玩家排行榜分数
  *
  * -----------
  *
@@ -12769,9 +12767,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `L<Int>` || `player_index_list` || Player ID List |
- * | 1 || 🔹 || `Flt` || `score` || Leaderboard Score |
- * | 2 || 🔹 || `Int` || `board_index` || Leaderboard ID: The ID corresponding to the specified Leaderboard in Peripheral System management |
+ * | 0 || 🔹 || `L<Int>` || `player_index_list` || 玩家序号列表 |
+ * | 1 || 🔹 || `Flt` || `score` || 排行榜分数 |
+ * | 2 || 🔹 || `Int` || `board_index` || 排行榜序号: 外围系统管理中指定排行榜对应的序号 |
  *
  * -----------
  *
@@ -12783,9 +12781,9 @@ export const NODES = {
   Execution_Leaderboard_SetScoreFloat: "Execution.Leaderboard.Set_Score_Float",
 
   /**
- * **Modify environment settings** `(Execution.Character_Related.Modify_Environment)`
+ * **修改环境配置** `(Execution.Character_Related.Modify_Environment)`
  *
- * - Apply the specified Environment Configuration to the designated player. Takes effect immediately upon execution
+ * - 使指定玩家应用指定的环境配置，运行后会立即生效
  *
  * -----------
  *
@@ -12799,10 +12797,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `config_index` || Environment Config Index: Identifier for this Environment Configuration |
- * | 1 || 🔹 || `L<Ety>` || `target_players` || Target Player List: Applies only to Players in the specified list |
- * | 2 || 🔹 || `Bol` || `enable_weather_preset` || Enable Weather Config: Set to True to enable |
- * | 3 || 🔹 || `Int` || `weather_preset_index` || Weather Config Index: The Weather Configuration matching this ID will take effect. If the ID does not exist, nothing happens |
+ * | 0 || 🔹 || `Int` || `config_index` || 环境配置索引: 环境配置的标识 |
+ * | 1 || 🔹 || `L<Ety>` || `target_players` || 目标玩家列表: 只对指定玩家列表中的玩家生效 |
+ * | 2 || 🔹 || `Bol` || `enable_weather_preset` || 是否启用天气配置: “是”为启用 |
+ * | 3 || 🔹 || `Int` || `weather_preset_index` || 天气配置序号: 会生效该序号对应的天气配置，不存在该序号则不生效 |
  *
  * -----------
  *
@@ -12814,9 +12812,9 @@ export const NODES = {
   Execution_CharacterRelated_ModifyEnvironment: "Execution.Character_Related.Modify_Environment",
 
   /**
- * **When Player Class Is Removed** `(Trigger.Class.On_Class_Remove)`
+ * **玩家职业解除时** `(Trigger.Class.On_Class_Remove)`
  *
- * - This event is triggered when a Player's Class is removed and sent to the corresponding Player. It can be received in the Node Graph of the previous Class
+ * - 玩家职业解除时触发该事件发送给对应玩家，可以在更改前职业的职业节点图里收到
  *
  * -----------
  *
@@ -12830,17 +12828,17 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Cfg` || `career_config_id_old` || Pre-Modification Class Config ID |
- * | 3 || 🔸 || `Cfg` || `career_config_id_new` || Post-Modification Config ID |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Cfg` || `career_config_id_old` || 更改前职业配置ID |
+ * | 3 || 🔸 || `Cfg` || `career_config_id_new` || 更改后职业配置ID |
  */
   Trigger_Class_OnClassRemove: "Trigger.Class.On_Class_Remove",
 
   /**
- * **When Entering an Interruptible State** `(Trigger.Combat.On_Interruptible)`
+ * **进入易受打断状态时** `(Trigger.Combat.On_Interruptible)`
  *
- * - This event is triggered when an Entity is attacked and enters the Vulnerable Status
+ * - 实体被攻击进入易受打断状态时触发该事件
  *
  * -----------
  *
@@ -12854,16 +12852,16 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Ety` || `attacker` || Attacker |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Ety` || `attacker` || 攻击者 |
  */
   Trigger_Combat_OnInterruptible: "Trigger.Combat.On_Interruptible",
 
   /**
- * **Query Game Mode and Player Number** `(Query.General.Get_Game_Info)`
+ * **查询对局游玩方式及人数** `(Query.General.Get_Game_Info)`
  *
- * - Searches the theoretical number of players entering the match, including players via Matchmaking or Room creation, and the method of entry
+ * - 查询进入对局的理论人数，即参与匹配或开房间的人数和进入对局的方式
  *
  * -----------
  *
@@ -12876,15 +12874,15 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `player_count` || Player Count |
- * | 1 || 🔸 || `E<GMOD>` || `mode` || Gameplay Mode: Includes Playtest, Room Play, and Matchmaking Play |
+ * | 0 || 🔸 || `Int` || `player_count` || 游玩人数 |
+ * | 1 || 🔸 || `E<GMOD>` || `mode` || 游玩方式: 分为试玩、房间游玩、匹配游玩 |
  */
   Query_General_GetGameInfo: "Query.General.Get_Game_Info",
 
   /**
- * **Get Player Nickname** `(Query.Character_Related.Get_Nickname)`
+ * **获取玩家昵称** `(Query.Character_Related.Get_Nickname)`
  *
- * - Returns the Player's nickname
+ * - 获取玩家的昵称
  *
  * -----------
  *
@@ -12897,21 +12895,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Str` || `nickname` || Player Nickname |
+ * | 0 || 🔸 || `Str` || `nickname` || 玩家昵称 |
  */
   Query_CharacterRelated_GetNickname: "Query.Character_Related.Get_Nickname",
 
   /**
- * **Get Player Client Input Device Type** `(Query.Character_Related.Get_Input_Type)`
+ * **获得玩家客户端输入设备类型** `(Query.Character_Related.Get_Input_Type)`
  *
- * - Returns the Player's local input device type, as determined by the Interface mapping method
+ * - 获得玩家的客户端输入设备类型，根据用户界面的映射方式决定
  *
  * -----------
  *
@@ -12924,21 +12922,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `E<IDVT>` || `input_type` || Input Device Type: Includes keyboard/mouse, gamepad, touchscreen |
+ * | 0 || 🔸 || `E<IDVT>` || `input_type` || 输入设备类型: 分为键盘鼠标、手柄、触屏 |
  */
   Query_CharacterRelated_GetInputType: "Query.Character_Related.Get_Input_Type",
 
   /**
- * **Set Chat Channel Switch** `(Execution.Chat_Channel.Set_Switch)`
+ * **设置聊天频道开关** `(Execution.Chat_Channel.Set_Switch)`
  *
- * - Set the Chat Channel switch
+ * - 设置聊天频道的开关
  *
  * -----------
  *
@@ -12952,8 +12950,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Int` || `channel_index` || Channel Index |
- * | 1 || 🔹 || `Bol` || `text_enabled` || Text Switch |
+ * | 0 || 🔹 || `Int` || `channel_index` || 频道索引 |
+ * | 1 || 🔹 || `Bol` || `text_enabled` || 文字开关 |
  *
  * -----------
  *
@@ -12965,9 +12963,9 @@ export const NODES = {
   Execution_ChatChannel_SetSwitch: "Execution.Chat_Channel.Set_Switch",
 
   /**
- * **Modify Player Channel Permission** `(Execution.Chat_Channel.Modify_Permission)`
+ * **修改玩家频道权限** `(Execution.Chat_Channel.Modify_Permission)`
  *
- * - Edit Player Channel Permissions
+ * - 修改玩家频道权限
  *
  * -----------
  *
@@ -12981,9 +12979,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Gid` || `player_guid` || Player GUID |
- * | 1 || 🔹 || `Int` || `channel_index` || Channel Index |
- * | 2 || 🔹 || `Bol` || `join` || Join: If set to True, the channel is available to the specified Player |
+ * | 0 || 🔹 || `Gid` || `player_guid` || 玩家GUID |
+ * | 1 || 🔹 || `Int` || `channel_index` || 频道索引 |
+ * | 2 || 🔹 || `Bol` || `join` || 是否加入: “是”则该频道指定玩家可用 |
  *
  * -----------
  *
@@ -12995,9 +12993,9 @@ export const NODES = {
   Execution_ChatChannel_ModifyPermission: "Execution.Chat_Channel.Modify_Permission",
 
   /**
- * **Set Player's Current Channel** `(Execution.Chat_Channel.Set_Current_Channel)`
+ * **设置玩家当前频道** `(Execution.Chat_Channel.Set_Current_Channel)`
  *
- * - Set the Player's currently available channels. Channels in the list are available to the Player, and channels not in the list are unavailable
+ * - 设置玩家当前可用的频道，在列表中的频道该玩家可用，不在的该玩家不可用
  *
  * -----------
  *
@@ -13011,8 +13009,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Gid` || `player_guid` || Player GUID |
- * | 1 || 🔹 || `L<Int>` || `channel_index_list` || Channel Index List |
+ * | 0 || 🔹 || `Gid` || `player_guid` || 玩家GUID |
+ * | 1 || 🔹 || `L<Int>` || `channel_index_list` || 频道索引列表 |
  *
  * -----------
  *
@@ -13024,9 +13022,9 @@ export const NODES = {
   Execution_ChatChannel_SetCurrentChannel: "Execution.Chat_Channel.Set_Current_Channel",
 
   /**
- * **Consume Gift Box** `(Execution.Wonderland_Box.Consume_Box)`
+ * **消耗礼盒** `(Execution.Wonderland_Box.Consume_Box)`
  *
- * - Consume the specified Player's Wonderland Gift Box
+ * - 可以消耗指定玩家的奇域礼盒
  *
  * -----------
  *
@@ -13040,9 +13038,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
- * | 1 || 🔹 || `Int` || `box_index` || Gift Box Index |
- * | 2 || 🔹 || `Int` || `consume_count` || Consumption Quantity |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
+ * | 1 || 🔹 || `Int` || `box_index` || 礼盒索引 |
+ * | 2 || 🔹 || `Int` || `consume_count` || 消耗数量 |
  *
  * -----------
  *
@@ -13054,9 +13052,9 @@ export const NODES = {
   Execution_WonderlandBox_ConsumeBox: "Execution.Wonderland_Box.Consume_Box",
 
   /**
- * **Query Corresponding Gift Box Quantity** `(Query.Wonderland_Box_Related.Get_Box_Quantity)`
+ * **查询对应礼盒数量** `(Query.Wonderland_Box_Related.Get_Box_Quantity)`
  *
- * - Searches the quantity of the specified Gift Box on the Player Entity
+ * - 查询玩家实体上指定礼盒的数量
  *
  * -----------
  *
@@ -13069,22 +13067,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
- * | 1 || 🔹 || `Int` || `box_index` || Gift Box Index |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
+ * | 1 || 🔹 || `Int` || `box_index` || 礼盒索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `count` || Quantity |
+ * | 0 || 🔸 || `Int` || `count` || 数量 |
  */
   Query_WonderlandBoxRelated_GetBoxQuantity: "Query.Wonderland_Box_Related.Get_Box_Quantity",
 
   /**
- * **Query Corresponding Gift Box Consumption** `(Query.Wonderland_Box_Related.Get_Box_Consumption)`
+ * **查询对应礼盒消耗数量** `(Query.Wonderland_Box_Related.Get_Box_Consumption)`
  *
- * - Searches the consumed quantity of the specified Gift Box on the Player Entity
+ * - 查询玩家实体上指定礼盒的消耗数量
  *
  * -----------
  *
@@ -13097,22 +13095,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player` || Player Entity |
- * | 1 || 🔹 || `Int` || `box_index` || Gift Box Index |
+ * | 0 || 🔹 || `Ety` || `player` || 玩家实体 |
+ * | 1 || 🔹 || `Int` || `box_index` || 礼盒索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `count` || Quantity |
+ * | 0 || 🔸 || `Int` || `count` || 数量 |
  */
   Query_WonderlandBoxRelated_GetBoxConsumption: "Query.Wonderland_Box_Related.Get_Box_Consumption",
 
   /**
- * **Activate Fixed-Point Motion Device** `(Execution.Motion_Device.Activate_Fixed_Point)`
+ * **开启定点运动器** `(Execution.Motion_Device.Activate_Fixed_Point)`
  *
- * - Dynamically add a Fixed-Point Basic Motion Device to the Target Entity during Stage runtime
+ * - 在关卡运行时为目标实体动态添加一个定点运动型基础运动器
  *
  * -----------
  *
@@ -13126,15 +13124,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity: Active Entity |
- * | 1 || 🔹 || `Str` || `mover_name` || Motion Device Name: Identifier for this motion device |
- * | 2 || 🔹 || `E<MOVE>` || `move_mode` || Movement Mode |
- * | 3 || 🔹 || `Flt` || `move_speed` || Movement SPD |
- * | 4 || 🔹 || `Vec` || `target_position` || Target Location: Absolute Location |
- * | 5 || 🔹 || `Vec` || `target_rotation` || Target Rotation: Absolute Rotation |
- * | 6 || 🔹 || `Bol` || `lock_rotation` || Lock Rotation |
- * | 7 || 🔹 || `E<FMPR>` || `param_type` || Parameter Type: Options: Fixed Speed or Fixed Time |
- * | 8 || 🔹 || `Flt` || `move_time` || Movement Time |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体: 生效的实体 |
+ * | 1 || 🔹 || `Str` || `mover_name` || 运动器名称: 该运动器的标识 |
+ * | 2 || 🔹 || `E<MOVE>` || `move_mode` || 移动方式 |
+ * | 3 || 🔹 || `Flt` || `move_speed` || 移动速度 |
+ * | 4 || 🔹 || `Vec` || `target_position` || 目标位置: 绝对位置 |
+ * | 5 || 🔹 || `Vec` || `target_rotation` || 目标旋转: 绝对旋转 |
+ * | 6 || 🔹 || `Bol` || `lock_rotation` || 是否锁定旋转 |
+ * | 7 || 🔹 || `E<FMPR>` || `param_type` || 参数类型: 分为固定速度、固定时间 |
+ * | 8 || 🔹 || `Flt` || `move_time` || 移动时间 |
  *
  * -----------
  *
@@ -13146,9 +13144,9 @@ export const NODES = {
   Execution_MotionDevice_ActivateFixedPoint: "Execution.Motion_Device.Activate_Fixed_Point",
 
   /**
- * **Left Shift Operation** `(Arithmetic.Math.Left_Shift)`
+ * **左移运算** `(Arithmetic.Math.Left_Shift)`
  *
- * - Performs a logical left shift on the input by the specified bit count and outputs the result
+ * - 将输入值作为二进制数逻辑左移一定位数后输出
  *
  * -----------
  *
@@ -13161,23 +13159,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `value` || Value |
- * | 1 || 🔹 || `Int` || `offset` || Left Shift Count |
+ * | 0 || 🔹 || `Int` || `value` || 值 |
+ * | 1 || 🔹 || `Int` || `offset` || 左移位数 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_LeftShift: "Arithmetic.Math.Left_Shift",
 
   /**
- * **Right Shift Operation** `(Arithmetic.Math.Right_Shift)`
+ * **右移运算** `(Arithmetic.Math.Right_Shift)`
  *
- * - Performs a logical right shift on the input by the specified bit count and outputs the result
- * - Performs an arithmetic right shift, preserving the sign bit
+ * - 将输入值作为二进制数逻辑右移一定位数后输出
  *
  * -----------
  *
@@ -13190,22 +13187,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `value` || Value |
- * | 1 || 🔹 || `Int` || `offset` || Right Shift Count |
+ * | 0 || 🔹 || `Int` || `value` || 值 |
+ * | 1 || 🔹 || `Int` || `offset` || 右移位数 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_RightShift: "Arithmetic.Math.Right_Shift",
 
   /**
- * **Bitwise AND** `(Arithmetic.Math.Bitwise_And)`
+ * **按位与** `(Arithmetic.Math.Bitwise_And)`
  *
- * - Performs a bitwise AND operation on the two inputs and returns the result
+ * - 将输入的两个值作为二进制进行按位与运算后返回结果
  *
  * -----------
  *
@@ -13218,22 +13215,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `a` || Value 1 |
- * | 1 || 🔹 || `Int` || `b` || Value 2 |
+ * | 0 || 🔹 || `Int` || `a` || 值1 |
+ * | 1 || 🔹 || `Int` || `b` || 值2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_BitwiseAnd: "Arithmetic.Math.Bitwise_And",
 
   /**
- * **Bitwise OR** `(Arithmetic.Math.Bitwise_Or)`
+ * **按位或** `(Arithmetic.Math.Bitwise_Or)`
  *
- * - Performs a bitwise OR operation on the two inputs and returns the result
+ * - 将输入的两个值作为二进制进行按位或运算后返回结果
  *
  * -----------
  *
@@ -13246,22 +13243,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `a` || Value 1 |
- * | 1 || 🔹 || `Int` || `b` || Value 2 |
+ * | 0 || 🔹 || `Int` || `a` || 值1 |
+ * | 1 || 🔹 || `Int` || `b` || 值2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_BitwiseOr: "Arithmetic.Math.Bitwise_Or",
 
   /**
- * **XOR (Exclusive OR)** `(Arithmetic.Math.Bitwise_Xor)`
+ * **按位异或** `(Arithmetic.Math.Bitwise_Xor)`
  *
- * - Performs a bitwise XOR operation on the two inputs and returns the result
+ * - 将输入的两个值作为二进制进行按位异或运算后返回结果
  *
  * -----------
  *
@@ -13274,22 +13271,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `a` || Value 1 |
- * | 1 || 🔹 || `Int` || `b` || Value 2 |
+ * | 0 || 🔹 || `Int` || `a` || 值1 |
+ * | 1 || 🔹 || `Int` || `b` || 值2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_BitwiseXor: "Arithmetic.Math.Bitwise_Xor",
 
   /**
- * **Bitwise Complement** `(Arithmetic.Math.Bitwise_Not)`
+ * **按位取补** `(Arithmetic.Math.Bitwise_Not)`
  *
- * - Performs a bitwise complement operation on the input and returns the result
+ * - 将输入值作为二进制进行按位取补运算后返回结果
  *
  * -----------
  *
@@ -13302,23 +13299,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `value` || Value |
+ * | 0 || 🔹 || `Int` || `value` || 值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_BitwiseNot: "Arithmetic.Math.Bitwise_Not",
 
   /**
- * **Write by bit** `(Arithmetic.Math.Write_Bit)`
+ * **按位写入** `(Arithmetic.Math.Write_Bit)`
  *
- * - Writes the write value as a binary number to the [start bit, end bit] of the target value (also a binary number). The start bit is indexed from 0, and the write length includes both the start and end bits
- * - If the binary significant length of the write value (counted from the first 1 from the left) exceeds the write length, the write fails and returns the original value
- * - If the write value is negative, it also fails due to exceeding the write length (the first bit of a negative number's binary representation is the sign bit 1)
+ * - 将写入值作为二进制数，写入被写入值（同样作为二进制数）的【起始位，结束位】。起始位从0开始算，写入的值长度包含起始位和结束位
+ * - 如果写入值的二进制有效数字长度（从左起第一个1开始计算）超过写入的长度，则写入失败，返回被写入值
+ * - 如果写入值是负数，也会因为写入值超出长度而写入失败（负数的二进制首位为符号位1）
  *
  * -----------
  *
@@ -13331,24 +13328,24 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `Input0` || Written value |
- * | 1 || 🔹 || `Int` || `Input1` || Write value |
- * | 2 || 🔹 || `Int` || `Input2` || Write starting position |
- * | 3 || 🔹 || `Int` || `Input3` || Write end position |
+ * | 0 || 🔹 || `Int` || `Input0` || 被写入值 |
+ * | 1 || 🔹 || `Int` || `Input1` || 写入值 |
+ * | 2 || 🔹 || `Int` || `Input2` || 写入起始位 |
+ * | 3 || 🔹 || `Int` || `Input3` || 写入结束位 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_WriteBit: "Arithmetic.Math.Write_Bit",
 
   /**
- * **Read by bit** `(Arithmetic.Math.Read_Bit)`
+ * **按位读出** `(Arithmetic.Math.Read_Bit)`
  *
- * - Reads the value from [start bit, end bit] of the value (in binary representation)
+ * - 从值（以二进制表示）的【起始位，结束位】读出值
  *
  * -----------
  *
@@ -13361,23 +13358,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `Input0` || Value |
- * | 1 || 🔹 || `Int` || `Input1` || Read starting position |
- * | 2 || 🔹 || `Int` || `Input2` || Read end position |
+ * | 0 || 🔹 || `Int` || `Input0` || 值 |
+ * | 1 || 🔹 || `Int` || `Input1` || 读出起始位 |
+ * | 2 || 🔹 || `Int` || `Input2` || 读出结束位 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `result` || Result |
+ * | 0 || 🔸 || `Int` || `result` || 结果 |
  */
   Arithmetic_Math_ReadBit: "Arithmetic.Math.Read_Bit",
 
   /**
- * **When Character Movement SPD Meets Condition** `(Trigger.Entity_Related.On_Speed_Condition)`
+ * **角色移动速度达到条件时** `(Trigger.Entity_Related.On_Speed_Condition)`
  *
- * - Adds the Unit Status effect [Monitor Movement Speed] to the Character Entity. This event is triggered when the conditions are met
+ * - 为角色实体添加单位状态效果【监听移动速率】，达成条件会触发该事件
  *
  * -----------
  *
@@ -13391,19 +13388,19 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Ety` || `source_entity` || Event Source Entity |
- * | 1 || 🔸 || `Gid` || `source_guid` || Event Source GUID |
- * | 2 || 🔸 || `Cfg` || `state_config_id` || Unit Status Config ID |
- * | 3 || 🔸 || `E<OCMP>` || `cmp_type` || Condition: Comparison Type |
- * | 4 || 🔸 || `Flt` || `cmp_value` || Condition: Comparison Value |
- * | 5 || 🔸 || `Flt` || `current_speed` || Current Movement SPD |
+ * | 0 || 🔸 || `Ety` || `source_entity` || 事件源实体 |
+ * | 1 || 🔸 || `Gid` || `source_guid` || 事件源GUID |
+ * | 2 || 🔸 || `Cfg` || `state_config_id` || 单位状态配置ID |
+ * | 3 || 🔸 || `E<OCMP>` || `cmp_type` || 条件：比较类型 |
+ * | 4 || 🔸 || `Flt` || `cmp_value` || 条件：比较值 |
+ * | 5 || 🔸 || `Flt` || `current_speed` || 当前移动速度 |
  */
   Trigger_EntityRelated_OnSpeedCondition: "Trigger.Entity_Related.On_Speed_Condition",
 
   /**
- * **Query Character's Current Movement SPD** `(Query.Entity_Related.Get_Move_Speed)`
+ * **查询角色当前移动速度** `(Query.Entity_Related.Get_Move_Speed)`
  *
- * - Can only be searched when the Character has the [Monitor Movement Speed] Unit Status effect
+ * - 仅当角色拥有【监听移动速率】的单位状态效果时，才能查询
  *
  * -----------
  *
@@ -13416,22 +13413,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `character` || Character Entity |
+ * | 0 || 🔹 || `Ety` || `character` || 角色实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `speed` || Current Speed |
- * | 1 || 🔸 || `Vec` || `speed_vector` || Velocity Vector |
+ * | 0 || 🔸 || `Flt` || `speed` || 当前速度 |
+ * | 1 || 🔸 || `Vec` || `speed_vector` || 速度向量 |
  */
   Query_EntityRelated_GetMoveSpeed: "Query.Entity_Related.Get_Move_Speed",
 
   /**
- * **Set or Add Key Value Pairs to Dictionary** `(Execution.Dictionary.Set_Value)`
+ * **对字典设置或新增键值对** `(Execution.Dictionary.Set_Value)`
  *
- * - Add a Key-Value Pair to the specified Dictionary
+ * - 为指定字典新增一个键值对
  *
  * -----------
  *
@@ -13445,9 +13442,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
- * | 1 || 🔷 || **`R<K>`** || `key` || Key |
- * | 2 || 🔷 || **`R<V>`** || `value` || Value |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
+ * | 1 || 🔷 || **`R<K>`** || `key` || 键 |
+ * | 2 || 🔷 || **`R<V>`** || `value` || 值 |
  *
  * -----------
  *
@@ -13594,11 +13591,11 @@ export const NODES = {
   Execution_Dictionary_SetValue: "Execution.Dictionary.Set_Value",
 
   /**
- * **Create Dictionary** `(Arithmetic.Dictionary.Create_Dictionary)`
+ * **建立字典** `(Arithmetic.Dictionary.Create_Dictionary)`
  *
- * - Creates Key-Value Pairs sequentially from the input key and value lists
- * - This node builds the Dictionary using the shorter of the key and value lists; extra items are truncated
- * - If duplicate keys are found in the key list, creation fails and returns an empty Dictionary
+ * - 根据输入的键和值列表的顺序依次建立键值对。
+ * - 此节点会按照键和值列表中较短的一个进行字典创建，多余的部分会被截断
+ * - 如果键列表中存在重复值，则会创建失败，返回空字典
  *
  * -----------
  *
@@ -13611,15 +13608,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<K>>`** || `keys` || Key List |
- * | 1 || 🔷 || **`L<R<V>>`** || `values` || Value List |
+ * | 0 || 🔷 || **`L<R<K>>`** || `keys` || 键列表 |
+ * | 1 || 🔷 || **`L<R<V>>`** || `values` || 值列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
+ * | 0 || 🔶 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Ety,V:Ety>`
@@ -13696,9 +13693,9 @@ export const NODES = {
   Arithmetic_Dictionary_CreateDictionary: "Arithmetic.Dictionary.Create_Dictionary",
 
   /**
- * **Query Dictionary Value by Key** `(Query.Dictionary.Get_Value)`
+ * **以键查询字典值** `(Query.Dictionary.Get_Value)`
  *
- * - Searches the corresponding Value in the Dictionary by Key. If the Key does not exist, returns the type's default value
+ * - 根据键查询字典中对应的值，如果键不存在，则返回类型默认值
  *
  * -----------
  *
@@ -13711,15 +13708,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
- * | 1 || 🔷 || **`R<K>`** || `key` || Key |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
+ * | 1 || 🔷 || **`R<K>`** || `key` || 键 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<V>`** || `value` || Value |
+ * | 0 || 🔶 || **`R<V>`** || `value` || 值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Ety,V:Ety>`
@@ -13859,9 +13856,9 @@ export const NODES = {
   Query_Dictionary_GetValue: "Query.Dictionary.Get_Value",
 
   /**
- * **Remove Key Value Pairs from Dictionary by Key** `(Execution.Dictionary.Remove_By_Key)`
+ * **以键对字典移除键值对** `(Execution.Dictionary.Remove_By_Key)`
  *
- * - Remove Key-Value Pairs from the specified Dictionary by key
+ * - 以键移除指定字典中的键值对
  *
  * -----------
  *
@@ -13875,8 +13872,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
- * | 1 || 🔷 || **`R<K>`** || `key` || Key |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
+ * | 1 || 🔷 || **`R<K>`** || `key` || 键 |
  *
  * -----------
  *
@@ -14023,9 +14020,9 @@ export const NODES = {
   Execution_Dictionary_RemoveByKey: "Execution.Dictionary.Remove_By_Key",
 
   /**
- * **Query If Dictionary Contains Specific Key** `(Query.Dictionary.Has_Key)`
+ * **查询字典是否包含特定键** `(Query.Dictionary.Has_Key)`
  *
- * - Searches whether the specified Dictionary contains the specified Key
+ * - 查询指定字典是否包含特定的键
  *
  * -----------
  *
@@ -14038,15 +14035,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
- * | 1 || 🔷 || **`R<K>`** || `key` || Key |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
+ * | 1 || 🔷 || **`R<K>`** || `key` || 键 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `contains` || Include |
+ * | 0 || 🔸 || `Bol` || `contains` || 是否包含 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Ety,V:Ety>`
@@ -14186,9 +14183,9 @@ export const NODES = {
   Query_Dictionary_HasKey: "Query.Dictionary.Has_Key",
 
   /**
- * **Query If Dictionary Contains Specific Value** `(Query.Dictionary.Has_Value)`
+ * **查询字典是否包含特定值** `(Query.Dictionary.Has_Value)`
  *
- * - Searches whether the specified Dictionary contains the specified Value
+ * - 查询指定字典是否包含特定的值
  *
  * -----------
  *
@@ -14201,15 +14198,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
- * | 1 || 🔷 || **`R<V>`** || `value` || Value |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
+ * | 1 || 🔷 || **`R<V>`** || `value` || 值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `contains` || Include |
+ * | 0 || 🔸 || `Bol` || `contains` || 是否包含 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Ety,V:Ety>`
@@ -14286,9 +14283,9 @@ export const NODES = {
   Query_Dictionary_HasValue: "Query.Dictionary.Has_Value",
 
   /**
- * **Get List of Keys from Dictionary** `(Query.Dictionary.Get_Keys)`
+ * **获取字典中键组成的列表** `(Query.Dictionary.Get_Keys)`
  *
- * - Returns a list of all Keys in the Dictionary. Because Key-Value Pairs are unordered, the Keys may not be returned in insertion order
+ * - 获取字典中所有键组成的列表。由于字典中键值对是无序排列的，所以取出的键列表也不一定按照其插入顺序排列
  *
  * -----------
  *
@@ -14301,14 +14298,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`L<R<K>>`** || `keys` || Key List |
+ * | 0 || 🔶 || **`L<R<K>>`** || `keys` || 键列表 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Ety,V:Ety>`
@@ -14448,9 +14445,9 @@ export const NODES = {
   Query_Dictionary_GetKeys: "Query.Dictionary.Get_Keys",
 
   /**
- * **Get List of Values from Dictionary** `(Query.Dictionary.Get_Values)`
+ * **获取字典中值组成的列表** `(Query.Dictionary.Get_Values)`
  *
- * - Returns a list of all Values in the Dictionary. Because Key-Value Pairs are unordered, the Values may not be returned in insertion order
+ * - 获取字典中所有值组成的列表。由于字典中键值对是无序排列的，所以取出的值列表也不一定按照其插入顺序排列
  *
  * -----------
  *
@@ -14463,14 +14460,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`L<R<V>>`** || `values` || Value List |
+ * | 0 || 🔶 || **`L<R<V>>`** || `values` || 值列表 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Ety,V:Ety>`
@@ -14547,9 +14544,9 @@ export const NODES = {
   Query_Dictionary_GetValues: "Query.Dictionary.Get_Values",
 
   /**
- * **Query Dictionary's Length** `(Query.Dictionary.Get_Length)`
+ * **查询字典长度** `(Query.Dictionary.Get_Length)`
  *
- * - Searches the number of Key-Value Pairs in the Dictionary
+ * - 查询字典中键值对的数量
  *
  * -----------
  *
@@ -14562,14 +14559,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `length` || Length |
+ * | 0 || 🔸 || `Int` || `length` || 长度 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Ety,V:Ety>`
@@ -14709,9 +14706,9 @@ export const NODES = {
   Query_Dictionary_GetLength: "Query.Dictionary.Get_Length",
 
   /**
- * **Clear Dictionary** `(Execution.Dictionary.Clear)`
+ * **清空字典** `(Execution.Dictionary.Clear)`
  *
- * - Clear all Key-Value Pairs from the specified Dictionary
+ * - 清空指定字典的键值对
  *
  * -----------
  *
@@ -14725,7 +14722,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
  *
  * -----------
  *
@@ -14872,7 +14869,7 @@ export const NODES = {
   Execution_Dictionary_Clear: "Execution.Dictionary.Clear",
 
   /**
- * **Assembly Dictionary** `(Arithmetic.Dictionary.Assemble_Dictionary)`
+ * **拼装字典** `(Arithmetic.Dictionary.Assemble_Dictionary)`
  *
  * -----------
  *
@@ -15132,9 +15129,9 @@ export const NODES = {
   Arithmetic_Dictionary_AssembleDictionary: "Arithmetic.Dictionary.Assemble_Dictionary",
 
   /**
- * **Sort Dictionary by Key** `(Execution.Dictionary.Sort_By_Key)`
+ * **对字典按键排序** `(Execution.Dictionary.Sort_By_Key)`
  *
- * - Sort and output the specified Dictionary by keys in ascending or descending order
+ * - 将指定字典按键进行顺序或逆序排序后输出
  *
  * -----------
  *
@@ -15148,8 +15145,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
- * | 1 || 🔹 || `E<SORT>` || `order` || Sort By |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
+ * | 1 || 🔹 || `E<SORT>` || `order` || 排序方式 |
  *
  * -----------
  *
@@ -15157,8 +15154,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔶 || **`L<R<K>>`** || `keys_out` || Key List |
- * | 1 || 🔶 || **`L<R<V>>`** || `values_out` || Value List |
+ * | 0 || 🔶 || **`L<R<K>>`** || `keys_out` || 键列表 |
+ * | 1 || 🔶 || **`L<R<V>>`** || `values_out` || 值列表 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Int,V:Ety>`
@@ -15175,9 +15172,9 @@ export const NODES = {
   Execution_Dictionary_SortByKey: "Execution.Dictionary.Sort_By_Key",
 
   /**
- * **Sort Dictionary by Value** `(Execution.Dictionary.Sort_By_Value)`
+ * **对字典按值排序** `(Execution.Dictionary.Sort_By_Value)`
  *
- * - Sort and output the specified Dictionary by values in ascending or descending order
+ * - 将指定字典按值进行顺序或逆序排序后输出
  *
  * -----------
  *
@@ -15191,8 +15188,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || Dictionary |
- * | 1 || 🔹 || `E<SORT>` || `order` || Sort By |
+ * | 0 || 🔷 || **`D<R<K>,R<V>>`** || `dict` || 字典 |
+ * | 1 || 🔹 || `E<SORT>` || `order` || 排序方式 |
  *
  * -----------
  *
@@ -15200,8 +15197,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔶 || **`L<R<K>>`** || `keys_out` || Key List |
- * | 1 || 🔶 || **`L<R<V>>`** || `values_out` || Value List |
+ * | 0 || 🔶 || **`L<R<K>>`** || `keys_out` || 键列表 |
+ * | 1 || 🔶 || **`L<R<V>>`** || `values_out` || 值列表 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Ety,V:Int>`
@@ -15222,10 +15219,10 @@ export const NODES = {
   Execution_Dictionary_SortByValue: "Execution.Dictionary.Sort_By_Value",
 
   /**
- * **Query Custom Variable Snapshot** `(Query.Custom_Variable.Get_Snapshot)`
+ * **查询自定义变量快照** `(Query.Custom_Variable.Get_Snapshot)`
  *
- * - Searches the value of the specified Variable Name from the Custom Variable Component snapshot
- * - Only available for the [On Entity Destroyed] event
+ * - 从自定义变量组件快照中，查询指定变量名的值
+ * - 仅可用于【实体销毁时】事件
  *
  * -----------
  *
@@ -15238,15 +15235,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vss` || `snapshot` || Custom Variable Component Snapshot |
- * | 1 || 🔹 || `Str` || `var_name` || Variable Name |
+ * | 0 || 🔹 || `Vss` || `snapshot` || 自定义变量组件快照 |
+ * | 1 || 🔹 || `Str` || `var_name` || 变量名 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `value` || Variable Value |
+ * | 0 || 🔶 || **`R<T>`** || `value` || 变量值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15430,10 +15427,10 @@ export const NODES = {
   Hidden_Trigger_OnGMCall: "Hidden.Trigger.On_GM_Call",
 
   /**
- * **Node Graph End (Boolean)** `(Others.Port_Client.Graph_End_Bool)`
+ * **节点图结束（布尔型）** `(Others.Port_Client.Graph_End_Bool)`
  *
- * - End Node for Boolean Local Filter
- * - Outputs True or False as the final result; applies to the referenced logic
+ * - 布尔型本地过滤器的结束节点
+ * - 以布尔型的True或者False作为最终结果，作用于引用的业务
  *
  * -----------
  *
@@ -15446,14 +15443,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `result` || Output Result (Boolean) |
+ * | 0 || 🔹 || `Bol` || `result` || 输出结果（布尔型） |
  */
   Others_PortClient_GraphEndBool: "Others.Port_Client.Graph_End_Bool",
 
   /**
- * **Logical AND Operation** `(Arithmetic.Math_Client.And)`
+ * **逻辑与运算** `(Arithmetic.Math_Client.And)`
  *
- * - Performs a logical AND operation on the two input Boolean values and returns the result
+ * - 对输入的两个布尔值进行与运算后输出
  *
  * -----------
  *
@@ -15466,22 +15463,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `a` || Condition 1 |
- * | 1 || 🔹 || `Bol` || `b` || Condition 2 |
+ * | 0 || 🔹 || `Bol` || `a` || 条件1 |
+ * | 1 || 🔹 || `Bol` || `b` || 条件2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Arithmetic_MathClient_And: "Arithmetic.Math_Client.And",
 
   /**
- * **Logical OR Operation** `(Arithmetic.Math_Client.Or)`
+ * **逻辑或运算** `(Arithmetic.Math_Client.Or)`
  *
- * - Performs a logical OR operation on the two input Boolean values and returns the result
+ * - 对输入的两个布尔值进行或运算后输出
  *
  * -----------
  *
@@ -15494,22 +15491,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `a` || Condition 1 |
- * | 1 || 🔹 || `Bol` || `b` || Condition 2 |
+ * | 0 || 🔹 || `Bol` || `a` || 条件1 |
+ * | 1 || 🔹 || `Bol` || `b` || 条件2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Arithmetic_MathClient_Or: "Arithmetic.Math_Client.Or",
 
   /**
- * **Logical NOT Operation** `(Arithmetic.Math_Client.Not)`
+ * **逻辑非运算** `(Arithmetic.Math_Client.Not)`
  *
- * - Performs a logical NOT operation on the input Boolean value and returns the result
+ * - 对输入的布尔值进行非运算后输出
  *
  * -----------
  *
@@ -15522,21 +15519,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `cond` || Condition |
+ * | 0 || 🔹 || `Bol` || `cond` || 条件 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Arithmetic_MathClient_Not: "Arithmetic.Math_Client.Not",
 
   /**
- * **Logical XOR Operation** `(Arithmetic.Math_Client.Xor)`
+ * **逻辑异或运算** `(Arithmetic.Math_Client.Xor)`
  *
- * - Performs a logical XOR operation on the two input Boolean values and returns the result
+ * - 对输入的两个布尔值进行异或运算后输出
  *
  * -----------
  *
@@ -15549,22 +15546,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Bol` || `a` || Condition 1 |
- * | 1 || 🔹 || `Bol` || `b` || Condition 2 |
+ * | 0 || 🔹 || `Bol` || `a` || 条件1 |
+ * | 1 || 🔹 || `Bol` || `b` || 条件2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  */
   Arithmetic_MathClient_Xor: "Arithmetic.Math_Client.Xor",
 
   /**
- * **Enumeration Match** `(Arithmetic.General_Client.Enum_Match)`
+ * **枚举匹配** `(Arithmetic.General_Client.Enum_Match)`
  *
- * - After confirming the Enumeration type, determines whether the two input values are equal
+ * - 确认枚举的类型后，判断两个输入的值是否相等
  *
  * -----------
  *
@@ -15577,15 +15574,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `enum1` || Enumeration 1 |
- * | 1 || 🔷 || **`R<T>`** || `enum2` || Enumeration 2 |
+ * | 0 || 🔷 || **`R<T>`** || `enum1` || 枚举1 |
+ * | 1 || 🔷 || **`R<T>`** || `enum2` || 枚举2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result: Output True if equal, False if not equal |
+ * | 0 || 🔸 || `Bol` || `result` || 结果: 相等输出“是”，不相等输出“否” |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:E<CGEN>>`
@@ -15635,12 +15632,12 @@ export const NODES = {
   Arithmetic_GeneralClient_EnumMatch: "Arithmetic.General_Client.Enum_Match",
 
   /**
- * **Equal** `(Arithmetic.General_Client.Equal)`
+ * **是否相等** `(Arithmetic.General_Client.Equal)`
  *
- * - Determines whether two inputs are equal
- * - Some Parameter Types have special comparison rules:
- * - Floating Point Numbers: Floating Point Numbers are compared using approximate equality. When the difference between two Floating Point Numbers is less than an extremely small value, the two numbers are considered equal. For example: 2.0000001 and 2.0 are considered equal
- * - 3D Vector: The x, y, and z components of a 3D Vector are compared using Floating Point approximate equality
+ * - 判断两个输入是否相等
+ * - 部分参数类型有较为特殊的判定规则：
+ * - 浮点数：浮点数采用近似相等进行比较，当两个浮点数小于一个极小值时，这两个浮点数认为相等。例如：2.0000001与2.0认为相等
+ * - 三维向量：三维向量的x、y、z分别采用浮点数近似相等比较
  *
  * -----------
  *
@@ -15661,7 +15658,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Bol>`
@@ -15678,9 +15675,9 @@ export const NODES = {
   Arithmetic_GeneralClient_Equal: "Arithmetic.General_Client.Equal",
 
   /**
- * **Greater Than** `(Arithmetic.Math_Client.Greater_Than)`
+ * **是否大于** `(Arithmetic.Math_Client.Greater_Than)`
  *
- * - Returns whether the left value is greater than the right value
+ * - 返回左值是否大于右值
  *
  * -----------
  *
@@ -15701,7 +15698,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15710,9 +15707,9 @@ export const NODES = {
   Arithmetic_MathClient_GreaterThan: "Arithmetic.Math_Client.Greater_Than",
 
   /**
- * **Less Than** `(Arithmetic.Math_Client.Less_Than)`
+ * **是否小于** `(Arithmetic.Math_Client.Less_Than)`
  *
- * - Returns whether the left value is less than the right value
+ * - 返回左值是否小于右值
  *
  * -----------
  *
@@ -15733,7 +15730,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15742,9 +15739,9 @@ export const NODES = {
   Arithmetic_MathClient_LessThan: "Arithmetic.Math_Client.Less_Than",
 
   /**
- * **Less Than or Equal To** `(Arithmetic.Math_Client.Less_Equal)`
+ * **是否小于等于** `(Arithmetic.Math_Client.Less_Equal)`
  *
- * - Returns whether the left value is less than or equal to the right value
+ * - 返回左值是否小于等于右值
  *
  * -----------
  *
@@ -15765,7 +15762,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15774,9 +15771,9 @@ export const NODES = {
   Arithmetic_MathClient_LessEqual: "Arithmetic.Math_Client.Less_Equal",
 
   /**
- * **Greater Than or Equal To** `(Arithmetic.Math_Client.Greater_Equal)`
+ * **是否大于等于** `(Arithmetic.Math_Client.Greater_Equal)`
  *
- * - Returns whether the left value is greater than or equal to the right value
+ * - 返回左值是否大于等于右值
  *
  * -----------
  *
@@ -15797,7 +15794,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15806,9 +15803,9 @@ export const NODES = {
   Arithmetic_MathClient_GreaterEqual: "Arithmetic.Math_Client.Greater_Equal",
 
   /**
- * **Addition** `(Arithmetic.Math_Client.Add)`
+ * **加法运算** `(Arithmetic.Math_Client.Add)`
  *
- * - Adds two Floating Point Numbers or Integers
+ * - 计算两个浮点数或整数的加法
  *
  * -----------
  *
@@ -15829,7 +15826,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15838,9 +15835,9 @@ export const NODES = {
   Arithmetic_MathClient_Add: "Arithmetic.Math_Client.Add",
 
   /**
- * **Subtraction** `(Arithmetic.Math_Client.Subtract)`
+ * **减法运算** `(Arithmetic.Math_Client.Subtract)`
  *
- * - Subtracts two Floating Point Numbers or Integers
+ * - 计算两个浮点数或整数的减法
  *
  * -----------
  *
@@ -15861,7 +15858,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15870,9 +15867,9 @@ export const NODES = {
   Arithmetic_MathClient_Subtract: "Arithmetic.Math_Client.Subtract",
 
   /**
- * **Multiplication** `(Arithmetic.Math_Client.Multiply)`
+ * **乘法运算** `(Arithmetic.Math_Client.Multiply)`
  *
- * - Performs multiplication, supporting Floating Point and Integer multiplication
+ * - 乘法运算，支持浮点数乘法和整数乘法
  *
  * -----------
  *
@@ -15893,7 +15890,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15902,10 +15899,10 @@ export const NODES = {
   Arithmetic_MathClient_Multiply: "Arithmetic.Math_Client.Multiply",
 
   /**
- * **Division** `(Arithmetic.Math_Client.Divide)`
+ * **除法运算** `(Arithmetic.Math_Client.Divide)`
  *
- * - Performs division, supporting Floating Point division and Integer division. Integer division returns the quotient result
- * - The divisor should not be 0, otherwise it may return an illegal value
+ * - 除法运算，支持浮点数除法和整数除法。整数除法返回整除结果
+ * - 除数不应为0，否则可能返回非法值
  *
  * -----------
  *
@@ -15926,7 +15923,7 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15935,9 +15932,9 @@ export const NODES = {
   Arithmetic_MathClient_Divide: "Arithmetic.Math_Client.Divide",
 
   /**
- * **Absolute Value Operation** `(Arithmetic.Math_Client.Abs)`
+ * **绝对值运算** `(Arithmetic.Math_Client.Abs)`
  *
- * - Returns the absolute value of the input
+ * - 返回输入的绝对值
  *
  * -----------
  *
@@ -15950,14 +15947,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `input` || Input |
+ * | 0 || 🔷 || **`R<T>`** || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -15966,10 +15963,10 @@ export const NODES = {
   Arithmetic_MathClient_Abs: "Arithmetic.Math_Client.Abs",
 
   /**
- * **Get Custom Variable** `(Query.Custom_Variable_Client.Get_Variable)`
+ * **获取自定义变量** `(Query.Custom_Variable_Client.Get_Variable)`
  *
- * - Returns the value of the specified Custom Variable from the Target Entity
- * - If the variable does not exist, returns the type's default value
+ * - 获取目标实体的指定自定义变量的值
+ * - 如果变量不存在，则返回类型的默认值
  *
  * -----------
  *
@@ -15982,15 +15979,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Str` || `variable_name` || Variable Name |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Str` || `variable_name` || 变量名 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `variable_value` || Variable Value |
+ * | 0 || 🔶 || **`R<T>`** || `variable_value` || 变量值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Bol>`
@@ -16016,9 +16013,9 @@ export const NODES = {
   Query_CustomVariableClient_GetVariable: "Query.Custom_Variable_Client.Get_Variable",
 
   /**
- * **Get Corresponding Value From List** `(Query.List_Related_Client.Get_At_Index)`
+ * **获取列表对应值** `(Query.List_Related_Client.Get_At_Index)`
  *
- * - Returns the value at the specified ID in the List. IDs start at 0
+ * - 返回列表中指定序号对应的值。列表中序号从0开始
  *
  * -----------
  *
@@ -16031,15 +16028,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `index` || ID |
- * | 1 || 🔷 || **`L<R<T>>`** || `data_list` || Data List |
+ * | 0 || 🔹 || `Int` || `index` || 序号 |
+ * | 1 || 🔷 || **`L<R<T>>`** || `data_list` || 数据列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `result` || Result |
+ * | 0 || 🔶 || **`R<T>`** || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Bol>`
@@ -16055,9 +16052,9 @@ export const NODES = {
   Query_ListRelatedClient_GetAtIndex: "Query.List_Related_Client.Get_At_Index",
 
   /**
- * **Get List Length** `(Query.List_Related_Client.Get_Length)`
+ * **获取列表长度** `(Query.List_Related_Client.Get_Length)`
  *
- * - Returns the length of the list (number of elements)
+ * - 获取列表长度（列表中的元素个数）
  *
  * -----------
  *
@@ -16070,14 +16067,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `input_list` || Input List |
+ * | 0 || 🔷 || **`R<T>`** || `input_list` || 输入列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `length` || Length |
+ * | 0 || 🔸 || `Int` || `length` || 长度 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:L<Bol>>`
@@ -16091,9 +16088,9 @@ export const NODES = {
   Query_ListRelatedClient_GetLength: "Query.List_Related_Client.Get_Length",
 
   /**
- * **List Includes This Value** `(Query.List_Related_Client.Contains)`
+ * **列表是否包含该值** `(Query.List_Related_Client.Contains)`
  *
- * - Returns whether the list contains the specified value
+ * - 返回列表中是否包含指定值
  *
  * -----------
  *
@@ -16106,15 +16103,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `value` || Value |
- * | 1 || 🔷 || **`L<R<T>>`** || `list` || List |
+ * | 0 || 🔷 || **`R<T>`** || `value` || 值 |
+ * | 1 || 🔷 || **`L<R<T>>`** || `list` || 列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `result` || Result |
+ * | 0 || 🔸 || `Bol` || `result` || 结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Bol>`
@@ -16130,9 +16127,9 @@ export const NODES = {
   Query_ListRelatedClient_Contains: "Query.List_Related_Client.Contains",
 
   /**
- * **Get Maximum Value From List** `(Query.List_Related_Client.Get_Max)`
+ * **获取列表最大值** `(Query.List_Related_Client.Get_Max)`
  *
- * - Applies only to Floating Point Number or Integer lists; returns the maximum value
+ * - 仅对浮点数列表和整数列表有意义，返回列表中的最大值
  *
  * -----------
  *
@@ -16145,14 +16142,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `max_value` || Maximum Value |
+ * | 0 || 🔶 || **`R<T>`** || `max_value` || 最大值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -16161,9 +16158,9 @@ export const NODES = {
   Query_ListRelatedClient_GetMax: "Query.List_Related_Client.Get_Max",
 
   /**
- * **Get Minimum Value From List** `(Query.List_Related_Client.Get_Min)`
+ * **获取列表最小值** `(Query.List_Related_Client.Get_Min)`
  *
- * - Applies only to Floating Point Number or Integer lists; returns the minimum value
+ * - 仅对浮点数列表和整数列表有意义，返回列表中的最小值
  *
  * -----------
  *
@@ -16176,14 +16173,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`L<R<T>>`** || `list` || List |
+ * | 0 || 🔷 || **`L<R<T>>`** || `list` || 列表 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `min_value` || Minimum Value |
+ * | 0 || 🔶 || **`R<T>`** || `min_value` || 最小值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -16192,9 +16189,9 @@ export const NODES = {
   Query_ListRelatedClient_GetMin: "Query.List_Related_Client.Get_Min",
 
   /**
- * **Data Type Conversion** `(Arithmetic.General_Client.Convert_Type)`
+ * **数据类型转换** `(Arithmetic.General_Client.Convert_Type)`
  *
- * - Converts input parameter types to another type for output. For specific rules, see [Basic Concepts](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhk23ora1wom) - [Conversion Rules Between Basic Data Types]
+ * - 将输入的参数类型转换为另一种类型输出。具体规则见[基础概念](https://act.mihoyo.com/ys/ugc/tutorial//detail/mhk23ora1wom)-【基础数据类型之间的转换规则】
  *
  * -----------
  *
@@ -16207,14 +16204,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<K>`** || `input` || Input |
+ * | 0 || 🔷 || **`R<K>`** || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<V>`** || `converted` || Conversion Result |
+ * | 0 || 🔶 || **`R<V>`** || `converted` || 转换结果 |
  *
  * #### 🧬 Variant Constraints
  * * `C<K:Int,V:Bol>`
@@ -16232,9 +16229,9 @@ export const NODES = {
   Arithmetic_GeneralClient_ConvertType: "Arithmetic.General_Client.Convert_Type",
 
   /**
- * **Query Entity by GUID** `(Query.Entity_Related_Client.Get_By_GUID)`
+ * **以GUID查询实体** `(Query.Entity_Related_Client.Get_By_GUID)`
  *
- * - Searches for an Entity by GUID
+ * - 根据GUID查询实体
  *
  * -----------
  *
@@ -16254,14 +16251,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `entity` || Entity |
+ * | 0 || 🔸 || `Ety` || `entity` || 实体 |
  */
   Query_EntityRelatedClient_GetByGUID: "Query.Entity_Related_Client.Get_By_GUID",
 
   /**
- * **Get Character Entity of Specified Player** `(Query.Character_Related_Client.Get_Player_Character)`
+ * **获取指定玩家的角色实体** `(Query.Character_Related_Client.Get_Player_Character)`
  *
- * - Returns the Character Entity of the specified Player Entity
+ * - 获取指定玩家实体的角色实体
  *
  * -----------
  *
@@ -16274,21 +16271,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `player_entity` || Player Entity |
+ * | 0 || 🔹 || `Ety` || `player_entity` || 玩家实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `character_entity` || Character Entity |
+ * | 0 || 🔸 || `Ety` || `character_entity` || 角色实体 |
  */
   Query_CharacterRelatedClient_GetPlayerCharacter: "Query.Character_Related_Client.Get_Player_Character",
 
   /**
- * **Get Player Entity to Which the Character Belongs** `(Query.Character_Related_Client.Get_Owner_Player)`
+ * **获取角色归属的玩家实体** `(Query.Character_Related_Client.Get_Owner_Player)`
  *
- * - Returns the Player Entity that owns the Character Entity
+ * - 获取角色实体所归属的玩家实体
  *
  * -----------
  *
@@ -16301,21 +16298,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `character_entity` || Character Entity |
+ * | 0 || 🔹 || `Ety` || `character_entity` || 角色实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `owner_player_entity` || Affiliated Player Entity |
+ * | 0 || 🔸 || `Ety` || `owner_player_entity` || 所属玩家实体 |
  */
   Query_CharacterRelatedClient_GetOwnerPlayer: "Query.Character_Related_Client.Get_Owner_Player",
 
   /**
- * **Get List of Player Entities on the Field** `(Query.Character_Related_Client.Get_All_Players)`
+ * **获取在场玩家实体列表** `(Query.Character_Related_Client.Get_All_Players)`
  *
- * - Returns a list of all Player Entities present in the scene
+ * - 获取在场所有玩家实体组成的列表
  *
  * -----------
  *
@@ -16328,14 +16325,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `player_entities` || Player Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `player_entities` || 玩家实体列表 |
  */
   Query_CharacterRelatedClient_GetAllPlayers: "Query.Character_Related_Client.Get_All_Players",
 
   /**
- * **Query GUID by Entity** `(Query.Character_Related_Client.Get_GUID)`
+ * **以实体查询GUID** `(Query.Character_Related_Client.Get_GUID)`
  *
- * - Searches for the GUID of the specified Entity
+ * - 查询指定实体的GUID
  *
  * -----------
  *
@@ -16348,7 +16345,7 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `entity` || Entity |
+ * | 0 || 🔹 || `Ety` || `entity` || 实体 |
  *
  * -----------
  *
@@ -16360,9 +16357,9 @@ export const NODES = {
   Query_CharacterRelatedClient_GetGUID: "Query.Character_Related_Client.Get_GUID",
 
   /**
- * **Get Preset Status** `(Query.Preset_Status_Client.Get_Status)`
+ * **获取预设状态** `(Query.Preset_Status_Client.Get_Status)`
  *
- * - Returns the Preset Status value of the specified Entity. Returns 0 if the Entity does not have the specified Preset Status
+ * - 获取指定实体的预设状态值。如果该实体没有指定的预设状态，则返回0
  *
  * -----------
  *
@@ -16375,22 +16372,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `entity` || Entity |
- * | 1 || 🔹 || `Int` || `preset_index` || Preset Status Index |
+ * | 0 || 🔹 || `Ety` || `entity` || 实体 |
+ * | 1 || 🔹 || `Int` || `preset_index` || 预设状态索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Int` || `preset_value` || Preset Status Value |
+ * | 0 || 🔸 || `Int` || `preset_value` || 预设状态值 |
  */
   Query_PresetStatusClient_GetStatus: "Query.Preset_Status_Client.Get_Status",
 
   /**
- * **Query Entity Faction** `(Query.Faction_Related_Client.Get_Faction)`
+ * **查询实体阵营** `(Query.Faction_Related_Client.Get_Faction)`
  *
- * - Searches Target Entity's Faction
+ * - 查询目标实体的阵营
  *
  * -----------
  *
@@ -16403,21 +16400,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Fct` || `camp` || Faction |
+ * | 0 || 🔸 || `Fct` || `camp` || 阵营 |
  */
   Query_FactionRelatedClient_GetFaction: "Query.Faction_Related_Client.Get_Faction",
 
   /**
- * **Get Entity Location** `(Query.Entity_Related_Client.Get_Location)`
+ * **获取实体位置** `(Query.Entity_Related_Client.Get_Location)`
  *
- * - Returns the Location of the specified Entity
+ * - 获取指定实体的位置
  *
  * -----------
  *
@@ -16430,21 +16427,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `entity` || Entity |
+ * | 0 || 🔹 || `Ety` || `entity` || 实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `position` || Location |
+ * | 0 || 🔸 || `Vec` || `position` || 位置 |
  */
   Query_EntityRelatedClient_GetLocation: "Query.Entity_Related_Client.Get_Location",
 
   /**
- * **Get Entity Rotation** `(Query.Entity_Related_Client.Get_Rotation)`
+ * **获取实体旋转** `(Query.Entity_Related_Client.Get_Rotation)`
  *
- * - Returns the Rotation of the specified Entity in Euler Angles
+ * - 获取指定实体以欧拉角表示的旋转
  *
  * -----------
  *
@@ -16457,21 +16454,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `entity` || Entity |
+ * | 0 || 🔹 || `Ety` || `entity` || 实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `rotation` || Rotate |
+ * | 0 || 🔸 || `Vec` || `rotation` || 旋转 |
  */
   Query_EntityRelatedClient_GetRotation: "Query.Entity_Related_Client.Get_Rotation",
 
   /**
- * **Get Random Number** `(Arithmetic.Math_Client.Random)`
+ * **获取随机数** `(Arithmetic.Math_Client.Random)`
  *
- * - Returns a random number in [Lower Limit, Upper Limit] (inclusive)
+ * - 获取一个大于等于下限，小于等于上限的随机数。注意该节点生成的随机数包含上下限
  *
  * -----------
  *
@@ -16484,15 +16481,15 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔷 || **`R<T>`** || `min` || Lower Limit |
- * | 1 || 🔷 || **`R<T>`** || `max` || Upper Limit |
+ * | 0 || 🔷 || **`R<T>`** || `min` || 下限 |
+ * | 1 || 🔷 || **`R<T>`** || `max` || 上限 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `value` || Random Number |
+ * | 0 || 🔶 || **`R<T>`** || `value` || 随机数 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -16501,9 +16498,9 @@ export const NODES = {
   Arithmetic_MathClient_Random: "Arithmetic.Math_Client.Random",
 
   /**
- * **Get Self Entity** `(Query.Entity_Related_Client.Get_Self)`
+ * **获取自身实体** `(Query.Entity_Related_Client.Get_Self)`
  *
- * - Returns the Entity associated with this Node Graph
+ * - 返回该节点图所关联的实体
  *
  * -----------
  *
@@ -16516,14 +16513,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `self` || Self Entity |
+ * | 0 || 🔸 || `Ety` || `self` || 自身实体 |
  */
   Query_EntityRelatedClient_GetSelf: "Query.Entity_Related_Client.Get_Self",
 
   /**
- * **Get Target Entity** `(Query.Entity_Related_Client.Get_Target)`
+ * **获取目标实体** `(Query.Entity_Related_Client.Get_Target)`
  *
- * - Returns the Target Entity. The meaning of this output varies depending on the functional module that references the Filter Node Graph
+ * - 获取目标实体，根据过滤器节点图被引用的功能模块不同，其指代含义会有区别
  *
  * -----------
  *
@@ -16536,14 +16533,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔸 || `Ety` || `target_entity` || 目标实体 |
  */
   Query_EntityRelatedClient_GetTarget: "Query.Entity_Related_Client.Get_Target",
 
   /**
- * **Get Unit Attack Target** `(Query.Entity_Related_Client.Get_Attack_Target)`
+ * **获取单位攻击目标** `(Query.Entity_Related_Client.Get_Attack_Target)`
  *
- * - Returns the Target Entity that the Unit Entity is currently attacking
+ * - 获取单位实体当前正在攻击的目标实体
  *
  * -----------
  *
@@ -16556,14 +16553,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `unit_entity` || Unit Entity |
+ * | 0 || 🔹 || `Ety` || `unit_entity` || 单位实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `attack_target_entity` || Attack Target Entity |
+ * | 0 || 🔸 || `Ety` || `attack_target_entity` || 攻击目标实体 |
  */
   Query_EntityRelatedClient_GetAttackTarget: "Query.Entity_Related_Client.Get_Attack_Target",
 
@@ -16586,9 +16583,9 @@ export const NODES = {
   Hidden_QueryClient_GetCameraTemplate: "Hidden.Query_Client.Get_Camera_Template",
 
   /**
- * **Query If Self Is in Combat** `(Query.Character_Related_Client.Is_In_Combat)`
+ * **查询自身是否已入战** `(Query.Character_Related_Client.Is_In_Combat)`
  *
- * - Searches whether the Entity associated with this Node Graph has entered battle
+ * - 查询该节点图关联的实体是否入战
  *
  * -----------
  *
@@ -16601,14 +16598,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `is_in_combat` || In Combat |
+ * | 0 || 🔸 || `Bol` || `is_in_combat` || 是否入战 |
  */
   Query_CharacterRelatedClient_IsInCombat: "Query.Character_Related_Client.Is_In_Combat",
 
   /**
- * **Play Timed Effects** `(Execution.Character_Skill_Client.Play_Timed_FX)`
+ * **播放限时特效** `(Execution.Character_Skill_Client.Play_Timed_FX)`
  *
- * - Plays Timed Effects at the specified World Location
+ * - 在指定的世界坐标位置播放限时特效
  *
  * -----------
  *
@@ -16622,11 +16619,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Cfg` || `effect_config_id` || Special Effects Asset Configuration ID |
- * | 1 || 🔹 || `Vec` || `position` || Location |
- * | 2 || 🔹 || `Vec` || `rotation` || Rotate |
- * | 3 || 🔹 || `Flt` || `scale` || Zoom Multiplier |
- * | 4 || 🔹 || `Bol` || `play_default_sfx` || Play Default Sound Effects? |
+ * | 0 || 🔹 || `Cfg` || `effect_config_id` || 特效资产配置ID |
+ * | 1 || 🔹 || `Vec` || `position` || 位置 |
+ * | 2 || 🔹 || `Vec` || `rotation` || 旋转 |
+ * | 3 || 🔹 || `Flt` || `scale` || 缩放倍率 |
+ * | 4 || 🔹 || `Bol` || `play_default_sfx` || 是否播放默认音效 |
  *
  * -----------
  *
@@ -16638,10 +16635,10 @@ export const NODES = {
   Execution_CharacterSkillClient_PlayTimedFX: "Execution.Character_Skill_Client.Play_Timed_FX",
 
   /**
- * **Notify Server Node Graph** `(Execution.Character_Skill_Client.Notify_Server)`
+ * **通知服务器节点图** `(Execution.Character_Skill_Client.Notify_Server)`
  *
- * - Notifies the Server Node Graph; supports up to three String parameters
- * - At runtime, forwards logic to the Server Node Graph and triggers the [On Skill Node Call] Event on the Server Node Graph
+ * - 通知服务器节点图，支持携带三个字符串参数
+ * - 该节点运行时可以将逻辑传到服务器节点图上，在服务器节点图上会触发【技能节点调用时】事件
  *
  * -----------
  *
@@ -16655,9 +16652,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Str` || `str1` || String 1 |
- * | 1 || 🔹 || `Str` || `str2` || String 2 |
- * | 2 || 🔹 || `Str` || `str3` || String 3 |
+ * | 0 || 🔹 || `Str` || `str1` || 字符串1 |
+ * | 1 || 🔹 || `Str` || `str2` || 字符串2 |
+ * | 2 || 🔹 || `Str` || `str3` || 字符串3 |
  *
  * -----------
  *
@@ -16669,9 +16666,9 @@ export const NODES = {
   Execution_CharacterSkillClient_NotifyServer: "Execution.Character_Skill_Client.Notify_Server",
 
   /**
- * **Player Turning** `(Execution.Character_Skill_Client.Turn_Player)`
+ * **玩家转向** `(Execution.Character_Skill_Client.Turn_Player)`
  *
- * - Turns the Player using the configured turning mode
+ * - 可以让玩家按照配置的转向模式转向
  *
  * -----------
  *
@@ -16685,7 +16682,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `E<CROT>` || `turn_mode` || Turning Mode: Includes: Target then Input, Input Direction, Target Direction, Target then Camera, Camera Direction, Input then Target |
+ * | 0 || 🔹 || `E<CROT>` || `turn_mode` || 转向模式: 分为先目标后输入、输入朝向、目标朝向、先目标后镜头、镜头朝向、先输入后目标 |
  *
  * -----------
  *
@@ -16697,9 +16694,9 @@ export const NODES = {
   Execution_CharacterSkillClient_TurnPlayer: "Execution.Character_Skill_Client.Turn_Player",
 
   /**
- * **Set Own Attack Target** `(Execution.Character_Skill_Client.Set_Target)`
+ * **设置自身攻击目标** `(Execution.Character_Skill_Client.Set_Target)`
  *
- * - Sets the Target Entity as its Attack Target
+ * - 将目标实体设置为自身的攻击目标
  *
  * -----------
  *
@@ -16713,8 +16710,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Bol` || `instant_turn` || Whether to Turn Immediately |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Bol` || `instant_turn` || 是否立即转向 |
  *
  * -----------
  *
@@ -16726,10 +16723,10 @@ export const NODES = {
   Execution_CharacterSkillClient_SetTarget: "Execution.Character_Skill_Client.Set_Target",
 
   /**
- * **Node Graph Begins** `(Others.Port_Client.Graph_Start)`
+ * **节点图开始** `(Others.Port_Client.Graph_Start)`
  *
- * - Start event of the Skill Node Graph
- * - Used to customize the Skill logic after this Node; subsequent Nodes execute in the order defined by the Node Graph
+ * - 技能节点图的开始事件
+ * - 自定义技能的逻辑，在该节点后进行编辑，会依照节点图执行顺序执行后续节点
  *
  * -----------
  *
@@ -16747,9 +16744,9 @@ export const NODES = {
   Others_PortClient_GraphStart: "Others.Port_Client.Graph_Start",
 
   /**
- * **Filter Entity List Within Spherical Range** `(Query.Entity_Related_Client.Filter_Sphere)`
+ * **筛选球体范围内的实体列表** `(Query.Entity_Related_Client.Filter_Sphere)`
  *
- * - Filters Entities within a spherical range according to specific rules and a maximum count, and returns a list of Entities that meet the conditions
+ * - 以特定的规则和数量上限筛选在球形范围内的实体，满足条件的实体会组成实体列表输出
  *
  * -----------
  *
@@ -16762,24 +16759,24 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `radius` || Radius |
- * | 1 || 🔹 || `Vec` || `center` || Central Location |
- * | 2 || 🔹 || `Int` || `limit` || Maximum Filter Quantity |
- * | 3 || 🔹 || `E<CTST>` || `rule` || Filter Rules: Options: Default, Random, or Nearest-to-Farthest order |
+ * | 0 || 🔹 || `Flt` || `radius` || 半径 |
+ * | 1 || 🔹 || `Vec` || `center` || 中心位置 |
+ * | 2 || 🔹 || `Int` || `limit` || 筛选数量上限 |
+ * | 3 || 🔹 || `E<CTST>` || `rule` || 筛选规则: 分为默认排序、随机排序、从近到远排序 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `result` || Filter Results |
+ * | 0 || 🔸 || `L<Ety>` || `result` || 筛选结果 |
  */
   Query_EntityRelatedClient_FilterSphere: "Query.Entity_Related_Client.Filter_Sphere",
 
   /**
- * **Filter Entity List Within Square Range** `(Query.Entity_Related_Client.Filter_Square)`
+ * **筛选方形范围内的实体列表** `(Query.Entity_Related_Client.Filter_Square)`
  *
- * - Filters Entities within a square range according to specified rules and a maximum count, and returns a list of Entities that meet the conditions
+ * - 以特定的规则和数量上限筛选在方形范围内的实体，满足条件的实体会组成实体列表输出
  *
  * -----------
  *
@@ -16792,26 +16789,26 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `width` || Width |
- * | 1 || 🔹 || `Flt` || `height` || Height |
- * | 2 || 🔹 || `Flt` || `length` || Length |
- * | 3 || 🔹 || `Vec` || `center` || Central Location |
- * | 4 || 🔹 || `Int` || `limit` || Maximum Filter Quantity |
- * | 5 || 🔹 || `E<CTST>` || `rule` || Filter Rules: Options: Default, Random, or Nearest-to-Farthest order |
+ * | 0 || 🔹 || `Flt` || `width` || 宽度 |
+ * | 1 || 🔹 || `Flt` || `height` || 高度 |
+ * | 2 || 🔹 || `Flt` || `length` || 长度 |
+ * | 3 || 🔹 || `Vec` || `center` || 中心位置 |
+ * | 4 || 🔹 || `Int` || `limit` || 筛选数量上限 |
+ * | 5 || 🔹 || `E<CTST>` || `rule` || 筛选规则: 分为默认排序、随机排序、从近到远排序 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `result` || Filter Results |
+ * | 0 || 🔸 || `L<Ety>` || `result` || 筛选结果 |
  */
   Query_EntityRelatedClient_FilterSquare: "Query.Entity_Related_Client.Filter_Square",
 
   /**
- * **Get Entity's Type** `(Query.Entity_Related_Client.Get_Type)`
+ * **获取实体的类型** `(Query.Entity_Related_Client.Get_Type)`
  *
- * - Returns the type of the specified Entity
+ * - 获取指定实体的类型
  *
  * -----------
  *
@@ -16824,14 +16821,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `E<CETY>` || `entity_type` || Entity Type |
+ * | 0 || 🔸 || `E<CETY>` || `entity_type` || 实体类型 |
  */
   Query_EntityRelatedClient_GetType: "Query.Entity_Related_Client.Get_Type",
 
@@ -16854,9 +16851,9 @@ export const NODES = {
   Hidden_QueryClient_GetCameraRotation: "Hidden.Query_Client.Get_Camera_Rotation",
 
   /**
- * **Get Target Attachment Point Location** `(Query.Entity_Related_Client.Get_Socket_Loc)`
+ * **获取目标挂接点位置** `(Query.Entity_Related_Client.Get_Socket_Loc)`
  *
- * - Returns the Attachment Point Location corresponding to the specified Attachment Point Name on the Target Entity
+ * - 获取指定目标实体上对应挂接点名称的挂接点位置
  *
  * -----------
  *
@@ -16869,22 +16866,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Str` || `attachment_name` || Attachment Point Name |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Str` || `attachment_name` || 挂接点名称 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `attachment_position` || Attachment Point Location |
+ * | 0 || 🔸 || `Vec` || `attachment_position` || 挂接点位置 |
  */
   Query_EntityRelatedClient_GetSocketLoc: "Query.Entity_Related_Client.Get_Socket_Loc",
 
   /**
- * **Get Target Attachment Point Rotation** `(Query.Entity_Related_Client.Get_Socket_Rot)`
+ * **获取目标挂接点旋转** `(Query.Entity_Related_Client.Get_Socket_Rot)`
  *
- * - Returns the Attachment Point Rotation corresponding to the specified Attachment Point Name on the Target Entity
+ * - 获取指定目标实体上对应挂接点名称的挂接点旋转
  *
  * -----------
  *
@@ -16897,20 +16894,20 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Str` || `attachment_name` || Attachment Point Name |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Str` || `attachment_name` || 挂接点名称 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `attachment_rotation` || Attachment Point Rotation |
+ * | 0 || 🔸 || `Vec` || `attachment_rotation` || 挂接点旋转 |
  */
   Query_EntityRelatedClient_GetSocketRot: "Query.Entity_Related_Client.Get_Socket_Rot",
 
   /**
- * **Assembly List** `(Arithmetic.List_Client.Assemble_List)`
+ * **拼装列表** `(Arithmetic.List_Client.Assemble_List)`
  *
  * -----------
  *
@@ -16956,7 +16953,7 @@ export const NODES = {
   Arithmetic_ListClient_AssembleList: "Arithmetic.List_Client.Assemble_List",
 
   /**
- * **Get Entity Type List** `(Query.List_Related_Client.Get_Entity_Types)`
+ * **获取实体类型列表** `(Query.List_Related_Client.Get_Entity_Types)`
  *
  * -----------
  *
@@ -16991,7 +16988,7 @@ export const NODES = {
   Query_ListRelatedClient_GetEntityTypes: "Query.List_Related_Client.Get_Entity_Types",
 
   /**
- * **Trigger Hitbox at Specific Location** `(Execution.Character_Skill_Client.Trigger_Hitbox_Loc)`
+ * **特定位置打攻击盒** `(Execution.Character_Skill_Client.Trigger_Hitbox_Loc)`
  *
  * -----------
  *
@@ -17054,9 +17051,9 @@ export const NODES = {
   Execution_CharacterSkillClient_TriggerHitboxLoc: "Execution.Character_Skill_Client.Trigger_Hitbox_Loc",
 
   /**
- * **Fixed-Point Projectile Launch** `(Execution.Character_Skill_Client.Launch_Projectile)`
+ * **定点发射投射物** `(Execution.Character_Skill_Client.Launch_Projectile)`
  *
- * - Spawns a Local Projectile at the specified Location in the World Coordinate System
+ * - 在世界坐标系的指定位置发射本地投射物
  *
  * -----------
  *
@@ -17070,11 +17067,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Pfb` || `projectile_component_id` || Projectile's Prefab ID |
- * | 1 || 🔹 || `Vec` || `spawn_position` || Create Location |
- * | 2 || 🔹 || `Vec` || `spawn_rotation` || Create Rotation |
- * | 3 || 🔹 || `Ety` || `tracking_target` || Track Target |
- * | 4 || 🔹 || `Fct` || `projectile_camp` || Projectile Faction |
+ * | 0 || 🔹 || `Pfb` || `projectile_component_id` || 投射物的元件ID |
+ * | 1 || 🔹 || `Vec` || `spawn_position` || 创建位置 |
+ * | 2 || 🔹 || `Vec` || `spawn_rotation` || 创建旋转 |
+ * | 3 || 🔹 || `Ety` || `tracking_target` || 追踪目标 |
+ * | 4 || 🔹 || `Fct` || `projectile_camp` || 投射物阵营 |
  *
  * -----------
  *
@@ -17086,10 +17083,10 @@ export const NODES = {
   Execution_CharacterSkillClient_LaunchProjectile: "Execution.Character_Skill_Client.Launch_Projectile",
 
   /**
- * **Fixed-Point Displacement** `(Execution.Character_Skill_Client.Move_To_Point)`
+ * **定点位移** `(Execution.Character_Skill_Client.Move_To_Point)`
  *
- * - Moves from the current Location to the Target Location
- * - Supports configuring movement duration and speed; if both are small, the movement may not reach the Target Location
+ * - 定点位移，从当前位置向目标位置位移
+ * - 可配置位移时长与位移速度，当这二者都比较小时，可能无法位移到目标位置
  *
  * -----------
  *
@@ -17103,11 +17100,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Flt` || `duration` || Displacement Duration |
- * | 1 || 🔹 || `Flt` || `damping_duration` || Displacement Attenuation Duration |
- * | 2 || 🔹 || `Flt` || `speed` || Displacement Speed |
- * | 3 || 🔹 || `Vec` || `target_position` || Displacement Target Location |
- * | 4 || 🔹 || `Bol` || `stop_on_collision` || Terminate Displacement on Collision |
+ * | 0 || 🔹 || `Flt` || `duration` || 位移时长 |
+ * | 1 || 🔹 || `Flt` || `damping_duration` || 位移衰减时长 |
+ * | 2 || 🔹 || `Flt` || `speed` || 位移速度 |
+ * | 3 || 🔹 || `Vec` || `target_position` || 位移目标位置 |
+ * | 4 || 🔹 || `Bol` || `stop_on_collision` || 碰撞是否终止位移 |
  *
  * -----------
  *
@@ -17119,9 +17116,9 @@ export const NODES = {
   Execution_CharacterSkillClient_MoveToPoint: "Execution.Character_Skill_Client.Move_To_Point",
 
   /**
- * **Traverse Entity List** `(Execution.Character_Skill_Client.For_Each_Entity)`
+ * **遍历实体列表** `(Execution.Character_Skill_Client.For_Each_Entity)`
  *
- * - Iterates through each Entity in the input Entity List
+ * - 遍历输入实体列表中的每个实体
  *
  * -----------
  *
@@ -17135,7 +17132,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `Start` ||  |
- * | 0 || 🔹 || `L<Ety>` || `entity_list` || Entity List |
+ * | 0 || 🔹 || `L<Ety>` || `entity_list` || 实体列表 |
  *
  * -----------
  *
@@ -17144,15 +17141,15 @@ export const NODES = {
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `Iteration` ||  |
  * | - || ⏩ || - || `End` ||  |
- * | 0 || 🔸 || `Ety` || `current_entity` || Current Entity |
+ * | 0 || 🔸 || `Ety` || `current_entity` || 当前实体 |
  */
   Execution_CharacterSkillClient_ForEachEntity: "Execution.Character_Skill_Client.For_Each_Entity",
 
   /**
- * **Double Branch** `(Control.General_Client.Branch)`
+ * **双分支** `(Control.General_Client.Branch)`
  *
- * - Branches into True or False based on the evaluated condition
- * - When the Boolean is True, the [True] execution flow runs; when it is False, the [False] execution flow runs
+ * - 根据输入条件的判断结果可以分出“是”与“否”两个不同的分支
+ * - 当布尔值为“是”时，后续会执行【是】对应的执行流；布尔值为“否”时，会执行【否】对应的执行流
  *
  * -----------
  *
@@ -17166,22 +17163,22 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Bol` || `cond` || Condition |
+ * | 0 || 🔹 || `Bol` || `cond` || 条件 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | - || ⏩ || - || `True` || Yes |
- * | - || ⏩ || - || `False` || No |
+ * | - || ⏩ || - || `True` || 是 |
+ * | - || ⏩ || - || `False` || 否 |
  */
   Control_GeneralClient_Branch: "Control.General_Client.Branch",
 
   /**
- * **Add Unit Status** `(Execution.Character_Skill_Client.Add_Status)`
+ * **添加单位状态** `(Execution.Character_Skill_Client.Add_Status)`
  *
- * - Applies the Unit Status defined by the configuration ID to the Target
+ * - 为施加目标添加配置ID对应的单位状态
  *
  * -----------
  *
@@ -17195,9 +17192,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Application Target |
- * | 1 || 🔹 || `Int` || `stack_count` || Stacks |
- * | 2 || 🔹 || `Cfg` || `state_config_id` || Unit Status Config ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 施加目标 |
+ * | 1 || 🔹 || `Int` || `stack_count` || 层数 |
+ * | 2 || 🔹 || `Cfg` || `state_config_id` || 单位状态配置ID |
  *
  * -----------
  *
@@ -17209,9 +17206,9 @@ export const NODES = {
   Execution_CharacterSkillClient_AddStatus: "Execution.Character_Skill_Client.Add_Status",
 
   /**
- * **Remove Unit Status** `(Execution.Character_Skill_Client.Remove_Status)`
+ * **移除单位状态** `(Execution.Character_Skill_Client.Remove_Status)`
  *
- * - Removes the Unit Status corresponding to the specified configuration ID from the Target Entity
+ * - 移除目标实体上指定配置ID对应的单位状态
  *
  * -----------
  *
@@ -17225,8 +17222,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Removal Target |
- * | 1 || 🔹 || `Cfg` || `state_config_id` || Unit Status Config ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 移除目标 |
+ * | 1 || 🔹 || `Cfg` || `state_config_id` || 单位状态配置ID |
  *
  * -----------
  *
@@ -17302,9 +17299,9 @@ export const NODES = {
   Execution_CharacterSkillClient_TriggerHitboxSocket: "Execution.Character_Skill_Client.Trigger_Hitbox_Socket",
 
   /**
- * **Remove Specified Character Disruptor Device** `(Execution.Character_Skill_Client.Remove_Device)`
+ * **移除指定角色扰动装置** `(Execution.Character_Skill_Client.Remove_Device)`
  *
- * - Removes the specified type of Character Disruptor Device
+ * - 移除指定类型的角色扰动装置
  *
  * -----------
  *
@@ -17318,7 +17315,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `E<CDDT>` || `device_type` || Disruptor Device Type: Includes: Force Field Device, Ejector, and Traction Device |
+ * | 0 || 🔹 || `E<CDDT>` || `device_type` || 扰动装置类型: 分为力场器、弹射器、牵引器 |
  *
  * -----------
  *
@@ -17330,9 +17327,9 @@ export const NODES = {
   Execution_CharacterSkillClient_RemoveDevice: "Execution.Character_Skill_Client.Remove_Device",
 
   /**
- * **Modify Attack Weight** `(Execution.Character_Skill_Client.Modify_Weight)`
+ * **修改攻击权重** `(Execution.Character_Skill_Client.Modify_Weight)`
  *
- * - Edits the weight of the current Attack Target
+ * - 可以修改当前攻击目标的权重
  *
  * -----------
  *
@@ -17346,8 +17343,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Flt` || `current_target_weight` || Current Attack Target Weight |
- * | 1 || 🔹 || `Bol` || `force_select_once` || Forcibly Select a Target Once |
+ * | 0 || 🔹 || `Flt` || `current_target_weight` || 当前攻击目标的权重 |
+ * | 1 || 🔹 || `Bol` || `force_select_once` || 是否强制选一次目标 |
  *
  * -----------
  *
@@ -17359,9 +17356,9 @@ export const NODES = {
   Execution_CharacterSkillClient_ModifyWeight: "Execution.Character_Skill_Client.Modify_Weight",
 
   /**
- * **Camera Orientation Detection Data** `(Execution.Character_Skill_Client.Get_Camera_Data)`
+ * **镜头朝向检测数据** `(Execution.Character_Skill_Client.Get_Camera_Data)`
  *
- * - Casts a ray from the Camera to the emission Location and returns the Rotation and Location of valid Targets along the path
+ * - 镜头朝向检测数据，从镜头向出射位置打射线，返回路线上合法目标的旋转与位置
  *
  * -----------
  *
@@ -17375,10 +17372,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `E<CCAM>` || `target_type` || Target Type |
- * | 1 || 🔹 || `Vec` || `origin` || Launch Location |
- * | 2 || 🔹 || `Flt` || `min_distance` || Nearest Distance |
- * | 3 || 🔹 || `Flt` || `max_distance` || Furthest Distance |
+ * | 0 || 🔹 || `E<CCAM>` || `target_type` || 目标类型 |
+ * | 1 || 🔹 || `Vec` || `origin` || 出射位置 |
+ * | 2 || 🔹 || `Flt` || `min_distance` || 最近距离 |
+ * | 3 || 🔹 || `Flt` || `max_distance` || 最远距离 |
  *
  * -----------
  *
@@ -17386,15 +17383,15 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ⏩ || - || `FlowOut` ||  |
- * | 0 || 🔸 || `Vec` || `target_rotation` || Target Rotation |
- * | 1 || 🔸 || `Vec` || `target_position` || Target Location |
+ * | 0 || 🔸 || `Vec` || `target_rotation` || 目标旋转 |
+ * | 1 || 🔸 || `Vec` || `target_position` || 目标位置 |
  */
   Execution_CharacterSkillClient_GetCameraData: "Execution.Character_Skill_Client.Get_Camera_Data",
 
   /**
- * **3D Vector Dot Product** `(Arithmetic.Math_Client.Vector_Dot)`
+ * **三维向量内积** `(Arithmetic.Math_Client.Vector_Dot)`
  *
- * - Calculates the dot product of two input 3D Vectors
+ * - 计算两个输入三维向量的内积（点乘）
  *
  * -----------
  *
@@ -17407,22 +17404,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector1` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `vector2` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `vector1` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `vector2` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `dot` || Calculation Result |
+ * | 0 || 🔸 || `Flt` || `dot` || 计算结果 |
  */
   Arithmetic_MathClient_VectorDot: "Arithmetic.Math_Client.Vector_Dot",
 
   /**
- * **3D Vector Cross Product** `(Arithmetic.Math_Client.Vector_Cross)`
+ * **三维向量外积** `(Arithmetic.Math_Client.Vector_Cross)`
  *
- * - Calculates the cross product of two 3D Vectors
+ * - 计算两个三维向量的外积（叉乘）
  *
  * -----------
  *
@@ -17435,22 +17432,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector1` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `vector2` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `vector1` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `vector2` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `cross` || Calculation Result |
+ * | 0 || 🔸 || `Vec` || `cross` || 计算结果 |
  */
   Arithmetic_MathClient_VectorCross: "Arithmetic.Math_Client.Vector_Cross",
 
   /**
- * **Split 3D Vector** `(Arithmetic.Math_Client.Split_Vector)`
+ * **拆分三维向量** `(Arithmetic.Math_Client.Split_Vector)`
  *
- * - Outputs the x, y, and z components of a 3D Vector as three Floating Point Numbers
+ * - 将三维向量的x、y、z分量输出为三个浮点数
  *
  * -----------
  *
@@ -17463,23 +17460,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector` || 3D Vector |
+ * | 0 || 🔹 || `Vec` || `vector` || 三维向量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `x` || X-Component |
- * | 1 || 🔸 || `Flt` || `y` || Y-Component |
- * | 2 || 🔸 || `Flt` || `z` || Z-Component |
+ * | 0 || 🔸 || `Flt` || `x` || X分量 |
+ * | 1 || 🔸 || `Flt` || `y` || Y分量 |
+ * | 2 || 🔸 || `Flt` || `z` || Z分量 |
  */
   Arithmetic_MathClient_SplitVector: "Arithmetic.Math_Client.Split_Vector",
 
   /**
- * **3D Vector Zoom** `(Arithmetic.Math_Client.Vector_Scale)`
+ * **三维向量缩放** `(Arithmetic.Math_Client.Vector_Scale)`
  *
- * - Scales the input 3D Vector (scalar multiplication) and outputs the result
+ * - 将输入的三维向量缩放后输出（三维向量数乘）
  *
  * -----------
  *
@@ -17492,22 +17489,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `scale` || Zoom Multiplier |
- * | 1 || 🔹 || `Vec` || `vector` || 3D Vector |
+ * | 0 || 🔹 || `Flt` || `scale` || 缩放倍率 |
+ * | 1 || 🔹 || `Vec` || `vector` || 三维向量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_MathClient_VectorScale: "Arithmetic.Math_Client.Vector_Scale",
 
   /**
- * **3D Vector Angle** `(Arithmetic.Math_Client.Vector_Angle)`
+ * **三维向量夹角** `(Arithmetic.Math_Client.Vector_Angle)`
  *
- * - Calculates the angle between two 3D Vectors and outputs the value in degrees
+ * - 计算两个三维向量之间的夹角，以角度输出
  *
  * -----------
  *
@@ -17520,22 +17517,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector1` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `vector2` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `vector1` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `vector2` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `angle_degrees` || Angle |
+ * | 0 || 🔸 || `Flt` || `angle_degrees` || 夹角角度 |
  */
   Arithmetic_MathClient_VectorAngle: "Arithmetic.Math_Client.Vector_Angle",
 
   /**
- * **3D Vector Rotation** `(Arithmetic.Math_Client.Vector_Rotate)`
+ * **三维向量旋转** `(Arithmetic.Math_Client.Vector_Rotate)`
  *
- * - Rotates the input 3D Vector by the Euler Angles specified by the rotation and returns the result
+ * - 将被旋转的三维向量，按照旋转所表示的欧拉角进行旋转后返回结果
  *
  * -----------
  *
@@ -17548,22 +17545,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector` || Rotated 3D Vector |
- * | 1 || 🔹 || `Vec` || `rotation` || Rotate |
+ * | 0 || 🔹 || `Vec` || `vector` || 被旋转的三维向量 |
+ * | 1 || 🔹 || `Vec` || `rotation` || 旋转 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_MathClient_VectorRotate: "Arithmetic.Math_Client.Vector_Rotate",
 
   /**
- * **3D Vector Modulo Operation** `(Arithmetic.Math_Client.Vector_Length)`
+ * **三维向量模运算** `(Arithmetic.Math_Client.Vector_Length)`
  *
- * - Calculates the magnitude of the input 3D Vector
+ * - 计算输入三维向量的模
  *
  * -----------
  *
@@ -17576,21 +17573,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector` || 3D Vector |
+ * | 0 || 🔹 || `Vec` || `vector` || 三维向量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_MathClient_VectorLength: "Arithmetic.Math_Client.Vector_Length",
 
   /**
- * **Create 3D Vector** `(Arithmetic.Math_Client.Create_Vector)`
+ * **创建三维向量** `(Arithmetic.Math_Client.Create_Vector)`
  *
- * - Creates a 3D Vector from x, y, and z components
+ * - 根据x、y、z分量创建一个三维向量
  *
  * -----------
  *
@@ -17603,23 +17600,23 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `x` || X-Component |
- * | 1 || 🔹 || `Flt` || `y` || Y-Component |
- * | 2 || 🔹 || `Flt` || `z` || Z-Component |
+ * | 0 || 🔹 || `Flt` || `x` || X分量 |
+ * | 1 || 🔹 || `Flt` || `y` || Y分量 |
+ * | 2 || 🔹 || `Flt` || `z` || Z分量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `vector` || 3D Vector |
+ * | 0 || 🔸 || `Vec` || `vector` || 三维向量 |
  */
   Arithmetic_MathClient_CreateVector: "Arithmetic.Math_Client.Create_Vector",
 
   /**
- * **3D Vector Addition** `(Arithmetic.Math_Client.Vector_Add)`
+ * **三维向量加法** `(Arithmetic.Math_Client.Vector_Add)`
  *
- * - Calculates the sum of two 3D Vectors
+ * - 计算两个三维向量的加法
  *
  * -----------
  *
@@ -17632,22 +17629,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector1` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `vector2` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `vector1` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `vector2` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `sum` || Calculation Result |
+ * | 0 || 🔸 || `Vec` || `sum` || 计算结果 |
  */
   Arithmetic_MathClient_VectorAdd: "Arithmetic.Math_Client.Vector_Add",
 
   /**
- * **3D Vector Subtraction** `(Arithmetic.Math_Client.Vector_Subtract)`
+ * **三维向量减法** `(Arithmetic.Math_Client.Vector_Subtract)`
  *
- * - Calculates the difference of two 3D Vectors
+ * - 计算两个三维向量的减法
  *
  * -----------
  *
@@ -17660,22 +17657,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector1` || 3D Vector 1 |
- * | 1 || 🔹 || `Vec` || `vector2` || 3D Vector 2 |
+ * | 0 || 🔹 || `Vec` || `vector1` || 三维向量1 |
+ * | 1 || 🔹 || `Vec` || `vector2` || 三维向量2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `diff` || Calculation Result |
+ * | 0 || 🔸 || `Vec` || `diff` || 计算结果 |
  */
   Arithmetic_MathClient_VectorSubtract: "Arithmetic.Math_Client.Vector_Subtract",
 
   /**
- * **Direction Vector to Rotation** `(Arithmetic.Math_Client.Vector_To_Rotation)`
+ * **方向向量转旋转** `(Arithmetic.Math_Client.Vector_To_Rotation)`
  *
- * - Converts the Forward Vector and Upward Vector to Euler Angles
+ * - 给定向前向量和向上向量，转化为欧拉角
  *
  * -----------
  *
@@ -17688,20 +17685,20 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `forward` || Forward Vector: Represents the desired Orientation of the Unit |
- * | 1 || 🔹 || `Vec` || `up` || Upward Vector: Defines the Unit's Up direction (used to determine the rotation angle). Default is the positive Y-axis of the World Coordinate System |
+ * | 0 || 🔹 || `Vec` || `forward` || 向前向量: 表示单位期望的朝向 |
+ * | 1 || 🔹 || `Vec` || `up` || 向上向量: 定义单位的上方向（用于确定旋转的旋转角度），默认值为世界坐标系Y轴正方向 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `rotation` || Rotate |
+ * | 0 || 🔸 || `Vec` || `rotation` || 旋转 |
  */
   Arithmetic_MathClient_VectorToRotation: "Arithmetic.Math_Client.Vector_To_Rotation",
 
   /**
- * **Orientation to Rotation** `(Arithmetic.Math_Client.Orientation_To_Rotation)`
+ * **朝向转旋转** `(Arithmetic.Math_Client.Orientation_To_Rotation)`
  *
  * -----------
  *
@@ -17727,9 +17724,9 @@ export const NODES = {
   Arithmetic_MathClient_OrientationToRotation: "Arithmetic.Math_Client.Orientation_To_Rotation",
 
   /**
- * **Recover HP** `(Execution.Character_Skill_Client.Recover_HP)`
+ * **恢复生命值** `(Execution.Character_Skill_Client.Recover_HP)`
  *
- * - Initiates a one-time HP restoration for the Target Entity
+ * - 为目标实体发起一次恢复生命值
  *
  * -----------
  *
@@ -17743,11 +17740,11 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Flt` || `heal_amount` || Recovery Amount |
- * | 2 || 🔹 || `Bol` || `ignore_healing_adjustments` || Ignore Recovery Adjustment Effect |
- * | 3 || 🔹 || `Flt` || `aggro_multiplier` || Aggro Multiplier for This Healing |
- * | 4 || 🔹 || `Int` || `aggro_increment` || Aggro Increment for This Healing |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Flt` || `heal_amount` || 恢复量 |
+ * | 2 || 🔹 || `Bol` || `ignore_healing_adjustments` || 是否忽略恢复调整效果 |
+ * | 3 || 🔹 || `Flt` || `aggro_multiplier` || 本次治疗的仇恨倍率 |
+ * | 4 || 🔹 || `Int` || `aggro_increment` || 本次治疗的仇恨增量 |
  *
  * -----------
  *
@@ -17759,9 +17756,9 @@ export const NODES = {
   Execution_CharacterSkillClient_RecoverHP: "Execution.Character_Skill_Client.Recover_HP",
 
   /**
- * **Get Current Character** `(Query.Character_Related_Client.Get_Current_Character)`
+ * **获取当前角色** `(Query.Character_Related_Client.Get_Current_Character)`
  *
- * - Returns the Character Entity currently controlled by this Player's client
+ * - 获取该玩家客户端当前控制的角色实体
  *
  * -----------
  *
@@ -17774,14 +17771,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `character_entity` || Character Entity |
+ * | 0 || 🔸 || `Ety` || `character_entity` || 角色实体 |
  */
   Query_CharacterRelatedClient_GetCurrentCharacter: "Query.Character_Related_Client.Get_Current_Character",
 
   /**
- * **Get Entity's Unit Tag List** `(Query.Unit_Tag_Client.Get_Tags)`
+ * **获取实体的单位标签列表** `(Query.Unit_Tag_Client.Get_Tags)`
  *
- * - Returns a list of all Unit Tags carried by the Target Entity
+ * - 获取目标实体上携带的所有单位标签组成的列表
  *
  * -----------
  *
@@ -17794,21 +17791,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Int>` || `indexes` || List |
+ * | 0 || 🔸 || `L<Int>` || `indexes` || 列表 |
  */
   Query_UnitTagClient_GetTags: "Query.Unit_Tag_Client.Get_Tags",
 
   /**
- * **Get Entity List by Unit Tag** `(Query.Unit_Tag_Client.Get_By_Tag)`
+ * **获取单位标签的实体列表** `(Query.Unit_Tag_Client.Get_By_Tag)`
  *
- * - Returns a list of all Entities in the scene that carry this Unit Tag
+ * - 获取在场所有携带该单位标签的实体列表
  *
  * -----------
  *
@@ -17821,22 +17818,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Int` || `unit_tag_index` || Unit Tag Index |
+ * | 0 || 🔹 || `Int` || `unit_tag_index` || 单位标签索引 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `entities` || Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `entities` || 实体列表 |
  */
   Query_UnitTagClient_GetByTag: "Query.Unit_Tag_Client.Get_By_Tag",
 
   /**
- * **Finite Loop** `(Execution.General_Client.For_Loop)`
+ * **有限循环** `(Execution.General_Client.For_Loop)`
  *
- * - From the [Loop Start Value] to the [Loop End Value], the loop iterates, incrementing the Integer by 1 each time. On each iteration, it executes the Nodes connected to [Loop Body]. After a full iteration, it executes the Nodes connected to [Loop Complete].
- * - Use [Break Loop] to end the iteration early
+ * - 从【循环起始值】开始到【循环终止值】结束，会遍历其中的循环值，每次整数加一。每次循环会执行一次【循环体】后连接的节点逻辑。完成一次完整遍历后，会执行【循环完成】后连接的节点逻辑。
+ * - 可以使用【跳出循环】来提前结束该循环值遍历
  *
  * -----------
  *
@@ -17850,25 +17847,25 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `Start` ||  |
- * | - || ▶️ || - || `Break` || Break Loop |
- * | 0 || 🔹 || `Int` || `start_index` || Loop Start Value |
- * | 1 || 🔹 || `Int` || `end_index` || Loop Termination Value |
+ * | - || ▶️ || - || `Break` || 跳出循环 |
+ * | 0 || 🔹 || `Int` || `start_index` || 循环起始值 |
+ * | 1 || 🔹 || `Int` || `end_index` || 循环终止值 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | - || ⏩ || - || `Iteration` || Loop Body |
- * | - || ⏩ || - || `End` || Loop Complete |
- * | 0 || 🔸 || `Int` || `current_index` || Current Loop Value |
+ * | - || ⏩ || - || `Iteration` || 循环体 |
+ * | - || ⏩ || - || `End` || 循环完成 |
+ * | 0 || 🔸 || `Int` || `current_index` || 当前循环值 |
  */
   Execution_GeneralClient_ForLoop: "Execution.General_Client.For_Loop",
 
   /**
- * **Break Loop** `(Execution.General_Client.Break)`
+ * **跳出循环** `(Execution.General_Client.Break)`
  *
- * - Break out of a Finite Loop. The output pin must connect to the [Break Loop] input parameter of the [Finite Loop] Node
+ * - 从有限循环中跳出。出引脚需要与节点【有限循环】的【跳出循环】入参相连
  *
  * -----------
  *
@@ -17893,9 +17890,9 @@ export const NODES = {
   Execution_GeneralClient_Break: "Execution.General_Client.Break",
 
   /**
- * **Set Local Variable** `(Execution.General_Client.Set_Local)`
+ * **设置局部变量** `(Execution.General_Client.Set_Local)`
  *
- * - Sets the value of a local variable
+ * - 设置局部变量的值
  *
  * -----------
  *
@@ -17909,8 +17906,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Str` || `variable_name` || Variable Name |
- * | 1 || 🔷 || **`R<T>`** || `variable_value` || Variable Value |
+ * | 0 || 🔹 || `Str` || `variable_name` || 变量名 |
+ * | 1 || 🔷 || **`R<T>`** || `variable_value` || 变量值 |
  *
  * -----------
  *
@@ -17941,9 +17938,9 @@ export const NODES = {
   Execution_GeneralClient_SetLocal: "Execution.General_Client.Set_Local",
 
   /**
- * **Get Local Variable** `(Query.General_Client.Get_Local)`
+ * **获取局部变量** `(Query.General_Client.Get_Local)`
  *
- * - Returns the value of a specific local variable
+ * - 获取特定局部变量的变量值
  *
  * -----------
  *
@@ -17956,14 +17953,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Str` || `variable_name` || Variable Name |
+ * | 0 || 🔹 || `Str` || `variable_name` || 变量名 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔶 || **`R<T>`** || `value` || Variable Value |
+ * | 0 || 🔶 || **`R<T>`** || `value` || 变量值 |
  *
  * #### 🧬 Variant Constraints
  * * `C<T:Int>`
@@ -17987,10 +17984,10 @@ export const NODES = {
   Query_GeneralClient_GetLocal: "Query.General_Client.Get_Local",
 
   /**
- * **Set the Aggro Value of the Specified Entity** `(Execution.Custom_Aggro_Client.Set_Aggro)`
+ * **设置指定实体的仇恨值** `(Execution.Custom_Aggro_Client.Set_Aggro)`
  *
- * - Available only in Custom Aggro Mode
- * - Sets the Aggro Value of the specified Entity on the Aggro Owner Entity
+ * - 仅自定义仇恨模式可用
+ * - 设置指定实体在仇恨拥有者实体上的仇恨值
  *
  * -----------
  *
@@ -18004,9 +18001,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target` || Target Entity |
- * | 1 || 🔹 || `Ety` || `owner` || Aggro Owner Entity |
- * | 2 || 🔹 || `Int` || `value` || Aggro Value |
+ * | 0 || 🔹 || `Ety` || `target` || 目标实体 |
+ * | 1 || 🔹 || `Ety` || `owner` || 仇恨拥有者实体 |
+ * | 2 || 🔹 || `Int` || `value` || 仇恨值 |
  *
  * -----------
  *
@@ -18018,10 +18015,10 @@ export const NODES = {
   Execution_CustomAggroClient_SetAggro: "Execution.Custom_Aggro_Client.Set_Aggro",
 
   /**
- * **Modify the Aggro Value of the Specified Entity** `(Execution.Custom_Aggro_Client.Modify_Aggro)`
+ * **修改指定实体的仇恨值** `(Execution.Custom_Aggro_Client.Modify_Aggro)`
  *
- * - Available only in Custom Aggro Mode
- * - Edits the Aggro Value of the specified Entity on the Aggro Owner Entity
+ * - 仅自定义仇恨模式可用
+ * - 修改指定实体在仇恨拥有者实体上的仇恨值
  *
  * -----------
  *
@@ -18035,9 +18032,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target` || Target Entity |
- * | 1 || 🔹 || `Ety` || `owner` || Aggro Owner Entity |
- * | 2 || 🔹 || `Int` || `delta` || Aggro Value Increment |
+ * | 0 || 🔹 || `Ety` || `target` || 目标实体 |
+ * | 1 || 🔹 || `Ety` || `owner` || 仇恨拥有者实体 |
+ * | 2 || 🔹 || `Int` || `delta` || 仇恨值增量 |
  *
  * -----------
  *
@@ -18049,10 +18046,10 @@ export const NODES = {
   Execution_CustomAggroClient_ModifyAggro: "Execution.Custom_Aggro_Client.Modify_Aggro",
 
   /**
- * **Modify the Aggro Value of the Specified Entity Proportionally** `(Execution.Custom_Aggro_Client.Modify_Aggro_Ratio)`
+ * **按比例修改指定实体的仇恨值** `(Execution.Custom_Aggro_Client.Modify_Aggro_Ratio)`
  *
- * - Available only in Custom Aggro Mode
- * - Proportionally edits the Target Entity's Aggro Value on the specified Aggro Owner
+ * - 仅自定义仇恨模式可用
+ * - 按比例修改目标实体在指定仇恨拥有者上的仇恨值
  *
  * -----------
  *
@@ -18066,9 +18063,9 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target` || Target Entity |
- * | 1 || 🔹 || `Ety` || `owner` || Aggro Owner Entity |
- * | 2 || 🔹 || `Flt` || `ratio` || Modified Aggro Value Ratio |
+ * | 0 || 🔹 || `Ety` || `target` || 目标实体 |
+ * | 1 || 🔹 || `Ety` || `owner` || 仇恨拥有者实体 |
+ * | 2 || 🔹 || `Flt` || `ratio` || 修改的仇恨值比例 |
  *
  * -----------
  *
@@ -18080,10 +18077,10 @@ export const NODES = {
   Execution_CustomAggroClient_ModifyAggroRatio: "Execution.Custom_Aggro_Client.Modify_Aggro_Ratio",
 
   /**
- * **Transfer the Aggro Value of the Specified Entity Proportionally** `(Execution.Custom_Aggro_Client.Transfer_Aggro)`
+ * **按比例转移指定实体的仇恨值** `(Execution.Custom_Aggro_Client.Transfer_Aggro)`
  *
- * - Available only in Custom Aggro Mode
- * - Transfers a percentage of Aggro on the Aggro Owner from the Source Entity to the Target Entity
+ * - 仅自定义仇恨模式可用
+ * - 将仇恨拥有者上对转移来源实体一定比例的仇恨转移到转移目标实体上
  *
  * -----------
  *
@@ -18097,10 +18094,10 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target` || Transfer Target Entity |
- * | 1 || 🔹 || `Ety` || `source` || Transfer Source Entity |
- * | 2 || 🔹 || `Ety` || `owner` || Aggro Owner Entity |
- * | 3 || 🔹 || `Flt` || `ratio` || Transfer Ratio |
+ * | 0 || 🔹 || `Ety` || `target` || 转移目标实体 |
+ * | 1 || 🔹 || `Ety` || `source` || 转移来源实体 |
+ * | 2 || 🔹 || `Ety` || `owner` || 仇恨拥有者实体 |
+ * | 3 || 🔹 || `Flt` || `ratio` || 转移比例 |
  *
  * -----------
  *
@@ -18112,10 +18109,10 @@ export const NODES = {
   Execution_CustomAggroClient_TransferAggro: "Execution.Custom_Aggro_Client.Transfer_Aggro",
 
   /**
- * **Clear the Aggro List of the Specified Entity** `(Execution.Custom_Aggro_Client.Clear_Aggro)`
+ * **清空指定实体的仇恨列表** `(Execution.Custom_Aggro_Client.Clear_Aggro)`
  *
- * - Available only in Custom Aggro Mode
- * - Clears the Aggro List of the specified Entity; this usually causes the Target to leave battle
+ * - 仅自定义仇恨模式可用
+ * - 清空指定实体的仇恨列表，这通常会导致该目标脱战
  *
  * -----------
  *
@@ -18129,7 +18126,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target` || 目标实体 |
  *
  * -----------
  *
@@ -18141,10 +18138,10 @@ export const NODES = {
   Execution_CustomAggroClient_ClearAggro: "Execution.Custom_Aggro_Client.Clear_Aggro",
 
   /**
- * **Remove Target Entity From Aggro List** `(Execution.Custom_Aggro_Client.Remove_Aggro)`
+ * **将目标实体移除出仇恨列表** `(Execution.Custom_Aggro_Client.Remove_Aggro)`
  *
- * - Available only in Custom Aggro Mode
- * - Removes the Target Entity from the Aggro Owner Entity's Aggro List; this may cause the Target Entity to leave battle
+ * - 仅自定义仇恨模式可用
+ * - 将目标实体移出仇恨拥有者实体的仇恨列表，这可能导致目标实体脱战
  *
  * -----------
  *
@@ -18158,8 +18155,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `target` || Target Entity |
- * | 1 || 🔹 || `Ety` || `owner` || Aggro Owner Entity |
+ * | 0 || 🔹 || `Ety` || `target` || 目标实体 |
+ * | 1 || 🔹 || `Ety` || `owner` || 仇恨拥有者实体 |
  *
  * -----------
  *
@@ -18171,10 +18168,10 @@ export const NODES = {
   Execution_CustomAggroClient_RemoveAggro: "Execution.Custom_Aggro_Client.Remove_Aggro",
 
   /**
- * **Taunt Target** `(Execution.Custom_Aggro_Client.Taunt)`
+ * **嘲讽目标** `(Execution.Custom_Aggro_Client.Taunt)`
  *
- * - Available only in Custom Aggro Mode
- * - The Taunter Entity taunts the specified Target Entity
+ * - 仅自定义仇恨模式可用
+ * - 嘲讽者实体嘲讽指定目标实体
  *
  * -----------
  *
@@ -18188,8 +18185,8 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Ety` || `taunter` || Taunter Entity |
- * | 1 || 🔹 || `Ety` || `target` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `taunter` || 嘲讽者实体 |
+ * | 1 || 🔹 || `Ety` || `target` || 目标实体 |
  *
  * -----------
  *
@@ -18201,9 +18198,9 @@ export const NODES = {
   Execution_CustomAggroClient_Taunt: "Execution.Custom_Aggro_Client.Taunt",
 
   /**
- * **Get the Aggro Target of the Specified Entity** `(Query.Custom_Aggro_Client.Get_Aggro_Target)`
+ * **获取指定实体的仇恨目标** `(Query.Custom_Aggro_Client.Get_Aggro_Target)`
  *
- * - Get Aggro Target of Specific Entity
+ * - 获取指定实体的仇恨目标
  *
  * -----------
  *
@@ -18216,21 +18213,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `specified_entity` || Specified Entity |
+ * | 0 || 🔹 || `Ety` || `specified_entity` || 指定实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `hate_target` || Aggro Target |
+ * | 0 || 🔸 || `Ety` || `hate_target` || 仇恨目标 |
  */
   Query_CustomAggroClient_GetAggroTarget: "Query.Custom_Aggro_Client.Get_Aggro_Target",
 
   /**
- * **Get the Aggro List of the Specified Entity** `(Query.Custom_Aggro_Client.Get_Aggro_List)`
+ * **获取指定实体的仇恨列表** `(Query.Custom_Aggro_Client.Get_Aggro_List)`
  *
- * - Get Specific Entity's Aggro List
+ * - 获取指定实体的仇恨列表
  *
  * -----------
  *
@@ -18243,21 +18240,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `specified_entity` || Specified Entity |
+ * | 0 || 🔹 || `Ety` || `specified_entity` || 指定实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `hate_list` || Aggro List |
+ * | 0 || 🔸 || `L<Ety>` || `hate_list` || 仇恨列表 |
  */
   Query_CustomAggroClient_GetAggroList: "Query.Custom_Aggro_Client.Get_Aggro_List",
 
   /**
- * **Query if Specified Entity is in Combat** `(Query.Custom_Aggro_Client.Is_In_Combat)`
+ * **查询指定实体是否入战** `(Query.Custom_Aggro_Client.Is_In_Combat)`
  *
- * - Searches whether the specified Entity has entered battle
+ * - 查询指定实体是否已经入战
  *
  * -----------
  *
@@ -18270,21 +18267,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `is_in_combat` || In Combat |
+ * | 0 || 🔸 || `Bol` || `is_in_combat` || 是否入战 |
  */
   Query_CustomAggroClient_IsInCombat: "Query.Custom_Aggro_Client.Is_In_Combat",
 
   /**
- * **Query If Faction Is Hostile** `(Query.Faction_Related_Client.Is_Hostile)`
+ * **查询阵营是否敌对** `(Query.Faction_Related_Client.Is_Hostile)`
  *
- * - Searches whether Faction 1 and Faction 2 are hostile
+ * - 查询阵营1和阵营2是否敌对
  *
  * -----------
  *
@@ -18297,22 +18294,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Fct` || `camp1` || Faction 1 |
- * | 1 || 🔹 || `Fct` || `camp2` || Faction 2 |
+ * | 0 || 🔹 || `Fct` || `camp1` || 阵营1 |
+ * | 1 || 🔹 || `Fct` || `camp2` || 阵营2 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `is_hostile` || Hostile |
+ * | 0 || 🔸 || `Bol` || `is_hostile` || 是否敌对 |
  */
   Query_FactionRelatedClient_IsHostile: "Query.Faction_Related_Client.Is_Hostile",
 
   /**
- * **Sine Function** `(Arithmetic.Math_Client.Sin)`
+ * **正弦函数** `(Arithmetic.Math_Client.Sin)`
  *
- * - Calculates the sine of the input in radians
+ * - 计算输入弧度的正弦
  *
  * -----------
  *
@@ -18325,21 +18322,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `radian` || Radian |
+ * | 0 || 🔹 || `Flt` || `radian` || 弧度 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_MathClient_Sin: "Arithmetic.Math_Client.Sin",
 
   /**
- * **Cosine Function** `(Arithmetic.Math_Client.Cos)`
+ * **余弦函数** `(Arithmetic.Math_Client.Cos)`
  *
- * - Calculates the cosine of the input in radians
+ * - 计算输入弧度的余弦
  *
  * -----------
  *
@@ -18352,21 +18349,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `radian` || Radian |
+ * | 0 || 🔹 || `Flt` || `radian` || 弧度 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `result` || Result |
+ * | 0 || 🔸 || `Flt` || `result` || 结果 |
  */
   Arithmetic_MathClient_Cos: "Arithmetic.Math_Client.Cos",
 
   /**
- * **Tangent Function** `(Arithmetic.Math_Client.Tan)`
+ * **正切函数** `(Arithmetic.Math_Client.Tan)`
  *
- * - Calculates the tangent of the input in radians
+ * - 计算输入弧度的正切
  *
  * -----------
  *
@@ -18379,21 +18376,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `Input1` || Radian |
+ * | 0 || 🔹 || `Flt` || `Input1` || 弧度 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `Output0` || Result |
+ * | 0 || 🔸 || `Flt` || `Output0` || 结果 |
  */
   Arithmetic_MathClient_Tan: "Arithmetic.Math_Client.Tan",
 
   /**
- * **Arcsine Function** `(Arithmetic.Math_Client.Asin)`
+ * **反正弦函数** `(Arithmetic.Math_Client.Asin)`
  *
- * - Calculates the arcsine of the input and returns the value in radians
+ * - 计算输入的反正弦值，返回为弧度值
  *
  * -----------
  *
@@ -18406,21 +18403,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `input` || Input |
+ * | 0 || 🔹 || `Flt` || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radians` || Radian |
+ * | 0 || 🔸 || `Flt` || `radians` || 弧度 |
  */
   Arithmetic_MathClient_Asin: "Arithmetic.Math_Client.Asin",
 
   /**
- * **Arccosine Function** `(Arithmetic.Math_Client.Acos)`
+ * **反余弦函数** `(Arithmetic.Math_Client.Acos)`
  *
- * - Calculates the arccosine of the input and returns the value in radians
+ * - 计算输入的反余弦值，返回为弧度值
  *
  * -----------
  *
@@ -18433,21 +18430,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `input` || Input |
+ * | 0 || 🔹 || `Flt` || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radians` || Radian |
+ * | 0 || 🔸 || `Flt` || `radians` || 弧度 |
  */
   Arithmetic_MathClient_Acos: "Arithmetic.Math_Client.Acos",
 
   /**
- * **Arctangent Function** `(Arithmetic.Math_Client.Atan)`
+ * **反正切函数** `(Arithmetic.Math_Client.Atan)`
  *
- * - Calculates the arctangent of the input and returns the value in radians
+ * - 计算输入的反正切值，返回为弧度值
  *
  * -----------
  *
@@ -18460,21 +18457,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `input` || Input |
+ * | 0 || 🔹 || `Flt` || `input` || 输入 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radians` || Radian |
+ * | 0 || 🔸 || `Flt` || `radians` || 弧度 |
  */
   Arithmetic_MathClient_Atan: "Arithmetic.Math_Client.Atan",
 
   /**
- * **3D Vector Normalization** `(Arithmetic.Math_Client.Vector_Normalize)`
+ * **三维向量归一化** `(Arithmetic.Math_Client.Vector_Normalize)`
  *
- * - Normalizes the length of a 3D Vector and outputs the result
+ * - 将三维向量的长度归一化后输出
  *
  * -----------
  *
@@ -18487,21 +18484,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Vec` || `vector` || 3D Vector |
+ * | 0 || 🔹 || `Vec` || `vector` || 三维向量 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Vec` || `result` || Result |
+ * | 0 || 🔸 || `Vec` || `result` || 结果 |
  */
   Arithmetic_MathClient_VectorNormalize: "Arithmetic.Math_Client.Vector_Normalize",
 
   /**
- * **Radians to Degrees** `(Arithmetic.Math_Client.Rad_To_Deg)`
+ * **弧度转角度** `(Arithmetic.Math_Client.Rad_To_Deg)`
  *
- * - Converts radians to degrees
+ * - 将弧度值转为角度值
  *
  * -----------
  *
@@ -18514,21 +18511,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `radian` || Radian |
+ * | 0 || 🔹 || `Flt` || `radian` || 弧度 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `degree` || Angle |
+ * | 0 || 🔸 || `Flt` || `degree` || 角度 |
  */
   Arithmetic_MathClient_RadToDeg: "Arithmetic.Math_Client.Rad_To_Deg",
 
   /**
- * **Degrees to Radians** `(Arithmetic.Math_Client.Deg_To_Rad)`
+ * **角度转弧度** `(Arithmetic.Math_Client.Deg_To_Rad)`
  *
- * - Converts degrees to radians
+ * - 将角度值转为弧度值
  *
  * -----------
  *
@@ -18541,22 +18538,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Flt` || `degree` || Angle |
+ * | 0 || 🔹 || `Flt` || `degree` || 角度 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Flt` || `radian` || Radian |
+ * | 0 || 🔸 || `Flt` || `radian` || 弧度 |
  */
   Arithmetic_MathClient_DegToRad: "Arithmetic.Math_Client.Deg_To_Rad",
 
   /**
- * **Query If Entity Is on the Field** `(Query.Entity_Related_Client.Is_Active)`
+ * **查询实体是否在场** `(Query.Entity_Related_Client.Is_Active)`
  *
- * - Searches whether the specified Entity is present
- * - Note that Character Entities are still considered present even when Downed
+ * - 查询指定实体是否在场
+ * - 注意角色实体即使处于倒下状态，仍然认为在场
  *
  * -----------
  *
@@ -18569,14 +18566,14 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Bol` || `is_present` || On the Field |
+ * | 0 || 🔸 || `Bol` || `is_present` || 是否在场 |
  */
   Query_EntityRelatedClient_IsActive: "Query.Entity_Related_Client.Is_Active",
 
@@ -18600,9 +18597,9 @@ export const NODES = {
   Hidden_OtherClient_GraphEnd: "Hidden.Other_Client.Graph_End",
 
   /**
- * **Player Turns to Face Set Direction** `(Execution.Character_Skill_Client.Turn_To_Face)`
+ * **玩家转向指定朝向** `(Execution.Character_Skill_Client.Turn_To_Face)`
  *
- * - Turns the Player toward the direction specified by the 3D Vector configuration
+ * - 玩家转向三维向量配置的方向
  *
  * -----------
  *
@@ -18616,7 +18613,7 @@ export const NODES = {
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
  * | - || ▶️ || - || `FlowIn` ||  |
- * | 0 || 🔹 || `Vec` || `direction` || Orientation |
+ * | 0 || 🔹 || `Vec` || `direction` || 朝向 |
  *
  * -----------
  *
@@ -18628,9 +18625,9 @@ export const NODES = {
   Execution_CharacterSkillClient_TurnToFace: "Execution.Character_Skill_Client.Turn_To_Face",
 
   /**
- * **Reset Skill Target** `(Execution.Character_Skill_Client.Reset_Target)`
+ * **重置技能目标** `(Execution.Character_Skill_Client.Reset_Target)`
  *
- * - Resets the Skill Target and reruns the Skill selection logic to choose a new Target
+ * - 重置技能目标，重新运行一次技能选取逻辑，选择一个新的目标
  *
  * -----------
  *
@@ -18655,9 +18652,9 @@ export const NODES = {
   Execution_CharacterSkillClient_ResetTarget: "Execution.Character_Skill_Client.Reset_Target",
 
   /**
- * **Get All Entities Within the Collision Trigger** `(Query.Trigger_Client.Get_Overlapping_Entities)`
+ * **获取碰撞触发器内所有实体** `(Query.Trigger_Client.Get_Overlapping_Entities)`
  *
- * - Returns all Entities within the Collision Trigger corresponding to a specific ID in the Collision Trigger Component on the Target Entity
+ * - 获取目标实体上碰撞触发器组件中特定序号对应的碰撞触发器内的所有实体
  *
  * -----------
  *
@@ -18670,22 +18667,22 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
- * | 1 || 🔹 || `Int` || `trigger_index` || Trigger ID |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
+ * | 1 || 🔹 || `Int` || `trigger_index` || 触发器序号 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `entities` || Entity List |
+ * | 0 || 🔸 || `L<Ety>` || `entities` || 实体列表 |
  */
   Query_TriggerClient_GetOverlappingEntities: "Query.Trigger_Client.Get_Overlapping_Entities",
 
   /**
- * **Force Exit Aiming State** `(Execution.Character_Skill_Client.Exit_Aiming)`
+ * **强制退出瞄准状态** `(Execution.Character_Skill_Client.Exit_Aiming)`
  *
- * - Forces the Character to exit Aiming Status if the Character is currently in it
+ * - 当角色处于瞄准状态是，会强制退出瞄准状态
  *
  * -----------
  *
@@ -18710,7 +18707,7 @@ export const NODES = {
   Execution_CharacterSkillClient_ExitAiming: "Execution.Character_Skill_Client.Exit_Aiming",
 
   /**
- * **Get Ray Detection Result** `(Query.Ray_Client.Get_Ray_Result)`
+ * **获取射线检测结果** `(Query.Ray_Client.Get_Ray_Result)`
  *
  * -----------
  *
@@ -18742,7 +18739,7 @@ export const NODES = {
   Query_RayClient_GetRayResult: "Query.Ray_Client.Get_Ray_Result",
 
   /**
- * **Get Ray Filter Type List** `(Query.List_Related_Client.Get_Ray_Filters)`
+ * **获取射线筛选类型列表** `(Query.List_Related_Client.Get_Ray_Filters)`
  *
  * -----------
  *
@@ -18777,7 +18774,7 @@ export const NODES = {
   Query_ListRelatedClient_GetRayFilters: "Query.List_Related_Client.Get_Ray_Filters",
 
   /**
- * **Trigger Spherical Hitbox at Specific Location** `(Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc)`
+ * **特定位置打球形攻击盒** `(Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc)`
  *
  * -----------
  *
@@ -18833,7 +18830,7 @@ export const NODES = {
   Execution_CharacterSkillClient_TriggerSphereHitboxLoc: "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc",
 
   /**
- * **Trigger Rectangular Hitbox at Specific Location** `(Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc)`
+ * **特定位置打矩形攻击盒** `(Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc)`
  *
  * -----------
  *
@@ -18889,7 +18886,7 @@ export const NODES = {
   Execution_CharacterSkillClient_TriggerRectHitboxLoc: "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc",
 
   /**
- * **Trigger Sector Hitbox at Specific Location** `(Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Loc)`
+ * **特定位置打扇形攻击盒** `(Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Loc)`
  *
  * -----------
  *
@@ -19067,7 +19064,7 @@ export const NODES = {
   Execution_CharacterSkillClient_TriggerRectHitboxSocket: "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Socket",
 
   /**
- * **Trigger Sector Hitbox at Specified Attachment Point** `(Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Socket)`
+ * **指定挂接点打攻击盒** `(Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Socket)`
  *
  * -----------
  *
@@ -19165,9 +19162,9 @@ export const NODES = {
   Hidden_ExecutionClient_TestSendSignal: "Hidden.Execution_Client.Test_Send_Signal",
 
   /**
- * **Get Entity Currently Scanned by Scan Component** `(Query.Scanning_Client.Get_Scanned_Entity)`
+ * **获取扫描组件当前扫描到的实体** `(Query.Scanning_Client.Get_Scanned_Entity)`
  *
- * - Returns Entities currently detected by the Scan Component; these are Entities in the Active State
+ * - 获取扫描组件当前扫描到的实体，指扫描状态为“激活状态”的实体
  *
  * -----------
  *
@@ -19180,15 +19177,15 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Ety` || `entity` || Corresponding Entity |
- * | 1 || 🔸 || `Cfg` || `scan_tag_config_id` || Scan Tag Config ID |
+ * | 0 || 🔸 || `Ety` || `entity` || 对应实体 |
+ * | 1 || 🔸 || `Cfg` || `scan_tag_config_id` || 扫描标签配置ID |
  */
   Query_ScanningClient_GetScannedEntity: "Query.Scanning_Client.Get_Scanned_Entity",
 
   /**
- * **Get All Valid Entities That Are Scannable by Scan Component** `(Query.Scanning_Client.Get_Scannable_Entities)`
+ * **获取扫描组件可扫描的所有合法对象** `(Query.Scanning_Client.Get_Scannable_Entities)`
  *
- * - Returns all Units carrying a Scan Component whose Filter returns True, regardless of the Unit's scannable status
+ * - 获取扫描组件可扫描的所有合法对象，此处的合法对象指代所有携带扫描组件且过滤器返回为“是”的单位，与单位的可扫描状态无关
  *
  * -----------
  *
@@ -19201,14 +19198,14 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `L<Ety>` || `objects` || Object List |
+ * | 0 || 🔸 || `L<Ety>` || `objects` || 对象列表 |
  */
   Query_ScanningClient_GetScannableEntities: "Query.Scanning_Client.Get_Scannable_Entities",
 
   /**
- * **Get Entity's Scan Status** `(Query.Scanning_Client.Get_Scan_Status)`
+ * **获取实体扫描状态** `(Query.Scanning_Client.Get_Scan_Status)`
  *
- * - Get Entity Scan Status
+ * - 获取实体扫描状态
  *
  * -----------
  *
@@ -19221,21 +19218,21 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `E<CSCN>` || `scan_state` || Scan Status: Options: Invisible, Current Scan Target, Candidate Target, Not Eligible |
+ * | 0 || 🔸 || `E<CSCN>` || `scan_state` || 扫描状态: 分为不可见、当前扫描目标、候选目标、不满足条件 |
  */
   Query_ScanningClient_GetScanStatus: "Query.Scanning_Client.Get_Scan_Status",
 
   /**
- * **Get Entity's Current Active Scan Tags** `(Query.Scanning_Client.Get_Active_Tags)`
+ * **获取实体当前生效的扫描标签** `(Query.Scanning_Client.Get_Active_Tags)`
  *
- * - Returns the Target Entity's Current Active Scan Tags
+ * - 获取目标实体当前生效的扫描标签
  *
  * -----------
  *
@@ -19248,19 +19245,19 @@ export const NODES = {
  * #### 📥 Inputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔹 || `Ety` || `target_entity` || Target Entity |
+ * | 0 || 🔹 || `Ety` || `target_entity` || 目标实体 |
  *
  * -----------
  *
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `Cfg` || `scan_tag_config_id` || Scan Tag Config ID |
+ * | 0 || 🔸 || `Cfg` || `scan_tag_config_id` || 扫描标签配置ID |
  */
   Query_ScanningClient_GetActiveTags: "Query.Scanning_Client.Get_Active_Tags",
 
   /**
- * **Node Graph End (Integer)** `(Others.Port_Client.Graph_End_Int)`
+ * **节点图结束(整数)** `(Others.Port_Client.Graph_End_Int)`
  *
  * -----------
  *
@@ -19279,9 +19276,9 @@ export const NODES = {
   Others_PortClient_GraphEndInt: "Others.Port_Client.Graph_End_Int",
 
   /**
- * **Get Player Client Input Device Type** `(Query.Character_Related_Client.Get_Input_Type)`
+ * **获得玩家客户端输入设备类型** `(Query.Character_Related_Client.Get_Input_Type)`
  *
- * - Returns the Player's local input device type, as determined by the Interface mapping method
+ * - 获得玩家的客户端输入设备类型，根据用户界面的映射方式决定
  *
  * -----------
  *
@@ -19294,12 +19291,12 @@ export const NODES = {
  * #### 📤 Outputs
  * | Idx | │ | Dir | │ | Type | │ | Identifier | │ | Info |
  * | :-: |:-:| :-: |:-:| :--: |:-:| :-------- |:-:| :-- |
- * | 0 || 🔸 || `E<CDEV>` || `input_device_type` || Input Device Type: Includes keyboard/mouse, gamepad, touchscreen |
+ * | 0 || 🔸 || `E<CDEV>` || `input_device_type` || 输入设备类型: 分为键盘鼠标、手柄、触屏 |
  */
   Query_CharacterRelatedClient_GetInputType: "Query.Character_Related_Client.Get_Input_Type",
 
   /**
- * **Send Signal to Server Node Graph** `(Execution.Signal_Client.Send_To_Server)`
+ * **向服务器节点图发送信号** `(Execution.Signal_Client.Send_To_Server)`
  *
  * -----------
  *
@@ -19324,7 +19321,7 @@ export const NODES = {
   Execution_SignalClient_SendToServer: "Execution.Signal_Client.Send_To_Server",
 
   /**
- * **Send Signal** `(Execution.Signal.Send)`
+ * **发送信号** `(Execution.Signal.Send)`
  *
  * -----------
  *
@@ -19350,7 +19347,7 @@ export const NODES = {
   Execution_Signal_Send: "Execution.Signal.Send",
 
   /**
- * **Monitor Signal** `(Trigger.Signal.On_Signal)`
+ * **监听信号** `(Trigger.Signal.On_Signal)`
  *
  * -----------
  *
@@ -19378,9 +19375,9 @@ export const NODES = {
   Trigger_Signal_OnSignal: "Trigger.Signal.On_Signal",
 
   /**
- * **Assemble Structure** `(Arithmetic.Structure.Assemble_Struct)`
+ * **拼装结构体** `(Arithmetic.Structure.Assemble_Struct)`
  *
- * - Combines multiple parameters into a single Structure-type value
+ * - 将多个参数拼合为一个结构体类型的值
  *
  * -----------
  *
@@ -19391,9 +19388,9 @@ export const NODES = {
   Arithmetic_Structure_AssembleStruct: "Arithmetic.Structure.Assemble_Struct",
 
   /**
- * **Split Structure** `(Arithmetic.Structure.Split_Struct)`
+ * **拆分结构体** `(Arithmetic.Structure.Split_Struct)`
  *
- * - Returns all parameters of the specified Structure
+ * - 获取指定结构体的所有参数
  *
  * -----------
  *
@@ -19404,9 +19401,9 @@ export const NODES = {
   Arithmetic_Structure_SplitStruct: "Arithmetic.Structure.Split_Struct",
 
   /**
- * **Modify Structure** `(Execution.Structure.Modify)`
+ * **修改结构体** `(Execution.Structure.Modify)`
  *
- * - After selecting a Structure, you can edit each parameter of that Structure
+ * - 在选定结构体后，可以修改该结构体的每个参数
  *
  * -----------
  *
@@ -19435,1119 +19432,1119 @@ export type NodeIdentifier = typeof NODES[keyof typeof NODES];
 
 export const NODE_NAMES = {
   /**  See `NODES.Execution_CommonNode_Print` for detailed documentation. */
-  Print_String: "Execution.Common_Node.Print",
+  "打印字符串": "Execution.Common_Node.Print",
   /**  See `NODES.Control_General_Branch` for detailed documentation. */
-  Double_Branch: "Control.General.Branch",
+  "双分支": "Control.General.Branch",
   /**  See `NODES.Control_General_Switch` for detailed documentation. */
-  Multiple_Branches: "Control.General.Switch",
+  "多分支": "Control.General.Switch",
   /**  See `NODES.Execution_CommonNode_ForLoop` for detailed documentation. */
-  Finite_Loop: "Execution.Common_Node.For_Loop",
+  "有限循环": "Execution.Common_Node.For_Loop",
   /**  See `NODES.Execution_CommonNode_Break` for detailed documentation. */
-  Break_Loop: "Execution.Common_Node.Break",
+  "跳出循环": "Execution.Common_Node.Break",
   /**  See `NODES.Query_Math_RandomFloat` for detailed documentation. */
-  Get_Random_Floating_Point_Number: "Query.Math.Random_Float",
+  "获取随机浮点数": "Query.Math.Random_Float",
   /**  See `NODES.Query_Math_WeightedRandom` for detailed documentation. */
-  Weighted_Random: "Query.Math.Weighted_Random",
+  "权重随机": "Query.Math.Weighted_Random",
   /**  See `NODES.Arithmetic_Math_SplitVector` for detailed documentation. */
-  Split_3D_Vector: "Arithmetic.Math.Split_Vector",
+  "拆分三维向量": "Arithmetic.Math.Split_Vector",
   /**  See `NODES.Arithmetic_Math_VectorAdd` for detailed documentation. */
-  _3D_Vector_Addition: "Arithmetic.Math.Vector_Add",
+  "三维向量加法": "Arithmetic.Math.Vector_Add",
   /**  See `NODES.Arithmetic_Math_VectorSubtract` for detailed documentation. */
-  _3D_Vector_Subtraction: "Arithmetic.Math.Vector_Subtract",
+  "三维向量减法": "Arithmetic.Math.Vector_Subtract",
   /**  See `NODES.Arithmetic_Math_VectorScale` for detailed documentation. */
-  _3D_Vector_Zoom: "Arithmetic.Math.Vector_Scale",
+  "三维向量缩放": "Arithmetic.Math.Vector_Scale",
   /**  See `NODES.Arithmetic_Math_VectorAngle` for detailed documentation. */
-  _3D_Vector_Angle: "Arithmetic.Math.Vector_Angle",
+  "三维向量夹角": "Arithmetic.Math.Vector_Angle",
   /**  See `NODES.Arithmetic_General_Equal` for detailed documentation. */
-  Equal: "Arithmetic.General.Equal",
+  "是否相等": "Arithmetic.General.Equal",
   /**  See `NODES.Query_General_GetLocal` for detailed documentation. */
-  Get_Local_Variable: "Query.General.Get_Local",
+  "获取局部变量": "Query.General.Get_Local",
   /**  See `NODES.Execution_CommonNode_SetLocal` for detailed documentation. */
-  Set_Local_Variable: "Execution.Common_Node.Set_Local",
+  "设置局部变量": "Execution.Common_Node.Set_Local",
   /**  See `NODES.Execution_CustomVariable_SetVariable` for detailed documentation. */
-  Set_Custom_Variable: "Execution.Custom_Variable.Set_Variable",
+  "设置自定义变量": "Execution.Custom_Variable.Set_Variable",
   /**  See `NODES.Trigger_CustomVariable_OnVariableChange` for detailed documentation. */
-  When_Custom_Variable_Changes: "Trigger.Custom_Variable.On_Variable_Change",
+  "自定义变量变化时": "Trigger.Custom_Variable.On_Variable_Change",
   /**  See `NODES.Query_CustomVariable_GetVariable` for detailed documentation. */
-  Get_Custom_Variable: "Query.Custom_Variable.Get_Variable",
+  "获取自定义变量": "Query.Custom_Variable.Get_Variable",
   /**  See `NODES.Execution_PresetStatus_SetStatus` for detailed documentation. */
-  Set_Preset_Status: "Execution.Preset_Status.Set_Status",
+  "设置预设状态": "Execution.Preset_Status.Set_Status",
   /**  See `NODES.Trigger_PresetStatus_OnStatusChange` for detailed documentation. */
-  When_Preset_Status_Changes: "Trigger.Preset_Status.On_Status_Change",
+  "预设状态变化时": "Trigger.Preset_Status.On_Status_Change",
   /**  See `NODES.Query_PresetStatus_GetStatus` for detailed documentation. */
-  Get_Preset_Status: "Query.Preset_Status.Get_Status",
+  "获取预设状态": "Query.Preset_Status.Get_Status",
   /**  See `NODES.Execution_EntityRelated_DestroyEntity` for detailed documentation. */
-  Destroy_Entity: "Execution.Entity_Related.Destroy_Entity",
+  "销毁实体": "Execution.Entity_Related.Destroy_Entity",
   /**  See `NODES.Execution_EntityRelated_CreateEntity` for detailed documentation. */
-  Create_Entity: "Execution.Entity_Related.Create_Entity",
+  "创建实体": "Execution.Entity_Related.Create_Entity",
   /**  See `NODES.Trigger_EntityRelated_OnCreated` for detailed documentation. */
-  When_Entity_Is_Created: "Trigger.Entity_Related.On_Created",
+  "实体创建时": "Trigger.Entity_Related.On_Created",
   /**  See `NODES.Trigger_EntityRelated_OnRemoved` for detailed documentation. */
-  When_Entity_Is_Removed_Destroyed: "Trigger.Entity_Related.On_Removed",
+  "实体移除/销毁时": "Trigger.Entity_Related.On_Removed",
   /**  See `NODES.Query_EntityRelated_GetSelf` for detailed documentation. */
-  Get_Self_Entity: "Query.Entity_Related.Get_Self",
+  "获取自身实体": "Query.Entity_Related.Get_Self",
   /**  See `NODES.Arithmetic_Math_VectorNormalize` for detailed documentation. */
-  _3D_Vector_Normalization: "Arithmetic.Math.Vector_Normalize",
+  "三维向量归一化": "Arithmetic.Math.Vector_Normalize",
   /**  See `NODES.Query_EntityRelated_GetByGUID` for detailed documentation. */
-  Query_Entity_by_GUID: "Query.Entity_Related.Get_By_GUID",
+  "以GUID查询实体": "Query.Entity_Related.Get_By_GUID",
   /**  See `NODES.Query_EntityRelated_GetGUID` for detailed documentation. */
-  Query_GUID_by_Entity: "Query.Entity_Related.Get_GUID",
+  "以实体查询GUID": "Query.Entity_Related.Get_GUID",
   /**  See `NODES.Execution_StageRelated_Settle` for detailed documentation. */
-  Settle_Stage: "Execution.Stage_Related.Settle",
+  "结算关卡": "Execution.Stage_Related.Settle",
   /**  See `NODES.Execution_Timer_Start` for detailed documentation. */
-  Start_Timer: "Execution.Timer.Start",
+  "启动定时器": "Execution.Timer.Start",
   /**  See `NODES.Execution_Timer_Pause` for detailed documentation. */
-  Pause_Timer: "Execution.Timer.Pause",
+  "暂停定时器": "Execution.Timer.Pause",
   /**  See `NODES.Execution_Timer_Resume` for detailed documentation. */
-  Resume_Timer: "Execution.Timer.Resume",
+  "恢复定时器": "Execution.Timer.Resume",
   /**  See `NODES.Execution_Timer_Stop` for detailed documentation. */
-  Stop_Timer: "Execution.Timer.Stop",
+  "终止定时器": "Execution.Timer.Stop",
   /**  See `NODES.Trigger_Timer_OnTimerTrigger` for detailed documentation. */
-  When_Timer_Is_Triggered: "Trigger.Timer.On_Timer_Trigger",
+  "定时器触发时": "Trigger.Timer.On_Timer_Trigger",
   /**  See `NODES.Execution_MotionDevice_AddLinearMotion` for detailed documentation. */
-  Add_Uniform_Basic_Linear_Motion_Device: "Execution.Motion_Device.Add_Linear_Motion",
+  "添加匀速直线型基础运动器": "Execution.Motion_Device.Add_Linear_Motion",
   /**  See `NODES.Execution_MotionDevice_AddRotationMotion` for detailed documentation. */
-  Add_Uniform_Basic_Rotation_Based_Motion_Device: "Execution.Motion_Device.Add_Rotation_Motion",
+  "添加匀速旋转型基础运动器": "Execution.Motion_Device.Add_Rotation_Motion",
   /**  See `NODES.Execution_MotionDevice_StopDelete` for detailed documentation. */
-  Stop_and_Delete_Basic_Motion_Device: "Execution.Motion_Device.Stop_Delete",
+  "停止并删除基础运动器": "Execution.Motion_Device.Stop_Delete",
   /**  See `NODES.Execution_MotionDevice_Pause` for detailed documentation. */
-  Pause_Basic_Motion_Device: "Execution.Motion_Device.Pause",
+  "暂停基础运动器": "Execution.Motion_Device.Pause",
   /**  See `NODES.Execution_MotionDevice_Resume` for detailed documentation. */
-  Recover_Basic_Motion_Device: "Execution.Motion_Device.Resume",
+  "恢复基础运动器": "Execution.Motion_Device.Resume",
   /**  See `NODES.Trigger_MotionDevice_OnMotionStop` for detailed documentation. */
-  When_Basic_Motion_Device_Stops: "Trigger.Motion_Device.On_Motion_Stop",
+  "基础运动器停止时": "Trigger.Motion_Device.On_Motion_Stop",
   /**  See `NODES.Execution_CollisionTrigger_SetTriggerState` for detailed documentation. */
-  Activate_Disable_Collision_Trigger: "Execution.Collision_Trigger.Set_Trigger_State",
+  "注册/关闭碰撞触发器": "Execution.Collision_Trigger.Set_Trigger_State",
   /**  See `NODES.Trigger_CollisionTrigger_OnExit` for detailed documentation. */
-  When_Exiting_Collision_Trigger: "Trigger.Collision_Trigger.On_Exit",
+  "离开碰撞触发器时": "Trigger.Collision_Trigger.On_Exit",
   /**  See `NODES.Trigger_CollisionTrigger_OnEnter` for detailed documentation. */
-  When_Entering_Collision_Trigger: "Trigger.Collision_Trigger.On_Enter",
+  "进入碰撞触发器时": "Trigger.Collision_Trigger.On_Enter",
   /**  See `NODES.Execution_SpecialEffect_PlayTimed` for detailed documentation. */
-  Play_Timed_Effects: "Execution.Special_Effect.Play_Timed",
+  "播放限时特效": "Execution.Special_Effect.Play_Timed",
   /**  See `NODES.Execution_SpecialEffect_PlayLoop` for detailed documentation. */
-  Mount_Looping_Special_Effect: "Execution.Special_Effect.Play_Loop",
+  "挂载循环特效": "Execution.Special_Effect.Play_Loop",
   /**  See `NODES.Execution_SpecialEffect_StopLoop` for detailed documentation. */
-  Clear_Looping_Special_Effect: "Execution.Special_Effect.Stop_Loop",
+  "清除循环特效": "Execution.Special_Effect.Stop_Loop",
   /**  See `NODES.Query_EntityRelated_GetTransform` for detailed documentation. */
-  Get_Entity_Location_and_Rotation: "Query.Entity_Related.Get_Transform",
+  "获取实体位置与旋转": "Query.Entity_Related.Get_Transform",
   /**  See `NODES.Execution_ListOperation_Concatenate` for detailed documentation. */
-  Concatenate_List: "Execution.List_Operation.Concatenate",
+  "拼接列表": "Execution.List_Operation.Concatenate",
   /**  See `NODES.Execution_ListOperation_Clear` for detailed documentation. */
-  Clear_List: "Execution.List_Operation.Clear",
+  "清除列表": "Execution.List_Operation.Clear",
   /**  See `NODES.Query_ListRelated_Contains` for detailed documentation. */
-  List_Includes_This_Value: "Query.List_Related.Contains",
+  "列表是否包含该值": "Query.List_Related.Contains",
   /**  See `NODES.Query_ListRelated_FindIndex` for detailed documentation. */
-  Search_List_and_Return_Value_ID: "Query.List_Related.Find_Index",
+  "查找列表并返回值的序号": "Query.List_Related.Find_Index",
   /**  See `NODES.Query_ListRelated_GetAtIndex` for detailed documentation. */
-  Get_Corresponding_Value_From_List: "Query.List_Related.Get_At_Index",
+  "获取列表对应值": "Query.List_Related.Get_At_Index",
   /**  See `NODES.Execution_ListOperation_Insert` for detailed documentation. */
-  Insert_Value_Into_List: "Execution.List_Operation.Insert",
+  "对列表插入值": "Execution.List_Operation.Insert",
   /**  See `NODES.Query_ListRelated_GetLength` for detailed documentation. */
-  Get_List_Length: "Query.List_Related.Get_Length",
+  "获取列表长度": "Query.List_Related.Get_Length",
   /**  See `NODES.Query_ListRelated_GetMax` for detailed documentation. */
-  Get_Maximum_Value_from_List: "Query.List_Related.Get_Max",
+  "获取列表最大值": "Query.List_Related.Get_Max",
   /**  See `NODES.Query_ListRelated_GetMin` for detailed documentation. */
-  Get_Minimum_Value_From_List: "Query.List_Related.Get_Min",
+  "获取列表最小值": "Query.List_Related.Get_Min",
   /**  See `NODES.Execution_ListOperation_Remove` for detailed documentation. */
-  Remove_Value_From_List: "Execution.List_Operation.Remove",
+  "对列表移除值": "Execution.List_Operation.Remove",
   /**  See `NODES.Execution_ListOperation_ModifyIndex` for detailed documentation. */
-  Modify_Value_in_List: "Execution.List_Operation.Modify_Index",
+  "对列表修改值": "Execution.List_Operation.Modify_Index",
   /**  See `NODES.Execution_ListOperation_Sort` for detailed documentation. */
-  List_Sorting: "Execution.List_Operation.Sort",
+  "列表排序": "Execution.List_Operation.Sort",
   /**  See `NODES.Arithmetic_General_AssembleList` for detailed documentation. */
-  Assembly_List: "Arithmetic.General.Assemble_List",
+  "拼装列表": "Arithmetic.General.Assemble_List",
   /**  See `NODES.Trigger_MotionDevice_OnReachWaypoint` for detailed documentation. */
-  When_Path_Reaches_Waypoint: "Trigger.Motion_Device.On_Reach_Waypoint",
+  "路径到达路点时": "Trigger.Motion_Device.On_Reach_Waypoint",
   /**  See `NODES.Execution_EntityDeployment_SetGroupState` for detailed documentation. */
-  Activate_Disable_Entity_Deployment_Group: "Execution.Entity_Deployment.Set_Group_State",
+  "激活/关闭实体布设组": "Execution.Entity_Deployment.Set_Group_State",
   /**  See `NODES.Query_EntityLayout_GetActiveGroups` for detailed documentation. */
-  Get_Currently_Active_Entity_Deployment_Groups: "Query.Entity_Layout.Get_Active_Groups",
+  "查询当前激活的实体布设组列表": "Query.Entity_Layout.Get_Active_Groups",
   /**  See `NODES.Arithmetic_General_ConvertType` for detailed documentation. */
-  Data_Type_Conversion: "Arithmetic.General.Convert_Type",
+  "数据类型转换": "Arithmetic.General.Convert_Type",
   /**  See `NODES.Execution_CommonNode_ForwardEvent` for detailed documentation. */
-  Forwarding_Event: "Execution.Common_Node.Forward_Event",
+  "转发事件": "Execution.Common_Node.Forward_Event",
   /**  See `NODES.Query_Math_Pi` for detailed documentation. */
-  Pi: "Query.Math.Pi",
+  "圆周率": "Query.Math.Pi",
   /**  See `NODES.Query_Math_VectorZero` for detailed documentation. */
-  _3D_Vector_Zero_Vector: "Query.Math.Vector_Zero",
+  "三维向量：零向量": "Query.Math.Vector_Zero",
   /**  See `NODES.Query_Math_VectorUp` for detailed documentation. */
-  _3D_Vector_Up: "Query.Math.Vector_Up",
+  "三维向量：上方": "Query.Math.Vector_Up",
   /**  See `NODES.Query_Math_VectorDown` for detailed documentation. */
-  _3D_Vector_Down: "Query.Math.Vector_Down",
+  "三维向量：下方": "Query.Math.Vector_Down",
   /**  See `NODES.Query_Math_VectorLeft` for detailed documentation. */
-  _3D_Vector_Left: "Query.Math.Vector_Left",
+  "三维向量：左侧": "Query.Math.Vector_Left",
   /**  See `NODES.Query_Math_VectorRight` for detailed documentation. */
-  _3D_Vector_Right: "Query.Math.Vector_Right",
+  "三维向量：右侧": "Query.Math.Vector_Right",
   /**  See `NODES.Query_Math_VectorForward` for detailed documentation. */
-  _3D_Vector_Forward: "Query.Math.Vector_Forward",
+  "三维向量：前方": "Query.Math.Vector_Forward",
   /**  See `NODES.Query_Math_VectorBackward` for detailed documentation. */
-  _3D_Vector_Backward: "Query.Math.Vector_Backward",
+  "三维向量：后方": "Query.Math.Vector_Backward",
   /**  See `NODES.Arithmetic_Math_Add` for detailed documentation. */
-  Addition: "Arithmetic.Math.Add",
+  "加法运算": "Arithmetic.Math.Add",
   /**  See `NODES.Arithmetic_Math_Subtract` for detailed documentation. */
-  Subtraction: "Arithmetic.Math.Subtract",
+  "减法运算": "Arithmetic.Math.Subtract",
   /**  See `NODES.Arithmetic_Math_Multiply` for detailed documentation. */
-  Multiplication: "Arithmetic.Math.Multiply",
+  "乘法运算": "Arithmetic.Math.Multiply",
   /**  See `NODES.Arithmetic_Math_Divide` for detailed documentation. */
-  Division: "Arithmetic.Math.Divide",
+  "除法运算": "Arithmetic.Math.Divide",
   /**  See `NODES.Arithmetic_Math_Modulo` for detailed documentation. */
-  Modulo_Operation: "Arithmetic.Math.Modulo",
+  "模运算": "Arithmetic.Math.Modulo",
   /**  See `NODES.Arithmetic_Math_Power` for detailed documentation. */
-  Exponentiation: "Arithmetic.Math.Power",
+  "幂运算": "Arithmetic.Math.Power",
   /**  See `NODES.Arithmetic_Math_Max` for detailed documentation. */
-  Take_Larger_Value: "Arithmetic.Math.Max",
+  "取较大值": "Arithmetic.Math.Max",
   /**  See `NODES.Arithmetic_Math_Min` for detailed documentation. */
-  Take_Smaller_Value: "Arithmetic.Math.Min",
+  "取较小值": "Arithmetic.Math.Min",
   /**  See `NODES.Arithmetic_Math_Log` for detailed documentation. */
-  Logarithm_Operation: "Arithmetic.Math.Log",
+  "对数运算": "Arithmetic.Math.Log",
   /**  See `NODES.Arithmetic_Math_Abs` for detailed documentation. */
-  Absolute_Value_Operation: "Arithmetic.Math.Abs",
+  "绝对值运算": "Arithmetic.Math.Abs",
   /**  See `NODES.Arithmetic_Math_Sign` for detailed documentation. */
-  Sign_Operation: "Arithmetic.Math.Sign",
+  "取符号运算": "Arithmetic.Math.Sign",
   /**  See `NODES.Arithmetic_Math_VectorLength` for detailed documentation. */
-  _3D_Vector_Modulo_Operation: "Arithmetic.Math.Vector_Length",
+  "三维向量模运算": "Arithmetic.Math.Vector_Length",
   /**  See `NODES.Arithmetic_Math_Sqrt` for detailed documentation. */
-  Arithmetic_Square_Root_Operation: "Arithmetic.Math.Sqrt",
+  "算术平方根运算": "Arithmetic.Math.Sqrt",
   /**  See `NODES.Arithmetic_Math_Clamp` for detailed documentation. */
-  Range_Limiting_Operation: "Arithmetic.Math.Clamp",
+  "范围限制运算": "Arithmetic.Math.Clamp",
   /**  See `NODES.Arithmetic_Math_Round` for detailed documentation. */
-  Round_to_Integer_Operation: "Arithmetic.Math.Round",
+  "取整数运算": "Arithmetic.Math.Round",
   /**  See `NODES.Arithmetic_Math_CreateVector` for detailed documentation. */
-  Create_3D_Vector: "Arithmetic.Math.Create_Vector",
+  "创建三维向量": "Arithmetic.Math.Create_Vector",
   /**  See `NODES.Arithmetic_Math_And` for detailed documentation. */
-  Logical_AND_Operation: "Arithmetic.Math.And",
+  "逻辑与运算": "Arithmetic.Math.And",
   /**  See `NODES.Arithmetic_Math_Or` for detailed documentation. */
-  Logical_OR_Operation: "Arithmetic.Math.Or",
+  "逻辑或运算": "Arithmetic.Math.Or",
   /**  See `NODES.Arithmetic_Math_Xor` for detailed documentation. */
-  Logical_XOR_Operation: "Arithmetic.Math.Xor",
+  "逻辑异或运算": "Arithmetic.Math.Xor",
   /**  See `NODES.Arithmetic_Math_Not` for detailed documentation. */
-  Logical_NOT_Operation: "Arithmetic.Math.Not",
+  "逻辑非运算": "Arithmetic.Math.Not",
   /**  See `NODES.Arithmetic_Math_LessThan` for detailed documentation. */
-  Less_Than: "Arithmetic.Math.Less_Than",
+  "数值小于": "Arithmetic.Math.Less_Than",
   /**  See `NODES.Arithmetic_Math_LessEqual` for detailed documentation. */
-  Less_Than_or_Equal_To: "Arithmetic.Math.Less_Equal",
+  "数值小于等于": "Arithmetic.Math.Less_Equal",
   /**  See `NODES.Arithmetic_Math_GreaterThan` for detailed documentation. */
-  Greater_Than: "Arithmetic.Math.Greater_Than",
+  "数值大于": "Arithmetic.Math.Greater_Than",
   /**  See `NODES.Arithmetic_Math_GreaterEqual` for detailed documentation. */
-  Greater_Than_or_Equal_To: "Arithmetic.Math.Greater_Equal",
+  "数值大于等于": "Arithmetic.Math.Greater_Equal",
   /**  See `NODES.Execution_Collision_SetNativeCollision` for detailed documentation. */
-  Activate_Disable_Native_Collision: "Execution.Collision.Set_Native_Collision",
+  "激活/关闭原生碰撞": "Execution.Collision.Set_Native_Collision",
   /**  See `NODES.Execution_Collision_SetNativeClimb` for detailed documentation. */
-  Activate_Disable_Native_Collision_Climbability: "Execution.Collision.Set_Native_Climb",
+  "激活/关闭原生碰撞可攀爬性": "Execution.Collision.Set_Native_Climb",
   /**  See `NODES.Execution_Collision_SetExtraCollision` for detailed documentation. */
-  Activate_Disable_Extra_Collision: "Execution.Collision.Set_Extra_Collision",
+  "激活/关闭额外碰撞": "Execution.Collision.Set_Extra_Collision",
   /**  See `NODES.Execution_Collision_SetExtraClimb` for detailed documentation. */
-  Activate_Disable_Extra_Collision_Climbability: "Execution.Collision.Set_Extra_Climb",
+  "激活/关闭额外碰撞可攀爬性": "Execution.Collision.Set_Extra_Climb",
   /**  See `NODES.Arithmetic_Math_Distance` for detailed documentation. */
-  Distance_Between_Two_Coordinate_Points: "Arithmetic.Math.Distance",
+  "两坐标点距离": "Arithmetic.Math.Distance",
   /**  See `NODES.Execution_FollowMotion_SetTargetGUID` for detailed documentation. */
-  Switch_Follow_Motion_Device_Target_by_GUID: "Execution.Follow_Motion.Set_Target_GUID",
+  "以GUID切换跟随运动器的目标": "Execution.Follow_Motion.Set_Target_GUID",
   /**  See `NODES.Query_FollowMotion_GetTarget` for detailed documentation. */
-  Get_Follow_Motion_Device_Target: "Query.Follow_Motion.Get_Target",
+  "获取跟随运动器的目标": "Query.Follow_Motion.Get_Target",
   /**  See `NODES.Query_CharacterRelated_GetAllPlayers` for detailed documentation. */
-  Get_List_of_Player_Entities_on_the_Field: "Query.Character_Related.Get_All_Players",
+  "获取在场玩家实体列表": "Query.Character_Related.Get_All_Players",
   /**  See `NODES.Query_FactionRelated_GetFaction` for detailed documentation. */
-  Query_Entity_Faction: "Query.Faction_Related.Get_Faction",
+  "查询实体阵营": "Query.Faction_Related.Get_Faction",
   /**  See `NODES.Execution_FactionRelated_SetFaction` for detailed documentation. */
-  Modify_Entity_Faction: "Execution.Faction_Related.Set_Faction",
+  "修改实体阵营": "Execution.Faction_Related.Set_Faction",
   /**  See `NODES.Trigger_FactionRelated_OnFactionChange` for detailed documentation. */
-  When_Entity_Faction_Changes: "Trigger.Faction_Related.On_Faction_Change",
+  "实体阵营变化时": "Trigger.Faction_Related.On_Faction_Change",
   /**  See `NODES.Execution_EntityRelated_CreatePrefab` for detailed documentation. */
-  Create_Prefab: "Execution.Entity_Related.Create_Prefab",
+  "创建元件": "Execution.Entity_Related.Create_Prefab",
   /**  See `NODES.Trigger_HitDetection_OnHitDetected` for detailed documentation. */
-  When_On_Hit_Detection_Is_Triggered: "Trigger.Hit_Detection.On_Hit_Detected",
+  "命中检测触发时": "Trigger.Hit_Detection.On_Hit_Detected",
   /**  See `NODES.Execution_Projectile_Create` for detailed documentation. */
-  Create_Projectile: "Execution.Projectile.Create",
+  "创建投射物": "Execution.Projectile.Create",
   /**  See `NODES.Query_Math_RandomInt` for detailed documentation. */
-  Get_Random_Integer: "Query.Math.Random_Int",
+  "获取随机整数": "Query.Math.Random_Int",
   /**  See `NODES.Query_CharacterRelated_GetPlayerCharacters` for detailed documentation. */
-  Get_All_Character_Entities_of_Specified_Player: "Query.Character_Related.Get_Player_Characters",
+  "获取指定玩家所有角色实体": "Query.Character_Related.Get_Player_Characters",
   /**  See `NODES.Query_CharacterRelated_GetOwnerPlayer` for detailed documentation. */
-  Get_Player_Entity_to_Which_the_Character_Belongs: "Query.Character_Related.Get_Owner_Player",
+  "获取角色归属的玩家实体": "Query.Character_Related.Get_Owner_Player",
   /**  See `NODES.Query_EntityRelated_GetType` for detailed documentation. */
-  Get_Entity_Type: "Query.Entity_Related.Get_Type",
+  "获取实体类型": "Query.Entity_Related.Get_Type",
   /**  See `NODES.Execution_Camera_SwitchTemplate` for detailed documentation. */
-  Switch_Main_Camera_Template: "Execution.Camera.Switch_Template",
+  "切换主镜头模板": "Execution.Camera.Switch_Template",
   /**  See `NODES.Hidden_Execution_ActivateEntityCamera` for detailed documentation. */
-  Activate_Entity_Camera: "Hidden.Execution.Activate_Entity_Camera",
+  "Activate Entity Camera": "Hidden.Execution.Activate_Entity_Camera",
   /**  See `NODES.Hidden_Execution_DisableEntityCamera` for detailed documentation. */
-  Disable_Entity_Camera: "Hidden.Execution.Disable_Entity_Camera",
+  "Disable Entity Camera": "Hidden.Execution.Disable_Entity_Camera",
   /**  See `NODES.Hidden_Execution_ActivateFocusCamera` for detailed documentation. */
-  Activate_Focus_Camera: "Hidden.Execution.Activate_Focus_Camera",
+  "Activate Focus Camera": "Hidden.Execution.Activate_Focus_Camera",
   /**  See `NODES.Hidden_Execution_DisableFocusCamera` for detailed documentation. */
-  Disable_Focus_Camera: "Hidden.Execution.Disable_Focus_Camera",
+  "Disable Focus Camera": "Hidden.Execution.Disable_Focus_Camera",
   /**  See `NODES.Hidden_Execution_PlayScreenShake` for detailed documentation. */
-  Activate_Screen_Shake: "Hidden.Execution.Play_Screen_Shake",
+  "Activate Screen Shake": "Hidden.Execution.Play_Screen_Shake",
   /**  See `NODES.Execution_MotionDevice_Activate` for detailed documentation. */
-  Activate_Basic_Motion_Device: "Execution.Motion_Device.Activate",
+  "激活基础运动器": "Execution.Motion_Device.Activate",
   /**  See `NODES.Query_PresetPoint_GetTransform` for detailed documentation. */
-  Query_Preset_Point_Position_Rotation: "Query.Preset_Point.Get_Transform",
+  "查询预设点位置旋转": "Query.Preset_Point.Get_Transform",
   /**  See `NODES.Query_PresetPoint_GetByTag` for detailed documentation. */
-  Get_Preset_Point_List_by_Unit_Tag: "Query.Preset_Point.Get_By_Tag",
+  "以单位标签获取预设点位列表": "Query.Preset_Point.Get_By_Tag",
   /**  See `NODES.Execution_CharacterRelated_ActivateRevivePoint` for detailed documentation. */
-  Activate_Revive_Point: "Execution.Character_Related.Activate_Revive_Point",
+  "激活复苏点": "Execution.Character_Related.Activate_Revive_Point",
   /**  See `NODES.Execution_CharacterRelated_DeactivateRevivePoint` for detailed documentation. */
-  Deactivate_Revive_Point: "Execution.Character_Related.Deactivate_Revive_Point",
+  "注销复苏点": "Execution.Character_Related.Deactivate_Revive_Point",
   /**  See `NODES.Execution_CharacterRelated_SetReviveAllowed` for detailed documentation. */
-  Allow_Forbid_Player_to_Revive: "Execution.Character_Related.Set_Revive_Allowed",
+  "允许/禁止玩家复苏": "Execution.Character_Related.Set_Revive_Allowed",
   /**  See `NODES.Query_CharacterRelated_GetRevives` for detailed documentation. */
-  Get_Player_Remaining_Revives: "Query.Character_Related.Get_Revives",
+  "获取玩家剩余复苏次数": "Query.Character_Related.Get_Revives",
   /**  See `NODES.Execution_CharacterRelated_SetReviveCount` for detailed documentation. */
-  Set_Player_Remaining_Revives: "Execution.Character_Related.Set_Revive_Count",
+  "设置玩家剩余复苏次数": "Execution.Character_Related.Set_Revive_Count",
   /**  See `NODES.Query_CharacterRelated_GetReviveTime` for detailed documentation. */
-  Get_Player_Revive_Time: "Query.Character_Related.Get_Revive_Time",
+  "获取玩家复苏耗时": "Query.Character_Related.Get_Revive_Time",
   /**  See `NODES.Execution_CharacterRelated_SetReviveTime` for detailed documentation. */
-  Set_Player_Revive_Time: "Execution.Character_Related.Set_Revive_Time",
+  "设置玩家复苏耗时": "Execution.Character_Related.Set_Revive_Time",
   /**  See `NODES.Execution_CharacterRelated_ReviveSingle` for detailed documentation. */
-  Revive_Character: "Execution.Character_Related.Revive_Single",
+  "复苏角色": "Execution.Character_Related.Revive_Single",
   /**  See `NODES.Trigger_CharacterRelated_OnCharacterDown` for detailed documentation. */
-  When_the_Character_Is_Down: "Trigger.Character_Related.On_Character_Down",
+  "角色倒下时": "Trigger.Character_Related.On_Character_Down",
   /**  See `NODES.Trigger_CharacterRelated_OnCharacterRevive` for detailed documentation. */
-  When_Character_Revives: "Trigger.Character_Related.On_Character_Revive",
+  "角色复苏时": "Trigger.Character_Related.On_Character_Revive",
   /**  See `NODES.Execution_CharacterRelated_DefeatAll` for detailed documentation. */
-  Defeat_All_Player_s_Characters: "Execution.Character_Related.Defeat_All",
+  "击倒玩家所有角色": "Execution.Character_Related.Defeat_All",
   /**  See `NODES.Execution_CharacterRelated_ReviveAll` for detailed documentation. */
-  Revive_All_Player_s_Characters: "Execution.Character_Related.Revive_All",
+  "复苏玩家所有角色": "Execution.Character_Related.Revive_All",
   /**  See `NODES.Trigger_CharacterRelated_OnAllDown` for detailed documentation. */
-  When_All_Player_s_Characters_Are_Down: "Trigger.Character_Related.On_All_Down",
+  "玩家所有角色倒下时": "Trigger.Character_Related.On_All_Down",
   /**  See `NODES.Trigger_CharacterRelated_OnAbnormalRevive` for detailed documentation. */
-  When_Player_Is_Abnormally_Downed_and_Revives: "Trigger.Character_Related.On_Abnormal_Revive",
+  "玩家异常倒下并复苏时": "Trigger.Character_Related.On_Abnormal_Revive",
   /**  See `NODES.Trigger_CharacterRelated_OnAllRevived` for detailed documentation. */
-  When_All_Player_s_Characters_Are_Revived: "Trigger.Character_Related.On_All_Revived",
+  "玩家所有角色复苏时": "Trigger.Character_Related.On_All_Revived",
   /**  See `NODES.Query_CharacterRelated_IsAllDown` for detailed documentation. */
-  Query_If_All_Player_Characters_Are_Down: "Query.Character_Related.Is_All_Down",
+  "查询玩家角色是否全部倒下": "Query.Character_Related.Is_All_Down",
   /**  See `NODES.Execution_CharacterRelated_Teleport` for detailed documentation. */
-  Teleport_Player: "Execution.Character_Related.Teleport",
+  "传送玩家": "Execution.Character_Related.Teleport",
   /**  See `NODES.Trigger_CharacterRelated_OnTeleportComplete` for detailed documentation. */
-  When_Player_Teleport_Completes: "Trigger.Character_Related.On_Teleport_Complete",
+  "玩家传送完成时": "Trigger.Character_Related.On_Teleport_Complete",
   /**  See `NODES.Query_StageRelated_GetElapsedTime` for detailed documentation. */
-  Query_Game_Time_Elapsed: "Query.Stage_Related.Get_Elapsed_Time",
+  "获取游戏已进行时间": "Query.Stage_Related.Get_Elapsed_Time",
   /**  See `NODES.Arithmetic_Math_Sin` for detailed documentation. */
-  Sine_Function: "Arithmetic.Math.Sin",
+  "正弦函数": "Arithmetic.Math.Sin",
   /**  See `NODES.Arithmetic_Math_Cos` for detailed documentation. */
-  Cosine_Function: "Arithmetic.Math.Cos",
+  "余弦函数": "Arithmetic.Math.Cos",
   /**  See `NODES.Arithmetic_Math_Tan` for detailed documentation. */
-  Tangent_Function: "Arithmetic.Math.Tan",
+  "正切函数": "Arithmetic.Math.Tan",
   /**  See `NODES.Arithmetic_Math_Asin` for detailed documentation. */
-  Arcsine_Function: "Arithmetic.Math.Asin",
+  "反正弦函数": "Arithmetic.Math.Asin",
   /**  See `NODES.Arithmetic_Math_Acos` for detailed documentation. */
-  Arccosine_Function: "Arithmetic.Math.Acos",
+  "反余弦函数": "Arithmetic.Math.Acos",
   /**  See `NODES.Arithmetic_Math_Atan` for detailed documentation. */
-  Arctangent_Function: "Arithmetic.Math.Atan",
+  "反正切函数": "Arithmetic.Math.Atan",
   /**  See `NODES.Execution_UnitStatus_AddStatus` for detailed documentation. */
-  Add_Unit_Status: "Execution.Unit_Status.Add_Status",
+  "添加单位状态": "Execution.Unit_Status.Add_Status",
   /**  See `NODES.Trigger_UnitStatus_OnStatusEnd` for detailed documentation. */
-  When_Unit_Status_Ends: "Trigger.Unit_Status.On_Status_End",
+  "单位状态结束时": "Trigger.Unit_Status.On_Status_End",
   /**  See `NODES.Trigger_UnitStatus_OnStatusChange` for detailed documentation. */
-  When_Unit_Status_Changes: "Trigger.Unit_Status.On_Status_Change",
+  "单位状态变更时": "Trigger.Unit_Status.On_Status_Change",
   /**  See `NODES.Execution_UnitStatus_RemoveStatus` for detailed documentation. */
-  Remove_Unit_Status: "Execution.Unit_Status.Remove_Status",
+  "移除单位状态": "Execution.Unit_Status.Remove_Status",
   /**  See `NODES.Execution_CharacterDisruptor_ModifyDevice` for detailed documentation. */
-  Modifying_Character_Disruptor_Device: "Execution.Character_Disruptor.Modify_Device",
+  "修改角色扰动装置": "Execution.Character_Disruptor.Modify_Device",
   /**  See `NODES.Execution_Combat_Attack` for detailed documentation. */
-  Initiate_Attack: "Execution.Combat.Attack",
+  "发起攻击": "Execution.Combat.Attack",
   /**  See `NODES.Trigger_Combat_OnBeAttacked` for detailed documentation. */
-  When_Attacked: "Trigger.Combat.On_Be_Attacked",
+  "受到攻击时": "Trigger.Combat.On_Be_Attacked",
   /**  See `NODES.Trigger_Combat_OnHitTarget` for detailed documentation. */
-  When_Attack_Hits: "Trigger.Combat.On_Hit_Target",
+  "攻击命中时": "Trigger.Combat.On_Hit_Target",
   /**  See `NODES.Execution_Tab_SetState` for detailed documentation. */
-  Activate_Disable_Tab: "Execution.Tab.Set_State",
+  "激活/关闭选项卡": "Execution.Tab.Set_State",
   /**  See `NODES.Trigger_Tab_OnTabSelect` for detailed documentation. */
-  When_Tab_Is_Selected: "Trigger.Tab.On_Tab_Select",
+  "选项卡选中时": "Trigger.Tab.On_Tab_Select",
   /**  See `NODES.Execution_EntityRelated_SetModelVisible` for detailed documentation. */
-  Activate_Disable_Model_Display: "Execution.Entity_Related.Set_Model_Visible",
+  "激活/关闭模型显示": "Execution.Entity_Related.Set_Model_Visible",
   /**  See `NODES.Execution_GlobalTimer_Pause` for detailed documentation. */
-  Pause_Global_Timer: "Execution.Global_Timer.Pause",
+  "暂停全局计时器": "Execution.Global_Timer.Pause",
   /**  See `NODES.Query_GlobalTimer_GetTime` for detailed documentation. */
-  Get_Current_Global_Timer_Time: "Query.Global_Timer.Get_Time",
+  "获取全局计时器当前时间": "Query.Global_Timer.Get_Time",
   /**  See `NODES.Execution_GlobalTimer_Start` for detailed documentation. */
-  Start_Global_Timer: "Execution.Global_Timer.Start",
+  "启动全局计时器": "Execution.Global_Timer.Start",
   /**  See `NODES.Execution_GlobalTimer_Resume` for detailed documentation. */
-  Recover_Global_Timer: "Execution.Global_Timer.Resume",
+  "恢复全局计时器": "Execution.Global_Timer.Resume",
   /**  See `NODES.Execution_GlobalTimer_Stop` for detailed documentation. */
-  Stop_Global_Timer: "Execution.Global_Timer.Stop",
+  "终止全局计时器": "Execution.Global_Timer.Stop",
   /**  See `NODES.Execution_GlobalTimer_Modify` for detailed documentation. */
-  Modify_Global_Timer: "Execution.Global_Timer.Modify",
+  "修改全局计时器": "Execution.Global_Timer.Modify",
   /**  See `NODES.Trigger_GlobalTimer_OnTimerTrigger` for detailed documentation. */
-  When_Global_Timer_Is_Triggered: "Trigger.Global_Timer.On_Timer_Trigger",
+  "全局计时器触发时": "Trigger.Global_Timer.On_Timer_Trigger",
   /**  See `NODES.Trigger_UIControlGroup_OnGroupTrigger` for detailed documentation. */
-  When_UI_Control_Group_Is_Triggered: "Trigger.UI_Control_Group.On_Group_Trigger",
+  "界面控件组触发时": "Trigger.UI_Control_Group.On_Group_Trigger",
   /**  See `NODES.Query_UIControlGroup_GetCurrentLayout` for detailed documentation. */
-  Get_Player_s_Current_UI_Layout: "Query.UI_Control_Group.Get_Current_Layout",
+  "获取玩家当前界面布局": "Query.UI_Control_Group.Get_Current_Layout",
   /**  See `NODES.Query_EntityRelated_GetAllEntities` for detailed documentation. */
-  Get_All_Entities_on_the_Field: "Query.Entity_Related.Get_All_Entities",
+  "获取场上所有实体": "Query.Entity_Related.Get_All_Entities",
   /**  See `NODES.Query_EntityRelated_GetEntityByType` for detailed documentation. */
-  Get_Specified_Type_of_Entity_on_the_Field: "Query.Entity_Related.Get_Entity_By_Type",
+  "获取场上指定类型实体": "Query.Entity_Related.Get_Entity_By_Type",
   /**  See `NODES.Query_EntityRelated_GetWithPrefab` for detailed documentation. */
-  Get_Entities_With_Specified_Prefab_on_the_Field: "Query.Entity_Related.Get_With_Prefab",
+  "获取场上指定元件ID的实体": "Query.Entity_Related.Get_With_Prefab",
   /**  See `NODES.Arithmetic_Math_RadToDeg` for detailed documentation. */
-  Radians_to_Degrees: "Arithmetic.Math.Rad_To_Deg",
+  "弧度转角度": "Arithmetic.Math.Rad_To_Deg",
   /**  See `NODES.Arithmetic_Math_DegToRad` for detailed documentation. */
-  Degrees_to_Radians: "Arithmetic.Math.Deg_To_Rad",
+  "角度转弧度": "Arithmetic.Math.Deg_To_Rad",
   /**  See `NODES.Execution_CustomVariable_SetGraphVariable` for detailed documentation. */
-  Set_Node_Graph_Variable: "Execution.Custom_Variable.Set_Graph_Variable",
+  "设置节点图变量": "Execution.Custom_Variable.Set_Graph_Variable",
   /**  See `NODES.Query_CustomVariable_GetGraphVariable` for detailed documentation. */
-  Get_Node_Graph_Variable: "Query.Custom_Variable.Get_Graph_Variable",
+  "获取节点图变量": "Query.Custom_Variable.Get_Graph_Variable",
   /**  See `NODES.Trigger_CustomVariable_OnGraphVariableChange` for detailed documentation. */
-  When_Node_Graph_Variable_Changes: "Trigger.Custom_Variable.On_Graph_Variable_Change",
+  "节点图变量变化时": "Trigger.Custom_Variable.On_Graph_Variable_Change",
   /**  See `NODES.Execution_FollowMotion_SetDeviceState` for detailed documentation. */
-  Activate_Disable_Follow_Motion_Device: "Execution.Follow_Motion.Set_Device_State",
+  "激活/关闭跟随运动器": "Execution.Follow_Motion.Set_Device_State",
   /**  See `NODES.Hidden_Execution_SetDisruptorState` for detailed documentation. */
-  Activate_Disable_Character_Disruptor_Device: "Hidden.Execution.Set_Disruptor_State",
+  "Activate/Disable Character Disruptor Device": "Hidden.Execution.Set_Disruptor_State",
   /**  See `NODES.Execution_CollisionTriggerSource_SetSourceState` for detailed documentation. */
-  Activate_Disable_Collision_Trigger_Source: "Execution.Collision_Trigger_Source.Set_Source_State",
+  "激活/关闭碰撞触发发源": "Execution.Collision_Trigger_Source.Set_Source_State",
   /**  See `NODES.Execution_EntityRelated_RemoveEntity` for detailed documentation. */
-  Remove_Entity: "Execution.Entity_Related.Remove_Entity",
+  "移除实体": "Execution.Entity_Related.Remove_Entity",
   /**  See `NODES.Trigger_EntityRelated_OnDestroyed` for detailed documentation. */
-  When_Entity_Is_Destroyed: "Trigger.Entity_Related.On_Destroyed",
+  "实体销毁时": "Trigger.Entity_Related.On_Destroyed",
   /**  See `NODES.Trigger_Creation_OnEnterCombat` for detailed documentation. */
-  When_Creation_Enters_Combat: "Trigger.Creation.On_Enter_Combat",
+  "造物入战时": "Trigger.Creation.On_Enter_Combat",
   /**  See `NODES.Trigger_Creation_OnLeaveCombat` for detailed documentation. */
-  When_Creation_Leaves_Combat: "Trigger.Creation.On_Leave_Combat",
+  "造物脱战时": "Trigger.Creation.On_Leave_Combat",
   /**  See `NODES.Query_Creation_GetTarget` for detailed documentation. */
-  Get_Creation_s_Current_Target: "Query.Creation.Get_Target",
+  "获取造物当前目标": "Query.Creation.Get_Target",
   /**  See `NODES.Query_EntityRelated_GetByType` for detailed documentation. */
-  Get_Entity_List_by_Specified_Type: "Query.Entity_Related.Get_By_Type",
+  "获取指定类型的实体列表": "Query.Entity_Related.Get_By_Type",
   /**  See `NODES.Query_EntityRelated_GetByPrefab` for detailed documentation. */
-  Get_Entity_List_by_Specified_Prefab_ID: "Query.Entity_Related.Get_By_Prefab",
+  "获取指定元件ID的实体列表": "Query.Entity_Related.Get_By_Prefab",
   /**  See `NODES.Query_EntityRelated_GetByFaction` for detailed documentation. */
-  Get_Entity_List_by_Specified_Faction: "Query.Entity_Related.Get_By_Faction",
+  "获取指定阵营的实体列表": "Query.Entity_Related.Get_By_Faction",
   /**  See `NODES.Query_EntityRelated_GetByRange` for detailed documentation. */
-  Get_Entity_List_by_Specified_Range: "Query.Entity_Related.Get_By_Range",
+  "获取指定范围的实体列表": "Query.Entity_Related.Get_By_Range",
   /**  See `NODES.Query_Creation_GetAttribute` for detailed documentation. */
-  Get_Creation_Attribute: "Query.Creation.Get_Attribute",
+  "获取造物属性": "Query.Creation.Get_Attribute",
   /**  See `NODES.Execution_UIControlGroup_SwitchLayout` for detailed documentation. */
-  Switch_Current_Interface_Layout: "Execution.UI_Control_Group.Switch_Layout",
+  "切换当前界面布局": "Execution.UI_Control_Group.Switch_Layout",
   /**  See `NODES.Execution_UIControlGroup_ActivateGroup` for detailed documentation. */
-  Activate_UI_Control_Group_in_Control_Group_Library: "Execution.UI_Control_Group.Activate_Group",
+  "激活控件组库内界面控件组": "Execution.UI_Control_Group.Activate_Group",
   /**  See `NODES.Execution_UIControlGroup_ModifyStatus` for detailed documentation. */
-  Modify_UI_Control_Status_Within_the_Interface_Layout: "Execution.UI_Control_Group.Modify_Status",
+  "修改界面布局内界面控件状态": "Execution.UI_Control_Group.Modify_Status",
   /**  See `NODES.Trigger_Class_OnClassChange` for detailed documentation. */
-  When_Player_Class_Changes: "Trigger.Class.On_Class_Change",
+  "玩家职业更改时": "Trigger.Class.On_Class_Change",
   /**  See `NODES.Trigger_Class_OnLevelChange` for detailed documentation. */
-  When_Player_Class_Level_Changes: "Trigger.Class.On_Level_Change",
+  "玩家职业等级变化时": "Trigger.Class.On_Level_Change",
   /**  See `NODES.Query_Class_GetClass` for detailed documentation. */
-  Query_Player_Class: "Query.Class.Get_Class",
+  "查询玩家职业": "Query.Class.Get_Class",
   /**  See `NODES.Query_Class_GetLevel` for detailed documentation. */
-  Query_Player_Class_Level: "Query.Class.Get_Level",
+  "查询玩家职业的等级": "Query.Class.Get_Level",
   /**  See `NODES.Execution_Class_ChangeClass` for detailed documentation. */
-  Change_Player_Class: "Execution.Class.Change_Class",
+  "更改玩家职业": "Execution.Class.Change_Class",
   /**  See `NODES.Execution_Class_AddExp` for detailed documentation. */
-  Increase_Player_s_Current_Class_EXP: "Execution.Class.Add_Exp",
+  "提升玩家当前职业经验": "Execution.Class.Add_Exp",
   /**  See `NODES.Execution_Class_SetLevel` for detailed documentation. */
-  Change_Player_s_Current_Class_Level: "Execution.Class.Set_Level",
+  "更改玩家当前职业等级": "Execution.Class.Set_Level",
   /**  See `NODES.Trigger_Skill_OnSkillCall` for detailed documentation. */
-  When_Skill_Node_Is_Called: "Trigger.Skill.On_Skill_Call",
+  "技能节点调用时": "Trigger.Skill.On_Skill_Call",
   /**  See `NODES.Execution_Skill_ModifyResource` for detailed documentation. */
-  Modify_Skill_Resource_Amount: "Execution.Skill.Modify_Resource",
+  "修改技能资源量": "Execution.Skill.Modify_Resource",
   /**  See `NODES.Execution_Skill_SetResource` for detailed documentation. */
-  Set_Skill_Resource_Amount: "Execution.Skill.Set_Resource",
+  "设置技能资源量": "Execution.Skill.Set_Resource",
   /**  See `NODES.Execution_Skill_AddSkill` for detailed documentation. */
-  Add_Character_Skill: "Execution.Skill.Add_Skill",
+  "添加角色技能": "Execution.Skill.Add_Skill",
   /**  See `NODES.Execution_Skill_RemoveByID` for detailed documentation. */
-  Delete_Character_Skill_by_ID: "Execution.Skill.Remove_By_ID",
+  "以ID删除角色技能": "Execution.Skill.Remove_By_ID",
   /**  See `NODES.Execution_Skill_InitSkill` for detailed documentation. */
-  Initialize_Character_Skill: "Execution.Skill.Init_Skill",
+  "初始化角色技能": "Execution.Skill.Init_Skill",
   /**  See `NODES.Query_Skill_GetSkillInfo` for detailed documentation. */
-  Query_Character_Skill: "Query.Skill.Get_Skill_Info",
+  "查询角色技能": "Query.Skill.Get_Skill_Info",
   /**  See `NODES.Execution_Skill_RemoveBySlot` for detailed documentation. */
-  Delete_Character_Skill_by_Slot: "Execution.Skill.Remove_By_Slot",
+  "以槽位删除角色技能": "Execution.Skill.Remove_By_Slot",
   /**  See `NODES.Hidden_Trigger_OnNativeValueChange` for detailed documentation. */
-  When_Native_Custom_Value_Changes: "Hidden.Trigger.On_Native_Value_Change",
+  "When Native Custom Value Changes": "Hidden.Trigger.On_Native_Value_Change",
   /**  See `NODES.Hidden_Execution_SetNativeValue` for detailed documentation. */
-  Native_Setting_Custom_Value: "Hidden.Execution.Set_Native_Value",
+  "Native Setting Custom Value": "Hidden.Execution.Set_Native_Value",
   /**  See `NODES.Hidden_Query_GetNativeValue` for detailed documentation. */
-  Native_Query_Custom_Value: "Hidden.Query.Get_Native_Value",
+  "Native Query Custom Value": "Hidden.Query.Get_Native_Value",
   /**  See `NODES.Execution_SpecialEffect_StopByAsset` for detailed documentation. */
-  Clear_Special_Effects_Based_on_Special_Effect_Assets: "Execution.Special_Effect.Stop_By_Asset",
+  "根据特效资产清除特效": "Execution.Special_Effect.Stop_By_Asset",
   /**  See `NODES.Arithmetic_Math_VectorRotate` for detailed documentation. */
-  _3D_Vector_Rotation: "Arithmetic.Math.Vector_Rotate",
+  "三维向量旋转": "Arithmetic.Math.Vector_Rotate",
   /**  See `NODES.Arithmetic_General_EnumEqual` for detailed documentation. */
-  Enumerations_Equal: "Arithmetic.General.Enum_Equal",
+  "枚举是否相等": "Arithmetic.General.Enum_Equal",
   /**  See `NODES.Arithmetic_Math_VectorDot` for detailed documentation. */
-  _3D_Vector_Dot_Product: "Arithmetic.Math.Vector_Dot",
+  "三维向量内积": "Arithmetic.Math.Vector_Dot",
   /**  See `NODES.Arithmetic_Math_VectorCross` for detailed documentation. */
-  _3D_Vector_Cross_Product: "Arithmetic.Math.Vector_Cross",
+  "三维向量外积": "Arithmetic.Math.Vector_Cross",
   /**  See `NODES.Query_EntityRelated_IsActive` for detailed documentation. */
-  Query_If_Entity_Is_on_the_Field: "Query.Entity_Related.Is_Active",
+  "查询实体是否在场": "Query.Entity_Related.Is_Active",
   /**  See `NODES.Query_UnitStatus_HasStatus` for detailed documentation. */
-  Query_If_Entity_Has_Unit_Status: "Query.Unit_Status.Has_Status",
+  "查询实体是否具有单位状态": "Query.Unit_Status.Has_Status",
   /**  See `NODES.Execution_ListOperation_ForEach` for detailed documentation. */
-  List_Iteration_Loop: "Execution.List_Operation.For_Each",
+  "列表迭代循环": "Execution.List_Operation.For_Each",
   /**  See `NODES.Query_EntityRelated_GetForward` for detailed documentation. */
-  Get_Entity_Forward_Vector: "Query.Entity_Related.Get_Forward",
+  "获取实体向前向量": "Query.Entity_Related.Get_Forward",
   /**  See `NODES.Query_EntityRelated_GetRight` for detailed documentation. */
-  Get_Entity_Right_Vector: "Query.Entity_Related.Get_Right",
+  "获取实体向右向量": "Query.Entity_Related.Get_Right",
   /**  See `NODES.Query_EntityRelated_GetUp` for detailed documentation. */
-  Get_Entity_Upward_Vector: "Query.Entity_Related.Get_Up",
+  "获取实体向上向量": "Query.Entity_Related.Get_Up",
   /**  See `NODES.Arithmetic_Math_VectorToRotation` for detailed documentation. */
-  Direction_Vector_to_Rotation: "Arithmetic.Math.Vector_To_Rotation",
+  "方向向量旋转": "Arithmetic.Math.Vector_To_Rotation",
   /**  See `NODES.Execution_MotionDevice_AddTargetRotation` for detailed documentation. */
-  Add_Target_Oriented_Rotation_Based_Motion_Device: "Execution.Motion_Device.Add_Target_Rotation",
+  "添加朝向目标旋转型基础运动器": "Execution.Motion_Device.Add_Target_Rotation",
   /**  See `NODES.Execution_UIControlGroup_RemoveGroup` for detailed documentation. */
-  Remove_Interface_Control_Group_From_Control_Group_Library: "Execution.UI_Control_Group.Remove_Group",
+  "移除控件组库内界面控件组": "Execution.UI_Control_Group.Remove_Group",
   /**  See `NODES.Query_EntityRelated_GetObjAttr` for detailed documentation. */
-  Get_Object_Attribute: "Query.Entity_Related.Get_Obj_Attr",
+  "获取物件属性": "Query.Entity_Related.Get_Obj_Attr",
   /**  See `NODES.Execution_Combat_RecoverHP` for detailed documentation. */
-  Recover_HP: "Execution.Combat.Recover_HP",
+  "恢复生命": "Execution.Combat.Recover_HP",
   /**  See `NODES.Trigger_Combat_OnHPRecover` for detailed documentation. */
-  When_HP_Is_Recovered: "Trigger.Combat.On_HP_Recover",
+  "被恢复生命值时": "Trigger.Combat.On_HP_Recover",
   /**  See `NODES.Trigger_Combat_OnHPRecoveryStart` for detailed documentation. */
-  When_Initiating_HP_Recovery: "Trigger.Combat.On_HP_Recovery_Start",
+  "发起恢复生命值时": "Trigger.Combat.On_HP_Recovery_Start",
   /**  See `NODES.Execution_UnitTag_AddTag` for detailed documentation. */
-  Add_Unit_Tag_to_Entity: "Execution.Unit_Tag.Add_Tag",
+  "实体添加单位标签": "Execution.Unit_Tag.Add_Tag",
   /**  See `NODES.Execution_UnitTag_RemoveTag` for detailed documentation. */
-  Remove_Unit_Tag_from_Entity: "Execution.Unit_Tag.Remove_Tag",
+  "实体移除单位标签": "Execution.Unit_Tag.Remove_Tag",
   /**  See `NODES.Execution_UnitTag_ClearTags` for detailed documentation. */
-  Clear_Unit_Tags_from_Entity: "Execution.Unit_Tag.Clear_Tags",
+  "实体清空单位标签": "Execution.Unit_Tag.Clear_Tags",
   /**  See `NODES.Query_UnitTag_GetTags` for detailed documentation. */
-  Get_Entity_Unit_Tag_List: "Query.Unit_Tag.Get_Tags",
+  "获取实体单位标签列表": "Query.Unit_Tag.Get_Tags",
   /**  See `NODES.Query_UnitTag_GetByTag` for detailed documentation. */
-  Get_Entity_List_by_Unit_Tag: "Query.Unit_Tag.Get_By_Tag",
+  "获取单位标签的实体列表": "Query.Unit_Tag.Get_By_Tag",
   /**  See `NODES.Execution_SoundEffect_ClosePlayer` for detailed documentation. */
-  Close_Specified_Sound_Effect_Player: "Execution.Sound_Effect.Close_Player",
+  "关闭指定音效播放器": "Execution.Sound_Effect.Close_Player",
   /**  See `NODES.Execution_SoundEffect_TogglePlayer` for detailed documentation. */
-  Start_Pause_Specified_Sound_Effect_Player: "Execution.Sound_Effect.Toggle_Player",
+  "启动/暂停指定音效播放器": "Execution.Sound_Effect.Toggle_Player",
   /**  See `NODES.Execution_SoundEffect_AdjustPlayer` for detailed documentation. */
-  Adjust_Specified_Sound_Effect_Player: "Execution.Sound_Effect.Adjust_Player",
+  "调整指定音效播放器": "Execution.Sound_Effect.Adjust_Player",
   /**  See `NODES.Execution_SoundEffect_AddPlayer` for detailed documentation. */
-  Add_Sound_Effect_Player: "Execution.Sound_Effect.Add_Player",
+  "添加音效播放器": "Execution.Sound_Effect.Add_Player",
   /**  See `NODES.Execution_SoundEffect_ToggleBGM` for detailed documentation. */
-  Start_Pause_Player_Background_Music: "Execution.Sound_Effect.Toggle_BGM",
+  "启动/暂停玩家背景音乐": "Execution.Sound_Effect.Toggle_BGM",
   /**  See `NODES.Execution_SoundEffect_SetBGMVolume` for detailed documentation. */
-  Adjust_Player_Background_Music_Volume: "Execution.Sound_Effect.Set_BGM_Volume",
+  "调整玩家背景音乐音量": "Execution.Sound_Effect.Set_BGM_Volume",
   /**  See `NODES.Execution_SoundEffect_SetBGM` for detailed documentation. */
-  Modify_Player_Background_Music: "Execution.Sound_Effect.Set_BGM",
+  "修改玩家背景音乐": "Execution.Sound_Effect.Set_BGM",
   /**  See `NODES.Execution_SoundEffect_Play2DOneShot` for detailed documentation. */
-  Player_Plays_One_Shot_2D_Sound_Effect: "Execution.Sound_Effect.Play_2D_One_Shot",
+  "玩家播放单次2D音效": "Execution.Sound_Effect.Play_2D_One_Shot",
   /**  See `NODES.Execution_CustomAggro_SetAggro` for detailed documentation. */
-  Set_the_Aggro_Value_of_Specified_Entity: "Execution.Custom_Aggro.Set_Aggro",
+  "设置指定实体的仇恨值": "Execution.Custom_Aggro.Set_Aggro",
   /**  See `NODES.Execution_CustomAggro_RemoveAggro` for detailed documentation. */
-  Remove_Target_Entity_From_Aggro_List: "Execution.Custom_Aggro.Remove_Aggro",
+  "将目标实体移除出仇恨列表": "Execution.Custom_Aggro.Remove_Aggro",
   /**  See `NODES.Execution_CustomAggro_ClearAggro` for detailed documentation. */
-  Clear_Specified_Target_s_Aggro_List: "Execution.Custom_Aggro.Clear_Aggro",
+  "清空指定目标的仇恨列表": "Execution.Custom_Aggro.Clear_Aggro",
   /**  See `NODES.Execution_CustomAggro_Taunt` for detailed documentation. */
-  Taunt_Target: "Execution.Custom_Aggro.Taunt",
+  "嘲讽目标": "Execution.Custom_Aggro.Taunt",
   /**  See `NODES.Query_CustomAggro_GetAggroValue` for detailed documentation. */
-  Query_the_Aggro_Value_of_the_Specified_Entity: "Query.Custom_Aggro.Get_Aggro_Value",
+  "查询指定实体的仇恨值": "Query.Custom_Aggro.Get_Aggro_Value",
   /**  See `NODES.Query_CustomAggro_GetMultiplier` for detailed documentation. */
-  Query_the_Aggro_Multiplier_of_the_Specified_Entity: "Query.Custom_Aggro.Get_Multiplier",
+  "查询指定实体的仇恨倍率": "Query.Custom_Aggro.Get_Multiplier",
   /**  See `NODES.Query_CustomAggro_GetGlobalMultiplier` for detailed documentation. */
-  Query_Global_Aggro_Transfer_Multiplier: "Query.Custom_Aggro.Get_Global_Multiplier",
+  "查询全局仇恨转移倍率": "Query.Custom_Aggro.Get_Global_Multiplier",
   /**  See `NODES.Query_CustomAggro_GetAggroTarget` for detailed documentation. */
-  Get_the_Aggro_Target_of_the_Specified_Entity: "Query.Custom_Aggro.Get_Aggro_Target",
+  "获取指定实体的仇恨目标": "Query.Custom_Aggro.Get_Aggro_Target",
   /**  See `NODES.Query_CustomAggro_GetAggroOwners` for detailed documentation. */
-  Get_List_of_Owners_Who_Have_the_Target_in_Their_Aggro_List: "Query.Custom_Aggro.Get_Aggro_Owners",
+  "获取目标所在仇恨列表的拥有者列表": "Query.Custom_Aggro.Get_Aggro_Owners",
   /**  See `NODES.Query_CustomAggro_GetTargetingOwners` for detailed documentation. */
-  Get_List_of_Owners_That_Have_the_Target_As_Their_Aggro_Target: "Query.Custom_Aggro.Get_Targeting_Owners",
+  "获取以目标为仇恨目标的拥有者列表": "Query.Custom_Aggro.Get_Targeting_Owners",
   /**  See `NODES.Query_CustomAggro_GetAggroList` for detailed documentation. */
-  Get_the_Aggro_List_of_the_Specified_Entity: "Query.Custom_Aggro.Get_Aggro_List",
+  "获取指定实体的仇恨列表": "Query.Custom_Aggro.Get_Aggro_List",
   /**  See `NODES.Query_CustomAggro_IsInCombat` for detailed documentation. */
-  Query_if_Specified_Entity_Is_in_Combat: "Query.Custom_Aggro.Is_In_Combat",
+  "查询指定实体是否已入战": "Query.Custom_Aggro.Is_In_Combat",
   /**  See `NODES.Trigger_CustomAggro_OnTargetChange` for detailed documentation. */
-  When_Aggro_Target_Changes: "Trigger.Custom_Aggro.On_Target_Change",
+  "仇恨目标变化时": "Trigger.Custom_Aggro.On_Target_Change",
   /**  See `NODES.Trigger_CustomAggro_OnEnterCombat` for detailed documentation. */
-  When_Self_Enters_Combat: "Trigger.Custom_Aggro.On_Enter_Combat",
+  "自身入战时": "Trigger.Custom_Aggro.On_Enter_Combat",
   /**  See `NODES.Trigger_CustomAggro_OnLeaveCombat` for detailed documentation. */
-  When_Self_Leaves_Combat: "Trigger.Custom_Aggro.On_Leave_Combat",
+  "自身脱战时": "Trigger.Custom_Aggro.On_Leave_Combat",
   /**  See `NODES.Query_FactionRelated_IsHostile` for detailed documentation. */
-  Query_If_Faction_Is_Hostile: "Query.Faction_Related.Is_Hostile",
+  "获取阵营是否敌对": "Query.Faction_Related.Is_Hostile",
   /**  See `NODES.Hidden_Execution_AddNameplate` for detailed documentation. */
-  Add_Entity_Active_Nameplate: "Hidden.Execution.Add_Nameplate",
+  "Add Entity Active Nameplate": "Hidden.Execution.Add_Nameplate",
   /**  See `NODES.Hidden_Execution_RemoveNameplate` for detailed documentation. */
-  Delete_Entity_Active_Nameplate: "Hidden.Execution.Remove_Nameplate",
+  "Delete Entity Active Nameplate": "Hidden.Execution.Remove_Nameplate",
   /**  See `NODES.Execution_Nameplate_SetNameplate` for detailed documentation. */
-  Set_Entity_Active_Nameplate: "Execution.Nameplate.Set_Nameplate",
+  "设置实体生效铭牌": "Execution.Nameplate.Set_Nameplate",
   /**  See `NODES.Execution_CreationPatrol_SwitchTemplate` for detailed documentation. */
-  Switch_Creation_Patrol_Template: "Execution.Creation_Patrol.Switch_Template",
+  "切换造物巡逻模板": "Execution.Creation_Patrol.Switch_Template",
   /**  See `NODES.Query_CreaturePatrol_GetPatrolTemplate` for detailed documentation. */
-  Get_Current_Creation_s_Patrol_Template: "Query.Creature_Patrol.Get_Patrol_Template",
+  "获取当前造物的巡逻模板": "Query.Creature_Patrol.Get_Patrol_Template",
   /**  See `NODES.Trigger_CreationPatrol_OnReachWaypoint` for detailed documentation. */
-  When_Creation_Reaches_Patrol_Waypoint: "Trigger.Creation_Patrol.On_Reach_Waypoint",
+  "造物抵达巡逻路点时": "Trigger.Creation_Patrol.On_Reach_Waypoint",
   /**  See `NODES.Query_GlobalPath_GetWaypoint` for detailed documentation. */
-  Get_Specified_Waypoint_Info: "Query.Global_Path.Get_Waypoint",
+  "获取指定路径点信息": "Query.Global_Path.Get_Waypoint",
   /**  See `NODES.Execution_TextBubble_SetBubble` for detailed documentation. */
-  Switch_Active_Text_Bubble: "Execution.Text_Bubble.Set_Bubble",
+  "切换生效的文本气泡": "Execution.Text_Bubble.Set_Bubble",
   /**  See `NODES.Execution_DeckSelector_Open` for detailed documentation. */
-  Invoke_Deck_Selector: "Execution.Deck_Selector.Open",
+  "唤起卡牌选择器": "Execution.Deck_Selector.Open",
   /**  See `NODES.Trigger_DeckSelector_OnDeckSelected` for detailed documentation. */
-  When_Deck_Selector_Is_Complete: "Trigger.Deck_Selector.On_Deck_Selected",
+  "卡牌选择器完成时": "Trigger.Deck_Selector.On_Deck_Selected",
   /**  See `NODES.Execution_MinimapMarker_SetZoom` for detailed documentation. */
-  Modify_Mini_Map_Zoom: "Execution.Minimap_Marker.Set_Zoom",
+  "修改小地图缩放": "Execution.Minimap_Marker.Set_Zoom",
   /**  See `NODES.Execution_MinimapMarker_SetMarkerState` for detailed documentation. */
-  Modify_Mini_Map_Marker_Activation_Status: "Execution.Minimap_Marker.Set_Marker_State",
+  "修改小地图标识生效状态": "Execution.Minimap_Marker.Set_Marker_State",
   /**  See `NODES.Execution_MinimapMarker_SetVisibleList` for detailed documentation. */
-  Modify_Player_List_for_Visible_Mini_Map_Markers: "Execution.Minimap_Marker.Set_Visible_List",
+  "修改可见小地图标识的玩家列表": "Execution.Minimap_Marker.Set_Visible_List",
   /**  See `NODES.Execution_MinimapMarker_SetTrackList` for detailed documentation. */
-  Modify_Player_List_for_Tracking_Mini_Map_Markers: "Execution.Minimap_Marker.Set_Track_List",
+  "修改追踪小地图标识的玩家列表": "Execution.Minimap_Marker.Set_Track_List",
   /**  See `NODES.Query_MinimapMarker_GetMarkerInfo` for detailed documentation. */
-  Query_Specified_Mini_Map_Marker_Information: "Query.Minimap_Marker.Get_Marker_Info",
+  "查询指定小地图标识信息": "Query.Minimap_Marker.Get_Marker_Info",
   /**  See `NODES.Query_MinimapMarker_GetMarkerStatus` for detailed documentation. */
-  Get_Entity_s_Mini_Map_Marker_Status: "Query.Minimap_Marker.Get_Marker_Status",
+  "获取实体的小地图标识状态": "Query.Minimap_Marker.Get_Marker_Status",
   /**  See `NODES.Execution_MinimapMarker_UpdateMarkers` for detailed documentation. */
-  Modify_Player_Markers_on_the_Mini_Map: "Execution.Minimap_Marker.Update_Markers",
+  "修改小地图标识的玩家标记": "Execution.Minimap_Marker.Update_Markers",
   /**  See `NODES.Execution_DeckSelector_Close` for detailed documentation. */
-  Close_Deck_Selector: "Execution.Deck_Selector.Close",
+  "关闭卡牌选择器": "Execution.Deck_Selector.Close",
   /**  See `NODES.Trigger_UnitStatus_OnElementReaction` for detailed documentation. */
-  When_Elemental_Reaction_Event_Occurs: "Trigger.Unit_Status.On_Element_Reaction",
+  "发生元素反应事件时": "Trigger.Unit_Status.On_Element_Reaction",
   /**  See `NODES.Trigger_UnitStatus_OnShieldHit` for detailed documentation. */
-  When_Shield_Is_Attacked: "Trigger.Unit_Status.On_Shield_Hit",
+  "护盾受到攻击时": "Trigger.Unit_Status.On_Shield_Hit",
   /**  See `NODES.Query_Achievement_IsCompleted` for detailed documentation. */
-  Query_If_Achievement_Is_Completed: "Query.Achievement.Is_Completed",
+  "查询成就是否完成": "Query.Achievement.Is_Completed",
   /**  See `NODES.Execution_Achievement_SetProgress` for detailed documentation. */
-  Set_Achievement_Progress_Tally: "Execution.Achievement.Set_Progress",
+  "设置成就进度计数": "Execution.Achievement.Set_Progress",
   /**  See `NODES.Execution_Achievement_AddProgress` for detailed documentation. */
-  Change_Achievement_Progress_Tally: "Execution.Achievement.Add_Progress",
+  "变更成就进度计数": "Execution.Achievement.Add_Progress",
   /**  See `NODES.Execution_StageSettlement_SetScoreboard` for detailed documentation. */
-  Set_Player_Settlement_Scoreboard_Data_Display: "Execution.Stage_Settlement.Set_Scoreboard",
+  "设置玩家结算计分板展示数据": "Execution.Stage_Settlement.Set_Scoreboard",
   /**  See `NODES.Execution_StageSettlement_SetPlayerRank` for detailed documentation. */
-  Set_Player_Settlement_Ranking_Value: "Execution.Stage_Settlement.Set_Player_Rank",
+  "设置玩家结算排名数值": "Execution.Stage_Settlement.Set_Player_Rank",
   /**  See `NODES.Query_StageSettlement_GetPlayerRank` for detailed documentation. */
-  Get_Player_Settlement_Ranking_Value: "Query.Stage_Settlement.Get_Player_Rank",
+  "获取玩家结算排名数值": "Query.Stage_Settlement.Get_Player_Rank",
   /**  See `NODES.Execution_StageSettlement_SetPlayerResult` for detailed documentation. */
-  Set_Player_Settlement_Success_Status: "Execution.Stage_Settlement.Set_Player_Result",
+  "设置玩家结算成功状态": "Execution.Stage_Settlement.Set_Player_Result",
   /**  See `NODES.Query_StageSettlement_GetPlayerResult` for detailed documentation. */
-  Get_Player_Settlement_Success_Status: "Query.Stage_Settlement.Get_Player_Result",
+  "获取玩家结算成功状态": "Query.Stage_Settlement.Get_Player_Result",
   /**  See `NODES.Execution_StageSettlement_SetFactionRank` for detailed documentation. */
-  Set_Faction_Settlement_Ranking_Value: "Execution.Stage_Settlement.Set_Faction_Rank",
+  "设置阵营结算排名数值": "Execution.Stage_Settlement.Set_Faction_Rank",
   /**  See `NODES.Query_StageSettlement_GetFactionRank` for detailed documentation. */
-  Get_Faction_Settlement_Ranking_Value: "Query.Stage_Settlement.Get_Faction_Rank",
+  "获取阵营结算排名数值": "Query.Stage_Settlement.Get_Faction_Rank",
   /**  See `NODES.Execution_StageSettlement_SetFactionResult` for detailed documentation. */
-  Set_Faction_Settlement_Success_Status: "Execution.Stage_Settlement.Set_Faction_Result",
+  "设置阵营结算成功状态": "Execution.Stage_Settlement.Set_Faction_Result",
   /**  See `NODES.Query_StageSettlement_GetFactionResult` for detailed documentation. */
-  Get_Faction_Settlement_Success_Status: "Query.Stage_Settlement.Get_Faction_Result",
+  "获取阵营结算成功状态": "Query.Stage_Settlement.Get_Faction_Result",
   /**  See `NODES.Query_RankTier_GetRankInfo` for detailed documentation. */
-  Get_Player_Ranking_Info: "Query.Rank_Tier.Get_Rank_Info",
+  "获取玩家段位信息": "Query.Rank_Tier.Get_Rank_Info",
   /**  See `NODES.Execution_Rank_ModifyScore` for detailed documentation. */
-  Set_Player_Rank_Score_Change: "Execution.Rank.Modify_Score",
+  "设置玩家段位变化分数": "Execution.Rank.Modify_Score",
   /**  See `NODES.Query_RankTier_GetScoreChange` for detailed documentation. */
-  Get_Player_Rank_Score_Change: "Query.Rank_Tier.Get_Score_Change",
+  "获取玩家段位变化分数": "Query.Rank_Tier.Get_Score_Change",
   /**  See `NODES.Execution_Rank_SetEscapeValid` for detailed documentation. */
-  Set_Player_Escape_Validity: "Execution.Rank.Set_Escape_Valid",
+  "设置玩家逃跑合法性": "Execution.Rank.Set_Escape_Valid",
   /**  See `NODES.Query_RankTier_GetEscapeStatus` for detailed documentation. */
-  Get_Player_Escape_Validity: "Query.Rank_Tier.Get_Escape_Status",
+  "获取玩家逃跑合法性": "Query.Rank_Tier.Get_Escape_Status",
   /**  See `NODES.Execution_Rank_SwitchScoreGroup` for detailed documentation. */
-  Switch_the_scoring_group_that_affects_player_s_competitive_rank: "Execution.Rank.Switch_Score_Group",
+  "切换玩家竞技段位生效的计分组": "Execution.Rank.Switch_Score_Group",
   /**  See `NODES.Query_StageRelated_GetEnvTime` for detailed documentation. */
-  Query_Current_Environment_Time: "Query.Stage_Related.Get_Env_Time",
+  "查询当前环境时间": "Query.Stage_Related.Get_Env_Time",
   /**  See `NODES.Execution_StageRelated_SetTime` for detailed documentation. */
-  Set_Current_Environment_Time: "Execution.Stage_Related.Set_Time",
+  "设置当前环境时间": "Execution.Stage_Related.Set_Time",
   /**  See `NODES.Execution_StageRelated_SetTimeSpeed` for detailed documentation. */
-  Set_Environment_Time_Passage_Speed: "Execution.Stage_Related.Set_Time_Speed",
+  "设置环境时间流逝速度": "Execution.Stage_Related.Set_Time_Speed",
   /**  See `NODES.Execution_LightComponent_ToggleLight` for detailed documentation. */
-  Toggle_Entity_Light_Source: "Execution.Light_Component.Toggle_Light",
+  "开关实体光源": "Execution.Light_Component.Toggle_Light",
   /**  See `NODES.Execution_FollowMotion_SetTargetEntity` for detailed documentation. */
-  Switch_Follow_Motion_Device_Target_by_Entity: "Execution.Follow_Motion.Set_Target_Entity",
+  "以实体切换跟随运动器的目标": "Execution.Follow_Motion.Set_Target_Entity",
   /**  See `NODES.Query_CollisionTrigger_GetOverlappingEntities` for detailed documentation. */
-  Get_All_Entities_Within_the_Collision_Trigger: "Query.Collision_Trigger.Get_Overlapping_Entities",
+  "获取碰撞触发器内所有实体": "Query.Collision_Trigger.Get_Overlapping_Entities",
   /**  See `NODES.Query_EntityRelated_GetAdvAttr` for detailed documentation. */
-  Get_Entity_Advanced_Attribute: "Query.Entity_Related.Get_Adv_Attr",
+  "获取实体进阶属性": "Query.Entity_Related.Get_Adv_Attr",
   /**  See `NODES.Query_EntityRelated_GetElemAttr` for detailed documentation. */
-  Get_Entity_Elemental_Attribute: "Query.Entity_Related.Get_Elem_Attr",
+  "获取实体元素属性": "Query.Entity_Related.Get_Elem_Attr",
   /**  See `NODES.Execution_Equipment_AddAffix` for detailed documentation. */
-  Add_Affix_to_Equipment: "Execution.Equipment.Add_Affix",
+  "装备添加词条": "Execution.Equipment.Add_Affix",
   /**  See `NODES.Execution_Equipment_RemoveAffix` for detailed documentation. */
-  Remove_Equipment_Affix: "Execution.Equipment.Remove_Affix",
+  "移除装备词条": "Execution.Equipment.Remove_Affix",
   /**  See `NODES.Execution_Equipment_ModifyAffix` for detailed documentation. */
-  Modify_Equipment_Affix_Value: "Execution.Equipment.Modify_Affix",
+  "修改装备词条值": "Execution.Equipment.Modify_Affix",
   /**  See `NODES.Query_Equipment_GetAffixes` for detailed documentation. */
-  Get_Equipment_Affix_List: "Query.Equipment.Get_Affixes",
+  "获取装备词条列表": "Query.Equipment.Get_Affixes",
   /**  See `NODES.Query_Equipment_GetAffixConfig` for detailed documentation. */
-  Get_Equipment_Affix_Config_ID: "Query.Equipment.Get_Affix_Config",
+  "获取装备词条配置ID": "Query.Equipment.Get_Affix_Config",
   /**  See `NODES.Query_Equipment_GetAffixValue` for detailed documentation. */
-  Get_Equipment_Affix_Value: "Query.Equipment.Get_Affix_Value",
+  "获取装备词条数值": "Query.Equipment.Get_Affix_Value",
   /**  See `NODES.Hidden_Execution_UpdateLeaderboard` for detailed documentation. */
-  Update_Player_Leaderboard_Score: "Hidden.Execution.Update_Leaderboard",
+  "Update Player Leaderboard Score": "Hidden.Execution.Update_Leaderboard",
   /**  See `NODES.Trigger_TextBubble_OnBubbleComplete` for detailed documentation. */
-  When_Text_Bubble_Is_Completed: "Trigger.Text_Bubble.On_Bubble_Complete",
+  "文本气泡完成时": "Trigger.Text_Bubble.On_Bubble_Complete",
   /**  See `NODES.Trigger_Equipment_OnAffixChange` for detailed documentation. */
-  When_Equipment_Affix_Value_Changes: "Trigger.Equipment.On_Affix_Change",
+  "装备的词条数值改变时": "Trigger.Equipment.On_Affix_Change",
   /**  See `NODES.Trigger_Item_OnItemAdd` for detailed documentation. */
-  When_Item_Is_Added_to_Inventory: "Trigger.Item.On_Item_Add",
+  "背包道具新增时": "Trigger.Item.On_Item_Add",
   /**  See `NODES.Trigger_Item_OnItemLose` for detailed documentation. */
-  When_Item_Is_Lost_From_Inventory: "Trigger.Item.On_Item_Lose",
+  "背包道具失去时": "Trigger.Item.On_Item_Lose",
   /**  See `NODES.Trigger_Item_OnItemQuantityChange` for detailed documentation. */
-  When_the_Quantity_of_Inventory_Item_Changes: "Trigger.Item.On_Item_Quantity_Change",
+  "背包道具数量变化时": "Trigger.Item.On_Item_Quantity_Change",
   /**  See `NODES.Trigger_Item_OnCurrencyChange` for detailed documentation. */
-  When_the_Quantity_of_Inventory_Currency_Changes: "Trigger.Item.On_Currency_Change",
+  "背包货币数量变化时": "Trigger.Item.On_Currency_Change",
   /**  See `NODES.Execution_Inventory_ExpandCapacity` for detailed documentation. */
-  Increase_Maximum_Inventory_Capacity: "Execution.Inventory.Expand_Capacity",
+  "增加背包最大容量": "Execution.Inventory.Expand_Capacity",
   /**  See `NODES.Execution_Inventory_ModifyItem` for detailed documentation. */
-  Modify_Inventory_Item_Quantity: "Execution.Inventory.Modify_Item",
+  "修改背包道具数量": "Execution.Inventory.Modify_Item",
   /**  See `NODES.Execution_Inventory_SetDropAmount` for detailed documentation. */
-  Set_Inventory_Loot_Item_Currency_Quantity: "Execution.Inventory.Set_Drop_Amount",
+  "设置背包掉落道具/货币数量": "Execution.Inventory.Set_Drop_Amount",
   /**  See `NODES.Execution_Inventory_ModifyCurrency` for detailed documentation. */
-  Modify_Inventory_Currency_Quantity: "Execution.Inventory.Modify_Currency",
+  "修改背包货币数量": "Execution.Inventory.Modify_Currency",
   /**  See `NODES.Query_Item_GetCapacity` for detailed documentation. */
-  Get_Inventory_Capacity: "Query.Item.Get_Capacity",
+  "获取背包容量": "Query.Item.Get_Capacity",
   /**  See `NODES.Query_Item_GetItemAmount` for detailed documentation. */
-  Get_Inventory_Item_Quantity: "Query.Item.Get_Item_Amount",
+  "获取背包道具数量": "Query.Item.Get_Item_Amount",
   /**  See `NODES.Query_Item_GetCurrencyAmount` for detailed documentation. */
-  Get_Inventory_Currency_Quantity: "Query.Item.Get_Currency_Amount",
+  "获取背包货币数量": "Query.Item.Get_Currency_Amount",
   /**  See `NODES.Trigger_Equipment_OnInit` for detailed documentation. */
-  When_Equipment_Is_Initialized: "Trigger.Equipment.On_Init",
+  "装备初始化时": "Trigger.Equipment.On_Init",
   /**  See `NODES.Trigger_Equipment_OnEquip` for detailed documentation. */
-  When_Equipment_Is_Equipped: "Trigger.Equipment.On_Equip",
+  "装备被穿戴时": "Trigger.Equipment.On_Equip",
   /**  See `NODES.Trigger_Equipment_OnUnequip` for detailed documentation. */
-  When_Equipment_Is_Unequipped: "Trigger.Equipment.On_Unequip",
+  "装备被卸下时": "Trigger.Equipment.On_Unequip",
   /**  See `NODES.Execution_Combat_LossHP` for detailed documentation. */
-  Loss_HP: "Execution.Combat.Loss_HP",
+  "损失生命": "Execution.Combat.Loss_HP",
   /**  See `NODES.Execution_Combat_RecoverHPInstant` for detailed documentation. */
-  Recover_HP_Directly: "Execution.Combat.Recover_HP_Instant",
+  "直接恢复生命": "Execution.Combat.Recover_HP_Instant",
   /**  See `NODES.Trigger_Shop_OnCustomItemSold` for detailed documentation. */
-  When_Custom_Shop_Item_Is_Sold: "Trigger.Shop.On_Custom_Item_Sold",
+  "商店出售自定义商品时": "Trigger.Shop.On_Custom_Item_Sold",
   /**  See `NODES.Trigger_Shop_OnInvItemSold` for detailed documentation. */
-  When_Selling_Inventory_Items_in_the_Shop: "Trigger.Shop.On_Inv_Item_Sold",
+  "商店出售背包物品时": "Trigger.Shop.On_Inv_Item_Sold",
   /**  See `NODES.Execution_Shop_Open` for detailed documentation. */
-  Open_Shop: "Execution.Shop.Open",
+  "打开商店": "Execution.Shop.Open",
   /**  See `NODES.Execution_Shop_Close` for detailed documentation. */
-  Close_Shop: "Execution.Shop.Close",
+  "关闭商店": "Execution.Shop.Close",
   /**  See `NODES.Execution_Shop_ModifyCustomSale` for detailed documentation. */
-  Modify_Custom_Shop_Item_Sales_Info: "Execution.Shop.Modify_Custom_Sale",
+  "修改自定义商店商品出售信息": "Execution.Shop.Modify_Custom_Sale",
   /**  See `NODES.Trigger_Shop_OnSellItem` for detailed documentation. */
-  When_selling_items_to_the_shop: "Trigger.Shop.On_Sell_Item",
+  "商店收购道具时": "Trigger.Shop.On_Sell_Item",
   /**  See `NODES.Execution_Shop_ModifyInventorySale` for detailed documentation. */
-  Modify_Inventory_Shop_Item_Sales_Info: "Execution.Shop.Modify_Inventory_Sale",
+  "修改背包商店商品出售信息": "Execution.Shop.Modify_Inventory_Sale",
   /**  See `NODES.Execution_Shop_ModifyCartItem` for detailed documentation. */
-  Modify_Item_Purchase_Info_in_the_Purchase_List: "Execution.Shop.Modify_Cart_Item",
+  "修改物品收购表中道具收购信息": "Execution.Shop.Modify_Cart_Item",
   /**  See `NODES.Execution_Shop_AddCustomSale` for detailed documentation. */
-  Add_New_Item_to_Custom_Shop_Sales_List: "Execution.Shop.Add_Custom_Sale",
+  "向自定义商店出售表中新增商品": "Execution.Shop.Add_Custom_Sale",
   /**  See `NODES.Execution_Shop_AddInventorySale` for detailed documentation. */
-  Add_New_Item_to_Inventory_Shop_Sales_List: "Execution.Shop.Add_Inventory_Sale",
+  "向背包商店出售表中新增商品": "Execution.Shop.Add_Inventory_Sale",
   /**  See `NODES.Execution_Shop_AddToCart` for detailed documentation. */
-  Add_Items_to_the_Purchase_List: "Execution.Shop.Add_To_Cart",
+  "向物品收购表中新增物品": "Execution.Shop.Add_To_Cart",
   /**  See `NODES.Execution_Shop_RemoveCustomSale` for detailed documentation. */
-  Remove_Item_From_Custom_Shop_Sales_List: "Execution.Shop.Remove_Custom_Sale",
+  "从自定义商店出售表中移除商品": "Execution.Shop.Remove_Custom_Sale",
   /**  See `NODES.Execution_Shop_RemoveInventorySale` for detailed documentation. */
-  Remove_Item_From_Inventory_Shop_Sales_List: "Execution.Shop.Remove_Inventory_Sale",
+  "从背包商店出售表中移除商品": "Execution.Shop.Remove_Inventory_Sale",
   /**  See `NODES.Execution_Shop_RemoveFromCart` for detailed documentation. */
-  Remove_item_from_purchase_list: "Execution.Shop.Remove_From_Cart",
+  "从物品收购表中移除物品": "Execution.Shop.Remove_From_Cart",
   /**  See `NODES.Query_Shop_GetCustomSales` for detailed documentation. */
-  Query_Custom_Shop_Item_Sales_List: "Query.Shop.Get_Custom_Sales",
+  "查询自定义商店商品出售列表": "Query.Shop.Get_Custom_Sales",
   /**  See `NODES.Query_Shop_GetInvSales` for detailed documentation. */
-  Query_Inventory_Shop_Item_Sales_List: "Query.Shop.Get_Inv_Sales",
+  "查询背包商店物品出售列表": "Query.Shop.Get_Inv_Sales",
   /**  See `NODES.Query_Shop_GetCartItems` for detailed documentation. */
-  Query_Shop_Purchase_Item_List: "Query.Shop.Get_Cart_Items",
+  "查询商店收购物品列表": "Query.Shop.Get_Cart_Items",
   /**  See `NODES.Query_Shop_GetCustomItemInfo` for detailed documentation. */
-  Query_Custom_Shop_Item_Sales_Info: "Query.Shop.Get_Custom_Item_Info",
+  "查询自定义商店商品出售信息": "Query.Shop.Get_Custom_Item_Info",
   /**  See `NODES.Query_Shop_GetInvItemInfo` for detailed documentation. */
-  Query_Inventory_Shop_Item_Sales_Info: "Query.Shop.Get_Inv_Item_Info",
+  "查询背包商店商品出售信息": "Query.Shop.Get_Inv_Item_Info",
   /**  See `NODES.Query_Shop_GetPurchaseInfo` for detailed documentation. */
-  Query_Shop_Item_Purchase_Info: "Query.Shop.Get_Purchase_Info",
+  "查询商店商品收购信息": "Query.Shop.Get_Purchase_Info",
   /**  See `NODES.Execution_Inventory_SetDropItems` for detailed documentation. */
-  Set_Inventory_Item_Drop_Content: "Execution.Inventory.Set_Drop_Items",
+  "设置背包道具掉落内容": "Execution.Inventory.Set_Drop_Items",
   /**  See `NODES.Query_Item_GetBasicItems` for detailed documentation. */
-  Get_all_basic_items_from_Inventory: "Query.Item.Get_Basic_Items",
+  "获取背包所有基础道具": "Query.Item.Get_Basic_Items",
   /**  See `NODES.Query_Item_GetCurrencyAll` for detailed documentation. */
-  Get_All_Currency_From_Inventory: "Query.Item.Get_Currency_All",
+  "获取背包所有货币": "Query.Item.Get_Currency_All",
   /**  See `NODES.Query_Item_GetEquipmentAll` for detailed documentation. */
-  Get_all_equipment_from_Inventory: "Query.Item.Get_Equipment_All",
+  "获取背包所有装备": "Query.Item.Get_Equipment_All",
   /**  See `NODES.Execution_Inventory_TriggerDrop` for detailed documentation. */
-  Trigger_Loot_Drop: "Execution.Inventory.Trigger_Drop",
+  "触发战利品掉落": "Execution.Inventory.Trigger_Drop",
   /**  See `NODES.Execution_Inventory_SetLootContent` for detailed documentation. */
-  Set_Loot_Drop_Content: "Execution.Inventory.Set_Loot_Content",
+  "设置战利品掉落内容": "Execution.Inventory.Set_Loot_Content",
   /**  See `NODES.Execution_Inventory_ModifyLootItem` for detailed documentation. */
-  Modify_Loot_Item_Component_Quantity: "Execution.Inventory.Modify_Loot_Item",
+  "修改掉落物组件道具数量": "Execution.Inventory.Modify_Loot_Item",
   /**  See `NODES.Execution_Inventory_ModifyLootCurrency` for detailed documentation. */
-  Modify_Loot_Component_Currency_Amount: "Execution.Inventory.Modify_Loot_Currency",
+  "修改掉落物组件货币数量": "Execution.Inventory.Modify_Loot_Currency",
   /**  See `NODES.Query_Item_GetLootItemAmount` for detailed documentation. */
-  Get_Loot_Component_Item_Quantity: "Query.Item.Get_Loot_Item_Amount",
+  "获取掉落物组件道具数量": "Query.Item.Get_Loot_Item_Amount",
   /**  See `NODES.Query_Item_GetLootCurrencyAmount` for detailed documentation. */
-  Get_Loot_Component_Currency_Quantity: "Query.Item.Get_Loot_Currency_Amount",
+  "获取凋落物组件货币数量": "Query.Item.Get_Loot_Currency_Amount",
   /**  See `NODES.Query_Item_GetLootItems` for detailed documentation. */
-  Get_All_Items_from_Loot_Component: "Query.Item.Get_Loot_Items",
+  "获取战利品所有道具": "Query.Item.Get_Loot_Items",
   /**  See `NODES.Query_Item_GetLootCurrency` for detailed documentation. */
-  Get_All_Currency_from_Loot_Component: "Query.Item.Get_Loot_Currency",
+  "获取战利品所有货币": "Query.Item.Get_Loot_Currency",
   /**  See `NODES.Query_Item_GetLootEquipment` for detailed documentation. */
-  Get_All_Equipment_from_Loot_Component: "Query.Item.Get_Loot_Equipment",
+  "获取掉落物件所有装备": "Query.Item.Get_Loot_Equipment",
   /**  See `NODES.Trigger_Item_OnItemUse` for detailed documentation. */
-  When_Items_in_the_Inventory_Are_Used: "Trigger.Item.On_Item_Use",
+  "背包内道具被使用时": "Trigger.Item.On_Item_Use",
   /**  See `NODES.Query_Equipment_GetTags` for detailed documentation. */
-  Query_Equipment_Tag_List: "Query.Equipment.Get_Tags",
+  "查询装备标签列表": "Query.Equipment.Get_Tags",
   /**  See `NODES.Execution_ScanTag_SetRules` for detailed documentation. */
-  Set_Scan_Tag_Rules: "Execution.Scan_Tag.Set_Rules",
+  "设置扫描标签的规则": "Execution.Scan_Tag.Set_Rules",
   /**  See `NODES.Execution_ScanTag_SetActiveTag` for detailed documentation. */
-  Set_Scan_Component_s_Active_Scan_Tag_ID: "Execution.Scan_Tag.Set_Active_Tag",
+  "设置扫描组件的生效扫描标签序号": "Execution.Scan_Tag.Set_Active_Tag",
   /**  See `NODES.Query_ScanTag_GetActiveTag` for detailed documentation. */
-  Get_the_Currently_Active_Scan_Tag_Config_ID: "Query.Scan_Tag.Get_Active_Tag",
+  "获取当前生效的扫描标签配置ID": "Query.Scan_Tag.Get_Active_Tag",
   /**  See `NODES.Query_EntityRelated_GetCharacterAttr` for detailed documentation. */
-  Get_Character_Attribute: "Query.Entity_Related.Get_Character_Attr",
+  "获取角色属性": "Query.Entity_Related.Get_Character_Attr",
   /**  See `NODES.Execution_Skill_SetCD` for detailed documentation. */
-  Set_Character_Skill_CD: "Execution.Skill.Set_CD",
+  "设置角色技能冷却": "Execution.Skill.Set_CD",
   /**  See `NODES.Execution_Skill_ModifyCD` for detailed documentation. */
-  Modify_Character_Skill_CD: "Execution.Skill.Modify_CD",
+  "修改角色技能冷却": "Execution.Skill.Modify_CD",
   /**  See `NODES.Execution_Skill_ModifyCDRatio` for detailed documentation. */
-  Modify_Skill_CD_Percentage_Based_on_Max_CD: "Execution.Skill.Modify_CD_Ratio",
+  "按最大冷却时间修改技能冷却百分比": "Execution.Skill.Modify_CD_Ratio",
   /**  See `NODES.Execution_Equipment_AddAffixByID` for detailed documentation. */
-  Add_Affix_to_Equipment_at_Specified_ID: "Execution.Equipment.Add_Affix_By_ID",
+  "装备指定序号添加词条": "Execution.Equipment.Add_Affix_By_ID",
   /**  See `NODES.Execution_DeckSelector_GetRandomList` for detailed documentation. */
-  Random_Deck_Selector_Selection_List: "Execution.Deck_Selector.Get_Random_List",
+  "随机卡牌选择器选择列表": "Execution.Deck_Selector.Get_Random_List",
   /**  See `NODES.Query_EntityRelated_GetOwner` for detailed documentation. */
-  Get_Owner_Entity: "Query.Entity_Related.Get_Owner",
+  "获取拥有者实体": "Query.Entity_Related.Get_Owner",
   /**  See `NODES.Query_EntityRelated_GetOwnedEntities` for detailed documentation. */
-  Get_List_of_Entities_Owned_by_the_Entity: "Query.Entity_Related.Get_Owned_Entities",
+  "获取实体拥有的实体列表": "Query.Entity_Related.Get_Owned_Entities",
   /**  See `NODES.Query_UnitStatus_GetStatusStacks` for detailed documentation. */
-  Query_Unit_Status_Stacks_by_Slot_ID: "Query.Unit_Status.Get_Status_Stacks",
+  "根据槽位序号查询单位状态层数": "Query.Unit_Status.Get_Status_Stacks",
   /**  See `NODES.Query_UnitStatus_GetStatusApplier` for detailed documentation. */
-  Query_Unit_Status_Applier_by_Slot_ID: "Query.Unit_Status.Get_Status_Applier",
+  "根据槽位序号查询单位状态施加者": "Query.Unit_Status.Get_Status_Applier",
   /**  See `NODES.Query_UnitStatus_GetStatusSlots` for detailed documentation. */
-  List_of_Slot_IDs_Querying_Unit_Status: "Query.Unit_Status.Get_Status_Slots",
+  "查询单位状态的槽位序号列表": "Query.Unit_Status.Get_Status_Slots",
   /**  See `NODES.Query_Equipment_GetConfigID` for detailed documentation. */
-  Query_Equipment_Config_ID_by_Equipment_ID: "Query.Equipment.Get_Config_ID",
+  "根据装备索引查询装备配置ID": "Query.Equipment.Get_Config_ID",
   /**  See `NODES.Query_CharacterRelated_GetGUIDByID` for detailed documentation. */
-  Get_Player_GUID_by_Player_ID: "Query.Character_Related.Get_GUID_By_ID",
+  "根据玩家序号获取玩家GUID": "Query.Character_Related.Get_GUID_By_ID",
   /**  See `NODES.Query_CharacterRelated_GetIDByGUID` for detailed documentation. */
-  Get_Player_ID_by_Player_GUID: "Query.Character_Related.Get_ID_By_GUID",
+  "根据玩家GUID获取玩家序号": "Query.Character_Related.Get_ID_By_GUID",
   /**  See `NODES.Arithmetic_Math_TimestampToTime` for detailed documentation. */
-  Calculate_formatted_time_from_timestamp: "Arithmetic.Math.Timestamp_To_Time",
+  "根据时间戳计算格式化时间": "Arithmetic.Math.Timestamp_To_Time",
   /**  See `NODES.Arithmetic_Math_TimeToTimestamp` for detailed documentation. */
-  Calculate_Timestamp_From_Formatted_Time: "Arithmetic.Math.Time_To_Timestamp",
+  "根据格式化时间计算时间戳": "Arithmetic.Math.Time_To_Timestamp",
   /**  See `NODES.Arithmetic_Math_TimestampToWeekday` for detailed documentation. */
-  Calculate_day_of_the_week_from_timestamp: "Arithmetic.Math.Timestamp_To_Weekday",
+  "根据时间戳计算星期几": "Arithmetic.Math.Timestamp_To_Weekday",
   /**  See `NODES.Query_Math_GetTimestamp` for detailed documentation. */
-  Query_Timestamp_UTC_0: "Query.Math.Get_Timestamp",
+  "查询时间戳（UTC+0时区）": "Query.Math.Get_Timestamp",
   /**  See `NODES.Query_Math_GetTimezone` for detailed documentation. */
-  Query_Server_Time_Zone: "Query.Math.Get_Timezone",
+  "查询服务器时区": "Query.Math.Get_Timezone",
   /**  See `NODES.Execution_EntityRelated_CreatePrefabGroup` for detailed documentation. */
-  Create_Prefab_Group: "Execution.Entity_Related.Create_Prefab_Group",
+  "创建元件组": "Execution.Entity_Related.Create_Prefab_Group",
   /**  See `NODES.Query_Creation_GetAggroList` for detailed documentation. */
-  Get_Aggro_List_of_Creation_in_Default_Mode: "Query.Creation.Get_Aggro_List",
+  "获取默认模式的造物仇恨列表": "Query.Creation.Get_Aggro_List",
   /**  See `NODES.Execution_Leaderboard_SetScoreInt` for detailed documentation. */
-  Set_Player_Leaderboard_Score_as_an_Integer: "Execution.Leaderboard.Set_Score_Int",
+  "以整数设置玩家排行榜分数": "Execution.Leaderboard.Set_Score_Int",
   /**  See `NODES.Execution_Leaderboard_SetScoreFloat` for detailed documentation. */
-  Set_Player_Leaderboard_Score_as_a_Float: "Execution.Leaderboard.Set_Score_Float",
+  "以浮点数设置玩家排行榜分数": "Execution.Leaderboard.Set_Score_Float",
   /**  See `NODES.Execution_CharacterRelated_ModifyEnvironment` for detailed documentation. */
-  Modify_environment_settings: "Execution.Character_Related.Modify_Environment",
+  "修改环境配置": "Execution.Character_Related.Modify_Environment",
   /**  See `NODES.Trigger_Class_OnClassRemove` for detailed documentation. */
-  When_Player_Class_Is_Removed: "Trigger.Class.On_Class_Remove",
+  "玩家职业解除时": "Trigger.Class.On_Class_Remove",
   /**  See `NODES.Trigger_Combat_OnInterruptible` for detailed documentation. */
-  When_Entering_an_Interruptible_State: "Trigger.Combat.On_Interruptible",
+  "进入易受打断状态时": "Trigger.Combat.On_Interruptible",
   /**  See `NODES.Query_General_GetGameInfo` for detailed documentation. */
-  Query_Game_Mode_and_Player_Number: "Query.General.Get_Game_Info",
+  "查询对局游玩方式及人数": "Query.General.Get_Game_Info",
   /**  See `NODES.Query_CharacterRelated_GetNickname` for detailed documentation. */
-  Get_Player_Nickname: "Query.Character_Related.Get_Nickname",
+  "获取玩家昵称": "Query.Character_Related.Get_Nickname",
   /**  See `NODES.Query_CharacterRelated_GetInputType` for detailed documentation. */
-  Get_Player_Client_Input_Device_Type: "Query.Character_Related.Get_Input_Type",
+  "获得玩家客户端输入设备类型": "Query.Character_Related.Get_Input_Type",
   /**  See `NODES.Execution_ChatChannel_SetSwitch` for detailed documentation. */
-  Set_Chat_Channel_Switch: "Execution.Chat_Channel.Set_Switch",
+  "设置聊天频道开关": "Execution.Chat_Channel.Set_Switch",
   /**  See `NODES.Execution_ChatChannel_ModifyPermission` for detailed documentation. */
-  Modify_Player_Channel_Permission: "Execution.Chat_Channel.Modify_Permission",
+  "修改玩家频道权限": "Execution.Chat_Channel.Modify_Permission",
   /**  See `NODES.Execution_ChatChannel_SetCurrentChannel` for detailed documentation. */
-  Set_Player_s_Current_Channel: "Execution.Chat_Channel.Set_Current_Channel",
+  "设置玩家当前频道": "Execution.Chat_Channel.Set_Current_Channel",
   /**  See `NODES.Execution_WonderlandBox_ConsumeBox` for detailed documentation. */
-  Consume_Gift_Box: "Execution.Wonderland_Box.Consume_Box",
+  "消耗礼盒": "Execution.Wonderland_Box.Consume_Box",
   /**  See `NODES.Query_WonderlandBoxRelated_GetBoxQuantity` for detailed documentation. */
-  Query_Corresponding_Gift_Box_Quantity: "Query.Wonderland_Box_Related.Get_Box_Quantity",
+  "查询对应礼盒数量": "Query.Wonderland_Box_Related.Get_Box_Quantity",
   /**  See `NODES.Query_WonderlandBoxRelated_GetBoxConsumption` for detailed documentation. */
-  Query_Corresponding_Gift_Box_Consumption: "Query.Wonderland_Box_Related.Get_Box_Consumption",
+  "查询对应礼盒消耗数量": "Query.Wonderland_Box_Related.Get_Box_Consumption",
   /**  See `NODES.Execution_MotionDevice_ActivateFixedPoint` for detailed documentation. */
-  Activate_Fixed_Point_Motion_Device: "Execution.Motion_Device.Activate_Fixed_Point",
+  "开启定点运动器": "Execution.Motion_Device.Activate_Fixed_Point",
   /**  See `NODES.Arithmetic_Math_LeftShift` for detailed documentation. */
-  Left_Shift_Operation: "Arithmetic.Math.Left_Shift",
+  "左移运算": "Arithmetic.Math.Left_Shift",
   /**  See `NODES.Arithmetic_Math_RightShift` for detailed documentation. */
-  Right_Shift_Operation: "Arithmetic.Math.Right_Shift",
+  "右移运算": "Arithmetic.Math.Right_Shift",
   /**  See `NODES.Arithmetic_Math_BitwiseAnd` for detailed documentation. */
-  Bitwise_AND: "Arithmetic.Math.Bitwise_And",
+  "按位与": "Arithmetic.Math.Bitwise_And",
   /**  See `NODES.Arithmetic_Math_BitwiseOr` for detailed documentation. */
-  Bitwise_OR: "Arithmetic.Math.Bitwise_Or",
+  "按位或": "Arithmetic.Math.Bitwise_Or",
   /**  See `NODES.Arithmetic_Math_BitwiseXor` for detailed documentation. */
-  XOR_Exclusive_OR: "Arithmetic.Math.Bitwise_Xor",
+  "按位异或": "Arithmetic.Math.Bitwise_Xor",
   /**  See `NODES.Arithmetic_Math_BitwiseNot` for detailed documentation. */
-  Bitwise_Complement: "Arithmetic.Math.Bitwise_Not",
+  "按位取补": "Arithmetic.Math.Bitwise_Not",
   /**  See `NODES.Arithmetic_Math_WriteBit` for detailed documentation. */
-  Write_by_bit: "Arithmetic.Math.Write_Bit",
+  "按位写入": "Arithmetic.Math.Write_Bit",
   /**  See `NODES.Arithmetic_Math_ReadBit` for detailed documentation. */
-  Read_by_bit: "Arithmetic.Math.Read_Bit",
+  "按位读出": "Arithmetic.Math.Read_Bit",
   /**  See `NODES.Trigger_EntityRelated_OnSpeedCondition` for detailed documentation. */
-  When_Character_Movement_SPD_Meets_Condition: "Trigger.Entity_Related.On_Speed_Condition",
+  "角色移动速度达到条件时": "Trigger.Entity_Related.On_Speed_Condition",
   /**  See `NODES.Query_EntityRelated_GetMoveSpeed` for detailed documentation. */
-  Query_Character_s_Current_Movement_SPD: "Query.Entity_Related.Get_Move_Speed",
+  "查询角色当前移动速度": "Query.Entity_Related.Get_Move_Speed",
   /**  See `NODES.Execution_Dictionary_SetValue` for detailed documentation. */
-  Set_or_Add_Key_Value_Pairs_to_Dictionary: "Execution.Dictionary.Set_Value",
+  "对字典设置或新增键值对": "Execution.Dictionary.Set_Value",
   /**  See `NODES.Arithmetic_Dictionary_CreateDictionary` for detailed documentation. */
-  Create_Dictionary: "Arithmetic.Dictionary.Create_Dictionary",
+  "建立字典": "Arithmetic.Dictionary.Create_Dictionary",
   /**  See `NODES.Query_Dictionary_GetValue` for detailed documentation. */
-  Query_Dictionary_Value_by_Key: "Query.Dictionary.Get_Value",
+  "以键查询字典值": "Query.Dictionary.Get_Value",
   /**  See `NODES.Execution_Dictionary_RemoveByKey` for detailed documentation. */
-  Remove_Key_Value_Pairs_from_Dictionary_by_Key: "Execution.Dictionary.Remove_By_Key",
+  "以键对字典移除键值对": "Execution.Dictionary.Remove_By_Key",
   /**  See `NODES.Query_Dictionary_HasKey` for detailed documentation. */
-  Query_If_Dictionary_Contains_Specific_Key: "Query.Dictionary.Has_Key",
+  "查询字典是否包含特定键": "Query.Dictionary.Has_Key",
   /**  See `NODES.Query_Dictionary_HasValue` for detailed documentation. */
-  Query_If_Dictionary_Contains_Specific_Value: "Query.Dictionary.Has_Value",
+  "查询字典是否包含特定值": "Query.Dictionary.Has_Value",
   /**  See `NODES.Query_Dictionary_GetKeys` for detailed documentation. */
-  Get_List_of_Keys_from_Dictionary: "Query.Dictionary.Get_Keys",
+  "获取字典中键组成的列表": "Query.Dictionary.Get_Keys",
   /**  See `NODES.Query_Dictionary_GetValues` for detailed documentation. */
-  Get_List_of_Values_from_Dictionary: "Query.Dictionary.Get_Values",
+  "获取字典中值组成的列表": "Query.Dictionary.Get_Values",
   /**  See `NODES.Query_Dictionary_GetLength` for detailed documentation. */
-  Query_Dictionary_s_Length: "Query.Dictionary.Get_Length",
+  "查询字典长度": "Query.Dictionary.Get_Length",
   /**  See `NODES.Execution_Dictionary_Clear` for detailed documentation. */
-  Clear_Dictionary: "Execution.Dictionary.Clear",
+  "清空字典": "Execution.Dictionary.Clear",
   /**  See `NODES.Arithmetic_Dictionary_AssembleDictionary` for detailed documentation. */
-  Assembly_Dictionary: "Arithmetic.Dictionary.Assemble_Dictionary",
+  "拼装字典": "Arithmetic.Dictionary.Assemble_Dictionary",
   /**  See `NODES.Execution_Dictionary_SortByKey` for detailed documentation. */
-  Sort_Dictionary_by_Key: "Execution.Dictionary.Sort_By_Key",
+  "对字典按键排序": "Execution.Dictionary.Sort_By_Key",
   /**  See `NODES.Execution_Dictionary_SortByValue` for detailed documentation. */
-  Sort_Dictionary_by_Value: "Execution.Dictionary.Sort_By_Value",
+  "对字典按值排序": "Execution.Dictionary.Sort_By_Value",
   /**  See `NODES.Query_CustomVariable_GetSnapshot` for detailed documentation. */
-  Query_Custom_Variable_Snapshot: "Query.Custom_Variable.Get_Snapshot",
+  "查询自定义变量快照": "Query.Custom_Variable.Get_Snapshot",
   /**  See `NODES.Hidden_Trigger_OnGMCall` for detailed documentation. */
-  When_Calling_GM_This_Node_is_Hidden_Externally: "Hidden.Trigger.On_GM_Call",
+  "When Calling GM (This Node is Hidden Externally)": "Hidden.Trigger.On_GM_Call",
   /**  See `NODES.Others_PortClient_GraphEndBool` for detailed documentation. */
-  Node_Graph_End_Boolean_Client: "Others.Port_Client.Graph_End_Bool",
+  "节点图结束（布尔型）_Client": "Others.Port_Client.Graph_End_Bool",
   /**  See `NODES.Arithmetic_MathClient_And` for detailed documentation. */
-  Logical_AND_Operation_Client: "Arithmetic.Math_Client.And",
+  "逻辑与运算_Client": "Arithmetic.Math_Client.And",
   /**  See `NODES.Arithmetic_MathClient_Or` for detailed documentation. */
-  Logical_OR_Operation_Client: "Arithmetic.Math_Client.Or",
+  "逻辑或运算_Client": "Arithmetic.Math_Client.Or",
   /**  See `NODES.Arithmetic_MathClient_Not` for detailed documentation. */
-  Logical_NOT_Operation_Client: "Arithmetic.Math_Client.Not",
+  "逻辑非运算_Client": "Arithmetic.Math_Client.Not",
   /**  See `NODES.Arithmetic_MathClient_Xor` for detailed documentation. */
-  Logical_XOR_Operation_Client: "Arithmetic.Math_Client.Xor",
+  "逻辑异或运算_Client": "Arithmetic.Math_Client.Xor",
   /**  See `NODES.Arithmetic_GeneralClient_EnumMatch` for detailed documentation. */
-  Enumeration_Match_Client: "Arithmetic.General_Client.Enum_Match",
+  "枚举匹配_Client": "Arithmetic.General_Client.Enum_Match",
   /**  See `NODES.Arithmetic_GeneralClient_Equal` for detailed documentation. */
-  Equal_Client: "Arithmetic.General_Client.Equal",
+  "是否相等_Client": "Arithmetic.General_Client.Equal",
   /**  See `NODES.Arithmetic_MathClient_GreaterThan` for detailed documentation. */
-  Greater_Than_Client: "Arithmetic.Math_Client.Greater_Than",
+  "是否大于_Client": "Arithmetic.Math_Client.Greater_Than",
   /**  See `NODES.Arithmetic_MathClient_LessThan` for detailed documentation. */
-  Less_Than_Client: "Arithmetic.Math_Client.Less_Than",
+  "是否小于_Client": "Arithmetic.Math_Client.Less_Than",
   /**  See `NODES.Arithmetic_MathClient_LessEqual` for detailed documentation. */
-  Less_Than_or_Equal_To_Client: "Arithmetic.Math_Client.Less_Equal",
+  "是否小于等于_Client": "Arithmetic.Math_Client.Less_Equal",
   /**  See `NODES.Arithmetic_MathClient_GreaterEqual` for detailed documentation. */
-  Greater_Than_or_Equal_To_Client: "Arithmetic.Math_Client.Greater_Equal",
+  "是否大于等于_Client": "Arithmetic.Math_Client.Greater_Equal",
   /**  See `NODES.Arithmetic_MathClient_Add` for detailed documentation. */
-  Addition_Client: "Arithmetic.Math_Client.Add",
+  "加法运算_Client": "Arithmetic.Math_Client.Add",
   /**  See `NODES.Arithmetic_MathClient_Subtract` for detailed documentation. */
-  Subtraction_Client: "Arithmetic.Math_Client.Subtract",
+  "减法运算_Client": "Arithmetic.Math_Client.Subtract",
   /**  See `NODES.Arithmetic_MathClient_Multiply` for detailed documentation. */
-  Multiplication_Client: "Arithmetic.Math_Client.Multiply",
+  "乘法运算_Client": "Arithmetic.Math_Client.Multiply",
   /**  See `NODES.Arithmetic_MathClient_Divide` for detailed documentation. */
-  Division_Client: "Arithmetic.Math_Client.Divide",
+  "除法运算_Client": "Arithmetic.Math_Client.Divide",
   /**  See `NODES.Arithmetic_MathClient_Abs` for detailed documentation. */
-  Absolute_Value_Operation_Client: "Arithmetic.Math_Client.Abs",
+  "绝对值运算_Client": "Arithmetic.Math_Client.Abs",
   /**  See `NODES.Query_CustomVariableClient_GetVariable` for detailed documentation. */
-  Get_Custom_Variable_Client: "Query.Custom_Variable_Client.Get_Variable",
+  "获取自定义变量_Client": "Query.Custom_Variable_Client.Get_Variable",
   /**  See `NODES.Query_ListRelatedClient_GetAtIndex` for detailed documentation. */
-  Get_Corresponding_Value_From_List_Client: "Query.List_Related_Client.Get_At_Index",
+  "获取列表对应值_Client": "Query.List_Related_Client.Get_At_Index",
   /**  See `NODES.Query_ListRelatedClient_GetLength` for detailed documentation. */
-  Get_List_Length_Client: "Query.List_Related_Client.Get_Length",
+  "获取列表长度_Client": "Query.List_Related_Client.Get_Length",
   /**  See `NODES.Query_ListRelatedClient_Contains` for detailed documentation. */
-  List_Includes_This_Value_Client: "Query.List_Related_Client.Contains",
+  "列表是否包含该值_Client": "Query.List_Related_Client.Contains",
   /**  See `NODES.Query_ListRelatedClient_GetMax` for detailed documentation. */
-  Get_Maximum_Value_From_List_Client: "Query.List_Related_Client.Get_Max",
+  "获取列表最大值_Client": "Query.List_Related_Client.Get_Max",
   /**  See `NODES.Query_ListRelatedClient_GetMin` for detailed documentation. */
-  Get_Minimum_Value_From_List_Client: "Query.List_Related_Client.Get_Min",
+  "获取列表最小值_Client": "Query.List_Related_Client.Get_Min",
   /**  See `NODES.Arithmetic_GeneralClient_ConvertType` for detailed documentation. */
-  Data_Type_Conversion_Client: "Arithmetic.General_Client.Convert_Type",
+  "数据类型转换_Client": "Arithmetic.General_Client.Convert_Type",
   /**  See `NODES.Query_EntityRelatedClient_GetByGUID` for detailed documentation. */
-  Query_Entity_by_GUID_Client: "Query.Entity_Related_Client.Get_By_GUID",
+  "以GUID查询实体_Client": "Query.Entity_Related_Client.Get_By_GUID",
   /**  See `NODES.Query_CharacterRelatedClient_GetPlayerCharacter` for detailed documentation. */
-  Get_Character_Entity_of_Specified_Player_Client: "Query.Character_Related_Client.Get_Player_Character",
+  "获取指定玩家的角色实体_Client": "Query.Character_Related_Client.Get_Player_Character",
   /**  See `NODES.Query_CharacterRelatedClient_GetOwnerPlayer` for detailed documentation. */
-  Get_Player_Entity_to_Which_the_Character_Belongs_Client: "Query.Character_Related_Client.Get_Owner_Player",
+  "获取角色归属的玩家实体_Client": "Query.Character_Related_Client.Get_Owner_Player",
   /**  See `NODES.Query_CharacterRelatedClient_GetAllPlayers` for detailed documentation. */
-  Get_List_of_Player_Entities_on_the_Field_Client: "Query.Character_Related_Client.Get_All_Players",
+  "获取在场玩家实体列表_Client": "Query.Character_Related_Client.Get_All_Players",
   /**  See `NODES.Query_CharacterRelatedClient_GetGUID` for detailed documentation. */
-  Query_GUID_by_Entity_Client: "Query.Character_Related_Client.Get_GUID",
+  "以实体查询GUID_Client": "Query.Character_Related_Client.Get_GUID",
   /**  See `NODES.Query_PresetStatusClient_GetStatus` for detailed documentation. */
-  Get_Preset_Status_Client: "Query.Preset_Status_Client.Get_Status",
+  "获取预设状态_Client": "Query.Preset_Status_Client.Get_Status",
   /**  See `NODES.Query_FactionRelatedClient_GetFaction` for detailed documentation. */
-  Query_Entity_Faction_Client: "Query.Faction_Related_Client.Get_Faction",
+  "查询实体阵营_Client": "Query.Faction_Related_Client.Get_Faction",
   /**  See `NODES.Query_EntityRelatedClient_GetLocation` for detailed documentation. */
-  Get_Entity_Location_Client: "Query.Entity_Related_Client.Get_Location",
+  "获取实体位置_Client": "Query.Entity_Related_Client.Get_Location",
   /**  See `NODES.Query_EntityRelatedClient_GetRotation` for detailed documentation. */
-  Get_Entity_Rotation_Client: "Query.Entity_Related_Client.Get_Rotation",
+  "获取实体旋转_Client": "Query.Entity_Related_Client.Get_Rotation",
   /**  See `NODES.Arithmetic_MathClient_Random` for detailed documentation. */
-  Get_Random_Number_Client: "Arithmetic.Math_Client.Random",
+  "获取随机数_Client": "Arithmetic.Math_Client.Random",
   /**  See `NODES.Query_EntityRelatedClient_GetSelf` for detailed documentation. */
-  Get_Self_Entity_Client: "Query.Entity_Related_Client.Get_Self",
+  "获取自身实体_Client": "Query.Entity_Related_Client.Get_Self",
   /**  See `NODES.Query_EntityRelatedClient_GetTarget` for detailed documentation. */
-  Get_Target_Entity_Client: "Query.Entity_Related_Client.Get_Target",
+  "获取目标实体_Client": "Query.Entity_Related_Client.Get_Target",
   /**  See `NODES.Query_EntityRelatedClient_GetAttackTarget` for detailed documentation. */
-  Get_Unit_Attack_Target_Client: "Query.Entity_Related_Client.Get_Attack_Target",
+  "获取单位攻击目标_Client": "Query.Entity_Related_Client.Get_Attack_Target",
   /**  See `NODES.Hidden_QueryClient_GetCameraTemplate` for detailed documentation. */
-  Get_Current_Camera_Template_Client: "Hidden.Query_Client.Get_Camera_Template",
+  "Get Current Camera Template_Client": "Hidden.Query_Client.Get_Camera_Template",
   /**  See `NODES.Query_CharacterRelatedClient_IsInCombat` for detailed documentation. */
-  Query_If_Self_Is_in_Combat_Client: "Query.Character_Related_Client.Is_In_Combat",
+  "查询自身是否已入战_Client": "Query.Character_Related_Client.Is_In_Combat",
   /**  See `NODES.Execution_CharacterSkillClient_PlayTimedFX` for detailed documentation. */
-  Play_Timed_Effects_Client: "Execution.Character_Skill_Client.Play_Timed_FX",
+  "播放限时特效_Client": "Execution.Character_Skill_Client.Play_Timed_FX",
   /**  See `NODES.Execution_CharacterSkillClient_NotifyServer` for detailed documentation. */
-  Notify_Server_Node_Graph_Client: "Execution.Character_Skill_Client.Notify_Server",
+  "通知服务器节点图_Client": "Execution.Character_Skill_Client.Notify_Server",
   /**  See `NODES.Execution_CharacterSkillClient_TurnPlayer` for detailed documentation. */
-  Player_Turning_Client: "Execution.Character_Skill_Client.Turn_Player",
+  "玩家转向_Client": "Execution.Character_Skill_Client.Turn_Player",
   /**  See `NODES.Execution_CharacterSkillClient_SetTarget` for detailed documentation. */
-  Set_Own_Attack_Target_Client: "Execution.Character_Skill_Client.Set_Target",
+  "设置自身攻击目标_Client": "Execution.Character_Skill_Client.Set_Target",
   /**  See `NODES.Others_PortClient_GraphStart` for detailed documentation. */
-  Node_Graph_Begins_Client: "Others.Port_Client.Graph_Start",
+  "节点图开始_Client": "Others.Port_Client.Graph_Start",
   /**  See `NODES.Query_EntityRelatedClient_FilterSphere` for detailed documentation. */
-  Filter_Entity_List_Within_Spherical_Range_Client: "Query.Entity_Related_Client.Filter_Sphere",
+  "筛选球体范围内的实体列表_Client": "Query.Entity_Related_Client.Filter_Sphere",
   /**  See `NODES.Query_EntityRelatedClient_FilterSquare` for detailed documentation. */
-  Filter_Entity_List_Within_Square_Range_Client: "Query.Entity_Related_Client.Filter_Square",
+  "筛选方形范围内的实体列表_Client": "Query.Entity_Related_Client.Filter_Square",
   /**  See `NODES.Query_EntityRelatedClient_GetType` for detailed documentation. */
-  Get_Entity_s_Type_Client: "Query.Entity_Related_Client.Get_Type",
+  "获取实体的类型_Client": "Query.Entity_Related_Client.Get_Type",
   /**  See `NODES.Hidden_QueryClient_GetCameraRotation` for detailed documentation. */
-  Get_Camera_Orientation_Client: "Hidden.Query_Client.Get_Camera_Rotation",
+  "Get Camera Orientation_Client": "Hidden.Query_Client.Get_Camera_Rotation",
   /**  See `NODES.Query_EntityRelatedClient_GetSocketLoc` for detailed documentation. */
-  Get_Target_Attachment_Point_Location_Client: "Query.Entity_Related_Client.Get_Socket_Loc",
+  "获取目标挂接点位置_Client": "Query.Entity_Related_Client.Get_Socket_Loc",
   /**  See `NODES.Query_EntityRelatedClient_GetSocketRot` for detailed documentation. */
-  Get_Target_Attachment_Point_Rotation_Client: "Query.Entity_Related_Client.Get_Socket_Rot",
+  "获取目标挂接点旋转_Client": "Query.Entity_Related_Client.Get_Socket_Rot",
   /**  See `NODES.Arithmetic_ListClient_AssembleList` for detailed documentation. */
-  Assembly_List_Client: "Arithmetic.List_Client.Assemble_List",
+  "拼装列表_Client": "Arithmetic.List_Client.Assemble_List",
   /**  See `NODES.Query_ListRelatedClient_GetEntityTypes` for detailed documentation. */
-  Get_Entity_Type_List_Client: "Query.List_Related_Client.Get_Entity_Types",
+  "获取实体类型列表_Client": "Query.List_Related_Client.Get_Entity_Types",
   /**  See `NODES.Execution_CharacterSkillClient_TriggerHitboxLoc` for detailed documentation. */
-  Trigger_Hitbox_at_Specific_Location_Client: "Execution.Character_Skill_Client.Trigger_Hitbox_Loc",
+  "特定位置打攻击盒_Client": "Execution.Character_Skill_Client.Trigger_Hitbox_Loc",
   /**  See `NODES.Execution_CharacterSkillClient_LaunchProjectile` for detailed documentation. */
-  Fixed_Point_Projectile_Launch_Client: "Execution.Character_Skill_Client.Launch_Projectile",
+  "定点发射投射物_Client": "Execution.Character_Skill_Client.Launch_Projectile",
   /**  See `NODES.Execution_CharacterSkillClient_MoveToPoint` for detailed documentation. */
-  Fixed_Point_Displacement_Client: "Execution.Character_Skill_Client.Move_To_Point",
+  "定点位移_Client": "Execution.Character_Skill_Client.Move_To_Point",
   /**  See `NODES.Execution_CharacterSkillClient_ForEachEntity` for detailed documentation. */
-  Traverse_Entity_List_Client: "Execution.Character_Skill_Client.For_Each_Entity",
+  "遍历实体列表_Client": "Execution.Character_Skill_Client.For_Each_Entity",
   /**  See `NODES.Control_GeneralClient_Branch` for detailed documentation. */
-  Double_Branch_Client: "Control.General_Client.Branch",
+  "双分支_Client": "Control.General_Client.Branch",
   /**  See `NODES.Execution_CharacterSkillClient_AddStatus` for detailed documentation. */
-  Add_Unit_Status_Client: "Execution.Character_Skill_Client.Add_Status",
+  "添加单位状态_Client": "Execution.Character_Skill_Client.Add_Status",
   /**  See `NODES.Execution_CharacterSkillClient_RemoveStatus` for detailed documentation. */
-  Remove_Unit_Status_Client: "Execution.Character_Skill_Client.Remove_Status",
+  "移除单位状态_Client": "Execution.Character_Skill_Client.Remove_Status",
   /**  See `NODES.Execution_CharacterSkillClient_TriggerHitboxSocket` for detailed documentation. */
-  Trigger_Hitbox_at_Specified_Attachment_Point_Client: "Execution.Character_Skill_Client.Trigger_Hitbox_Socket",
+  "Trigger Hitbox at Specified Attachment Point_Client": "Execution.Character_Skill_Client.Trigger_Hitbox_Socket",
   /**  See `NODES.Execution_CharacterSkillClient_RemoveDevice` for detailed documentation. */
-  Remove_Specified_Character_Disruptor_Device_Client: "Execution.Character_Skill_Client.Remove_Device",
+  "移除指定角色扰动装置_Client": "Execution.Character_Skill_Client.Remove_Device",
   /**  See `NODES.Execution_CharacterSkillClient_ModifyWeight` for detailed documentation. */
-  Modify_Attack_Weight_Client: "Execution.Character_Skill_Client.Modify_Weight",
+  "修改攻击权重_Client": "Execution.Character_Skill_Client.Modify_Weight",
   /**  See `NODES.Execution_CharacterSkillClient_GetCameraData` for detailed documentation. */
-  Camera_Orientation_Detection_Data_Client: "Execution.Character_Skill_Client.Get_Camera_Data",
+  "镜头朝向检测数据_Client": "Execution.Character_Skill_Client.Get_Camera_Data",
   /**  See `NODES.Arithmetic_MathClient_VectorDot` for detailed documentation. */
-  _3D_Vector_Dot_Product_Client: "Arithmetic.Math_Client.Vector_Dot",
+  "三维向量内积_Client": "Arithmetic.Math_Client.Vector_Dot",
   /**  See `NODES.Arithmetic_MathClient_VectorCross` for detailed documentation. */
-  _3D_Vector_Cross_Product_Client: "Arithmetic.Math_Client.Vector_Cross",
+  "三维向量外积_Client": "Arithmetic.Math_Client.Vector_Cross",
   /**  See `NODES.Arithmetic_MathClient_SplitVector` for detailed documentation. */
-  Split_3D_Vector_Client: "Arithmetic.Math_Client.Split_Vector",
+  "拆分三维向量_Client": "Arithmetic.Math_Client.Split_Vector",
   /**  See `NODES.Arithmetic_MathClient_VectorScale` for detailed documentation. */
-  _3D_Vector_Zoom_Client: "Arithmetic.Math_Client.Vector_Scale",
+  "三维向量缩放_Client": "Arithmetic.Math_Client.Vector_Scale",
   /**  See `NODES.Arithmetic_MathClient_VectorAngle` for detailed documentation. */
-  _3D_Vector_Angle_Client: "Arithmetic.Math_Client.Vector_Angle",
+  "三维向量夹角_Client": "Arithmetic.Math_Client.Vector_Angle",
   /**  See `NODES.Arithmetic_MathClient_VectorRotate` for detailed documentation. */
-  _3D_Vector_Rotation_Client: "Arithmetic.Math_Client.Vector_Rotate",
+  "三维向量旋转_Client": "Arithmetic.Math_Client.Vector_Rotate",
   /**  See `NODES.Arithmetic_MathClient_VectorLength` for detailed documentation. */
-  _3D_Vector_Modulo_Operation_Client: "Arithmetic.Math_Client.Vector_Length",
+  "三维向量模运算_Client": "Arithmetic.Math_Client.Vector_Length",
   /**  See `NODES.Arithmetic_MathClient_CreateVector` for detailed documentation. */
-  Create_3D_Vector_Client: "Arithmetic.Math_Client.Create_Vector",
+  "创建三维向量_Client": "Arithmetic.Math_Client.Create_Vector",
   /**  See `NODES.Arithmetic_MathClient_VectorAdd` for detailed documentation. */
-  _3D_Vector_Addition_Client: "Arithmetic.Math_Client.Vector_Add",
+  "三维向量加法_Client": "Arithmetic.Math_Client.Vector_Add",
   /**  See `NODES.Arithmetic_MathClient_VectorSubtract` for detailed documentation. */
-  _3D_Vector_Subtraction_Client: "Arithmetic.Math_Client.Vector_Subtract",
+  "三维向量减法_Client": "Arithmetic.Math_Client.Vector_Subtract",
   /**  See `NODES.Arithmetic_MathClient_VectorToRotation` for detailed documentation. */
-  Direction_Vector_to_Rotation_Client: "Arithmetic.Math_Client.Vector_To_Rotation",
+  "方向向量转旋转_Client": "Arithmetic.Math_Client.Vector_To_Rotation",
   /**  See `NODES.Arithmetic_MathClient_OrientationToRotation` for detailed documentation. */
-  Orientation_to_Rotation_Client: "Arithmetic.Math_Client.Orientation_To_Rotation",
+  "朝向转旋转_Client": "Arithmetic.Math_Client.Orientation_To_Rotation",
   /**  See `NODES.Execution_CharacterSkillClient_RecoverHP` for detailed documentation. */
-  Recover_HP_Client: "Execution.Character_Skill_Client.Recover_HP",
+  "恢复生命值_Client": "Execution.Character_Skill_Client.Recover_HP",
   /**  See `NODES.Query_CharacterRelatedClient_GetCurrentCharacter` for detailed documentation. */
-  Get_Current_Character_Client: "Query.Character_Related_Client.Get_Current_Character",
+  "获取当前角色_Client": "Query.Character_Related_Client.Get_Current_Character",
   /**  See `NODES.Query_UnitTagClient_GetTags` for detailed documentation. */
-  Get_Entity_s_Unit_Tag_List_Client: "Query.Unit_Tag_Client.Get_Tags",
+  "获取实体的单位标签列表_Client": "Query.Unit_Tag_Client.Get_Tags",
   /**  See `NODES.Query_UnitTagClient_GetByTag` for detailed documentation. */
-  Get_Entity_List_by_Unit_Tag_Client: "Query.Unit_Tag_Client.Get_By_Tag",
+  "获取单位标签的实体列表_Client": "Query.Unit_Tag_Client.Get_By_Tag",
   /**  See `NODES.Execution_GeneralClient_ForLoop` for detailed documentation. */
-  Finite_Loop_Client: "Execution.General_Client.For_Loop",
+  "有限循环_Client": "Execution.General_Client.For_Loop",
   /**  See `NODES.Execution_GeneralClient_Break` for detailed documentation. */
-  Break_Loop_Client: "Execution.General_Client.Break",
+  "跳出循环_Client": "Execution.General_Client.Break",
   /**  See `NODES.Execution_GeneralClient_SetLocal` for detailed documentation. */
-  Set_Local_Variable_Client: "Execution.General_Client.Set_Local",
+  "设置局部变量_Client": "Execution.General_Client.Set_Local",
   /**  See `NODES.Query_GeneralClient_GetLocal` for detailed documentation. */
-  Get_Local_Variable_Client: "Query.General_Client.Get_Local",
+  "获取局部变量_Client": "Query.General_Client.Get_Local",
   /**  See `NODES.Execution_CustomAggroClient_SetAggro` for detailed documentation. */
-  Set_the_Aggro_Value_of_the_Specified_Entity_Client: "Execution.Custom_Aggro_Client.Set_Aggro",
+  "设置指定实体的仇恨值_Client": "Execution.Custom_Aggro_Client.Set_Aggro",
   /**  See `NODES.Execution_CustomAggroClient_ModifyAggro` for detailed documentation. */
-  Modify_the_Aggro_Value_of_the_Specified_Entity_Client: "Execution.Custom_Aggro_Client.Modify_Aggro",
+  "修改指定实体的仇恨值_Client": "Execution.Custom_Aggro_Client.Modify_Aggro",
   /**  See `NODES.Execution_CustomAggroClient_ModifyAggroRatio` for detailed documentation. */
-  Modify_the_Aggro_Value_of_the_Specified_Entity_Proportionally_Client: "Execution.Custom_Aggro_Client.Modify_Aggro_Ratio",
+  "按比例修改指定实体的仇恨值_Client": "Execution.Custom_Aggro_Client.Modify_Aggro_Ratio",
   /**  See `NODES.Execution_CustomAggroClient_TransferAggro` for detailed documentation. */
-  Transfer_the_Aggro_Value_of_the_Specified_Entity_Proportionally_Client: "Execution.Custom_Aggro_Client.Transfer_Aggro",
+  "按比例转移指定实体的仇恨值_Client": "Execution.Custom_Aggro_Client.Transfer_Aggro",
   /**  See `NODES.Execution_CustomAggroClient_ClearAggro` for detailed documentation. */
-  Clear_the_Aggro_List_of_the_Specified_Entity_Client: "Execution.Custom_Aggro_Client.Clear_Aggro",
+  "清空指定实体的仇恨列表_Client": "Execution.Custom_Aggro_Client.Clear_Aggro",
   /**  See `NODES.Execution_CustomAggroClient_RemoveAggro` for detailed documentation. */
-  Remove_Target_Entity_From_Aggro_List_Client: "Execution.Custom_Aggro_Client.Remove_Aggro",
+  "将目标实体移除出仇恨列表_Client": "Execution.Custom_Aggro_Client.Remove_Aggro",
   /**  See `NODES.Execution_CustomAggroClient_Taunt` for detailed documentation. */
-  Taunt_Target_Client: "Execution.Custom_Aggro_Client.Taunt",
+  "嘲讽目标_Client": "Execution.Custom_Aggro_Client.Taunt",
   /**  See `NODES.Query_CustomAggroClient_GetAggroTarget` for detailed documentation. */
-  Get_the_Aggro_Target_of_the_Specified_Entity_Client: "Query.Custom_Aggro_Client.Get_Aggro_Target",
+  "获取指定实体的仇恨目标_Client": "Query.Custom_Aggro_Client.Get_Aggro_Target",
   /**  See `NODES.Query_CustomAggroClient_GetAggroList` for detailed documentation. */
-  Get_the_Aggro_List_of_the_Specified_Entity_Client: "Query.Custom_Aggro_Client.Get_Aggro_List",
+  "获取指定实体的仇恨列表_Client": "Query.Custom_Aggro_Client.Get_Aggro_List",
   /**  See `NODES.Query_CustomAggroClient_IsInCombat` for detailed documentation. */
-  Query_if_Specified_Entity_is_in_Combat_Client: "Query.Custom_Aggro_Client.Is_In_Combat",
+  "查询指定实体是否入战_Client": "Query.Custom_Aggro_Client.Is_In_Combat",
   /**  See `NODES.Query_FactionRelatedClient_IsHostile` for detailed documentation. */
-  Query_If_Faction_Is_Hostile_Client: "Query.Faction_Related_Client.Is_Hostile",
+  "查询阵营是否敌对_Client": "Query.Faction_Related_Client.Is_Hostile",
   /**  See `NODES.Arithmetic_MathClient_Sin` for detailed documentation. */
-  Sine_Function_Client: "Arithmetic.Math_Client.Sin",
+  "正弦函数_Client": "Arithmetic.Math_Client.Sin",
   /**  See `NODES.Arithmetic_MathClient_Cos` for detailed documentation. */
-  Cosine_Function_Client: "Arithmetic.Math_Client.Cos",
+  "余弦函数_Client": "Arithmetic.Math_Client.Cos",
   /**  See `NODES.Arithmetic_MathClient_Tan` for detailed documentation. */
-  Tangent_Function_Client: "Arithmetic.Math_Client.Tan",
+  "正切函数_Client": "Arithmetic.Math_Client.Tan",
   /**  See `NODES.Arithmetic_MathClient_Asin` for detailed documentation. */
-  Arcsine_Function_Client: "Arithmetic.Math_Client.Asin",
+  "反正弦函数_Client": "Arithmetic.Math_Client.Asin",
   /**  See `NODES.Arithmetic_MathClient_Acos` for detailed documentation. */
-  Arccosine_Function_Client: "Arithmetic.Math_Client.Acos",
+  "反余弦函数_Client": "Arithmetic.Math_Client.Acos",
   /**  See `NODES.Arithmetic_MathClient_Atan` for detailed documentation. */
-  Arctangent_Function_Client: "Arithmetic.Math_Client.Atan",
+  "反正切函数_Client": "Arithmetic.Math_Client.Atan",
   /**  See `NODES.Arithmetic_MathClient_VectorNormalize` for detailed documentation. */
-  _3D_Vector_Normalization_Client: "Arithmetic.Math_Client.Vector_Normalize",
+  "三维向量归一化_Client": "Arithmetic.Math_Client.Vector_Normalize",
   /**  See `NODES.Arithmetic_MathClient_RadToDeg` for detailed documentation. */
-  Radians_to_Degrees_Client: "Arithmetic.Math_Client.Rad_To_Deg",
+  "弧度转角度_Client": "Arithmetic.Math_Client.Rad_To_Deg",
   /**  See `NODES.Arithmetic_MathClient_DegToRad` for detailed documentation. */
-  Degrees_to_Radians_Client: "Arithmetic.Math_Client.Deg_To_Rad",
+  "角度转弧度_Client": "Arithmetic.Math_Client.Deg_To_Rad",
   /**  See `NODES.Query_EntityRelatedClient_IsActive` for detailed documentation. */
-  Query_If_Entity_Is_on_the_Field_Client: "Query.Entity_Related_Client.Is_Active",
+  "查询实体是否在场_Client": "Query.Entity_Related_Client.Is_Active",
   /**  See `NODES.Hidden_OtherClient_GraphEnd` for detailed documentation. */
-  Node_Graph_Ends_Client: "Hidden.Other_Client.Graph_End",
+  "Node Graph Ends_Client": "Hidden.Other_Client.Graph_End",
   /**  See `NODES.Execution_CharacterSkillClient_TurnToFace` for detailed documentation. */
-  Player_Turns_to_Face_Set_Direction_Client: "Execution.Character_Skill_Client.Turn_To_Face",
+  "玩家转向指定朝向_Client": "Execution.Character_Skill_Client.Turn_To_Face",
   /**  See `NODES.Execution_CharacterSkillClient_ResetTarget` for detailed documentation. */
-  Reset_Skill_Target_Client: "Execution.Character_Skill_Client.Reset_Target",
+  "重置技能目标_Client": "Execution.Character_Skill_Client.Reset_Target",
   /**  See `NODES.Query_TriggerClient_GetOverlappingEntities` for detailed documentation. */
-  Get_All_Entities_Within_the_Collision_Trigger_Client: "Query.Trigger_Client.Get_Overlapping_Entities",
+  "获取碰撞触发器内所有实体_Client": "Query.Trigger_Client.Get_Overlapping_Entities",
   /**  See `NODES.Execution_CharacterSkillClient_ExitAiming` for detailed documentation. */
-  Force_Exit_Aiming_State_Client: "Execution.Character_Skill_Client.Exit_Aiming",
+  "强制退出瞄准状态_Client": "Execution.Character_Skill_Client.Exit_Aiming",
   /**  See `NODES.Query_RayClient_GetRayResult` for detailed documentation. */
-  Get_Ray_Detection_Result_Client: "Query.Ray_Client.Get_Ray_Result",
+  "获取射线检测结果_Client": "Query.Ray_Client.Get_Ray_Result",
   /**  See `NODES.Query_ListRelatedClient_GetRayFilters` for detailed documentation. */
-  Get_Ray_Filter_Type_List_Client: "Query.List_Related_Client.Get_Ray_Filters",
+  "获取射线筛选类型列表_Client": "Query.List_Related_Client.Get_Ray_Filters",
   /**  See `NODES.Execution_CharacterSkillClient_TriggerSphereHitboxLoc` for detailed documentation. */
-  Trigger_Spherical_Hitbox_at_Specific_Location_Client: "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc",
+  "特定位置打球形攻击盒_Client": "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc",
   /**  See `NODES.Execution_CharacterSkillClient_TriggerRectHitboxLoc` for detailed documentation. */
-  Trigger_Rectangular_Hitbox_at_Specific_Location_Client: "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc",
+  "特定位置打矩形攻击盒_Client": "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc",
   /**  See `NODES.Execution_CharacterSkillClient_TriggerSectorHitboxLoc` for detailed documentation. */
-  Trigger_Sector_Hitbox_at_Specific_Location_Client: "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Loc",
+  "特定位置打扇形攻击盒_Client": "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Loc",
   /**  See `NODES.Execution_CharacterSkillClient_TriggerSphereHitboxSocket` for detailed documentation. */
-  Trigger_Spherical_Hitbox_at_Specified_Attachment_Point_Client: "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Socket",
+  "Trigger Spherical Hitbox at Specified Attachment Point_Client": "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Socket",
   /**  See `NODES.Execution_CharacterSkillClient_TriggerRectHitboxSocket` for detailed documentation. */
-  Trigger_Rectangular_Hitbox_at_Specified_Attachment_Point_Client: "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Socket",
+  "Trigger Rectangular Hitbox at Specified Attachment Point_Client": "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Socket",
   /**  See `NODES.Execution_CharacterSkillClient_TriggerSectorHitboxSocket` for detailed documentation. */
-  Trigger_Sector_Hitbox_at_Specified_Attachment_Point_Client: "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Socket",
+  "指定挂接点打攻击盒_Client": "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Socket",
   /**  See `NODES.Hidden_ExecutionClient_TestSendSignal` for detailed documentation. */
-  _Test_Send_Client_Signal_Client: "Hidden.Execution_Client.Test_Send_Signal",
+  "(Test) Send Client Signal_Client": "Hidden.Execution_Client.Test_Send_Signal",
   /**  See `NODES.Query_ScanningClient_GetScannedEntity` for detailed documentation. */
-  Get_Entity_Currently_Scanned_by_Scan_Component_Client: "Query.Scanning_Client.Get_Scanned_Entity",
+  "获取扫描组件当前扫描到的实体_Client": "Query.Scanning_Client.Get_Scanned_Entity",
   /**  See `NODES.Query_ScanningClient_GetScannableEntities` for detailed documentation. */
-  Get_All_Valid_Entities_That_Are_Scannable_by_Scan_Component_Client: "Query.Scanning_Client.Get_Scannable_Entities",
+  "获取扫描组件可扫描的所有合法对象_Client": "Query.Scanning_Client.Get_Scannable_Entities",
   /**  See `NODES.Query_ScanningClient_GetScanStatus` for detailed documentation. */
-  Get_Entity_s_Scan_Status_Client: "Query.Scanning_Client.Get_Scan_Status",
+  "获取实体扫描状态_Client": "Query.Scanning_Client.Get_Scan_Status",
   /**  See `NODES.Query_ScanningClient_GetActiveTags` for detailed documentation. */
-  Get_Entity_s_Current_Active_Scan_Tags_Client: "Query.Scanning_Client.Get_Active_Tags",
+  "获取实体当前生效的扫描标签_Client": "Query.Scanning_Client.Get_Active_Tags",
   /**  See `NODES.Others_PortClient_GraphEndInt` for detailed documentation. */
-  Node_Graph_End_Integer_Client: "Others.Port_Client.Graph_End_Int",
+  "节点图结束(整数)_Client": "Others.Port_Client.Graph_End_Int",
   /**  See `NODES.Query_CharacterRelatedClient_GetInputType` for detailed documentation. */
-  Get_Player_Client_Input_Device_Type_Client: "Query.Character_Related_Client.Get_Input_Type",
+  "获得玩家客户端输入设备类型_Client": "Query.Character_Related_Client.Get_Input_Type",
   /**  See `NODES.Execution_SignalClient_SendToServer` for detailed documentation. */
-  Send_Signal_to_Server_Node_Graph_Client: "Execution.Signal_Client.Send_To_Server",
+  "向服务器节点图发送信号_Client": "Execution.Signal_Client.Send_To_Server",
   /**  See `NODES.Execution_Signal_Send` for detailed documentation. */
-  Send_Signal: "Execution.Signal.Send",
+  "发送信号": "Execution.Signal.Send",
   /**  See `NODES.Trigger_Signal_OnSignal` for detailed documentation. */
-  Monitor_Signal: "Trigger.Signal.On_Signal",
+  "监听信号": "Trigger.Signal.On_Signal",
   /**  See `NODES.Arithmetic_Structure_AssembleStruct` for detailed documentation. */
-  Assemble_Structure: "Arithmetic.Structure.Assemble_Struct",
+  "拼装结构体": "Arithmetic.Structure.Assemble_Struct",
   /**  See `NODES.Arithmetic_Structure_SplitStruct` for detailed documentation. */
-  Split_Structure: "Arithmetic.Structure.Split_Struct",
+  "拆分结构体": "Arithmetic.Structure.Split_Struct",
   /**  See `NODES.Execution_Structure_Modify` for detailed documentation. */
-  Modify_Structure: "Execution.Structure.Modify",
+  "修改结构体": "Execution.Structure.Modify",
 } as const;
