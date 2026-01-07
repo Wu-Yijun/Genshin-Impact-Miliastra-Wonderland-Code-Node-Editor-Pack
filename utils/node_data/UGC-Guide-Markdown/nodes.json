@@ -2045,14 +2045,14 @@
   {
     "name": "Node Graph Begins",
     "category": "ClientOther",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Start event of the Skill Node Graph\nUsed to customize the Skill logic after this Node; subsequent Nodes execute in the order defined by the Node Graph\n",
     "parameters": []
   },
   {
     "name": "Node Graph End (Boolean)",
     "category": "ClientOther",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "End Node for Boolean Local Filter\nOutputs True or False as the final result; applies to the referenced logic\n",
     "parameters": [
       {
@@ -2066,7 +2066,7 @@
   {
     "name": "Node Graph End (Integer)",
     "category": "ClientOther",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "End Node for Integer Local Filter\nOutputs an Integer value as the final result; applies to the referenced logic\n",
     "parameters": [
       {
@@ -10992,7 +10992,7 @@
   {
     "name": "Query Game Mode and Player Number",
     "category": "ServerQuery",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Searches the theoretical number of players entering the match, including players via Matchmaking or Room creation, and the method of entry\n",
     "parameters": [
       {
@@ -11012,7 +11012,7 @@
   {
     "name": "Get Local Variable",
     "category": "ServerQuery",
-    "subcategory": "General",
+    "subcategory": "I. General",
     "description": "Retrieves a Local Variable and optionally sets its [Initial Value]\nAfter setting the [Initial Value], the [Value] output parameter will be equal to the input [Initial Value]\nWhen the output [Local Variable] is connected to the [Set Local Variable] Execution Node's input [Local Variable], the input [Value] of [Set Local Variable] overwrites this Search Node's output [Value]. The next time you use [Get Local Variable], the output [Value] is the overwritten value\n",
     "parameters": [
       {

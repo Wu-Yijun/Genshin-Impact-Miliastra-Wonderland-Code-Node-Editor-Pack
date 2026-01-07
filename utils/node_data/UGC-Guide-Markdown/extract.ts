@@ -26,7 +26,7 @@ const EN = {
   "| Parameter Type | Parameter Name | Type | Description |": "| Parameter Type | Parameter Name | Type | Description |",
   "| Parameter Type | Parameter Name | Type | Description | Description |": "| Parameter Type | Parameter Name | Type | Description | Description |",
   'General': 'General',
-  "/^## \d+\.(\s+.+)$/": /^###? \d+\.(\s+.+)$/,
+  "/^## \d+\.(\s+.+)$/": /^### \d+\.(\s+.+)$/,
   "/^[IVXLC]+\./": /^[IVXLC]+\./,
   "/^[0-9A-Z]/": /^[0-9A-Z]/
 };
@@ -39,7 +39,7 @@ const ZH = {
   "| Parameter Type | Parameter Name | Type | Description |": "| 参数类型 | 参数名 | 类型 | 说明 |",
   "| Parameter Type | Parameter Name | Type | Description | Description |": "| 参数类型 | 参数名 | 类型 | 说明 | 说明 |",
   'General': '通用',
-  "/^## \d+\.(\s+.+)$/": /^###? \d+\.(\p{Script=Han}.+)$/u,
+  "/^## \d+\.(\s+.+)$/": /^### \d+\.(\p{Script=Han}.+)$/u,
   "/^[IVXLC]+\./": /^[一二三四五六七八九十]+、/,
   "/^[0-9A-Z]/": /^\p{Script=Han}/u
 };
@@ -58,7 +58,14 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
   for (let i = 0; i < old_lines.length; i++) {
     if (old_lines[i].startsWith("|") && !old_lines[i].endsWith("|")) {
       let l = old_lines[i];
-      while (!old_lines[i].endsWith("|")) l += '\n' + old_lines[++i];
+      while (!old_lines[i].endsWith("|")) {
+        i++;
+        l += '\n' + old_lines[i];
+        if (!t["/^[0-9A-Z]/"].test(old_lines[i]) && !/^[a-z]/.test(old_lines[i])) {
+          console.log("[WARN]: Unexpected Line In Table:", JSON.stringify(old_lines[i]));
+          debugger;
+        }
+      }
       lines.push(l);
       // console.log(JSON.stringify(l));
       if (l.split("").filter(x => x === "|").length !== 5) {
@@ -75,28 +82,26 @@ function parseMarkdownFile(filePath: string): NodeEntry[] {
 
   // format checker
   lines.forEach((l, ii) => {
-    if (l.startsWith("## ")||l.startsWith("### ")) {
+    if (l.startsWith("## ")) {
+      let a = l.slice(3).replace(/\*\*/g, "").trim();
+      if (t["/^[IVXLC]+\./"].test(a)) {
+        // ## I.
+        if (s !== "ready" && s !== "tb") {
+          debugger;
+        }
+        s = "header";
+      } else {
+        console.log(filePath, lines.slice(ii - 1, ii + 1));
+        debugger;
+      }
+    }else if(l.startsWith("### ")){
       let a = l.slice(3).replace(/\*\*/g, "").trim();
       if (/^\d+\./.test(a)) {
         // ## 1.
-        if (s !== "ready" && s !== "tb" && s !== "header") {
-          if (s === "th") {
-            console.warn(l.slice(ii - 3, ii));// 允许空表
-          } else {
-            debugger;
-          }
+        if (s !== "tb" && s !== "header") {
+          debugger;
         }
         s = "desc";
-      } else if (t["/^[IVXLC]+\./"].test(a)) {
-        // ## I.
-        if (s !== "ready" && s !== "tb") {
-          if (s === "th") {
-            console.warn(l.slice(ii - 3, ii));// 允许空表
-          } else {
-            debugger;
-          }
-        }
-        s = "header";
       } else {
         console.log(filePath, lines.slice(ii - 1, ii + 1));
         debugger;

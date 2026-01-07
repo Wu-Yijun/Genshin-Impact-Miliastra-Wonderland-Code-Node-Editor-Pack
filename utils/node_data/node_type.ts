@@ -229,7 +229,7 @@ export function stringify(node: NodeType | string, options: StringifyOptions = {
     case "b":
       return node.b;
     case "e":
-      if (node.e === "Unk" && options.unknown_enum) {
+      if (options.unknown_enum) {
         return "E<Unk>";
       }
       return `E<${node.e}>`;

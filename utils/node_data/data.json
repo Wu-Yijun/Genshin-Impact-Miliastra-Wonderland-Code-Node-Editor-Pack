@@ -133759,7 +133759,8 @@
       "ID": 200051,
       "KernelID": 2000,
       "InGameName": {
-        "en": "Trigger Hitbox at Specific Location"
+        "en": "Trigger Hitbox at Specific Location",
+        "zh-Hans": "特定位置打攻击盒"
       },
       "Alias": [
         "Trigger_Hitbox_at_Specific_Location"
@@ -136491,7 +136492,8 @@
       "ID": 200074,
       "KernelID": 139,
       "InGameName": {
-        "en": "Orientation to Rotation"
+        "en": "Orientation to Rotation",
+        "zh-Hans": "朝向转旋转"
       },
       "Alias": [
         "Orientation_to_Rotation"
@@ -138366,7 +138368,8 @@
       "ID": 200096,
       "KernelID": 35,
       "InGameName": {
-        "en": "Tangent Function"
+        "en": "Tangent Function",
+        "zh-Hans": "正切函数"
       },
       "Alias": [
         "Tangent_Function"
@@ -139069,7 +139072,8 @@
       "ID": 200109,
       "KernelID": 1047,
       "InGameName": {
-        "en": "Get Ray Detection Result"
+        "en": "Get Ray Detection Result",
+        "zh-Hans": "获取射线检测结果"
       },
       "Alias": [
         "Get_Ray_Detection_Result"
@@ -142618,7 +142622,8 @@
       "ID": 200116,
       "KernelID": 2000,
       "InGameName": {
-        "en": "Trigger Sector Hitbox at Specified Attachment Point"
+        "en": "Trigger Sector Hitbox at Specified Attachment Point",
+        "zh-Hans": "指定挂接点打攻击盒"
       },
       "Alias": [
         "Trigger_Sector_Hitbox_at_Specified_Attachment_Point"
@@ -143672,7 +143677,8 @@
       "ID": 200122,
       "KernelID": 0,
       "InGameName": {
-        "en": "Node Graph End (Integer)"
+        "en": "Node Graph End (Integer)",
+        "zh-Hans": "节点图结束(整数)"
       },
       "Alias": [
         "Node_Graph_End_Integer"
@@ -143792,7 +143798,8 @@
       "Identifier": "Execution.Signal.Send",
       "ID": 300000,
       "InGameName": {
-        "en": "Send Signal"
+        "en": "Send Signal",
+        "zh-Hans": "发送信号"
       },
       "Alias": [
         "Send_Signal"
@@ -143930,7 +143937,8 @@
       "Identifier": "Arithmetic.Structure.Assemble_Struct",
       "ID": 300002,
       "InGameName": {
-        "en": "Assemble Structure"
+        "en": "Assemble Structure",
+        "zh-Hans": "拼装结构体"
       },
       "Alias": [
         "Assemble_Structure"
@@ -143947,7 +143955,8 @@
       "Identifier": "Arithmetic.Structure.Split_Struct",
       "ID": 300003,
       "InGameName": {
-        "en": "Split Structure"
+        "en": "Split Structure",
+        "zh-Hans": "拆分结构体"
       },
       "Alias": [
         "Split_Structure"

@@ -1,0 +1,5 @@
+[Type Mismatch] in node Trigger Hitbox at Specific Location(特定位置打攻击盒) parameter Input5: L<E<CETY>> (DATA) vs L<Fct> (MD)
+[Type Mismatch] in node Trigger Hitbox at Specific Location(特定位置打攻击盒) parameter Input9: Vec (DATA) vs E<Unk> (MD)
+[Type Mismatch] in node Trigger Hitbox at Specific Location(特定位置打攻击盒) parameter Input10: Flt (DATA) vs Bol (MD)
+[Type Mismatch] in node Get Ray Detection Result(获取射线检测结果) parameter Input5: L<E<CETY>> (DATA) vs E<Unk> (MD)
+[Type Mismatch] in node Get Ray Detection Result(获取射线检测结果) parameter Input6: L<E<CATX>> (DATA) vs E<Unk> (MD)

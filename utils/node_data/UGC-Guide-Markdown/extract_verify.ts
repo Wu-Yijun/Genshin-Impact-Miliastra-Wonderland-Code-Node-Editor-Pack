@@ -10,7 +10,7 @@ const g2 = Object.groupBy(dataZH, x => x.category + x.subcategory);
 //
 // console.log(Object.entries(g2)[1][1])
 
-const t = {
+const t: { [key: string]: string } = {
   "Input Parameter": "入参",
   "Output Parameter": "出参",
   "Enumeration": "枚举",
@@ -40,6 +40,7 @@ const t = {
   "Generic Dictionary": "泛型字典",
   "Local Variable": "局部变量",
   "Custom Variable Snapshot": "自定义变量快照",
+  "": "!!保证不为空!!",
 };
 
 Object.entries(g1).forEach(([k, v], i) => {
@@ -49,16 +50,16 @@ Object.entries(g1).forEach(([k, v], i) => {
   }
   v!.forEach((node, idx) => {
     const node2 = v2![idx];
-    if(node.parameters.length !== node2.parameters.length) {
+    if (node.parameters.length !== node2.parameters.length) {
       console.log(`  Mismatch in node ${node.name}(${node2.name}) parameters: ${node.parameters.length} (EN) vs ${node2.parameters.length} (ZH)`);
     }
     for (let p = 0; p < node.parameters.length; p++) {
       const param1 = node.parameters[p];
       const param2 = node2.parameters[p];
-      if(t[param1.type] !== param2.type) {
+      if (t[param1.type] !== param2.type) {
         console.log(`    Mismatch in parameter type: ${param1.type} (EN) vs ${param2.type} (ZH), node: ${node.name}(${node2.name}), param: ${param1.name}(${param2.name})`);
       }
-      if(t[param1.dataType]!== param2.dataType) {
+      if (t[param1.dataType] !== param2.dataType) {
         console.log(`    Mismatch in parameter dataType: ${param1.dataType} (EN) vs ${param2.dataType} (ZH), node: ${node.name}(${node2.name}), param: ${param1.name}(${param2.name})`);
       }
     }
