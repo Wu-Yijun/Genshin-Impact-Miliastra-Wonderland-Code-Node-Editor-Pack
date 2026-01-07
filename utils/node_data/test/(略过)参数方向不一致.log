@@ -1,6 +1,0 @@
-[Direction Mismatch] in node Query Corresponding Gift Box Quantity(查询对应礼盒数量) parameter player: In (DATA) vs Out (MD)
-[Direction Mismatch] in node Query Corresponding Gift Box Quantity(查询对应礼盒数量) parameter box_index: In (DATA) vs Out (MD)
-[Direction Mismatch] in node Query Corresponding Gift Box Quantity(查询对应礼盒数量) parameter count: Out (DATA) vs In (MD)
-[Direction Mismatch] in node Query Corresponding Gift Box Consumption(查询对应礼盒消耗数量) parameter player: In (DATA) vs Out (MD)
-[Direction Mismatch] in node Query Corresponding Gift Box Consumption(查询对应礼盒消耗数量) parameter box_index: In (DATA) vs Out (MD)
-[Direction Mismatch] in node Query Corresponding Gift Box Consumption(查询对应礼盒消耗数量) parameter count: Out (DATA) vs In (MD)

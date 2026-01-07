@@ -100,6 +100,13 @@ const unused = new Set(doc);
   const pins = node.DataPins.filter(p => p.Visibility !== "Hidden");
   if (pins.length !== ref_node.parameters.length) {
     // console.log(`[Length Mismatch] in node ${node.InGameName.en}(${ref_node_zh.name}) parameters: ${pins.length} (DATA) vs ${ref_node.parameters.length} (MD)`);
+    // for (let i = 0; i < pins.length; i++) {
+    //   console.log(`    ${pins[i].Label?.["zh-Hans"] ?? pins[i].Identifier}(${NT.stringify(pins[i].Type!)}):`);
+    //   const zh = ref_node_zh?.parameters[i];
+    //   if (zh) console.log(`         ${zh.name}(${zh.dataType}): ${zh.description}`);
+    //   const en = ref_node.parameters[i];
+    //   if (en) console.log(`         ${en.name}(${en.dataType}): ${en.description}`);
+    // }
     return;
   }
   for (let i = 0; i < pins.length; i++) {
@@ -117,7 +124,7 @@ const unused = new Set(doc);
         skip = true;
       }
       if (!skip) {
-        // console.log(`[Type Mismatch] in node ${node.InGameName.en}(${ref_node_zh.name}) parameter ${pins[i].Identifier}: ${p.Type} (DATA) vs ${rp} (MD)`);
+        console.log(`[Type Mismatch] in node ${node.InGameName.en}(${ref_node_zh.name}) parameter ${pins[i].Identifier}: ${p.Type} (DATA) vs ${rp} (MD)`);
         return;
       }
     }

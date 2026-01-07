@@ -804,14 +804,18 @@
           "Direction": "In",
           "Type": "R<T>",
           "Label": {
-            "zh-Hans": "控制表达式"
+            "zh-Hans": "控制表达式",
+            "en": "Control Expression"
           },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "仅支持整数或字符串",
+            "en": "Only supports Integers or Strings"
+          }
         },
         {
           "Identifier": "cases",
@@ -10388,119 +10392,152 @@
           "Direction": "In",
           "Type": "Cfg",
           "Label": {
-            "zh-Hans": "特效资产"
+            "zh-Hans": "特效资产",
+            "en": "Special Effects Asset"
           },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "该特效的标识",
+            "en": "Identifier for this Effect"
+          }
         },
         {
           "Identifier": "target_entity",
           "Direction": "In",
           "Type": "Ety",
           "Label": {
-            "zh-Hans": "目标实体"
+            "zh-Hans": "目标实体",
+            "en": "Target Entity"
           },
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "实体不存在会导致特效无法播放",
+            "en": "If the Entity does not exist, the Effect will not play"
+          }
         },
         {
           "Identifier": "socket_name",
           "Direction": "In",
           "Type": "Str",
           "Label": {
-            "zh-Hans": "挂接点名称"
+            "zh-Hans": "挂接点名称",
+            "en": "Attachment Point Name"
           },
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "挂接点名称不存在会导致特效无法播放",
+            "en": "If the Attachment Point Name does not exist, the Special Effect will not play"
+          }
         },
         {
           "Identifier": "follow_move",
           "Direction": "In",
           "Type": "Bol",
           "Label": {
-            "zh-Hans": "是否跟随目标运动"
+            "zh-Hans": "是否跟随目标运动",
+            "en": "Move With the Target"
           },
           "Placeholder": null,
           "ShellIndex": 3,
           "KernelIndex": 3,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "“是”会跟随目标实体运动",
+            "en": "If set to True, follows the Target Entity's Motion"
+          }
         },
         {
           "Identifier": "follow_rotate",
           "Direction": "In",
           "Type": "Bol",
           "Label": {
-            "zh-Hans": "是否跟随目标旋转"
+            "zh-Hans": "是否跟随目标旋转",
+            "en": "Rotate With the Target"
           },
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "“是”会跟随目标实体旋转",
+            "en": "If set to True, follows the Target Entity's Rotation"
+          }
         },
         {
           "Identifier": "pos_offset",
           "Direction": "In",
           "Type": "Vec",
           "Label": {
-            "zh-Hans": "位置偏移"
+            "zh-Hans": "位置偏移",
+            "en": "Location Offset"
           },
           "Placeholder": null,
           "ShellIndex": 5,
           "KernelIndex": 5,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "相对于目标实体指定挂接点的位置偏移",
+            "en": "Location Offset relative to the Target Entity's specified Attachment Point"
+          }
         },
         {
           "Identifier": "rot_offset",
           "Direction": "In",
           "Type": "Vec",
           "Label": {
-            "zh-Hans": "旋转偏移"
+            "zh-Hans": "旋转偏移",
+            "en": "Rotation Offset"
           },
           "Placeholder": null,
           "ShellIndex": 6,
           "KernelIndex": 6,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "相对于目标实体指定挂接点的旋转偏移",
+            "en": "Rotation offset relative to the Target Entity's specified Attachment Point"
+          }
         },
         {
           "Identifier": "scale",
           "Direction": "In",
           "Type": "Flt",
           "Label": {
-            "zh-Hans": "缩放倍率"
+            "zh-Hans": "缩放倍率",
+            "en": "Zoom Multiplier"
           },
           "Placeholder": null,
           "ShellIndex": 7,
           "KernelIndex": 7,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "该特效的缩放倍率",
+            "en": "The Zoom Multiplier of this Effect"
+          }
         },
         {
           "Identifier": "play_built_in_sfx",
           "Direction": "In",
           "Type": "Bol",
           "Label": {
-            "zh-Hans": "是否播放自带的音效"
+            "zh-Hans": "是否播放自带的音效",
+            "en": "Play Built-In Sound Effect"
           },
           "Placeholder": null,
           "ShellIndex": 8,
@@ -10514,14 +10551,18 @@
           "Direction": "Out",
           "Type": "Int",
           "Label": {
-            "zh-Hans": "特效实例ID"
+            "zh-Hans": "特效实例ID",
+            "en": "Special Effect Instance ID"
           },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "挂载该特效时自动生成的实例ID",
+            "en": "The Instance ID automatically generated when mounting this Effect"
+          }
         }
       ],
       "Implementation": null,
@@ -12816,7 +12857,7 @@
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true,
           "Description": {}
         },
@@ -23806,6 +23847,7 @@
           "Direction": "Out",
           "Type": "Ety",
           "Label": {
+            "zh-Hans": "事件源实体",
             "en": "Event Source Entity"
           },
           "Placeholder": null,
@@ -23813,13 +23855,17 @@
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "挂载选项卡组件的实体",
+            "en": "Entity with the tab component mounted"
+          }
         },
         {
           "Identifier": "source_guid",
           "Direction": "Out",
           "Type": "Gid",
           "Label": {
+            "zh-Hans": "事件源GUID",
             "en": "Event Source GUID"
           },
           "Placeholder": null,
@@ -23827,13 +23873,17 @@
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "挂载选项卡组件的实体GUID，若无则输出0",
+            "en": "GUID of the Entity with the tab component mounted; outputs 0 if none exists"
+          }
         },
         {
           "Identifier": "tab_id",
           "Direction": "Out",
           "Type": "Int",
           "Label": {
+            "zh-Hans": "选项卡序号",
             "en": "Tab ID"
           },
           "Placeholder": null,
@@ -23841,13 +23891,17 @@
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "选项卡的序号",
+            "en": "The tab ID"
+          }
         },
         {
           "Identifier": "selector_entity",
           "Direction": "Out",
           "Type": "Ety",
           "Label": {
+            "zh-Hans": "选择者实体",
             "en": "Selector Entity"
           },
           "Placeholder": null,
@@ -23855,7 +23909,10 @@
           "KernelIndex": 3,
           "Visibility": "Display",
           "Connectability": true,
-          "Description": {}
+          "Description": {
+            "zh-Hans": "触发选项卡时的角色实体",
+            "en": "Character Entity that triggers the tab"
+          }
         },
         {
           "Identifier": "hidden_guid",
@@ -23865,7 +23922,7 @@
           "Placeholder": null,
           "ShellIndex": 4,
           "KernelIndex": 4,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true,
           "Description": {}
         }
@@ -47106,7 +47163,8 @@
           "Direction": "In",
           "Type": "Ety",
           "Label": {
-            "zh-Hans": "目标实体"
+            "zh-Hans": "目标实体",
+            "en": "Target Entity"
           },
           "Placeholder": null,
           "ShellIndex": 0,
@@ -47120,7 +47178,8 @@
           "Direction": "Out",
           "Type": "Flt",
           "Label": {
-            "en": "CRIT Rate"
+            "en": "CRIT Rate",
+            "zh-Hans": "暴击率"
           },
           "Placeholder": null,
           "ShellIndex": 0,
@@ -47134,7 +47193,8 @@
           "Direction": "Out",
           "Type": "Flt",
           "Label": {
-            "en": "CRIT DMG"
+            "en": "CRIT DMG",
+            "zh-Hans": "暴击伤害"
           },
           "Placeholder": null,
           "ShellIndex": 1,
@@ -47148,7 +47208,8 @@
           "Direction": "Out",
           "Type": "Flt",
           "Label": {
-            "en": "Healing Bonus"
+            "en": "Healing Bonus",
+            "zh-Hans": "治疗加成"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -47162,7 +47223,8 @@
           "Direction": "Out",
           "Type": "Flt",
           "Label": {
-            "en": "Incoming Healing Bonus"
+            "en": "Incoming Healing Bonus",
+            "zh-Hans": "受治疗加成"
           },
           "Placeholder": null,
           "ShellIndex": 3,
@@ -47176,7 +47238,8 @@
           "Direction": "Out",
           "Type": "Flt",
           "Label": {
-            "en": "Energy Recharge"
+            "en": "Energy Recharge",
+            "zh-Hans": "元素充能效率"
           },
           "Placeholder": null,
           "ShellIndex": 4,
@@ -47190,7 +47253,8 @@
           "Direction": "Out",
           "Type": "Flt",
           "Label": {
-            "en": "CD Reduction"
+            "en": "CD Reduction",
+            "zh-Hans": "冷却缩减"
           },
           "Placeholder": null,
           "ShellIndex": 5,
@@ -47204,7 +47268,8 @@
           "Direction": "Out",
           "Type": "Flt",
           "Label": {
-            "en": "Shield Strength"
+            "en": "Shield Strength",
+            "zh-Hans": "护盾强效"
           },
           "Placeholder": null,
           "ShellIndex": 6,
@@ -47221,7 +47286,7 @@
           "Placeholder": null,
           "ShellIndex": 7,
           "KernelIndex": 7,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true,
           "Description": {}
         }
@@ -141203,7 +141268,10 @@
           "Identifier": "Input0",
           "Direction": "In",
           "Type": "Vec",
-          "Label": null,
+          "Label": {
+            "zh-Hans": "朝向",
+            "en": "Orientation"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -141219,7 +141287,7 @@
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true,
           "Description": {}
         },
@@ -141227,7 +141295,10 @@
           "Identifier": "Output0",
           "Direction": "Out",
           "Type": "Vec",
-          "Label": null,
+          "Label": {
+            "zh-Hans": "旋转",
+            "en": "Rotate"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -148617,8 +148688,11 @@
         {
           "Identifier": "Input0",
           "Direction": "In",
-          "Type": "Bol",
-          "Label": null,
+          "Type": "Int",
+          "Label": {
+            "zh-Hans": "输出结果（整型）",
+            "en": "Output Result (integer)"
+          },
           "Placeholder": null,
           "ShellIndex": 0,
           "KernelIndex": 0,
@@ -148634,7 +148708,7 @@
           "Placeholder": null,
           "ShellIndex": 1,
           "KernelIndex": 1,
-          "Visibility": "Display",
+          "Visibility": "Hidden",
           "Connectability": true,
           "Description": {}
         }
@@ -148763,20 +148837,7 @@
           "ShellIndex": 0
         }
       ],
-      "DataPins": [
-        {
-          "Identifier": "Input0",
-          "Direction": "In",
-          "Type": "Str",
-          "Label": null,
-          "Placeholder": null,
-          "ShellIndex": 0,
-          "KernelIndex": 0,
-          "Visibility": "Display",
-          "Connectability": true,
-          "Description": {}
-        }
-      ],
+      "DataPins": [],
       "Implementation": null,
       "__not_find_in_ref": true
     },
@@ -148808,25 +148869,12 @@
       ],
       "DataPins": [
         {
-          "Identifier": "signal_name",
-          "Direction": "In",
-          "Type": "Str",
-          "Label": {
-            "zh-Hans": "信号名"
-          },
-          "Placeholder": null,
-          "ShellIndex": 0,
-          "KernelIndex": 0,
-          "Visibility": "Display",
-          "Connectability": true,
-          "Description": {}
-        },
-        {
           "Identifier": "source_entity",
           "Direction": "Out",
           "Type": "Ety",
           "Label": {
-            "zh-Hans": "事件源实体"
+            "zh-Hans": "事件源实体",
+            "en": "Event Source Entity"
           },
           "Placeholder": null,
           "ShellIndex": 0,
@@ -148840,7 +148888,8 @@
           "Direction": "Out",
           "Type": "Gid",
           "Label": {
-            "zh-Hans": "事件源GUID"
+            "zh-Hans": "事件源GUID",
+            "en": "Event Source GUID"
           },
           "Placeholder": null,
           "ShellIndex": 1,
@@ -148854,7 +148903,8 @@
           "Direction": "Out",
           "Type": "Ety",
           "Label": {
-            "zh-Hans": "信号来源实体"
+            "zh-Hans": "信号来源实体",
+            "en": "Signal Source Entity"
           },
           "Placeholder": null,
           "ShellIndex": 2,

@@ -1,0 +1,123 @@
+[Type Mismatch] in node Trigger Hitbox at Specific Location(特定位置打攻击盒) parameter Input5: L<E<CETY>> (DATA) vs L<Fct> (MD)
+[Type Mismatch] in node Trigger Hitbox at Specific Location(特定位置打攻击盒) parameter Input9: Vec (DATA) vs E<Unk> (MD)
+[Type Mismatch] in node Trigger Hitbox at Specific Location(特定位置打攻击盒) parameter Input10: Flt (DATA) vs Bol (MD)
+[Type Mismatch] in node Get Ray Detection Result(获取射线检测结果) parameter Input5: L<E<CETY>> (DATA) vs E<Unk> (MD)
+[Type Mismatch] in node Get Ray Detection Result(获取射线检测结果) parameter Input6: L<E<CATX>> (DATA) vs E<Unk> (MD)
+
+Missing node: Trigger Hitbox at Specified Attachment Point Execution.Character_Skill_Client.Trigger_Hitbox_Socket
+Missing node: Trigger Spherical Hitbox at Specific Location Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc
+Missing node: Trigger Rectangular Hitbox at Specific Location Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc
+Missing node: Trigger Sector Hitbox at Specific Location Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Loc
+Missing node: Trigger Spherical Hitbox at Specified Attachment Point Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Socket
+Missing node: Trigger Rectangular Hitbox at Specified Attachment Point Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Socket
+// 隐藏节点除外
+
+[Length Mismatch] in node Trigger Sector Hitbox at Specified Attachment Point(指定挂接点打攻击盒) parameters: 36 (DATA) vs 39 (MD)
+    Input0(E<CTTP>):
+         目标阵营筛选(枚举):
+         Target Faction Filter(Enumeration):
+    Input1(Str):
+         挂接点名称(字符串):
+         Location(String):
+    Input2(Vec):
+         挂接点偏移(三维向量):
+         Rotate(3D Vector):
+    Input3(Vec):
+         挂接点旋转(三维向量):
+         Damage Coefficient(3D Vector):
+    Input4(Flt):
+         伤害系数(浮点数):
+         Damage Increment(Floating Point Numbers):
+    Input5(Flt):
+         伤害增量(浮点数):
+         Hitbox Entity Type Filter List(Floating Point Numbers):
+    Input6(L<E<CETY>>):
+         攻击盒实体类型筛选列表(阵营列表):
+         Trigger Type(Faction List):
+    Input7(E<CTRG>):
+         触发类型(枚举):
+         On-Hit Scene Effects(Enumeration):
+    Input8(Int):
+         命中场景特效(整数):
+         Hitbox Type(Integer):
+    Input12(Flt):
+         攻击盒类型(枚举):
+         Scale of Cuboid Hitbox(Enumeration):
+    Input13(Flt):
+         攻击盒为长方体时的缩放(枚举):
+         Radius of Sphere Hitbox(Enumeration):
+    Input14(Flt):
+         攻击盒为球体时的半径(布尔值):
+         Height of Sector Hitbox(Boolean):
+    Input15(Flt):
+         攻击盒为扇形时的高度(浮点数):
+         Sector Angle of Sector Hitbox(Floating Point Numbers):
+    Input16(E<CSCT>):
+         攻击盒为扇形时的扇角度(浮点数):
+         Sector Radius of Sector Hitbox(Floating Point Numbers):
+    Input17(E<CALC>):
+         攻击盒为扇形时的扇半径(浮点数):
+         Inner Radius of Sector Hitbox(Floating Point Numbers):
+    Input18(L<Str>):
+         攻击盒为扇形时的内半径(浮点数):
+         Detection Direction of Sector Hitbox(Floating Point Numbers):
+    Input19(E<CELM>):
+         攻击盒为扇形时的检测方向(枚举):
+         Attack Layer Filter(Enumeration):
+    Input20(Flt):
+         攻击层筛选(枚举):
+         Attack Tag List(Enumeration):
+    Input21(E<CHIT>):
+         攻击标签列表(字符串列表):
+         Elemental Type(String List):
+    Input22(E<CATK>):
+         元素类型(枚举):
+         Elemental Attack Potency(Enumeration):
+    Input23(Flt):
+         元素攻击强效(浮点数):
+         Hit Type(Floating Point Numbers):
+    Input25(Bol):
+         打击类型(枚举):
+         Attack Type(Enumeration):
+    Input26(Int):
+         攻击类型(枚举):
+         Interrupt Value(Enumeration):
+    Input28(E<CKBD>):
+         打断值(浮点数):
+         Absolute Damage(Floating Point Numbers):
+    Input29(Bol):
+         是否是绝对伤害(布尔值):
+         On-Hit Special Effects(Boolean):
+    Input33(Vec):
+         命中特效(整数):
+         Knockback Orientation(Integer):
+    Input34(Vec):
+         受击击退朝向(枚举):
+         Block Damage Pop-Up(Enumeration):
+    Input35(Flt):
+         是否屏蔽伤害跳字(布尔值):
+         On-Hit Scene Effects Offset(Boolean):
+    Input39(Vec):
+         命中场景特效偏移(三维向量):
+         On-Hit Scene Effects Rotation(3D Vector):
+    Input40(Vec):
+         命中场景特效旋转(三维向量):
+         On-Hit Scene Effects Zoom(3D Vector):
+    Input41(Flt):
+         命中场景特效缩放(浮点数):
+         On-Hit Scene Special Effects Offset(Floating Point Numbers):
+    Input42(Flt):
+         命中特效偏移(三维向量):
+         On-Hit Scene Special Effects Rotation(3D Vector):
+    Input43(Int):
+         命中特效旋转(三维向量):
+         On-Hit Scene Special Effects Zoom(3D Vector):
+    Input45(E<CHTS>):
+         命中特效缩放(浮点数):
+         Aggro Multiplier for This Attack(Floating Point Numbers):
+    Input46(Flt):
+         本次攻击的仇恨倍率(浮点数):
+         Aggro Increment for This Attack(Floating Point Numbers):
+    Input47(Flt):
+         本次攻击的仇恨增量(整数):
+         Hit Level(Integer):
