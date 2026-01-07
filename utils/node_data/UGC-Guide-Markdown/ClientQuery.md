@@ -195,7 +195,7 @@ Returns the Target Entity. The meaning of this output varies depending on the fu
 |------------------|----------------|--------|-------------|
 | Output Parameter | Target Entity | Entity |  |
 
-## **6. Get Entity‘s Type**
+## **6. Get Entity's Type**
 
 **Node Functions**
 
@@ -274,7 +274,7 @@ Filters Entities within a spherical range according to specific rules and a maxi
 
 | Parameter Type | Parameter Name | Type | Description |
 |------------------|-------------------------|------------------------|--------------------------------------------------------|
-| Parameter | Radius | Floating Point Numbers |  |
+| Input Parameter | Radius | Floating Point Numbers |  |
 | Input Parameter | Central Location | 3D Vector |  |
 | Input Parameter | Maximum Filter Quantity | Integer |  |
 | Input Parameter | Filter Rules | Enumeration | Options: Default, Random, or Nearest-to-Farthest order |

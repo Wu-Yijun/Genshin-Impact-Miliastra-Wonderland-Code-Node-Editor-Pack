@@ -1137,7 +1137,7 @@ Query Aggro Multiplier of Specific Entity
 | Parameter Type | Parameter Name | Type | Description |
 |------------------|------------------|--------|-------------|
 | Input Parameter | Query Target | Entity |  |
-| Output Parameter | Aggro Multiplier | Float |  |
+| Output Parameter | Aggro Multiplier | Floating Point Numbers |  |
 
 ## **3. Query the Aggro Value of the Specified Entity**
 
@@ -1164,7 +1164,7 @@ Searches whether the specified Entity has entered battle
 | Parameter Type | Parameter Name | Type | Description |
 |------------------|----------------|---------------|-------------|
 | Input Parameter | Query Target | Entity |  |
-| Output Parameter | In Combat | Boolean Value |  |
+| Output Parameter | In Combat | Boolean |  |
 
 ## **5.** Get List of Owners Who Have the Target in Their Aggro List
 

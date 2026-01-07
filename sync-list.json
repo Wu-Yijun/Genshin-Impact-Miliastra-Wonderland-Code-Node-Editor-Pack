@@ -1,6 +1,6 @@
 {
   "commitMessage": "更新文档, 更新数据, 修复了测试用例",
-  "notSync": false,
+  "notSync": true,
   "include": [
     "*",
     "docs/**",

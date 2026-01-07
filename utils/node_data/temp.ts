@@ -18,10 +18,43 @@ const save = (path: string, data: {} | string) =>
 
 // TODO: VisiblePin8(10) of Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Loc's type conflicts with others
 
-const nodes = (data as any as Document).Nodes.filter(x => Object.keys(x).find(x => x.startsWith("__todo")) !== undefined);
-console.log(nodes.length);
+// const nodes = (data as any as Document).Nodes.filter(x => Object.keys(x).find(x => x.startsWith("__todo")) !== undefined);
+// console.log(nodes.length);
 
-console.log(data.Nodes.filter(n => n.DataPins.find(p => p.Identifier.startsWith('Input')) !== undefined).length);
+// console.log(data.Nodes.filter(n => n.DataPins.find(p => p.Identifier.startsWith('Input')) !== undefined).length);
+
+import doc from "./UGC-Guide-Markdown/nodes.json" with {type: "json"};
+
+const used = new Set();
+const unused = new Set(doc);
+
+data.Nodes.forEach(node => {
+  if (node.Domain === "Hidden") return;
+  let ref_node = doc.find(n => n.name === node.InGameName.en && n.category.startsWith(node.System));
+  
+  if (!ref_node) {
+    ref_node = doc.find(n => node.Alias.includes(n.name) && n.category.startsWith(node.System));
+    if (ref_node) {
+      console.log("Alias node:", node.InGameName.en, node.Identifier, "->", ref_node.name);
+    } else{
+      console.log("Missing node:", node.InGameName.en, node.Identifier);
+    return;
+    }
+  }
+  if(used.has(ref_node)) {
+    console.log("Duplicate node:", node.InGameName.en, node.Identifier);
+  }
+  used.add(ref_node);
+  if(!unused.has(ref_node)) {
+    console.log("Duplicate unused node:", node.InGameName.en, node.Identifier);
+  }
+  unused.delete(ref_node);
+});
+
+console.log("Unused nodes:");
+for(const n of unused) {
+  console.log("-", n.name, `(${n.category})`);
+}
 
 // save("nodes.json", nodes);
 

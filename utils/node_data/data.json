@@ -29336,11 +29336,12 @@
       "Identifier": "Query.Entity_Related.Get_By_Prefab",
       "ID": 378,
       "InGameName": {
-        "en": "Get Entity List by Specified Prefab",
+        "en": "Get Entity List by Specified Prefab ID",
         "zh-Hans": "获取指定元件ID的实体列表"
       },
       "Alias": [
-        "Get_Entity_List_by_Specified_Prefab"
+        "Get_Entity_List_by_Specified_Prefab",
+        "Get Entity List by Specified Prefab"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -50510,7 +50511,7 @@
       "Identifier": "Query.Unit_Status.Get_Status_Stacks",
       "ID": 746,
       "InGameName": {
-        "en": "Execution.UI_Control_Group.Modify_Status",
+        "en": "Query Unit Status Stacks by Slot ID",
         "zh-Hans": "根据槽位序号查询单位状态层数"
       },
       "Alias": [
@@ -50866,7 +50867,8 @@
         "zh-Hans": "根据时间戳计算格式化时间"
       },
       "Alias": [
-        "Calculate_formatted_time_from_timestamp"
+        "Calculate_formatted_time_from_timestamp",
+        "Calculate Formatted Time From Timestamp"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -51100,7 +51102,8 @@
         "zh-Hans": "根据时间戳计算星期几"
       },
       "Alias": [
-        "Calculate_day_of_the_week_from_timestamp"
+        "Calculate_day_of_the_week_from_timestamp",
+        "Calculate Day of the Week From Timestamp"
       ],
       "Type": "Fixed",
       "System": "Server",

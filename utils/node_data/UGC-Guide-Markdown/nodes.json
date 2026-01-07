@@ -613,7 +613,7 @@
     ]
   },
   {
-    "name": "Trigger Hitbox at Specific Location",
+    "name": "Trigger Sector Hitbox at Specified Attachment Point",
     "category": "ClientExecution",
     "subcategory": "I. Character Skills",
     "description": "Initiates a Hitbox Attack at the specified Attachment Point, with configurable attack parameters\n",
@@ -864,7 +864,7 @@
   {
     "name": "Set Local Variable",
     "category": "ClientExecution",
-    "subcategory": "I. Character Skills",
+    "subcategory": "II. General",
     "description": "Sets the value of a local variable\n",
     "parameters": [
       {
@@ -884,14 +884,14 @@
   {
     "name": "Break Loop",
     "category": "ClientExecution",
-    "subcategory": "I. Character Skills",
+    "subcategory": "II. General",
     "description": "Break out of a Finite Loop. The output pin must connect to the [Break Loop] input parameter of the [Finite Loop] Node\n",
     "parameters": []
   },
   {
     "name": "Finite Loop",
     "category": "ClientExecution",
-    "subcategory": "I. Character Skills",
+    "subcategory": "II. General",
     "description": "From the [Loop Start Value] to the [Loop End Value], the loop iterates, incrementing the Integer by 1 each time. On each iteration, it executes the Nodes connected to [Loop Body]. After a full iteration, it executes the Nodes connected to [Loop Complete].\nUse [Break Loop] to end the iteration early\n",
     "parameters": [
       {
@@ -2376,7 +2376,7 @@
     ]
   },
   {
-    "name": "Get Entity‘s Type",
+    "name": "Get Entity's Type",
     "category": "ClientQuery",
     "subcategory": "IV. Entity Related",
     "description": "Returns the type of the specified Entity\n",
@@ -2506,7 +2506,7 @@
     "description": "Filters Entities within a spherical range according to specific rules and a maximum count, and returns a list of Entities that meet the conditions\n",
     "parameters": [
       {
-        "type": "Parameter",
+        "type": "Input Parameter",
         "name": "Radius",
         "dataType": "Floating Point Numbers",
         "description": ""
@@ -4117,7 +4117,7 @@
         "type": "Output Parameter",
         "name": "Tab ID",
         "dataType": "Integer",
-        "description": "The tab ID\n![](https://act-webstatic.mihoyo.com/ugc-tutorial/knowledge/cn/en-us/mh9ji0030dzs/b44601b1-56b3-4b0e-993e-719d6777da7d.png)"
+        "description": "The tab ID"
       },
       {
         "type": "Output Parameter",
@@ -12894,7 +12894,7 @@
       {
         "type": "Output Parameter",
         "name": "Aggro Multiplier",
-        "dataType": "Float",
+        "dataType": "Floating Point Numbers",
         "description": ""
       }
     ]
@@ -12940,7 +12940,7 @@
       {
         "type": "Output Parameter",
         "name": "In Combat",
-        "dataType": "Boolean Value",
+        "dataType": "Boolean",
         "description": ""
       }
     ]

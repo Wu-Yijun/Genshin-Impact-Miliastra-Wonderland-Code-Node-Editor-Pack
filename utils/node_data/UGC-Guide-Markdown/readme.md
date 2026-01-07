@@ -9,9 +9,7 @@
 
 中文数据见 [nodes.zh.json](./nodes.zh.json), 英文数据见 [nodes.json](./nodes.json).
 
-*P.S. 评价是多半是 AI 自动翻译的, 不然怎么连缺少字段的位置和错误类型都一样?*
-
-*P.P.S 然后我就可以将数据补全进入我的 data.json 了...* 
+*P.S 然后我就可以将数据补全进入我的 data.json 了...* 
 
 ## 文件清单
 
@@ -68,4 +66,13 @@
 [ClientFlowControl.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhxppurzujfq)
 [ClientOther.zh](https://act.mihoyo.com/ys/ugc/tutorial/detail/mhor3u09y7u0)
 
+```
+
+似乎会跳过一些表格, 可以先控制台手动处理一下:
+```js
+document.querySelectorAll('.doc-view>h2').forEach(x=>x.outerHTML=`<h3>${x.innerHTML}</h3>`);
+document.querySelectorAll('.doc-view>h1').forEach(x=>x.outerHTML=`<h2>${x.innerHTML}</h2>`);
+document.querySelectorAll('div>table').forEach(x=>x.parentNode.replaceWith(x));
+document.querySelectorAll('img').forEach(el => el.remove());
+document.querySelectorAll('p').forEach(x=>x.textContent.trim().length === 0 && x.remove());
 ```

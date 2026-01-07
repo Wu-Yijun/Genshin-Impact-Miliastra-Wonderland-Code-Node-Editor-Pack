@@ -262,7 +262,7 @@ Removes the specified type of Character Disruptor Device
 |-----------------|-----------------------|-------------|------------------------------------------------------------|
 | Input Parameter | Disruptor Device Type | Enumeration | Includes: Force Field Device, Ejector, and Traction Device |
 
-## **17. Trigger Hitbox at Specific Location**
+## **17. Trigger Sector Hitbox at Specified Attachment Point**
 
 **Node Functions**
 
@@ -323,6 +323,8 @@ Resets the Skill Target and reruns the Skill selection logic to choose a new Tar
 | Parameter Type | Parameter Name | Type | Description |
 |----------------|----------------|------|-------------|
 |  |  |  |  |
+
+## II. General
 
 ## **1. Set Local Variable**
 
