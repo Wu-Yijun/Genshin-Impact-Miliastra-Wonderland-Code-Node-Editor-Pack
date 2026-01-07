@@ -268,7 +268,7 @@ export interface EnumTypeDef {
  * ```
  */
 export interface EnumDef {
-  /** 枚举值标识符，格式：<Category>.<Type> */
+  /** 枚举值标识符，格式：`<Category>.<Type>` */
   Identifier: string;
 
   /** 游戏内部类型系统中使用的 ID */

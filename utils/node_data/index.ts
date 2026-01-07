@@ -27,6 +27,3 @@ export {
 } from "./node_type.ts";
 
 export * as D from "./types.ts";
-
-// for Global Usage without maintaining any Document instance
-export { Doc as DocHelper, Node as NodeHelper, Enum as EnumHelper, ServerType as Type, ClientType } from "./instances.ts";

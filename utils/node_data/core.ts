@@ -264,7 +264,7 @@ export class Nodes {
       let pass = true;
       for (let i = 0; i < d.length; i++) {
         if (d[i] === NT.UNK_TYPE) continue;  // Skip unknown types
-        if (!NT.type_equal(NT.reflects(d[i], cts), constraints[i][1])) {
+        if (!NT.type_equal(NT.reflects(d[i], cts), constraints[i][1], { omit_unknown: true })) {
           pass = false;
           break;
         }
@@ -601,6 +601,10 @@ export class Enums {
    */
   getEnumsByCategory(category: string): D.EnumDef[] {
     return this.ensureEnumsByCategoryMap().get(category) || [];
+  }
+
+  getEnumsByIdentifier(identifier: string): D.EnumDef[] {
+    return this.getEnumsByCategory(this.getEnumTypeByIdentifier(identifier)?.Category ?? "");
   }
 
   /**

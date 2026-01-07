@@ -652,17 +652,23 @@ export function extract_reflect_fields(
  * ); // true
  * ```
  */
-export function type_equal(a: NodeType, b: NodeType): boolean {
+export function type_equal(a: NodeType, b: NodeType, options: { omit_unknown?: boolean } = {}): boolean {
   if (a.t !== b.t) return false;
   switch (a.t) {
     case "b":
+      if (options.omit_unknown && b.t === "b") {
+        return a.b === b.b || a.b === "Unk" || b.b === "Unk";
+      }
       return a.b === (b as any).b;
     case "e":
+      if (options.omit_unknown && b.t === "e") {
+        return a.e === b.e || a.e === "Unk" || b.e === "Unk";
+      }
       return a.e === (b as any).e;
     case "l":
-      return type_equal(a.i, (b as any).i);
+      return type_equal(a.i, (b as any).i, options);
     case "d":
-      return type_equal(a.k, (b as any).k) && type_equal(a.v, (b as any).v);
+      return type_equal(a.k, (b as any).k, options) && type_equal(a.v, (b as any).v, options);
     case "s": {
       const bf = (b as any).f as [string, NodeType][];
       if (a.f.length !== bf.length) return false;

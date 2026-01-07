@@ -12,6 +12,7 @@ import { writeFileSync } from "fs";
 import { get_graph_server } from "./graph_server.ts";
 import { get_graph_client } from "./graph_client.ts";
 import { ResourceClass } from "../../utils/node_data/types.ts";
+import { main as test_all_nodes } from "./test_all_nodes.ts"
 
 
 const DSL = `
@@ -121,7 +122,6 @@ function test(system: ResourceClass) {
 
 console.log("All tests passed!");
 
-
 if (import.meta.main) {
   console.log("The equivalent DSL is:", DSL);
 
@@ -141,7 +141,9 @@ if (import.meta.main) {
   test("BOOLEAN_FILTER_GRAPH");
   console.log("======== Test Complete ========\n");
 
-  // test(createGraphClient, "skill");
 
+  console.log("======== Test Encode and Decode All nodes========");
+  test_all_nodes();
+  console.log("======== Test Complete ========\n");
 
 }

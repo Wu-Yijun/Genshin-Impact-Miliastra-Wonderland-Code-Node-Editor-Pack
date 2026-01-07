@@ -278,6 +278,10 @@ export function deepEqual<T>(
     // --- 1. 快速检查 ---
     if (a === b) return true;
 
+    if (ignore_rules !== undefined) {
+      if (ignore_rules(a, b)) return true;
+    }
+
     if (typeof a === 'number' && typeof b === 'number') {
       if (isNaN(a) && isNaN(b)) return true;
       if (Math.abs(a - b) < precision) return true;

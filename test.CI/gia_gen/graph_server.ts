@@ -7,13 +7,12 @@ import { ResourceClass } from "../../utils/node_data/types.ts";
 
 
 // ========= 示例代码 ========= //
-export function get_graph_server(system: ResourceClass){
-  
+export function get_graph_server(system: ResourceClass) {
   // 创建不同类型的节点图
   // const graph = new Graph("ENTITY_NODE_GRAPH");
   // const graph = new Graph("SKILL_NODE_GRAPH");
   const graph = new Graph(system);
-  
+
   // 光标移动到 `.Trigger_Tab_OnTabSelect` 上方会有节点说明与引脚接口定义
   const Trig = graph.add_node(NODES.Trigger_Tab_OnTabSelect)!;
   const Branch1 = graph.add_node(NODES.Control_General_Switch)!;
@@ -21,7 +20,6 @@ export function get_graph_server(system: ResourceClass){
   // 对于可变类型节点, 设置类型约束
   Branch1.setConstraints("C<T:Int>");
   get_val.setConstraints("C<T:Int>");
-  
   // 控制流连线
   graph.flow(Trig, Branch1); // 默认从第零个引脚连接
   // 运算流连接
@@ -30,7 +28,7 @@ export function get_graph_server(system: ResourceClass){
   // 设置引脚值
   Branch1.setVal(1, [1, 2, 3]); // 设置第 1 个引脚的值
   get_val.setVal("var_name", "Plant Level"); // 设置 identifier 为 var_name 的引脚的值
-  
+
   NODES.Control_General_Branch
   // 创建节点: 不同方式的效果相同(推荐使用 NODES.Control_General_Branch )
   const Branch2 = graph.add_node("Control.General.Branch")!; // 使用 identifier (试试打错单词了会怎样?)
@@ -60,7 +58,7 @@ export function get_graph_server(system: ResourceClass){
   Branch1.add_comment("Comment Attached to Node");
   graph.add_comment("Comment Not Attached to Node", 600, 100);
   graph.add_comment("Comment2 Also Attached to Node", Trig);
-  
+
   // 添加图变量
   graph.add_graph_var("var1", "L<Int>", [1, 24, 5], true);
   // graph.add_graph_var("var1", "Int", 3, false); // 重复定义的会被跳过
@@ -75,7 +73,7 @@ export function get_graph_server(system: ResourceClass){
   const Pfb2 = graph.add_node(NODES.Execution_EntityRelated_CreatePrefab)!;
   const slf2 = graph.add_node(NODES.Query_EntityRelated_GetSelf)!;
   const Eff1 = graph.add_node(NODES.Execution_SpecialEffect_PlayLoop)!;
-  
+
   graph.flow(Branch2, Pfb1);
   graph.flow(Branch3, Pfb2);
   graph.flow(Branch4, Eff1);
@@ -97,8 +95,8 @@ export function get_graph_server(system: ResourceClass){
   Eff1.setVal("follow_move", true);
   Eff1.setVal('follow_rotate', true);
   Eff1.setVal("scale", 0.1);
-  
-  
+
+
   const set_val1 = graph.add_node(NODES.Execution_CustomVariable_SetVariable, "C<T:Int>")!;
   const set_val2 = graph.add_node(NODES.Execution_CustomVariable_SetVariable, "C<T:Int>")!;
   graph.flow(Pfb1, set_val1);
