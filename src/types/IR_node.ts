@@ -82,8 +82,8 @@ export interface IR_CallNode extends IRBase {
   specific?: typeof BUILD_IN_SYS_NODE[number]; // special built-in
   name: string;
 
-  inputs: IR_FunctionArg[];
-  outputs: IR_FunctionArg[];
+  inputs: (IR_FunctionArg & { kind: "in" })[];
+  outputs: (IR_FunctionArg & { kind: "out" })[];
   // mapping of exit branches optionally specified at call site:
   // e.g. .Comp()( "large" = Log(...), "small" = ... )
   branches: { branchId: BranchId | null; nodes: IR_NodeChain[] }[];
@@ -97,9 +97,9 @@ export interface IR_CallNode extends IRBase {
  */
 export interface IR_EvalNode extends IRBase {
   kind: "eval";
-  captures: IR_FunctionArg[]; // list of inputs' captured function-output names this eval depends on (e.g. ["val_a", "val_b"])
-  lambda: ASTExpr | ArithmeticProgram; // lambda code body as string (for runtime eval)
-  outputs: IR_FunctionArg[]; // mapping of outputs
+  captures: (IR_FunctionArg & { kind: "in" })[]; // list of inputs' captured function-output names this eval depends on (e.g. ["val_a", "val_b"])
+  lambda: ASTExpr | ArithmeticProgram;
+  outputs: (IR_FunctionArg & { kind: "in" })[]; // mapping of outputs
 }
 
 /**

@@ -530,6 +530,17 @@ export function assertNotEqs<T, const Excluded extends readonly any[]>(target: T
     throw new Error(`Assert Unequal Failed`);
   }
 }
+export function assertError(fun: () => unknown, msg?: string) {
+  let ret;
+  try {
+    ret = fun();
+  } catch (e) {
+    return;
+  }
+  console.info("[Assertion] function returns:", ret);
+  throw new Error(msg ?? "Assert Error Failed: The run should throw errors.");
+}
+
 export function empty(v: any): v is null | undefined {
   return v === undefined || v === null;
 }

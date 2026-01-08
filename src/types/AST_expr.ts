@@ -51,6 +51,7 @@ export interface Literal {
   type: 'Literal';
   value: number | boolean | string;
   raw: string;
+  var_type: NodeType;
 }
 
 // 仅用于 Return 语句
