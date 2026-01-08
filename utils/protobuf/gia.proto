@@ -686,13 +686,13 @@ message StructureDefinition {
         RuntimeInfo  runtime_info = 2;
       }
 
-      message SnapshotRef {
+      message Struct {
         repeated TypeDef3 elem = 1;
         int64        runtime_id = 501;
         ResourceLocator reference = 502;
       }
 
-      message SnapshotRefList {
+      message StructList {
         repeated TypeDef3 elem = 1;
         int64        runtime_id = 501;
       }
@@ -719,9 +719,9 @@ message StructureDefinition {
         String           val_string = 16; // 字符串
         Enum             val_enum   = 14; // 枚举索引
         Vector           val_vector = 22; // 向量
-        SnapshotRef    val_snapshot = 35; // 结构体
-        SnapshotRefList    val_snapshotList = 36; // 结构体
-        Dict    val_dict = 37; // 结构体
+        Struct    val_struct = 35; // 结构体
+        StructList    val_structList = 36; // 结构体
+        Dict    val_dict = 37; // 字典
         String       val_stringList = 21;
         String          val_intList = 18;
         String          val_floatList = 20;
