@@ -464,13 +464,8 @@ message DynamicTypeMetadata {
 //   - 内存布局优化：在某些序列化框架中，这种嵌套允许引擎在不完全反序列化内部逻辑的情况下，先读取资源的“外壳”信息（如 ID 和名称）。
 
 message NodeGraphContainer {
-  message NodeGraphWrapper { NodeGraph graph = 1; }
-  message NodeWrapper { NodeInterface node = 1; }
-  repeated NodeGraphWrapper inner = 1;
-  repeated NodeWrapper generated_nodes = 2;
-  // 3跟复合节点有关，5是信号，7是一个数
-  repeated NodeGraphWrapper composite_graphs = 4;
-  repeated StructureDefinition structure_definitions = 6;
+  message InnerWrapper { NodeGraph graph = 1; }
+  InnerWrapper inner = 1;
 }
 
 message NodeInterfaceContainer {
@@ -690,8 +685,6 @@ message StructureDefinition {
 
       message String { repeated string str = 1; }
 
-      message Enum { repeated int64 enum = 1; }
-
       message Vector {
         message Vec {
           float x = 1;
@@ -726,20 +719,20 @@ message StructureDefinition {
         Enum   val_enum         = 14; // 枚举索引
         Float  val_float        = 15; // 浮点
         String val_string       = 16; // 字符串
-        String val_idList       = 17;
-        String val_intList      = 18;
-        String val_enumList     = 19;
-        String val_floatList    = 20;
+        Id     val_idList       = 17;
+        Int    val_intList      = 18;
+        Id     val_enumList     = 19;
+        Float  val_floatList    = 20;
         String val_stringList   = 21;
         Vector val_vector       = 22; // 向量
-        String val_entityList   = 23;
+        Id     val_entityList   = 23;
         Vector val_vectorList   = 25;
         Id     val_faction      = 27; // GUID
         Prefab val_config       = 30; // 配置
         Prefab val_prefab       = 31; // 元件
         Prefab val_configList   = 32;
         Prefab val_prefabList   = 33;
-        String val_factionList  = 34;
+        Id     val_factionList  = 34;
         Entry  val_entry        = 35; // 结构体或键值对
         Entry  val_structList   = 36; // 结构体列表
         Dict   val_dict         = 37; // 字典
@@ -920,6 +913,16 @@ message Annotation {
 
 // ======================================================================== GIL File Format
 
+message LevelNodeGraphContainer {
+  message NodeGraphWrapper { NodeGraph graph = 1; }
+  message NodeWrapper { NodeInterface node = 1; }
+  repeated NodeGraphWrapper inner = 1;
+  repeated NodeWrapper generated_nodes = 2;
+  // 3跟复合节点有关，5是信号，7是一个数
+  repeated NodeGraphWrapper composite_graphs = 4;
+  repeated StructureDefinition structure_definitions = 6;
+}
+
 message Level {
   string                 level_name            = 2;  // 存档名
 
@@ -931,7 +934,7 @@ message Level {
   // repeated Terrain     terrains               = 7;  // 地形
   // 8; // 造物
   // repeated UIControlGroup ui_control_group    = 9;
-  NodeGraphContainer     graph_data            = 10; // Which is Node Graph
+  LevelNodeGraphContainer graph_data            = 10; // Which is Node Graph
   // repeated LevelSetting level_settings        = 11;
   // 12; // 全局计时器
   // 14; // 好像是模板的索引
