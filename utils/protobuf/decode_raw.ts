@@ -6,7 +6,7 @@
 import { readFileSync } from "fs";
 
 export interface ParsedResult {
-  [field: number]: any[] ;
+  [field: number]: any[];
 }
 
 export interface TagResult {
@@ -99,7 +99,7 @@ export class ProtobufParser {
         resultTags[field] = [];
       }
       result[field].push(value);
-      if(meta) Object.entries(meta).forEach(([k,v]) => (result[field] as any)["_"+k] = v);
+      if (meta) Object.entries(meta).forEach(([k, v]) => (result[field] as any)["_" + k] = v);
       resultTags[field].push(tag);
     };
 
@@ -150,55 +150,64 @@ export class ProtobufParser {
           const raw = data.slice(pos, pos + size);
           meta["wire_type_2"] = raw; // Keep raw data for potential use
           let resolved = false;
+          // 0. 跳过空对象
+          if (size === 0) {
+            resolved = true;
+            meta["wire_type_2"] = raw; // Keep raw data for potential use
+            value = "";
+            meta["wire_type_2_empty"] = true;
+            tagDesc = "wire type 2: empty(str or msg)";
+          }
+
           // 1. 尝试作为 Sub-Message 解析
           // 只有当数据量足够大，且看起来像 Protobuf 结构时才认为是 Message
           // 简单的防守：如果是极短的数据(如2字节 01 02)，解析为 Message 会抛错(Invalid Field 0)或解析出空对象
           if (!resolved) {
-             try {
-               const subParser = new ProtobufParser(true); // 严格模式
-               const { result: subMsg,  tags: subTag } = subParser.parseMessage(raw);
-               
-               // 启发式过滤：如果有合法的解析结果，且不是空的，认为是 Message
-               if (Object.keys(subMsg).length > 0) {
-                 value = subMsg;
-                 tagDesc = subTag;
-                 resolved = true;
-               }
-             } catch (e) { /* 不是 Message */ }
+            try {
+              const subParser = new ProtobufParser(true); // 严格模式
+              const { result: subMsg, tags: subTag } = subParser.parseMessage(raw);
+
+              // 启发式过滤：如果有合法的解析结果，且不是空的，认为是 Message
+              if (Object.keys(subMsg).length > 0) {
+                value = subMsg;
+                tagDesc = subTag;
+                resolved = true;
+              }
+            } catch (e) { /* 不是 Message */ }
           }
 
           // 2. 尝试作为 String 解析 (优先于 Packed Varint，因为文本更常见)
           if (!resolved) {
-             try {
-                // 如果看起来像文本，才解码
-                if (this.isLikelyString(raw)) {
-                    value = this.textDecoder.decode(raw);
-                    tagDesc = "wire_type=2 String (Heuristic)";
-                    resolved = true;
-                }
-             } catch (e) { /* UTF-8 解码失败 */ }
+            try {
+              // 如果看起来像文本，才解码
+              if (this.isLikelyString(raw)) {
+                value = this.textDecoder.decode(raw);
+                tagDesc = "wire_type=2 String (Heuristic)";
+                resolved = true;
+              }
+            } catch (e) { /* UTF-8 解码失败 */ }
           }
 
           // 3. 尝试作为 Packed Varint 解析 (Repeated Int32)
           if (!resolved) {
-             if (this.isValidPackedVarint(raw)) {
-                // 真正的解析
-                value = [];
-                let p = 0;
-                while(p < raw.length) {
-                    const vInfo = this.readVarint(raw, p);
-                    value.push(vInfo.value);
-                    p = vInfo.pos;
-                }
-                tagDesc = "wire_type=2 Packed Varint (Heuristic)";
-                resolved = true;
-             }
+            if (this.isValidPackedVarint(raw)) {
+              // 真正的解析
+              value = [];
+              let p = 0;
+              while (p < raw.length) {
+                const vInfo = this.readVarint(raw, p);
+                value.push(vInfo.value);
+                p = vInfo.pos;
+              }
+              tagDesc = "wire_type=2 Packed Varint (Heuristic)";
+              resolved = true;
+            }
           }
 
           // 4. 无法识别，作为 Bytes
           if (!resolved) {
-              value = raw;
-              tagDesc = "wire_type=2 Bytes";
+            value = raw;
+            tagDesc = "wire_type=2 Bytes";
           }
 
           pos += size;
@@ -233,7 +242,7 @@ export class ProtobufParser {
    */
   private isLikelyString(data: Uint8Array): boolean {
     if (data.length === 0) return true;
-    
+
     // 统计可打印字符 (ASCII 32-126, 以及 \t \n \r)
     let printableCount = 0;
     for (let i = 0; i < data.length; i++) {
@@ -243,10 +252,10 @@ export class ProtobufParser {
       } else if (b > 127) {
         // 对于非 ASCII，如果是合法的 UTF-8 序列首字节，我们假设它是文本
         // 这里简化处理，不做完整的 UTF-8 校验，主要依靠下面的 TextDecoder 抛错
-        printableCount++; 
+        printableCount++;
       }
     }
-    
+
     // 阈值：如果 90% 以上是可打印字符，我们倾向于是 String
     return (printableCount / data.length) > 0.9;
   }

@@ -1,6 +1,7 @@
 syntax = "proto3";
-// @version: 2.0.9b
+// @version: 2.1.0
 // package gia;
+// @Author Aluria, MiemieMethod
 
 // ========================================================================
 // 1. 顶层资产容器 (Top-Level Containers)
@@ -670,22 +671,56 @@ message StructureDefinition {
     message KernelDef {
 
       // 结构体中使用的辅助类型，和节点中不一样，全都必须为repeated
-      message Id { repeated int64 id = 1; }
+      message Id {
+        int64 id = 1;
+      }
+      message IdList {
+        repeated int64 id = 1;
+      }
 
       message Prefab {
+        message PrefabInner {
+          int64 ref_id = 2;
+        }
+        PrefabInner inner = 1;
+      }
+      message PrefabList {
         message PrefabInner {
           int64 ref_id = 2;
         }
         repeated PrefabInner inner = 1;
       }
 
-      message Int { repeated int32 int = 1; }
+      message Int {
+        int32 int = 1;
+      }
+      message IntList {
+        repeated int32 int = 1;
+      }
 
-      message Float { repeated float float = 1; }
+      message Float {
+        float float = 1;
+      }
+      message FloatList {
+        repeated float float = 1;
+      }
 
-      message String { repeated string str = 1; }
+      message String {
+        string str = 1;
+      }
+      message StringList {
+        repeated string str = 1;
+      }
 
       message Vector {
+        message Vec {
+          float x = 1;
+          float y = 2;
+          float z = 3;
+        }
+        Vec vec = 1;
+      }
+      message VectorList {
         message Vec {
           float x = 1;
           float y = 2;
@@ -713,32 +748,32 @@ message StructureDefinition {
       GenericDef   generic_def = 2;
 
       oneof val {
-        Id     val_entity       = 11; // 实体
-        Id     val_id           = 12; // GUID
-        Int    val_int          = 13; // 整数
-        Enum   val_enum         = 14; // 枚举索引
-        Float  val_float        = 15; // 浮点
-        String val_string       = 16; // 字符串
-        Id     val_idList       = 17;
-        Int    val_intList      = 18;
-        Id     val_enumList     = 19;
-        Float  val_floatList    = 20;
-        String val_stringList   = 21;
-        Vector val_vector       = 22; // 向量
-        Id     val_entityList   = 23;
-        Vector val_vectorList   = 25;
-        Id     val_faction      = 27; // GUID
-        Prefab val_config       = 30; // 配置
-        Prefab val_prefab       = 31; // 元件
-        Prefab val_configList   = 32;
-        Prefab val_prefabList   = 33;
-        Id     val_factionList  = 34;
-        Entry  val_entry        = 35; // 结构体或键值对
-        Entry  val_structList   = 36; // 结构体列表
-        Dict   val_dict         = 37; // 字典
+        Id         val_entity      = 11; // 实体
+        Id         val_id          = 12; // GUID
+        Int        val_int         = 13; // 整数
+        Enum       val_enum        = 14; // 枚举索引
+        Float      val_float       = 15; // 浮点
+        String     val_string      = 16; // 字符串
+        Id         val_idList      = 17;
+        IntList    val_intList     = 18;
+        IdList     val_enumList    = 19;
+        FloatList  val_floatList   = 20;
+        StringList val_stringList  = 21;
+        Vector     val_vector      = 22; // 向量
+        IdList     val_entityList  = 23;
+        VectorList val_vectorList  = 25;
+        IdList     val_faction     = 27; // GUID
+        Prefab     val_config      = 30; // 配置
+        Prefab     val_prefab      = 31; // 元件
+        PrefabList val_configList  = 32;
+        PrefabList val_prefabList  = 33;
+        IdList     val_factionList = 34;
+        Entry      val_entry       = 35; // 结构体或键值对
+        Entry      val_structList  = 36; // 结构体列表
+        Dict       val_dict        = 37; // 字典
       }
 
-      string       varName     = 501;
+      string varName = 501;
     }
     GenericDef generic_def = 1;
     KernelDef  kernel_def  = 3;
@@ -910,21 +945,20 @@ message Annotation {
   optional float y_pos = 3;
 }
 
-
 // ======================================================================== GIL File Format
 
 message LevelNodeGraphContainer {
   message NodeGraphWrapper { NodeGraph graph = 1; }
   message NodeWrapper { NodeInterface node = 1; }
-  repeated NodeGraphWrapper inner = 1;
-  repeated NodeWrapper generated_nodes = 2;
+  repeated NodeGraphWrapper inner           = 1;
+  repeated NodeWrapper      generated_nodes = 2;
   // 3跟复合节点有关，5是信号，7是一个数
-  repeated NodeGraphWrapper composite_graphs = 4;
+  repeated NodeGraphWrapper    composite_graphs      = 4;
   repeated StructureDefinition structure_definitions = 6;
 }
 
 message Level {
-  string                 level_name            = 2;  // 存档名
+  string level_name = 2; // 存档名
 
   // ====== Optional ======
   // string               some_name              = 3;
@@ -934,7 +968,7 @@ message Level {
   // repeated Terrain     terrains               = 7;  // 地形
   // 8; // 造物
   // repeated UIControlGroup ui_control_group    = 9;
-  LevelNodeGraphContainer graph_data            = 10; // Which is Node Graph
+  LevelNodeGraphContainer graph_data = 10; // Which is Node Graph
   // repeated LevelSetting level_settings        = 11;
   // 12; // 全局计时器
   // 14; // 好像是模板的索引
@@ -957,5 +991,5 @@ message Level {
   //  string              some_name5             = 37;
   //  int64               some_int               = 40;
   //  int32               some_int2              = 41;
-  string                 engine_version        = 43;
+  string engine_version = 43;
 }

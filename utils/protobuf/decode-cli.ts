@@ -29,6 +29,7 @@ Options:
   --extra-error             Show Extra Field errors in error output.
   --type-error              Show Type Mismatch errors in error output.
   --repeated-error          Show Repeated Mismatch errors in error output.
+  --packed-error            Show WireType Mismatch warnings(Repeated Unpacked Scalar) in error output.
   --enum-error              Show Invalid Enum errors in error output.
   --skip-paths <paths>      List of error paths to skip (case-sensitive, prefix match).
                             Multiple paths can be separated by spaces.
@@ -80,6 +81,8 @@ async function main() {
       printErrors.add("TYPE_MISMATCH");
     } else if (arg === "--repeated-error") {
       printErrors.add("REPEATED_MISMATCH");
+    } else if (arg === "--packed-error") {
+      printErrors.add("PACKED_MISMATCH");
     } else if (arg === "--enum-error") {
       printErrors.add("INVALID_ENUM");
     } else if (arg === "--skip-paths") {

@@ -1,8 +1,14 @@
 import { type ParsedResult } from './decode_raw.ts';
 import { TypeLayers, type VarDef } from './proto2ts.ts';
 
-export type ErrorType = | 'MISSING_FIELD' | 'EXTRA_FIELD' | 'TYPE_MISMATCH' |
-  'REPEATED_MISMATCH' | 'INVALID_ENUM';
+export type ErrorType =
+  | 'MISSING_FIELD'
+  | 'EXTRA_FIELD'
+  | 'TYPE_MISMATCH'
+  | 'REPEATED_MISMATCH'
+  | 'INVALID_ENUM'
+  | 'PACKED_MISMATCH'
+  ;
 
 export interface ValidationError {
   type: ErrorType;
@@ -97,8 +103,7 @@ export function verifyProto(
 
     if (rawBuffer && varDef.repeated) {
       const isPackedScalar = PackedAllowedTypes.has(typeName);
-      const isEnum = !SystemTypeMap[typeName] && !layer.message.has(typeName) &&
-        !layer.parent?.message.has(typeName);  // 简单判断 Enum
+      const isEnum = layer.getEnumFullPath(varDef.class);
 
       // 如果是数值标量或者是 Enum，我们必须尝试以 Packed 格式重新解析
       if (isPackedScalar || isEnum) {
@@ -106,7 +111,8 @@ export function verifyProto(
           // 只有当解析器原本推断的类型看起来不对（例如是 String 或
           // Bytes），或者我们要强制确保正确性时 这里我们选择：只要有 rawBuffer
           // 且是 packed 类型，就强制重新解析，这是最安全的
-          const correctedValues = reparsePackedField(rawBuffer, typeName);
+          const type = isEnum ? "int64" : typeName;
+          const correctedValues = reparsePackedField(rawBuffer, type);
           values = correctedValues;  // 替换原来的值
         } catch (e) {
           errors.push({
@@ -119,9 +125,38 @@ export function verifyProto(
         }
       }
     }
+    if (rawBuffer && (values as any)['_wire_type_2_empty']) {
+      // maybe an empty message
+      const isRaw = SystemTypeMap[typeName];
+      const isEnum = layer.getEnumFullPath(varDef.class);
+      if (!isRaw && !isEnum) {
+        // assume it is message
+        values = [{}];
+      }
+
+    }
     // --- AUTO-CORRECTION LOGIC END ---
 
     // 2b. Repeated logic check
+    if (PackedAllowedTypes.has(typeName)) {
+      if (!varDef.repeated && rawBuffer) {
+        errors.push({
+          type: 'PACKED_MISMATCH',
+          path: currentPath,
+          fieldIndex: fieldIndex,
+          content: `Field "${typeName} ${varDef.name} = ${fieldIndex}" is not repeated but found wire type 2`,
+          expected: values
+        });
+      } else if (varDef.repeated && !rawBuffer) {
+        errors.push({
+          type: 'PACKED_MISMATCH',
+          path: currentPath,
+          fieldIndex: fieldIndex,
+          content: `Field "${typeName} ${varDef.name} = ${fieldIndex}" is repeated but found wire type 0`,
+          expected: values
+        });
+      }
+    }
     if (!varDef.repeated && values.length > 1) {
       errors.push({
         type: 'REPEATED_MISMATCH',
@@ -190,60 +225,39 @@ function checkType(
     return { errors, value };
   }
 
-  // Find Type Definition (Message or Enum)
-  let typeLayer: TypeLayers | undefined = undefined;
-  let search: TypeLayers | null = currentLayer;
-  // ... (查找定义的逻辑保持不变) ...
-  while (search) {
-    let found = true;
-    let current: TypeLayers = search;
-    for (const p of varDef.class) {
-      const next = current.message.get(p);
-      if (next) {
-        current = next;
-      } else {
-        found = false;
-        break;
-      }
-    }
-    if (found) {
-      typeLayer = current;
-      break;
-    }
-    search = search.parent;
-  }
 
   // Enum Handling
-  if (!typeLayer) {
-    // Check Enums in parent scope usually
-    const enumValues = currentLayer.parent?.enums.get(typeName) ||
-      currentLayer.enums.get(typeName);  // 简化查找
-    if (enumValues) {
-      const val = Number(value);
-      if (isNaN(val)) {
-        // 如果原本被解析成了 string 且不是数字，这绝对是个错误 (除非是 packed
-        // 矫正失败)
-        errors.push({
-          type: 'TYPE_MISMATCH',
-          path,
-          fieldIndex,
-          content: `Expected Enum(number) but got ${typeof value}`
-        });
-        return { errors, value };
-      }
-      const isValid = enumValues.find(([_, v]) => v === val);
-      if (!isValid) {
-        errors.push({
-          type: 'INVALID_ENUM',
-          path,
-          fieldIndex,
-          content: `Invalid enum value ${val}`,
-          expected: enumValues
-        });
-        return { errors, value };
-      }
-      return { errors, value: replaceEnum ? isValid[0] : val };
+  const enumValues = currentLayer.getEnumFullPath(varDef.class);
+  if (enumValues) {
+    const val = Number(value);
+    if (isNaN(val)) {
+      // 如果原本被解析成了 string 且不是数字，这绝对是个错误 (除非是 packed
+      // 矫正失败)
+      errors.push({
+        type: 'TYPE_MISMATCH',
+        path,
+        fieldIndex,
+        content: `Expected Enum(number) but got ${typeof value}`
+      });
+      return { errors, value };
     }
+    const isValid = enumValues.find(([_, v]) => v === val);
+    if (!isValid) {
+      errors.push({
+        type: 'INVALID_ENUM',
+        path,
+        fieldIndex,
+        content: `Invalid enum value ${val}`,
+        expected: enumValues
+      });
+      return { errors, value };
+    }
+    return { errors, value: replaceEnum ? isValid[0] : val };
+  }
+
+  const layer = currentLayer.getMessageFullPath(varDef.class);
+  if (!layer) {
+    currentLayer.getMessageFullPath(varDef.class);
     errors.push({
       type: 'TYPE_MISMATCH',
       path,
@@ -260,7 +274,7 @@ function checkType(
   if (typeof value === 'object' && value !== null &&
     !(value instanceof Uint8Array)) {
     const { errors: subErrors, result: subResult } =
-      verifyProto(value as ParsedResult, typeLayer, { path, replaceEnum });
+      verifyProto(value as ParsedResult, layer, { path, replaceEnum });
     errors.push(...subErrors);
     return { errors, value: subResult };
   } else {
@@ -269,7 +283,7 @@ function checkType(
       type: 'TYPE_MISMATCH',
       path: path,
       fieldIndex: fieldIndex,
-      content: `Expected Message structure for '${typeLayer.name}', but got '${typeof value}' (likely parsing failed or data corrupted)`,
+      content: `Expected Message structure for '${currentLayer.name}', but got '${typeof value}' (likely parsing failed or data corrupted)`,
       expected: 'Message Object'
     });
     return { errors, value };

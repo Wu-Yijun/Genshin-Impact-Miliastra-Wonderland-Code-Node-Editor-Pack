@@ -334,6 +334,24 @@ export class TypeLayers {
       }
     }
   }
+  get root(): TypeLayers {
+    return this.parent?.root ?? this;
+  }
+  cd(dirs: string[]): TypeLayers | undefined {
+    return dirs.length === 0 ? this : this.message.get(dirs[0])?.cd(dirs.slice(1));
+  }
+  getEnumFullPath(path: string[]): [string, number][] | undefined {
+    return this.root.cd(path.slice(0, -1))?.enums.get(path[path.length - 1]);
+  }
+  getMessageFullPath(path: string[]): TypeLayers | undefined {
+    return this.root.cd(path);
+  }
+  getEnum(name: string): [string, number][] | undefined {
+    return this.enums.get(name) ?? this.parent?.getEnum(name);
+  }
+  getMessage(name: string): TypeLayers | undefined {
+    return this.message.get(name) ?? this.parent?.getMessage(name);
+  }
   getPath(): string[] {
     if (this.parent === null) {
       return [];

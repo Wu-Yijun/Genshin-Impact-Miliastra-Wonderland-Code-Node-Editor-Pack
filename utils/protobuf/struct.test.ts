@@ -4,7 +4,7 @@ import { ProtobufParser } from "./decode_raw.ts";
 import { verifyProto } from "./verify_proto.ts";
 import { inspect } from "util";
 
-const PATH = "c:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/2.gia";
+const PATH = "c:/Users/admin/AppData/LocalLow/miHoYo/原神/BeyondLocal/Beyond_Local_Export/1.gia";
 
 
 const layers = parse(readFileSync(import.meta.dirname + "/gia.proto").toString());
