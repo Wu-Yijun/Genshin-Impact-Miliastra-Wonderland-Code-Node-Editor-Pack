@@ -72,8 +72,8 @@ message ResourceEntry {
     // PrefabDefinition      prefab       = 11;
     // EntityDefinition      entity       = 12;
 
-    NodeGraphContainer           graph_data     = 13; // Which is Node Graph
-    NodeInterfaceContainer       interface_data = 14; // Which is Interface Definition
+    NodeGraphContainer     graph_data     = 13; // Which is Node Graph
+    NodeInterfaceContainer interface_data = 14; // Which is Interface Definition
 
     // Configuration         config       = 15;
     // Terrain               terrain      = 16;
@@ -82,7 +82,7 @@ message ResourceEntry {
     // UiControlGroup        ui           = 19;
     // GlobalTimer           timer        = 20;
 
-    StructureDefinitionContainer struct_data    = 22; // Which is Structure Definition
+    StructureDefinitionContainer struct_data = 22; // Which is Structure Definition
 
     // LevelPath             path         = 23;
     // UnitTag               unit_tag     = 26;
@@ -395,6 +395,7 @@ message TypedValue {
 
 message Id { int64 id = 1; }
 
+// Comment@Aluria 为什么 Prefab 与 ID_INPUT 的其它类型(Faction, Guid 等)结构不一致, 是未完成修正吗?
 message Prefab {
   message PrefabInner {
     int64 ref_id = 2;
@@ -406,11 +407,24 @@ message Int { int32 int = 1; }
 
 message Float { float float = 1; }
 
-message String { repeated string str = 1; }
+message String {  string str = 1; }
+
+// Comment@Aluria 谨慎 repeated 字段, 会使 { val: Type } 变成 { val: Type[] }, 对外部使用者的数据操作产生影响和干扰, 与 optional 不同 (不破坏原有逻辑)
+// Comment@Aluria 现在还不急着合并不太一致字段, 可以先搞清楚各部分结构, 最后再归纳合并也行
+message StringList { repeated string str = 1; }
 
 message Enum { int64 enum = 1; }
 
 message Vector {
+  message Vec {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+  }
+  Vec vec = 1;
+}
+
+message VectorList {
   message Vec {
     float x = 1;
     float y = 2;
@@ -683,55 +697,55 @@ message StructureDefinition {
           ServerTypeId value      = 503;
           int64        valueId    = 504;
         }
-        RuntimeInfo  runtime_info = 2;
+        RuntimeInfo runtime_info = 2;
       }
 
       message Struct {
-        repeated TypeDef3 elem = 1;
-        int64        runtime_id = 501;
-        ResourceLocator reference = 502;
+        repeated TypeDef3 elem       = 1;
+        int64             runtime_id = 501;
+        ResourceLocator   reference  = 502;
       }
 
       message StructList {
-        repeated TypeDef3 elem = 1;
-        int64        runtime_id = 501;
+        repeated TypeDef3 elem       = 1;
+        int64             runtime_id = 501;
       }
 
       message Dict {
-        repeated TypeDef3 elem = 1;
-        TypeDef3        keys = 501;
-        TypeDef3        values = 502;
-        ServerTypeId key        = 503;
-        ServerTypeId value      = 504;
+        repeated TypeDef3 elem   = 1;
+        TypeDef3          keys   = 501;
+        TypeDef3          values = 502;
+        ServerTypeId      key    = 503;
+        ServerTypeId      value  = 504;
       }
 
       ServerTypeId type    = 1;
       SubType      subType = 2;
 
       oneof val {
-        Id               val_entity    = 11; // 实体
-        Id               val_id     = 12; // GUID
-        Id               val_faction     = 27; // GUID
-        Prefab               val_config     = 30; // 配置
-        Prefab               val_prefab     = 31; // 元件
-        Int              val_int    = 13; // 整数
-        Float            val_float  = 15; // 浮点
-        String           val_string = 16; // 字符串
-        Enum             val_enum   = 14; // 枚举索引
-        Vector           val_vector = 22; // 向量
-        Struct    val_struct = 35; // 结构体
-        StructList    val_structList = 36; // 结构体
-        Dict    val_dict = 37; // 字典
-        String       val_stringList = 21;
-        String          val_intList = 18;
-        String          val_floatList = 20;
-        String          val_enumList = 19;
-        Vector          val_vectorList = 25;
-        String          val_entityList = 23;
-        String          val_idList = 17;
-        String          val_factionList = 34;
-        Prefab          val_configList = 32;
-        Prefab          val_prefabList = 33;
+        Id         val_entity      = 11; // 实体
+        Id         val_id          = 12; // GUID
+        Id         val_faction     = 27; // GUID
+        Prefab     val_config      = 30; // 配置
+        Prefab     val_prefab      = 31; // 元件
+        Int        val_int         = 13; // 整数
+        Float      val_float       = 15; // 浮点
+        String     val_string      = 16; // 字符串
+        Enum       val_enum        = 14; // 枚举索引
+        Vector     val_vector      = 22; // 向量
+        Struct     val_struct      = 35; // 结构体
+        StructList val_structList  = 36; // 结构体
+        Dict       val_dict        = 37; // 字典
+        StringList val_stringList  = 21;
+        StringList val_intList     = 18;
+        StringList val_floatList   = 20;
+        StringList val_enumList    = 19;
+        VectorList val_vectorList  = 25;
+        StringList val_entityList  = 23;
+        StringList val_idList      = 17;
+        StringList val_factionList = 34;
+        Prefab     val_configList  = 32;
+        Prefab     val_prefabList  = 33;
       }
     }
     TypeDef  typedef1 = 1;
