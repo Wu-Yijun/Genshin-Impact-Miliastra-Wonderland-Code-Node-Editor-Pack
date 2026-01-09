@@ -279,7 +279,7 @@ enum ClientTypeId {
   C_VECTOR      = 11;
   C_VECTOR_LIST = 12;
 
- // --- 业务类型 ---
+  // --- 业务类型 ---
   C_ENUM_ITEM = 13;
   C_ENUM_LIST = 17;
 
@@ -340,7 +340,7 @@ message TypeDefinition {
 
 // 统一定义的数值对象，对应原 TypedValue
 message TypedValue {
-// 定义 UI 输入框的展示样式
+  // 定义 UI 输入框的展示样式
   enum WidgetType {
     UNKNOWN       = 0;
     ID_INPUT      = 1; // ID 基础，如 Prefab/GUID
@@ -395,23 +395,11 @@ message TypedValue {
 
 message Id { int64 id = 1; }
 
-// Comment@Aluria 为什么 Prefab 与 ID_INPUT 的其它类型(Faction, Guid 等)结构不一致, 是未完成修正吗?
-message Prefab {
-  message PrefabInner {
-    int64 ref_id = 2;
-  }
-  repeated PrefabInner inner = 1;
-}
-
 message Int { int32 int = 1; }
 
 message Float { float float = 1; }
 
-message String {  string str = 1; }
-
-// Comment@Aluria 谨慎 repeated 字段, 会使 { val: Type } 变成 { val: Type[] }, 对外部使用者的数据操作产生影响和干扰, 与 optional 不同 (不破坏原有逻辑)
-// Comment@Aluria 现在还不急着合并不太一致字段, 可以先搞清楚各部分结构, 最后再归纳合并也行
-message StringList { repeated string str = 1; }
+message String { string str = 1; }
 
 message Enum { int64 enum = 1; }
 
@@ -422,15 +410,6 @@ message Vector {
     float z = 3;
   }
   Vec vec = 1;
-}
-
-message VectorList {
-  message Vec {
-    float x = 1;
-    float y = 2;
-    float z = 3;
-  }
-  repeated Vec vec = 1;
 }
 
 message StructStorage { repeated TypedValue fields = 1; }
@@ -485,8 +464,13 @@ message DynamicTypeMetadata {
 //   - 内存布局优化：在某些序列化框架中，这种嵌套允许引擎在不完全反序列化内部逻辑的情况下，先读取资源的“外壳”信息（如 ID 和名称）。
 
 message NodeGraphContainer {
-  message InnerWrapper { NodeGraph graph = 1; }
-  InnerWrapper inner = 1;
+  message NodeGraphWrapper { NodeGraph graph = 1; }
+  message NodeWrapper { NodeInterface node = 1; }
+  repeated NodeGraphWrapper inner = 1;
+  repeated NodeWrapper generated_nodes = 2;
+  // 3跟复合节点有关，5是信号，7是一个数
+  repeated NodeGraphWrapper composite_graphs = 4;
+  repeated StructureDefinition structure_definitions = 6;
 }
 
 message NodeInterfaceContainer {
@@ -509,7 +493,7 @@ message NodeGraph {
   // 图的显示名称
   string display_name = 2;
 
-// --- 执行层 ---
+  // --- 执行层 ---
   // 逻辑节点实例列表
   repeated NodeInstance nodes = 3;
 
@@ -583,7 +567,7 @@ message NodeInterface {
 
   Implementation impl = 107;
 
-// 这里的 Which 逻辑建议保留原本命名，因为它们是模板系统的索引
+  // 这里的 Which 逻辑建议保留原本命名，因为它们是模板系统的索引
   enum TemplateRoot {
     UNKNOWN        = 0;
     SUB_TEMPLATE   = 1;
@@ -662,7 +646,7 @@ message StructureDefinition {
   Field genericField  = 1;
   Field concreteField = 2; // same as 1
   int32 structVersion = 3; // Version Updated as structure is modified and as
-                           // other structures modified
+  // other structures modified
   int32 itemCount = 4; // item count
 
   message Field {
@@ -676,81 +660,96 @@ message StructureDefinition {
   }
   message VarDef {
 
-    message TypeDef {
-      message SubType {
-        ServerTypeId type       = 1;
-        int64        runtime_id = 2; // What are they?
-        ServerTypeId key        = 502;
-        ServerTypeId value      = 503;
-        int64        valueId    = 504;
-      }
-      ServerTypeId type    = 1;
-      SubType      subType = 2;
+    message StructureInfo {
+      bool         has_structure_info = 1; // always 1
+      int64        runtime_id         = 2;
+      ServerTypeId key_type           = 502;
+      ServerTypeId value_type         = 503;
+      int64        value_struct_id    = 504;
     }
-    message TypeDef3 {
-      message SubType {
-        ServerTypeId type = 1;
-        message RuntimeInfo {
-          int32        xxx        = 1; // always 1
-          int64        runtime_id = 2;
-          ServerTypeId key        = 502;
-          ServerTypeId value      = 503;
-          int64        valueId    = 504;
+
+    message GenericDef {
+      ServerTypeId  type           = 1;
+      StructureInfo structure_info = 2;
+    }
+    message KernelDef {
+
+      // 结构体中使用的辅助类型，和节点中不一样，全都必须为repeated
+      message Id { repeated int64 id = 1; }
+
+      message Prefab {
+        message PrefabInner {
+          int64 ref_id = 2;
         }
-        RuntimeInfo runtime_info = 2;
+        repeated PrefabInner inner = 1;
       }
 
-      message Struct {
-        repeated TypeDef3 elem       = 1;
-        int64             runtime_id = 501;
-        ResourceLocator   reference  = 502;
+      message Int { repeated int32 int = 1; }
+
+      message Float { repeated float float = 1; }
+
+      message String { repeated string str = 1; }
+
+      message Enum { repeated int64 enum = 1; }
+
+      message Vector {
+        message Vec {
+          float x = 1;
+          float y = 2;
+          float z = 3;
+        }
+        repeated Vec vec = 1;
       }
 
-      message StructList {
-        repeated TypeDef3 elem       = 1;
-        int64             runtime_id = 501;
+      message Entry {
+        repeated KernelDef elem       = 1;
+        int64              runtime_id = 501;
+        ResourceLocator    reference  = 502;
       }
 
       message Dict {
-        repeated TypeDef3 elem   = 1;
-        TypeDef3          keys   = 501;
-        TypeDef3          values = 502;
-        ServerTypeId      key    = 503;
-        ServerTypeId      value  = 504;
+        repeated KernelDef elem            = 1;
+        KernelDef          keys            = 501;
+        KernelDef          values          = 502;
+        ServerTypeId       key_type        = 503;
+        ServerTypeId       value_type      = 504;
+        int64              value_struct_id = 505;
       }
 
-      ServerTypeId type    = 1;
-      SubType      subType = 2;
+      ServerTypeId type        = 1;
+      GenericDef   generic_def = 2;
 
       oneof val {
-        Id         val_entity      = 11; // 实体
-        Id         val_id          = 12; // GUID
-        Id         val_faction     = 27; // GUID
-        Prefab     val_config      = 30; // 配置
-        Prefab     val_prefab      = 31; // 元件
-        Int        val_int         = 13; // 整数
-        Float      val_float       = 15; // 浮点
-        String     val_string      = 16; // 字符串
-        Enum       val_enum        = 14; // 枚举索引
-        Vector     val_vector      = 22; // 向量
-        Struct     val_struct      = 35; // 结构体
-        StructList val_structList  = 36; // 结构体
-        Dict       val_dict        = 37; // 字典
-        StringList val_stringList  = 21;
-        StringList val_intList     = 18;
-        StringList val_floatList   = 20;
-        StringList val_enumList    = 19;
-        VectorList val_vectorList  = 25;
-        StringList val_entityList  = 23;
-        StringList val_idList      = 17;
-        StringList val_factionList = 34;
-        Prefab     val_configList  = 32;
-        Prefab     val_prefabList  = 33;
+        Id     val_entity       = 11; // 实体
+        Id     val_id           = 12; // GUID
+        Int    val_int          = 13; // 整数
+        Enum   val_enum         = 14; // 枚举索引
+        Float  val_float        = 15; // 浮点
+        String val_string       = 16; // 字符串
+        String val_idList       = 17;
+        String val_intList      = 18;
+        String val_enumList     = 19;
+        String val_floatList    = 20;
+        String val_stringList   = 21;
+        Vector val_vector       = 22; // 向量
+        String val_entityList   = 23;
+        Vector val_vectorList   = 25;
+        Id     val_faction      = 27; // GUID
+        Prefab val_config       = 30; // 配置
+        Prefab val_prefab       = 31; // 元件
+        Prefab val_configList   = 32;
+        Prefab val_prefabList   = 33;
+        String val_factionList  = 34;
+        Entry  val_entry        = 35; // 结构体或键值对
+        Entry  val_structList   = 36; // 结构体列表
+        Dict   val_dict         = 37; // 字典
       }
+
+      string       varName     = 501;
     }
-    TypeDef  typedef1 = 1;
-    TypeDef3 typedef3 = 3;
-    string   name     = 5;
+    GenericDef generic_def = 1;
+    KernelDef  kernel_def  = 3;
+    string     name        = 5;
 
     string       varName  = 501;
     ServerTypeId varType  = 502;
@@ -916,4 +915,44 @@ message Annotation {
   // 如果坐标为空，说明该注释是“吸附”在某个节点实例上的（通过 NodeInstance.attached_comment 关联）
   optional float x_pos = 2;
   optional float y_pos = 3;
+}
+
+
+// ======================================================================== GIL File Format
+
+message Level {
+  string                 level_name            = 2;  // 存档名
+
+  // ====== Optional ======
+  // string               some_name              = 3;
+  // repeated Component   components             = 4;  // 玩家模板、角色模板、元件
+  // repeated Entity      entities               = 5;  // 实体
+  // repeated Category    categories             = 6;  // 页签
+  // repeated Terrain     terrains               = 7;  // 地形
+  // 8; // 造物
+  // repeated UIControlGroup ui_control_group    = 9;
+  NodeGraphContainer     graph_data            = 10; // Which is Node Graph
+  // repeated LevelSetting level_settings        = 11;
+  // 12; // 全局计时器
+  // 14; // 好像是模板的索引
+  // repeated Configuration config               = 15;
+  // 16; // 好像是技能动画和事件轨道
+  // string               some_name2             = 17;
+  // repeated Camera cameras                     = 18; // 镜头
+  // string               some_name3             = 19;
+  // repeated Component   projectiles            = 20; // 投射物
+  // repeated LevelFlags  level_flags            = 22;
+  // repeated PeripheralSystem peripheral_system = 25;
+  // repeated Component   decorations            = 27;
+  // repeated EditorInfo  editor_info            = 29;
+  // 30; // 单位标签
+  // string               some_name4             = 31;
+  // 32; // 路径
+  // 33; // 实体布设组
+  // 35; // 本地化
+  // 36; // 频道
+  //  string              some_name5             = 37;
+  //  int64               some_int               = 40;
+  //  int32               some_int2              = 41;
+  string                 engine_version        = 43;
 }
