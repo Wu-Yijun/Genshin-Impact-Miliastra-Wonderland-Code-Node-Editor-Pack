@@ -395,11 +395,18 @@ message TypedValue {
 
 message Id { int64 id = 1; }
 
+message Prefab {
+  message PrefabInner {
+    int64 ref_id = 2;
+  }
+  repeated PrefabInner inner = 1;
+}
+
 message Int { int32 int = 1; }
 
 message Float { float float = 1; }
 
-message String { string str = 1; }
+message String { repeated string str = 1; }
 
 message Enum { int64 enum = 1; }
 
@@ -409,7 +416,7 @@ message Vector {
     float y = 2;
     float z = 3;
   }
-  Vec vec = 1;
+  repeated Vec vec = 1;
 }
 
 message StructStorage { repeated TypedValue fields = 1; }
@@ -657,43 +664,74 @@ message StructureDefinition {
 
     message TypeDef {
       message SubType {
-        ServerTypeId type    = 1;
-        int64        xxxx_id = 2; // What are they?
-        ServerTypeId key     = 502;
-        ServerTypeId value   = 503;
-        int64        valueId = 504;
+        ServerTypeId type       = 1;
+        int64        runtime_id = 2; // What are they?
+        ServerTypeId key        = 502;
+        ServerTypeId value      = 503;
+        int64        valueId    = 504;
       }
       ServerTypeId type    = 1;
       SubType      subType = 2;
-
-      oneof val {
-        Int    intVal  = 13;
-        Enum   boolVal = 14;
-        String strVal  = 16;
-        // TODO: What A mess here! I can't bear anymore!!!!!
-        // He who trust himself could take a try.
-        // ESPECIALLY MAP/STRUCT BASE
-      }
     }
     message TypeDef3 {
       message SubType {
         ServerTypeId type = 1;
-        message Any {}
-        Any          xxxx_id = 2; // Why diff from TypeDef3
-        ServerTypeId key     = 502;
-        ServerTypeId value   = 503;
-        int64        valueId = 504;
+        message RuntimeInfo {
+          int32        xxx        = 1; // always 1
+          int64        runtime_id = 2;
+          ServerTypeId key        = 502;
+          ServerTypeId value      = 503;
+          int64        valueId    = 504;
+        }
+        RuntimeInfo  runtime_info = 2;
       }
+
+      message Struct {
+        repeated TypeDef3 elem = 1;
+        int64        runtime_id = 501;
+        ResourceLocator reference = 502;
+      }
+
+      message StructList {
+        repeated TypeDef3 elem = 1;
+        int64        runtime_id = 501;
+      }
+
+      message Dict {
+        repeated TypeDef3 elem = 1;
+        TypeDef3        keys = 501;
+        TypeDef3        values = 502;
+        ServerTypeId key        = 503;
+        ServerTypeId value      = 504;
+      }
+
       ServerTypeId type    = 1;
       SubType      subType = 2;
 
       oneof val {
-        Int    intVal  = 13;
-        Enum   boolVal = 14;
-        String strVal  = 16;
-        // TODO: What A mess here! I can't bear anymore!!!!!
-        // He who trust himself could take a try.
-        // ESPECIALLY MAP/STRUCT BASE
+        Id               val_entity    = 11; // 实体
+        Id               val_id     = 12; // GUID
+        Id               val_faction     = 27; // GUID
+        Prefab               val_config     = 30; // 配置
+        Prefab               val_prefab     = 31; // 元件
+        Int              val_int    = 13; // 整数
+        Float            val_float  = 15; // 浮点
+        String           val_string = 16; // 字符串
+        Enum             val_enum   = 14; // 枚举索引
+        Vector           val_vector = 22; // 向量
+        Struct    val_struct = 35; // 结构体
+        StructList    val_structList = 36; // 结构体
+        Dict    val_dict = 37; // 字典
+        String       val_stringList = 21;
+        String          val_intList = 18;
+        String          val_floatList = 20;
+        String          val_enumList = 19;
+        Vector          val_vectorList = 25;
+        String          val_entityList = 23;
+        String          val_idList = 17;
+        String          val_factionList = 34;
+        Prefab          val_configList = 32;
+        Prefab          val_prefabList = 33;
       }
     }
     TypeDef  typedef1 = 1;
