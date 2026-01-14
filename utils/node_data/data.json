@@ -58127,6 +58127,21 @@
           "Visibility": "Display",
           "Connectability": true,
           "Description": {}
+        },
+        {
+          "Identifier": "order",
+          "Direction": "In",
+          "Type": "E<SORT>",
+          "Label": {
+            "zh-Hans": "排序方式",
+            "en": "Sort By"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
         }
       ],
       "Implementation": null,
@@ -60287,6 +60302,21 @@
           "Placeholder": null,
           "ShellIndex": 2,
           "KernelIndex": 2,
+          "Visibility": "Display",
+          "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "is_consumed",
+          "Direction": "Out",
+          "Type": "Bol",
+          "Label": {
+            "zh-Hans": "是否消耗",
+            "en": "Consume?"
+          },
+          "Placeholder": null,
+          "ShellIndex": 0,
+          "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
           "Description": {}
@@ -153693,7 +153723,28 @@
       "Type": "Fixed",
       "System": "Client",
       "Domain": "Hidden",
-      "FlowPins": [],
+      "FlowPins": [
+        {
+          "Identifier": "FlowIn",
+          "Direction": "In",
+          "Label": {
+            "en": "",
+            "zh-Hans": ""
+          },
+          "Description": {},
+          "ShellIndex": 0
+        },
+        {
+          "Identifier": "FlowOut",
+          "Direction": "Out",
+          "Label": {
+            "en": "",
+            "zh-Hans": ""
+          },
+          "Description": {},
+          "ShellIndex": 0
+        }
+      ],
       "DataPins": [
         {
           "Identifier": "Input0",
@@ -154468,7 +154519,23 @@
       "System": "Server",
       "Domain": "Arithmetic",
       "FlowPins": [],
-      "DataPins": [],
+      "DataPins": [
+        {
+          "Identifier": "struct",
+          "Direction": "Out",
+          "Type": "S<>",
+          "Label": {
+            "en": "Structure",
+            "zh-Hans": "结构体"
+          },
+          "Placeholder": null,
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Display",
+          "Connectability": true,
+          "Description": {}
+        }
+      ],
       "Implementation": null,
       "__not_find_in_ref": true,
       "Description": {
@@ -154490,7 +154557,23 @@
       "System": "Server",
       "Domain": "Arithmetic",
       "FlowPins": [],
-      "DataPins": [],
+      "DataPins": [
+        {
+          "Identifier": "struct",
+          "Direction": "In",
+          "Type": "S<>",
+          "Label": {
+            "en": "Target Structure",
+            "zh-Hans": "目标结构体"
+          },
+          "Placeholder": null,
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Display",
+          "Connectability": true,
+          "Description": {}
+        }
+      ],
       "Implementation": null,
       "__not_find_in_ref": true,
       "Description": {
@@ -154535,7 +154618,23 @@
           "Description": {}
         }
       ],
-      "DataPins": [],
+      "DataPins": [
+        {
+          "Identifier": "struct",
+          "Direction": "In",
+          "Type": "S<>",
+          "Label": {
+            "en": "Target Structure",
+            "zh-Hans": "目标结构体"
+          },
+          "Placeholder": null,
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Display",
+          "Connectability": true,
+          "Description": {}
+        }
+      ],
       "Implementation": null,
       "__ref_id": "action.struct.modify",
       "__todo_special_structure": true,
