@@ -37,5 +37,21 @@ interface NodeParam {
 ```
 
 ### Step2
-与现有节点数据对比, 寻找差异/增量
+与现有节点数据对比, 寻找差异/增量, 自动更新差异: [compare_with_data](compare_with_data.ts)
 
+输入(读取)文件:
+- [new_nodes](nodes.json)
+- [old_nodes](../data.json): 格式参见 [types.ts](../types.ts)
+
+输出文件(仅包含增减, 不包含更新): 
+- [comparison_result.log](comparison_result.log)
+
+控制台输出: 包含 old_data 中变化名称与路径, 新增的节点, 以及删除的节点
+```log
+[Value Changed] Src: <data path>
+    Old: <value>
+    New: <value>
+[Added Nodes] <node id>: <node name>
+[Removed Nodes] <node id>: <node name>
+# repeated of the above
+```
