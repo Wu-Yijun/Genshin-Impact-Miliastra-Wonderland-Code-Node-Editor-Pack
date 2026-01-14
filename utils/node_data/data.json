@@ -688,8 +688,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "1",
+            "zh-Hans": "1"
           },
           "Description": {}
         },
@@ -701,8 +701,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "2",
+            "zh-Hans": "2"
           },
           "Description": {}
         },
@@ -714,8 +714,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "3",
+            "zh-Hans": "3"
           },
           "Description": {}
         },
@@ -727,8 +727,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "4",
+            "zh-Hans": "4"
           },
           "Description": {}
         },
@@ -740,8 +740,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "5",
+            "zh-Hans": "5"
           },
           "Description": {}
         },
@@ -753,8 +753,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "6",
+            "zh-Hans": "6"
           },
           "Description": {}
         },
@@ -766,8 +766,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "7",
+            "zh-Hans": "7"
           },
           "Description": {}
         },
@@ -779,8 +779,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "8",
+            "zh-Hans": "8"
           },
           "Description": {}
         },
@@ -792,8 +792,8 @@
           "Visibility": "Conditional",
           "Remarks": "Visibility Depends on the length of CasesList",
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "9",
+            "zh-Hans": "9"
           },
           "Description": {}
         }
@@ -12508,11 +12508,13 @@
       "Identifier": "Execution.List_Operation.Modify_Index",
       "ID": 160,
       "InGameName": {
-        "en": "Modify Value in List",
-        "zh-Hans": "对列表修改值"
+        "en": "Set List Value",
+        "zh-Hans": "对列表设置值"
       },
       "Alias": [
-        "Modify_Value_in_List"
+        "Modify_Value_in_List",
+        "Modify Value in List",
+        "对列表修改值"
       ],
       "Type": "Variant",
       "System": "Server",
@@ -22576,11 +22578,13 @@
       "Identifier": "Execution.Faction_Related.Set_Faction",
       "ID": 250,
       "InGameName": {
-        "en": "Modify Entity Faction",
-        "zh-Hans": "修改实体阵营"
+        "en": "Set Entity Faction",
+        "zh-Hans": "设置实体阵营"
       },
       "Alias": [
-        "Modify_Entity_Faction"
+        "Modify_Entity_Faction",
+        "Modify Entity Faction",
+        "修改实体阵营"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -26427,12 +26431,14 @@
       "Identifier": "Execution.Character_Disruptor.Modify_Device",
       "ID": 302,
       "InGameName": {
-        "en": "Modify Character Disruptor Device",
-        "zh-Hans": "修改角色扰动装置"
+        "en": "Set Character Disruptor Device",
+        "zh-Hans": "设置角色扰动装置"
       },
       "Alias": [
         "Modifying_Character_Disruptor_Device",
-        "Modifying Character Disruptor Device"
+        "Modifying Character Disruptor Device",
+        "Modify Character Disruptor Device",
+        "修改角色扰动装置"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -27688,11 +27694,13 @@
       "Identifier": "Execution.Global_Timer.Modify",
       "ID": 314,
       "InGameName": {
-        "en": "Modify Global Timer",
-        "zh-Hans": "修改全局计时器"
+        "en": "Increase Global Timer Value",
+        "zh-Hans": "增加全局计时器的值"
       },
       "Alias": [
-        "Modify_Global_Timer"
+        "Modify_Global_Timer",
+        "Modify Global Timer",
+        "修改全局计时器"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -27763,8 +27771,8 @@
           "Direction": "In",
           "Type": "Flt",
           "Label": {
-            "zh-Hans": "变化值",
-            "en": "Change Value"
+            "zh-Hans": "增加值",
+            "en": "Increase Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -35088,11 +35096,13 @@
       "Identifier": "Execution.UI_Control_Group.Modify_Status",
       "ID": 384,
       "InGameName": {
-        "en": "Modify UI Control Status Within the Interface Layout",
-        "zh-Hans": "修改界面布局内界面控件状态"
+        "en": "Set UI Control (Group) Status",
+        "zh-Hans": "设置界面控件(组)状态"
       },
       "Alias": [
-        "Modify_UI_Control_Status_Within_the_Interface_Layout"
+        "Modify_UI_Control_Status_Within_the_Interface_Layout",
+        "Modify UI Control Status Within the Interface Layout",
+        "修改界面布局内界面控件状态"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -35145,8 +35155,8 @@
           "Direction": "In",
           "Type": "Int",
           "Label": {
-            "zh-Hans": "界面控件索引",
-            "en": "UI Control Index"
+            "zh-Hans": "界面控件(组)索引",
+            "en": "UI Control (Group) Index"
           },
           "Placeholder": null,
           "ShellIndex": 1,
@@ -35858,11 +35868,13 @@
       "Identifier": "Execution.Skill.Modify_Resource",
       "ID": 393,
       "InGameName": {
-        "en": "Modify Skill Resource Amount",
-        "zh-Hans": "修改技能资源量"
+        "en": "Increase Skill Resource Amount",
+        "zh-Hans": "增加技能资源量"
       },
       "Alias": [
-        "Modify_Skill_Resource_Amount"
+        "Modify_Skill_Resource_Amount",
+        "Modify Skill Resource Amount",
+        "修改技能资源量"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -35933,8 +35945,8 @@
           "Direction": "In",
           "Type": "Flt",
           "Label": {
-            "zh-Hans": "变更值",
-            "en": "Change Value"
+            "zh-Hans": "增加值",
+            "en": "Increase Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -43051,8 +43063,8 @@
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "Break Loop",
+            "zh-Hans": "跳出循环"
           },
           "Description": {}
         },
@@ -43062,8 +43074,8 @@
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "Loop Body",
+            "zh-Hans": "循环体"
           },
           "Description": {}
         },
@@ -43073,8 +43085,8 @@
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "Loop Complete",
+            "zh-Hans": "循环完成"
           },
           "Description": {}
         }
@@ -45189,11 +45201,13 @@
       "Identifier": "Execution.Sound_Effect.Set_BGM",
       "ID": 597,
       "InGameName": {
-        "en": "Modify Player Background Music",
-        "zh-Hans": "修改玩家背景音乐"
+        "en": "Set Player Background Music",
+        "zh-Hans": "设置玩家背景音乐"
       },
       "Alias": [
-        "Modify_Player_Background_Music"
+        "Modify_Player_Background_Music",
+        "Modify Player Background Music",
+        "修改玩家背景音乐"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -47546,11 +47560,13 @@
       "Identifier": "Execution.Minimap_Marker.Set_Zoom",
       "ID": 634,
       "InGameName": {
-        "en": "Modify Mini-Map Zoom",
-        "zh-Hans": "修改小地图缩放"
+        "en": "Set Mini-Map Zoom",
+        "zh-Hans": "设置小地图缩放"
       },
       "Alias": [
-        "Modify_Mini_Map_Zoom"
+        "Modify_Mini_Map_Zoom",
+        "Modify Mini-Map Zoom",
+        "修改小地图缩放"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -47622,11 +47638,13 @@
       "Identifier": "Execution.Minimap_Marker.Set_Marker_State",
       "ID": 635,
       "InGameName": {
-        "en": "Modify Mini-Map Marker Activation Status",
-        "zh-Hans": "修改小地图标识生效状态"
+        "en": "Set Mini-Map Marker Activation Status",
+        "zh-Hans": "设置小地图标识生效状态"
       },
       "Alias": [
-        "Modify_Mini_Map_Marker_Activation_Status"
+        "Modify_Mini_Map_Marker_Activation_Status",
+        "Modify Mini-Map Marker Activation Status",
+        "修改小地图标识生效状态"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -47722,11 +47740,13 @@
       "Identifier": "Execution.Minimap_Marker.Set_Visible_List",
       "ID": 636,
       "InGameName": {
-        "en": "Modify Player List for Visible Mini-Map Markers",
-        "zh-Hans": "修改可见小地图标识的玩家列表"
+        "en": "Set Player List for Visible Mini-Map Markers",
+        "zh-Hans": "设置可见小地图标识的玩家列表"
       },
       "Alias": [
-        "Modify_Player_List_for_Visible_Mini_Map_Markers"
+        "Modify_Player_List_for_Visible_Mini_Map_Markers",
+        "Modify Player List for Visible Mini-Map Markers",
+        "修改可见小地图标识的玩家列表"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -47822,11 +47842,13 @@
       "Identifier": "Execution.Minimap_Marker.Set_Track_List",
       "ID": 637,
       "InGameName": {
-        "en": "Modify Player List for Tracking Mini-Map Markers",
-        "zh-Hans": "修改追踪小地图标识的玩家列表"
+        "en": "Set Player List for Tracking Mini-Map Markers",
+        "zh-Hans": "设置追踪小地图标识的玩家列表"
       },
       "Alias": [
-        "Modify_Player_List_for_Tracking_Mini_Map_Markers"
+        "Modify_Player_List_for_Tracking_Mini_Map_Markers",
+        "Modify Player List for Tracking Mini-Map Markers",
+        "修改追踪小地图标识的玩家列表"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -48121,11 +48143,13 @@
       "Identifier": "Execution.Minimap_Marker.Update_Markers",
       "ID": 640,
       "InGameName": {
-        "en": "Modify Player Markers on the Mini-Map",
-        "zh-Hans": "修改小地图标识的玩家标记"
+        "en": "Set Player Markers on the Mini-Map",
+        "zh-Hans": "设置小地图标识的玩家标记"
       },
       "Alias": [
-        "Modify_Player_Markers_on_the_Mini_Map"
+        "Modify_Player_Markers_on_the_Mini_Map",
+        "Modify Player Markers on the Mini-Map",
+        "修改小地图标识的玩家标记"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -51136,11 +51160,13 @@
       "Identifier": "Execution.Equipment.Modify_Affix",
       "ID": 674,
       "InGameName": {
-        "en": "Modify Equipment Affix Value",
-        "zh-Hans": "修改装备词条值"
+        "en": "Set Equipment Affix Value",
+        "zh-Hans": "设置装备词条值"
       },
       "Alias": [
-        "Modify_Equipment_Affix_Value"
+        "Modify_Equipment_Affix_Value",
+        "Modify Equipment Affix Value",
+        "修改装备词条值"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -52225,11 +52251,13 @@
       "Identifier": "Execution.Inventory.Modify_Item",
       "ID": 686,
       "InGameName": {
-        "en": "Modify Inventory Item Quantity",
-        "zh-Hans": "修改背包道具数量"
+        "en": "Increase Inventory Item Quantity",
+        "zh-Hans": "增加背包道具数量"
       },
       "Alias": [
-        "Modify_Inventory_Item_Quantity"
+        "Modify_Inventory_Item_Quantity",
+        "Modify Inventory Item Quantity",
+        "修改背包道具数量"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -52294,8 +52322,8 @@
           "Direction": "In",
           "Type": "Int",
           "Label": {
-            "zh-Hans": "变更值",
-            "en": "Change Value"
+            "zh-Hans": "增加值",
+            "en": "Increase Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -52430,11 +52458,13 @@
       "Identifier": "Execution.Inventory.Modify_Currency",
       "ID": 688,
       "InGameName": {
-        "en": "Modify Inventory Currency Quantity",
-        "zh-Hans": "修改背包货币数量"
+        "en": "Increase Inventory Currency Quantity",
+        "zh-Hans": "增加背包货币数量"
       },
       "Alias": [
-        "Modify_Inventory_Currency_Quantity"
+        "Modify_Inventory_Currency_Quantity",
+        "Modify Inventory Currency Quantity",
+        "修改背包货币数量"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -52499,8 +52529,8 @@
           "Direction": "In",
           "Type": "Int",
           "Label": {
-            "zh-Hans": "变更值",
-            "en": "Change Value"
+            "zh-Hans": "增加值",
+            "en": "Increase Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -53689,11 +53719,13 @@
       "Identifier": "Execution.Shop.Modify_Custom_Sale",
       "ID": 704,
       "InGameName": {
-        "en": "Modify Custom Shop Item Sales Info",
-        "zh-Hans": "修改自定义商店商品出售信息"
+        "en": "Set Custom Shop Item Sales Info",
+        "zh-Hans": "设置自定义商店商品出售信息"
       },
       "Alias": [
-        "Modify_Custom_Shop_Item_Sales_Info"
+        "Modify_Custom_Shop_Item_Sales_Info",
+        "Modify Custom Shop Item Sales Info",
+        "修改自定义商店商品出售信息"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -54002,11 +54034,13 @@
       "Identifier": "Execution.Shop.Modify_Inventory_Sale",
       "ID": 706,
       "InGameName": {
-        "en": "Modify Inventory Shop Item Sales Info",
-        "zh-Hans": "修改背包商店商品出售信息"
+        "en": "Set Inventory Shop Item Sales Info",
+        "zh-Hans": "设置背包商店商品出售信息"
       },
       "Alias": [
-        "Modify_Inventory_Shop_Item_Sales_Info"
+        "Modify_Inventory_Shop_Item_Sales_Info",
+        "Modify Inventory Shop Item Sales Info",
+        "修改背包商店商品出售信息"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -54156,11 +54190,13 @@
       "Identifier": "Execution.Shop.Modify_Cart_Item",
       "ID": 707,
       "InGameName": {
-        "en": "Modify Item Purchase Info in the Purchase List",
-        "zh-Hans": "修改物品收购表中道具收购信息"
+        "en": "Set Item Purchase Info in the Purchase List",
+        "zh-Hans": "设置物品收购表中道具收购信息"
       },
       "Alias": [
-        "Modify_Item_Purchase_Info_in_the_Purchase_List"
+        "Modify_Item_Purchase_Info_in_the_Purchase_List",
+        "Modify Item Purchase Info in the Purchase List",
+        "修改物品收购表中道具收购信息"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -56049,12 +56085,14 @@
       "Identifier": "Execution.Inventory.Modify_Loot_Item",
       "ID": 726,
       "InGameName": {
-        "en": "Modify Loot Component Item Quantity",
-        "zh-Hans": "修改掉落物组件道具数量"
+        "en": "Increase Loot Component Item Quantity",
+        "zh-Hans": "增加掉落物组件道具数量"
       },
       "Alias": [
         "Modify_Loot_Item_Component_Quantity",
-        "Modify Loot Item Component Quantity"
+        "Modify Loot Item Component Quantity",
+        "Modify Loot Component Item Quantity",
+        "修改掉落物组件道具数量"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -56119,8 +56157,8 @@
           "Direction": "In",
           "Type": "Int",
           "Label": {
-            "zh-Hans": "变更值",
-            "en": "Change Value"
+            "zh-Hans": "增加值",
+            "en": "Increase Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -56144,12 +56182,14 @@
       "Identifier": "Execution.Inventory.Modify_Loot_Currency",
       "ID": 727,
       "InGameName": {
-        "en": "Modify Loot Component Currency Quantity",
-        "zh-Hans": "修改掉落物组件货币数量"
+        "en": "Increase Loot Component Currency Quantity",
+        "zh-Hans": "增加掉落物组件货币数量"
       },
       "Alias": [
         "Modify_Loot_Component_Currency_Amount",
-        "Modify Loot Component Currency Amount"
+        "Modify Loot Component Currency Amount",
+        "Modify Loot Component Currency Quantity",
+        "修改掉落物组件货币数量"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -56214,8 +56254,8 @@
           "Direction": "In",
           "Type": "Int",
           "Label": {
-            "zh-Hans": "变更值",
-            "en": "Change Value"
+            "zh-Hans": "增加值",
+            "en": "Increase Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -57163,8 +57203,8 @@
           "Direction": "In",
           "Type": "Flt",
           "Label": {
-            "zh-Hans": "冷却剩余时间",
-            "en": "Remaining CD Time"
+            "zh-Hans": "冷却时间",
+            "en": "Cooldown"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -57206,11 +57246,13 @@
       "Identifier": "Execution.Skill.Modify_CD",
       "ID": 740,
       "InGameName": {
-        "en": "Modify Character Skill CD",
-        "zh-Hans": "修改角色技能冷却"
+        "en": "Increase Character Skill CD",
+        "zh-Hans": "增加角色技能冷却"
       },
       "Alias": [
-        "Modify_Character_Skill_CD"
+        "Modify_Character_Skill_CD",
+        "Modify Character Skill CD",
+        "修改角色技能冷却"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -57281,8 +57323,8 @@
           "Direction": "In",
           "Type": "Flt",
           "Label": {
-            "zh-Hans": "冷却时间修改值",
-            "en": "CD Time Modifier"
+            "zh-Hans": "冷却时间增加值",
+            "en": "CD Increase Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -57324,11 +57366,13 @@
       "Identifier": "Execution.Skill.Modify_CD_Ratio",
       "ID": 741,
       "InGameName": {
-        "en": "Modify Skill CD Percentage Based on Max CD",
-        "zh-Hans": "按最大冷却时间修改技能冷却百分比"
+        "en": "Set Skill CD Based on Maximum CD Percentage",
+        "zh-Hans": "按最大冷却时间比例设置技能冷却"
       },
       "Alias": [
-        "Modify_Skill_CD_Percentage_Based_on_Max_CD"
+        "Modify_Skill_CD_Percentage_Based_on_Max_CD",
+        "Modify Skill CD Percentage Based on Max CD",
+        "按最大冷却时间修改技能冷却百分比"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -57399,8 +57443,8 @@
           "Direction": "In",
           "Type": "Flt",
           "Label": {
-            "zh-Hans": "冷却比例修改值",
-            "en": "CD Ratio Modifier"
+            "zh-Hans": "比例值",
+            "en": "Ratio Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -58979,12 +59023,14 @@
       "Identifier": "Execution.Character_Related.Modify_Environment",
       "ID": 763,
       "InGameName": {
-        "en": "Modify Environment Settings",
-        "zh-Hans": "修改环境配置"
+        "en": "Set Environment Configuration",
+        "zh-Hans": "设置环境配置"
       },
       "Alias": [
         "Modify_environment_settings",
-        "Modify environment settings"
+        "Modify environment settings",
+        "Modify Environment Settings",
+        "修改环境配置"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -59531,11 +59577,13 @@
       "Identifier": "Execution.Chat_Channel.Modify_Permission",
       "ID": 770,
       "InGameName": {
-        "en": "Modify Player Channel Permission",
-        "zh-Hans": "修改玩家频道权限"
+        "en": "Set Player Channel Permissions",
+        "zh-Hans": "设置玩家频道权限"
       },
       "Alias": [
-        "Modify_Player_Channel_Permission"
+        "Modify_Player_Channel_Permission",
+        "Modify Player Channel Permission",
+        "修改玩家频道权限"
       ],
       "Type": "Fixed",
       "System": "Server",
@@ -60818,8 +60866,8 @@
       "Implementation": null,
       "__ref_id": "event.characterMoveSpeedReached",
       "Description": {
-        "en": "Adds the Unit Status effect [Monitor Movement Speed] to the Character Entity. This event is triggered when the conditions are met",
-        "zh-Hans": "为角色实体添加单位状态效果【监听移动速率】，达成条件会触发该事件"
+        "en": "Requires the character to have the unit status effect \"Monitor Movement Rate\" applied",
+        "zh-Hans": "需要角色挂载【监听移动速率】单位状态效果"
       }
     },
     {
@@ -60886,8 +60934,8 @@
       "Implementation": null,
       "__ref_id": "query.character.moveSpeed",
       "Description": {
-        "en": "Can only be searched when the Character has the [Monitor Movement Speed] Unit Status effect",
-        "zh-Hans": "仅当角色拥有【监听移动速率】的单位状态效果时，才能查询"
+        "en": "Requires the character to have the unit status effect \"Monitor Movement Rate\" applied",
+        "zh-Hans": "需要角色挂载【监听移动速率】单位状态效果"
       }
     },
     {
@@ -141382,8 +141430,8 @@
           "Direction": "In",
           "Type": "Int",
           "Label": {
-            "en": "Count",
-            "zh-Hans": "Count"
+            "en": "count",
+            "zh-Hans": "count"
           },
           "Placeholder": null,
           "ShellIndex": 0,
@@ -143282,8 +143330,8 @@
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Label": {
-            "en": "",
-            "zh-Hans": ""
+            "en": "Execute",
+            "zh-Hans": "执行"
           },
           "Description": {}
         }
@@ -144402,11 +144450,13 @@
       "ID": 200061,
       "KernelID": 2000,
       "InGameName": {
-        "en": "Modify Attack Weight",
-        "zh-Hans": "修改攻击权重"
+        "en": "Set Attack Weight",
+        "zh-Hans": "设置攻击权重"
       },
       "Alias": [
-        "Modify_Attack_Weight"
+        "Modify_Attack_Weight",
+        "Modify Attack Weight",
+        "修改攻击权重"
       ],
       "Type": "Fixed",
       "System": "Client",
@@ -146594,11 +146644,13 @@
       "ID": 200084,
       "KernelID": 2000,
       "InGameName": {
-        "en": "Modify the Aggro Value of the Specified Entity",
-        "zh-Hans": "修改指定实体的仇恨值"
+        "en": "Increase the Aggro Value of the Specified Entity",
+        "zh-Hans": "增加指定实体的仇恨值"
       },
       "Alias": [
-        "Modify_the_Aggro_Value_of_the_Specified_Entity"
+        "Modify_the_Aggro_Value_of_the_Specified_Entity",
+        "Modify the Aggro Value of the Specified Entity",
+        "修改指定实体的仇恨值"
       ],
       "Type": "Fixed",
       "System": "Client",
@@ -146663,8 +146715,8 @@
           "Direction": "In",
           "Type": "Int",
           "Label": {
-            "zh-Hans": "仇恨值增量",
-            "en": "Aggro Value Increment"
+            "zh-Hans": "增加值",
+            "en": "Increase Value"
           },
           "Placeholder": null,
           "ShellIndex": 2,
@@ -146686,11 +146738,13 @@
       "ID": 200085,
       "KernelID": 2000,
       "InGameName": {
-        "en": "Modify the Aggro Value of the Specified Entity Proportionally",
-        "zh-Hans": "按比例修改指定实体的仇恨值"
+        "en": "Set the Aggro Value of the Specified Entity Proportionally",
+        "zh-Hans": "按比例设置指定实体的仇恨值"
       },
       "Alias": [
-        "Modify_the_Aggro_Value_of_the_Specified_Entity_Proportionally"
+        "Modify_the_Aggro_Value_of_the_Specified_Entity_Proportionally",
+        "Modify the Aggro Value of the Specified Entity Proportionally",
+        "按比例修改指定实体的仇恨值"
       ],
       "Type": "Fixed",
       "System": "Client",
@@ -146755,8 +146809,8 @@
           "Direction": "In",
           "Type": "Flt",
           "Label": {
-            "zh-Hans": "修改的仇恨值比例",
-            "en": "Modified Aggro Value Ratio"
+            "zh-Hans": "仇恨值比例",
+            "en": "Aggro Value Ratio"
           },
           "Placeholder": null,
           "ShellIndex": 2,

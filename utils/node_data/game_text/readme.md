@@ -43,14 +43,11 @@ interface NodeParam {
 - [new_nodes](nodes.json)
 - [old_nodes](../data.json): 格式参见 [types.ts](../types.ts)
 
-输出文件(仅包含增减, 不包含更新): 
-- [comparison_result.log](comparison_result.log)
+输出文件: 
+- [comparison_result.log](comparison_result.log): 仅包含增减节点信息
 
-控制台输出: 包含 old_data 中变化名称与路径, 新增的节点, 以及删除的节点
+控制台输出: 仅包含新增的节点以及删除的节点 (Value Changed 的内容会自动更新入 data.json 而不再输出)
 ```log
-[Value Changed] Src: <data path>
-    Old: <value>
-    New: <value>
 [Added Nodes] <node id>: <node name>
 [Removed Nodes] <node id>: <node name>
 # repeated of the above
