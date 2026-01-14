@@ -1,5 +1,5 @@
 {
-  "commitMessage": "将文档数据与信息录入data.json中, 添加了测试用例",
+  "commitMessage": "更新 6.3.0 版本数据",
   "notSync": true,
   "include": [
     "*",
@@ -17,6 +17,7 @@
     "!utils/extracting_nodes/**",
     "!utils/protobuf/debug_decode.ts",
     "!utils/node_data/convert.ts",
+    "!utils/node_data/game_text/**",
     "!utils/functions/ref.*",
     "!utils/functions/tools.ts",
     "!utils/functions/math_raw.d.ts",
