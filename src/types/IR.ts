@@ -1,6 +1,6 @@
 import type { DefineDecl, GlobalDecl, GlobalVarDecl, ImportDecl, LocalVarDecl, NodeVarDecl, SignalDecl, StructDecl, TimerDecl } from "./IR_decl.ts";
-import { ComponentDecl, LambdaDecl, SharedFuncDecl } from "./IR_func.ts";
-import { IR_AnchorNode, IR_BranchNode, IR_CallNode, IR_EvalNode, IR_ExecutionBlock, IR_InOutNode, IR_JumpNode, IR_Node, IR_NodeChain, IR_Trigger } from "./IR_node.ts";
+import type { ComponentDecl, LambdaDecl, SharedFuncDecl } from "./IR_func.ts";
+import type { IR_AnchorNode, IR_BranchNode, IR_CallNode, IR_EvalNode, IR_ExecutionBlock, IR_InOutNode, IR_JumpNode, IR_Node, IR_NodeChain, IR_Trigger } from "./IR_node.ts";
 import type { IRBase } from "./types.ts";
 
 export type * from "./IR_node.ts";

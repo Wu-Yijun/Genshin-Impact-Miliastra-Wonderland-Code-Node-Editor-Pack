@@ -10,18 +10,9 @@
  */
 
 import { type_equal, UNK_TYPE, type NodeType } from "../../utils/node_data/node_type.ts";
-import { IR_GraphModule } from "../types/IR.ts";
-import { BranchId } from "../types/types.ts";
-import { Graph } from "./graph_wrapper.ts";
-
-// --- 0. 外部依赖接口假设 (Mocks/Interfaces) ---
-
-
-// 外部提供的类型推导函数
-declare function solve_identifier(
-  callee_name: string,
-  arg_types: NodeType[]
-): { identifier: string, args: string[], return_type: NodeType };
+import type { IR_GraphModule } from "../types/IR.ts";
+import type { BranchId } from "../types/types.ts";
+import { Graph, solve_pure_data_node } from "./graph_wrapper.ts";
 
 // --- 1. 核心数据结构定义 ---
 
@@ -61,7 +52,6 @@ export class CompilerContext {
   private graph: Graph;
 
   // // 1. 符号表: 变量名 -> 数据源 (包括 IR_Call 的 outputs, 局部变量等)
-  // private varMap = new Map<string, SourceInfo>();
 
   // [新增] 待处理的跳转连接
   private pendingFlows: PendingFlowRequest[] = [];
@@ -207,7 +197,7 @@ export class CompilerContext {
     calleeName: string,
     argTypes: NodeType[],
     contextInfo: string = ""
-  ): { identifier: string, argPortNames: string[], returnType: NodeType } {
+  ): { identifier: string, argPortNames: string[], returnPortName: string, returnType: NodeType } {
 
     // 1. 替换 UNK 类型，避免推导器崩溃 (可选)
     // const safeArgTypes = argTypes.map(t => t === UNK_TYPE ? "ANY" : t);
@@ -215,13 +205,14 @@ export class CompilerContext {
     // 2. 调用外部推导
     let result;
     try {
-      result = solve_identifier(calleeName, argTypes);
+      result = solve_pure_data_node(calleeName, argTypes);
     } catch (e) {
       console.warn(`[TypeSolver] Failed to solve '${calleeName}' at ${contextInfo}:`, e);
       // Fallback
       return {
         identifier: calleeName,
         argPortNames: argTypes.map((_, i) => `arg${i}`),
+        returnPortName: "result",
         returnType: UNK_TYPE
       };
     }
@@ -229,6 +220,7 @@ export class CompilerContext {
     return {
       identifier: result.identifier,
       argPortNames: result.args,
+      returnPortName: result.return_identifier,
       returnType: result.return_type
     };
   }

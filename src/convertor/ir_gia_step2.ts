@@ -7,13 +7,10 @@
  * 4. 将结果“连接”到指定的目标端口 (graph.connect 或 graph.set_default)
  */
 
-import { UNK_TYPE, type NodeType } from "../../utils/node_data/node_type.ts";
-import { ASTExpr, CallExpression } from "../types/AST_expr.ts";
+import { type_equal, UNK_TYPE, type NodeType } from "../../utils/node_data/node_type.ts";
+import type { ASTExpr, CallExpression } from "../types/AST_expr.ts";
 import { Graph } from "./graph_wrapper.ts";
-import { ASTResult, CompilerContext, SourceInfo } from "./ir_gia_step1.ts";
-
-// 假设外部提供的类型比较函数
-declare function type_equal(a: NodeType, b: NodeType): boolean;
+import { type ASTResult, CompilerContext } from "./ir_gia_step1.ts";
 
 
 /** 中间运算节点的默认输出端口名 */
@@ -133,7 +130,7 @@ export class ASTExpander {
     // 根据函数名 (callee) 和参数类型，推导具体的运算节点标识符和端口布局
     const solverResult = this.ctx.solveFunction(expr.callee, argTypes, `Call ${expr.callee}`);
 
-    const { identifier, argPortNames, returnType } = solverResult;
+    const { identifier, argPortNames, returnPortName, returnType } = solverResult;
 
     // 4. 创建中间运算节点
     // 注意: 这些节点是隐式的，由表达式生成的，通常不需要特定的 _id，让 Graph 自动生成
@@ -159,7 +156,7 @@ export class ASTExpander {
       kind: "source",
       info: {
         nodeId: nodeId,
-        port: DEFAULT_OP_OUTPUT_PORT, // 假设运算节点统一输出名为 "result"
+        port: returnPortName,
         type: returnType
       },
       type: returnType,

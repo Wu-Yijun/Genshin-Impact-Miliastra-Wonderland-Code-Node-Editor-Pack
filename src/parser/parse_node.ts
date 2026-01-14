@@ -2,11 +2,11 @@
 import type { IR_AnchorNode, IR_BranchNode, IR_CallNode, IR_EvalNode, IR_InOutNode, IR_JumpNode, IR_Node } from "../types/IR_node.ts";
 import type { BranchId, ParserState } from "../types/types.ts";
 
-import { BUILD_IN_SYS_NODE_Set, IR_Id_Counter } from "../types/consts.ts";
+import { BUILD_IN_SYS_NODE_MAP, IR_Id_Counter } from "../types/consts.ts";
 import { extractBalancedTokens } from "./balanced_extract.ts";
 import { name_style, parse_branch_id, parse_int } from "./parse_utils.ts";
 import { expect, peekIs, next, src_pos, expectEOF } from "./utils.ts";
-import { ALL_SYS_NODE_Set, SYS_TRIGGER_NODE_SET } from "../types/consts.gen.ts";
+// import { ALL_SYS_NODE_Set, SYS_TRIGGER_NODE_SET } from "../types/consts.gen.ts";
 import { parseNodeChainList } from "./parse_block.ts";
 import { assert, assertEqs } from "../../utils/utils.ts";
 import { parse_expr_program, parse_expr } from "./parse_expr.ts";
@@ -128,16 +128,28 @@ export function parseCallNode(s: ParserState): IR_CallNode {
   }
 
   // 系统内置函数表 
-  if (ALL_SYS_NODE_Set.has(ret.name as any)) {
-    ret.class = "Sys";
-    if (BUILD_IN_SYS_NODE_Set.has(ret.name as any)) {
-      ret.specific = ret.name as any;
-    } else if (SYS_TRIGGER_NODE_SET.has(ret.name as any)) {
-      ret.specific = "Trigger";
-    }
-  } else {
-    ret.class = "Usr";
+  // TODO
+  ret.class = "Sys";
+  if (ret.name.startsWith("Trigger_") || ret.name.startsWith("On_")) {
+    ret.specific = "Trigger";
+  } else if (BUILD_IN_SYS_NODE_MAP[ret.name]) {
+    ret.specific = ret.name;
+    ret.name = BUILD_IN_SYS_NODE_MAP[ret.name];
   }
+  // if (ALL_SYS_NODE_Set.has(ret.name as any)) {
+  //   ret.class = "Sys";
+  //   if (BUILD_IN_SYS_NODE_Set.has(ret.name as any)) {
+  //     ret.specific = ret.name as any;
+  //   } else if (SYS_TRIGGER_NODE_SET.has(ret.name as any)) {
+  //     ret.specific = "Trigger";
+  //   }
+  // } else if (ret.name.startsWith("Trigger_") || ret.name.startsWith("On_")) {
+  //   // TODO: fixed this naive method
+  //   ret.class = "Sys";
+  //   ret.specific = "Trigger";
+  // } else {
+  //   ret.class = "Usr";
+  // }
 
   // 解析 inputs: (args)
   ret.inputs = parseInArguments(s);

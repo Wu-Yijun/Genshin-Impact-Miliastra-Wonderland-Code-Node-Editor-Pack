@@ -1,6 +1,6 @@
 import type { NodeType } from "../../utils/node_data/node_type.ts";
 import { NodeVar } from "./class.ts";
-import { IRBase } from "./types.ts";
+import type { IRBase } from "./types.ts";
 
 /** 声明从其他文件导入可复用的组件或纯函数
  * ```ts

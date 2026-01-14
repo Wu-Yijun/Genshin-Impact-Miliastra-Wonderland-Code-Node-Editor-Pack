@@ -2,9 +2,9 @@
  * Step 4: Advanced Branching & Jump Handling
  */
 
-import { ArithmeticProgram } from "../types/AST_expr.ts";
-import { IR_EvalNode, IR_NodeChain } from "../types/IR_node.ts";
-import { BranchId } from "../types/types.ts";
+import type { ArithmeticProgram } from "../types/AST_expr.ts";
+import type { IR_EvalNode, IR_NodeChain } from "../types/IR_node.ts";
+import type { BranchId } from "../types/types.ts";
 import { NodeFlowBuilder } from "./ir_gia_step3.ts";
 
 // 扩展 NodeFlowBuilder 的原型或子类方法

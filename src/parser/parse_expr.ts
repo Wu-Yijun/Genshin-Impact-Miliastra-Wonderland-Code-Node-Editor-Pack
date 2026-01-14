@@ -1,3 +1,4 @@
+import type { NodeType } from "../../utils/index.ts";
 import type { ArithmeticProgram, VariableDeclaration, ReturnStatement, ObjectExpression, ArrayExpression, ASTExpr, Literal, Identifier, CallExpression } from "../types/AST_expr.ts";
 import { AST_BINARY_OP_MAP, AST_PRECEDENCE, AST_UNARY_OP_MAP } from "../types/consts.ts";
 import type { ParserState, Token } from "../types/types.ts";
@@ -186,13 +187,14 @@ function parsePrefix(state: ParserState): ASTExpr {
   // 字面量
   if (token.type === 'int' || token.type === 'float') {
     // 假设 Tokenizer 已经处理了 0x, 0o 等格式，这里简单转换
-    return { type: 'Literal', value: Number(token.value.replaceAll("_", "")), raw: token.value };
+    const var_type: NodeType = token.type === 'int' ? { t: "b", b: "Int" } : { t: "b", b: "Flt" };
+    return { type: 'Literal', var_type, value: Number(token.value.replaceAll("_", "")), raw: token.value };
   }
   if (token.type === 'boolean') {
-    return { type: 'Literal', value: token.value === 'true', raw: token.value };
+    return { type: 'Literal', var_type: { t: "b", b: "Bol" }, value: token.value === 'true', raw: token.value };
   }
   if (token.type === 'string') {
-    return { type: 'Literal', value: token.value, raw: token.value };
+    return { type: 'Literal', var_type: { t: "b", b: "Str" }, value: token.value, raw: token.value };
   }
 
   // 标识符

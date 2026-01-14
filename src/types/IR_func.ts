@@ -1,8 +1,8 @@
-import { NodeType } from "../../utils/node_data/node_type.ts";
-import { ArithmeticProgram } from "./AST_expr.ts";
-import { LocalVarDecl } from "./IR_decl.ts";
-import { IR_ExecutionBlock } from "./IR_node.ts";
-import { BranchId, IRBase } from "./types.ts";
+import type { NodeType } from "../../utils/node_data/node_type.ts";
+import type { ArithmeticProgram } from "./AST_expr.ts";
+import type { LocalVarDecl } from "./IR_decl.ts";
+import type { IR_ExecutionBlock } from "./IR_node.ts";
+import type { BranchId, IRBase } from "./types.ts";
 
 /** 声明共享复合节点
  * ```ts

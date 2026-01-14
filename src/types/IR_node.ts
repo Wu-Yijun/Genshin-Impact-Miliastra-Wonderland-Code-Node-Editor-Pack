@@ -1,6 +1,5 @@
 import type { NodeType } from "../../utils/node_data/node_type.ts";
 import type { ArithmeticProgram, ASTExpr, Identifier } from "./AST_expr.ts";
-import { BUILD_IN_SYS_NODE } from "./consts.ts";
 import type { Token } from "./types.ts";
 import type { BranchId, IRBase } from "./types.ts";
 
@@ -79,7 +78,7 @@ export type IR_Node =
 export interface IR_CallNode extends IRBase {
   kind: "call";
   class: "Sys" | "Usr";
-  specific?: typeof BUILD_IN_SYS_NODE[number]; // special built-in
+  specific?: string; // special built-in
   name: string;
 
   inputs: (IR_FunctionArg & { kind: "in" })[];

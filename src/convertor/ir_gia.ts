@@ -61,3 +61,30 @@
  * * 如果 ID 为 0，取出栈顶 ID 并连接。
  * * 如果 ID 为其他，查找对应的 Anchor（沿用之前的 Anchor 逻辑）。
  */
+
+import { safe_parse } from "../parser/index.ts";
+import { Graph } from "./graph_wrapper.ts";
+import { CompilerContext } from "./ir_gia_step1.ts";
+import { AdvancedNodeFlowBuilder } from "./ir_gia_step4.ts";
+
+const src = `
+[On_Tab_Select()[source=src, tab_id=id]].Switch(tab_id)(
+    1 = If(m.eq(source.Plant_Level, 0))
+      .CreatePrefab(1077236130, q.pos(), q.rot(), Self, level=1)
+      .SetVal(source.Plant_Level, 1, true),
+    2 = If(m.eq(Self.Plant_Level,0))
+      .CreatePrefab(1077236131, q.pos(), q.rot(), Self, level=1)
+      .SetVal(source.Plant_Level, 2, true),
+    3 = If(m.eq(Self.Plant_Level,0))
+      .PlayEffects(10002107, target=Self, "RootNode", true, true, zoom=0.1),
+  );
+`;
+
+
+const ir = safe_parse(src);
+
+const graph = new Graph();
+const ctx = new CompilerContext(graph);
+const fb = new AdvancedNodeFlowBuilder(ctx, graph);
+
+fb.processBlock(ir!.graph[0]);

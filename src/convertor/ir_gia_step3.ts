@@ -9,8 +9,8 @@
  */
 
 import { UNK_TYPE } from "../../utils/index.ts";
-import { ArithmeticProgram } from "../types/AST_expr.ts";
-import { IR_CallNode, IR_EvalNode, IR_ExecutionBlock, IR_NodeChain } from "../types/IR_node.ts";
+import type { ArithmeticProgram } from "../types/AST_expr.ts";
+import type { IR_CallNode, IR_EvalNode, IR_ExecutionBlock, IR_NodeChain } from "../types/IR_node.ts";
 import { Graph } from "./graph_wrapper.ts";
 import { CompilerContext } from "./ir_gia_step1.ts";
 import { ASTExpander } from "./ir_gia_step2.ts";
@@ -201,7 +201,7 @@ export class NodeFlowBuilder {
     // IR_CallNode 的 outputs 定义了该节点产生的变量名
     node.outputs.forEach((output, index) => {
       if (output.expr.type === 'Identifier') {
-        const varName = output.expr.name;
+        const varName = output.name ?? output.expr.name;
         const portName = `res${index}`; // 同样，实际应查询元数据
         // 注册：这个变量名 varName 由 nodeId 的 portName 产生
         this.ctx.registerVar(varName, nodeId, portName, output.type || UNK_TYPE);

@@ -67,12 +67,23 @@ export const TOKENIZER_PATTERNS = [
   { type: "Unknown", regex: /^./ },
 ] as const satisfies { type: PatternTypes; regex: RegExp }[];
 
-export const BUILD_IN_SYS_NODE = [
+const BUILD_IN_SYS_NODE = [
   "If", "Switch", "Loop", "ForEach", "Selector",
   "SetVal", "In", "Out", "Trigger", "Timer", "Signal"
 ] as const;
-export type BUILD_IN_SYS_NODE = typeof BUILD_IN_SYS_NODE[number];
-export const BUILD_IN_SYS_NODE_Set = Object.freeze(new Set(BUILD_IN_SYS_NODE));
+export const BUILD_IN_SYS_NODE_MAP: { [key: string]: string } = {
+  "If": "Control.General.Branch",
+  "Switch": "Control.General.Switch",
+  "Loop": "Execution.Common_Node.For_Loop",
+  "ForEach": "Execution.List_Operation.For_Each",
+  "SetVal": "Execution.Custom_Variable.Set_Variable",
+  "Trigger": "Control.General.Trigger",
+  "Timer": "Trigger.Timer.On_Timer_Trigger",
+  "Signal": "Trigger.Signal.On_Signal",
+} as const satisfies { [key: string]: string };
+
+type BUILD_IN_SYS_NODE = typeof BUILD_IN_SYS_NODE[number];
+const BUILD_IN_SYS_NODE_Set = Object.freeze(new Set(BUILD_IN_SYS_NODE));
 
 
 
