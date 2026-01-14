@@ -1,5 +1,5 @@
 syntax = "proto3";
-// @version: 2.1.0
+// @version: 2.2.0
 // package gia;
 // @Author Aluria, MiemieMethod
 
@@ -19,47 +19,50 @@ message AssetBundle {
 message ResourceEntry {
   // 业务类型枚举 (决定了这是个什么"东西")
   enum ResourceClass {
-    UNKNOWN_TYPE              = 0; // 未知类型
-    OBJECT                    = 1; // 物件元件、掉落物元件、元件组
-    CREATION                  = 2; // 造物元件
-    OBJECT_ENTITY             = 3; // 物件实体、掉落物实体、实体组
-    CREATION_ENTITY           = 4; // 造物实体
-    TERRAIN_ENTITY            = 5; // 地形实体
-    PRESET_POINT              = 6; // 预设点
-    UNIT_STATUS               = 7; // 单位状态
-    SKILL                     = 8; // 技能
-    ENTITY_NODE_GRAPH         = 9; // 实体节点图
-    BOOLEAN_FILTER_GRAPH      = 10; // 布尔过滤器节点图
-    SKILL_NODE_GRAPH          = 11; // 技能节点图
-    COMPOSITE_NODE_DECL       = 12; // 复合节点声明 (含监听信号、修改/拆分/拼装结构体)
-    CAMERA                    = 13; // 镜头
-    SIGNAL_NODE_DECL          = 14; // 信号节点声明 (发送信号、向服务器节点图发送信号)
-    UI_CONTROL                = 15; // 界面控件
-    SKILL_RESOURCE            = 16; // 技能资源
-    CLASS                     = 17; // 职业
-    PLAYER_TEMPLATE           = 18; // 玩家模板
-    CHARACTER_TEMPLATE        = 19; // 角色模板
-    INTERFACE_LAYOUT          = 20; // 界面布局
-    UI_CONTROL_GROUP          = 21; // 界面控件组（交互控件）
-    STATUS_NODE_GRAPH         = 22; // 状态节点图
-    CLASS_NODE_GRAPH          = 23; // 职业节点图
-    GLOBAL_TIMER              = 24; // 全局计时器
-    PROJECTILE                = 25; // 投射物
-    ITEM                      = 26; // 道具
-    DECORATION                = 28; // 装饰物
-    STRUCTURE                 = 29; // 结构体定义（高级数据结构）
-    SHOP_TEMPLATE             = 30; // 商店模板
-    CURRENCY                  = 35; // 货币
-    LEVEL_STRUCTURE           = 37; // 关卡结构体定义
-    PATH                      = 38; // 关卡路径
-    SHIELD                    = 39; // 护盾
-    ENTITY_DEPLOYMENT_GROUP   = 43; // 实体布设组
-    UNIT_TAG                  = 44; // 单位标签
-    SCAN_TAG                  = 45; // 扫描标签
-    ITEM_NODE_GRAPH           = 46; // 道具节点图
-    INTEGER_FILTER_GRAPH      = 47; // 整数过滤器节点图
-    LIGHT_SOURCE              = 48; // 光源
-    ENVIRONMENT_CONFIGURATION = 49; // 环境配置
+    UNKNOWN_TYPE                 = 0; // 未知类型
+    OBJECT                       = 1; // 物件元件、掉落物元件、元件组
+    CREATION                     = 2; // 造物元件
+    OBJECT_ENTITY                = 3; // 物件实体、掉落物实体、实体组
+    CREATION_ENTITY              = 4; // 造物实体
+    TERRAIN_ENTITY               = 5; // 地形实体
+    PRESET_POINT                 = 6; // 预设点
+    UNIT_STATUS                  = 7; // 单位状态
+    SKILL                        = 8; // 技能
+    ENTITY_NODE_GRAPH            = 9; // 实体节点图
+    BOOLEAN_FILTER_GRAPH         = 10; // 布尔过滤器节点图
+    SKILL_NODE_GRAPH             = 11; // 技能节点图
+    COMPOSITE_NODE_DECL          = 12; // 复合节点声明 (含监听信号、修改/拆分/拼装结构体)
+    CAMERA                       = 13; // 镜头
+    SIGNAL_NODE_DECL             = 14; // 信号节点声明 (发送信号、向服务器节点图发送信号)
+    UI_CONTROL                   = 15; // 界面控件
+    SKILL_RESOURCE               = 16; // 技能资源
+    CLASS                        = 17; // 职业
+    PLAYER_TEMPLATE              = 18; // 玩家模板
+    CHARACTER_TEMPLATE           = 19; // 角色模板
+    INTERFACE_LAYOUT             = 20; // 界面布局
+    UI_CONTROL_GROUP             = 21; // 界面控件组（交互控件）
+    STATUS_NODE_GRAPH            = 22; // 状态节点图
+    CLASS_NODE_GRAPH             = 23; // 职业节点图
+    GLOBAL_TIMER                 = 24; // 全局计时器
+    PROJECTILE                   = 25; // 投射物
+    ITEM                         = 26; // 道具
+    DECORATION                   = 28; // 装饰物
+    STRUCTURE                    = 29; // 结构体定义（高级数据结构）
+    SHOP_TEMPLATE                = 30; // 商店模板
+    CURRENCY                     = 35; // 货币
+    LEVEL_STRUCTURE              = 37; // 关卡结构体定义
+    PATH                         = 38; // 关卡路径
+    SHIELD                       = 39; // 护盾
+    ENTITY_DEPLOYMENT_GROUP      = 43; // 实体布设组
+    UNIT_TAG                     = 44; // 单位标签
+    SCAN_TAG                     = 45; // 扫描标签
+    ITEM_NODE_GRAPH              = 46; // 道具节点图
+    INTEGER_FILTER_GRAPH         = 47; // 整数过滤器节点图
+    LIGHT_SOURCE                 = 48; // 光源
+    ENVIRONMENT_CONFIGURATION    = 49; // 环境配置
+    CREATION_DECISION_NODE_GRAPH = 51; // 造物状态选择节点图
+    CREATION_SKILL_NODE_GRAPH    = 52; // 造物技能节点图
+    CREATION_STATUS_NODE_GRAPH   = 53; // 造物状态节点图
     // reserved 27, 31 to 34, 36, 40 to 42;
   };
 
@@ -132,6 +135,9 @@ message ResourceLocator {
     CLIENT_FILTER     = 20001; // 过滤器类型(默认 Bool)
     CLIENT_SKILL      = 20002; // 技能节点图流程(客户端)
     CLIENT_INT_FILTER = 20006; // 整数过滤器类型
+    CREATION_GRAPH    = 20007; // 造物相关节点图
+    CREATION_SKILL    = 20008; // 造物技能节点图流程(客户端)
+    CREATION_STATUS   = 20009; // 造物技能状态节点图流程(客户端)
   }
 
   // AssetKind/Kind (原型域/数据结构)：
@@ -287,11 +293,19 @@ enum ClientTypeId {
   C_GUID      = 14;
   C_GUID_LIST = 15;
 
-  C_FACTION = 16;
+  C_FACTION      = 16;
+  C_FACTION_LIST = 25;
 
   C_CONFIG      = 18;
-  C_PREFAB      = 19;
   C_CONFIG_LIST = 20;
+
+  C_PREFAB      = 19;
+  C_PREFAB_LIST = 21;
+
+  C_STRUCT      = 22;
+  C_STRUCT_LIST = 23;
+
+  C_DICT = 24;
 
   // 预留区：用于UI中枚举连线时的匹配
   // Starting From: 10001
@@ -308,10 +322,12 @@ message TypeDefinition {
     CLIENT  = 2;
   }
   message StructReference { int64 schema_id = 1; }
-  message MapKeyValueBinding {
-    ServerTypeId   key_type        = 1;
-    ServerTypeId   value_type      = 2;
-    optional int64 value_struct_id = 3;
+  message MapKeyValueBinding { // todo: 这很讨厌, 所有id都使用了两套系统......
+    int64          key_type             = 1; // server type id for server/client
+    int64          value_type           = 2; // server type id for server/client
+    optional int64 value_struct_id      = 3;
+    optional int32 xxx_always_one_4     = 4; // always one
+    optional int32 xxx_always_one_two_5 = 5; // todo: what is this: 2 only for val_poly in decided map in client
   }
 
   message ServerType {
@@ -329,7 +345,17 @@ message TypeDefinition {
   }
 
   message ClientType {
-    ClientTypeId type_tag = 2;
+    enum Implementation {
+      PRIMITIVE = 0;
+      STRUCT    = 1;
+      PAIR      = 2;
+    }
+    ClientTypeId   type_tag = 2;
+    Implementation impl     = 3;
+    oneof schema {
+      StructReference    struct_ref  = 100;
+      MapKeyValueBinding map_binding = 101;
+    }
   }
 
   Backend backend = 1;
@@ -356,12 +382,26 @@ message TypedValue {
     STRUCT_BLOCK  = 10001; // 结构体块
     LIST_GROUP    = 10002; // 数组/列表
     MAP_GROUP     = 10003; // 字典/键值对
+    MAP_UNDECIDED = 10006; // 未选择类型的 Generic 字典
     MAP_PAIR_ITEM = 10007; // 键值对子项
   }
 
-  WidgetType              widget       = 1; // 样式类
-  int32                   is_value_set = 2; // 0=空值, 1=用户已修改
-  optional TypeDefinition type_def     = 4; // 类型元数据
+  WidgetType widget       = 1; // 样式类
+  int32      is_value_set = 2; // 0=空值, 1=用户已修改
+
+  optional TypeDefinition type_def = 4; // 类型元数据
+
+  // TODO: 通过 composite decl 测试不同样式
+  message IdSelector {
+    int32 kind = 1;
+    message Kind {
+      int32 selected = 1;
+    }
+    oneof kind {
+      Kind status_graph = 106; //Status Node Graph Configuration ID
+    }
+  }
+  optional IdSelector id_selector = 3; // ID选择器类别
 
   // 结构体实例追踪（用于在图中生成唯一的索引名）
   message InstanceTracker {
@@ -446,6 +486,7 @@ message DynamicTypeMetadata {
         TypeDefinition.StructReference    target_struct_id    = 100;
         TypeDefinition.StructReference    list_item_struct_id = 101;
         TypeDefinition.MapKeyValueBinding map_config          = 102;
+        TypeDefinition.MapKeyValueBinding undecided_map       = 103; // todo: why
       }
     }
     Inner inner = 1;
@@ -643,7 +684,8 @@ message StructureDefinition {
   Field concreteField = 2; // same as 1
   int32 structVersion = 3; // Version Updated as structure is modified and as
   // other structures modified
-  int32 itemCount = 4; // item count
+  int32 itemCount        = 4; // item count
+  int32 xxx_always_one_5 = 5; // what is this
 
   message Field {
     int64           id   = 1;
@@ -834,6 +876,20 @@ message NodeInstance {
   }
   // 结构体依赖声明
   repeated DependencyDeclaration using_structs = 10;
+
+  // only for Creation Status Node Graph's Begin Node
+  // todo: confirm this
+  optional CreationExecSeq execution_sequence = 11;
+  message CreationExecSeq {
+    int32 class_base = 1;
+    oneof class {
+      SequenceLen sequence_length = 100;
+    }
+
+    message SequenceLen {
+      int32 len = 1;
+    }
+  }
 }
 
 // 引脚签名 (Meta Tag)
@@ -894,6 +950,7 @@ message PinInstance {
   // 仅用于动态类型 (Struct/Signal/Composite)
   // 当 Shell 定义发生变更(插队/重排)时，通过此 ID 找回连线关系
   optional int32 persistent_pin_uid = 7; // 原 compositePinUid
+
 }
 
 // 连接

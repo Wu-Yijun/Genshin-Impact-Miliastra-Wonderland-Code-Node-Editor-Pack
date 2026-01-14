@@ -393,6 +393,7 @@ export class TypeLayers {
     src_path: string,
     dest_path?: string,
     separator?: string,
+    authors?: string[],
   }) {
     switch (type) {
       case "ts":
@@ -403,7 +404,7 @@ export class TypeLayers {
  *
  * @version ${config.version}
  * @date ${new Date().toString()}
- * @author Aluria
+${(config.authors ?? ["Aluria"]).map(x => " * @author " + x).join("\n")}
  * 
  * @source ${config.src_path}
  * @dest ${out_file}
@@ -480,6 +481,7 @@ function main(input_path: string) {
   if (version === null) {
     throw new Error("ProtoBuf file is lack of version info such as '// @version: 1.0.0'");
   }
+  const authors = /^\s*\/\/\s*@?Author:?\s*(.+)$/m.exec(proto_raw)?.[1].split(",").map(x => x.trim()).filter(x => x.length > 0);
   const proto = proto_raw
     .split("\n")
     .map(s => s.replace(/\/\/.*$/m, ""))
@@ -496,6 +498,7 @@ function main(input_path: string) {
     version: version[1].trim(),
     src_path: input_path,
     separator: "_",
+    authors: authors
   });
 }
 

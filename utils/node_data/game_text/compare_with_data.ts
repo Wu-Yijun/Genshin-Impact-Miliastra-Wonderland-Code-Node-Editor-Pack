@@ -205,15 +205,15 @@ if (changes.length > 0) {
   changes.forEach(c => console.log(c));
 }
 
-// if (addedNodes.length > 0) {
-//   addedNodes.forEach(n => console.log(`[Added Nodes] ${n}`));
-// }
+if (addedNodes.length > 0) {
+  addedNodes.forEach(n => console.log(`[Added Nodes] ${n}`));
+}
 
-// if (removedNodes.length > 0) {
-//   removedNodes.forEach(n => console.log(`[Removed Nodes] ${n}`));
-// }
-// Save Logs (Added/Removed only)
-// writeFileSync("utils/node_data/game_text/comparison_result.log", ["", ...addedNodes].join("\n[Added Nodes] ") + "\n" + ["", ...removedNodes].join("\n[Removed Nodes] "), "utf-8");
+if (removedNodes.length > 0) {
+  removedNodes.forEach(n => console.log(`[Removed Nodes] ${n}`));
+}
+// Save Logs(Added / Removed only)
+writeFileSync("utils/node_data/game_text/comparison_result.log", ["", ...addedNodes].join("\n[Added Nodes] ") + "\n" + ["", ...removedNodes].join("\n[Removed Nodes] "), "utf-8");
 
 if (addedNodes.length === 0 && removedNodes.length === 0) {
   if (!hasChanges) {
