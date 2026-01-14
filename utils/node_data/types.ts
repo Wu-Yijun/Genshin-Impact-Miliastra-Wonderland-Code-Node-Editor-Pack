@@ -346,6 +346,9 @@ export interface NodeDef {
   /** 数据引脚列表 */
   DataPins: PinDef[];
 
+  /** 额外引脚列表 */
+  ExtraPins?: PinDef[];
+
   /** 变体定义列表（仅用于 Variant 节点） */
   Variants?: VariantDef[]
 

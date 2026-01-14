@@ -141200,7 +141200,23 @@
       "Description": {
         "en": "Plays Timed Effects at the specified World Location",
         "zh-Hans": "在指定的世界坐标位置播放限时特效"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Notify_Server",
@@ -141292,7 +141308,23 @@
       "Description": {
         "en": "Notifies the Server Node Graph; supports up to three String parameters\nAt runtime, forwards logic to the Server Node Graph and triggers the [On Skill Node Call] Event on the Server Node Graph",
         "zh-Hans": "通知服务器节点图，支持携带三个字符串参数\n该节点运行时可以将逻辑传到服务器节点图上，在服务器节点图上会触发【技能节点调用时】事件"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Turn_Player",
@@ -141357,7 +141389,23 @@
       "Description": {
         "en": "Turns the Player using the configured turning mode",
         "zh-Hans": "可以让玩家按照配置的转向模式转向"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Set_Target",
@@ -141434,7 +141482,23 @@
       "Description": {
         "en": "Sets the Target Entity as its Attack Target",
         "zh-Hans": "将目标实体设置为自身的攻击目标"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Others.Port_Client.Graph_Start",
@@ -143564,7 +143628,23 @@
         }
       ],
       "Implementation": null,
-      "__not_find_in_ref": true
+      "__not_find_in_ref": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Launch_Projectile",
@@ -143686,7 +143766,23 @@
       "Description": {
         "en": "Spawns a Local Projectile at the specified Location in the World Coordinate System",
         "zh-Hans": "在世界坐标系的指定位置发射本地投射物"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Move_To_Point",
@@ -143808,7 +143904,23 @@
       "Description": {
         "en": "Moves from the current Location to the Target Location\nSupports configuring movement duration and speed; if both are small, the movement may not reach the Target Location",
         "zh-Hans": "定点位移，从当前位置向目标位置位移\n可配置位移时长与位移速度，当这二者都比较小时，可能无法位移到目标位置"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.For_Each_Entity",
@@ -143896,7 +144008,23 @@
       "Description": {
         "en": "Iterates through each Entity in the input Entity List",
         "zh-Hans": "遍历输入实体列表中的每个实体"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Control.General_Client.Branch",
@@ -143970,7 +144098,23 @@
       "Description": {
         "en": "Branches into True or False based on the evaluated condition\nWhen the Boolean is True, the [True] execution flow runs; when it is False, the [False] execution flow runs",
         "zh-Hans": "根据输入条件的判断结果可以分出“是”与“否”两个不同的分支\n当布尔值为“是”时，后续会执行【是】对应的执行流；布尔值为“否”时，会执行【否】对应的执行流"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Add_Status",
@@ -144062,7 +144206,23 @@
       "Description": {
         "en": "Applies the Unit Status defined by the configuration ID to the Target",
         "zh-Hans": "为施加目标添加配置ID对应的单位状态"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Remove_Status",
@@ -144139,7 +144299,23 @@
       "Description": {
         "en": "Removes the Unit Status corresponding to the specified configuration ID from the Target Entity",
         "zh-Hans": "移除目标实体上指定配置ID对应的单位状态"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Hitbox_Socket",
@@ -144901,7 +145077,23 @@
         }
       ],
       "Implementation": null,
-      "__not_find_in_ref": true
+      "__not_find_in_ref": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Remove_Device",
@@ -144966,7 +145158,23 @@
       "Description": {
         "en": "Removes the specified type of Character Disruptor Device",
         "zh-Hans": "移除指定类型的角色扰动装置"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Modify_Weight",
@@ -145045,7 +145253,23 @@
       "Description": {
         "en": "Edits the weight of the current Attack Target",
         "zh-Hans": "可以修改当前攻击目标的权重"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Get_Camera_Data",
@@ -145182,7 +145406,23 @@
       "Description": {
         "en": "Casts a ray from the Camera to the emission Location and returns the Rotation and Location of valid Targets along the path",
         "zh-Hans": "镜头朝向检测数据，从镜头向出射位置打射线，返回路线上合法目标的旋转与位置"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Arithmetic.Math_Client.Vector_Dot",
@@ -146288,7 +146528,23 @@
       "Description": {
         "en": "Initiates a one-time HP restoration for the Target Entity",
         "zh-Hans": "为目标实体发起一次恢复生命值"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Query.Character_Related_Client.Get_Current_Character",
@@ -146549,7 +146805,23 @@
       "Description": {
         "en": "From the [Loop Start Value] to the [Loop End Value], the loop iterates, incrementing the Integer by 1 each time. On each iteration, it executes the Nodes connected to [Loop Body]. After a full iteration, it executes the Nodes connected to [Loop Complete].\nUse [Break Loop] to end the iteration early",
         "zh-Hans": "从【循环起始值】开始到【循环终止值】结束，会遍历其中的循环值，每次整数加一。每次循环会执行一次【循环体】后连接的节点逻辑。完成一次完整遍历后，会执行【循环完成】后连接的节点逻辑。\n可以使用【跳出循环】来提前结束该循环值遍历"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.General_Client.Break",
@@ -146595,7 +146867,23 @@
       "Description": {
         "en": "Break out of a Finite Loop. The output pin must connect to the [Break Loop] input parameter of the [Finite Loop] Node",
         "zh-Hans": "从有限循环中跳出。出引脚需要与节点【有限循环】的【跳出循环】入参相连"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.General_Client.Set_Local",
@@ -146843,7 +147131,23 @@
       "Description": {
         "en": "Sets the value of a local variable",
         "zh-Hans": "设置局部变量的值"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Query.General_Client.Get_Local",
@@ -147160,7 +147464,23 @@
       "Description": {
         "en": "Available only in Custom Aggro Mode\nSets the Aggro Value of the specified Entity on the Aggro Owner Entity",
         "zh-Hans": "仅自定义仇恨模式可用\n设置指定实体在仇恨拥有者实体上的仇恨值"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Modify_Aggro",
@@ -147254,7 +147574,23 @@
       "Description": {
         "en": "Available only in Custom Aggro Mode\nEdits the Aggro Value of the specified Entity on the Aggro Owner Entity",
         "zh-Hans": "仅自定义仇恨模式可用\n修改指定实体在仇恨拥有者实体上的仇恨值"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Modify_Aggro_Ratio",
@@ -147348,7 +147684,23 @@
       "Description": {
         "en": "Available only in Custom Aggro Mode\nProportionally edits the Target Entity's Aggro Value on the specified Aggro Owner",
         "zh-Hans": "仅自定义仇恨模式可用\n按比例修改目标实体在指定仇恨拥有者上的仇恨值"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Transfer_Aggro",
@@ -147455,7 +147807,23 @@
       "Description": {
         "en": "Available only in Custom Aggro Mode\nTransfers a percentage of Aggro on the Aggro Owner from the Source Entity to the Target Entity",
         "zh-Hans": "仅自定义仇恨模式可用\n将仇恨拥有者上对转移来源实体一定比例的仇恨转移到转移目标实体上"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Clear_Aggro",
@@ -147517,7 +147885,23 @@
       "Description": {
         "en": "Available only in Custom Aggro Mode\nClears the Aggro List of the specified Entity; this usually causes the Target to leave battle",
         "zh-Hans": "仅自定义仇恨模式可用\n清空指定实体的仇恨列表，这通常会导致该目标脱战"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Remove_Aggro",
@@ -147594,7 +147978,23 @@
       "Description": {
         "en": "Available only in Custom Aggro Mode\nRemoves the Target Entity from the Aggro Owner Entity's Aggro List; this may cause the Target Entity to leave battle",
         "zh-Hans": "仅自定义仇恨模式可用\n将目标实体移出仇恨拥有者实体的仇恨列表，这可能导致目标实体脱战"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Custom_Aggro_Client.Taunt",
@@ -147671,7 +148071,23 @@
       "Description": {
         "en": "Available only in Custom Aggro Mode\nThe Taunter Entity taunts the specified Target Entity",
         "zh-Hans": "仅自定义仇恨模式可用\n嘲讽者实体嘲讽指定目标实体"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Query.Custom_Aggro_Client.Get_Aggro_Target",
@@ -148683,7 +149099,23 @@
       "Description": {
         "en": "Turns the Player toward the direction specified by the 3D Vector configuration",
         "zh-Hans": "玩家转向三维向量配置的方向"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Reset_Target",
@@ -148729,7 +149161,23 @@
       "Description": {
         "en": "Resets the Skill Target and reruns the Skill selection logic to choose a new Target",
         "zh-Hans": "重置技能目标，重新运行一次技能选取逻辑，选择一个新的目标"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Query.Trigger_Client.Get_Overlapping_Entities",
@@ -148844,7 +149292,23 @@
       "Description": {
         "en": "Forces the Character to exit Aiming Status if the Character is currently in it",
         "zh-Hans": "当角色处于瞄准状态是，会强制退出瞄准状态"
-      }
+      },
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Query.Ray_Client.Get_Ray_Result",
@@ -149950,7 +150414,23 @@
       ],
       "Implementation": null,
       "__ref_id": "client.action.sphericalAttackBoxAtPosition",
-      "__todo_set_in_pin": true
+      "__todo_set_in_pin": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Loc",
@@ -150700,7 +151180,23 @@
       ],
       "Implementation": null,
       "__ref_id": "client.action.rectangularAttackBoxAtPosition",
-      "__todo_set_in_pin": true
+      "__todo_set_in_pin": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Loc",
@@ -151450,7 +151946,23 @@
       ],
       "Implementation": null,
       "__ref_id": "client.action.sectorAttackBoxAtPosition",
-      "__todo_set_in_pin": true
+      "__todo_set_in_pin": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Sphere_Hitbox_Socket",
@@ -152212,7 +152724,23 @@
         }
       ],
       "Implementation": null,
-      "__not_find_in_ref": true
+      "__not_find_in_ref": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Rect_Hitbox_Socket",
@@ -152974,7 +153502,23 @@
         }
       ],
       "Implementation": null,
-      "__not_find_in_ref": true
+      "__not_find_in_ref": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Character_Skill_Client.Trigger_Sector_Hitbox_Socket",
@@ -153737,7 +154281,23 @@
         }
       ],
       "Implementation": null,
-      "__not_find_in_ref": true
+      "__not_find_in_ref": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Hidden.Execution_Client.Test_Send_Signal",
@@ -154078,7 +154638,23 @@
         }
       ],
       "Implementation": null,
-      "__not_find_in_ref": true
+      "__not_find_in_ref": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Query.Scanning_Client.Get_Scanned_Entity",
@@ -154418,7 +154994,37 @@
       "Implementation": null,
       "__ref_id": "client.action.sendSignalToServer",
       "__todo_special_signal": true,
-      "__todo_set_in_pin": true
+      "__todo_set_in_pin": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Hidden",
+          "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "extra_pin_1",
+          "Direction": "In",
+          "Type": "Str",
+          "Label": {
+            "zh-Hans": "信号名",
+            "en": "Signal Name"
+          },
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Display",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Execution.Signal.Send",
@@ -154457,7 +155063,23 @@
       ],
       "DataPins": [],
       "Implementation": null,
-      "__not_find_in_ref": true
+      "__not_find_in_ref": true,
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Str",
+          "Label": {
+            "zh-Hans": "信号名",
+            "en": "Signal Name"
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Display",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Trigger.Signal.On_Signal",
@@ -154533,7 +155155,23 @@
         }
       ],
       "Implementation": null,
-      "__ref_id": "event.signalListen"
+      "__ref_id": "event.signalListen",
+      "ExtraPins": [
+        {
+          "Identifier": "extra_pin_0",
+          "Direction": "In",
+          "Type": "Str",
+          "Label": {
+            "zh-Hans": "信号名",
+            "en": "Signal Name"
+          },
+          "ShellIndex": 0,
+          "KernelIndex": 0,
+          "Visibility": "Display",
+          "Connectability": true,
+          "Description": {}
+        }
+      ]
     },
     {
       "Identifier": "Arithmetic.Structure.Assemble_Struct",

@@ -846,7 +846,7 @@ message PinSignature {
     OUT_PARAM = 4;
 
     // 特殊用途
-    META_RPC_OPCODE = 5; // 原 SignalClient. 携带 RPC ID
+    META_RPC_OPCODE = 5; // extra Pin. 携带 RPC ID
     META_TOPIC_NAME = 6; // 原 Signal (Entry Context). 携带信号名称/Context声明
 
     // 结构体操作

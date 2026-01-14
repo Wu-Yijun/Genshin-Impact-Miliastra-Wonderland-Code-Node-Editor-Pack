@@ -40,6 +40,7 @@ interface NodeDef {
   Description: { [lang: string]: string };
   FlowPins: PinDef[];
   DataPins: PinDef[];
+  ExtraPins?: PinDef[];
 }
 
 interface OldData {
@@ -143,13 +144,14 @@ newNodes.forEach(newNode => {
         hasChanges = true;
       }
 
-      if (kind === 'DataIn' && (np.hint?.length ?? 0) > 0) {
+      if (kind === 'DataIn' && isDifferent(op.Placeholder?.["zh-Hans"], np.hintZH)) {
         op.Placeholder ??= {};
         changes.push(`[Value Changed] Src: ${iden}.${kind}[${np.index}].Placeholder["zh-Hans"]\n    Old: ${op.Placeholder["zh-Hans"]}\n    New: ${np.hintZH}`);
         op.Placeholder["en"] = np.hint!;
         op.Placeholder["zh-Hans"] = np.hintZH!;
         hasChanges = true;
       }
+
     });
   };
 
@@ -157,6 +159,32 @@ newNodes.forEach(newNode => {
   syncPins(oldNode.FlowPins.filter(p => p.Direction === "Out"), newNode.outPins, "FlowOut");
   syncPins(oldNode.DataPins.filter(p => p.Direction === "In"), newNode.inParams, "DataIn");
   syncPins(oldNode.DataPins.filter(p => p.Direction === "Out"), newNode.outParams, "DataOut");
+  if ((newNode.extraParams?.length ?? 0) > 0) {
+    oldNode.ExtraPins ??= [];
+    if (oldNode.ExtraPins.length > 0) {
+      syncPins(oldNode.ExtraPins, newNode.extraParams, "ExtraIn");
+    } else {
+      newNode.extraParams?.forEach(np => {
+        oldNode.ExtraPins?.push({
+          "Identifier": "extra_pin_" + np.index,
+          "Direction": "In",
+          "Type": "Unk",
+          "Label": {
+            "zh-Hans": np.nameZH ?? '',
+            "en": np.name ?? "",
+          },
+          "ShellIndex": np.index,
+          "KernelIndex": np.index,
+          "Visibility": ((np.nameZH?.length ?? 0) > 0) ? "Display" : "Hidden",
+          "Connectability": true,
+          "Description": {}
+        } as any);
+        hasChanges = true;
+      });
+    }
+  }
+  // extra pin
+
 });
 
 // Identify Removed Nodes
