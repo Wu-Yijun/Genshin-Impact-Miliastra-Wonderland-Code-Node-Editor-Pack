@@ -115,6 +115,12 @@ newNodes.forEach(newNode => {
 
   // Sync Pins
   const syncPins = (pins: PinDef[], newPins: NodeParam[] | undefined, kind: string) => {
+    if (newPins?.length !== pins.length) {
+      console.error(`[Error] Pin length mismatch for ${iden}.${kind}`, pins.length, newPins?.length);
+      const added = newPins!.find(p => pins.findIndex(p2 => p2.ShellIndex === p.index) === -1)!;
+      console.info(`    [Added Pin] ${added.index} ${added.name} ${added.nameZH}`);
+      return;
+    }
     if (!newPins) return;
     newPins.forEach(np => {
       const op = pins.find(p => p.ShellIndex === np.index);
@@ -149,25 +155,25 @@ oldNodesMap.forEach((oldNode, id) => {
 });
 
 // Save updated data if changes occurred
-if (hasChanges) {
-  writeFileSync(oldDataPath, JSON.stringify(oldData, null, 2), "utf-8");
-  console.error(`[Updated] data.json has been updated with modified node text.`);
-}
+// if (hasChanges) {
+//   writeFileSync(oldDataPath, JSON.stringify(oldData, null, 2), "utf-8");
+//   console.error(`[Updated] data.json has been updated with modified node text.`);
+// }
 
 // Output Logs (All)
 if (changes.length > 0) {
   changes.forEach(c => console.log(c));
 }
 
-if (addedNodes.length > 0) {
-  addedNodes.forEach(n => console.log(`[Added Nodes] ${n}`));
-}
+// if (addedNodes.length > 0) {
+//   addedNodes.forEach(n => console.log(`[Added Nodes] ${n}`));
+// }
 
-if (removedNodes.length > 0) {
-  removedNodes.forEach(n => console.log(`[Removed Nodes] ${n}`));
-}
+// if (removedNodes.length > 0) {
+//   removedNodes.forEach(n => console.log(`[Removed Nodes] ${n}`));
+// }
 // Save Logs (Added/Removed only)
-writeFileSync("utils/node_data/game_text/comparison_result.log", ["", ...addedNodes].join("\n[Added Nodes] ") + "\n" + ["", ...removedNodes].join("\n[Removed Nodes] "), "utf-8");
+// writeFileSync("utils/node_data/game_text/comparison_result.log", ["", ...addedNodes].join("\n[Added Nodes] ") + "\n" + ["", ...removedNodes].join("\n[Removed Nodes] "), "utf-8");
 
 if (addedNodes.length === 0 && removedNodes.length === 0) {
   if (!hasChanges) {

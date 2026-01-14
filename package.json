@@ -18,7 +18,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cls & echo $ node compare_with_data.ts & node ./utils/node_data/game_text/compare_with_data.ts",
+    "test2": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "@google/genai": "^1.34.0",

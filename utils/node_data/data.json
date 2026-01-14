@@ -796,6 +796,19 @@
             "zh-Hans": "9"
           },
           "Description": {}
+        },
+        {
+          "Identifier": "Case10",
+          "Direction": "Out",
+          "ShellIndex": 10,
+          "KernelIndex": 10,
+          "Visibility": "Conditional",
+          "Remarks": "Visibility Depends on the length of CasesList",
+          "Label": {
+            "en": "10",
+            "zh-Hans": "10"
+          },
+          "Description": {}
         }
       ],
       "DataPins": [
@@ -19069,6 +19082,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<TCOV>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "output",
           "Direction": "Out",
           "Type": "R<V>",
@@ -19758,6 +19786,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "R<T>",
@@ -19861,6 +19904,21 @@
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -19970,6 +20028,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "R<T>",
@@ -20073,6 +20146,21 @@
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -20182,6 +20270,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "",
+            "en": ""
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "Int",
@@ -20247,6 +20350,21 @@
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -20356,6 +20474,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "max",
           "Direction": "Out",
           "Type": "R<T>",
@@ -20462,6 +20595,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "min",
           "Direction": "Out",
           "Type": "R<T>",
@@ -20538,7 +20686,7 @@
       "FlowPins": [],
       "DataPins": [
         {
-          "Identifier": "Input0",
+          "Identifier": "x",
           "Direction": "In",
           "Type": "Flt",
           "Label": {
@@ -20553,7 +20701,7 @@
           "Description": {}
         },
         {
-          "Identifier": "Input1",
+          "Identifier": "base",
           "Direction": "In",
           "Type": "Flt",
           "Label": {
@@ -20565,6 +20713,21 @@
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {

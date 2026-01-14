@@ -134,12 +134,13 @@ nodesText.forEach((node: any) => {
           });
           break;
         case "inHint":
-          data.extraParams ??= [];
-          data.extraParams.push({
-            index: Number(index),
-            name: node.en,
-            nameZH: node.zh
-          });
+          const pin = data.inParams?.find(p => p.index == Number(index));
+          if (pin) {
+            pin.hint = node.en;
+            pin.hintEN = node.zh;
+          } else {
+            console.error("[Error] Pin not found", node.textMapId, index);
+          }
           break;
         default:
           console.warn("[Warning] Not Implemented", kind);
