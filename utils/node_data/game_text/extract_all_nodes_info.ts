@@ -48,7 +48,7 @@ interface NodeParam {
   nameZH: string;
   // for override hint
   hint?: string;
-  hintEN?: string;
+  hintZH?: string;
 }
 
 const name = /^BeyondEditorInstructionNodeConfig_(name)_(\d+)$/;
@@ -137,7 +137,7 @@ nodesText.forEach((node: any) => {
           const pin = data.inParams?.find(p => p.index == Number(index));
           if (pin) {
             pin.hint = node.en;
-            pin.hintEN = node.zh;
+            pin.hintZH = node.zh;
           } else {
             console.error("[Error] Pin not found", node.textMapId, index);
           }

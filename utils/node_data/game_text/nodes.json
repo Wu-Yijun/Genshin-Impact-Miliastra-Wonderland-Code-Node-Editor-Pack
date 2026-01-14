@@ -7002,14 +7002,14 @@
         "name": "Target Player",
         "nameZH": "目标玩家",
         "hint": "Player",
-        "hintEN": "Player"
+        "hintZH": "Player"
       },
       {
         "index": 1,
         "name": "Layout Index",
         "nameZH": "布局索引",
         "hint": "Input Index",
-        "hintEN": "输入索引"
+        "hintZH": "输入索引"
       }
     ],
     "outParams": []
@@ -7040,14 +7040,14 @@
         "name": "Target Player",
         "nameZH": "目标玩家",
         "hint": "Player",
-        "hintEN": "Player"
+        "hintZH": "Player"
       },
       {
         "index": 1,
         "name": "UI Control Group Index",
         "nameZH": "界面控件组索引",
         "hint": "Input Index",
-        "hintEN": "输入索引"
+        "hintZH": "输入索引"
       }
     ],
     "outParams": []
@@ -7078,14 +7078,14 @@
         "name": "Target Player",
         "nameZH": "目标玩家",
         "hint": "Player",
-        "hintEN": "Player"
+        "hintZH": "Player"
       },
       {
         "index": 1,
         "name": "UI Control (Group) Index",
         "nameZH": "界面控件(组)索引",
         "hint": "Input Index",
-        "hintEN": "输入索引"
+        "hintZH": "输入索引"
       },
       {
         "index": 2,
@@ -8158,7 +8158,7 @@
         "name": "UI Control Group Index",
         "nameZH": "界面控件组索引",
         "hint": "Input Index",
-        "hintEN": "输入索引"
+        "hintZH": "输入索引"
       }
     ],
     "outParams": []
@@ -9633,7 +9633,7 @@
         "name": "Deck Selector Index",
         "nameZH": "卡牌选择器索引",
         "hint": "Input Index",
-        "hintEN": "输入索引"
+        "hintZH": "输入索引"
       },
       {
         "index": 2,
@@ -10013,7 +10013,7 @@
         "name": "Deck Selector Index",
         "nameZH": "卡牌选择器索引",
         "hint": "Input Index",
-        "hintEN": "输入索引"
+        "hintZH": "输入索引"
       }
     ],
     "outParams": []
@@ -10775,7 +10775,7 @@
         "name": "Environment Time Passage Speed",
         "nameZH": "环境时间流逝速度",
         "hint": "(minutes elapsed per second)",
-        "hintEN": "（每秒流逝分钟数）"
+        "hintZH": "（每秒流逝分钟数）"
       }
     ],
     "outParams": []

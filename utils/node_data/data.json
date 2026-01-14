@@ -35437,7 +35437,10 @@
             "zh-Hans": "目标玩家",
             "en": "Target Player"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Player",
+            "zh-Hans": "Player"
+          },
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Visibility": "Display",
@@ -35455,7 +35458,10 @@
             "zh-Hans": "布局索引",
             "en": "Layout Index"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Input Index",
+            "zh-Hans": "输入索引"
+          },
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
@@ -35519,7 +35525,10 @@
             "zh-Hans": "目标玩家",
             "en": "Target Player"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Player",
+            "zh-Hans": "Player"
+          },
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Visibility": "Display",
@@ -35537,7 +35546,10 @@
             "zh-Hans": "界面控件组索引",
             "en": "UI Control Group Index"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Input Index",
+            "zh-Hans": "输入索引"
+          },
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
@@ -35603,7 +35615,10 @@
             "zh-Hans": "目标玩家",
             "en": "Target Player"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Player",
+            "zh-Hans": "Player"
+          },
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Visibility": "Display",
@@ -35621,7 +35636,10 @@
             "zh-Hans": "界面控件(组)索引",
             "en": "UI Control (Group) Index"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Input Index",
+            "zh-Hans": "输入索引"
+          },
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
@@ -44159,7 +44177,10 @@
             "zh-Hans": "界面控件组索引",
             "en": "UI Control Group Index"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Input Index",
+            "zh-Hans": "输入索引"
+          },
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
@@ -47732,7 +47753,10 @@
             "zh-Hans": "卡牌选择器索引",
             "en": "Deck Selector Index"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Input Index",
+            "zh-Hans": "输入索引"
+          },
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
@@ -48768,7 +48792,10 @@
             "zh-Hans": "卡牌选择器索引",
             "en": "Deck Selector Index"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "Input Index",
+            "zh-Hans": "输入索引"
+          },
           "ShellIndex": 1,
           "KernelIndex": 1,
           "Visibility": "Display",
@@ -50641,7 +50668,10 @@
             "zh-Hans": "环境时间流逝速度",
             "en": "Environment Time Passage Speed"
           },
-          "Placeholder": null,
+          "Placeholder": {
+            "en": "(minutes elapsed per second)",
+            "zh-Hans": "（每秒流逝分钟数）"
+          },
           "ShellIndex": 0,
           "KernelIndex": 0,
           "Visibility": "Display",

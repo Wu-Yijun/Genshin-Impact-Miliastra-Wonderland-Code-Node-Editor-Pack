@@ -7,7 +7,7 @@ interface NodeParam {
   name: string;
   nameZH: string;
   hint?: string;
-  hintEN?: string;
+  hintZH?: string;
 }
 
 interface NewNodeData {
@@ -29,6 +29,7 @@ interface PinDef {
   ShellIndex: number;
   Label: { [lang: string]: string };
   Description: { [lang: string]: string };
+  Placeholder?: { [lang: string]: string };
 }
 
 interface NodeDef {
@@ -121,10 +122,13 @@ newNodes.forEach(newNode => {
       console.info(`    [Added Pin] ${added.index} ${added.name} ${added.nameZH}`);
       return;
     }
-    if (!newPins) return;
+    // if (!newPins) return;
     newPins.forEach(np => {
       const op = pins.find(p => p.ShellIndex === np.index);
-      if (!op) return;
+      if (!op) {
+        console.error("[Error] pin not found!");
+        return;
+      }
 
       if (isDifferent(op.Label?.["en"], np.name)) {
         if (!op.Label) op.Label = {};
@@ -136,6 +140,14 @@ newNodes.forEach(newNode => {
         if (!op.Label) op.Label = {};
         changes.push(`[Value Changed] Src: ${iden}.${kind}[${np.index}].Label["zh-Hans"]\n    Old: ${op.Label["zh-Hans"]}\n    New: ${np.nameZH}`);
         op.Label["zh-Hans"] = np.nameZH;
+        hasChanges = true;
+      }
+
+      if (kind === 'DataIn' && (np.hint?.length ?? 0) > 0) {
+        op.Placeholder ??= {};
+        changes.push(`[Value Changed] Src: ${iden}.${kind}[${np.index}].Placeholder["zh-Hans"]\n    Old: ${op.Placeholder["zh-Hans"]}\n    New: ${np.hintZH}`);
+        op.Placeholder["en"] = np.hint!;
+        op.Placeholder["zh-Hans"] = np.hintZH!;
         hasChanges = true;
       }
     });
@@ -155,10 +167,10 @@ oldNodesMap.forEach((oldNode, id) => {
 });
 
 // Save updated data if changes occurred
-// if (hasChanges) {
-//   writeFileSync(oldDataPath, JSON.stringify(oldData, null, 2), "utf-8");
-//   console.error(`[Updated] data.json has been updated with modified node text.`);
-// }
+if (hasChanges) {
+  writeFileSync(oldDataPath, JSON.stringify(oldData, null, 2), "utf-8");
+  console.error(`[Updated] data.json has been updated with modified node text.`);
+}
 
 // Output Logs (All)
 if (changes.length > 0) {
