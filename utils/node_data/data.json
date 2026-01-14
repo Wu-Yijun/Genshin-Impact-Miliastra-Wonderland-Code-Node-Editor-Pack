@@ -20785,6 +20785,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "R<T>",
@@ -20865,6 +20880,21 @@
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -21004,6 +21034,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "Flt",
@@ -21084,6 +21129,21 @@
           "KernelIndex": 2,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<MATH>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 3,
+          "KernelIndex": 3,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -21355,6 +21415,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<LOGC>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "Bol",
@@ -21420,6 +21495,21 @@
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<LOGC>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -21491,6 +21581,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<LOGC>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "Bol",
@@ -21556,6 +21661,21 @@
           "KernelIndex": 1,
           "Visibility": "Hidden",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<LOGC>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -21625,6 +21745,21 @@
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<OCMP>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -21726,6 +21861,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<OCMP>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "ok",
           "Direction": "Out",
           "Type": "Bol",
@@ -21824,6 +21974,21 @@
           "Description": {}
         },
         {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<OCMP>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "ok",
           "Direction": "Out",
           "Type": "Bol",
@@ -21919,6 +22084,21 @@
           "KernelIndex": 1,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "op",
+          "Direction": "In",
+          "Type": "E<OCMP>",
+          "Label": {
+            "zh-Hans": "op",
+            "en": "op"
+          },
+          "Placeholder": null,
+          "ShellIndex": 2,
+          "KernelIndex": 2,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -25627,6 +25807,21 @@
           "Description": {}
         },
         {
+          "Identifier": "type",
+          "Direction": "In",
+          "Type": "E<TRIG>",
+          "Label": {
+            "zh-Hans": "类型",
+            "en": "Type"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "Flt",
@@ -25677,6 +25872,21 @@
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "type",
+          "Direction": "In",
+          "Type": "E<TRIG>",
+          "Label": {
+            "zh-Hans": "类型",
+            "en": "Type"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -25733,6 +25943,21 @@
           "Description": {}
         },
         {
+          "Identifier": "type",
+          "Direction": "In",
+          "Type": "E<TRIG>",
+          "Label": {
+            "zh-Hans": "类型",
+            "en": "Type"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "result",
           "Direction": "Out",
           "Type": "Flt",
@@ -25783,6 +26008,21 @@
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "type",
+          "Direction": "In",
+          "Type": "E<TRIG>",
+          "Label": {
+            "zh-Hans": "类型",
+            "en": "Type"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -25839,6 +26079,21 @@
           "Description": {}
         },
         {
+          "Identifier": "type",
+          "Direction": "In",
+          "Type": "E<TRIG>",
+          "Label": {
+            "zh-Hans": "类型",
+            "en": "Type"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "radians",
           "Direction": "Out",
           "Type": "Flt",
@@ -25889,6 +26144,21 @@
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "type",
+          "Direction": "In",
+          "Type": "E<TRIG>",
+          "Label": {
+            "zh-Hans": "类型",
+            "en": "Type"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
@@ -28370,6 +28640,21 @@
           "Description": {}
         },
         {
+          "Identifier": "type",
+          "Direction": "In",
+          "Type": "E<TRIG>",
+          "Label": {
+            "zh-Hans": "类型",
+            "en": "Type"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
+          "Description": {}
+        },
+        {
           "Identifier": "degrees",
           "Direction": "Out",
           "Type": "Flt",
@@ -28420,6 +28705,21 @@
           "KernelIndex": 0,
           "Visibility": "Display",
           "Connectability": true,
+          "Description": {}
+        },
+        {
+          "Identifier": "type",
+          "Direction": "In",
+          "Type": "E<TRIG>",
+          "Label": {
+            "zh-Hans": "类型",
+            "en": "Type"
+          },
+          "Placeholder": null,
+          "ShellIndex": 1,
+          "KernelIndex": 1,
+          "Visibility": "Hidden",
+          "Connectability": false,
           "Description": {}
         },
         {
