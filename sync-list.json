@@ -18,6 +18,7 @@
     "!utils/protobuf/debug_decode.ts",
     "!utils/node_data/convert.ts",
     "!utils/node_data/game_text/**",
+    "!utils/node_data/data.helper.ts",
     "!utils/functions/ref.*",
     "!utils/functions/tools.ts",
     "!utils/functions/math_raw.d.ts",

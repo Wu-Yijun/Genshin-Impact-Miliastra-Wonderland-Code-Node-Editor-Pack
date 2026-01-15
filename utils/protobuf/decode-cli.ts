@@ -24,6 +24,7 @@ Options:
   -q, --quiet               Disable all console output.
   -s, --strict <boolean>    Enable strict parsing (default: true).
   -n, --no-slice            Disable default slicing (20:-4) of the input file.
+  -k, --keep-enum           Keep raw enum number instead of enum identifier.
   -e, --print-errors        Show all errors in error output.
   --missing-error           Show Missing Field errors in error output.
   --extra-error             Show Extra Field errors in error output.

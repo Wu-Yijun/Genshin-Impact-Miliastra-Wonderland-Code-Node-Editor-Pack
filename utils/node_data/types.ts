@@ -71,32 +71,35 @@ export interface Document {
 }
 
 /**
+ * ServerClient type - 服务端/客户端标识
+ * 
+ * 用于区分节点或类型属于服务端还是客户端。
+ */
+export type ServerClient = "Server" | "Client"
+
+/**
  * ResourceClass - 资源类别常量
  * 
  * 定义所有可用的节点图系统类型。
  */
 export const ResourceClass = [
   // 服务端节点图
-  "ENTITY_NODE_GRAPH",      // 实体节点图
-  "STATUS_NODE_GRAPH",      // 状态节点图
-  "CLASS_NODE_GRAPH",       // 类节点图
-  "ITEM_NODE_GRAPH",        // 物品节点图
+  "ENTITY_NODE_GRAPH",            // 实体节点图
+  "STATUS_NODE_GRAPH",            // 状态节点图
+  "CLASS_NODE_GRAPH",             // 类节点图
+  "ITEM_NODE_GRAPH",              // 物品节点图
 
   // 客户端节点图
-  "BOOLEAN_FILTER_GRAPH",   // 布尔过滤器图
-  "INTEGER_FILTER_GRAPH",   // 整数过滤器图
-  "SKILL_NODE_GRAPH",       // 技能节点图
+  "BOOLEAN_FILTER_GRAPH",         // 布尔过滤器图
+  "INTEGER_FILTER_GRAPH",         // 整数过滤器图
+  "SKILL_NODE_GRAPH",             // 技能节点图
+  "CREATION_DECISION_NODE_GRAPH", // 造物状态选择节点图
+  "CREATION_SKILL_NODE_GRAPH",    // 造物技能节点图
+  "CREATION_STATUS_NODE_GRAPH",   // 造物状态节点图
 
   // 复合声明
-  "COMPOSITE_NODE_DECL",    // 复合节点声明
+  "COMPOSITE_NODE_DECL",          // 复合节点声明
 ] as const;
-
-/**
- * ServerClient type - 服务端/客户端标识
- * 
- * 用于区分节点或类型属于服务端还是客户端。
- */
-export type ServerClient = "Server" | "Client"
 
 /**
  * ResourceClass type - 资源类别类型
