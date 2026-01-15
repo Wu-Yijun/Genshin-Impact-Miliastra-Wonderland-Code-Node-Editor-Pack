@@ -1,0 +1,3167 @@
+[
+  {
+    "id": 0,
+    "textMapId": 1,
+    "name": "Boolean",
+    "nameZH": "布尔值",
+    "enums": [
+      {
+        "index": 0,
+        "name": "No",
+        "nameZH": "否"
+      },
+      {
+        "index": 1,
+        "name": "Yes",
+        "nameZH": "是"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "textMapId": 2,
+    "name": "Comparison Operators",
+    "nameZH": "比较运算",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Comparison Operators_Equal To",
+        "nameZH": "比较运算_相等"
+      },
+      {
+        "index": 1,
+        "name": "Comparison Operators_Less Than",
+        "nameZH": "比较运算_小于"
+      },
+      {
+        "index": 2,
+        "name": "Comparison Operators_Less Than or Equal To",
+        "nameZH": "比较运算_小于等于"
+      },
+      {
+        "index": 3,
+        "name": "Comparison Operators_Greater Than",
+        "nameZH": "比较运算_大于"
+      },
+      {
+        "index": 4,
+        "name": "Comparison Operators_Greater Than or Equal To",
+        "nameZH": "比较运算_大于等于"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "textMapId": 3,
+    "name": "Logical Operators",
+    "nameZH": "逻辑运算",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Logical Operators_AND",
+        "nameZH": "逻辑运算_与"
+      },
+      {
+        "index": 1,
+        "name": "Logical Operators_OR",
+        "nameZH": "逻辑运算_或"
+      },
+      {
+        "index": 2,
+        "name": "Logical Operators_XOR",
+        "nameZH": "逻辑运算_异或"
+      },
+      {
+        "index": 3,
+        "name": "Logical Operators_NOT",
+        "nameZH": "逻辑运算_非"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "textMapId": 4,
+    "name": "Mathematical Operators",
+    "nameZH": "数学运算",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Mathematical Operators_Addition",
+        "nameZH": "数学运算_加法"
+      },
+      {
+        "index": 1,
+        "name": "Mathematical Operators_Subtraction",
+        "nameZH": "数学运算_减法"
+      },
+      {
+        "index": 2,
+        "name": "Mathematical Operators_Multiplication",
+        "nameZH": "数学运算_乘法"
+      },
+      {
+        "index": 3,
+        "name": "Mathematical Operators_Division",
+        "nameZH": "数学运算_除法"
+      },
+      {
+        "index": 4,
+        "name": "Mathematical Operators_Modulo Operation",
+        "nameZH": "数学运算_模运算"
+      },
+      {
+        "index": 5,
+        "name": "Mathematical Operators_Exponentiation",
+        "nameZH": "数学运算_幂运算"
+      },
+      {
+        "index": 6,
+        "name": "Mathematical Operators_Get Maximum Value",
+        "nameZH": "数学运算_取最大值"
+      },
+      {
+        "index": 7,
+        "name": "Mathematical Operators_Get Minimum Value",
+        "nameZH": "数学运算_取最小值"
+      },
+      {
+        "index": 8,
+        "name": "Mathematical Operators_Logarithm",
+        "nameZH": "数学运算_对数"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "textMapId": 5,
+    "name": "Attack Shapes",
+    "nameZH": "攻击形状",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Attack Shapes_Rectangle",
+        "nameZH": "攻击形状_矩形"
+      },
+      {
+        "index": 1,
+        "name": "Attack Shapes_Sphere",
+        "nameZH": "攻击形状_球体"
+      },
+      {
+        "index": 2,
+        "name": "Attack Shapes_Sector",
+        "nameZH": "攻击形状_扇形"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "textMapId": 6,
+    "name": "Survival Status",
+    "nameZH": "生存状态",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Survival Status_Alive",
+        "nameZH": "生存状态_存活"
+      },
+      {
+        "index": 1,
+        "name": "Survival Status_Down",
+        "nameZH": "生存状态_倒下"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "textMapId": 7,
+    "name": "Sorting Rules",
+    "nameZH": "排序规则",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Sorting Rules_Ascending",
+        "nameZH": "排序规则_顺序"
+      },
+      {
+        "index": 1,
+        "name": "Sorting Rules_Descending",
+        "nameZH": "排序规则_逆序"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "textMapId": 8,
+    "name": "Rounding Logic",
+    "nameZH": "取整逻辑",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Rounding Logic_Round Up",
+        "nameZH": "取整逻辑_向上取整"
+      },
+      {
+        "index": 1,
+        "name": "Rounding Logic_Round Down",
+        "nameZH": "取整逻辑_向下取整"
+      },
+      {
+        "index": 2,
+        "name": "Rounding Logic_Round to Nearest",
+        "nameZH": "取整逻辑_四舍五入"
+      },
+      {
+        "index": 3,
+        "name": "Rounding Logic_Truncate",
+        "nameZH": "取整逻辑_截尾取整"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "textMapId": 9,
+    "name": "Type Conversions",
+    "nameZH": "类型转换",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Type Conversions_Integer to Boolean",
+        "nameZH": "类型转换_整数转布尔型"
+      },
+      {
+        "index": 1,
+        "name": "Type Conversions_Integer to Floating Point",
+        "nameZH": "类型转换_整数转浮点数"
+      },
+      {
+        "index": 2,
+        "name": "Type Conversions_Integer to String",
+        "nameZH": "类型转换_整数转字符串型"
+      },
+      {
+        "index": 3,
+        "name": "Type Conversions_Entity to String",
+        "nameZH": "类型转换_实体转字符串型"
+      },
+      {
+        "index": 4,
+        "name": "Type Conversions_GUID to String",
+        "nameZH": "类型转换_GUID换字符串型"
+      },
+      {
+        "index": 5,
+        "name": "Type Conversions_Boolean to Integer",
+        "nameZH": "类型转换_布尔型转整数"
+      },
+      {
+        "index": 6,
+        "name": "Type Conversions_Boolean to String",
+        "nameZH": "类型转换_布尔型转字符串型"
+      },
+      {
+        "index": 7,
+        "name": "Type Conversions_Floating Point to Integer",
+        "nameZH": "类型转换_浮点数转整数"
+      },
+      {
+        "index": 8,
+        "name": "Type Conversions_Floating Point to String",
+        "nameZH": "类型转换_浮点数转字符串型"
+      },
+      {
+        "index": 9,
+        "name": "Type Conversions_3D Vector to String",
+        "nameZH": "类型转换_三维向量转字符串型"
+      },
+      {
+        "index": 10,
+        "name": "Type Conversions_Faction to String",
+        "nameZH": "类型转换_阵营转字符串型"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "textMapId": 10,
+    "name": "Motion Path Point Types",
+    "nameZH": "运动路径点位类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Motion Path Points_Straight Line",
+        "nameZH": "运动路径点位_直线"
+      },
+      {
+        "index": 1,
+        "name": "Motion Path Points_Curve",
+        "nameZH": "运动路径点位_曲线"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "textMapId": 11,
+    "name": "Motion Types",
+    "nameZH": "运动类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Motion Types_One-Way",
+        "nameZH": "运动类型_单向运动"
+      },
+      {
+        "index": 1,
+        "name": "Motion Types_Back and Forth",
+        "nameZH": "运动类型_往返运动"
+      },
+      {
+        "index": 2,
+        "name": "Motion Types_Cyclic Movement",
+        "nameZH": "运动类型_循环运动"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "textMapId": 12,
+    "name": "Follow Location Type",
+    "nameZH": "跟随位置类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Completely Follow",
+        "nameZH": "完全跟随"
+      },
+      {
+        "index": 1,
+        "name": "Follow Location",
+        "nameZH": "跟随位置"
+      },
+      {
+        "index": 2,
+        "name": "Follow Rotation",
+        "nameZH": "跟随旋转"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "textMapId": 13,
+    "name": "Coordinate System Type",
+    "nameZH": "坐标系类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Local Coordinate System",
+        "nameZH": "本地坐标系"
+      },
+      {
+        "index": 1,
+        "name": "World Coordinate System",
+        "nameZH": "世界坐标系"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "textMapId": 14,
+    "name": "Elemental Type",
+    "nameZH": "元素类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Elemental Type_Pyro",
+        "nameZH": "元素类型_火元素"
+      },
+      {
+        "index": 1,
+        "name": "Elemental Type_Hydro",
+        "nameZH": "元素类型_水元素"
+      },
+      {
+        "index": 2,
+        "name": "Elemental Type_Anemo",
+        "nameZH": "元素类型_风元素"
+      },
+      {
+        "index": 3,
+        "name": "Elemental Type_Electro",
+        "nameZH": "元素类型_雷元素"
+      },
+      {
+        "index": 4,
+        "name": "Elemental Type_Dendro",
+        "nameZH": "元素类型_草元素"
+      },
+      {
+        "index": 5,
+        "name": "Elemental Type_Cryo",
+        "nameZH": "元素类型_冰元素"
+      },
+      {
+        "index": 6,
+        "name": "Elemental Type_Geo",
+        "nameZH": "元素类型_岩元素"
+      },
+      {
+        "index": 7,
+        "name": "Elemental Type_None",
+        "nameZH": "元素类型_无"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "textMapId": 15,
+    "name": "Entity Type",
+    "nameZH": "实体类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Entity Type_Stage",
+        "nameZH": "实体类型_关卡"
+      },
+      {
+        "index": 1,
+        "name": "Entity Type_Object",
+        "nameZH": "实体类型_物件"
+      },
+      {
+        "index": 2,
+        "name": "Entity Type_Player",
+        "nameZH": "实体类型_玩家"
+      },
+      {
+        "index": 3,
+        "name": "Entity Type_Character",
+        "nameZH": "实体类型_角色"
+      },
+      {
+        "index": 4,
+        "name": "Entity Type_Creation",
+        "nameZH": "实体类型_造物"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "textMapId": 16,
+    "name": "Unit Status Addition Failure Reason",
+    "nameZH": "单位状态添加失败原因",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Failed: Unexpected error",
+        "nameZH": "失败，其它异常"
+      },
+      {
+        "index": 1,
+        "name": "Failed: Operation paused for another process",
+        "nameZH": "失败，让位于其它状态"
+      },
+      {
+        "index": 2,
+        "name": "Failed: Maximum coexistence limit reached",
+        "nameZH": "失败，超出并存上限"
+      },
+      {
+        "index": 3,
+        "name": "Failed: Unable to add additional stack",
+        "nameZH": "失败，附加叠层未成功"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "textMapId": 17,
+    "name": "Unit Status Addition Result",
+    "nameZH": "单位状态添加结果",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Failed: Unexpected error",
+        "nameZH": "失败，其它异常"
+      },
+      {
+        "index": 1,
+        "name": "Failed: Operation paused for another process",
+        "nameZH": "失败，让位于其它状态"
+      },
+      {
+        "index": 2,
+        "name": "Failed: Maximum coexistence limit reached",
+        "nameZH": "失败，超出并存上限"
+      },
+      {
+        "index": 3,
+        "name": "Failed: Unable to add additional stack",
+        "nameZH": "失败，附加叠层未成功"
+      },
+      {
+        "index": 4,
+        "name": "Success: New status applied",
+        "nameZH": "成功，施加新状态"
+      },
+      {
+        "index": 5,
+        "name": "Success: Slot stacking",
+        "nameZH": "成功，槽位叠层"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "textMapId": 18,
+    "name": "Unit Status Removal Reason",
+    "nameZH": "单位状态移除原因",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Replaced by other unit status",
+        "nameZH": "其它单位状态顶替"
+      },
+      {
+        "index": 1,
+        "name": "Duration exceeded",
+        "nameZH": "超出持续时间"
+      },
+      {
+        "index": 2,
+        "name": "Dispelled",
+        "nameZH": "被驱散"
+      },
+      {
+        "index": 3,
+        "name": "Status expired",
+        "nameZH": "状态失效"
+      },
+      {
+        "index": 4,
+        "name": "Class changed",
+        "nameZH": "职业变更"
+      },
+      {
+        "index": 5,
+        "name": "Affix Expired",
+        "nameZH": "词条失效"
+      },
+      {
+        "index": 6,
+        "name": "Shield Depleted to Zero",
+        "nameZH": "护盾含量归零"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "textMapId": 19,
+    "name": "Unit Status Removal Strategy",
+    "nameZH": "单位状态移除策略",
+    "enums": [
+      {
+        "index": 0,
+        "name": "All Coexisting Statuses With the Same Name",
+        "nameZH": "所有同名并存状态"
+      },
+      {
+        "index": 1,
+        "name": "Status With Fastest Stack Loss",
+        "nameZH": "最快丢失叠加层数的状态"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "textMapId": 20,
+    "name": "Revive Point Selection Strategy",
+    "nameZH": "复苏点选取策略",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Revive Point Selection_Nearest",
+        "nameZH": "复苏点选取_最近"
+      },
+      {
+        "index": 1,
+        "name": "Revive Point Selection_Most Recently Activated",
+        "nameZH": "复苏点选取_最新激活"
+      },
+      {
+        "index": 2,
+        "name": "Revive Point Selection_Highest Priority",
+        "nameZH": "复苏点选取_优先级最高"
+      },
+      {
+        "index": 3,
+        "name": "Revive Point Selection_Random",
+        "nameZH": "复苏点选取_随机"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "textMapId": 21,
+    "name": "Cause of Being Down",
+    "nameZH": "倒下原因",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Cause of Being Down_Node Graph Triggered",
+        "nameZH": "倒下原因_节点图导致"
+      },
+      {
+        "index": 1,
+        "name": "Cause of Being Down_Normal Defeat",
+        "nameZH": "倒下原因_正常被击倒"
+      },
+      {
+        "index": 2,
+        "name": "Cause of Being Down_Abnormal Defeat",
+        "nameZH": "倒下原因_非正常被击倒"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "textMapId": 22,
+    "name": "Trigonometric Functions",
+    "nameZH": "三角函数",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Trigonometric Functions_cos",
+        "nameZH": "三角函数_余弦"
+      },
+      {
+        "index": 1,
+        "name": "Trigonometric Functions_sin",
+        "nameZH": "三角函数_正弦"
+      },
+      {
+        "index": 2,
+        "name": "Trigonometric Functions_tan",
+        "nameZH": "三角函数_正切"
+      },
+      {
+        "index": 3,
+        "name": "Trigonometric Functions_arccos",
+        "nameZH": "三角函数_反余弦"
+      },
+      {
+        "index": 4,
+        "name": "Trigonometric Functions_arcsin",
+        "nameZH": "三角函数_反正弦"
+      },
+      {
+        "index": 5,
+        "name": "Trigonometric Functions_arctan",
+        "nameZH": "三角函数_反正切"
+      },
+      {
+        "index": 6,
+        "name": "Trigonometric Functions_Radians to Degrees",
+        "nameZH": "三角函数_弧度转角度"
+      },
+      {
+        "index": 7,
+        "name": "Trigonometric Functions_Degrees to Radians",
+        "nameZH": "三角函数_角度转弧度"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "textMapId": 23,
+    "name": "Disruptor Device Types",
+    "nameZH": "扰动装置类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Disruptor Device Type_Force Field Device",
+        "nameZH": "扰动装置类型_力场器"
+      },
+      {
+        "index": 1,
+        "name": "Disruptor Device Type_Ejector",
+        "nameZH": "扰动装置类型_弹射器"
+      },
+      {
+        "index": 2,
+        "name": "Disruptor Device Type_Tractor Device",
+        "nameZH": "扰动装置类型_牵引器"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "textMapId": 24,
+    "name": "Disruptor Device Orientation",
+    "nameZH": "扰动装置朝向",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Disruptor Device Orientation_Associate Character Orientation",
+        "nameZH": "扰动装置朝向_关联角色朝向"
+      },
+      {
+        "index": 1,
+        "name": "Disruptor Device Orientation_Fixed Unidirectional",
+        "nameZH": "扰动装置朝向_固定单向"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "textMapId": 25,
+    "name": "UI Control Group Status",
+    "nameZH": "界面控件组状态",
+    "enums": [
+      {
+        "index": 0,
+        "name": "UI Control Group Status_Off",
+        "nameZH": "界面控件组状态_关闭"
+      },
+      {
+        "index": 1,
+        "name": "UI Control Group Status_On",
+        "nameZH": "界面控件组状态_开启"
+      },
+      {
+        "index": 2,
+        "name": "UI Control Group Status_Hidden",
+        "nameZH": "界面控件组状态_隐藏"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "textMapId": 26,
+    "name": "Target Type",
+    "nameZH": "目标类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "None",
+        "nameZH": "无"
+      },
+      {
+        "index": 1,
+        "name": "Allied Faction",
+        "nameZH": "友善阵营"
+      },
+      {
+        "index": 2,
+        "name": "Hostile Faction",
+        "nameZH": "敌对阵营"
+      },
+      {
+        "index": 3,
+        "name": "Self",
+        "nameZH": "自己"
+      },
+      {
+        "index": 4,
+        "name": "Own Faction",
+        "nameZH": "自身阵营"
+      },
+      {
+        "index": 5,
+        "name": "All",
+        "nameZH": "全部"
+      },
+      {
+        "index": 6,
+        "name": "Remove All of Self",
+        "nameZH": "剔除自身的全部"
+      },
+      {
+        "index": 7,
+        "name": "Allied Faction Self Included",
+        "nameZH": "友善阵营包括自身"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "textMapId": 27,
+    "name": "Trigger Restriction",
+    "nameZH": "触发限制",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Trigger Only Once",
+        "nameZH": "只触发一次"
+      },
+      {
+        "index": 1,
+        "name": "Trigger Only Once per Entity",
+        "nameZH": "对于每个实体只触发一次"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "textMapId": 28,
+    "name": "Hit Type",
+    "nameZH": "打击类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "None",
+        "nameZH": "无"
+      },
+      {
+        "index": 1,
+        "name": "Default",
+        "nameZH": "默认"
+      },
+      {
+        "index": 2,
+        "name": "Slash",
+        "nameZH": "斩击"
+      },
+      {
+        "index": 3,
+        "name": "Smash",
+        "nameZH": "钝击"
+      },
+      {
+        "index": 4,
+        "name": "Projectile",
+        "nameZH": "投射物"
+      },
+      {
+        "index": 5,
+        "name": "Piercing Attack",
+        "nameZH": "刺击攻击"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "textMapId": 29,
+    "name": "Attack Type",
+    "nameZH": "攻击类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "None",
+        "nameZH": "无"
+      },
+      {
+        "index": 1,
+        "name": "Melee Attack",
+        "nameZH": "近战攻击"
+      },
+      {
+        "index": 2,
+        "name": "Ranged Attack",
+        "nameZH": "远程攻击"
+      },
+      {
+        "index": 3,
+        "name": "Default",
+        "nameZH": "默认"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "textMapId": 30,
+    "name": "Hit Performance Level",
+    "nameZH": "受击表现等级",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Default",
+        "nameZH": "默认"
+      },
+      {
+        "index": 1,
+        "name": "No Hit Performance",
+        "nameZH": "无受击表现"
+      },
+      {
+        "index": 2,
+        "name": "Hit by Normal Arrow Without Charging",
+        "nameZH": "未蓄力普通箭受击"
+      },
+      {
+        "index": 3,
+        "name": "Combo Hit",
+        "nameZH": "连击受击"
+      },
+      {
+        "index": 4,
+        "name": "Normal Hit",
+        "nameZH": "普通受击"
+      },
+      {
+        "index": 5,
+        "name": "Heavy Hit",
+        "nameZH": "重受击"
+      },
+      {
+        "index": 6,
+        "name": "Strong Impact",
+        "nameZH": "强力冲击"
+      },
+      {
+        "index": 7,
+        "name": "Ultimate Impact",
+        "nameZH": "终结技冲击"
+      },
+      {
+        "index": 8,
+        "name": "Vertical Launch",
+        "nameZH": "垂直击飞"
+      },
+      {
+        "index": 9,
+        "name": "Super Launch",
+        "nameZH": "超强力击飞"
+      },
+      {
+        "index": 10,
+        "name": "Long-Range Throw",
+        "nameZH": "长距抛射"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "textMapId": 31,
+    "name": "Skill Slot",
+    "nameZH": "技能槽位",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Normal Attack",
+        "nameZH": "普通攻击"
+      },
+      {
+        "index": 1,
+        "name": "Skill 1: E",
+        "nameZH": "技能1-E"
+      },
+      {
+        "index": 2,
+        "name": "Skill 2: Q",
+        "nameZH": "技能2-Q"
+      },
+      {
+        "index": 3,
+        "name": "Skill 3: R",
+        "nameZH": "技能3-R"
+      },
+      {
+        "index": 4,
+        "name": "Skill 4: T",
+        "nameZH": "技能4-T"
+      },
+      {
+        "index": 5,
+        "name": "Custom Skill Slot 1",
+        "nameZH": "自定义技能槽位1"
+      },
+      {
+        "index": 6,
+        "name": "Custom Skill Slot 2",
+        "nameZH": "自定义技能槽位2"
+      },
+      {
+        "index": 7,
+        "name": "Custom Skill Slot 3",
+        "nameZH": "自定义技能槽位3"
+      },
+      {
+        "index": 8,
+        "name": "Custom Skill Slot 4",
+        "nameZH": "自定义技能槽位4"
+      },
+      {
+        "index": 9,
+        "name": "Custom Skill Slot 5",
+        "nameZH": "自定义技能槽位5"
+      },
+      {
+        "index": 10,
+        "name": "Custom Skill Slot 6",
+        "nameZH": "自定义技能槽位6"
+      },
+      {
+        "index": 11,
+        "name": "Custom Skill Slot 7",
+        "nameZH": "自定义技能槽位7"
+      },
+      {
+        "index": 12,
+        "name": "Custom Skill Slot 8",
+        "nameZH": "自定义技能槽位8"
+      },
+      {
+        "index": 13,
+        "name": "Custom Skill Slot 9",
+        "nameZH": "自定义技能槽位9"
+      },
+      {
+        "index": 14,
+        "name": "Custom Skill Slot 10",
+        "nameZH": "自定义技能槽位10"
+      },
+      {
+        "index": 15,
+        "name": "Custom Skill Slot 11",
+        "nameZH": "自定义技能槽位11"
+      },
+      {
+        "index": 16,
+        "name": "Custom Skill Slot 12",
+        "nameZH": "自定义技能槽位12"
+      },
+      {
+        "index": 17,
+        "name": "Custom Skill Slot 13",
+        "nameZH": "自定义技能槽位13"
+      },
+      {
+        "index": 18,
+        "name": "Custom Skill Slot 14",
+        "nameZH": "自定义技能槽位14"
+      },
+      {
+        "index": 19,
+        "name": "Custom Skill Slot 15",
+        "nameZH": "自定义技能槽位15"
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "textMapId": 32,
+    "name": "Sound Attenuation Mode",
+    "nameZH": "声音衰减方式",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Linear Attenuation",
+        "nameZH": "线性衰减"
+      },
+      {
+        "index": 1,
+        "name": "Fast Then Slow",
+        "nameZH": "先快后慢"
+      },
+      {
+        "index": 2,
+        "name": "Slow Then Fast",
+        "nameZH": "先慢后快"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "textMapId": 33,
+    "name": "Select Completion Reason",
+    "nameZH": "选择完成原因",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Completed by Player",
+        "nameZH": "玩家完成"
+      },
+      {
+        "index": 1,
+        "name": "Timeout",
+        "nameZH": "超时关闭"
+      },
+      {
+        "index": 2,
+        "name": "Fixed-Quantity Refresh",
+        "nameZH": "定量刷新"
+      },
+      {
+        "index": 3,
+        "name": "Refresh All",
+        "nameZH": "全量刷新"
+      },
+      {
+        "index": 4,
+        "name": "Closed Manually",
+        "nameZH": "主动关闭"
+      },
+      {
+        "index": 5,
+        "name": "Closed by Node Graph",
+        "nameZH": "节点图关闭"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "textMapId": 34,
+    "name": "Settlement Status",
+    "nameZH": "结算状态",
+    "enums": [
+      {
+        "index": 0,
+        "name": "TBC",
+        "nameZH": "未定"
+      },
+      {
+        "index": 1,
+        "name": "Victory",
+        "nameZH": "胜利"
+      },
+      {
+        "index": 2,
+        "name": "Failed",
+        "nameZH": "失败"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "textMapId": 35,
+    "name": "Settlement Status",
+    "nameZH": "结算状态",
+    "enums": [
+      {
+        "index": 0,
+        "name": "TBC",
+        "nameZH": "未定"
+      },
+      {
+        "index": 1,
+        "name": "Victory",
+        "nameZH": "胜利"
+      },
+      {
+        "index": 2,
+        "name": "Failed",
+        "nameZH": "失败"
+      },
+      {
+        "index": 3,
+        "name": "Escape",
+        "nameZH": "逃跑"
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "textMapId": 36,
+    "name": "Reason for Item Change",
+    "nameZH": "道具变化原因",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Destroy",
+        "nameZH": "销毁"
+      },
+      {
+        "index": 1,
+        "name": "Discard",
+        "nameZH": "丢弃"
+      },
+      {
+        "index": 2,
+        "name": "Use",
+        "nameZH": "使用"
+      },
+      {
+        "index": 3,
+        "name": "Defeat Drops",
+        "nameZH": "被击倒掉落"
+      },
+      {
+        "index": 4,
+        "name": "Shop Trade",
+        "nameZH": "商店交易"
+      },
+      {
+        "index": 5,
+        "name": "Node Graph Operation",
+        "nameZH": "节点图操作"
+      },
+      {
+        "index": 6,
+        "name": "Pick Up",
+        "nameZH": "拾取"
+      },
+      {
+        "index": 7,
+        "name": "Default",
+        "nameZH": "默认"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "textMapId": 37,
+    "name": "Item Loot Type",
+    "nameZH": "道具掉落类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Shared Reward",
+        "nameZH": "全员一份"
+      },
+      {
+        "index": 1,
+        "name": "Individualized Reward",
+        "nameZH": "每人一份"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "textMapId": 38,
+    "name": "Decision Refresh Mode",
+    "nameZH": "决策刷新方式",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Cannot Refresh",
+        "nameZH": "不可刷新"
+      },
+      {
+        "index": 1,
+        "name": "Partial Refresh",
+        "nameZH": "部分刷新"
+      },
+      {
+        "index": 2,
+        "name": "Refresh All",
+        "nameZH": "全量刷新"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "textMapId": 39,
+    "name": "Elemental Reaction Type",
+    "nameZH": "元素反应类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Overloaded",
+        "nameZH": "超载"
+      },
+      {
+        "index": 1,
+        "name": "Vaporize",
+        "nameZH": "蒸发"
+      },
+      {
+        "index": 2,
+        "name": "Burning",
+        "nameZH": "燃烧"
+      },
+      {
+        "index": 3,
+        "name": "Wet",
+        "nameZH": "潮湿"
+      },
+      {
+        "index": 4,
+        "name": "Bloom",
+        "nameZH": "绽放"
+      },
+      {
+        "index": 5,
+        "name": "Melt",
+        "nameZH": "融化"
+      },
+      {
+        "index": 6,
+        "name": "Frozen",
+        "nameZH": "冻结"
+      },
+      {
+        "index": 7,
+        "name": "Electro-Charged",
+        "nameZH": "感电"
+      },
+      {
+        "index": 8,
+        "name": "Superconduct",
+        "nameZH": "超导"
+      },
+      {
+        "index": 9,
+        "name": "Swirl: Pyro",
+        "nameZH": "扩散-火"
+      },
+      {
+        "index": 10,
+        "name": "Swirl: Hydro",
+        "nameZH": "扩散-水"
+      },
+      {
+        "index": 11,
+        "name": "Swirl: Electro",
+        "nameZH": "扩散-雷"
+      },
+      {
+        "index": 12,
+        "name": "Swirl: Cryo",
+        "nameZH": "扩散-冰"
+      },
+      {
+        "index": 13,
+        "name": "Crystallize: Pyro",
+        "nameZH": "结晶-火"
+      },
+      {
+        "index": 14,
+        "name": "Crystallize: Hydro",
+        "nameZH": "结晶-水"
+      },
+      {
+        "index": 15,
+        "name": "Crystallize: Electro",
+        "nameZH": "结晶-雷"
+      },
+      {
+        "index": 16,
+        "name": "Crystallize: Cryo",
+        "nameZH": "结晶-冰"
+      },
+      {
+        "index": 17,
+        "name": "Catalyze",
+        "nameZH": "激化"
+      },
+      {
+        "index": 18,
+        "name": "Aggravate",
+        "nameZH": "超激化"
+      },
+      {
+        "index": 19,
+        "name": "Spread",
+        "nameZH": "蔓激化"
+      },
+      {
+        "index": 20,
+        "name": "Burgeon",
+        "nameZH": "烈绽放"
+      },
+      {
+        "index": 21,
+        "name": "Hyperbloom",
+        "nameZH": "超绽放"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "textMapId": 40,
+    "name": "Scan Scoring Rules",
+    "nameZH": "扫描积分规则",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Prioritize View",
+        "nameZH": "视野优先"
+      },
+      {
+        "index": 1,
+        "name": "Prioritize Distance",
+        "nameZH": "距离优先"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "textMapId": 41,
+    "name": "Random Order",
+    "nameZH": "随机排序",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Sorting Rules_Random",
+        "nameZH": "排序规则_随机"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "textMapId": 42,
+    "name": "Gameplay Mode",
+    "nameZH": "游玩方式",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Test Play",
+        "nameZH": "试玩"
+      },
+      {
+        "index": 1,
+        "name": "Room Play",
+        "nameZH": "房间游玩"
+      },
+      {
+        "index": 2,
+        "name": "Match Play",
+        "nameZH": "匹配游玩"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "textMapId": 43,
+    "name": "Input Device Type",
+    "nameZH": "输入设备类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Keyboard and Mouse",
+        "nameZH": "键盘鼠标"
+      },
+      {
+        "index": 1,
+        "name": "Controller",
+        "nameZH": "手柄"
+      },
+      {
+        "index": 2,
+        "name": "Touchscreen",
+        "nameZH": "触屏"
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "textMapId": 44,
+    "name": "Fixed-Point Motion Device Motion Type",
+    "nameZH": "定点运动器运动类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Instant Movement",
+        "nameZH": "瞬间移动"
+      },
+      {
+        "index": 1,
+        "name": "Uniform Linear Motion",
+        "nameZH": "匀速直线运动"
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "textMapId": 45,
+    "name": "Fixed-Point Motion Device Parameter Conversion Type",
+    "nameZH": "定点运动器参数转化类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Fixed Speed",
+        "nameZH": "固定速度"
+      },
+      {
+        "index": 1,
+        "name": "Fixed Time",
+        "nameZH": "固定时间"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "textMapId": 200001,
+    "name": "Boolean",
+    "nameZH": "布尔值",
+    "enums": [
+      {
+        "index": 0,
+        "name": "No",
+        "nameZH": "否"
+      },
+      {
+        "index": 1,
+        "name": "Yes",
+        "nameZH": "是"
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "textMapId": 200002,
+    "name": "Comparison Operators",
+    "nameZH": "比较运算",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Comparison Operators_Equal To",
+        "nameZH": "比较运算_相等"
+      },
+      {
+        "index": 1,
+        "name": "Comparison Operators_Less Than",
+        "nameZH": "比较运算_小于"
+      },
+      {
+        "index": 2,
+        "name": "Comparison Operators_Less Than or Equal To",
+        "nameZH": "比较运算_小于等于"
+      },
+      {
+        "index": 3,
+        "name": "Comparison Operators_Greater Than",
+        "nameZH": "比较运算_大于"
+      },
+      {
+        "index": 4,
+        "name": "Comparison Operators_Greater Than or Equal To",
+        "nameZH": "比较运算_大于等于"
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "textMapId": 200003,
+    "name": "Logical Operators",
+    "nameZH": "逻辑运算",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Logical Operators_AND",
+        "nameZH": "逻辑运算_与"
+      },
+      {
+        "index": 1,
+        "name": "Logical Operators_OR",
+        "nameZH": "逻辑运算_或"
+      },
+      {
+        "index": 2,
+        "name": "Logical Operators_XOR",
+        "nameZH": "逻辑运算_异或"
+      },
+      {
+        "index": 3,
+        "name": "Logical Operators_NOT",
+        "nameZH": "逻辑运算_非"
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "textMapId": 200004,
+    "name": "Basic Mathematical Operators",
+    "nameZH": "基础数学运算",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Mathematical Operators_Addition",
+        "nameZH": "数学运算_加法"
+      },
+      {
+        "index": 1,
+        "name": "Mathematical Operators_Subtraction",
+        "nameZH": "数学运算_减法"
+      },
+      {
+        "index": 2,
+        "name": "Mathematical Operators_Multiplication",
+        "nameZH": "数学运算_乘法"
+      },
+      {
+        "index": 3,
+        "name": "Mathematical Operators_Division",
+        "nameZH": "数学运算_除法"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "textMapId": 200005,
+    "name": "Attack Shapes",
+    "nameZH": "攻击形状",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Cuboid",
+        "nameZH": "长方体"
+      },
+      {
+        "index": 1,
+        "name": "Sphere",
+        "nameZH": "球体"
+      },
+      {
+        "index": 2,
+        "name": "Sector",
+        "nameZH": "扇形"
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "textMapId": 200006,
+    "name": "Survival Status",
+    "nameZH": "生存状态",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Survival Status_Alive",
+        "nameZH": "生存状态_存活"
+      },
+      {
+        "index": 1,
+        "name": "Survival Status_Down",
+        "nameZH": "生存状态_倒下"
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "textMapId": 200007,
+    "name": "Sorting Rules",
+    "nameZH": "排序规则",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Sorting Rules_Ascending",
+        "nameZH": "排序规则_顺序"
+      },
+      {
+        "index": 1,
+        "name": "Sorting Rules_Descending",
+        "nameZH": "排序规则_逆序"
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "textMapId": 200008,
+    "name": "Rounding Logic",
+    "nameZH": "取整逻辑",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Rounding Logic_Round Up",
+        "nameZH": "取整逻辑_向上取整"
+      },
+      {
+        "index": 1,
+        "name": "Rounding Logic_Round Down",
+        "nameZH": "取整逻辑_向下取整"
+      },
+      {
+        "index": 2,
+        "name": "Rounding Logic_Round to Nearest",
+        "nameZH": "取整逻辑_四舍五入"
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "textMapId": 200009,
+    "name": "Type Conversions",
+    "nameZH": "类型转换",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Type Conversions_Integer to Boolean",
+        "nameZH": "类型转换_整数转布尔型"
+      },
+      {
+        "index": 1,
+        "name": "Type Conversions_Integer to Floating Point",
+        "nameZH": "类型转换_整数转浮点数"
+      },
+      {
+        "index": 2,
+        "name": "Type Conversions_Integer to String",
+        "nameZH": "类型转换_整数转字符串型"
+      },
+      {
+        "index": 3,
+        "name": "Type Conversions_Entity to String",
+        "nameZH": "类型转换_实体转字符串型"
+      },
+      {
+        "index": 4,
+        "name": "Type Conversions_GUID to String",
+        "nameZH": "类型转换_GUID换字符串型"
+      },
+      {
+        "index": 5,
+        "name": "Type Conversions_Boolean to Integer",
+        "nameZH": "类型转换_布尔型转整数"
+      },
+      {
+        "index": 6,
+        "name": "Type Conversions_Boolean to String",
+        "nameZH": "类型转换_布尔型转字符串型"
+      },
+      {
+        "index": 7,
+        "name": "Type Conversions_Floating Point to Integer",
+        "nameZH": "类型转换_浮点数转整数"
+      },
+      {
+        "index": 8,
+        "name": "Type Conversions_Floating Point to String",
+        "nameZH": "类型转换_浮点数转字符串型"
+      },
+      {
+        "index": 9,
+        "name": "Type Conversions_3D Vector to String",
+        "nameZH": "类型转换_三维向量转字符串型"
+      },
+      {
+        "index": 10,
+        "name": "Type Conversions_Faction to String",
+        "nameZH": "类型转换_阵营转字符串型"
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "textMapId": 200010,
+    "name": "Motion Path Point Types",
+    "nameZH": "运动路径点位类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Motion Path Points_Straight Line",
+        "nameZH": "运动路径点位_直线"
+      },
+      {
+        "index": 1,
+        "name": "Motion Path Points_Curve",
+        "nameZH": "运动路径点位_曲线"
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "textMapId": 200011,
+    "name": "Motion Types",
+    "nameZH": "运动类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Motion Types_One-Way",
+        "nameZH": "运动类型_单向运动"
+      },
+      {
+        "index": 1,
+        "name": "Motion Types_Back and Forth",
+        "nameZH": "运动类型_往返运动"
+      },
+      {
+        "index": 2,
+        "name": "Motion Types_Cyclic Movement",
+        "nameZH": "运动类型_循环运动"
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "textMapId": 200012,
+    "name": "Follow Location Type",
+    "nameZH": "跟随位置类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Follow Location Type_Full (Location + Orientation)",
+        "nameZH": "跟随位置类型_全量（位置+朝向）"
+      },
+      {
+        "index": 1,
+        "name": "Follow Location Type_Location",
+        "nameZH": "跟随位置类型_位置"
+      },
+      {
+        "index": 2,
+        "name": "Follow Location Type_Orientation",
+        "nameZH": "跟随位置类型_朝向"
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "textMapId": 200013,
+    "name": "Coordinate System Type",
+    "nameZH": "坐标系类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Follow Location_Relative Location",
+        "nameZH": "跟随位置_相对位置"
+      },
+      {
+        "index": 1,
+        "name": "Follow Location_Absolute Location",
+        "nameZH": "跟随位置_绝对位置"
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "textMapId": 200014,
+    "name": "Elemental Type",
+    "nameZH": "元素类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Elemental Type_Pyro",
+        "nameZH": "元素类型_火元素"
+      },
+      {
+        "index": 1,
+        "name": "Elemental Type_Hydro",
+        "nameZH": "元素类型_水元素"
+      },
+      {
+        "index": 2,
+        "name": "Elemental Type_Anemo",
+        "nameZH": "元素类型_风元素"
+      },
+      {
+        "index": 3,
+        "name": "Elemental Type_Electro",
+        "nameZH": "元素类型_雷元素"
+      },
+      {
+        "index": 4,
+        "name": "Elemental Type_Dendro",
+        "nameZH": "元素类型_草元素"
+      },
+      {
+        "index": 5,
+        "name": "Elemental Type_Cryo",
+        "nameZH": "元素类型_冰元素"
+      },
+      {
+        "index": 6,
+        "name": "Elemental Type_Geo",
+        "nameZH": "元素类型_岩元素"
+      },
+      {
+        "index": 7,
+        "name": "Elemental Type_None",
+        "nameZH": "元素类型_无"
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "textMapId": 200015,
+    "name": "Entity Type",
+    "nameZH": "实体类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Stage",
+        "nameZH": "关卡"
+      },
+      {
+        "index": 1,
+        "name": "Object",
+        "nameZH": "物件"
+      },
+      {
+        "index": 2,
+        "name": "Player",
+        "nameZH": "玩家"
+      },
+      {
+        "index": 3,
+        "name": "Character",
+        "nameZH": "角色"
+      },
+      {
+        "index": 4,
+        "name": "Creation",
+        "nameZH": "造物"
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "textMapId": 200016,
+    "name": "Unit Status Addition Failure Reason",
+    "nameZH": "单位状态添加失败原因",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Failed: Unexpected error",
+        "nameZH": "失败，其它异常"
+      },
+      {
+        "index": 1,
+        "name": "Failed: Operation paused for another process",
+        "nameZH": "失败，让位于其它状态"
+      },
+      {
+        "index": 2,
+        "name": "Failed: Maximum coexistence limit reached",
+        "nameZH": "失败，超出并存上限"
+      },
+      {
+        "index": 3,
+        "name": "Failed: Unable to add additional stack",
+        "nameZH": "失败，附加叠层未成功"
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "textMapId": 200017,
+    "name": "Unit Status Addition Success Type",
+    "nameZH": "单位状态添加成功类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Success: New status applied",
+        "nameZH": "成功，施加新状态"
+      },
+      {
+        "index": 1,
+        "name": "Success: Slot stacking",
+        "nameZH": "成功，槽位叠层"
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "textMapId": 200018,
+    "name": "Unit Status Removal Reason",
+    "nameZH": "单位状态移除原因",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Replaced by other unit status",
+        "nameZH": "其它单位状态顶替"
+      },
+      {
+        "index": 1,
+        "name": "Duration exceeded",
+        "nameZH": "超出持续时间"
+      },
+      {
+        "index": 2,
+        "name": "Dispelled",
+        "nameZH": "被驱散"
+      },
+      {
+        "index": 3,
+        "name": "Status expired",
+        "nameZH": "状态失效"
+      },
+      {
+        "index": 4,
+        "name": "Class changed",
+        "nameZH": "职业变更"
+      },
+      {
+        "index": 5,
+        "name": "Affix Expired",
+        "nameZH": "词条失效"
+      },
+      {
+        "index": 6,
+        "name": "Shield Depleted to Zero",
+        "nameZH": "护盾含量归零"
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "textMapId": 200019,
+    "name": "Unit Status Removal Strategy",
+    "nameZH": "单位状态移除策略",
+    "enums": [
+      {
+        "index": 0,
+        "name": "All Coexisting Statuses With the Same Name",
+        "nameZH": "所有同名并存状态"
+      },
+      {
+        "index": 1,
+        "name": "Status With Fastest Stack Loss",
+        "nameZH": "最快丢失叠加层数的状态"
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "textMapId": 200020,
+    "name": "Revive Point Selection Strategy",
+    "nameZH": "复苏点选取策略",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Revive Point Selection_Nearest",
+        "nameZH": "复苏点选取_最近"
+      },
+      {
+        "index": 1,
+        "name": "Revive Point Selection_Most Recently Activated",
+        "nameZH": "复苏点选取_最新激活"
+      },
+      {
+        "index": 2,
+        "name": "Revive Point Selection_Highest Priority",
+        "nameZH": "复苏点选取_优先级最高"
+      },
+      {
+        "index": 3,
+        "name": "Revive Point Selection_Random",
+        "nameZH": "复苏点选取_随机"
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "textMapId": 200021,
+    "name": "Cause of Being Down",
+    "nameZH": "倒下原因",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Cause of Being Down_Node Graph Triggered",
+        "nameZH": "倒下原因_节点图导致"
+      },
+      {
+        "index": 1,
+        "name": "Cause of Being Down_Normal Defeat",
+        "nameZH": "倒下原因_正常被击倒"
+      },
+      {
+        "index": 2,
+        "name": "Cause of Being Down_Abnormal Defeat",
+        "nameZH": "倒下原因_非正常被击倒"
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "textMapId": 200022,
+    "name": "Trigonometric Functions",
+    "nameZH": "三角函数",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Trigonometric Functions_cos",
+        "nameZH": "三角函数_余弦"
+      },
+      {
+        "index": 1,
+        "name": "Trigonometric Functions_sin",
+        "nameZH": "三角函数_正弦"
+      },
+      {
+        "index": 2,
+        "name": "Trigonometric Functions_tan",
+        "nameZH": "三角函数_正切"
+      },
+      {
+        "index": 3,
+        "name": "Trigonometric Functions_arccos",
+        "nameZH": "三角函数_反余弦"
+      },
+      {
+        "index": 4,
+        "name": "Trigonometric Functions_arcsin",
+        "nameZH": "三角函数_反正弦"
+      },
+      {
+        "index": 5,
+        "name": "Trigonometric Functions_arctan",
+        "nameZH": "三角函数_反正切"
+      },
+      {
+        "index": 6,
+        "name": "Trigonometric Functions_Radians to Degrees",
+        "nameZH": "三角函数_弧度转角度"
+      },
+      {
+        "index": 7,
+        "name": "Trigonometric Functions_Degrees to Radians",
+        "nameZH": "三角函数_角度转弧度"
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "textMapId": 200023,
+    "name": "Disruptor Device Type",
+    "nameZH": "扰动装置类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Disruptor Device Type_Force Field Device",
+        "nameZH": "扰动装置类型_力场器"
+      },
+      {
+        "index": 1,
+        "name": "Disruptor Device Type_Ejector",
+        "nameZH": "扰动装置类型_弹射器"
+      },
+      {
+        "index": 2,
+        "name": "Disruptor Device Type_Tractor Device",
+        "nameZH": "扰动装置类型_牵引器"
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "textMapId": 200024,
+    "name": "Disruptor Device Orientation",
+    "nameZH": "扰动装置朝向",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Disruptor Device Orientation_Associate Character Orientation",
+        "nameZH": "扰动装置朝向_关联角色朝向"
+      },
+      {
+        "index": 1,
+        "name": "Disruptor Device Orientation_Fixed Unidirectional",
+        "nameZH": "扰动装置朝向_固定单向"
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "textMapId": 200025,
+    "name": "UI Control Group Status",
+    "nameZH": "界面控件组状态",
+    "enums": [
+      {
+        "index": 0,
+        "name": "UI Control Group Status_Off",
+        "nameZH": "界面控件组状态_关闭"
+      },
+      {
+        "index": 1,
+        "name": "UI Control Group Status_On",
+        "nameZH": "界面控件组状态_开启"
+      },
+      {
+        "index": 2,
+        "name": "UI Control Group Status_Hidden",
+        "nameZH": "界面控件组状态_隐藏"
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "textMapId": 200026,
+    "name": "Target Type",
+    "nameZH": "目标类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Don't Find Target",
+        "nameZH": "不找目标"
+      },
+      {
+        "index": 1,
+        "name": "Allied Faction",
+        "nameZH": "友善阵营"
+      },
+      {
+        "index": 2,
+        "name": "Hostile Faction",
+        "nameZH": "敌对阵营"
+      },
+      {
+        "index": 3,
+        "name": "Self",
+        "nameZH": "自身"
+      },
+      {
+        "index": 4,
+        "name": "Own Faction",
+        "nameZH": "自身所在阵营"
+      },
+      {
+        "index": 5,
+        "name": "All",
+        "nameZH": "全部"
+      },
+      {
+        "index": 6,
+        "name": "All Except Self",
+        "nameZH": "除自身外全部"
+      },
+      {
+        "index": 7,
+        "name": "Allied Faction Self Included",
+        "nameZH": "友善阵营包括自身"
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "textMapId": 200027,
+    "name": "Quick Mathematical Operators",
+    "nameZH": "便捷数学运算",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Mathematical Operators_Modulo Operation",
+        "nameZH": "数学运算_模运算"
+      },
+      {
+        "index": 1,
+        "name": "Mathematical Operators_Exponentiation",
+        "nameZH": "数学运算_幂运算"
+      },
+      {
+        "index": 2,
+        "name": "Mathematical Operators_Get Maximum Value",
+        "nameZH": "数学运算_取最大值"
+      },
+      {
+        "index": 3,
+        "name": "Mathematical Operators_Get Minimum Value",
+        "nameZH": "数学运算_取最小值"
+      },
+      {
+        "index": 4,
+        "name": "Mathematical Operators_Logarithm",
+        "nameZH": "数学运算_对数"
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "textMapId": 200099,
+    "name": "Trigger Restriction",
+    "nameZH": "触发限制",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Triggers Only Once per Lifecycle",
+        "nameZH": "生命周期只触发一次"
+      },
+      {
+        "index": 1,
+        "name": "Triggers Only Once per Entity",
+        "nameZH": "每个实体只触发一次"
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "textMapId": 200028,
+    "name": "Hit Type",
+    "nameZH": "打击类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "None",
+        "nameZH": "无"
+      },
+      {
+        "index": 1,
+        "name": "Default",
+        "nameZH": "默认"
+      },
+      {
+        "index": 2,
+        "name": "Slash",
+        "nameZH": "斩击"
+      },
+      {
+        "index": 3,
+        "name": "Smash",
+        "nameZH": "钝击"
+      },
+      {
+        "index": 4,
+        "name": "Projectile",
+        "nameZH": "投射物"
+      },
+      {
+        "index": 5,
+        "name": "Piercing Attack",
+        "nameZH": "刺击攻击"
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "textMapId": 200029,
+    "name": "Attack Type",
+    "nameZH": "攻击类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "None",
+        "nameZH": "无"
+      },
+      {
+        "index": 1,
+        "name": "Melee Attack",
+        "nameZH": "近战攻击"
+      },
+      {
+        "index": 2,
+        "name": "Ranged Attack",
+        "nameZH": "远程攻击"
+      },
+      {
+        "index": 3,
+        "name": "Default",
+        "nameZH": "默认"
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "textMapId": 200030,
+    "name": "Hit Performance Level",
+    "nameZH": "受击表现等级",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Default",
+        "nameZH": "默认"
+      },
+      {
+        "index": 1,
+        "name": "No Hit Performance",
+        "nameZH": "无受击表现"
+      },
+      {
+        "index": 2,
+        "name": "Hit by Normal Arrow Without Charging",
+        "nameZH": "未蓄力普通箭受击"
+      },
+      {
+        "index": 3,
+        "name": "Combo Hit",
+        "nameZH": "连击受击"
+      },
+      {
+        "index": 4,
+        "name": "Normal Hit",
+        "nameZH": "普通受击"
+      },
+      {
+        "index": 5,
+        "name": "Heavy Hit",
+        "nameZH": "重受击"
+      },
+      {
+        "index": 6,
+        "name": "Strong Impact",
+        "nameZH": "强力冲击"
+      },
+      {
+        "index": 7,
+        "name": "Ultimate Impact",
+        "nameZH": "终结技冲击"
+      },
+      {
+        "index": 8,
+        "name": "Vertical Launch",
+        "nameZH": "垂直击飞"
+      },
+      {
+        "index": 9,
+        "name": "Super Launch",
+        "nameZH": "超强力击飞"
+      },
+      {
+        "index": 10,
+        "name": "Long-Range Throw",
+        "nameZH": "长距抛射"
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "textMapId": 200031,
+    "name": "Target Sorting Rules",
+    "nameZH": "目标排序规则",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Default Sorting",
+        "nameZH": "默认排序"
+      },
+      {
+        "index": 1,
+        "name": "Random Order",
+        "nameZH": "随机排序"
+      },
+      {
+        "index": 2,
+        "name": "Sort From Near to Far",
+        "nameZH": "从近到远排序"
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "textMapId": 200032,
+    "name": "Attack Layer Config",
+    "nameZH": "攻击层配置",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Only On-Hit Hurtbox",
+        "nameZH": "只命中受击盒"
+      },
+      {
+        "index": 1,
+        "name": "Only On-Hit Scene",
+        "nameZH": "只命中场景"
+      },
+      {
+        "index": 2,
+        "name": "Hit All",
+        "nameZH": "全部命中"
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "textMapId": 200033,
+    "name": "Knockback Direction Type",
+    "nameZH": "击退方向类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Line Connecting Attacker and Hit Point",
+        "nameZH": "攻击者与受击点的连线"
+      },
+      {
+        "index": 1,
+        "name": "Hitbox On-Hit Direction",
+        "nameZH": "攻击盒命中方向"
+      },
+      {
+        "index": 2,
+        "name": "Line Connecting Attacker's Owner and Hit Point",
+        "nameZH": "攻击者主人与受击点连线"
+      },
+      {
+        "index": 3,
+        "name": "Tangent Line Between Attacker and Hit Point",
+        "nameZH": "攻击者与受击点连线切线"
+      },
+      {
+        "index": 4,
+        "name": "Opposite Direction to Hit",
+        "nameZH": "受击反方向"
+      },
+      {
+        "index": 5,
+        "name": "Attacker's Facing Orientation",
+        "nameZH": "攻击者面朝朝向"
+      },
+      {
+        "index": 6,
+        "name": "Opposite Direction to Line Connecting Attacker and Hit Point",
+        "nameZH": "攻击者与受击点连线反方向"
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "textMapId": 200034,
+    "name": "Rotation Type",
+    "nameZH": "转向类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Target First, Then Input",
+        "nameZH": "先目标后输入"
+      },
+      {
+        "index": 1,
+        "name": "Input Orientation",
+        "nameZH": "输入朝向"
+      },
+      {
+        "index": 2,
+        "name": "Target Orientation",
+        "nameZH": "目标朝向"
+      },
+      {
+        "index": 3,
+        "name": "Target First, Then Camera",
+        "nameZH": "先目标后镜头"
+      },
+      {
+        "index": 4,
+        "name": "Camera Orientation",
+        "nameZH": "镜头朝向"
+      },
+      {
+        "index": 5,
+        "name": "Input First, Then Target",
+        "nameZH": "先输入后目标"
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "textMapId": 200035,
+    "name": "Sector Detection Direction",
+    "nameZH": "扇形检测方向",
+    "enums": [
+      {
+        "index": 0,
+        "name": "From Inside Out",
+        "nameZH": "由内向外"
+      },
+      {
+        "index": 1,
+        "name": "Clockwise",
+        "nameZH": "顺时针"
+      },
+      {
+        "index": 2,
+        "name": "Counterclockwise",
+        "nameZH": "逆时针"
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "textMapId": 200036,
+    "name": "Type Conversions",
+    "nameZH": "类型转换",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Type Conversions_Integer to Boolean",
+        "nameZH": "类型转换_整数转布尔型"
+      },
+      {
+        "index": 1,
+        "name": "Type Conversions_Integer to Floating Point",
+        "nameZH": "类型转换_整数转浮点数"
+      },
+      {
+        "index": 2,
+        "name": "Type Conversions_Integer to String",
+        "nameZH": "类型转换_整数转字符串型"
+      },
+      {
+        "index": 3,
+        "name": "Type Conversions_Entity to String",
+        "nameZH": "类型转换_实体转字符串型"
+      },
+      {
+        "index": 4,
+        "name": "Type Conversions_GUID to String",
+        "nameZH": "类型转换_GUID换字符串型"
+      },
+      {
+        "index": 5,
+        "name": "Type Conversions_Boolean to Integer",
+        "nameZH": "类型转换_布尔型转整数"
+      },
+      {
+        "index": 6,
+        "name": "Type Conversions_Boolean to String",
+        "nameZH": "类型转换_布尔型转字符串型"
+      },
+      {
+        "index": 7,
+        "name": "Type Conversions_Floating Point to Integer",
+        "nameZH": "类型转换_浮点数转整数"
+      },
+      {
+        "index": 8,
+        "name": "Type Conversions_Floating Point to String",
+        "nameZH": "类型转换_浮点数转字符串型"
+      },
+      {
+        "index": 9,
+        "name": "Type Conversions_3D Vector to String",
+        "nameZH": "类型转换_三维向量转字符串型"
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "textMapId": 200037,
+    "name": "Retracing Type",
+    "nameZH": "溯源类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Retracing Type: Self",
+        "nameZH": "溯源类型-自身"
+      },
+      {
+        "index": 1,
+        "name": "Retracing Type: Self Owner",
+        "nameZH": "溯源类型-自身所有者"
+      },
+      {
+        "index": 2,
+        "name": "Retracing Type: Top Layer Self Owner",
+        "nameZH": "溯源类型-自身最上层所有者"
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "textMapId": 200038,
+    "name": "Hit Level",
+    "nameZH": "受击等级",
+    "enums": [
+      {
+        "index": 0,
+        "name": "No Effect",
+        "nameZH": "无效果"
+      },
+      {
+        "index": 1,
+        "name": "Light Tremor",
+        "nameZH": "轻颤"
+      },
+      {
+        "index": 2,
+        "name": "Light Hit",
+        "nameZH": "轻受击"
+      },
+      {
+        "index": 3,
+        "name": "Knockback Hit",
+        "nameZH": "击退受击"
+      },
+      {
+        "index": 4,
+        "name": "Launch",
+        "nameZH": "挑飞"
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "textMapId": 200039,
+    "name": "Elemental Reaction Type",
+    "nameZH": "元素反应类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Explode",
+        "nameZH": "Explode"
+      },
+      {
+        "index": 1,
+        "name": "Stream",
+        "nameZH": "Stream"
+      },
+      {
+        "index": 2,
+        "name": "Burning",
+        "nameZH": "Burning"
+      },
+      {
+        "index": 3,
+        "name": "Burned",
+        "nameZH": "Burned"
+      },
+      {
+        "index": 4,
+        "name": "Wet",
+        "nameZH": "Wet"
+      },
+      {
+        "index": 5,
+        "name": "Overgrow",
+        "nameZH": "Overgrow"
+      },
+      {
+        "index": 6,
+        "name": "Melt",
+        "nameZH": "Melt"
+      },
+      {
+        "index": 7,
+        "name": "Freeze",
+        "nameZH": "Freeze"
+      },
+      {
+        "index": 8,
+        "name": "AntiFire",
+        "nameZH": "AntiFire"
+      },
+      {
+        "index": 9,
+        "name": "Rock",
+        "nameZH": "Rock"
+      },
+      {
+        "index": 10,
+        "name": "SlowDown",
+        "nameZH": "SlowDown"
+      },
+      {
+        "index": 11,
+        "name": "Shock",
+        "nameZH": "Shock"
+      },
+      {
+        "index": 12,
+        "name": "Wind",
+        "nameZH": "Wind"
+      },
+      {
+        "index": 13,
+        "name": "Electric",
+        "nameZH": "Electric"
+      },
+      {
+        "index": 14,
+        "name": "Fire",
+        "nameZH": "Fire"
+      },
+      {
+        "index": 15,
+        "name": "Superconductor",
+        "nameZH": "Superconductor"
+      },
+      {
+        "index": 16,
+        "name": "SwirlFire",
+        "nameZH": "SwirlFire"
+      },
+      {
+        "index": 17,
+        "name": "SwirlWater",
+        "nameZH": "SwirlWater"
+      },
+      {
+        "index": 18,
+        "name": "SwirlElectric",
+        "nameZH": "SwirlElectric"
+      },
+      {
+        "index": 19,
+        "name": "SwirlIce",
+        "nameZH": "SwirlIce"
+      },
+      {
+        "index": 20,
+        "name": "SwirlFireAccu",
+        "nameZH": "SwirlFireAccu"
+      },
+      {
+        "index": 21,
+        "name": "SwirlWaterAccu",
+        "nameZH": "SwirlWaterAccu"
+      },
+      {
+        "index": 22,
+        "name": "SwirlElectricAccu",
+        "nameZH": "SwirlElectricAccu"
+      },
+      {
+        "index": 23,
+        "name": "SwirlIceAccu",
+        "nameZH": "SwirlIceAccu"
+      },
+      {
+        "index": 24,
+        "name": "StickRock",
+        "nameZH": "StickRock"
+      },
+      {
+        "index": 25,
+        "name": "StickWater",
+        "nameZH": "StickWater"
+      },
+      {
+        "index": 26,
+        "name": "CrystallizeFire",
+        "nameZH": "CrystallizeFire"
+      },
+      {
+        "index": 27,
+        "name": "CrystallizeWater",
+        "nameZH": "CrystallizeWater"
+      },
+      {
+        "index": 28,
+        "name": "CrystallizeElectric",
+        "nameZH": "CrystallizeElectric"
+      },
+      {
+        "index": 29,
+        "name": "CrystallizeIce",
+        "nameZH": "CrystallizeIce"
+      },
+      {
+        "index": 30,
+        "name": "FrozenBroken",
+        "nameZH": "FrozenBroken"
+      },
+      {
+        "index": 31,
+        "name": "StickGrass",
+        "nameZH": "StickGrass"
+      },
+      {
+        "index": 32,
+        "name": "Overdose",
+        "nameZH": "Overdose"
+      },
+      {
+        "index": 33,
+        "name": "OverdoseElectric",
+        "nameZH": "OverdoseElectric"
+      },
+      {
+        "index": 34,
+        "name": "OverdoseGrass",
+        "nameZH": "OverdoseGrass"
+      },
+      {
+        "index": 35,
+        "name": "OvergrowMushroomFire",
+        "nameZH": "OvergrowMushroomFire"
+      },
+      {
+        "index": 36,
+        "name": "OvergrowMushroomElectric",
+        "nameZH": "OvergrowMushroomElectric"
+      },
+      {
+        "index": 37,
+        "name": "PhlogistonSolidification",
+        "nameZH": "PhlogistonSolidification"
+      },
+      {
+        "index": 38,
+        "name": "PhlogistonSolidificationEnd",
+        "nameZH": "PhlogistonSolidificationEnd"
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "textMapId": 200040,
+    "name": "Filter Return Type",
+    "nameZH": "过滤器返回类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Return Boolean",
+        "nameZH": "返回布尔型"
+      },
+      {
+        "index": 1,
+        "name": "Return Integer",
+        "nameZH": "返回整型"
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "textMapId": 200041,
+    "name": "Target Type (For Camera Orientation Node)",
+    "nameZH": "目标类型(镜头朝向节点用)",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Don't Find Target",
+        "nameZH": "不找目标"
+      },
+      {
+        "index": 1,
+        "name": "Allied Faction",
+        "nameZH": "友善阵营"
+      },
+      {
+        "index": 2,
+        "name": "Hostile Faction",
+        "nameZH": "敌对阵营"
+      },
+      {
+        "index": 3,
+        "name": "Own Faction",
+        "nameZH": "自身所在阵营"
+      },
+      {
+        "index": 4,
+        "name": "All Except Self",
+        "nameZH": "除自身外全部"
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "textMapId": 200042,
+    "name": "Ray Hit Filter Type",
+    "nameZH": "射线命中筛选类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Hurtbox",
+        "nameZH": "受击盒"
+      },
+      {
+        "index": 1,
+        "name": "Scene",
+        "nameZH": "场景"
+      },
+      {
+        "index": 2,
+        "name": "Object Self-Collision",
+        "nameZH": "物件自身碰撞"
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "textMapId": 200043,
+    "name": "Interrupt Status",
+    "nameZH": "受打断状态",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Interrupt Resistance Status",
+        "nameZH": "抗打断状态"
+      },
+      {
+        "index": 1,
+        "name": "Interrupt-Vulnerable State",
+        "nameZH": "易受打断状态"
+      },
+      {
+        "index": 2,
+        "name": "Protected Status",
+        "nameZH": "受保护状态"
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "textMapId": 200044,
+    "name": "Scan Status",
+    "nameZH": "扫描状态",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Unusable Target",
+        "nameZH": "目标不可用"
+      },
+      {
+        "index": 1,
+        "name": "Current Scan Target",
+        "nameZH": "当前扫描目标"
+      },
+      {
+        "index": 2,
+        "name": "Candidate Target",
+        "nameZH": "候选目标"
+      },
+      {
+        "index": 3,
+        "name": "Condition Not Met",
+        "nameZH": "不满足条件"
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "textMapId": 200045,
+    "name": "Damage Pop-Up Type",
+    "nameZH": "伤害跳字类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "No Pop-Up",
+        "nameZH": "无跳字"
+      },
+      {
+        "index": 1,
+        "name": "Regular Pop-Up",
+        "nameZH": "普通跳字"
+      },
+      {
+        "index": 2,
+        "name": "CRIT Hit Pop-Up",
+        "nameZH": "暴击跳字"
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "textMapId": 200046,
+    "name": "Input Device Type",
+    "nameZH": "输入设备类型",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Keyboard and Mouse",
+        "nameZH": "键盘鼠标"
+      },
+      {
+        "index": 1,
+        "name": "Controller",
+        "nameZH": "手柄"
+      },
+      {
+        "index": 2,
+        "name": "Touchscreen",
+        "nameZH": "触屏"
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "textMapId": 200047,
+    "name": "Movement Speed",
+    "nameZH": "移动速度",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Walk",
+        "nameZH": "走"
+      },
+      {
+        "index": 1,
+        "name": "Run",
+        "nameZH": "跑"
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "textMapId": 200048,
+    "name": "Target Entity",
+    "nameZH": "目标实体",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Aggro Target",
+        "nameZH": "仇恨目标"
+      },
+      {
+        "index": 1,
+        "name": "Self",
+        "nameZH": "自己"
+      },
+      {
+        "index": 2,
+        "name": "Stage Entity",
+        "nameZH": "关卡实体"
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "textMapId": null,
+    "name": "Component Functions",
+    "nameZH": "组件功能",
+    "enums": []
+  },
+  {
+    "id": 95,
+    "textMapId": 200050,
+    "name": "Rotation Direction",
+    "nameZH": "旋转方向",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Default",
+        "nameZH": "默认"
+      },
+      {
+        "index": 1,
+        "name": "Clockwise",
+        "nameZH": "顺时针"
+      },
+      {
+        "index": 2,
+        "name": "Counterclockwise",
+        "nameZH": "逆时针"
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "textMapId": 200051,
+    "name": "Tactical Enumeration",
+    "nameZH": "战术枚举",
+    "enums": [
+      {
+        "index": 0,
+        "name": "Tactic: Stand Still",
+        "nameZH": "战术：静止不动"
+      },
+      {
+        "index": 1,
+        "name": "Tactic: Move to the Target Position",
+        "nameZH": "战术：移动到目标点"
+      },
+      {
+        "index": 2,
+        "name": "Tactic: Move to the Target Entity",
+        "nameZH": "战术：移动到目标实体"
+      },
+      {
+        "index": 3,
+        "name": "Tactic: Rotate to the Specified Direction",
+        "nameZH": "战术：旋转到指定朝向"
+      },
+      {
+        "index": 4,
+        "name": "Tactic: Rotate by Specified Angle",
+        "nameZH": "战术：旋转指定角度"
+      },
+      {
+        "index": 5,
+        "name": "Tactic: Ground Pursuit",
+        "nameZH": "战术：地面追击"
+      },
+      {
+        "index": 6,
+        "name": "Tactic: Ground Escape",
+        "nameZH": "战术：地面逃跑"
+      },
+      {
+        "index": 7,
+        "name": "Tactic: Ground Idle Roaming",
+        "nameZH": "战术：地面闲逛"
+      },
+      {
+        "index": 8,
+        "name": "Tactic: Return to Spawn Point After Leaving Battle",
+        "nameZH": "战术：脱战后返回出生点"
+      },
+      {
+        "index": 9,
+        "name": "Tactic: Ground Confrontation",
+        "nameZH": "战术：地面对峙"
+      },
+      {
+        "index": 10,
+        "name": "Tactic: Execute Patrol",
+        "nameZH": "战术：执行巡逻"
+      },
+      {
+        "index": 11,
+        "name": "Tactic: Rotate to the Target Entity",
+        "nameZH": "战术：旋转朝向目标实体"
+      },
+      {
+        "index": 12,
+        "name": "None",
+        "nameZH": "无"
+      }
+    ]
+  }
+]

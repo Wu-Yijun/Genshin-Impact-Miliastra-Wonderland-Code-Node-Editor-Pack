@@ -397,7 +397,7 @@ message TypedValue {
     message Kind {
       int32 selected = 1;
     }
-    oneof kind {
+    oneof style {
       Kind status_graph = 106; //Status Node Graph Configuration ID
     }
   }

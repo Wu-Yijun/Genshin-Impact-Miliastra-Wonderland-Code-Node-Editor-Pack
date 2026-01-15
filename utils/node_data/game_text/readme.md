@@ -52,3 +52,6 @@ interface NodeParam {
 [Removed Nodes] <node id>: <node name>
 # repeated of the above
 ```
+
+
+// UI_BEYOND_ASSIST_EDITOR_VAR_TYPE_ARMY_LIST
