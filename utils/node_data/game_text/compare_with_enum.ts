@@ -40,6 +40,11 @@ enums.filter(e => {
   }
   def.InGameName["en"] ??= e.name;
   def.InGameName["zh-Hans"] ??= e.nameZH;
+
+  // length
+  if (def.Collection.length !== e.enums.length) {
+    debugger;
+  }
 });
 
 oldData.EnumTypes.filter(e => enums.find(i => i.textMapId === e.ID) === undefined).forEach(e => {

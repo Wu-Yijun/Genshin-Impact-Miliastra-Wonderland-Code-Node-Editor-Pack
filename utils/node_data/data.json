@@ -159991,8 +159991,7 @@
         "TypeConversion.BOOL_TO_STRING",
         "TypeConversion.FLOAT_TO_INT",
         "TypeConversion.FLOAT_TO_STRING",
-        "TypeConversion.VEC3_TO_STRING",
-        "TypeConversion.FACTION_TO_STRING"
+        "TypeConversion.VEC3_TO_STRING"
       ]
     },
     {
@@ -160052,25 +160051,42 @@
         "ElementReaction.OVERLOADED",
         "ElementReaction.VAPORIZE",
         "ElementReaction.BURNING",
+        "ElementReaction.BURNED",
         "ElementReaction.WET",
         "ElementReaction.BLOOM",
         "ElementReaction.MELT",
         "ElementReaction.FROZEN",
+        "ElementReaction.ANTI_FIRE",
+        "ElementReaction.ROCK",
+        "ElementReaction.SLOW_DOWN",
         "ElementReaction.ELECTRO_CHARGED",
+        "ElementReaction.WIND",
+        "ElementReaction.ELECTRIC",
+        "ElementReaction.FIRE",
         "ElementReaction.SUPERCONDUCT",
         "ElementReaction.SWIRL_PYRO",
         "ElementReaction.SWIRL_HYDRO",
         "ElementReaction.SWIRL_ELECTRO",
         "ElementReaction.SWIRL_CRYO",
+        "ElementReaction.SWIRL_FIRE_ACCU",
+        "ElementReaction.SWIRL_WATER_ACCU",
+        "ElementReaction.SWIRL_ELEC_ACCU",
+        "ElementReaction.SWIRL_ICE_ACCU",
+        "ElementReaction.STICK_ROCK",
+        "ElementReaction.STICK_WATER",
         "ElementReaction.CRYSTAL_PYRO",
         "ElementReaction.CRYSTAL_HYDRO",
         "ElementReaction.CRYSTAL_ELECTRO",
         "ElementReaction.CRYSTAL_CRYO",
+        "ElementReaction.FROZEN_BROKEN",
+        "ElementReaction.STICK_GRASS",
         "ElementReaction.CATALYZE",
         "ElementReaction.AGGRAVATE",
         "ElementReaction.SPREAD",
         "ElementReaction.BURGEON",
-        "ElementReaction.HYPERBLOOM"
+        "ElementReaction.HYPERBLOOM",
+        "ElementReaction.PHLOG_SOLID",
+        "ElementReaction.PHLOG_SOLID_END"
       ]
     },
     {
