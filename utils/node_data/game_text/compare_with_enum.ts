@@ -62,6 +62,23 @@ enums.filter(e => {
       console.warn(`    old: ${old.InGameName.en} ${old.InGameName["zh-Hans"]}`);
       console.warn(`    new: ${item.name} ${item.nameZH}`);
       // 需要手动核查
+      // 添加Alias / name
+      old.InGameName.en ??= name;
+      const nameZH = item.nameZH.slice(item.nameZH.indexOf("_") + 1);
+      old.InGameName["zh-Hans"] ??= nameZH;
+      changed = true;
+      if (old.InGameName.en !== name && !old.Alias?.includes(name)) {
+        old.Alias?.push(name);
+      }
+      if (old.InGameName.en !== item.name && !old.Alias?.includes(item.name)) {
+        old.Alias?.push(item.name);
+      }
+      if (old.InGameName["zh-Hans"] !== nameZH && !old.Alias?.includes(nameZH)) {
+        old.Alias?.push(nameZH);
+      }
+      if (old.InGameName["zh-Hans"] !== item.nameZH && !old.Alias?.includes(item.nameZH)) {
+        old.Alias?.push(item.nameZH);
+      }
     }
   })
 });

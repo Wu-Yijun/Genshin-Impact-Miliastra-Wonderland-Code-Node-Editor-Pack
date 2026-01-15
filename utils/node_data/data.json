@@ -1,8 +1,8 @@
 {
-  "Version": "2.2.6",
+  "Version": "2.2.7",
   "GameVersion": "6.3.0",
   "Author": "Aluria",
-  "Date": "Thu Jan 15 2026 13:32:37 GMT+0800 (中国标准时间)",
+  "Date": "Thu Jan 15 2026 14:20:16 GMT+0800 (中国标准时间)",
   "Description": "This document contains all necessary information for this project, including types, nodes, and enums.",
   "Schema": "export interface Document {\nVersion: string;\nGameVersion: string;\nAuthor: string;\nDate: string;\nDescription: string;\nSchema: string;\nTypes: TypeDef[];\nNodes: NodeDef[];\nEnums: EnumDef[];\nEnumTypes: EnumTypeDef[];\nSystemConstants: SystemConstDef;\n}\nexport type ServerClient = \"Server\" | \"Client\"\nexport const ResourceClass = [\n\"ENTITY_NODE_GRAPH\",\n\"STATUS_NODE_GRAPH\",\n\"CLASS_NODE_GRAPH\",\n\"ITEM_NODE_GRAPH\",\n\"BOOLEAN_FILTER_GRAPH\",\n\"INTEGER_FILTER_GRAPH\",\n\"SKILL_NODE_GRAPH\",\n\"CREATION_DECISION_NODE_GRAPH\",\n\"CREATION_SKILL_NODE_GRAPH\",\n\"CREATION_STATUS_NODE_GRAPH\",\n\"COMPOSITE_NODE_DECL\",\n] as const;\nexport type ResourceClass = typeof ResourceClass[number];\nexport const Languages = [\n\"cs\",\n\"de\",\n\"es\",\n\"en\",\n\"fr\",\n\"it\",\n\"ja\",\n\"ko\",\n\"pl\",\n\"pt-BR\",\n\"ru\",\n\"tr\",\n\"zh-Hans\",\n\"zh-Hant\"\n] as const;\nexport type Translations = Partial<{ [key in typeof Languages[number]]: string }>;\nexport type TypedValue = string | number | null | TypedValue[];\nexport interface TypeDef {\nIdentifier: string;\nID: number;\nClientID: number | null;\nBaseType: string;\nBaseTypeID: number;\nDSLName: string;\nInGameName: Translations;\nAlias: string[];\n}\nexport interface EnumTypeDef {\nIdentifier: string;\nID: number;\nTypeID: number;\nSystem: \"Server\" | \"Client\";\nCategory: string;\nInGameName: Translations;\nAlias?: string[];\nCollection: string[];\n}\nexport interface EnumDef {\nIdentifier: string;\nID: number;\nCategory: string;\nInGameName: Translations;\nAlias?: string[];\n}\nexport interface NodeDef {\nIdentifier: string;\nID: number;\nKernelID?: number;\nSystem: \"Server\" | \"Client\";\nDomain: \"Execution\" | \"Trigger\" | \"Control\" | \"Query\" | \"Arithmetic\" | \"Others\" | \"Hidden\";\nType: \"Fixed\" | \"Variant\";\nInGameName: Translations;\nAlias?: string[];\nDescription: Translations;\nFlowPins: PinDef[];\nDataPins: PinDef[];\nExtraPins?: PinDef[];\nVariants?: VariantDef[];\nImplementation?: ImplementationDef;\n}\nexport interface PinDef {\nIdentifier: string;\nDirection: \"In\" | \"Out\";\nShellIndex: number;\nKernelIndex: number;\nType?: string;\nDefaultValue?: TypedValue;\nVisibility?: \"Display\" | \"Hidden\" | \"Conditional\";\nConnectability?: boolean;\nEditability?: boolean;\nRemarks?: string;\nLabel: Translations;\nDescription: Translations;\nPlaceholder?: Translations;\n}\nexport interface VariantDef {\nConstraints: string;\nKernelID: number;\nInjectedContents: InjectedDef[];\n}\nexport interface InjectedDef {\nIdentifier: string;\nTypeSelectorIndex?: number;\nShellIndex?: number;\nKernelIndex?: number;\nDefaultValue?: TypedValue;\nVisibility?: \"Display\" | \"Hidden\" | \"Conditional\";\nConnectability?: boolean;\n}\nexport type ImplementationDef = {\nKind: \"RPC\";\nMessages: Partial<PinDef>[];\n};\nexport interface SystemConstDef {\nGRAPH_CATEGORY_CONSTS: Record<ResourceClass, GraphCategoryConstsDef>;\nGRAPH_ID_RANGE: Record<string, number>;\n}\nexport interface GraphCategoryConstsDef {\nAssetsOrigin: number;\nAssetsCategory: number;\nAssetsKind: number;\nAssetsWhich: number;\nGraphOrigin: number;\nGraphCategory: number;\nGraphKind: number;\nNodeOrigin: number;\nNodeCategory: number;\nNodeKind: number;\n};",
   "Types": [
@@ -156944,10 +156944,12 @@
       "ID": 3111,
       "Category": "SkillSlot",
       "InGameName": {
-        "en": "1: E"
+        "en": "1: E",
+        "zh-Hans": "技能1-E"
       },
       "Alias": [
-        "1: E"
+        "1: E",
+        "Skill 1: E"
       ]
     },
     {
@@ -156955,10 +156957,12 @@
       "ID": 3112,
       "Category": "SkillSlot",
       "InGameName": {
-        "en": "2: Q"
+        "en": "2: Q",
+        "zh-Hans": "技能2-Q"
       },
       "Alias": [
-        "2: Q"
+        "2: Q",
+        "Skill 2: Q"
       ]
     },
     {
@@ -156966,10 +156970,12 @@
       "ID": 3113,
       "Category": "SkillSlot",
       "InGameName": {
-        "en": "3: R"
+        "en": "3: R",
+        "zh-Hans": "技能3-R"
       },
       "Alias": [
-        "3: R"
+        "3: R",
+        "Skill 3: R"
       ]
     },
     {
@@ -156977,10 +156983,12 @@
       "ID": 3114,
       "Category": "SkillSlot",
       "InGameName": {
-        "en": "4: T"
+        "en": "4: T",
+        "zh-Hans": "技能4-T"
       },
       "Alias": [
-        "4: T"
+        "4: T",
+        "Skill 4: T"
       ]
     },
     {
@@ -157153,10 +157161,12 @@
       "ID": 3200,
       "Category": "RetracingType",
       "InGameName": {
-        "en": "Self"
+        "en": "Self",
+        "zh-Hans": "溯源类型-自身"
       },
       "Alias": [
-        "Self"
+        "Self",
+        "Retracing Type: Self"
       ]
     },
     {
@@ -157164,10 +157174,12 @@
       "ID": 3201,
       "Category": "RetracingType",
       "InGameName": {
-        "en": "Self Owner"
+        "en": "Self Owner",
+        "zh-Hans": "溯源类型-自身所有者"
       },
       "Alias": [
-        "Self Owner"
+        "Self Owner",
+        "Retracing Type: Self Owner"
       ]
     },
     {
@@ -157175,10 +157187,12 @@
       "ID": 3202,
       "Category": "RetracingType",
       "InGameName": {
-        "en": "Top Layer Self Owner"
+        "en": "Top Layer Self Owner",
+        "zh-Hans": "溯源类型-自身最上层所有者"
       },
       "Alias": [
-        "Top Layer Self Owner"
+        "Top Layer Self Owner",
+        "Retracing Type: Top Layer Self Owner"
       ]
     },
     {
@@ -158041,10 +158055,12 @@
       "ID": 5201,
       "Category": "InterruptStatus",
       "InGameName": {
-        "en": "Interrupt Vulnerability Status"
+        "en": "Interrupt Vulnerability Status",
+        "zh-Hans": "易受打断状态"
       },
       "Alias": [
-        "Interrupt Vulnerability Status"
+        "Interrupt Vulnerability Status",
+        "Interrupt-Vulnerable State"
       ]
     },
     {
