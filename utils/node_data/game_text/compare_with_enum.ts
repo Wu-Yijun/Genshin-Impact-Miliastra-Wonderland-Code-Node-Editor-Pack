@@ -43,8 +43,27 @@ enums.filter(e => {
 
   // length
   if (def.Collection.length !== e.enums.length) {
-    debugger;
+    console.warn(`[Mismatch Length] ${e.id}: ${e.name}`);
+    return;
   }
+
+  // compare data
+  def.Collection.forEach((c, i) => {
+    const old = oldData.Enums.find(x => x.Identifier === c)!;
+    const item = e.enums[i];
+    let name = item.name;
+    if (name.startsWith(e.name + "_")) name = name.slice(e.name.length + 1);
+    if (name.includes("_")) {
+      console.warn(`[Enum Name Prefix] Different: ${e.name}: ${name}`);
+      name = name.slice(name.indexOf("_") + 1);
+    }
+    if (old.InGameName.en !== name && !old.Alias?.includes(name)) {
+      console.warn(`[Enum Name Changed] ${def.Identifier} ${old.ID}: ${old.Identifier}`);
+      console.warn(`    old: ${old.InGameName.en} ${old.InGameName["zh-Hans"]}`);
+      console.warn(`    new: ${item.name} ${item.nameZH}`);
+      // 需要手动核查
+    }
+  })
 });
 
 oldData.EnumTypes.filter(e => enums.find(i => i.textMapId === e.ID) === undefined).forEach(e => {

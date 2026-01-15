@@ -155819,7 +155819,8 @@
       },
       "Alias": [
         "Relative Coordinate System",
-        "Relative Location"
+        "Relative Location",
+        "Local Coordinate System"
       ]
     },
     {
@@ -158549,14 +158550,14 @@
         "Elemental Type"
       ],
       "Collection": [
-        "ElementType.NONE",
         "ElementType.PYRO",
         "ElementType.HYDRO",
         "ElementType.ANEMO",
         "ElementType.ELECTRO",
         "ElementType.DENDRO",
         "ElementType.CRYO",
-        "ElementType.GEO"
+        "ElementType.GEO",
+        "ElementType.NONE"
       ]
     },
     {
@@ -159041,14 +159042,14 @@
         "Reason for Item Change"
       ],
       "Collection": [
-        "BooleanGeneric.FALSE_DEFAULT",
         "ItemChangeReason.DESTROY",
         "ItemChangeReason.DISCARD",
         "ItemChangeReason.USE",
         "ItemChangeReason.DEFEAT_DROP",
         "ItemChangeReason.SHOP_TRADE",
         "ItemChangeReason.NODE_GRAPH",
-        "ItemChangeReason.PICK_UP"
+        "ItemChangeReason.PICK_UP",
+        "BooleanGeneric.FALSE_DEFAULT"
       ]
     },
     {
@@ -159522,14 +159523,14 @@
         "Elemental Type"
       ],
       "Collection": [
-        "ElementType.NONE",
         "ElementType.PYRO",
         "ElementType.HYDRO",
         "ElementType.ANEMO",
         "ElementType.ELECTRO",
         "ElementType.DENDRO",
         "ElementType.CRYO",
-        "ElementType.GEO"
+        "ElementType.GEO",
+        "ElementType.NONE"
       ]
     },
     {
