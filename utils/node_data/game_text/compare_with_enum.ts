@@ -49,7 +49,11 @@ enums.filter(e => {
 
   // compare data
   def.Collection.forEach((c, i) => {
-    const old = oldData.Enums.find(x => x.Identifier === c)!;
+    const old = oldData.Enums.find(x => x.Identifier === c);
+    if (old === undefined) {
+      console.warn(`[Missing Enum] ${c}`);
+      return;
+    }
     const item = e.enums[i];
     let name = item.name;
     if (name.startsWith(e.name + "_")) name = name.slice(e.name.length + 1);
