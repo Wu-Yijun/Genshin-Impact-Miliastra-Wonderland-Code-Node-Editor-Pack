@@ -1,8 +1,8 @@
 {
-  "Version": "2.2.3",
+  "Version": "2.2.4",
   "GameVersion": "6.3.0",
   "Author": "Aluria",
-  "Date": "Thu Jan 15 2026 11:58:25 GMT+0800 (中国标准时间)",
+  "Date": "Thu Jan 15 2026 11:59:05 GMT+0800 (中国标准时间)",
   "Description": "This document contains all necessary information for this project, including types, nodes, and enums.",
   "Schema": "export interface Document {\nVersion: string;\nGameVersion: string;\nAuthor: string;\nDate: string;\nDescription: string;\nSchema: string;\nTypes: TypeDef[];\nNodes: NodeDef[];\nEnums: EnumDef[];\nEnumTypes: EnumTypeDef[];\nSystemConstants: SystemConstDef;\n}\nexport const ResourceClass = [\n\"ENTITY_NODE_GRAPH\",\n\"STATUS_NODE_GRAPH\",\n\"CLASS_NODE_GRAPH\",\n\"ITEM_NODE_GRAPH\",\n\"BOOLEAN_FILTER_GRAPH\",\n\"INTEGER_FILTER_GRAPH\",\n\"SKILL_NODE_GRAPH\",\n\"COMPOSITE_NODE_DECL\",\n] as const;\nexport type ServerClient = \"Server\" | \"Client\"\nexport type ResourceClass = typeof ResourceClass[number];\nexport const Languages = [\n\"cs\",\n\"de\",\n\"es\",\n\"en\",\n\"fr\",\n\"it\",\n\"ja\",\n\"ko\",\n\"pl\",\n\"pt-BR\",\n\"ru\",\n\"tr\",\n\"zh-Hans\",\n\"zh-Hant\"\n] as const;\nexport type Translations = Partial<{ [key in typeof Languages[number]]: string }>;\nexport type TypedValue = string | number | null | TypedValue[];\nexport interface TypeDef {\nIdentifier: string;\nID: number;\nClientID: number | null;\nBaseType: string;\nBaseTypeID: number;\nDSLName: string;\nInGameName: Translations;\nAlias: string[];\n}\nexport interface EnumTypeDef {\nIdentifier: string;\nID: number;\nTypeID: number;\nSystem: \"Server\" | \"Client\";\nCategory: string;\nInGameName: Translations;\nAlias?: string[];\nCollection: string[];\n}\nexport interface EnumDef {\nIdentifier: string;\nID: number;\nCategory: string;\nInGameName: Translations;\nAlias?: string[];\n}\nexport interface NodeDef {\nIdentifier: string;\nID: number;\nKernelID?: number;\nSystem: \"Server\" | \"Client\";\nDomain: \"Execution\" | \"Trigger\" | \"Control\" | \"Query\" | \"Arithmetic\" | \"Others\" | \"Hidden\";\nType: \"Fixed\" | \"Variant\";\nInGameName: Translations;\nAlias?: string[];\nDescription: Translations;\nFlowPins: PinDef[];\nDataPins: PinDef[];\nExtraPins?: PinDef[];\nVariants?: VariantDef[];\nImplementation?: ImplementationDef;\n}\nexport interface PinDef {\nIdentifier: string;\nDirection: \"In\" | \"Out\";\nShellIndex: number;\nKernelIndex: number;\nType?: string;\nDefaultValue?: TypedValue;\nVisibility?: \"Display\" | \"Hidden\" | \"Conditional\";\nConnectability?: boolean;\nEditability?: boolean;\nRemarks?: string;\nLabel: Translations;\nDescription: Translations;\nPlaceholder?: Translations;\n}\nexport interface VariantDef {\nConstraints: string;\nKernelID: number;\nInjectedContents: InjectedDef[];\n}\nexport interface InjectedDef {\nIdentifier: string;\nTypeSelectorIndex?: number;\nShellIndex?: number;\nKernelIndex?: number;\nDefaultValue?: TypedValue;\nVisibility?: \"Display\" | \"Hidden\" | \"Conditional\";\nConnectability?: boolean;\n}\nexport type ImplementationDef = {\nKind: \"RPC\";\nMessages: Partial<PinDef>[];\n};\nexport interface SystemConstDef {\nGRAPH_CATEGORY_CONSTS: Record<ResourceClass, GraphCategoryConstsDef>;\nGRAPH_ID_RANGE: Record<string, number>;\n}\nexport interface GraphCategoryConstsDef {\nAssetsOrigin: number;\nAssetsCategory: number;\nAssetsKind: number;\nAssetsWhich: number;\nGraphOrigin: number;\nGraphCategory: number;\nGraphKind: number;\nNodeOrigin: number;\nNodeCategory: number;\nNodeKind: number;\n};",
   "Types": [
@@ -160125,6 +160125,42 @@
         "NodeCategory": 20000,
         "NodeKind": 22000
       },
+      "BOOLEAN_FILTER_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 1,
+        "AssetsKind": 3,
+        "AssetsWhich": 10,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20001,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20001,
+        "NodeKind": 22000
+      },
+      "SKILL_NODE_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 1,
+        "AssetsKind": 3,
+        "AssetsWhich": 11,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20002,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20002,
+        "NodeKind": 22000
+      },
+      "COMPOSITE_NODE_DECL": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 23,
+        "AssetsKind": 0,
+        "AssetsWhich": 12,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20000,
+        "GraphKind": 21002,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20000,
+        "NodeKind": 22000
+      },
       "STATUS_NODE_GRAPH": {
         "AssetsOrigin": 0,
         "AssetsCategory": 5,
@@ -160161,18 +160197,6 @@
         "NodeCategory": 20000,
         "NodeKind": 22000
       },
-      "BOOLEAN_FILTER_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 1,
-        "AssetsKind": 3,
-        "AssetsWhich": 10,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20001,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20001,
-        "NodeKind": 22000
-      },
       "INTEGER_FILTER_GRAPH": {
         "AssetsOrigin": 0,
         "AssetsCategory": 1,
@@ -160183,30 +160207,6 @@
         "GraphKind": 21001,
         "NodeOrigin": 10001,
         "NodeCategory": 20001,
-        "NodeKind": 22000
-      },
-      "SKILL_NODE_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 1,
-        "AssetsKind": 3,
-        "AssetsWhich": 11,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20002,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20002,
-        "NodeKind": 22000
-      },
-      "COMPOSITE_NODE_DECL": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 23,
-        "AssetsKind": 0,
-        "AssetsWhich": 12,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20000,
-        "GraphKind": 21002,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20000,
         "NodeKind": 22000
       }
     },

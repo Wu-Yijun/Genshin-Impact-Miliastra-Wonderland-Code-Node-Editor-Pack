@@ -86,10 +86,10 @@ function reorderObjectKeys(old_doc: Document): Document {
   });
   doc.Enums.sort((a, b) => a.ID - b.ID);
   doc.EnumTypes.sort((a, b) => a.ID - b.ID);
-  // doc.SystemConstants.GRAPH_CATEGORY_CONSTS = Object.fromEntries(
-  //   Object.entries(doc.SystemConstants.GRAPH_CATEGORY_CONSTS)
-  //     .sort((a, b) => a[1].AssetsWhich - b[1].AssetsWhich)
-  // ) as any;
+  doc.SystemConstants.GRAPH_CATEGORY_CONSTS = Object.fromEntries(
+    Object.entries(doc.SystemConstants.GRAPH_CATEGORY_CONSTS)
+      .sort((a, b) => a[1].AssetsWhich - b[1].AssetsWhich)
+  ) as any;
   return doc;
 }
 
