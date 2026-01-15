@@ -96,4 +96,8 @@ enumsText.forEach((item: any) => {
 const enum_arr = Array.from(enums.values()).sort((a, b) => a.id - b.id);
 console.log("Total enums:", enum_arr.length);
 
+
+enum_arr.find(x => x.name === "Component Functions")!.textMapId ??= 200049;
+
+
 writeFileSync("./utils/node_data/game_text/enums.json", JSON.stringify(enum_arr, null, 2));

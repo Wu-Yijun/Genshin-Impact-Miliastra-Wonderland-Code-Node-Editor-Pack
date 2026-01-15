@@ -82,4 +82,21 @@ interface EnumDef {
 }
 ```
 
+
+### Step4
+与现有枚举数据对比, 寻找差异/增量, **需要手动检查[Enum Name Changed]是否是由于顺序原因**, 自动更新差异: [compare_with_data](compare_with_data.ts)
+
+输入(读取)文件:
+- [new_enums](enums.json)
+- [old_enums](../data.json): 格式参见 [types.ts](../types.ts)
+
+输出文件: 无
+
+控制台输出: 全部差异/修改/新增信息
+
+### Step5
+
+合成全部新增......
+
+
 // UI_BEYOND_ASSIST_EDITOR_VAR_TYPE_ARMY_LIST

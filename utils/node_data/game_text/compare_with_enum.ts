@@ -21,6 +21,8 @@ const enums: EnumData[] = JSON.parse(readFileSync("utils/node_data/game_text/enu
 const oldData = read_data();
 
 let changed = false;
+const id_set = new Set(oldData.Enums.map(x => x.Identifier));
+assertEq(id_set.size, oldData.Enums.length);
 
 enums.filter(e => {
   const def = oldData.EnumTypes.find(t => t.ID === e.textMapId);
@@ -49,11 +51,20 @@ enums.filter(e => {
 
   // compare data
   def.Collection.forEach((c, i) => {
-    const old = oldData.Enums.find(x => x.Identifier === c);
+    let old = oldData.Enums.find(x => x.Identifier === c);
     if (old === undefined) {
       console.warn(`[Missing Enum] ${c}`);
-      return;
+      old = {
+        Identifier: c,
+        ID: 0,
+        Category: c.split(".")[0],
+        InGameName: {},
+        Alias: [],
+      };
+      oldData.Enums.push(old);
+      // return;
     }
+    id_set.delete(c);
     const item = e.enums[i];
     let name = item.name;
     if (name.startsWith(e.name + "_")) name = name.slice(e.name.length + 1);
@@ -91,6 +102,8 @@ oldData.EnumTypes.filter(e => enums.find(i => i.textMapId === e.ID) === undefine
   console.warn(`[Incorrect TextMapId] ${e.ID}: ${e.InGameName["en"]}`)
 })
 
+if (id_set.size > 0) console.warn("[Unused Enum]", id_set);
+
 if (changed) {
-  save_data(oldData);
+  save_data(oldData, true);
 }

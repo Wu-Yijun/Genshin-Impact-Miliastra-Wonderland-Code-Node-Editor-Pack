@@ -68,7 +68,7 @@ message ResourceEntry {
 
   ResourceLocator          identity       = 1; // 自身 ID
   repeated ResourceLocator reference_list = 2; // 显式引用表
-  string                   internal_name  = 3; // 内部调试名
+  string                   internal_name  = 3; // 内部资源自定义名称
   ResourceClass            resource_class = 5; // 业务分类
 
   // 实际数据载荷
