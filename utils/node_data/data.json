@@ -1,8 +1,8 @@
 {
-  "Version": "2.2.5",
+  "Version": "2.2.6",
   "GameVersion": "6.3.0",
   "Author": "Aluria",
-  "Date": "Thu Jan 15 2026 12:23:33 GMT+0800 (中国标准时间)",
+  "Date": "Thu Jan 15 2026 13:32:37 GMT+0800 (中国标准时间)",
   "Description": "This document contains all necessary information for this project, including types, nodes, and enums.",
   "Schema": "export interface Document {\nVersion: string;\nGameVersion: string;\nAuthor: string;\nDate: string;\nDescription: string;\nSchema: string;\nTypes: TypeDef[];\nNodes: NodeDef[];\nEnums: EnumDef[];\nEnumTypes: EnumTypeDef[];\nSystemConstants: SystemConstDef;\n}\nexport type ServerClient = \"Server\" | \"Client\"\nexport const ResourceClass = [\n\"ENTITY_NODE_GRAPH\",\n\"STATUS_NODE_GRAPH\",\n\"CLASS_NODE_GRAPH\",\n\"ITEM_NODE_GRAPH\",\n\"BOOLEAN_FILTER_GRAPH\",\n\"INTEGER_FILTER_GRAPH\",\n\"SKILL_NODE_GRAPH\",\n\"CREATION_DECISION_NODE_GRAPH\",\n\"CREATION_SKILL_NODE_GRAPH\",\n\"CREATION_STATUS_NODE_GRAPH\",\n\"COMPOSITE_NODE_DECL\",\n] as const;\nexport type ResourceClass = typeof ResourceClass[number];\nexport const Languages = [\n\"cs\",\n\"de\",\n\"es\",\n\"en\",\n\"fr\",\n\"it\",\n\"ja\",\n\"ko\",\n\"pl\",\n\"pt-BR\",\n\"ru\",\n\"tr\",\n\"zh-Hans\",\n\"zh-Hant\"\n] as const;\nexport type Translations = Partial<{ [key in typeof Languages[number]]: string }>;\nexport type TypedValue = string | number | null | TypedValue[];\nexport interface TypeDef {\nIdentifier: string;\nID: number;\nClientID: number | null;\nBaseType: string;\nBaseTypeID: number;\nDSLName: string;\nInGameName: Translations;\nAlias: string[];\n}\nexport interface EnumTypeDef {\nIdentifier: string;\nID: number;\nTypeID: number;\nSystem: \"Server\" | \"Client\";\nCategory: string;\nInGameName: Translations;\nAlias?: string[];\nCollection: string[];\n}\nexport interface EnumDef {\nIdentifier: string;\nID: number;\nCategory: string;\nInGameName: Translations;\nAlias?: string[];\n}\nexport interface NodeDef {\nIdentifier: string;\nID: number;\nKernelID?: number;\nSystem: \"Server\" | \"Client\";\nDomain: \"Execution\" | \"Trigger\" | \"Control\" | \"Query\" | \"Arithmetic\" | \"Others\" | \"Hidden\";\nType: \"Fixed\" | \"Variant\";\nInGameName: Translations;\nAlias?: string[];\nDescription: Translations;\nFlowPins: PinDef[];\nDataPins: PinDef[];\nExtraPins?: PinDef[];\nVariants?: VariantDef[];\nImplementation?: ImplementationDef;\n}\nexport interface PinDef {\nIdentifier: string;\nDirection: \"In\" | \"Out\";\nShellIndex: number;\nKernelIndex: number;\nType?: string;\nDefaultValue?: TypedValue;\nVisibility?: \"Display\" | \"Hidden\" | \"Conditional\";\nConnectability?: boolean;\nEditability?: boolean;\nRemarks?: string;\nLabel: Translations;\nDescription: Translations;\nPlaceholder?: Translations;\n}\nexport interface VariantDef {\nConstraints: string;\nKernelID: number;\nInjectedContents: InjectedDef[];\n}\nexport interface InjectedDef {\nIdentifier: string;\nTypeSelectorIndex?: number;\nShellIndex?: number;\nKernelIndex?: number;\nDefaultValue?: TypedValue;\nVisibility?: \"Display\" | \"Hidden\" | \"Conditional\";\nConnectability?: boolean;\n}\nexport type ImplementationDef = {\nKind: \"RPC\";\nMessages: Partial<PinDef>[];\n};\nexport interface SystemConstDef {\nGRAPH_CATEGORY_CONSTS: Record<ResourceClass, GraphCategoryConstsDef>;\nGRAPH_ID_RANGE: Record<string, number>;\n}\nexport interface GraphCategoryConstsDef {\nAssetsOrigin: number;\nAssetsCategory: number;\nAssetsKind: number;\nAssetsWhich: number;\nGraphOrigin: number;\nGraphCategory: number;\nGraphKind: number;\nNodeOrigin: number;\nNodeCategory: number;\nNodeKind: number;\n};",
   "Types": [
@@ -158265,7 +158265,8 @@
       "System": "Server",
       "Category": "Generic",
       "InGameName": {
-        "en": "Generic"
+        "en": "Generic",
+        "zh-Hans": "默认"
       },
       "Alias": [
         "Generic"
@@ -158279,7 +158280,8 @@
       "System": "Server",
       "Category": "BooleanGeneric",
       "InGameName": {
-        "en": "Boolean"
+        "en": "Boolean",
+        "zh-Hans": "布尔值"
       },
       "Alias": [
         "Boolean"
@@ -158296,7 +158298,8 @@
       "System": "Server",
       "Category": "ComparisonOperator",
       "InGameName": {
-        "en": "Comparison Operators"
+        "en": "Comparison Operators",
+        "zh-Hans": "比较运算"
       },
       "Alias": [
         "Comparison Operators"
@@ -158316,7 +158319,8 @@
       "System": "Server",
       "Category": "LogicalOperator",
       "InGameName": {
-        "en": "Logical Operators"
+        "en": "Logical Operators",
+        "zh-Hans": "逻辑运算"
       },
       "Alias": [
         "Logical Operators"
@@ -158335,7 +158339,8 @@
       "System": "Server",
       "Category": "MathOperator",
       "InGameName": {
-        "en": "Mathematical Operators"
+        "en": "Mathematical Operators",
+        "zh-Hans": "数学运算"
       },
       "Alias": [
         "Mathematical Operators"
@@ -158359,7 +158364,8 @@
       "System": "Server",
       "Category": "AttackShape",
       "InGameName": {
-        "en": "Attack Shapes"
+        "en": "Attack Shapes",
+        "zh-Hans": "攻击形状"
       },
       "Alias": [
         "Attack Shapes"
@@ -158377,7 +158383,8 @@
       "System": "Server",
       "Category": "SurvivalStatus",
       "InGameName": {
-        "en": "Survival Status"
+        "en": "Survival Status",
+        "zh-Hans": "生存状态"
       },
       "Alias": [
         "Survival Status"
@@ -158394,7 +158401,8 @@
       "System": "Server",
       "Category": "SortingRule",
       "InGameName": {
-        "en": "Sorting Rules"
+        "en": "Sorting Rules",
+        "zh-Hans": "排序规则"
       },
       "Alias": [
         "Sorting Rules"
@@ -158411,7 +158419,8 @@
       "System": "Server",
       "Category": "RoundingLogic",
       "InGameName": {
-        "en": "Rounding Logic"
+        "en": "Rounding Logic",
+        "zh-Hans": "取整逻辑"
       },
       "Alias": [
         "Rounding Logic"
@@ -158430,7 +158439,8 @@
       "System": "Server",
       "Category": "TypeConversion",
       "InGameName": {
-        "en": "Type Conversions"
+        "en": "Type Conversions",
+        "zh-Hans": "类型转换"
       },
       "Alias": [
         "Type Conversions"
@@ -158456,7 +158466,8 @@
       "System": "Server",
       "Category": "PathPointType",
       "InGameName": {
-        "en": "Motion Path Point Types"
+        "en": "Motion Path Point Types",
+        "zh-Hans": "运动路径点位类型"
       },
       "Alias": [
         "Motion Path Point Types",
@@ -158474,7 +158485,8 @@
       "System": "Server",
       "Category": "MotionType",
       "InGameName": {
-        "en": "Motion Types"
+        "en": "Motion Types",
+        "zh-Hans": "运动类型"
       },
       "Alias": [
         "Motion Types"
@@ -158492,7 +158504,8 @@
       "System": "Server",
       "Category": "FollowType",
       "InGameName": {
-        "en": "Follow Location Type"
+        "en": "Follow Location Type",
+        "zh-Hans": "跟随位置类型"
       },
       "Alias": [
         "Follow Location Type"
@@ -158510,7 +158523,8 @@
       "System": "Server",
       "Category": "CoordinateSystem",
       "InGameName": {
-        "en": "Coordinate System Type"
+        "en": "Coordinate System Type",
+        "zh-Hans": "坐标系类型"
       },
       "Alias": [
         "Coordinate System Type",
@@ -158528,7 +158542,8 @@
       "System": "Server",
       "Category": "ElementType",
       "InGameName": {
-        "en": "Elemental Type"
+        "en": "Elemental Type",
+        "zh-Hans": "元素类型"
       },
       "Alias": [
         "Elemental Type"
@@ -158551,7 +158566,8 @@
       "System": "Server",
       "Category": "EntityType",
       "InGameName": {
-        "en": "Entity Type"
+        "en": "Entity Type",
+        "zh-Hans": "实体类型"
       },
       "Alias": [
         "Entity Type"
@@ -158571,7 +158587,8 @@
       "System": "Server",
       "Category": "StatusChangeReason",
       "InGameName": {
-        "en": "Unit Status Addition Failure Reason"
+        "en": "Unit Status Addition Failure Reason",
+        "zh-Hans": "单位状态添加失败原因"
       },
       "Alias": [
         "Unit Status Addition Failure Reason"
@@ -158590,7 +158607,8 @@
       "System": "Server",
       "Category": "StatusChangeReason",
       "InGameName": {
-        "en": "Unit Status Addition Result"
+        "en": "Unit Status Addition Result",
+        "zh-Hans": "单位状态添加结果"
       },
       "Alias": [
         "Unit Status Addition Result"
@@ -158611,7 +158629,8 @@
       "System": "Server",
       "Category": "StatusChangeReason",
       "InGameName": {
-        "en": "Unit Status Removal Reason"
+        "en": "Unit Status Removal Reason",
+        "zh-Hans": "单位状态移除原因"
       },
       "Alias": [
         "Unit Status Removal Reason"
@@ -158633,7 +158652,8 @@
       "System": "Server",
       "Category": "StatusChangeReason",
       "InGameName": {
-        "en": "Unit Status Removal Strategy"
+        "en": "Unit Status Removal Strategy",
+        "zh-Hans": "单位状态移除策略"
       },
       "Alias": [
         "Unit Status Removal Strategy"
@@ -158650,7 +158670,8 @@
       "System": "Server",
       "Category": "ReviveSelection",
       "InGameName": {
-        "en": "Revive Point Selection Strategy"
+        "en": "Revive Point Selection Strategy",
+        "zh-Hans": "复苏点选取策略"
       },
       "Alias": [
         "Revive Point Selection Strategy"
@@ -158669,7 +158690,8 @@
       "System": "Server",
       "Category": "ReviveSelection",
       "InGameName": {
-        "en": "Cause of Being Down"
+        "en": "Cause of Being Down",
+        "zh-Hans": "倒下原因"
       },
       "Alias": [
         "Cause of Being Down"
@@ -158687,7 +158709,8 @@
       "System": "Server",
       "Category": "TrigFunction",
       "InGameName": {
-        "en": "Trigonometric Functions"
+        "en": "Trigonometric Functions",
+        "zh-Hans": "三角函数"
       },
       "Alias": [
         "Trigonometric Functions"
@@ -158710,9 +158733,11 @@
       "System": "Server",
       "Category": "DisruptorType",
       "InGameName": {
-        "en": "Disruptor Device Type"
+        "en": "Disruptor Device Types",
+        "zh-Hans": "扰动装置类型"
       },
       "Alias": [
+        "Disruptor Device Type",
         "Disruptor Device Type"
       ],
       "Collection": [
@@ -158728,7 +158753,8 @@
       "System": "Server",
       "Category": "DisruptorType",
       "InGameName": {
-        "en": "Disruptor Device Orientation"
+        "en": "Disruptor Device Orientation",
+        "zh-Hans": "扰动装置朝向"
       },
       "Alias": [
         "Disruptor Device Orientation"
@@ -158745,7 +158771,8 @@
       "System": "Server",
       "Category": "UIControlStatus",
       "InGameName": {
-        "en": "UI Control Group Status"
+        "en": "UI Control Group Status",
+        "zh-Hans": "界面控件组状态"
       },
       "Alias": [
         "UI Control Group Status"
@@ -158763,7 +158790,8 @@
       "System": "Server",
       "Category": "TargetType",
       "InGameName": {
-        "en": "Target Type"
+        "en": "Target Type",
+        "zh-Hans": "目标类型"
       },
       "Alias": [
         "Target Type"
@@ -158786,7 +158814,8 @@
       "System": "Server",
       "Category": "TriggerRestriction",
       "InGameName": {
-        "en": "Trigger Restriction"
+        "en": "Trigger Restriction",
+        "zh-Hans": "触发限制"
       },
       "Alias": [
         "Trigger Restriction"
@@ -158820,7 +158849,8 @@
       "System": "Server",
       "Category": "HitType",
       "InGameName": {
-        "en": "Hit Type"
+        "en": "Hit Type",
+        "zh-Hans": "打击类型"
       },
       "Alias": [
         "Hit Type"
@@ -158841,7 +158871,8 @@
       "System": "Server",
       "Category": "AttackType",
       "InGameName": {
-        "en": "Attack Type"
+        "en": "Attack Type",
+        "zh-Hans": "攻击类型"
       },
       "Alias": [
         "Attack Type"
@@ -158860,7 +158891,8 @@
       "System": "Server",
       "Category": "HitPerformance",
       "InGameName": {
-        "en": "Hit Performance Level"
+        "en": "Hit Performance Level",
+        "zh-Hans": "受击表现等级"
       },
       "Alias": [
         "Hit Performance Level"
@@ -158886,7 +158918,8 @@
       "System": "Server",
       "Category": "SkillSlot",
       "InGameName": {
-        "en": "Skill Slot"
+        "en": "Skill Slot",
+        "zh-Hans": "技能槽位"
       },
       "Alias": [
         "Skill Slot"
@@ -158921,7 +158954,8 @@
       "System": "Server",
       "Category": "SoundAttenuation",
       "InGameName": {
-        "en": "Sound Attenuation Mode"
+        "en": "Sound Attenuation Mode",
+        "zh-Hans": "声音衰减方式"
       },
       "Alias": [
         "Sound Attenuation Mode"
@@ -158939,7 +158973,8 @@
       "System": "Server",
       "Category": "SelectionResult",
       "InGameName": {
-        "en": "Select Completion Reason"
+        "en": "Select Completion Reason",
+        "zh-Hans": "选择完成原因"
       },
       "Alias": [
         "Select Completion Reason"
@@ -158960,7 +158995,8 @@
       "System": "Server",
       "Category": "SettlementStatus",
       "InGameName": {
-        "en": "Settlement Status"
+        "en": "Settlement Status",
+        "zh-Hans": "结算状态"
       },
       "Alias": [
         "Settlement Status"
@@ -158978,7 +159014,8 @@
       "System": "Server",
       "Category": "SettlementStatus",
       "InGameName": {
-        "en": "Settlement Status"
+        "en": "Settlement Status",
+        "zh-Hans": "结算状态"
       },
       "Alias": [
         "Settlement Status"
@@ -158997,7 +159034,8 @@
       "System": "Server",
       "Category": "ItemChangeReason",
       "InGameName": {
-        "en": "Reason for Item Change"
+        "en": "Reason for Item Change",
+        "zh-Hans": "道具变化原因"
       },
       "Alias": [
         "Reason for Item Change"
@@ -159020,7 +159058,8 @@
       "System": "Server",
       "Category": "LootType",
       "InGameName": {
-        "en": "Item Loot Type"
+        "en": "Item Loot Type",
+        "zh-Hans": "道具掉落类型"
       },
       "Alias": [
         "Item Loot Type"
@@ -159037,7 +159076,8 @@
       "System": "Server",
       "Category": "SelectionResult",
       "InGameName": {
-        "en": "Decision Refresh Mode"
+        "en": "Decision Refresh Mode",
+        "zh-Hans": "决策刷新方式"
       },
       "Alias": [
         "Decision Refresh Mode"
@@ -159055,7 +159095,8 @@
       "System": "Server",
       "Category": "ElementReaction",
       "InGameName": {
-        "en": "Elemental Reaction Type"
+        "en": "Elemental Reaction Type",
+        "zh-Hans": "元素反应类型"
       },
       "Alias": [
         "Elemental Reaction Type"
@@ -159092,9 +159133,11 @@
       "System": "Server",
       "Category": "ScanPriority",
       "InGameName": {
-        "en": "Scan Tag Prioritize Type"
+        "en": "Scan Scoring Rules",
+        "zh-Hans": "扫描积分规则"
       },
       "Alias": [
+        "Scan Tag Prioritize Type",
         "Scan Tag Prioritize Type"
       ],
       "Collection": [
@@ -159109,9 +159152,11 @@
       "System": "Server",
       "Category": "SortingRule",
       "InGameName": {
-        "en": "Sorting Rules"
+        "en": "Random Order",
+        "zh-Hans": "随机排序"
       },
       "Alias": [
+        "Sorting Rules",
         "Sorting Rules"
       ],
       "Collection": [
@@ -159125,7 +159170,8 @@
       "System": "Server",
       "Category": "GameplayMode",
       "InGameName": {
-        "en": "Gameplay Mode"
+        "en": "Gameplay Mode",
+        "zh-Hans": "游玩方式"
       },
       "Alias": [
         "Gameplay Mode"
@@ -159143,7 +159189,8 @@
       "System": "Server",
       "Category": "InputDevice",
       "InGameName": {
-        "en": "Input Device Type"
+        "en": "Input Device Type",
+        "zh-Hans": "输入设备类型"
       },
       "Alias": [
         "Input Device Type"
@@ -159161,9 +159208,11 @@
       "System": "Server",
       "Category": "MovementMode",
       "InGameName": {
-        "en": "Movement Mode"
+        "en": "Fixed-Point Motion Device Motion Type",
+        "zh-Hans": "定点运动器运动类型"
       },
       "Alias": [
+        "Movement Mode",
         "Movement Mode"
       ],
       "Collection": [
@@ -159178,9 +159227,11 @@
       "System": "Server",
       "Category": "MotionParamType",
       "InGameName": {
-        "en": "Fixed Motion Parameter Type"
+        "en": "Fixed-Point Motion Device Parameter Conversion Type",
+        "zh-Hans": "定点运动器参数转化类型"
       },
       "Alias": [
+        "Fixed Motion Parameter Type",
         "Fixed Motion Parameter Type"
       ],
       "Collection": [
@@ -159195,7 +159246,8 @@
       "System": "Client",
       "Category": "Generic",
       "InGameName": {
-        "en": "Generic"
+        "en": "Generic",
+        "zh-Hans": "默认"
       },
       "Alias": [
         "Generic"
@@ -159209,7 +159261,8 @@
       "System": "Client",
       "Category": "BooleanGeneric",
       "InGameName": {
-        "en": "Boolean"
+        "en": "Boolean",
+        "zh-Hans": "布尔值"
       },
       "Alias": [
         "Boolean"
@@ -159226,7 +159279,8 @@
       "System": "Client",
       "Category": "ComparisonOperator",
       "InGameName": {
-        "en": "Comparison Operators"
+        "en": "Comparison Operators",
+        "zh-Hans": "比较运算"
       },
       "Alias": [
         "Comparison Operators"
@@ -159246,7 +159300,8 @@
       "System": "Client",
       "Category": "LogicalOperator",
       "InGameName": {
-        "en": "Logical Operators"
+        "en": "Logical Operators",
+        "zh-Hans": "逻辑运算"
       },
       "Alias": [
         "Logical Operators"
@@ -159265,7 +159320,8 @@
       "System": "Client",
       "Category": "MathOperator",
       "InGameName": {
-        "en": "Basic Mathematical Operators"
+        "en": "Basic Mathematical Operators",
+        "zh-Hans": "基础数学运算"
       },
       "Alias": [
         "Basic Mathematical Operators"
@@ -159284,7 +159340,8 @@
       "System": "Client",
       "Category": "AttackShape",
       "InGameName": {
-        "en": "Attack Shapes"
+        "en": "Attack Shapes",
+        "zh-Hans": "攻击形状"
       },
       "Alias": [
         "Attack Shapes"
@@ -159302,7 +159359,8 @@
       "System": "Client",
       "Category": "SurvivalStatus",
       "InGameName": {
-        "en": "Survival Status"
+        "en": "Survival Status",
+        "zh-Hans": "生存状态"
       },
       "Alias": [
         "Survival Status"
@@ -159319,7 +159377,8 @@
       "System": "Client",
       "Category": "SortingRule",
       "InGameName": {
-        "en": "Sorting Rules"
+        "en": "Sorting Rules",
+        "zh-Hans": "排序规则"
       },
       "Alias": [
         "Sorting Rules"
@@ -159336,7 +159395,8 @@
       "System": "Client",
       "Category": "RoundingLogic",
       "InGameName": {
-        "en": "Rounding Logic"
+        "en": "Rounding Logic",
+        "zh-Hans": "取整逻辑"
       },
       "Alias": [
         "Rounding Logic"
@@ -159354,7 +159414,8 @@
       "System": "Client",
       "Category": "TypeConversion",
       "InGameName": {
-        "en": "Type Conversions"
+        "en": "Type Conversions",
+        "zh-Hans": "类型转换"
       },
       "Alias": [
         "Type Conversions"
@@ -159380,7 +159441,8 @@
       "System": "Client",
       "Category": "PathPointType",
       "InGameName": {
-        "en": "Motion Path Point Types"
+        "en": "Motion Path Point Types",
+        "zh-Hans": "运动路径点位类型"
       },
       "Alias": [
         "Motion Path Point Types"
@@ -159397,7 +159459,8 @@
       "System": "Client",
       "Category": "MotionType",
       "InGameName": {
-        "en": "Motion Types"
+        "en": "Motion Types",
+        "zh-Hans": "运动类型"
       },
       "Alias": [
         "Motion Types"
@@ -159415,7 +159478,8 @@
       "System": "Client",
       "Category": "FollowType",
       "InGameName": {
-        "en": "Follow Location Type"
+        "en": "Follow Location Type",
+        "zh-Hans": "跟随位置类型"
       },
       "Alias": [
         "Follow Location Type"
@@ -159433,7 +159497,8 @@
       "System": "Client",
       "Category": "CoordinateSystem",
       "InGameName": {
-        "en": "Coordinate System Type"
+        "en": "Coordinate System Type",
+        "zh-Hans": "坐标系类型"
       },
       "Alias": [
         "Coordinate System Type"
@@ -159450,7 +159515,8 @@
       "System": "Client",
       "Category": "ElementType",
       "InGameName": {
-        "en": "Elemental Type"
+        "en": "Elemental Type",
+        "zh-Hans": "元素类型"
       },
       "Alias": [
         "Elemental Type"
@@ -159473,7 +159539,8 @@
       "System": "Client",
       "Category": "EntityType",
       "InGameName": {
-        "en": "Entity Type"
+        "en": "Entity Type",
+        "zh-Hans": "实体类型"
       },
       "Alias": [
         "Entity Type"
@@ -159493,7 +159560,8 @@
       "System": "Client",
       "Category": "StatusChangeReason",
       "InGameName": {
-        "en": "Unit Status Addition Failure Reason"
+        "en": "Unit Status Addition Failure Reason",
+        "zh-Hans": "单位状态添加失败原因"
       },
       "Alias": [
         "Unit Status Addition Failure Reason"
@@ -159512,7 +159580,8 @@
       "System": "Client",
       "Category": "StatusChangeReason",
       "InGameName": {
-        "en": "Unit Status Addition Success Type"
+        "en": "Unit Status Addition Success Type",
+        "zh-Hans": "单位状态添加成功类型"
       },
       "Alias": [
         "Unit Status Addition Success Type"
@@ -159529,7 +159598,8 @@
       "System": "Client",
       "Category": "StatusChangeReason",
       "InGameName": {
-        "en": "Unit Status Removal Reason"
+        "en": "Unit Status Removal Reason",
+        "zh-Hans": "单位状态移除原因"
       },
       "Alias": [
         "Unit Status Removal Reason"
@@ -159551,7 +159621,8 @@
       "System": "Client",
       "Category": "StatusChangeReason",
       "InGameName": {
-        "en": "Unit Status Removal Strategy"
+        "en": "Unit Status Removal Strategy",
+        "zh-Hans": "单位状态移除策略"
       },
       "Alias": [
         "Unit Status Removal Strategy"
@@ -159568,7 +159639,8 @@
       "System": "Client",
       "Category": "ReviveSelection",
       "InGameName": {
-        "en": "Revive Point Selection Strategy"
+        "en": "Revive Point Selection Strategy",
+        "zh-Hans": "复苏点选取策略"
       },
       "Alias": [
         "Revive Point Selection",
@@ -159588,7 +159660,8 @@
       "System": "Client",
       "Category": "ReviveSelection",
       "InGameName": {
-        "en": "Cause of Being Down"
+        "en": "Cause of Being Down",
+        "zh-Hans": "倒下原因"
       },
       "Alias": [
         "Cause of Being Down"
@@ -159606,7 +159679,8 @@
       "System": "Client",
       "Category": "TrigFunction",
       "InGameName": {
-        "en": "Trigonometric Functions"
+        "en": "Trigonometric Functions",
+        "zh-Hans": "三角函数"
       },
       "Alias": [
         "Trigonometric Functions"
@@ -159629,7 +159703,8 @@
       "System": "Client",
       "Category": "DisruptorType",
       "InGameName": {
-        "en": "Disruptor Device Type"
+        "en": "Disruptor Device Type",
+        "zh-Hans": "扰动装置类型"
       },
       "Alias": [
         "Disruptor Device Type"
@@ -159647,7 +159722,8 @@
       "System": "Client",
       "Category": "DisruptorType",
       "InGameName": {
-        "en": "Disruptor Device Orientation"
+        "en": "Disruptor Device Orientation",
+        "zh-Hans": "扰动装置朝向"
       },
       "Alias": [
         "Disruptor Device Orientation"
@@ -159664,7 +159740,8 @@
       "System": "Client",
       "Category": "UIControlStatus",
       "InGameName": {
-        "en": "UI Control Group Status"
+        "en": "UI Control Group Status",
+        "zh-Hans": "界面控件组状态"
       },
       "Alias": [
         "UI Control Group Status"
@@ -159682,7 +159759,8 @@
       "System": "Client",
       "Category": "TargetType",
       "InGameName": {
-        "en": "Target Type"
+        "en": "Target Type",
+        "zh-Hans": "目标类型"
       },
       "Alias": [
         "Target Type"
@@ -159705,7 +159783,8 @@
       "System": "Client",
       "Category": "MathOperator",
       "InGameName": {
-        "en": "Quick Mathematical Operators"
+        "en": "Quick Mathematical Operators",
+        "zh-Hans": "便捷数学运算"
       },
       "Alias": [
         "Quick Mathematical Operators"
@@ -159725,7 +159804,8 @@
       "System": "Client",
       "Category": "HitType",
       "InGameName": {
-        "en": "Hit Type"
+        "en": "Hit Type",
+        "zh-Hans": "打击类型"
       },
       "Alias": [
         "Hit Type"
@@ -159746,7 +159826,8 @@
       "System": "Client",
       "Category": "AttackType",
       "InGameName": {
-        "en": "Attack Type"
+        "en": "Attack Type",
+        "zh-Hans": "攻击类型"
       },
       "Alias": [
         "Attack Type"
@@ -159765,7 +159846,8 @@
       "System": "Client",
       "Category": "HitPerformance",
       "InGameName": {
-        "en": "Hit Performance Level"
+        "en": "Hit Performance Level",
+        "zh-Hans": "受击表现等级"
       },
       "Alias": [
         "Hit Performance Level"
@@ -159791,7 +159873,8 @@
       "System": "Client",
       "Category": "FilterRule",
       "InGameName": {
-        "en": "Target Sorting Rules"
+        "en": "Target Sorting Rules",
+        "zh-Hans": "目标排序规则"
       },
       "Alias": [
         "Target Sorting Rules"
@@ -159809,7 +159892,8 @@
       "System": "Client",
       "Category": "AttackLayer",
       "InGameName": {
-        "en": "Attack Layer Config"
+        "en": "Attack Layer Config",
+        "zh-Hans": "攻击层配置"
       },
       "Alias": [
         "Attack Layer Config"
@@ -159827,7 +159911,8 @@
       "System": "Client",
       "Category": "KnockbackDirection",
       "InGameName": {
-        "en": "Knockback Direction Type"
+        "en": "Knockback Direction Type",
+        "zh-Hans": "击退方向类型"
       },
       "Alias": [
         "Knockback Direction Type"
@@ -159849,7 +159934,8 @@
       "System": "Client",
       "Category": "RotationType",
       "InGameName": {
-        "en": "Rotation Type"
+        "en": "Rotation Type",
+        "zh-Hans": "转向类型"
       },
       "Alias": [
         "Rotation Type"
@@ -159870,7 +159956,8 @@
       "System": "Client",
       "Category": "AttackShape",
       "InGameName": {
-        "en": "Sector Detection Direction"
+        "en": "Sector Detection Direction",
+        "zh-Hans": "扇形检测方向"
       },
       "Alias": [
         "Sector Detection Direction"
@@ -159888,7 +159975,8 @@
       "System": "Client",
       "Category": "TypeConversion",
       "InGameName": {
-        "en": "Type Conversions"
+        "en": "Type Conversions",
+        "zh-Hans": "类型转换"
       },
       "Alias": [
         "Type Conversions"
@@ -159914,7 +160002,8 @@
       "System": "Client",
       "Category": "RetracingType",
       "InGameName": {
-        "en": "Retracing Type"
+        "en": "Retracing Type",
+        "zh-Hans": "溯源类型"
       },
       "Alias": [
         "Retracing Type"
@@ -159932,7 +160021,8 @@
       "System": "Client",
       "Category": "HitLevel",
       "InGameName": {
-        "en": "Hit Level"
+        "en": "Hit Level",
+        "zh-Hans": "受击等级"
       },
       "Alias": [
         "Hit Level"
@@ -159952,7 +160042,8 @@
       "System": "Client",
       "Category": "ElementReaction",
       "InGameName": {
-        "en": "Elemental Reaction Type"
+        "en": "Elemental Reaction Type",
+        "zh-Hans": "元素反应类型"
       },
       "Alias": [
         "Elemental Reaction Type"
@@ -159989,7 +160080,8 @@
       "System": "Client",
       "Category": "FilterRule",
       "InGameName": {
-        "en": "Filter Return Type"
+        "en": "Filter Return Type",
+        "zh-Hans": "过滤器返回类型"
       },
       "Alias": [
         "Filter Return Type"
@@ -160006,7 +160098,8 @@
       "System": "Client",
       "Category": "TargetType",
       "InGameName": {
-        "en": "Target Type (For Camera Orientation Node)"
+        "en": "Target Type (For Camera Orientation Node)",
+        "zh-Hans": "目标类型(镜头朝向节点用)"
       },
       "Alias": [
         "Target Type (For Camera Orientation Node)"
@@ -160026,9 +160119,11 @@
       "System": "Client",
       "Category": "AttackLayer",
       "InGameName": {
-        "en": "Attack Layer Config"
+        "en": "Ray Hit Filter Type",
+        "zh-Hans": "射线命中筛选类型"
       },
       "Alias": [
+        "Attack Layer Config",
         "Attack Layer Config"
       ],
       "Collection": [
@@ -160044,7 +160139,8 @@
       "System": "Client",
       "Category": "InterruptStatus",
       "InGameName": {
-        "en": "Interrupt Status"
+        "en": "Interrupt Status",
+        "zh-Hans": "受打断状态"
       },
       "Alias": [
         "Interrupt Status"
@@ -160062,7 +160158,8 @@
       "System": "Client",
       "Category": "ScanStatus",
       "InGameName": {
-        "en": "Scan Status"
+        "en": "Scan Status",
+        "zh-Hans": "扫描状态"
       },
       "Alias": [
         "Scan Status"
@@ -160081,7 +160178,8 @@
       "System": "Client",
       "Category": "DamagePopType",
       "InGameName": {
-        "en": "Damage Pop-Up Type"
+        "en": "Damage Pop-Up Type",
+        "zh-Hans": "伤害跳字类型"
       },
       "Alias": [
         "Damage Pop-Up Type"
@@ -160099,7 +160197,8 @@
       "System": "Client",
       "Category": "InputDevice",
       "InGameName": {
-        "en": "Input Device Type"
+        "en": "Input Device Type",
+        "zh-Hans": "输入设备类型"
       },
       "Alias": [
         "Input Device Type"

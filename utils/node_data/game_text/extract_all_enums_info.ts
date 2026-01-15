@@ -34,7 +34,7 @@ writeFileSync("./utils/node_data/game_text/enums.json", JSON.stringify(enumsText
 // combine enums
 interface EnumData {
   id: number;
-  textMapId: number | null;
+  textMapId: number;
   name: string;
   nameZH: string;
   enums: EnumDef[];
@@ -61,7 +61,7 @@ enumsText.forEach((item: any) => {
       if (!enums.has(id)) {
         enums.set(id, {
           id: id,
-          textMapId: null,
+          textMapId: null as any,
           name: "",
           nameZH: "",
           enums: [],

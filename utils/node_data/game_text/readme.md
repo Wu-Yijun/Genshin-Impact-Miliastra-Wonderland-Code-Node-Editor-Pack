@@ -54,4 +54,32 @@ interface NodeParam {
 ```
 
 
+### Step3
+从原始游戏数据中提取全部枚举的全部信息: [extract_all_enums_info](extract_all_enums_info.ts)
+
+输入(读取)文件:
+- [ManualTextMapConfigData](../../../ref/DimbreathBot/AnimeGameData/ExcelBinOutput/ManualTextMapConfigData.json)
+- [TextMapCHS](../../../ref/DimbreathBot/AnimeGameData/TextMap/TextMapCHS.json)
+- [TextMapEN](../../../ref/DimbreathBot/AnimeGameData/TextMap/TextMapEN.json)
+
+输出文件:
+- [enums](enums.json)
+
+输出文件结构:
+```ts
+type JSON_Schema = EnumData[];
+interface EnumData {
+  id: number;
+  textMapId: number;
+  name: string;
+  nameZH: string;
+  enums: EnumDef[];
+}
+interface EnumDef {
+  index: number;
+  name: string;
+  nameZH: string;
+}
+```
+
 // UI_BEYOND_ASSIST_EDITOR_VAR_TYPE_ARMY_LIST
