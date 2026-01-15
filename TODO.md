@@ -129,6 +129,9 @@
 ## 进行中
 *按任务优先级和完成度排序, 打勾的说明已经开始, 仍未完成*
 
+- [x] 更新data.json - 节点图类型数据
+- [x] 更新data.json - 节点变体定义
+- [x] 更新data.json - 客户端类型定义
 - [x] 添加 6.3.0 新增节点
 - [x] 测试并修复从 lambda exp ast 到 math/query nodes 的转化
 - [x] 完成helper处理从 ir call 的 函数名到 identifier 的转化

@@ -1,115 +1,10 @@
 {
-  "Version": "2.1.0",
-  "GameVersion": "6.2.0",
+  "Version": "2.2.2",
+  "GameVersion": "6.3.0",
   "Author": "Aluria",
-  "Date": "Tue Dec 30 2025 12:46:47 GMT+0800 (中国标准时间)",
+  "Date": "Thu Jan 15 2026 11:09:42 GMT+0800 (中国标准时间)",
   "Description": "This document contains all necessary information for this project, including types, nodes, and enums.",
-  "Schema": "Skip",
-  "SystemConstants": {
-    "GRAPH_CATEGORY_CONSTS": {
-      "ENTITY_NODE_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 5,
-        "AssetsKind": 0,
-        "AssetsWhich": 9,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20000,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20000,
-        "NodeKind": 22000
-      },
-      "STATUS_NODE_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 5,
-        "AssetsKind": 0,
-        "AssetsWhich": 22,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20003,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20000,
-        "NodeKind": 22000
-      },
-      "CLASS_NODE_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 5,
-        "AssetsKind": 0,
-        "AssetsWhich": 23,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20004,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20000,
-        "NodeKind": 22000
-      },
-      "ITEM_NODE_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 5,
-        "AssetsKind": 0,
-        "AssetsWhich": 46,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20005,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20000,
-        "NodeKind": 22000
-      },
-      "BOOLEAN_FILTER_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 1,
-        "AssetsKind": 3,
-        "AssetsWhich": 10,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20001,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20001,
-        "NodeKind": 22000
-      },
-      "INTEGER_FILTER_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 1,
-        "AssetsKind": 3,
-        "AssetsWhich": 47,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20006,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20001,
-        "NodeKind": 22000
-      },
-      "SKILL_NODE_GRAPH": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 1,
-        "AssetsKind": 3,
-        "AssetsWhich": 11,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20002,
-        "GraphKind": 21001,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20002,
-        "NodeKind": 22000
-      },
-      "COMPOSITE_NODE_DECL": {
-        "AssetsOrigin": 0,
-        "AssetsCategory": 23,
-        "AssetsKind": 0,
-        "AssetsWhich": 12,
-        "GraphOrigin": 10000,
-        "GraphCategory": 20000,
-        "GraphKind": 21002,
-        "NodeOrigin": 10001,
-        "NodeCategory": 20000,
-        "NodeKind": 22000
-      }
-    },
-    "GRAPH_ID_RANGE": {
-      "Server": 1073741824,
-      "Client": 1082130432,
-      "Composite": 1610612736
-    }
-  },
+  "Schema": "export interface Document {\nVersion: string;\nGameVersion: string;\nAuthor: string;\nDate: string;\nDescription: string;\nSchema: string;\nTypes: TypeDef[];\nNodes: NodeDef[];\nEnums: EnumDef[];\nEnumTypes: EnumTypeDef[];\nSystemConstants: SystemConstDef;\n}\nexport const ResourceClass = [\n\"ENTITY_NODE_GRAPH\",\n\"STATUS_NODE_GRAPH\",\n\"CLASS_NODE_GRAPH\",\n\"ITEM_NODE_GRAPH\",\n\"BOOLEAN_FILTER_GRAPH\",\n\"INTEGER_FILTER_GRAPH\",\n\"SKILL_NODE_GRAPH\",\n\"COMPOSITE_NODE_DECL\",\n] as const;\nexport type ServerClient = \"Server\" | \"Client\"\nexport type ResourceClass = typeof ResourceClass[number];\nexport const Languages = [\n\"cs\",\n\"de\",\n\"es\",\n\"en\",\n\"fr\",\n\"it\",\n\"ja\",\n\"ko\",\n\"pl\",\n\"pt-BR\",\n\"ru\",\n\"tr\",\n\"zh-Hans\",\n\"zh-Hant\"\n] as const;\nexport type Translations = Partial<{ [key in typeof Languages[number]]: string }>;\nexport type TypedValue = string | number | null | TypedValue[];\nexport interface TypeDef {\nIdentifier: string;\nID: number;\nClientID: number | null;\nBaseType: string;\nBaseTypeID: number;\nDSLName: string;\nInGameName: Translations;\n}\nexport interface EnumTypeDef {\nIdentifier: string;\nID: number;\nTypeID: number;\nSystem: \"Server\" | \"Client\";\nCategory: string;\nInGameName: Translations;\nAlias?: string[];\nCollection: string[];\n}\nexport interface EnumDef {\nIdentifier: string;\nID: number;\nCategory: string;\nInGameName: Translations;\nAlias?: string[];\n}\nexport interface NodeDef {\nIdentifier: string;\nID: number;\nKernelID?: number;\nSystem: \"Server\" | \"Client\";\nDomain: \"Execution\" | \"Trigger\" | \"Control\" | \"Query\" | \"Arithmetic\" | \"Others\" | \"Hidden\";\nType: \"Fixed\" | \"Variant\";\nInGameName: Translations;\nAlias?: string[];\nDescription: Translations;\nFlowPins: PinDef[];\nDataPins: PinDef[];\nExtraPins?: PinDef[];\nVariants?: VariantDef[]\nImplementation?: ImplementationDef;\n}\nexport interface PinDef {\nIdentifier: string;\nDirection: \"In\" | \"Out\";\nShellIndex: number;\nKernelIndex: number;\nType?: string;\nDefaultValue?: TypedValue;\nVisibility?: \"Display\" | \"Hidden\" | \"Conditional\";\nConnectability?: boolean;\nEditability?: boolean;\nRemarks?: string;\nLabel: Translations;\nDescription: Translations;\nPlaceholder?: Translations;\n}\nexport interface VariantDef {\nConstraints: string;\nKernelID: number;\nInjectedContents: InjectedDef[];\n}\nexport interface InjectedDef {\nIdentifier: string;\nTypeSelectorIndex?: number;\nShellIndex?: number;\nKernelIndex?: number;\nDefaultValue?: TypedValue;\nVisibility?: \"Display\" | \"Hidden\" | \"Conditional\";\nConnectability?: boolean;\n}\nexport type ImplementationDef = {\nKind: \"RPC\";\nMessages: Partial<PinDef>[];\n};\nexport interface SystemConstDef {\nGRAPH_CATEGORY_CONSTS: GraphCategoryConstsDef;\nGRAPH_ID_RANGE: Record<string, number>;\n}\nexport type GraphCategoryConstsDef = Record<ResourceClass, {\nAssetsOrigin: number;\nAssetsCategory: number;\nAssetsKind: number;\nAssetsWhich: number;\nGraphOrigin: number;\nGraphCategory: number;\nGraphKind: number;\nNodeOrigin: number;\nNodeCategory: number;\nNodeKind: number;\n}>;",
   "Types": [
     {
       "Identifier": "Unk",
@@ -443,7 +338,7 @@
         "FactionList"
       ],
       "ID": 24,
-      "ClientID": null,
+      "ClientID": 25,
       "InGameName": {
         "en": "Faction List"
       },
@@ -457,7 +352,7 @@
         "Struct"
       ],
       "ID": 25,
-      "ClientID": null,
+      "ClientID": 22,
       "InGameName": {
         "en": "Structure"
       },
@@ -471,7 +366,7 @@
         "StructList"
       ],
       "ID": 26,
-      "ClientID": null,
+      "ClientID": 23,
       "InGameName": {
         "en": "Structure List"
       },
@@ -485,7 +380,7 @@
         "Dictionary"
       ],
       "ID": 27,
-      "ClientID": null,
+      "ClientID": 24,
       "InGameName": {
         "en": "Dictionary"
       },
@@ -160215,5 +160110,110 @@
         "InputDevice.TOUCHSCREEN"
       ]
     }
-  ]
+  ],
+  "SystemConstants": {
+    "GRAPH_CATEGORY_CONSTS": {
+      "ENTITY_NODE_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 5,
+        "AssetsKind": 0,
+        "AssetsWhich": 9,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20000,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20000,
+        "NodeKind": 22000
+      },
+      "STATUS_NODE_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 5,
+        "AssetsKind": 0,
+        "AssetsWhich": 22,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20003,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20000,
+        "NodeKind": 22000
+      },
+      "CLASS_NODE_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 5,
+        "AssetsKind": 0,
+        "AssetsWhich": 23,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20004,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20000,
+        "NodeKind": 22000
+      },
+      "ITEM_NODE_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 5,
+        "AssetsKind": 0,
+        "AssetsWhich": 46,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20005,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20000,
+        "NodeKind": 22000
+      },
+      "BOOLEAN_FILTER_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 1,
+        "AssetsKind": 3,
+        "AssetsWhich": 10,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20001,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20001,
+        "NodeKind": 22000
+      },
+      "INTEGER_FILTER_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 1,
+        "AssetsKind": 3,
+        "AssetsWhich": 47,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20006,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20001,
+        "NodeKind": 22000
+      },
+      "SKILL_NODE_GRAPH": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 1,
+        "AssetsKind": 3,
+        "AssetsWhich": 11,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20002,
+        "GraphKind": 21001,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20002,
+        "NodeKind": 22000
+      },
+      "COMPOSITE_NODE_DECL": {
+        "AssetsOrigin": 0,
+        "AssetsCategory": 23,
+        "AssetsKind": 0,
+        "AssetsWhich": 12,
+        "GraphOrigin": 10000,
+        "GraphCategory": 20000,
+        "GraphKind": 21002,
+        "NodeOrigin": 10001,
+        "NodeCategory": 20000,
+        "NodeKind": 22000
+      }
+    },
+    "GRAPH_ID_RANGE": {
+      "Server": 1073741824,
+      "Client": 1082130432,
+      "Composite": 1610612736
+    }
+  }
 }
