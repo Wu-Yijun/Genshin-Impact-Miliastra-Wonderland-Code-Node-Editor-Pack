@@ -202,6 +202,9 @@ export interface TypeDef {
 
   /** 游戏内显示名称（多语言） */
   InGameName: Translations;
+
+  /** 其它名称 */
+  Alias: string[];
 }
 
 /**
@@ -350,7 +353,7 @@ export interface NodeDef {
   ExtraPins?: PinDef[];
 
   /** 变体定义列表（仅用于 Variant 节点） */
-  Variants?: VariantDef[]
+  Variants?: VariantDef[];
 
   /** 实现定义（用于特殊节点，如 RPC 节点） */
   Implementation?: ImplementationDef;
@@ -563,7 +566,7 @@ export type ImplementationDef = {
  */
 export interface SystemConstDef {
   /** 图类别常量定义 */
-  GRAPH_CATEGORY_CONSTS: GraphCategoryConstsDef;
+  GRAPH_CATEGORY_CONSTS: Record<ResourceClass, GraphCategoryConstsDef>;
 
   /** 图 ID 范围定义 */
   GRAPH_ID_RANGE: Record<string, number>;
@@ -590,7 +593,7 @@ export interface SystemConstDef {
  * };
  * ```
  */
-export type GraphCategoryConstsDef = Record<ResourceClass, {
+export interface GraphCategoryConstsDef {
   /** 资产来源 */
   AssetsOrigin: number;
 
@@ -620,6 +623,6 @@ export type GraphCategoryConstsDef = Record<ResourceClass, {
 
   /** 节点种类 */
   NodeKind: number;
-}>;
+};
 
 // ====== End of Document Schema ====== //
